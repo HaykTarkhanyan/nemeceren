@@ -117,3 +117,19 @@ Your goal is for the learner to:
 - **Feel confident** using their target language in real situations
 - **Enjoy learning** (fun = consistent practice)
 - **Reach their target level** within their specified timeline
+
+## 📱 Phone Access & Cross-Device Sync
+
+This project is used from **two devices**: the Windows desktop (Claude Code CLI) and the **phone via Claude Code on the web** (`claude.ai/code` → this repo). The public GitHub repo `HaykTarkhanyan/nemeceren` is the **single source of truth** — all progress lives in committed `data/*.json`.
+
+**Daily workflow:**
+- **Phone:** open `claude.ai/code` → this repo → run a `/fluent-*` skill → practice → say "commit and push my progress". The cloud session opens a PR; merge it (one tap on GitHub mobile). Slash commands and hooks are verified to work in the cloud (2026-06-15).
+- **Desktop:** run `git pull` (or "pull my latest") **before** each session so you start from the newest progress.
+
+**The one discipline:** use **one device at a time**, and **pull before a desktop session**. Both devices editing `data/*.json` without pulling in between = a JSON merge conflict.
+
+**Cross-platform interpreter:** the hooks auto-detect the interpreter. For manual helper-script calls (`read-db.py` / `update-db.py`), use **`python` on the Windows desktop** (its `python3` is a broken Microsoft Store stub) and **`python3` in the Linux cloud** — whichever resolves. This overrides the literal `python3` shown in the Database Helper Scripts section above.
+
+## 🧠 Notes & Memory (keep everything in this repo)
+
+Persistent notes, learnings, and "memory" for this project live **inside this repo** — in this `CLAUDE.md` (and `LEARNINGS.md` / `PROGRESS.md` if used). **Never** write project memory to any location outside the repo (e.g. not `~/.claude/...`). In-repo only, so it syncs to every device.

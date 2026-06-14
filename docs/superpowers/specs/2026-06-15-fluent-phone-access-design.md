@@ -1,7 +1,7 @@
 # Fluent on Phone via Claude Code on the Web — Design Spec
 
 - **Date:** 2026-06-15
-- **Status:** Approved (pending spec review)
+- **Status:** Implemented and verified end-to-end (2026-06-15)
 - **Owner:** Hayk
 
 ## Goal
@@ -78,3 +78,14 @@ Exact click-by-click steps belong in the implementation plan.
 - **Mobile web UI is for running sessions, not editing code** — fine for Fluent practice.
 - **Git sync friction / conflicts** as described above.
 - **Cloud environment assumes `python3` is present** — covered by interpreter detection; if a future cloud image lacks both `python` and `python3`, hooks would fail (low likelihood).
+
+## Verification results (2026-06-15, live test from phone)
+
+Ran a real session from the phone via Claude Code on the web against `main`. Outcomes:
+
+- **Mobile slash commands: WORK.** `/fluent-vocab` ran a full 8-word drill; `command_used: /fluent-vocab` is recorded in `session-log.json`. (The pre-test concern from GitHub issue #48696 did not reproduce.)
+- **Commit model: branch + PR (confirmed).** The cloud session pushed to `claude/new-session-btxdu7` and opened PR #1 to `main` — it did not commit directly to `main`. Merging the PR is a one-tap action on GitHub mobile.
+- **Hooks + DB updates ran in cloud:** all 6 databases were updated correctly (streak 1, 10 SR items queued, 2 error patterns captured). The hybrid `learner-profile` schema read correctly.
+- **Full round-trip clean:** PR merged (squash) → `git pull --ff-only` on desktop fast-forwarded with no conflicts and no CRLF churn (`.gitattributes` held). Desktop `session-start` then showed streak 1 and 10 items due.
+
+**Net:** approach works as designed. Only ongoing friction is one PR-merge tap per phone session + `git pull` before a desktop session. Optional optimization to test: instruct the cloud session to "commit directly to main" (repo has no branch protection) to skip the PR.
