@@ -1,8 +1,55 @@
 {
-  "error_patterns": {},
+  "error_patterns": {
+    "spelling_noun_capitalization": {
+      "category": "spelling",
+      "subcategory": "capitalization",
+      "description": "German nouns must be capitalized",
+      "severity": "minor",
+      "frequency": 1,
+      "mastery_level": 0,
+      "difficulty_score": 0.5,
+      "last_seen": "2026-06-14",
+      "last_occurred": "2026-06-14",
+      "next_review": "2026-06-15",
+      "consecutive_correct": 0,
+      "consecutive_incorrect": 1,
+      "examples": [
+        {
+          "incorrect": "tag",
+          "correct": "Tag",
+          "context": "Guten ___, ich heiße Hayk.",
+          "date": "2026-06-14"
+        }
+      ],
+      "notes": "All German nouns (people, places, things) are always capitalized."
+    },
+    "spelling_ie_ei_confusion": {
+      "category": "spelling",
+      "subcategory": "ie/ei vowel + verb confusion",
+      "description": "Confused ie/ei ordering and sehen vs sein",
+      "severity": "moderate",
+      "frequency": 1,
+      "mastery_level": 0,
+      "difficulty_score": 0.5,
+      "last_seen": "2026-06-14",
+      "last_occurred": "2026-06-14",
+      "next_review": "2026-06-15",
+      "consecutive_correct": 0,
+      "consecutive_incorrect": 1,
+      "examples": [
+        {
+          "incorrect": "Weidersein",
+          "correct": "Wiedersehen",
+          "context": "Auf ___!",
+          "date": "2026-06-14"
+        }
+      ],
+      "notes": "ie sounds like 'ee'; the verb is sehen (to see), not sein (to be)."
+    }
+  },
   "metadata": {
     "created_date": "2026-06-15",
-    "last_updated": null,
-    "total_patterns_tracked": 0
+    "last_updated": "2026-06-14",
+    "total_patterns_tracked": 2
   }
 }
