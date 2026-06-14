@@ -1,0 +1,27 @@
+{
+  "learner": {
+    "name": "Hayk",
+    "target_language": "German",
+    "native_language": "Armenian",
+    "explanation_language": "English",
+    "other_languages": ["English"],
+    "current_level": "A1",
+    "target_level": "B1",
+    "timeline": "no_deadline",
+    "daily_study_minutes": 15,
+    "learning_goal": "living_in_germany",
+    "learning_style": "balanced",
+    "gamification_enabled": true,
+    "created_date": "2026-06-15"
+  },
+  "current_streak_days": 0,
+  "longest_streak_days": 0,
+  "total_sessions": 0,
+  "total_study_minutes": 0,
+  "last_updated": null,
+  "skills": {},
+  "focus_areas": [],
+  "achievements": [],
+  "estimated_hours_to_target": 250,
+  "estimated_months_to_target": 30
+}

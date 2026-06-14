@@ -216,3 +216,11 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# === Fluent (language learning) ===
+# Progress data IS committed on purpose so it syncs to the phone (Claude Code on web).
+# The repo is public by the user's explicit choice, so this learning data is public too.
+/data/*.json.backup-*
+.backups/
+.claude/settings.local.json
+myfile.txt
