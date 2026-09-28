@@ -2,6 +2,24 @@
 
 Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
+## 13. The syllabus is 7 units from zero to A1, built around work, classes and friends, with DW Nicos Weg as the video companion (`SYLLABUS.md` v3)
+
+- **Date:** 2026-09-29 - **Status:** active
+- **Why:** Hayk is a complete beginner who wants A1 for now, for daily life with no exam, and whose priorities are work, classes and friends. Hayk chose no placement test, Nicos Weg as the companion, and explanations in English with Russian/Armenian comparisons, then asked Claude to self-review and finalise. The self-review of v2 fixed:
+  - the accusative arriving after unit 2's "what you have" task (now a chunk in unit 2);
+  - the Nicos Weg mapping checked against its lesson list (numbers are in ch. 2; ch. 14, 15 and 18 teach adjective endings, which the textbooks consensus puts at A2);
+  - missing A1 consensus items: dates, verbs with dative, gern/lieber, polite chunks;
+  - no process at all, now "how a unit runs" with word targets, 20% mixed-in review, and done-criteria.
+- **Alternatives rejected:**
+  - v1 (15 units A1 to B1, which wrongly assumed Hayk was already A1);
+  - following a textbook (Hayk decided against Schritte);
+  - following Nicos Weg's own order (it puts adjective endings and two-way prepositions in A1, earlier than every textbook);
+  - admin-first ordering from the BAMF curriculum (Hayk's priorities are work, classes and friends).
+- **What would change this:**
+  - unit tests staying under 80% twice in a row (slow down or split units);
+  - Hayk's real situations changing (e.g. a flat search, which pulls admin forward);
+  - reaching A1 (plan A2 in detail).
+
 ## 12. Audio, video and archives are not committed; they stay local and can be downloaded again
 
 - **Date:** 2026-09-29 - **Status:** active

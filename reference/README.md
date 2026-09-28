@@ -11,7 +11,7 @@ Downloaded 2026-09-28. Everything is free and official, apart from `german_nouns
 | `goethe_A1_modellsatz.pdf` | A1 model exam with transcripts, answer key, and the grading criteria for Schreiben and Sprechen | goethe.de |
 | `exams_A1/` | Two more A1 mock exams (`uebungssatz01.pdf`, `uebungssatz02.pdf`) plus the listening audio for all three A1 exams (`modellsatz_hoeren.mp4`, `pruefungstraining_2_...mp4`, `pruefungstraining_3_...mp4`; audio-only MP4s). Which audio goes with which Übungssatz is unconfirmed; check the first track's announcement. | goethe.de, goethemp4s.akamaized.net |
 
-The *Schritte international 1* audio (old edition, Kursbuch and Arbeitsbuch, Lektion 1-7, 160 MP3s) is in `books/schritte1_audio/`, downloaded from Hueber's free download server (`hv-prod-craft.fsn1.your-objectstorage.com/downloads/sit_audios_{kb,ab}_L01.zip` ... `L07`).
+Audio and video files are not in git (DECISIONS.md #12). The exam MP4s above exist only locally; fetch them again from the URLs in `_knowledge/2026-09-28_llm-tutoring-and-materials.md`. The *Schritte international 1* audio was downloaded and then deleted on 2026-09-29, because Hayk decided not to use the Schritte books.
 
 Research behind the teaching approach and more material links: `_knowledge/2026-09-28_llm-tutoring-and-materials.md`.
 | `bamf_rahmencurriculum_integrationskurs.pdf` | BAMF integration-course curriculum: everyday situations in Germany, the basis of the DTZ exam | bamf.de |

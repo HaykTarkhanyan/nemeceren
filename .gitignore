@@ -6,7 +6,6 @@ logs/
 *.stackdump
 
 # Large media stays local (re-downloadable, URLs in reference/README.md and _knowledge/). See DECISIONS.md #12.
-books/
 *.mp3
 *.mp4
 *.zip

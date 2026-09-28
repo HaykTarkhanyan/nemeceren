@@ -4,7 +4,7 @@ Topics cut from current work so they don't get lost.
 
 - **Phone sync for the learning platform** (Neon Postgres or GitHub API commits). Deferred 2026-09-28: phone use is occasional and Hayk is fine with phone results not being saved. See DECISIONS.md #4.
 - **der/die/das and verb conjugation drills** fed from `reference/goethe_wortliste.tsv` and `reference/german_nouns.csv`. Not picked for platform v1 (2026-09-28).
-- **Schritte audio in `books/schritte1_audio/`** (195 MB, untracked): downloaded before Hayk decided on 2026-09-28 not to use the Schritte books. Mostly useless without the book, so ask Hayk whether to delete it.
+- **Pronunciation feedback:** Claude can't hear Hayk. Option: Hayk records on the desktop, and a local phoneme model (`facebook/wav2vec2-xlsr-53-espeak-cv-ft`) is compared against DWDS IPA. Whisper hides mispronunciations. See `_knowledge/2026-09-28_llm-tutoring-and-materials.md`. Heavy on this laptop: ask before running.
 - **Platform follow-ups from the v1 build (2026-09-29):**
   - Bake PC results (with Claude's reviews) into the Pages build so the phone can read feedback.
   - Test on a real phone (voices, umlaut buttons on a touch keyboard).

@@ -1,0 +1,44 @@
+title = "Fresh start: wiped old tutor, reference data, learning platform, syllabus v3"
+date = "2026-09-28"
+time = "22:45"  # approximate start; ran past midnight into 2026-09-29
+areas = ["/", "reference/", "scripts/", "app/", "content/", "progress/", ".github/", "_knowledge/", "_learnings/"]
+
+done = [
+  "Wiped the old Fluent tutor repo contents (history kept); stale remote branch was already gone",
+  "Found the Schritte books email (Drive links need Hayk's login); Hayk later decided not to use Schritte, audio deleted",
+  "Downloaded free references: Goethe A1/A2/B1 Wortlisten, A1 Modellsatz + 2 Uebungssaetze (+ audio, local only), BAMF Rahmencurriculum, german-nouns CSV, DWDS Goethe CSVs",
+  "scripts/build_wortliste.py: parsed the Goethe PDFs into reference/goethe_wortliste.tsv (4,923 entries, 0 anomalies; vs DWDS: level 98.1%, article 99.5%)",
+  "Research agents: LLM tutoring + SLA evidence + materials (_knowledge/2026-09-28_...), A1-B1 syllabi (_knowledge/2026-09-29_...)",
+  "Build agent: Vite + React + TS platform (tests, FSRS word review, TTS listening, umlaut bar, results with Claude reviews); verified by Claude: check-content, 64 tests, tsc, build",
+  "Enabled GitHub Pages (workflow), pushed 625a2f2, deploy green: https://hayktarkhanyan.github.io/nemeceren/",
+  "Learner profile corrected: complete beginner, goal A1 (Claude had wrongly assumed A1 from the old Fluent profile)",
+  "SYLLABUS.md v3 active: unit 0 (sounds, numbers, survival phrases) + units 1-6 to A1, work/classes/friends first, Nicos Weg companion, ~100 h",
+]
+
+pending = [
+  "Replace the sample test (too hard for a beginner, hint gives the answer away) with Unit 0 content",
+  "Unit 0 word set (~50 words) into content/words.json",
+  "Platform follow-ups in DEFERRED_TODO.md (real phone test, dark mode, phone sees Claude reviews)",
+]
+
+next = [
+  "Write Unit 0 test(s) + words, check-content, push",
+  "First lesson with Hayk: Unit 0 intro in chat, then app test on localhost (cd app && npm run dev)",
+]
+
+files = [
+  "CLAUDE.md", "SYLLABUS.md", "DECISIONS.md (#1-#13)", "DEFERRED_TODO.md", "README.md",
+  "reference/README.md", "reference/goethe_wortliste.tsv", "scripts/build_wortliste.py",
+  "app/", "content/README.md", "progress/README.md", ".github/workflows/pages.yml",
+  "_knowledge/2026-09-28_llm-tutoring-and-materials.md", "_knowledge/2026-09-29_syllabus-research.md",
+  "_learnings/2026-09-29-0036_*.md (4 files)",
+]
+
+commits = ["f216736 Remove all files to start the repo fresh", "625a2f2 Set up German learning repo: platform, reference data, syllabus"]
+
+notes = """
+Hayk's answers so far: daily life, no exam; time varies; hint-first corrections; no textbook; start at unit 0, no placement;
+Nicos Weg yes; explanations English + RU/HY comparisons; priorities work, classes, friends; public repo fine;
+React kept after asking about Flask; mostly PC via localhost, phone occasional (not synced, fine).
+Session restarted ~00:15; build agent was resumed via SendMessage and finished (see _learnings).
+"""
