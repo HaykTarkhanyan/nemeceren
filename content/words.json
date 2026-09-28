@@ -1,0 +1,155 @@
+[
+  {
+    "id": "termin",
+    "de": "der Termin",
+    "plural": "die Termine",
+    "en": "appointment",
+    "example": { "de": "Am besten machen wir sofort einen Termin.", "en": "It's best if we make an appointment right away." },
+    "level": "A1",
+    "tags": ["termine"],
+    "added": "2026-09-28"
+  },
+  {
+    "id": "heissen",
+    "de": "heißen",
+    "en": "to be called (name)",
+    "example": { "de": "Ich heiße Charlotte Meier.", "en": "My name is Charlotte Meier." },
+    "level": "A1",
+    "tags": ["vorstellen"],
+    "added": "2026-09-28"
+  },
+  {
+    "id": "kommen",
+    "de": "kommen",
+    "en": "to come",
+    "example": { "de": "Woher kommen Sie? - Aus Frankreich.", "en": "Where are you from? - From France." },
+    "level": "A1",
+    "tags": ["vorstellen"],
+    "added": "2026-09-28"
+  },
+  {
+    "id": "wohnen",
+    "de": "wohnen",
+    "en": "to live (reside)",
+    "example": { "de": "Ich wohne in München.", "en": "I live in Munich." },
+    "level": "A1",
+    "tags": ["vorstellen"],
+    "added": "2026-09-28"
+  },
+  {
+    "id": "uhr",
+    "de": "die Uhr",
+    "plural": "die Uhren",
+    "en": "clock, watch; o'clock",
+    "example": { "de": "Es ist vier Uhr.", "en": "It is four o'clock." },
+    "level": "A1",
+    "tags": ["termine", "zahlen"],
+    "added": "2026-09-28"
+  },
+  {
+    "id": "name",
+    "de": "der Name",
+    "plural": "die Namen",
+    "en": "name",
+    "example": { "de": "Mein Name ist Thomas Schmidt.", "en": "My name is Thomas Schmidt." },
+    "level": "A1",
+    "tags": ["vorstellen"],
+    "added": "2026-09-28"
+  },
+  {
+    "id": "zeit",
+    "de": "die Zeit",
+    "en": "time",
+    "example": { "de": "Ich habe heute keine Zeit.", "en": "I don't have time today." },
+    "level": "A1",
+    "tags": ["termine"],
+    "added": "2026-09-28"
+  },
+  {
+    "id": "vorname",
+    "de": "der Vorname",
+    "plural": "die Vornamen",
+    "en": "first name",
+    "example": { "de": "Ich heiße Müller, mein Vorname ist Eva.", "en": "My surname is Müller, my first name is Eva." },
+    "level": "A1",
+    "tags": ["vorstellen"],
+    "added": "2026-09-28"
+  },
+  {
+    "id": "morgen",
+    "de": "morgen",
+    "en": "tomorrow",
+    "example": { "de": "Morgen beginnt die Schule um 10 Uhr.", "en": "Tomorrow school starts at 10 o'clock." },
+    "level": "A1",
+    "tags": ["termine"],
+    "added": "2026-09-28"
+  },
+  {
+    "id": "land",
+    "de": "das Land",
+    "plural": "die Länder",
+    "en": "country",
+    "example": { "de": "Italien ist ein schönes Land.", "en": "Italy is a beautiful country." },
+    "level": "A1",
+    "tags": ["vorstellen"],
+    "added": "2026-09-28"
+  },
+  {
+    "id": "leider",
+    "de": "leider",
+    "en": "unfortunately",
+    "example": { "de": "Leider kann ich nicht kommen. Ich muss zum Arzt.", "en": "Unfortunately I can't come. I have to go to the doctor." },
+    "level": "A1",
+    "tags": ["termine"],
+    "added": "2026-09-28"
+  },
+  {
+    "id": "sprache",
+    "de": "die Sprache",
+    "plural": "die Sprachen",
+    "en": "language",
+    "example": { "de": "Welche Sprachen sprichst du?", "en": "Which languages do you speak?" },
+    "level": "A1",
+    "tags": ["vorstellen"],
+    "added": "2026-09-28"
+  },
+  {
+    "id": "puenktlich",
+    "de": "pünktlich",
+    "en": "on time, punctual",
+    "example": { "de": "Herr Müller ist immer pünktlich.", "en": "Mr Müller is always on time." },
+    "level": "A1",
+    "tags": ["termine"],
+    "added": "2026-09-28"
+  },
+  {
+    "id": "beruf",
+    "de": "der Beruf",
+    "plural": "die Berufe",
+    "en": "job, profession",
+    "example": { "de": "Was sind Sie von Beruf?", "en": "What do you do for a living?" },
+    "level": "A1",
+    "tags": ["vorstellen"],
+    "added": "2026-09-28"
+  },
+  {
+    "id": "adresse",
+    "de": "die Adresse",
+    "plural": "die Adressen",
+    "en": "address",
+    "example": { "de": "Können Sie mir seine Adresse sagen?", "en": "Can you tell me his address?" },
+    "level": "A1",
+    "tags": ["vorstellen"],
+    "added": "2026-09-28"
+  },
+  {
+    "id": "nummer",
+    "de": "die Nummer",
+    "plural": "die Nummern",
+    "en": "number (phone, room, house)",
+    "example": { "de": "Können Sie mir Ihre Nummer geben?", "en": "Can you give me your number?" },
+    "level": "A1",
+    "tags": ["zahlen"],
+    "added": "2026-09-28"
+  }
+]

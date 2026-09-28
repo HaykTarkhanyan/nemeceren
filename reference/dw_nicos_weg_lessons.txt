@@ -1,0 +1,297 @@
+===== nicos.html 36519789 2 /en/nicos-weg/c-36519789
+## Welcome to A1!
+- Hallo! | Greetings | Informal and formal
+- Kein Problem! | Basic words in German | None
+- Tschüss! | Saying goodbye | Informal and formal
+- Von A bis Z | Spelling | None
+## 1 Meeting people
+- Ich heiße Emma | Introducing yourself | Personal pronouns: ich, du
+- Das ist Nico | Introducing others | None
+- Woher kommst du? | Name and background | Conjugation: present tense
+- Nico hat ein Problem | Finding out about other people | Personal pronouns: er, sie
+## 2 Contact details
+- Zahlen von 1 bis 100 | Numbers from 1 to 100 | Numbers from 11 to 19
+- Wichtige Nummern | Important numbers | None
+- Adressen | Providing personal information | W-questions
+- Auf dem Amt | Formal address | Numbers over 100
+## 3 In company
+- Was machst du hier? | Social situations | None
+- Was trinkst du? | Offering drinks | Nouns: gender
+- Eine Pizza bitte! | Placing an order | Vowel change: e to i
+- Zahlen bitte!  | Paying the bill | None
+## 4 Around the world
+- Ich war schon in Berlin | Sightseeing attractions | Simple past: sein
+- Wo liegt das? | Geographic info | Questions and statements
+- In Europa | Speaking about countries | Indefinite pronouns: man
+- Andere Länder | Languages | Conjugation: sprechen
+## 5 Things
+- Was ist das? | Naming objects | Articles: definite
+- Wem gehört das? | Asking about objects | Articles: indefinite
+- Ich habe kein … | What you (do not) have | Sentence construction: subject
+- Das Auto ist rot | Naming objects | Adjectives following "sein"
+## 6 Living
+- So wohne ich | Living arrangements | Articles
+- Meine Wohnung | The rooms in an apartment | Negatives: nicht
+- Sofa, Sessel und Tisch | Describing interiors | zu + adjective
+- Unser Haus | Saying what is whose | Possessive determiners
+## 7 Days and times
+- Emmas Tag | Talking about the day | Time: 12-hour clock
+- Tageszeiten | Describing the day | Separable verbs
+- Am Sonntag koche ich | Free time activities | Prepositions of time: an
+- Emmas Wochenende | The weekend | Adverbs: sequence
+## 8 Appointments
+- Wie spät ist es? | Understanding time and date | Time specification: 24-hour clock
+- Hast du morgen Zeit? | Planning dates | Ordinal numbers
+- Wann spielen wir? | Making arrangements | Conjugation: können
+- Zu spät!? | Delays | Simple past: haben
+## 9 Working life
+- Ich bin Lehrerin | Talking about professions | Word formation: professions
+- Mein Beruf | Describing activities | Modal verbs
+- Wo ist der Aufzug? | Finding your way around a building | The dative
+- Traumberufe | Career hopes | Modal verbs: wollen
+## 10 Orientation
+- Wo ist der Bahnhof? | Living and working | Prepositions: bei, von
+- An der Ampel links | Giving directions | Prepositions of place
+- Mit Bus und Bahn | Commuting to work | Prepositions: mit
+- Im Büro | Objects in the office | Two-case prepositions 
+## 11 Eating and leisure
+- Lebensmittel | Talking about food | Negation: nicht/kein
+- Ich mag (nicht)! | Eating preferences | Comparative
+- Haushaltsarbeit | Preferences at home | Comparison: wie/als
+- Was macht dir Spaß? | Leisure activities | gehen + infinitive
+## 12 Food
+- Mengen und Preise | Buying groceries | Prepositions: in, auf
+- Was darf es sein? | Shopping conversations | None
+- Sonst noch etwas? | Shopping at the market | Question words: wie viel
+- Wie viel Mehl? | Following a recipe | Instructions
+## 13 Weather and holiday
+- Wie war dein Urlaub? | Talking about vacations | Present perfect with "haben"
+- Jahreszeiten | Comparing the seasons | Comparison
+- Der Ausflug | Talking about the past | Present perfect with "sein"
+- Wie wird das Wetter? | Talking about the weather | Pronouns: es
+## 14 Clothing
+- Das ist jetzt modern | Talking about clothing | Adjective declension
+- Mein Lieblingspulli | Describing clothing | Question words: welch-
+- Das passt gut! | Shopping for clothes | Verbs with a dative object
+- Schick! | Casual wear | None
+## 15 Family
+- Meine Familie | Talking about family | Adjective declension
+- Meine Eltern | Introducing parents | Personal pronouns: accusative
+- Meine Tante | Career choices | The possessive determiner
+- Mein Bruder | Talking about siblings | Modal verbs: sollen
+## 16 Sports and exercise
+- Von Kopf bis Fuß | Sports | Comparison
+- Bist du fit? | Sports and training | Time specification: Wann ...?
+- Fitness | Fitness tips | Comparison
+- Ist das gesund? | Talking about nutrition | Imperative: informal
+## 17 Health
+- Geht es dir gut? | Talking about illnesses | Müssen or sollen?
+- Beim Arzt | Checking in at the doctor's office | Modal verbs: dürfen
+- Gute Besserung! | Inquiring about patients | Present perfect
+- Nehmen Sie … | A visit to the doctor | Prepositions: vor, nach
+## 18 Home
+- Meine Heimat | Talking about home | Adjective declension
+- Leben in Deutschland | To miss something | Personal pronouns: dative
+- Anders als zu Hause | Comparisons | None
+- Ich träume von … | Hopes and dreams | Subjunctive: Wishes
+## 
+- Final Test A1 | Check your knowledge | None
+lessons: 77
+===== nicosA2.html 36519797 4 /en/nicos-weg/c-36519797
+## Welcome to A2!
+- Lebenslinien | Biographical information | Prepositions: vor, seit
+- Angekommen | Migration | Compound conjunctions
+- Pläne machen | Future plans | Subordinate clauses: dass
+- Sprichst du Deutsch? | Study habits | Indirect interrogatives
+## 1 Money
+- Geld ist für mich … | Speaking about money | Subordinate clauses
+- Mein Bankkonto | Opening a bank account | None
+- Rechnungen | Talking about bills | Nouns ending in -ung
+- Am Bankautomaten | Using cash machines (ATMs) | None
+## 2 Family
+- Familiengeschichten | Talking about family members | Possessive determiners
+- Personen beschreiben | Talking about family | Adjective declension
+- Generationen | Talking about problems with aging | Modal verbs: sollen
+- Alten- und Pflegeheim | One's condition | None
+## 3 Living together
+- Wohngemeinschaft | Household tasks | Conjugation: bügeln
+- Nachbarschaft | Problems in the neighborhood | Verbs + preposition
+- Kinder | Childcare options | None
+- Anders als ihr | Living situations | Comparison
+## 4 Mobility
+- Unterwegs | Travel and transportation | Conjunctions: aber
+- Im Hotel | Booking a room | Conjunctions: oder
+- Bahnreisen | Organizing a train trip | Separable verbs
+- Der Ticketautomat | Buying a ticket | None
+## 5 So stressful!
+- Alltag und Freizeit | Talking about leisure time | Reflexive verbs
+- Freizeitstress |  Free time and vacation plans | Verbs + preposition
+- Das hört sich gut an! | Say how you feel | Adjective + preposition
+- Das meinen Sie nicht ernst! | Understanding discussions | None
+## 6 Are you in a club?
+- Das macht mir Spaß! | Interests and special preferences | Expressions with the dative
+- Im Verein | Talking about clubs | Indefinite pronouns
+- Das macht mir Sorgen! | Expressing rejection and concerns | Reflexive pronouns
+- Das ist mir wichtig! | Volunteer work | Verbs with a dative object
+## 7 Digital life
+- Immer und überall | Discussing media usage | Time specification: Wie oft ...?
+- Das Internet | The internet | Indirect questions: ob
+- Mit freundlichen Grüßen | Talking about mobile phones | Messages without a subject 
+- Reklamation | Making a complaint | Indirect questions
+## 8 In a restaurant
+- Essen gehen | Eating habits | Relative clauses: nominative
+- Die Karte bitte! | Talking about meals | Relative clauses: interruptive
+- Was darf es sein? | Ordering food at a restaurant | Relative clauses: accusative
+- Ich bin Koch | Catering professions | Linked relative clauses 
+## 9 Meeting people
+- Bei uns oder bei euch? | Inviting friends over | None
+- Ich bin neu hier | Getting to know people | Adverbs: gradable
+-  Mein Traumpartner | Partners and relationships | None
+- Alte und neue Freunde | Friends and friendship | Reflexive pronouns
+## 10 How do you live?
+- Stadt oder Land? | City life and country life | None
+- Auf Wohnungssuche | Housing ads | None
+- Der Umzug | Organizing a move | Two-case prepositions
+- Unfälle im Haushalt | Talking about accidents | None
+## 11 The past and today
+- Das Leben heute und damals | Discussing life now and in the past | Simple past: müssen, dürfen
+- Alles anders? | Comparing life situations | Impersonal verbs
+- Frauensache? | Men and women | Simple past: können, wollen
+- Damals | Talking about the past | Simple past: regular verbs
+## 12 Working world
+- Berufswahl | Professional biographies | Conjunctions: denn
+- Bewerbung | Writing a job application | Nouns ending in -ung
+- Ist die Stelle noch frei? | Talking about jobs | Subjunctive: polite requests
+- Bewerbungsgespräch | The job interview | Indirect questions
+## 13 Experience culture
+- Kulturkalender | Talking about culture | None
+- Eine Stadtbesichtigung | Planning a sightseeing tour | Modal verbs: sollen
+- Ein Bürger dieser Stadt | Biographies / written texts | Simple past: regular verbs
+- Theater und Konzerte | Theater/concert visit | None
+## 14 Celebrations
+- Feste und Feiertage | Talking about celebrations | Question words: case
+- Ein Jahr – viele Feste | Festivals and small talk at parties | Verbs + preposition
+- Was passiert, wenn …? | What, when, if ...? | Subordinate clauses: wenn
+- So feiern wir! | Celebrations and parties | Verbs with a dative object
+## 15 Invitations
+- Herzlichen Glückwunsch! | Parties and presents | Verbs with two objects 
+- Passende Geschenke | Presents | Sentence construction: pronouns
+- Was sollen wir schenken? | Ideas for presents | Making suggestions
+- Lieblingsfeste | Talk about a holiday | None
+## 16 Film and TV
+- Ein Praktikum beim Film | Talking about jobs in film | Relative clauses
+- Der Film war toll! | Talking about films | Genitive
+- Im Filmstudio | Positioning | None
+- Ich bin Schauspieler | People and their lives | Relative clauses + preposition
+## 17 With feeling
+- Einfach super! | Expressing emotions | None
+- Das regt mich auf! | Feelings: verbal and non-verbal | Adjectives + preposition
+- Meiner Meinung nach | Conflict and disagreement | None
+- Ich bin Fußballfan | Strong emotions | Adverbs: gradable
+## 18 Good ideas
+- Praktisch! | Inventions | Relative clauses
+- Das funktioniert so! | Describing a process | Passive
+- Das brauche ich! | Technology in daily life | Final clauses: um ... zu
+- Wer hat’s erfunden? | Presenting a product | None
+## 
+- Final Test A2 | Check your knowledge | None
+lessons: 77
+===== nicosB1.html 36519718 8 /de/nicos-weg/c-36519718
+## Intro zu B1
+- Berufsberatung | Berufliche Interessen | None
+- Meine Muttersprache | Sprachbiografien | None
+- Bei der Arbeit | Arbeitsbedingungen | Indirekte Fragesätze: ob
+- Zukunftspläne | Ziele und Pläne | Modalverben
+## 1 Zeitpunkte
+- Zu wenig Zeit? | Über Zeit sprechen | Nominalisierung
+- Keine Zeit | Zeitmanagement | Nebensätze: während
+- Pünktlichkeit | Thema Pünktlichkeit  | None
+- Jetzt oder nie | Zeitpunkte definieren | Indirekte Rede
+## 2 Geschichte
+- Heimat | Über Heimat sprechen | Präteritum: unregelmäßig
+- Krieg und Frieden | Persönliche Erlebnisse | None
+- Die Mauer | Deutsche Geschichte | Präteritum oder Perfekt?
+- Wiedervereinigung | Über Geschichte sprechen | Satzbau: Hauptsätze
+## 3 Alltag
+- Alltagsprobleme | Über Probleme sprechen | None
+- Geldprobleme | Begründungen | Adverbien: Gründe
+- Tipps und Ratschläge | Über Stress sprechen | Konjunktiv II: Tipps
+- Alle haben Probleme | Ratschläge geben | None
+## 4 Endlich Arbeit!
+- Jobsuche | Über Fähigkeiten sprechen | Doppelkonjunktionen
+- Stellenanzeigen | Stellenanzeigen verstehen | None
+- Bewerbungen | Eine Bewerbung schreiben | None
+- Der erste Eindruck | Das Bewerbungsgespräch | Finalsätze: um ... zu
+## 5 Männer und Frauen
+- Typisch? | Über Klischees sprechen | None
+- Anders! | Personenbeschreibung | Wortbildung: Adjektive
+- Jobs und Gender | Über Jobs sprechen | Kausale Verbindungen
+- Rollenverteilung | Berufstätigkeit | Nebensätze: obwohl
+## 6 Paare
+- Partnersuche | Partner suchen | Konzessive Verbindungen
+- Partnerschaft | Über Haushalt sprechen | Nebensätze: zu + Infinitiv
+- Männer und Frauen | Kommunikationsprobleme | Konjunktionen: sondern
+- Beziehungsprobleme | Über Beziehungen sprechen | Doppelkonjunktionen
+## 7 Arbeitswelt
+- Mein Arbeitsplatz | Arbeitsplatz und Kollegen | None
+- Mein Gehalt? | Gehaltsabrechnungen | Negation: nicht/kein
+- 112 | Notrufe machen | Präteritum
+- Gut versichert | Unfälle und Versicherung | Nebensätze: wenn
+## 8 Schule und Lernen
+- Schule | Über Schule sprechen | Ordnungszahlen
+- Schulalltag | Wünsche äußern | Konjunktiv II: Präsens
+- Lernen | Über das Lernen sprechen | None
+- Berufe an der Schule | Über Schulalltag sprechen | None
+## 9 Ausbildung
+- Die Berufswahl | Berufswahl | Fragewörter: wo(r)-
+- Weiterbildung | Informationen verstehen | None
+- Praktikum | Übers Praktikum sprechen | None
+- Studium und Beruf | Übers Studium sprechen | None
+## 10 Klima
+- Wetter und Klima | Über das Wetter sprechen | None
+- Wieder so ein Wetter | Klima und Gesundheit | Doppelkonjunktionen
+- Wegen des Wetters | Über das Klima sprechen | Präpositionen: wegen
+- Es wird wärmer | Klimawandel | Futur I
+## 11 Umwelt
+- Mensch und Umwelt | Über die Umwelt sprechen | None
+- Umweltbelastungen | Die Umwelt schützen | None
+- Umweltschutz | Alternative Energien | None
+- Wertstoffe | Über Recycling sprechen | None
+## 12 Medien
+- In der Zeitung steht | Zeitungen und Nachrichten | None
+- In der Redaktion | Arbeit bei der Zeitung | None
+- Analog oder digital? | Alte und neue Medien | None
+- Kontaktanzeigen | Über Werbung sprechen | None
+## 13 Wie peinlich!
+- Peinlich?! | Ein Missgeschick schildern | None
+- Richtiges Benehmen | Benehmen im Restaurant | Modalverben: sollen
+- Benimmregeln | Verhaltensregeln  | Partizip I
+- Was tun, wenn …? | Beschwerden | Plusquamperfekt
+## 14 Zu jung – zu alt?
+- Endlich erwachsen | Mindestalter | Doppelkonjunktionen
+- Was Eltern erwarten | Über Erwartungen sprechen | Nebensätze: seit
+- Lebenswege | Über Erfahrungen sprechen | Nebensätze: bevor
+- Noch mal anfangen | Über Neuanfänge sprechen | None
+## 15 Politik
+- Bund und Länder | Bundesländer | Genitiv
+- Die EU | Politik und Europa | brauchen + zu + Infinitiv
+- Gerechtigkeit?  | Steuer- und Sozialsystem  | Nomen auf -heit/-keit 
+- Wir haben die Wahl | Über Wahlen sprechen | Passiv
+## 16 Region im Wandel
+- Das Ruhrgebiet | Regionen beschreiben | Nomen auf -chen
+- Industrie | Arbeitsbedingungen  | Präpositionen: während
+- Strukturwandel | Veränderungen im Leben | Vergleiche: wie/als
+- Kultur | Über Kultur sprechen | None
+## 17 Migration
+- Nach Deutschland | Über Migration sprechen | Temporale Präpositionen 
+- Migrationsgründe | Migrationsgeschichten | None
+- Hin und zurück? | Gründe für Migration | Relativsätze: Genitiv
+- Existenzgründung | Geschäftsideen besprechen | Adversative Verbindungen
+## 18 Neuanfang
+- Neue Heimat | Vermutungen äußern | Relativadverb: wo
+- So geht’s!  | Abläufe beschreiben | lassen + Infinitiv
+- Zukunftspläne | Gespräche in der Bank | n-Deklination
+- Wünsche und Träume | Wünsche ausdrücken | Wünsche ausdrücken
+## Abschlusstest
+- Abschlusstest B1 | Überprüfe dein Wissen | None
+lessons: 77
