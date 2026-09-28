@@ -19,6 +19,7 @@ Other commands (in `app/`):
 | command | what it does |
 |---|---|
 | `npm run check-content` | validates `content/` and `progress/` files, lists every problem (about 1 s) |
+| `npm run glossary` | rebuilds `content/glossary.generated.json` (word popups) from kaikki.org after German text changed; needs network, not run in CI (about 1 s per new word) |
 | `npm test` | unit tests (about 5 s) |
 | `npm run build` | type check and production build into `app/dist/` |
 

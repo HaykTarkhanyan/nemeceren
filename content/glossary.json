@@ -1,0 +1,17 @@
+{
+  "ignore": ["Hayk", "Charlotte", "Eva", "Meier", "Müller", "Schmidt", "Thomas", "Weber"],
+  "entries": {
+    "der": [
+      { "lemma": "der", "pos": "article", "level": "A1", "gloss": ["the (masculine)"], "note": "der Mann, die Frau, das Kind; plural always die. Also the feminine dative: mit der Frau." },
+      { "lemma": "der", "pos": "pronoun", "gloss": ["who, that, which", "this one, that one"] }
+    ],
+    "die": [
+      { "lemma": "der", "pos": "article", "level": "A1", "gloss": ["the (feminine, and every plural)"], "note": "die Frau, die Kinder" },
+      { "lemma": "die", "pos": "pronoun", "gloss": ["who, that, which", "this one, that one"] }
+    ],
+    "das": [
+      { "lemma": "der", "pos": "article", "level": "A1", "gloss": ["the (neuter)"], "note": "das Kind, das Land" },
+      { "lemma": "das", "pos": "pronoun", "gloss": ["this, that, it", "which, that"] }
+    ]
+  }
+}

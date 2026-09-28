@@ -1,36 +1,16 @@
-// Where results and review state are saved.
+// The one module that reads and writes Hayk's progress. Nothing else touches storage.
 //   repo mode (npm run dev):   JSON files under progress/ through the dev server API.
 //   browser mode (GitHub Pages): localStorage in this browser only, not synced.
 // Every failure throws with a clear message; callers show it in the UI.
 import snapshot from 'virtual:review-snapshot'
-import type { NearMissKind, Result, ReviewState } from '../content/schema.ts'
-import { parseResult, parseReviewState } from '../content/validate.ts'
+import type { Result, ReviewLogEntry, ReviewState } from '../content/schema.ts'
+import { parseResult, parseReviewLog, parseReviewState } from '../content/validate.ts'
 import { emptyState, mergeStates } from './srs.ts'
+import type { ReviewEvent, TestItemEvent } from './stats.ts'
 
 export type SaveMode = 'repo' | 'browser'
 export const SAVE_MODE: SaveMode = import.meta.env.DEV ? 'repo' : 'browser'
 
-export type ReviewMode = 'recognition' | 'production' | 'listening'
-
-/** One line of progress/review-log.jsonl. */
-export interface ReviewLogEntry {
-  ts: string
-  wordId: string
-  de: string
-  mode: ReviewMode
-  /** 1 Again, 2 Hard, 3 Good, 4 Easy */
-  rating: number
-  /** What Hayk typed (production/listening), null for recognition. */
-  answer: string | null
-  /** Auto-check result (production/listening), null for recognition. */
-  correct: boolean | null
-  nearMiss: NearMissKind[] | null
-  isNew: boolean
-  /** FSRS state before/after: 0 New, 1 Learning, 2 Review, 3 Relearning */
-  stateBefore: number
-  stateAfter: number
-  due: string
-}
 
 export interface SavedResult {
   /** Path relative to progress/, e.g. results/a1-01__2026-09-28T19-30-05-123Z.json */
@@ -165,4 +145,39 @@ export async function saveReviewState(state: ReviewState): Promise<void> {
 export async function appendReviewLog(entry: ReviewLogEntry): Promise<void> {
   if (SAVE_MODE === 'repo') await api('POST', q('path', 'review-log.jsonl'), entry)
   else writeLs(LS.reviewLog, [...readLsArray(LS.reviewLog), entry])
+}
+
+/** Every word review so far, oldest first. */
+export async function loadReviewLog(): Promise<ReviewLogEntry[]> {
+  if (SAVE_MODE === 'repo') {
+    try {
+      const data = (await api('GET', q('path', 'review-log.jsonl'))) as { lines: unknown[] }
+      return parseReviewLog('progress/review-log.jsonl', data.lines)
+    } catch (err) {
+      // No file yet just means no word has been reviewed yet.
+      if ((err as { status?: number }).status === 404) return []
+      throw err
+    }
+  }
+  return parseReviewLog(`browser storage "${LS.reviewLog}"`, readLsArray(LS.reviewLog))
+}
+
+/**
+ * Study activity as plain events for the statistics (lib/stats.ts), independent of how it is
+ * stored: one event per word review, one per test item of every submitted attempt.
+ */
+export async function loadActivity(): Promise<{ reviews: ReviewEvent[]; testItems: TestItemEvent[] }> {
+  const [log, results] = await Promise.all([loadReviewLog(), listResults()])
+  const reviews = log.map((e) => ({ at: Date.parse(e.ts), localDay: e.localDay, timeMs: e.timeMs, rating: e.rating, isNew: e.isNew }))
+  const testItems = results.flatMap(({ file, result }) =>
+    result.items.map((it) => ({
+      attemptId: file,
+      startedAt: Date.parse(result.startedAt),
+      submittedAt: Date.parse(result.submittedAt),
+      localDay: result.localDay,
+      timeMs: it.timeMs,
+      answered: it.answer !== null,
+    })),
+  )
+  return { reviews, testItems }
 }

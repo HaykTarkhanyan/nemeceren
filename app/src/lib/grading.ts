@@ -38,7 +38,7 @@ function unionKinds(lists: (NearMissKind[] | null | undefined)[]): NearMissKind[
 }
 
 // Punctuation that is ignored at the start and end of each dictation word.
-const EDGE_PUNCT = /^[.,!?;:"'()«»„“”‚‘’–—-]+|[.,!?;:"'()«»„“”‚‘’–—-]+$/g
+const EDGE_PUNCT = /^[.,!?;:"'()\u00AB\u00BB\u201E\u201C\u201D\u201A\u2018\u2019\u2013\u2014-]+|[.,!?;:"'()\u00AB\u00BB\u201E\u201C\u201D\u201A\u2018\u2019\u2013\u2014-]+$/g
 
 interface Token {
   raw: string

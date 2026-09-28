@@ -2,6 +2,107 @@
 
 Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
+## 22. The PC stays on Node 20.20.0 (decided by Hayk, 2026-09-29)
+
+- **Date:** 2026-09-29 - **Status:** active
+- **Why:** Hayk: "lets stay 20" when asked about a machine-wide upgrade to Node 22 LTS. It also corrects #11, which wrongly said upgrading Node was "ruled out by Hayk". That constraint came from Claude's brief to the build agent, not from Hayk.
+- **Consequences:**
+  - `neon skills` (needs Node 22.20+) can't run, so Neon skills are downloaded from Neon's registry and checked by sha256.
+  - The Neon CLI (`>=20.19.0`) and the app toolchain (#11) work.
+  - Neon Functions run on Node 24 on Neon's side regardless.
+- **Alternatives rejected:** a machine-wide upgrade to Node 22/24 (it could affect Hayk's other projects on this PC).
+- **What would change this:** a tool we need refusing Node 20, or Hayk upgrading for another project. Node 20 is past end of life (April 2026).
+
+## 21. Progress moves to a private Neon Postgres database on the Free plan, via Neon Auth and a Neon Functions API (Hono)
+
+- **Date:** 2026-09-29 - **Status:** active (the app wiring is in progress)
+- **Why:**
+  - Hayk wants sessions done on the website (phone or any browser) saved so we can pick them up, and chose Neon over saving into the repo and over Supabase (Hayk: "neon").
+  - Neon's own guidance (its `neon` skill) is to not expose Postgres to the browser via the Data API for new apps, because row-level security policies are easy to get wrong. So the website logs in with Neon Auth (Managed Better Auth), and a small Neon Functions API checks the token and does all database access. Hayk: "whatever u chose".
+  - Progress becomes private (the repo stays public).
+  - **Hayk's hard rule: Neon stays on the Free plan.** Checked on neon.com/pricing.md on 2026-09-29: the Free plan is permanent with no card, and hitting a limit pauses or blocks but never bills. Expected use (1 learner) is about 8 of 100 CU-hours a month, a few MB of 0.5 GB storage, and a few thousand of 1M Functions invocations.
+  - Project: `nemeceren` (`aged-violet-98333413`), `aws-eu-central-1`, Postgres 18.
+- **Alternatives rejected:**
+  - Repo sync via the GitHub API (commit noise, progress public, a JSON merge between devices).
+  - The Neon Data API from the browser (Neon advises against it for new apps).
+  - Supabase (another service and account, and Hayk preferred Neon).
+- **What would change this:** usage approaching the Free limits, Neon changing the Free plan, or the Functions/Auth setup turning out too heavy to maintain.
+- **Supersedes:** #4, and the file storage of #8 once the wiring lands. It revisits #2 for progress data.
+
+## 20. Charts are hand-drawn SVG bars (`app/src/components/BarChart.tsx`), no chart library
+
+- **Date:** 2026-09-29 - **Status:** active
+- **Why:** The dashboard needs three small bar charts. One component of about 140 lines covers value labels on the bars (turned upright when a bar is too narrow, with the top padding sized so they are never clipped), hover/tap/arrow-key tooltips, and light/dark colors from CSS variables. The whole dashboard added 6.9 kB gzip to the main bundle (117.0 -> 123.9 kB, including popups).
+- **Alternatives rejected:** Plotly (the global default for reports, but several MB; far too big for a phone bundle); Chart.js or Recharts (tens of kB gzip for three bar charts).
+- **What would change this:** needing many chart types, zooming, or several charts per screen with complex interaction.
+
+## 19. Study statistics use the recorded local day, 30-minute sessions, measured and capped minutes, and "known" = interval of 21 days or more
+
+- **Date:** 2026-09-29 - **Status:** active
+- **Why:**
+  - Hayk splits time between Munich and Armenia, so each review and test result now records `localDay` when it happens. A review at 23:30 in Munich stays on that Munich day wherever the stats are viewed, and a snapshot built in CI (UTC) cannot shift days.
+  - Minutes come from time actually measured (card open to grade, and time on each test item), capped at 2 min per card and 20 min per test item, so an open tab does not count as study. Summing session wall-clock time was rejected because a 25-minute break inside a session would count as study.
+  - A session ends after a gap of 30 minutes or more and counts on the day it started.
+  - "Known" follows Anki's "mature" rule (interval of 21 days or more).
+  - All definitions are in `progress/README.md` and `app/src/lib/stats.ts`, and unit-tested (midnight, Munich vs Yerevan, the 2026-10-25 clock change).
+- **Alternatives rejected:** session wall-clock minutes (counts breaks); computing the day from UTC timestamps at view time (moves late-evening study to the wrong day when viewed from another time zone); FSRS stability as "known" (harder to explain to Hayk than "interval of 3 weeks").
+- **What would change this:** the caps clearly cutting real work (for example long writing items), or Hayk wanting a different streak rule (e.g. a minimum number of reviews per day).
+
+## 18. The dashboard shows streaks, study days and word progress (decided by Hayk, 2026-09-29); the stats maths is pure functions over plain event arrays, and there is no phone stats snapshot
+
+- **Date:** 2026-09-29 - **Status:** active
+- **Why:** Hayk picked "Streaks + study days" and "Words progress". Progress storage is moving to Neon Postgres (Hayk's decision, 2026-09-29, a separate task), after which PC and phone read the same live data. So the planned build-time snapshot of PC stats for the phone was dropped, and the maths (`app/src/lib/stats.ts`) takes plain `ReviewEvent`/`TestItemEvent` arrays with no knowledge of storage. Only `app/src/lib/storage.ts` reads and writes progress (`loadActivity()` builds the events), so the Neon swap is contained there. Until then the phone dashboard shows only that browser's activity, and the page says so.
+- **Alternatives rejected:** a build-time snapshot of daily PC aggregates merged with phone data (thrown away once Neon exists); computing stats inside the storage code (would have to be rewritten for Neon).
+- **What would change this:** the Neon task, which should feed database rows into the same functions.
+
+## 17. A test question or writing prompt can be marked as English (`questionLang` / `promptLang`: `"en"`)
+
+- **Date:** 2026-09-29 - **Status:** active
+- **Why:** Hayk is a complete beginner, so many Unit 0 questions will be in English ("How do you say thank you?"). Without a marker, every English word in them would fail the glossary check, and the app would put a German speaker button on English text. The marker is optional and defaults to German, so existing tests are unchanged.
+- **Alternatives rejected:** putting English questions in `instruction` (the question field is required and shown differently); adding English words to the glossary ignore list (hides real gaps); a language field on every text (more to write for little gain).
+- **What would change this:** needing mixed-language options, or languages other than German and English in content.
+
+## 16. Generated glossary entries keep only the readings a learner most likely means, ranked by the word bank and the DWDS Goethe A1-B1 lists
+
+- **Date:** 2026-09-29 - **Status:** active
+- **Why:** Plain Wiktionary data misled on the sample content: "einen" came out as the verb "to unite" (not the accusative article), "heiße" also as "hot; horny" (a form of "heiß"), "Namen" as the city Namur, and sentence-initial "Ich" as "ego". The generator now ranks candidates in 3 tiers and keeps only the best one:
+  - tier 0: the lemma is in `content/words.json`;
+  - tier 1: the lemma, with a matching part of speech, is in `reference/dwds_goethe_{A1,A2,B1}.csv`;
+  - tier 2: anything else.
+  Entries also carry the learner level, and at a sentence start the lookup drops readings without a level when one has it. After the change, all four examples above are right. The word bank's own English meaning replaces Wiktionary's for its words (Wiktionary lists "date" and "deadline" before "appointment" for "Termin").
+- **Alternatives rejected:** first Wiktionary entry only (wrong for "einen", "das", "Namen"); "a dictionary entry beats an inflected form" (tried first; hid "einen" = "ein" and "das" = the article); the Goethe TSV for levels (it leaves out days, numbers and articles, which live in the word-group pages).
+- **What would change this:** the DWDS lists turning out to miss many words Hayk meets (then add a frequency list), or curated overrides piling up for the same kind of mistake.
+
+## 15. Word popups use a glossary generated from Wiktionary data via kaikki.org, checked and overridden by Claude (data source decided by Hayk, 2026-09-29)
+
+- **Date:** 2026-09-29 - **Status:** active
+- **Why:** Hayk chose kaikki.org. Implementation choices:
+  - `npm run glossary` (TypeScript via tsx, like check-content) fetches each word's JSONL from `kaikki.org/dictionary/German/meaning/<c>/<cc>/<word>.jsonl`, sequentially with a 700 ms pause and a disk cache. The first run over the sample content took 137 s for 193 requests; reruns are instant.
+  - It is TypeScript so the generator, check-content and the app share one tokenizer and one list of German fields.
+  - It needs network, so CI does not run it; the generated file is committed.
+  - `content/glossary.json` holds Claude's overrides (they replace a generated key) and an ignore list for person names.
+  - check-content fails, naming the word and where it is used, when a German word has no entry. The popup shows a visible "no entry" line rather than nothing.
+  - The glossary is a separate lazy chunk (3.8 kB gzip for the sample content), so the first page load does not pay for it.
+- **Alternatives rejected:**
+  - A Python generator (would duplicate the tokenizer and field rules).
+  - Fetching glossary data at runtime from the phone (no network guarantee, rate limits, slower popups).
+  - Bundling a whole dictionary (megabytes).
+  - Machine translation (not a dictionary, no base form or article).
+- **What would change this:** kaikki.org changing its URL scheme or data format, or Claude's overrides outgrowing the generated data.
+- **Known limitation:** popups look at one word at a time, so split separable verbs ("Ich rufe dich an") show "rufen" for "rufe". Curated entries with a `note` are the fix.
+
+## 14. Word popups appear only after answering (decided by Hayk, 2026-09-29)
+
+- **Date:** 2026-09-29 - **Status:** active
+- **Why:** Hayk's decision. Popups would otherwise give answers away: a translation of a multiple-choice option or a gap word before answering is a hint. The rule:
+  - tests: off on every unanswered item, on after the test is submitted and graded (results page included);
+  - word review: off on the prompt before the answer is revealed, on afterwards;
+  - everywhere else German is shown: on;
+  - never inside text inputs.
+  Enforced by `GlossScope` (`app/src/glossary/gate.ts`): German text rendered outside a scope throws, so a new screen cannot leak popups by accident. Unit-tested at function and render level.
+- **Alternatives rejected:** always on (gives answers away); only on the results page (Hayk also wants them after revealing a word).
+- **What would change this:** Hayk wanting popups as a paid hint during tests (e.g. recorded like `hintUsed`).
+
 ## 13. The syllabus is 7 units from zero to A1, built around work, classes and friends, with DW Nicos Weg as the video companion (`SYLLABUS.md` v3)
 
 - **Date:** 2026-09-29 - **Status:** active
@@ -29,7 +130,7 @@ Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
 ## 11. The app toolchain is pinned to versions that run on Node 20.20.0: Vite 8.3.1, TypeScript 6.0.3, Vitest 4.1.11, and CI uses Node 20.20.0 too
 
-- **Date:** 2026-09-28 - **Status:** active
+- **Date:** 2026-09-28 - **Status:** active; corrected 2026-09-29: "ruled out by Hayk" below is wrong. The Node 20 constraint came from Claude's brief. Hayk decided to stay on Node 20 on 2026-09-29 (#22).
 - **Why:** Node is not being upgraded on the PC. Checked with `npm view` on 2026-09-28: Vite 8.3.1 needs `^20.19.0 || >=22.12.0` (fine); Vitest 5.0.2 needs `^22.12.0`, so the last 4.x (4.1.11, `^20 || ^22 || >=24`, peer `vite ^6 || ^7 || ^8`); TypeScript 7.0.2 is `latest` but it is the Go port and the official `create-vite` 9.2.1 react-ts template still pins `~6.0.2`, so 6.0.3. `check-content` is TypeScript run through tsx 4.23.15 because Node 20 has no type stripping (`node --experimental-strip-types` -> "bad option"). All versions are exact (`save-exact=true`, lockfile committed).
 - **Alternatives rejected:** upgrading Node (ruled out by Hayk); Vitest 5 (needs Node 22); TypeScript 7 (template and plugin ecosystem still on 6); CI on Node 22/24 (would test something different from the PC).
 - **What would change this:** moving the PC to Node 22 or 24 (Node 20 left maintenance in April 2026). Then bump CI's `node-version`, and Vitest to 5.
@@ -50,7 +151,7 @@ Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
 ## 8. Progress is one JSON file per test attempt, one review-state JSON, and an append-only review log (JSONL); phone mode merges per word by the latest review
 
-- **Date:** 2026-09-28 - **Status:** active
+- **Date:** 2026-09-28 - **Status:** revisited 2026-09-29: storage moves to Neon (#21). The structure (one record per attempt, per-word review state, append-only review log) carries over as tables.
 - **Why:** One file per attempt (`progress/results/<test-id>__<timestamp>.json`) is never rewritten by the app, so Claude can add a `review` to it without conflicts, and each file is self-contained (question, answer, expected, near-miss labels, time). The review log is only appended, so the full history survives for mistake analysis. In phone mode the build embeds `progress/review-state.json`; on load it is merged with the browser's state, keeping for each word the card with the later `last_review`, so the phone picks up PC progress after each deploy without losing phone-only reviews.
 - **Alternatives rejected:** one big `results.json` (rewritten on every attempt, easy to corrupt, noisy diffs); SQLite (binary, Claude cannot read or edit it with plain file tools); Claude's grading in separate files next to the results (two files to keep in step).
 - **What would change this:** hundreds of result files making the Results page slow (add an index file), or phone sync being built (DEFERRED_TODO.md), which replaces the merge rule.
@@ -78,7 +179,7 @@ Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
 ## 4. Results and review state are saved as JSON files in the repo; phone progress stays in the browser
 
-- **Date:** 2026-09-28 - **Status:** active
+- **Date:** 2026-09-28 - **Status:** superseded by #21 (takes effect when the Neon wiring lands)
 - **Why:** Hayk mostly practises on the PC with Claude in the chat ("tell me to go on localhost and do this and that and then it gets saved to repo and u check"). The local dev server writes results straight into the repo, and Claude reads them with no token and no service. Phone use is occasional, and Hayk said it's fine if those results aren't saved to the repo.
 - **Alternatives rejected:** committing results through the GitHub API with a personal access token (every device needs token setup, and not needed while use is mostly on the PC); Neon Postgres (a static site can't hold a DB secret, so it would need a backend, and Hayk only floated it as an option); copy/paste of results into the chat (a manual step every session).
 - **What would change this:** phone sessions becoming regular and their results mattering. Then add sync (Neon or GitHub API), see DEFERRED_TODO.md.
@@ -92,7 +193,7 @@ Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
 ## 2. The repo stays public, including Hayk's results and progress
 
-- **Date:** 2026-09-28 - **Status:** active
+- **Date:** 2026-09-28 - **Status:** revisited 2026-09-29: progress data moves to a private Neon database (#21). The repo itself stays public.
 - **Why:** Hayk: "Public is fine". GitHub Pages on a private repo needs a paid plan, which isn't confirmed.
 - **Alternatives rejected:** a private repo (Pages might not deploy); a public site with results in a separate private repo (a token with access to two repos, more setup).
 - **What would change this:** Hayk wanting the progress data private.

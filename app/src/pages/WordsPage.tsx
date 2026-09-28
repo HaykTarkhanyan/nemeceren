@@ -2,17 +2,18 @@
 import { useEffect, useRef, useState } from 'react'
 import type { FormEvent } from 'react'
 import { content } from '../content/load.ts'
-import type { ReviewState, Word } from '../content/schema.ts'
+import type { ReviewLogEntry, ReviewMode, ReviewState, Word } from '../content/schema.ts'
 import { nearMissText } from '../components/ResultView.tsx'
-import { De, PlayButtons } from '../components/Speaker.tsx'
+import { De, GlossScope } from '../components/GermanText.tsx'
+import { PlayButtons } from '../components/Speaker.tsx'
 import { UmlautBar } from '../components/UmlautBar.tsx'
+import { localDay } from '../lib/dates.ts'
 import { messageOf } from '../lib/errors.ts'
 import { useSettings } from '../lib/settings.ts'
 import { speak } from '../lib/speech.ts'
 import { counts, GRADES, LEARN_AHEAD_MS, nextCard, previewIntervals, Rating, review } from '../lib/srs.ts'
 import type { Grade } from '../lib/srs.ts'
 import { appendReviewLog, loadReviewState, saveReviewState } from '../lib/storage.ts'
-import type { ReviewLogEntry, ReviewMode } from '../lib/storage.ts'
 import { checkWord } from '../lib/text.ts'
 import type { Comparison } from '../lib/text.ts'
 
@@ -127,11 +128,13 @@ function Session(props: {
     }
   }
 
-  function grade(word: Word, isNew: boolean, rating: Grade, typed: { answer: string; check: Comparison } | null) {
+  function grade(word: Word, isNew: boolean, rating: Grade, typed: { answer: string; check: Comparison } | null, timeMs: number) {
     const at = new Date()
     const out = review(state, word.id, rating, at)
     const entry: ReviewLogEntry = {
       ts: at.toISOString(),
+      localDay: localDay(at),
+      timeMs,
       wordId: word.id,
       de: word.de,
       mode,
@@ -203,7 +206,7 @@ function Session(props: {
         mode={mode}
         intervals={previewIntervals(state, next.word.id, now)}
         disabled={saving}
-        onGrade={(rating, typed) => grade(next.word, next.isNew, rating, typed)}
+        onGrade={(rating, typed, timeMs) => grade(next.word, next.isNew, rating, typed, timeMs)}
       />
     </div>
   )
@@ -222,13 +225,15 @@ function Card(props: {
   mode: ReviewMode
   intervals: Record<Grade, string>
   disabled: boolean
-  onGrade: (rating: Grade, typed: { answer: string; check: Comparison } | null) => void
+  onGrade: (rating: Grade, typed: { answer: string; check: Comparison } | null, timeMs: number) => void
 }) {
   const { word, isNew, mode, intervals, disabled, onGrade } = props
   const [revealed, setRevealed] = useState(false)
   const [typed, setTyped] = useState('')
   const [check, setCheck] = useState<Comparison | null>(null)
   const inputRef = useRef<HTMLInputElement>(null)
+  // Time from showing the card to grading it, for the minutes statistics.
+  const [shownAt] = useState(() => performance.now())
   const typingMode = mode !== 'recognition'
   const done = typingMode ? check !== null : revealed
 
@@ -243,7 +248,7 @@ function Card(props: {
 
   const submitGrade = (g: Grade) => {
     if (disabled) return
-    onGrade(g, typingMode && check ? { answer: typed.trim(), check } : null)
+    onGrade(g, typingMode && check ? { answer: typed.trim(), check } : null, Math.round(performance.now() - shownAt))
   }
 
   useEffect(() => {
@@ -272,6 +277,8 @@ function Card(props: {
   const near = nearMissText(check?.nearMiss)
 
   return (
+    // Word popups only once the answer is shown (Hayk, 2026-09-29).
+    <GlossScope surface={{ kind: 'review-card', revealed: done }}>
     <section className="card word-card">
       {isNew && <span className="badge pending">new word</span>}
 
@@ -361,5 +368,6 @@ function Card(props: {
         </div>
       )}
     </section>
+    </GlossScope>
   )
 }

@@ -11,5 +11,5 @@ Topics cut from current work so they don't get lost.
   - Check dark mode.
   - Take a test in phone mode.
   - Investigate a one-off `npm run build` crash (exit 134, native stack) if it happens again.
-- **Node 20 is past end of life (April 2026):** move the PC and CI to Node 22/24, then Vitest 5 (DECISIONS.md #11).
+- **Node 20 is past end of life (April 2026):** move the PC and CI to Node 22/24, then Vitest 5 (DECISIONS.md #11). Hayk chose to stay on 20 for now (2026-09-29). This also blocks `neon skills install/update` (needs Node 22.20+); the workaround is a manual download from Neon's skill registry.
 - **Goethe A2/B1 Modellsaetze**: download when Hayk works at those levels (URLs in `_knowledge/2026-09-28_llm-tutoring-and-materials.md`).

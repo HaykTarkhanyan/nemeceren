@@ -31,6 +31,9 @@ function sameMultiset(a: string[], b: string[]): boolean {
   return x.every((v, i) => v === y[i])
 }
 
+/** Language of a question or prompt that is not always German. Default "de". */
+export const Lang = z.enum(['de', 'en'])
+
 const common = {
   instruction: Text.optional(),
   hint: Text.optional(),
@@ -47,7 +50,14 @@ function checkChoice(item: { options: string[]; answer: string }, ctx: z.Refinem
 }
 
 export const McItem = z
-  .strictObject({ type: z.literal('mc'), question: Text, options: z.array(Text).min(2), answer: Text, ...common })
+  .strictObject({
+    type: z.literal('mc'),
+    question: Text,
+    questionLang: Lang.optional(),
+    options: z.array(Text).min(2),
+    answer: Text,
+    ...common,
+  })
   .superRefine(checkChoice)
 
 export const GapItem = z
@@ -107,6 +117,7 @@ export const TranslateItem = z.strictObject({
 export const WriteItem = z.strictObject({
   type: z.literal('write'),
   prompt: Text,
+  promptLang: Lang.optional(),
   minWords: z.number().int().positive().optional(),
   ...common,
 })
@@ -118,6 +129,7 @@ export const ListenMcItem = z
     type: z.literal('listen_mc'),
     audio: Text,
     question: Text,
+    questionLang: Lang.optional(),
     options: z.array(Text).min(2),
     answer: Text,
     ...common,
@@ -231,6 +243,8 @@ export const Result = z
     mode: z.enum(['repo', 'browser']),
     startedAt: IsoDateTime,
     submittedAt: IsoDateTime,
+    /** Hayk's local calendar day at submit time. Missing in results saved before 2026-09-29. */
+    localDay: IsoDate.optional(),
     score: z.strictObject({ correct: Count, wrong: Count, pending: Count, total: Count }),
     items: z.array(ResultItem),
     review: Review.optional(),
@@ -275,6 +289,83 @@ export const ReviewState = z.strictObject({
   cards: z.record(z.string(), StoredCard),
 })
 
+// ---------- Word review log (one line of progress/review-log.jsonl, written by the app) ----------
+
+export const ReviewMode = z.enum(['recognition', 'production', 'listening'])
+
+export const ReviewLogEntry = z.strictObject({
+  ts: IsoDateTime,
+  /** Local calendar day when the review happened. Missing in lines written before 2026-09-29. */
+  localDay: IsoDate.optional(),
+  /** Time from showing the card to grading it. Missing in lines written before 2026-09-29. */
+  timeMs: Count.optional(),
+  wordId: z.string(),
+  de: z.string(),
+  mode: ReviewMode,
+  rating: z.number().int().min(1).max(4),
+  answer: z.string().nullable(),
+  correct: z.boolean().nullable(),
+  nearMiss: z.array(NearMissKind).nullable(),
+  isNew: z.boolean(),
+  stateBefore: z.number().int().min(0).max(3),
+  stateAfter: z.number().int().min(0).max(3),
+  due: IsoDateTime,
+})
+
+// ---------- Glossary (word popups) ----------
+
+export const POS = z.enum([
+  'noun',
+  'verb',
+  'adjective',
+  'adverb',
+  'pronoun',
+  'preposition',
+  'conjunction',
+  'article',
+  'determiner',
+  'numeral',
+  'interjection',
+  'particle',
+  'name',
+  'phrase',
+  'contraction',
+  'other',
+])
+
+export const GlossEntry = z.strictObject({
+  /** Base form: "machen", "Termin". */
+  lemma: Text,
+  pos: POS,
+  /** 1-3 short English senses. */
+  gloss: z.array(Text).min(1).max(3),
+  /** Nouns only. */
+  article: z.enum(['der', 'die', 'das']).optional(),
+  /** Nouns only, without the article: "Termine". */
+  plural: Text.optional(),
+  /** Only when the word is an inflected form: "er/sie/es form, present". */
+  form: Text.optional(),
+  /** Extra hint, e.g. for separable verbs. */
+  note: Text.optional(),
+  /** CEFR level of the lemma (word bank or DWDS Goethe lists), if it is a learner word. */
+  level: Level.optional(),
+})
+
+const GlossMap = z.record(z.string().regex(/^\S+$/, { message: 'keys are single words' }), z.array(GlossEntry).min(1).max(3))
+
+export const GeneratedGlossary = z.strictObject({ source: z.string(), entries: GlossMap })
+
+export const CuratedGlossary = z
+  .strictObject({ ignore: z.array(Text), entries: GlossMap })
+  .superRefine((g, ctx) => {
+    const seen = new Set<string>()
+    g.ignore.forEach((w, i) => {
+      if (seen.has(w)) ctx.addIssue({ code: 'custom', path: ['ignore', i], message: `"${w}" is listed twice` })
+      if (g.entries[w]) ctx.addIssue({ code: 'custom', path: ['ignore', i], message: `"${w}" is both ignored and has an entry` })
+      seen.add(w)
+    })
+  })
+
 export type Level = z.infer<typeof Level>
 export type Item = z.infer<typeof Item>
 export type ItemType = z.infer<typeof ItemType>
@@ -296,3 +387,9 @@ export type Review = z.infer<typeof Review>
 export type Result = z.infer<typeof Result>
 export type StoredCard = z.infer<typeof StoredCard>
 export type ReviewState = z.infer<typeof ReviewState>
+export type ReviewMode = z.infer<typeof ReviewMode>
+export type ReviewLogEntry = z.infer<typeof ReviewLogEntry>
+export type Pos = z.infer<typeof POS>
+export type GlossEntry = z.infer<typeof GlossEntry>
+export type GeneratedGlossary = z.infer<typeof GeneratedGlossary>
+export type CuratedGlossary = z.infer<typeof CuratedGlossary>

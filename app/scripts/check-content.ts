@@ -1,83 +1,77 @@
-// Validates everything Claude writes: content/tests/*.json, content/words.json, and the
-// progress files the app reads back (results, which may carry Claude's review, and the review state).
+// Validates everything Claude writes: content/tests/*.json, content/words.json, the glossary
+// files (content/glossary.json, content/glossary.generated.json) including that every German
+// word in the content has a glossary entry or is on the ignore list, and the progress files
+// the app reads back (results, which may carry Claude's review, the review state and log).
 // Run from app/:  npm run check-content   (takes about 1 s)
 // Exits with code 1 and lists every problem (file + field) if anything is invalid.
 import fs from 'node:fs'
 import path from 'node:path'
-import { fileURLToPath } from 'node:url'
-import { checkAllContent, ContentError, parseJsonText, parseResult, parseReviewState } from '../src/content/validate.ts'
-import type { RawFile } from '../src/content/validate.ts'
+import { germanFields } from '../src/content/german.ts'
+import { parseJsonText, parseResult, parseReviewLog, parseReviewState } from '../src/content/validate.ts'
+import { glossaryGaps, makeGlossary } from '../src/glossary/lookup.ts'
+import { collect, CURATED_GLOSSARY, jsonFiles, readContent, readCuratedGlossary, readGeneratedGlossary, readText, rel, repoRoot } from './content-files.ts'
 
 const started = Date.now()
-const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..')
 const progressDir = process.env.PROGRESS_DIR ? path.resolve(process.env.PROGRESS_DIR) : path.join(repoRoot, 'progress')
 const problems: string[] = []
 
-function rel(abs: string): string {
-  return path.relative(repoRoot, abs).split(path.sep).join('/')
-}
-
-/** Returns the file text, or undefined after recording why it could not be read. */
-function readText(abs: string): string | undefined {
-  try {
-    return fs.readFileSync(abs, 'utf8')
-  } catch (err) {
-    problems.push(`${rel(abs)}: cannot read file: ${(err as Error).message}`)
-    return undefined
-  }
-}
-
-function jsonFiles(dir: string): string[] {
-  if (!fs.existsSync(dir)) return []
-  return fs
-    .readdirSync(dir)
-    .filter((n) => n.endsWith('.json'))
-    .sort()
-    .map((n) => path.join(dir, n))
-}
-
-function collect(fn: () => void): void {
-  try {
-    fn()
-  } catch (err) {
-    if (err instanceof ContentError) problems.push(...err.problems)
-    else throw err
-  }
-}
-
 // Content
-const testsDir = path.join(repoRoot, 'content', 'tests')
-const testFiles: RawFile[] = []
-for (const abs of jsonFiles(testsDir)) {
-  const text = readText(abs)
-  if (text !== undefined) testFiles.push({ file: rel(abs), text })
+const content = readContent(problems)
+
+// Glossary: both files must be valid, and every German word must be covered.
+const generated = readGeneratedGlossary(problems)
+const curated = readCuratedGlossary(problems)
+let gapCount = 0
+if (generated && curated) {
+  const gaps = glossaryGaps(germanFields(content.tests, content.words), makeGlossary(generated, curated))
+  gapCount = gaps.length
+  for (const g of gaps) {
+    problems.push(
+      `glossary: no entry for "${g.word}" (first used in ${g.where}). Run "npm run glossary", or add it to ${CURATED_GLOSSARY} (entries, or ignore for names)`,
+    )
+  }
 }
-const wordsPath = path.join(repoRoot, 'content', 'words.json')
-const checked = checkAllContent({ tests: testFiles, words: { file: rel(wordsPath), text: readText(wordsPath) ?? '' } })
-problems.push(...checked.problems)
 
 // Progress files
 const resultFiles = jsonFiles(path.join(progressDir, 'results'))
 for (const abs of resultFiles) {
-  const text = readText(abs)
-  if (text !== undefined) collect(() => parseResult(rel(abs), parseJsonText(rel(abs), text)))
+  const text = readText(abs, problems)
+  if (text !== undefined) collect(problems, () => parseResult(rel(abs), parseJsonText(rel(abs), text)))
 }
 const statePath = path.join(progressDir, 'review-state.json')
 const hasState = fs.existsSync(statePath)
 if (hasState) {
-  const text = readText(statePath)
-  if (text !== undefined) collect(() => parseReviewState(rel(statePath), parseJsonText(rel(statePath), text)))
+  const text = readText(statePath, problems)
+  if (text !== undefined) collect(problems, () => parseReviewState(rel(statePath), parseJsonText(rel(statePath), text)))
+}
+const logPath = path.join(progressDir, 'review-log.jsonl')
+let logLines = 0
+if (fs.existsSync(logPath)) {
+  const text = readText(logPath, problems)
+  if (text !== undefined) {
+    const lines = text.split('\n').filter((l) => l.trim() !== '')
+    logLines = lines.length
+    collect(problems, () =>
+      parseReviewLog(
+        rel(logPath),
+        lines.map((l, i) => parseJsonText(`${rel(logPath)} line ${i + 1}`, l)),
+      ),
+    )
+  }
 }
 
 const secs = ((Date.now() - started) / 1000).toFixed(2)
 if (problems.length > 0) {
-  console.error(`check-content: ${problems.length} problem(s):`)
+  console.error(`check-content: ${problems.length} problem(s)${gapCount ? `, ${gapCount} of them missing glossary entries` : ''}:`)
   for (const p of problems) console.error(`  - ${p}`)
   console.error(`(took ${secs} s)`)
   process.exit(1)
 }
-const items = checked.tests.reduce((n, t) => n + t.items.length, 0)
+const items = content.tests.reduce((n, t) => n + t.test.items.length, 0)
+const glossKeys = Object.keys(generated?.entries ?? {}).length + Object.keys(curated?.entries ?? {}).length
 console.log(
-  `check-content: OK - ${checked.tests.length} test(s) with ${items} items, ${checked.words.length} words, ` +
-    `${resultFiles.length} result file(s), review state ${hasState ? 'valid' : 'not created yet'} (took ${secs} s)`,
+  `check-content: OK - ${content.tests.length} test(s) with ${items} items, ${content.words.words.length} words, ` +
+    `glossary ${glossKeys} entries + ${curated?.ignore.length ?? 0} ignored (every German word covered), ` +
+    `${resultFiles.length} result file(s), review state ${hasState ? 'valid' : 'not created yet'}, ` +
+    `review log ${logLines} line(s) (took ${secs} s)`,
 )

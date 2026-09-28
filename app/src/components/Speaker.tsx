@@ -18,15 +18,6 @@ export function Speaker({ text, rate, label = 'Listen' }: { text: string; rate?:
   )
 }
 
-/** German text with a speaker button next to it. */
-export function De({ text, className }: { text: string; className?: string }) {
-  return (
-    <span className={`de ${className ?? ''}`}>
-      <span lang="de">{text}</span> <Speaker text={text} />
-    </span>
-  )
-}
-
 /** Big play buttons for listening exercises (normal speed from settings, and slow). */
 export function PlayButtons({ text, onPlay }: { text: string; onPlay?: () => void }) {
   const play = (rate?: number) => {

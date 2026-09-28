@@ -4,8 +4,10 @@ import { content } from '../content/load.ts'
 import type { Item, Result, ResultItem, Test } from '../content/schema.ts'
 import { GAP_MARKER } from '../content/schema.ts'
 import { ResultView } from '../components/ResultView.tsx'
-import { De, PlayButtons, Speaker } from '../components/Speaker.tsx'
+import { De, GlossScope } from '../components/GermanText.tsx'
+import { PlayButtons, Speaker } from '../components/Speaker.tsx'
 import { UmlautBar } from '../components/UmlautBar.tsx'
+import { localDay } from '../lib/dates.ts'
 import { messageOf } from '../lib/errors.ts'
 import { describeItem, gradeItem, instructionFor, isBlank, scoreOf } from '../lib/grading.ts'
 import type { AnswerValue } from '../lib/grading.ts'
@@ -116,6 +118,7 @@ function Attempt({ test, onRestart }: { test: Test; onRestart: () => void }) {
         ...(audio ? { plays: plays.current[i] } : {}),
       }
     })
+    const submitted = new Date()
     const r: Result = {
       version: 1,
       testId: test.id,
@@ -123,7 +126,8 @@ function Attempt({ test, onRestart }: { test: Test; onRestart: () => void }) {
       level: test.level,
       mode: SAVE_MODE,
       startedAt,
-      submittedAt: new Date().toISOString(),
+      localDay: localDay(submitted),
+      submittedAt: submitted.toISOString(),
       score: scoreOf(items),
       items,
     }
@@ -169,6 +173,8 @@ function Attempt({ test, onRestart }: { test: Test; onRestart: () => void }) {
         </div>
       </div>
 
+      {/* Word popups stay off until the test is submitted (Hayk, 2026-09-29). */}
+      <GlossScope surface={{ kind: 'test-item', submitted: false }}>
       <section className="card item">
         <p className="instruction">{instructionFor(item)}</p>
         <ItemInput
@@ -195,6 +201,7 @@ function Attempt({ test, onRestart }: { test: Test; onRestart: () => void }) {
           </div>
         )}
       </section>
+      </GlossScope>
 
       <div className="row between">
         <button type="button" className="btn" disabled={index === 0} onClick={() => goTo(index - 1)}>
@@ -251,9 +258,7 @@ function ItemInput({ item, layout, answer, onChange, onPlay }: InputProps) {
     case 'mc':
       return (
         <>
-          <p className="question">
-            <De text={item.question} />
-          </p>
+          <p className="question">{item.questionLang === 'en' ? item.question : <De text={item.question} />}</p>
           <Choices options={layout ?? item.options} value={answer as string | null} onChange={onChange} />
         </>
       )
@@ -261,7 +266,7 @@ function ItemInput({ item, layout, answer, onChange, onPlay }: InputProps) {
       return (
         <>
           <PlayButtons text={item.audio} onPlay={onPlay} />
-          <p className="question" lang="de">
+          <p className="question" lang={item.questionLang ?? 'de'}>
             {item.question}
           </p>
           <Choices options={layout ?? item.options} value={answer as string | null} onChange={onChange} />
@@ -317,7 +322,7 @@ function ItemInput({ item, layout, answer, onChange, onPlay }: InputProps) {
       const words = countWords(answer as string)
       return (
         <>
-          <p className="question" lang="de">
+          <p className="question" lang={item.promptLang ?? 'de'}>
             {item.prompt}
           </p>
           <textarea

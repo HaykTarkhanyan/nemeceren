@@ -3,6 +3,7 @@
 import { createEmptyCard, fsrs, Rating, State } from 'ts-fsrs'
 import type { Card, Grade } from 'ts-fsrs'
 import type { ReviewState, StoredCard, Word } from '../content/schema.ts'
+import { localDay } from './dates.ts'
 
 export { Rating, State }
 export type { Grade }
@@ -34,12 +35,6 @@ export function fromStored(s: StoredCard): Card {
     state: s.state as State,
     last_review: s.last_review ? new Date(s.last_review) : undefined,
   }
-}
-
-/** Local calendar day as YYYY-MM-DD. */
-export function localDay(d: Date): string {
-  const pad = (n: number) => String(n).padStart(2, '0')
-  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`
 }
 
 function endOfLocalDay(d: Date): Date {

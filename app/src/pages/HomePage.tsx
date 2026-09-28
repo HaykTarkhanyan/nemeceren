@@ -7,6 +7,7 @@ import { useSettings } from '../lib/settings.ts'
 import { counts } from '../lib/srs.ts'
 import { listResults } from '../lib/storage.ts'
 import type { SavedResult } from '../lib/storage.ts'
+import { StreakLine } from './StatsPage.tsx'
 import { useReviewState } from './WordsPage.tsx'
 
 export function HomePage() {
@@ -22,6 +23,7 @@ export function HomePage() {
 
   return (
     <div className="stack">
+      <StreakLine />
       <section className="card">
         <div className="row between">
           <h2>Words</h2>

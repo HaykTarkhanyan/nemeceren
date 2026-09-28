@@ -24,6 +24,7 @@ export function Header({ route }: { route: string[] }) {
     ['', 'Home'],
     ['words', 'Words'],
     ['results', 'Results'],
+    ['stats', 'Stats'],
     ['settings', 'Settings'],
   ]
   return (

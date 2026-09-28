@@ -99,9 +99,22 @@ export function createProgressHandler(progressDir: string) {
     if (relFile === null) throw new HttpError(400, 'Missing "path" or "dir" query parameter')
 
     if (req.method === 'GET') {
-      const file = resolveInside(progressDir, relFile, ['.json'])
+      const file = resolveInside(progressDir, relFile, ['.json', '.jsonl'])
       if (!fs.existsSync(file)) throw new HttpError(404, `${relFile} does not exist yet`)
       const text = fs.readFileSync(file, 'utf8')
+      if (relFile.endsWith('.jsonl')) {
+        // One JSON value per line; returned as { lines: [...] }.
+        const lines = text.split('\n').filter((l) => l.trim() !== '')
+        const values = lines.map((l, i) => {
+          try {
+            return JSON.parse(l) as unknown
+          } catch (err) {
+            throw new HttpError(500, `${relFile} line ${i + 1} is not valid JSON: ${(err as Error).message}`)
+          }
+        })
+        sendJson(res, 200, { lines: values })
+        return
+      }
       try {
         sendJson(res, 200, JSON.parse(text))
       } catch (err) {

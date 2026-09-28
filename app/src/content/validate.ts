@@ -2,8 +2,16 @@
 // Every error names the file and the field path, e.g.
 //   content/tests/a1-01.json: items[3].answers[0]: "..." does not use exactly the tiles [...]
 import type { z } from 'zod'
-import { Result, ReviewState, Test, WordList } from './schema.ts'
-import type { Result as ResultT, ReviewState as ReviewStateT, Test as TestT, Word as WordT } from './schema.ts'
+import { CuratedGlossary, GeneratedGlossary, Result, ReviewLogEntry, ReviewState, Test, WordList } from './schema.ts'
+import type {
+  CuratedGlossary as CuratedGlossaryT,
+  GeneratedGlossary as GeneratedGlossaryT,
+  Result as ResultT,
+  ReviewLogEntry as ReviewLogEntryT,
+  ReviewState as ReviewStateT,
+  Test as TestT,
+  Word as WordT,
+} from './schema.ts'
 
 export class ContentError extends Error {
   problems: string[]
@@ -55,6 +63,19 @@ export function parseResult(file: string, data: unknown): ResultT {
 
 export function parseReviewState(file: string, data: unknown): ReviewStateT {
   return parseWith(ReviewState, file, data)
+}
+
+/** Parse the lines of review-log.jsonl (already split into values). */
+export function parseReviewLog(file: string, lines: unknown[]): ReviewLogEntryT[] {
+  return lines.map((line, i) => parseWith(ReviewLogEntry, `${file} line ${i + 1}`, line))
+}
+
+export function parseGeneratedGlossary(file: string, data: unknown): GeneratedGlossaryT {
+  return parseWith(GeneratedGlossary, file, data)
+}
+
+export function parseCuratedGlossary(file: string, data: unknown): CuratedGlossaryT {
+  return parseWith(CuratedGlossary, file, data)
 }
 
 export function parseJsonText(file: string, text: string): unknown {

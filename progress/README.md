@@ -23,6 +23,7 @@ Run `npm run check-content` in `app/` after editing anything here. It validates 
   "mode": "repo",
   "startedAt": "2026-09-28T21:57:57.000Z",
   "submittedAt": "2026-09-28T21:59:04.900Z",
+  "localDay": "2026-09-28",
   "score": { "correct": 6, "wrong": 3, "pending": 2, "total": 11 },
   "items": [
     {
@@ -43,6 +44,8 @@ Run `npm run check-content` in `app/` after editing anything here. It validates 
   ]
 }
 ```
+
+`localDay` is Hayk's local calendar day at submit time (missing in results saved before 2026-09-29). The statistics count the attempt on that day.
 
 Per item:
 - `index` - 0-based position in the test's `items`.
@@ -91,9 +94,30 @@ Keyed by word `id` from `content/words.json`; a word with no entry has never bee
 One JSON object per line, appended after every word review:
 
 ```json
-{"ts":"2026-09-28T22:00:14.479Z","wordId":"uhr","de":"die Uhr","mode":"production","rating":1,"answer":"Uhr","correct":false,"nearMiss":["article_missing"],"isNew":true,"stateBefore":0,"stateAfter":1,"due":"2026-09-28T22:01:14.479Z"}
+{"ts":"2026-09-28T22:00:14.479Z","localDay":"2026-09-29","timeMs":8420,"wordId":"uhr","de":"die Uhr","mode":"production","rating":1,"answer":"Uhr","correct":false,"nearMiss":["article_missing"],"isNew":true,"stateBefore":0,"stateAfter":1,"due":"2026-09-28T22:01:14.479Z"}
 ```
 - `mode` - `recognition` (German to English, self-graded), `production` (English to German, typed), `listening` (audio, typed).
 - `rating` - 1 Again, 2 Hard, 3 Good, 4 Easy (Hayk's choice; after a typed answer the app suggests 1 or 3).
 - `answer`, `correct`, `nearMiss` - typed modes only, otherwise `null`.
 - `stateBefore`/`stateAfter` - FSRS state as above; `due` - next review time.
+- `localDay` - Hayk's local calendar day when the review happened; `timeMs` - time from showing the card to grading it. Both are missing in lines written before 2026-09-29.
+
+## Statistics (Stats page)
+
+Computed in the app from the review log and the result files, by the pure functions in `app/src/lib/stats.ts` (unit-tested in `stats.test.ts`, including midnight and time-zone cases). Nothing extra is stored.
+
+| term | definition |
+|---|---|
+| study day | a local calendar day with at least one word review or one answered test item. The day is the `localDay` recorded when it happened, so a review at 23:30 in Munich counts for that Munich day even when viewed later from Yerevan. Old records without `localDay` use the day in the time zone of the device showing the stats. |
+| streak | study days in a row ending today; before anything is done today, the streak still counts up to yesterday |
+| longest streak | the longest such run ever |
+| days this week / month | study days from Monday to today / in the current calendar month |
+| activity | one word review (from `ts - timeMs` to `ts`), or one test attempt with at least one answered item (from `startedAt` to `submittedAt`) |
+| session | activities with no gap of 30 minutes or more between the end of one and the start of the next. A session counts on the day of its first activity, so one that runs past midnight is one session on the day it started. |
+| minutes | the sum of measured time: each review's `timeMs` (capped at 2 min, so a card left open does not count) and each test item's `timeMs` (capped at 20 min), counted on the activity's day. Reviews without `timeMs` count everywhere except minutes, and the page says how many there are. |
+| % correct | reviews not graded Again, divided by all reviews |
+| known word | a word in `content/words.json` whose FSRS card is in the Review state with an interval (`scheduled_days`) of 21 days or more |
+| learning | a reviewed word that is not known yet |
+| due today | cards due before the end of today (same as the Words page) |
+
+In phone mode (GitHub Pages) the Stats page only sees that browser's own activity; nothing from the PC is baked into the build.

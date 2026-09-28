@@ -4,6 +4,7 @@ import { useRoute } from './lib/router.ts'
 import { HomePage } from './pages/HomePage.tsx'
 import { ResultDetailPage, ResultsPage } from './pages/ResultsPage.tsx'
 import { SettingsPage } from './pages/SettingsPage.tsx'
+import { StatsPage } from './pages/StatsPage.tsx'
 import { TestPage } from './pages/TestPage.tsx'
 import { WordsPage } from './pages/WordsPage.tsx'
 
@@ -28,6 +29,8 @@ function Page({ route }: { route: string[] }) {
       return <WordsPage />
     case 'results':
       return arg ? <ResultDetailPage name={arg} /> : <ResultsPage />
+    case 'stats':
+      return <StatsPage />
     case 'settings':
       return <SettingsPage />
     default:

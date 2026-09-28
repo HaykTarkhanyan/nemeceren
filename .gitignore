@@ -9,3 +9,11 @@ logs/
 *.mp3
 *.mp4
 *.zip
+
+# kaikki.org download cache of app/scripts/build-glossary.ts
+.cache/
+
+# Neon: CLI link file and env files with DATABASE_URL (secret). Never commit.
+.neon
+.env
+.env.*

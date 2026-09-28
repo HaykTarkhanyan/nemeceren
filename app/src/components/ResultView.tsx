@@ -2,7 +2,7 @@
 import type { Item, NearMissKind, Result, ResultItem, Review, Test } from '../content/schema.ts'
 import { GAP_MARKER } from '../content/schema.ts'
 import { finalScore, finalStatus } from '../lib/grading.ts'
-import { De } from './Speaker.tsx'
+import { De, GermanText, GlossScope } from './GermanText.tsx'
 
 const NEAR_MISS_LABEL: Record<NearMissKind, string> = {
   case: 'capitalization',
@@ -38,7 +38,7 @@ function GapAnswer({ ri }: { ri: ResultItem }) {
     <span lang="de">
       {parts.map((p, i) => (
         <span key={i}>
-          {p}
+          <GermanText text={p} />
           {i < parts.length - 1 && ri.gaps && (
             <mark className={ri.gaps[i].correct ? 'fill ok' : 'fill bad'}>{ri.gaps[i].answer || '(empty)'}</mark>
           )}
@@ -75,6 +75,34 @@ function DictationDiff({ ri }: { ri: ResultItem }) {
   )
 }
 
+/**
+ * The question as stored in the result, with its German parts as German text. The formats
+ * come from describeItem() in lib/grading.ts. English questions (questionLang/promptLang "en")
+ * are only recognizable while the test still exists, so item is used when it matches.
+ */
+function QuestionText({ ri, item }: { ri: ResultItem; item: Item | null }) {
+  if (ri.type === 'mc' || ri.type === 'write') {
+    const english = (item?.type === 'mc' && item.questionLang === 'en') || (item?.type === 'write' && item.promptLang === 'en')
+    return english ? <span>{ri.question}</span> : <GermanText text={ri.question} />
+  }
+  if (ri.type === 'translate') {
+    const m = /^Translate \((de-en|en-de)\): ([\s\S]*)$/.exec(ri.question)
+    if (m && m[1] === 'de-en') return <GermanText text={m[2]} />
+    return <span>{ri.question}</span>
+  }
+  if (ri.type === 'listen_mc') {
+    const m = /^([\s\S]*) \[audio: ([\s\S]*)\]$/.exec(ri.question)
+    if (!m) return <GermanText text={ri.question} />
+    const english = item?.type === 'listen_mc' && item.questionLang === 'en'
+    return (
+      <>
+        {english ? m[1] : <GermanText text={m[1]} />} <span className="muted">[audio: <GermanText text={m[2]} />]</span>
+      </>
+    )
+  }
+  return <span>{ri.question}</span>
+}
+
 function YourAnswer({ ri }: { ri: ResultItem }) {
   if (ri.answer === null) return <span className="muted">(no answer)</span>
   if (ri.type === 'gap') return <GapAnswer ri={ri} />
@@ -108,7 +136,11 @@ function ItemFeedback(props: {
           {near && <span className="badge near">{near}</span>}
         </span>
       </div>
-      {ri.type !== 'gap' && ri.type !== 'dictation' && <p className="question">{ri.question}</p>}
+      {ri.type !== 'gap' && ri.type !== 'dictation' && (
+        <p className="question">
+          <QuestionText ri={ri} item={item} />
+        </p>
+      )}
       <div className="field">
         <span className="label">Your answer</span>
         <YourAnswer ri={ri} />
@@ -160,6 +192,7 @@ export function ScoreLine({ result }: { result: Result }) {
 
 export function ResultView({ result, test }: { result: Result; test: Test | undefined }) {
   return (
+    <GlossScope surface={{ kind: 'test-item', submitted: true }}>
     <div className="stack">
       <ScoreLine result={result} />
       {result.review && (
@@ -182,5 +215,6 @@ export function ResultView({ result, test }: { result: Result; test: Test | unde
         )
       })}
     </div>
+    </GlossScope>
   )
 }

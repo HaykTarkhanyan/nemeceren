@@ -34,6 +34,14 @@ Evidence and sources are in `_knowledge/2026-09-28_llm-tutoring-and-materials.md
 - `app/`, `content/`, `progress/`: the learning platform. Claude writes tests and words into `content/` (format in `content/README.md`), and Hayk's results land in `progress/` (format in `progress/README.md`).
 - `DECISIONS.md` (why things are built this way), `DEFERRED_TODO.md`, `_knowledge/` (research), `_work_sessions/` (session logs), `_learnings/`.
 
+## Neon (progress database)
+
+- Project `nemeceren` (`aged-violet-98333413`), region `aws-eu-central-1`, org `org-damp-paper-53725530`, branch `main`. The repo is linked via the gitignored `.neon`, and `DATABASE_URL` is in the gitignored `.env.local`. Never print or commit connection strings.
+- **Hayk's hard rule: Neon must stay on the Free plan.** Never upgrade, add a card, or enable paid features (AI Gateway, extra branches beyond 10). Free limits per project: 100 CU-hours/month compute (scales to zero after 5 min), 0.5 GB storage, 5 GB egress, Auth up to 60k MAU, Functions 10 active and 400 waiting capacity-hours plus 1M invocations/month. Hitting a limit pauses or blocks; it never bills. Keep usage far below these limits, e.g. batch syncs and no polling loops.
+- Architecture: GitHub Pages site -> Neon Auth (Managed Better Auth) login -> Neon Functions API (Hono) -> Postgres. No Data API from the browser (Neon's own guidance).
+- The Neon CLI (`neon`, 6.2.4, global) works on Node 20. `neon skills` needs Node 22.20+, and Hayk chose to stay on Node 20, so update the skills in `.claude/skills/` by re-downloading from `https://neon.com/.well-known/agent-skills` and checking the sha256 digests.
+- The other Neon project `infocom` belongs to something else. Don't touch it.
+
 ## Practical
 
 - Windows desktop: use `python` (not `python3`) and pass `encoding="utf-8"` explicitly. In the Linux cloud session on the phone, use `python3`.

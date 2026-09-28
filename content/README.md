@@ -4,7 +4,8 @@ Everything in this folder is written by Claude and read by the app in `app/`. Yo
 
 - `tests/<id>.json` - one test per file. Shows up in the app on its own (no restart while `npm run dev` runs).
 - `words.json` - the word bank for spaced repetition.
-- After every edit run `npm run check-content` in `app/`. It prints every problem as `file: field.path: message` and exits 1. The app refuses to start (it shows the same list) and the GitHub Pages deploy fails while any problem is left.
+- `glossary.json` (written by Claude) and `glossary.generated.json` (written by a script) - the word popups, see [Glossary](#glossary-word-popups).
+- After every edit run, in `app/`: `npm run glossary` (only if German text changed), then `npm run check-content`. check-content prints every problem as `file: field.path: message` and exits 1. The app refuses to start on invalid files (it shows the same list), and the GitHub Pages deploy fails while any problem is left, including a German word with no glossary entry.
 
 General rules:
 - Files are UTF-8 JSON. Write umlauts and ß directly (`"heiße"`), never `ae/oe/ue/ss` substitutes.
@@ -58,6 +59,7 @@ Items are graded after the whole test is submitted. Hayk sees per-item feedback,
 }
 ```
 - `options`: at least 2, all different. They are shuffled for every attempt, so you can put the right one anywhere.
+- `questionLang` (optional): `"en"` if the question is in English ("How do you say thank you?"). Default `"de"`. English questions get no speaker button and are not checked against the glossary; the options always count as German.
 - `answer`: must be exactly one of the `options` strings.
 
 ### `gap` - fill in the gaps, auto-graded
@@ -113,6 +115,7 @@ Items are graded after the whole test is submitted. Hayk sees per-item feedback,
 }
 ```
 - `minWords` (optional, positive integer): shown as a live word counter; it does not block submitting.
+- `promptLang` (optional): `"en"` if the prompt is in English. Default `"de"`.
 - Always `pending` unless left empty (then `wrong`).
 
 ### `dictation` - listen and type, auto-graded word by word
@@ -138,7 +141,7 @@ Items are graded after the whole test is submitted. Hayk sees per-item feedback,
   "answer": "am Donnerstag um 11 Uhr"
 }
 ```
-- `audio` is spoken, never shown before submitting. Same `options`/`answer` rules as `mc`.
+- `audio` is spoken, never shown before submitting. Same `options`/`answer`/`questionLang` rules as `mc`.
 - Spell out abbreviations in `audio` ("Doktor", not "Dr.") so every voice reads them the same.
 
 ## Word bank: `words.json`
@@ -181,9 +184,68 @@ A JSON array. New words are introduced in array order (default 10 new per day), 
 
 Changing `de` or `en` of an existing word is fine; changing or deleting its `id` loses its review history.
 
+## Glossary (word popups)
+
+After a test item is submitted, after a word-review card is revealed, and on the results page, Hayk can hover (PC) or tap (phone) any German word to see its base form, part of speech, level, a short meaning, article and plural. Before answering, popups are off (Hayk's decision). Every German word in content needs a glossary entry or must be on the ignore list, otherwise check-content fails.
+
+**Which text counts as German** (the same list is used by the generator, check-content and the app, in `app/src/content/german.ts`):
+
+| type | German fields |
+|---|---|
+| `mc`, `listen_mc` | `question` (unless `questionLang` is `"en"`), `options`, and `audio` for `listen_mc` |
+| `gap` | `text`, every accepted answer |
+| `order` | `tiles`, `answers` (not `prompt`, which is English) |
+| `translate` | `text` if `direction` is `"de-en"`, else `references` |
+| `write` | `prompt` (unless `promptLang` is `"en"`) |
+| `dictation` | `text` |
+| words.json | `de`, `plural`, `example.de` |
+
+Not German: `title`, `description`, `instruction`, `hint`, `explanation`, every `en` field.
+
+**Generating.** In `app/` run `npm run glossary` (TypeScript, like check-content; about 1 s per new word because it fetches kaikki.org one word at a time with a pause; cached words are instant; the cache is `.cache/kaikki/` at the repo root, git-ignored). It needs network, so CI never runs it: commit `glossary.generated.json` together with the content. The script:
+- collects every word from the fields above (plus the lowercase form of capitalized words, which may just start a sentence);
+- looks each up on kaikki.org (Wiktionary data). An inflected form ("macht", "komme") points to its base form ("machen, er/sie/es form, present");
+- keeps the readings a learner most likely means: the word bank first, then words (with a matching part of speech) in the DWDS Goethe A1-B1 lists in `reference/`, then the rest. Example: "einen" becomes the article "ein", not the verb "einen" (to unite);
+- uses the word bank's own `en` meaning instead of Wiktionary's for its words;
+- writes `glossary.generated.json` (never edit it by hand, the next run overwrites it) and lists every word still without an entry, with exit code 1.
+
+**Checking and overriding: `glossary.json`.** Read the generated entries for the words you just added (the script prints them). Where Wiktionary is misleading for a beginner, or a word is missing, write your own entry here; it replaces the generated entry for that exact spelling. Person names go on the ignore list (no popup at all). Country and city names usually have a generated entry ("Armenien: Armenia") and can stay.
+
+```json
+{
+  "ignore": ["Hayk", "Müller"],
+  "entries": {
+    "das": [
+      { "lemma": "der", "pos": "article", "level": "A1", "gloss": ["the (neuter)"], "note": "das Kind, das Land" },
+      { "lemma": "das", "pos": "pronoun", "gloss": ["this, that, it"] }
+    ],
+    "rufe": [
+      { "lemma": "anrufen", "pos": "verb", "form": "ich form, present", "gloss": ["to phone, to call"], "note": "Separable: Ich rufe dich an." }
+    ]
+  }
+}
+```
+
+Keys are the word exactly as written in the content (case matters: "Morgen" the noun, "morgen" tomorrow). A capitalized word at the start of a sentence also finds the lowercase key, so "Ich" at the start is covered by "ich". Each key has 1-3 entries:
+
+| key | required | notes |
+|---|---|---|
+| `lemma` | yes | the base form ("machen", "Termin"), without article |
+| `pos` | yes | `noun`, `verb`, `adjective`, `adverb`, `pronoun`, `preposition`, `conjunction`, `article`, `determiner`, `numeral`, `interjection`, `particle`, `name`, `phrase`, `contraction`, `other` |
+| `gloss` | yes | 1-3 short English meanings |
+| `article` | no | nouns: `der`, `die` or `das` |
+| `plural` | no | nouns: the plural without article ("Termine") |
+| `form` | no | for an inflected form: "ich form, present", "dative plural" |
+| `note` | no | a short hint shown under the meaning |
+| `level` | no | `A1`/`A2`/`B1`; shown in the popup. At a sentence start, readings with a level win over readings without one |
+
+The ignore list and entries must not overlap, and a word may be listed only once.
+
+**Known limitation: separable verbs.** Popups look at one word at a time, so in "Ich rufe dich an" the word "rufe" shows "rufen", and "an" shows the preposition. The escape hatch is a curated entry for the form in that sentence (like "rufe" above, with a `note`). The same applies to other multi-word expressions ("Wie geht's?").
+
 ## Checklist before telling Hayk a test is ready
 
-1. `cd app && npm run check-content` prints `OK`.
+1. `cd app && npm run glossary` covers every word (curate or ignore what it lists), then `npm run check-content` prints `OK`.
 2. Each item has an `explanation` for the rule it practises.
 3. `gap` and `order` items list every correct variant you would accept, otherwise Hayk is marked wrong for a correct answer.
 4. Tell Hayk the test title; it appears at the top of the list on `http://localhost:5173/`.

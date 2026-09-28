@@ -9,6 +9,7 @@
     "typecheck": "tsc -b",
     "test": "vitest run",
     "check-content": "tsx scripts/check-content.ts",
+    "glossary": "tsx scripts/build-glossary.ts",
     "preview": "vite preview"
   },
   "dependencies": {
