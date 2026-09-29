@@ -1,0 +1,37 @@
+title = "Unit 2 live, content review, Neon sign-in live, Topics and Daily pages"
+date = "2026-09-29"
+time = "11:50"
+areas = ["content/", "app/", "backend/", "_learnings/", "DECISIONS.md", "DEFERRED_TODO.md", "CLAUDE.md"]
+
+done = [
+  "Installed Unit 2 (6 lessons, 3 tests, 66 words) after applying the independent review's 33 fixes; deployed.",
+  "Review pass over all content: 38 curated popups for misleading generated glosses (Ja, Bitte, er, du, liebt, Welche ...); word cards cross-checked against german_nouns.csv and the Goethe list (no gender/plural errors); taught-before-used scan (added 'Das kostet' to u0-05); Unit 2 re-read (two wording fixes).",
+  "Reviewed and committed the Neon wire-up (sign-in, outbox, sync); the agent found the SDK token() bug (see _learnings).",
+  "Hayk signed up (tarkhanyan02@gmail.com), was allowlisted, sign-up disabled and verified closed (HTTP 400 EMAIL_PASSWORD_SIGN_UP_DISABLED). First real-browser sync confirmed in the DB: 2 reviews, 2 cards, lesson u1-06 progress.",
+  "Built via agent, reviewed and deployed: Topics page (66 items), Daily page with 10 days of jokes/facts/phrases (content/daily.json, written by Claude; 3 facts web-verified), word-source picker, header on one line + sync dot, System/Light/Dark theme, popup lookup fixes, punctuation-tolerant word review. DECISIONS #45-#51.",
+]
+
+pending = [
+  "Hayk to check the new UI in a browser on PC and Android phone (nothing was seen in a browser: Playwright MCP failed to connect).",
+  "Phone sign-in: partitioned cookie and token refresh after 15+ minutes untested.",
+  "Prune the 38 stopgap popup entries now that the code fixes landed (DEFERRED_TODO).",
+  "Daily page has 10 days (runs out 2026-10-08); write more before then.",
+]
+
+next = [
+  "Ask Hayk how the Topics/Daily/theme/header look on PC and phone; fix what's off.",
+  "Start teaching Unit 0 in the chat (Hayk opened u1-06 first; steer to u0-01).",
+  "Grade Hayk's first attempts with backend/scripts/progress.py when they appear.",
+  "Unit 3 content once Hayk is into Unit 1.",
+]
+
+files = [
+  "content/lessons/u2-*.json", "content/tests/u2-*.json", "content/words.json", "content/glossary.json",
+  "content/daily.json", "content/topics.json",
+  "_learnings/2026-09-29-1213_armenian-has-articles-not-gender.md",
+  "_learnings/2026-09-29-1300_neon-auth-token-answers-from-session-cache.md",
+]
+
+commits = ["505feea", "b72e9b4", "3d6eb8a", "fb00a5b", "0dcd30a"]
+
+notes = "Popups: the generated glossary is weakest on the most common words (interjections, pronouns); check the top-frequency words after every glossary rebuild. Neon stays on the Free plan: no polling, empty outbox never syncs."
