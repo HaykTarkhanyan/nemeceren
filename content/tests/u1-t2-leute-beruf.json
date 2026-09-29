@@ -10,7 +10,7 @@
     {
       "type": "gap",
       "text": "Ich ___ Hayk. Das ___ mein Kollege Aram.",
-      "answers": [["bin"], ["ist"]],
+      "answers": [["bin", "heiße"], ["ist"]],
       "explanation": "ich bin; das ist."
     },
     {
@@ -68,7 +68,7 @@
       "type": "translate",
       "direction": "en-de",
       "text": "She is new here.",
-      "references": ["Sie ist neu hier."],
+      "references": ["Sie ist neu hier.", "Sie ist hier neu."],
       "explanation": "sie ist = she is."
     },
     {

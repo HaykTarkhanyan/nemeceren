@@ -24,6 +24,7 @@
       "items": [
         { "de": "Ich heiße Hayk.", "en": "My name is Hayk.", "note": "heißen = to be called" },
         { "de": "Mein Name ist Hayk.", "en": "My name is Hayk." },
+        { "de": "Mein Vorname ist Hayk. Mein Nachname ist Tarkhanyan.", "en": "My first name is Hayk. My surname is Tarkhanyan." },
         { "de": "Ich komme aus Armenien.", "en": "I come from Armenia." },
         { "de": "Ich wohne in München.", "en": "I live in Munich." },
         { "de": "Ich spreche Armenisch, Russisch und Englisch.", "en": "I speak Armenian, Russian and English." },
@@ -95,8 +96,9 @@
         },
         {
           "type": "gap",
+          "instruction": "Fill in the gaps: I come from Armenia and I live in Munich.",
           "text": "Ich ___ aus Armenien und ich ___ in München.",
-          "answers": [["komme"], ["wohne"]],
+          "answers": [["komme", "bin"], ["wohne", "bin", "arbeite", "lerne"]],
           "explanation": "With ich the verb ends in -e: ich komme, ich wohne."
         },
         {

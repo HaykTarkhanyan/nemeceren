@@ -30,9 +30,9 @@
       "audio": "Tür",
       "question": "Which word did you hear?",
       "questionLang": "en",
-      "options": ["Tür", "Tor"],
+      "options": ["Tür", "Tier"],
       "answer": "Tür",
-      "explanation": "ü is i with rounded lips: Tür (door). Tor (gate) has a plain o."
+      "explanation": "ü is i with rounded lips: Tür (door). Tier (animal) has a plain long ee."
     },
     {
       "type": "dictation",

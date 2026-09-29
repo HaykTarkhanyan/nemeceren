@@ -117,7 +117,7 @@
           "type": "translate",
           "direction": "en-de",
           "text": "She is new here.",
-          "references": ["Sie ist neu hier."],
+          "references": ["Sie ist neu hier.", "Sie ist hier neu."],
           "explanation": "sie ist = she is. At the start of the sentence: Sie ist ..."
         }
       ]

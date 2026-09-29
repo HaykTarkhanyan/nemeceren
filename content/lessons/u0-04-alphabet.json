@@ -28,7 +28,7 @@
         ["B", "be", ""],
         ["C", "tse", ""],
         ["D", "de", ""],
-        ["E", "e", "a long 'eh', not English 'ee'"],
+        ["E", "e", "like 'ay' in 'day' without the glide, not English 'ee'"],
         ["F", "ef", ""],
         ["G", "ge", "hard g as in 'go'"],
         ["H", "ha", ""],
@@ -41,7 +41,7 @@
         ["O", "o", ""],
         ["P", "pe", ""],
         ["Q", "ku", ""],
-        ["R", "er", ""],
+        ["R", "err", "like 'air'"],
         ["S", "es", ""],
         ["T", "te", ""],
         ["U", "u", "'oo'"],
@@ -85,7 +85,7 @@
     {
       "type": "tip",
       "title": "On the phone",
-      "text": "Germans often spell with names on the phone: 'A wie Anton, B wie Berta'. The word 'wie' just means 'as in'. You don't need the list; the first letter of each name is what matters. For email addresses: @ is 'at' (said like English), a dot is 'Punkt', and a hyphen is 'Bindestrich'."
+      "text": "On the phone, Germans often spell with names: 'A wie Anton, B wie Berta', or, officially since 2022, with city names: 'A wie Aachen, B wie Berlin'. The word 'wie' just means 'as in'; only the first letter of each name matters. For email addresses: @ is 'ät', a dot is 'Punkt', and a hyphen is 'Bindestrich'."
     },
     {
       "type": "exercise",
@@ -94,7 +94,7 @@
         {
           "type": "gap",
           "text": "Wie ist Ihr ___?",
-          "answers": [["Name"]],
+          "answers": [["Name", "Vorname", "Nachname"]],
           "hint": "A noun, so it starts with a capital letter.",
           "explanation": "der Name. Wie ist Ihr Name? = What is your name? (polite)"
         },
@@ -115,7 +115,7 @@
         },
         {
           "type": "write",
-          "instruction": "Spell your first name, your surname and the city you live in, letter by letter, using the German letter names (for example: ha, a, ypsilon, ka). Claude will check it.",
+          "instruction": "Spell your first name, your surname and the city you live in, letter by letter, using the German letter names (for example, Aram: a, err, a, em). Claude will check it.",
           "prompt": "Spell your first name, your surname and your city the German way.",
           "promptLang": "en",
           "minWords": 6

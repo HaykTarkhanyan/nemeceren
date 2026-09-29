@@ -56,7 +56,7 @@
     {
       "type": "explanation",
       "title": "Phone numbers and prices",
-      "text": "Phone numbers are usually read digit by digit or in pairs. The Munich area code 089 is [[null, acht, neun]]. On the phone people often say [[zwo]] instead of [[zwei]], so it doesn't sound like [[drei]].\n\nPrices: [[zwei Euro fünfzig]] is 2.50 €. The cents come after the word [[Euro]]."
+      "text": "Phone numbers are usually read digit by digit or in pairs. The Munich area code 089 is [[null, acht, neun]]. On the phone people often say [[zwo]] instead of [[zwei]], so it doesn't sound like [[drei]].\n\nPrices: [[zwei Euro fünfzig]] is 2,50 € (Germany writes a comma, not a point). The cents come after the word [[Euro]]."
     },
     {
       "type": "audio",
@@ -108,6 +108,7 @@
         },
         {
           "type": "dictation",
+          "instruction": "Listen and write the number as a word.",
           "text": "dreiundzwanzig",
           "explanation": "drei-und-zwanzig = 23, written as one word."
         }

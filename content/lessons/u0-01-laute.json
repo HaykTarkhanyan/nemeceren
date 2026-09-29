@@ -26,7 +26,7 @@
         ["v", "usually f", "Vater", "father"],
         ["z", "ts, like Russian ц, Armenian ց", "Zeit", "time"],
         ["j", "y in 'yes', like Russian й", "ja", "yes"],
-        ["s", "z before a vowel", "sagen", "to say"],
+        ["s", "like English z in 'zoo' before a vowel (Russian з, Armenian զ); in Bavaria often a plain s", "sagen", "to say"],
         ["ß", "always a sharp s", "Straße", "street"],
         ["sch", "sh, like Russian ш, Armenian շ", "Schule", "school"],
         ["sp", "shp at the start of a word", "Sport", "sport"],
@@ -34,6 +34,7 @@
         ["ei", "like English 'eye'", "mein", "my"],
         ["ie", "a long ee", "Liebe", "love"],
         ["eu", "oy, as in 'boy'", "neu", "new"],
+        ["äu", "also oy, as in 'boy'", "Häuser", "houses"],
         ["h", "silent after a vowel (the vowel gets long)", "sehr", "very"]
       ]
     },
@@ -44,7 +45,7 @@
     {
       "type": "explanation",
       "title": "Long and short vowels",
-      "text": "Every vowel can be long or short, and the spelling tells you which:\n\n- **long** before a single consonant, before **h**, or when doubled: [[Tag]], [[sehr]], [[Tee]]\n- **short** before two or more consonants: [[Bett]], [[kommen]], [[Hand]]\n\nAt the end of a word, **-e** is a short weak sound, and **-er** sounds almost like a short a: [[Name]], [[Vater]]."
+      "text": "Every vowel can be long or short, and the spelling usually tells you which (a rule of thumb):\n\n- **long** before a single consonant, before **h**, or when doubled: [[Tag]], [[sehr]], [[Tee]]\n- **short** before two or more consonants: [[Bett]], [[kommen]], [[Hand]]\n\nAt the end of a word, **-e** is a short weak sound, and **-er** sounds almost like a short a: [[Name]], [[Vater]].\n\nMany short everyday words break the rule: [[das]], [[es]], [[in]], [[mit]], [[hat]], [[bin]] are short, and [[Buch]] is long. When in doubt, press the speaker button."
     },
     {
       "type": "table",
@@ -63,12 +64,12 @@
     {
       "type": "explanation",
       "title": "Two kinds of ch",
-      "text": "**ch** has two sounds, depending on the vowel in front of it:\n\n- after **a, o, u, au** it is rough, from the back of the throat: [[Bach]], [[Buch]], [[auch]]\n- after **e, i, ä, ö, ü** and after consonants it is soft, like a loud whispered y: [[ich]], [[nicht]], [[Milch]]\n\nAt the start of **Ch**ina or **Ch**emie you will hear both variants in Germany; don't worry about it."
+      "text": "**ch** has two sounds, depending on the vowel in front of it:\n\n- after **a, o, u, au** it is rough, from the back of the throat: [[Bach]], [[Buch]], [[auch]]\n- after **e, i, ä, ö, ü** and after consonants it is soft, like a loud whispered y: [[ich]], [[nicht]], [[Milch]]\n\nAt the start of words like **Ch**ina and **Ch**emie, people in Munich and the south usually say a **k** ('Kina', 'Kemie'); in the north you hear the soft ch."
     },
     {
       "type": "comparison",
       "title": "What Russian and Armenian already give you",
-      "text": "- **Rough ch:** the ch in [[Buch]] is exactly Russian х (Бах) and Armenian խ.\n- **Soft ch:** the ch in [[ich]] is close to the х in Russian химия, said further forward.\n- **Final devoicing, like Russian:** b, d, g at the end of a word sound like p, t, k, just as год sounds like гот. So [[Tag]] sounds like 'tak'. Armenian doesn't do this, so Armenian habits need a small correction here.\n- **Weak final -e:** the -e in [[Name]] is the Armenian ը sound.\n- **Stress:** German usually stresses the **first** syllable: [[Name]], [[Vater]], [[Wasser]]. Armenian usually stresses the last syllable, so watch this one.\n- **r:** textbook German uses a throat r, but in Munich and Bavaria many people roll the r with the tongue, like Russian р or Armenian ռ. Your own r is fine here."
+      "text": "- **Rough ch:** the ch in [[Buch]] is exactly Russian х (Бах) and Armenian խ.\n- **Soft ch:** the ch in [[ich]] is close to the х in Russian химия, said further forward.\n- **Final devoicing, like Russian:** b, d, g at the end of a word sound like p, t, k, just as год sounds like гот. So [[Tag]] sounds like 'tak'. Armenian doesn't do this, so Armenian habits need a small correction here.\n- **Weak final -e:** the -e in [[Name]] is the Armenian ը sound.\n- **Stress:** German usually stresses the **first** syllable: [[Name]], [[Vater]], [[Wasser]]. Armenian usually stresses the last syllable, so watch this one. Exceptions you will meet soon: words starting with be-, ver- or ent- ([[verstehen]], [[Entschuldigung]]) and verbs in -ieren ([[studieren]]) stress a later syllable.\n- **r:** textbook German uses a throat r, but in Munich and Bavaria many people roll the r with the tongue, like Russian р or Armenian ռ. Your own r is fine here."
     },
     {
       "type": "audio",

@@ -18,11 +18,12 @@
     {
       "type": "gap",
       "text": "Ich ___ Hayk und ich ___ aus Armenien.",
-      "answers": [["heiße"], ["komme"]],
+      "answers": [["heiße", "bin"], ["komme", "bin"]],
       "explanation": "With ich the verb ends in -e: ich heiße, ich komme."
     },
     {
       "type": "gap",
+      "instruction": "Fill in the gap: Where do you live?",
       "text": "Wo ___ du?",
       "answers": [["wohnst"]],
       "explanation": "du wohnst: with du the verb ends in -st."
@@ -30,7 +31,7 @@
     {
       "type": "gap",
       "text": "Er ___ Deutsch und Englisch.",
-      "answers": [["spricht"]],
+      "answers": [["spricht", "lernt"]],
       "hint": "sprechen changes its vowel with er/sie/es.",
       "explanation": "er spricht: e becomes i."
     },
@@ -47,7 +48,7 @@
       "type": "order",
       "prompt": "I also speak Armenian.",
       "tiles": ["ich", "spreche", "auch", "Armenisch"],
-      "answers": ["Ich spreche auch Armenisch"],
+      "answers": ["Ich spreche auch Armenisch", "Armenisch spreche ich auch"],
       "explanation": "The verb is second; auch follows it."
     },
     {

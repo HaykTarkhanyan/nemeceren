@@ -59,6 +59,7 @@
       "items": [
         { "de": "Ich habe eine Frage.", "en": "I have a question." },
         { "de": "Können Sie das bitte wiederholen?", "en": "Can you repeat that, please?" },
+        { "de": "Können Sie das bitte erklären?", "en": "Can you explain that, please?" },
         { "de": "Wie sagt man das auf Deutsch?", "en": "How do you say that in German?" },
         { "de": "Was bedeutet das?", "en": "What does that mean?" },
         { "de": "Ich verstehe die Frage nicht.", "en": "I don't understand the question." }

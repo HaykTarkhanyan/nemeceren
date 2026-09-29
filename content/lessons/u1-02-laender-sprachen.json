@@ -17,7 +17,7 @@
     {
       "type": "explanation",
       "title": "Two questions you will hear everywhere",
-      "text": "In every class and every new team:\n\n- [[Woher kommen Sie?]] - [[Ich komme aus Armenien.]]\n- [[Welche Sprachen sprechen Sie?]] - [[Ich spreche Armenisch, Russisch und Englisch.]]\n\nMost countries have no article: [[aus Armenien]], [[in Deutschland]]. A few always have one, like [[die Schweiz]]: [[Er kommt aus der Schweiz.]]"
+      "text": "In every class and every new team:\n\n- [[Woher kommen Sie?]] - [[Ich komme aus Armenien.]]\n- [[Welche Sprachen sprechen Sie?]] - [[Ich spreche Armenisch, Russisch und Englisch.]]\n\nMost countries have no article: [[aus Armenien]], [[in Deutschland]]. A few always have one, like [[die Schweiz]]: [[Er kommt aus der Schweiz.]] (after [[aus]], [[die]] becomes [[der]]; more in Unit 6)"
     },
     {
       "type": "table",
@@ -36,7 +36,7 @@
     {
       "type": "explanation",
       "title": "sprechen changes its vowel",
-      "text": "Most verbs keep their vowel, like [[lernen]]. A few change it with **du** and **er/sie/es**, and [[sprechen]] is one of them: e becomes i.\n\n- [[ich spreche]], but [[du sprichst]] and [[er spricht]]\n\nThe endings are the same as always. The dictionary never shows the change, so learn these verbs with their [[er]] form."
+      "text": "Most verbs keep their vowel, like [[lernen]]. A few change it with **du** and **er/sie/es**, and [[sprechen]] is one of them: e becomes i.\n\n- [[ich spreche]], but [[du sprichst]] and [[er spricht]]\n\nThe endings are the same as always. The infinitive doesn't show the change, so learn these verbs with their er form: sprechen, spricht."
     },
     {
       "type": "table",
@@ -99,14 +99,14 @@
         {
           "type": "gap",
           "text": "Wir ___ Deutsch.",
-          "answers": [["lernen"]],
-          "explanation": "wir lernen: with wir the verb looks like the infinitive."
+          "answers": [["lernen", "sprechen", "verstehen"]],
+          "explanation": "With wir the verb looks like the infinitive: wir lernen, wir sprechen."
         },
         {
           "type": "order",
           "prompt": "I also speak Russian.",
           "tiles": ["ich", "spreche", "auch", "Russisch"],
-          "answers": ["Ich spreche auch Russisch"],
+          "answers": ["Ich spreche auch Russisch", "Russisch spreche ich auch"],
           "explanation": "The verb stays in second place; auch comes after it."
         },
         {

@@ -20,7 +20,7 @@
     },
     {
       "type": "comparison",
-      "text": "German asks 'how is your address?' ([[Wie ist Ihre Adresse?]]), just like Russian Какой у вас адрес? uses 'which'. Don't translate English 'what' here: 'Was ist Ihre Adresse?' sounds wrong."
+      "text": "German asks 'how is your address?' ([[Wie ist Ihre Adresse?]]). Like Russian (Какой у вас адрес?, not Что ...), German avoids 'what' here: 'Was ist Ihre Adresse?' sounds wrong."
     },
     {
       "type": "explanation",
@@ -42,7 +42,7 @@
       "type": "examples",
       "title": "At the reception desk",
       "items": [
-        { "de": "Wie ist Ihre Adresse? - Hauptstraße zwölf, in München.", "en": "What is your address? - Hauptstraße 12, in Munich." },
+        { "de": "Wie ist Ihre Adresse? - Hauptstraße zwölf, München.", "en": "What is your address? - Hauptstraße 12, Munich." },
         { "de": "Meine Handynummer ist null, eins, fünf, zwei, drei, vier.", "en": "My mobile number is 0152 34..." },
         { "de": "Können Sie das bitte schreiben?", "en": "Can you write that down, please?" },
         { "de": "Wie schreibt man das?", "en": "How do you spell that?" }
@@ -91,6 +91,7 @@
         },
         {
           "type": "dictation",
+          "instruction": "Listen and write the numbers as words.",
           "text": "Meine Nummer ist null, eins, sieben, sechs.",
           "explanation": "Numbers as words, digit by digit."
         },

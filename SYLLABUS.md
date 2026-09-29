@@ -40,6 +40,8 @@
 | 5 | **Work and class day** | daily routine, tasks, follow instructions, ask politely, say what you did | imperative (Sie, du), dürfen/sollen, "Könnten Sie...?" as a chunk, **Perfekt** with haben/sein, war/hatte | ch. 9, 13; ch. 16 lesson 4 | tell a colleague about your weekend; ask a teacher to repeat and explain | ~15 |
 | 6 | **Getting around, feeling ill** | directions in a building and in town, MVV, say what hurts, call in sick at work or class | **dative**: mit/zu/bei/aus/nach/von, "Wo?" + dative (im/am), dative pronouns (mir/dir/Ihnen), gefallen/gehören/passen, "mir tut ... weh" | ch. 10, 17; ch. 14 lesson 3; ch. 18 lesson 2 | Krankmeldung email to your boss or teacher; give directions from your home to the U-Bahn | ~15 |
 
+**Deviations as written (2026-09-29):** Unit 1 already teaches the e→i vowel change of *sprechen* (du sprichst) and *gern* (Ich lerne gern Deutsch), which the table places in Unit 4. Both are needed from the first self-introduction, so they come early as chunks, and Unit 4 practises them properly.
+
 **Total about 100 hours and about 650 words.** Goethe estimates 60-150 h for A1 (search snippet, not verified).
 - 20 min/day: about 10 months
 - 30 min/day: about 6-7 months

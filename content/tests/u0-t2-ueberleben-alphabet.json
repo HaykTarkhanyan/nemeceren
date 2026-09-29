@@ -43,20 +43,20 @@
       "type": "translate",
       "direction": "en-de",
       "text": "Once more, please.",
-      "references": ["Noch einmal, bitte.", "Noch einmal bitte."],
+      "references": ["Noch einmal, bitte.", "Noch einmal bitte.", "Noch mal, bitte.", "Nochmal, bitte.", "Noch mal bitte."],
       "explanation": "noch einmal = once more."
     },
     {
       "type": "translate",
       "direction": "en-de",
       "text": "I speak a little German.",
-      "references": ["Ich spreche ein bisschen Deutsch."],
+      "references": ["Ich spreche ein bisschen Deutsch.", "Ich spreche etwas Deutsch.", "Ich spreche ein wenig Deutsch."],
       "explanation": "ein bisschen = a little. Languages start with a capital letter: Deutsch."
     },
     {
       "type": "gap",
-      "text": "Wie ist Ihr ___? - Mein Name ist Hayk.",
-      "answers": [["Name"]],
+      "text": "Wie ist Ihr ___? - Hayk Tarkhanyan.",
+      "answers": [["Name", "Vorname"]],
       "explanation": "der Name. Nouns always start with a capital letter."
     },
     {
@@ -66,7 +66,7 @@
     },
     {
       "type": "write",
-      "instruction": "Spell your first name and your city letter by letter, using the German letter names (for example: ha, a, ypsilon, ka). Claude will check it.",
+      "instruction": "Spell your first name and your city letter by letter, using the German letter names (for example, Aram: a, err, a, em). Claude will check it.",
       "prompt": "Spell your first name and your city the German way.",
       "promptLang": "en",
       "minWords": 4

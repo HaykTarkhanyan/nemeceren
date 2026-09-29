@@ -50,15 +50,17 @@
       "questionLang": "en",
       "options": ["9,90 €", "19,90 €", "9,19 €"],
       "answer": "9,90 €",
-      "explanation": "neun Euro neunzig = 9.90 €. In Germany prices are written with a comma: 9,90 €."
+      "explanation": "neun Euro neunzig = 9,90 €. Germany writes prices with a comma."
     },
     {
       "type": "dictation",
+      "instruction": "Listen and write the numbers as words.",
       "text": "einundzwanzig",
       "explanation": "ein-und-zwanzig, one word, no capital letter."
     },
     {
       "type": "dictation",
+      "instruction": "Listen and write the numbers as words.",
       "text": "siebzehn",
       "explanation": "siebzehn, not 'siebenzehn'."
     },
@@ -78,8 +80,9 @@
     },
     {
       "type": "dictation",
-      "text": "Meine Nummer ist null, eins, fünf, zwei.",
-      "explanation": "Phone numbers digit by digit: null, eins, fünf, zwei."
+      "instruction": "Listen and write the numbers as words.",
+      "text": "null, acht, neun",
+      "explanation": "The Munich area code 089, digit by digit: null, acht, neun."
     }
   ]
 }

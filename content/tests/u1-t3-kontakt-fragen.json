@@ -65,12 +65,13 @@
     },
     {
       "type": "dictation",
-      "text": "Wie ist Ihre E-Mail-Adresse?",
-      "explanation": "E-Mail-Adresse is written with two hyphens; Ihre (polite your) with a capital I."
+      "instruction": "Listen and write the numbers as words.",
+      "text": "Meine Adresse ist Hauptstraße zwölf.",
+      "explanation": "Adresse has one d and a double s; Hauptstraße has ß; zwölf has ö."
     },
     {
       "type": "write",
-      "instruction": "Unit 1 final task. Introduce yourself to a new German class in 6-8 sentences: name, country, city, languages, job or studies, how long you have been learning German ('Ich lerne seit ... Deutsch'), and end with one question to the class. Claude will check it.",
+      "instruction": "Unit 1 final task. Introduce yourself to a new German class in 6-8 sentences: name, country, city, languages, job or studies, how long you have been learning German (use one of these: 'Ich lerne seit einer Woche Deutsch', 'seit zwei Wochen', 'seit einem Monat'), and end with one question to the class. Claude will check it.",
       "prompt": "Introduce yourself to a new German class and ask the class one question.",
       "promptLang": "en",
       "minWords": 30

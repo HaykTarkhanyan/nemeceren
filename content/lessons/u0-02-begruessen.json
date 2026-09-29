@@ -38,6 +38,7 @@
       "title": "How are you?",
       "items": [
         { "de": "Wie geht's?", "en": "How are you? (informal)" },
+        { "de": "Wie geht es dir?", "en": "How are you? (informal, full form)" },
         { "de": "Gut, danke. Und dir?", "en": "Fine, thanks. And you? (informal)" },
         { "de": "Wie geht es Ihnen?", "en": "How are you? (polite)" },
         { "de": "Sehr gut, danke. Und Ihnen?", "en": "Very well, thanks. And you? (polite)" },
@@ -101,9 +102,9 @@
         {
           "type": "gap",
           "text": "Hallo, wie geht's? - Gut, danke. Und ___?",
-          "answers": [["dir"]],
+          "answers": [["dir", "du"]],
           "hint": "The question was informal.",
-          "explanation": "Wie geht's? is informal, so answer informally: Und dir? (polite: Und Ihnen?)"
+          "explanation": "Wie geht's? is informal, so answer informally: Und dir? (polite: Und Ihnen?) In relaxed speech you also hear Und du?"
         }
       ]
     }

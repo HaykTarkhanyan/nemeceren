@@ -51,7 +51,7 @@
     },
     {
       "type": "comparison",
-      "text": "[[Bitte]] works like Russian пожалуйста and Armenian խնդրեմ: please, you're welcome, and 'here you go' when you hand something over, all in one word. [[Wie bitte?]] means 'pardon?'."
+      "text": "[[Bitte]] works like Russian пожалуйста: please, you're welcome, and 'here you go' when you hand something over, all in one word. Armenian splits it: խնդրում եմ (please) and խնդրեմ (you're welcome, here you go). [[Wie bitte?]] means 'pardon?'."
     },
     {
       "type": "warning",
@@ -105,14 +105,14 @@
         {
           "type": "gap",
           "text": "Danke! - ___!",
-          "answers": [["Bitte", "Bitte schön", "Gern"]],
+          "answers": [["Bitte", "Bitte schön", "Bitte sehr", "Gern", "Gerne", "Gern geschehen"]],
           "explanation": "Bitte (or Bitte schön) = you're welcome."
         },
         {
           "type": "translate",
           "direction": "en-de",
           "text": "I speak a little German.",
-          "references": ["Ich spreche ein bisschen Deutsch."],
+          "references": ["Ich spreche ein bisschen Deutsch.", "Ich spreche etwas Deutsch.", "Ich spreche ein wenig Deutsch."],
           "explanation": "Ich spreche = I speak; ein bisschen = a little."
         }
       ]

@@ -1,6 +1,36 @@
 {
   "ignore": ["Hayk", "Charlotte", "Eva", "Meier", "Müller", "Schmidt", "Thomas", "Weber", "Aram", "Tarkhanyan", "Goethestraße", "Siemens"],
   "entries": {
+    "Lehrer": [
+      {"lemma": "Lehrer", "pos": "noun", "article": "der", "plural": "Lehrer", "level": "A1", "gloss": ["teacher (male)"], "note": "Female: die Lehrerin."}
+    ],
+    "Kollegin": [
+      {"lemma": "Kollegin", "pos": "noun", "article": "die", "plural": "Kolleginnen", "level": "A1", "gloss": ["colleague (female)"], "note": "Male: der Kollege."}
+    ],
+    "Freundin": [
+      {"lemma": "Freundin", "pos": "noun", "article": "die", "plural": "Freundinnen", "level": "A1", "gloss": ["friend (female); girlfriend"], "note": "Male: der Freund."}
+    ],
+    "Studentin": [
+      {"lemma": "Studentin", "pos": "noun", "article": "die", "plural": "Studentinnen", "level": "A1", "gloss": ["student (female)"], "note": "Male: der Student."}
+    ],
+    "sie": [
+      {"lemma": "sie", "pos": "pronoun", "level": "A1", "gloss": ["she", "they"], "note": "sie ist = she is; sie sind = they are. With a capital S, Sie = you (polite)."}
+    ],
+    "seine": [
+      {"lemma": "sein", "pos": "determiner", "level": "A1", "form": "feminine and plural", "gloss": ["his, its"], "note": "seine Adresse, seine Eltern"}
+    ],
+    "Französisch": [
+      {"lemma": "Französisch", "pos": "noun", "level": "A1", "gloss": ["French (the language)"]}
+    ],
+    "es": [
+      {"lemma": "es", "pos": "pronoun", "level": "A1", "gloss": ["it"]}
+    ],
+    "heißt": [
+      {"lemma": "heißen", "pos": "verb", "level": "A1", "form": "du and er/sie/es form, present", "gloss": ["to be called"], "note": "Wie heißt du? Er heißt Aram."}
+    ],
+    "Milch": [
+      {"lemma": "Milch", "pos": "noun", "article": "die", "level": "A1", "gloss": ["milk"]}
+    ],
     "Welche": [
       { "lemma": "welcher", "pos": "determiner", "level": "A1", "gloss": ["which"], "note": "Welche Sprachen sprechen Sie? = Which languages do you speak?" }
     ],
