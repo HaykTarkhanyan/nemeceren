@@ -1,5 +1,5 @@
 // Validates everything Claude writes: content/tests/*.json, content/lessons/*.json,
-// content/words.json, content/topics.json, content/daily.json, the glossary files (content/glossary.json, content/glossary.generated.json)
+// content/words.json, content/topics.json, content/extras.json, the glossary files (content/glossary.json, content/glossary.generated.json)
 // including that every German word in the content has a glossary entry or is on the ignore list.
 // Then prints how much content there is. Hayk's progress lives in Neon (DECISIONS.md #21), not in
 // files, so what is left FOR HAYK (the runway) is on the app's Stats page, and Claude reads
@@ -8,8 +8,7 @@
 // Exits with code 1 and lists every problem (file + field) if anything is invalid.
 import { germanFields } from '../src/content/german.ts'
 import { glossaryGaps, makeGlossary } from '../src/glossary/lookup.ts'
-import { dailyRunwayText, dailyView } from '../src/lib/daily.ts'
-import { localDay } from '../src/lib/dates.ts'
+import { extrasCountText } from '../src/lib/extras.ts'
 import { CURATED_GLOSSARY, readContent, readCuratedGlossary, readGeneratedGlossary } from './content-files.ts'
 
 const started = Date.now()
@@ -52,6 +51,4 @@ console.log(
   `What is left for Hayk (the runway) depends on progress in Neon: see the app's Stats page, or ` +
     `\`uv run backend/scripts/progress.py summary\` from the repo root.`,
 )
-// The Daily page runs on the calendar, not on progress, so its runway is known here.
-const today = localDay(new Date())
-console.log(dailyRunwayText(dailyView(content.daily, today), today))
+console.log(extrasCountText(content.extras.items))

@@ -19,6 +19,7 @@ import {
 } from '../lib/stats.ts'
 import type { DayStats } from '../lib/stats.ts'
 import { contentRunway, runwayText } from '../lib/plan.ts'
+import { useIsGuest } from '../lib/session.ts'
 import { useSettings } from '../lib/settings.ts'
 import { activityOf, useProgress } from '../lib/storage.ts'
 import type { ProgressView } from '../lib/storage.ts'
@@ -70,6 +71,7 @@ function Tile({ value, label }: { value: string | number; label: string }) {
 export function StatsPage() {
   const progress = useProgress()
   const settings = useSettings()
+  const guest = useIsGuest()
   const state = progress.reviewState
   const activity = activityOf(progress)
 
@@ -124,6 +126,7 @@ export function StatsPage() {
   return (
     <div className="stack">
       <h1>Stats</h1>
+      {guest && <p className="warn-text small">Guest mode: these numbers cover only this session. Nothing is saved.</p>}
 
       <section className="card stack">
         <h2>Study days</h2>

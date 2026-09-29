@@ -136,7 +136,7 @@ main.container {
   border-bottom: 1px solid var(--border);
 }
 
-/* Wider than the page (760 px) so brand, 8 links, sync status and theme button fit on one line from 900 px. */
+/* Wider than the page (760 px) so brand, 8 links, sync status, theme and settings buttons fit on one line from 900 px. */
 .header-inner {
   display: flex;
   flex-wrap: wrap;
@@ -370,6 +370,27 @@ button.card:hover {
   cursor: pointer;
   vertical-align: middle;
   flex-shrink: 0;
+  text-decoration: none;
+}
+
+/* The settings gear while the Settings page is open. */
+.icon-btn.active {
+  background: var(--bg);
+  border-color: var(--accent);
+}
+
+/* Guest mode: a slim line under the header on every page. */
+.guest-banner {
+  background: var(--warn-bg);
+  color: var(--warn);
+  border-bottom: 1px solid var(--warn);
+  padding: 6px 0;
+  font-size: 0.9rem;
+}
+
+.guest-banner .link-btn {
+  color: inherit;
+  font-weight: 600;
 }
 
 input[type='text'],
@@ -1159,8 +1180,113 @@ rect.tone-b {
   color: var(--warn);
 }
 
-/* Daily */
-.daily-label {
+/* Notes */
+.note-text {
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-size: 1.05rem;
+}
+
+.note.editing {
+  border-color: var(--accent);
+}
+
+.note-feedback {
+  border-radius: 8px;
+  padding: 10px 12px;
+  background: var(--pending-bg);
+}
+
+.hints,
+.edits {
+  margin: 4px 0 0;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.edits del {
+  color: var(--bad);
+  background: var(--bad-bg);
+  border-radius: 4px;
+  padding: 0 3px;
+}
+
+.edits ins {
+  color: var(--ok);
+  background: var(--ok-bg);
+  text-decoration: none;
+  border-radius: 4px;
+  padding: 0 3px;
+}
+
+/* Extras */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.chip {
+  min-height: 36px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.chip.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-text);
+  font-weight: 600;
+}
+
+.chip-count {
+  opacity: 0.75;
+  font-size: 0.8rem;
+}
+
+/* The whole head of an item is the button that opens and closes it. */
+.extra-head {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.extra-head:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.extra-title {
+  font-weight: 600;
+}
+
+.extra-head:hover .extra-title {
+  color: var(--accent);
+}
+
+.extra-body {
+  margin-top: 12px;
+}
+
+.extra-label {
   background: var(--pending-bg);
   color: var(--pending);
 }
@@ -1173,14 +1299,6 @@ rect.tone-b {
   display: flex;
   flex-direction: column;
   gap: 4px;
-}
-
-.daily-archive summary {
-  cursor: pointer;
-}
-
-.daily-archive[open] summary {
-  margin-bottom: 12px;
 }
 
 /* Sign-in and sync */

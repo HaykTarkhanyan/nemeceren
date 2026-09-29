@@ -3,10 +3,10 @@
 //   content/tests/a1-01.json: items[3].answers[0]: "..." does not use exactly the tiles [...]
 import type { z } from 'zod'
 import { exerciseSections, exerciseTestId, sectionIndex } from './lessons.ts'
-import { CuratedGlossary, Daily, GeneratedGlossary, Lesson, LessonProgress, Result, ReviewLogEntry, ReviewState, Test, Topics, WordList } from './schema.ts'
+import { CuratedGlossary, Extras, GeneratedGlossary, Lesson, LessonProgress, Result, ReviewLogEntry, ReviewState, Test, Topics, WordList } from './schema.ts'
 import type {
   CuratedGlossary as CuratedGlossaryT,
-  Daily as DailyT,
+  Extras as ExtrasT,
   GeneratedGlossary as GeneratedGlossaryT,
   Lesson as LessonT,
   LessonProgress as LessonProgressT,
@@ -70,8 +70,8 @@ export function parseTopics(file: string, data: unknown): TopicsT {
   return parseWith(Topics, file, data)
 }
 
-export function parseDaily(file: string, data: unknown): DailyT {
-  return parseWith(Daily, file, data)
+export function parseExtras(file: string, data: unknown): ExtrasT {
+  return parseWith(Extras, file, data)
 }
 
 export function parseLessonProgress(file: string, data: unknown): LessonProgressT {
@@ -121,12 +121,12 @@ export interface RawFile {
  * Validate all content at once and collect every problem instead of stopping at the first,
  * so one run shows everything that needs fixing.
  */
-export function checkAllContent(input: { tests: RawFile[]; words: RawFile; lessons: RawFile[]; topics: RawFile; daily: RawFile }): {
+export function checkAllContent(input: { tests: RawFile[]; words: RawFile; lessons: RawFile[]; topics: RawFile; extras: RawFile }): {
   tests: TestT[]
   words: WordT[]
   lessons: LessonT[]
   topics: TopicsT
-  daily: DailyT
+  extras: ExtrasT
   problems: string[]
 } {
   const problems: string[] = []
@@ -156,13 +156,13 @@ export function checkAllContent(input: { tests: RawFile[]; words: RawFile; lesso
     topics = parseTopics(input.topics.file, parseJsonText(input.topics.file, input.topics.text))
   })
   // Not German for the glossary: the breakdown is the gloss, and jokes use made-up words.
-  let daily: DailyT = { startDate: '1970-01-01', days: [] }
+  let extras: ExtrasT = { items: [] }
   collect(() => {
-    daily = parseDaily(input.daily.file, parseJsonText(input.daily.file, input.daily.text))
+    extras = parseExtras(input.extras.file, parseJsonText(input.extras.file, input.extras.text))
   })
   problems.push(...crossReferences(tests, words, lessons))
   problems.push(...topicReferences(input.topics.file, topics, lessons))
-  return { tests, words, lessons, topics, daily, problems }
+  return { tests, words, lessons, topics, extras, problems }
 }
 
 /** Every topic points to an existing lesson and to a section id in it. */

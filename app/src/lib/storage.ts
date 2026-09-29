@@ -6,6 +6,8 @@
 //     review round, every ~5 minutes while the tab is visible and the outbox is not empty, when
 //     the tab is hidden, and with "Sync now". An empty outbox never makes a request (Free plan).
 // Pages read one merged view (the server state plus the outbox) through useProgress().
+// Guest mode (startGuest, DECISIONS.md #55): the same store with an empty state in memory; changes
+// go straight into it, nothing is written to browser storage and no request is ever made.
 import { useSyncExternalStore } from 'react'
 import type { LessonProgress, Result, ReviewLogEntry, StoredCard } from '../content/schema.ts'
 import { ContentError } from '../content/validate.ts'
@@ -13,11 +15,14 @@ import { AuthFailure, getToken } from './auth.ts'
 import { API_URL } from './config.ts'
 import { localDay } from './dates.ts'
 import { messageOf, reportError } from './errors.ts'
+import { noteTextProblem } from './notes.ts'
 import {
+  acceptedLocally,
   applySent,
   buildView,
   emptyOutbox,
   isOutboxEmpty,
+  lockedRejections,
   nextBatch,
   outboxSize,
   parseOutbox,
@@ -26,10 +31,10 @@ import {
   removeSent,
   sameJson,
 } from './outbox.ts'
-import type { Outbox, ProgressView, SavedResult, ServerState, SyncBatch } from './outbox.ts'
+import type { NoteRecord, NoteView, Outbox, ProgressView, SavedResult, ServerState, SyncBatch } from './outbox.ts'
 import type { ReviewEvent, TestItemEvent } from './stats.ts'
 
-export type { ProgressView, SavedResult }
+export type { NoteView, ProgressView, SavedResult }
 
 /** An error answer from the API: { error: { code, message, details? }, requestId }. */
 export class ApiError extends Error {
@@ -98,8 +103,27 @@ const KEEPALIVE_MAX_BYTES = 60_000
 const outboxKey = (userId: string) => `nemeceren.outbox.${userId}`
 const cacheKey = (userId: string) => `nemeceren.state.${userId}`
 
+/** The state of a guest: nothing yet. */
+function emptyServerState(now: Date): ServerState {
+  const t = now.toISOString()
+  return {
+    serverTime: t,
+    userId: 'guest',
+    reviewEventsSince: t,
+    cards: {},
+    reviewEvents: [],
+    studyDays: [],
+    attempts: [],
+    lessonProgress: { version: 1, lessons: {} },
+    newWordExtras: {},
+    notes: [],
+  }
+}
+
 export function createProgressStore(deps: StoreDeps) {
   let userId: string | null = null
+  /** Guest mode: no account, no storage, no network; progress lives in memory until a reload. */
+  let guest = false
   let server: ServerState | null = null
   let outbox: Outbox = emptyOutbox()
   let view: ProgressView | null = null
@@ -217,7 +241,7 @@ export function createProgressStore(deps: StoreDeps) {
 
   /** Sends the outbox, in as many batches as the limits need. Never sends an empty batch. */
   function flush(opts: { keepalive?: boolean; manual?: boolean } = {}): Promise<void> {
-    if (!userId) return Promise.resolve()
+    if (guest || !userId) return Promise.resolve()
     if (running) {
       again = true
       return running
@@ -230,6 +254,7 @@ export function createProgressStore(deps: StoreDeps) {
       try {
         for (let batch: SyncBatch | null = nextBatch(outbox); batch; batch = nextBatch(outbox)) {
           const reply = parseSyncResponse(await request('POST', '/v1/sync', batch, opts.keepalive))
+          for (const message of lockedRejections(batch, reply)) deps.reportError(message)
           outbox = removeSent(outbox, batch)
           persistOutbox()
           if (server) {
@@ -256,6 +281,7 @@ export function createProgressStore(deps: StoreDeps) {
 
   /** Loads the user's outbox and state. Throws ApiError (e.g. 403 not_allowed), AuthFailure or NetworkError. */
   async function start(user: { id: string }): Promise<void> {
+    guest = false
     userId = user.id
     server = null
     view = null
@@ -276,14 +302,51 @@ export function createProgressStore(deps: StoreDeps) {
       if (cached === null) {
         throw new NetworkError(`${messageOf(err)}. There is no copy of your progress on this device yet, so the app needs the internet once.`)
       }
-      server = parseState('the offline copy of your progress', cached)
+      // Offline copies saved before notes existed (2026-09-30) have no "notes" key: that copy had none.
+      const copy = cached !== null && typeof cached === 'object' && !('notes' in cached) ? { ...cached, notes: [] } : cached
+      server = parseState('the offline copy of your progress', copy)
       status = { ...status, phase: 'offline', fromCache: true }
     }
     rebuild()
   }
 
+  /** Guest mode: an empty state in memory. Never reads or writes browser storage and never calls the API or the auth server. */
+  function startGuest() {
+    guest = true
+    userId = null
+    server = emptyServerState(deps.now())
+    outbox = emptyOutbox()
+    status = { phase: 'idle', pending: 0, lastSyncAt: null, error: null, blocked: false, fromCache: false }
+    rebuild()
+  }
+
+  /**
+   * "Check for feedback": loads GET /v1/state once more (one request; the outbox is not sent), so
+   * Claude's new feedback and reviews show. Throws on failure, for the page to show.
+   */
+  async function refresh(): Promise<void> {
+    if (guest) throw new Error('Guest mode has no account to check.')
+    if (!userId) throw new Error('Not signed in: nothing to check')
+    const user = userId
+    let state: ServerState
+    try {
+      state = parseState('progress from the server', await request('GET', `/v1/state?days=${STATE_DAYS}`))
+    } catch (err) {
+      if (isSignedOut(err)) deps.onSignedOut?.()
+      if (err instanceof ApiError || err instanceof ContentError) throw new Error(describe(err))
+      throw err
+    }
+    if (state.userId !== user) throw new Error(`The server sent progress for another user (${state.userId}, signed in as ${user})`)
+    if (userId !== user) return // signed out while the request was on its way
+    server = state
+    persistCache()
+    status = { ...status, fromCache: false }
+    rebuild()
+  }
+
   /** Forgets the user in memory (the outbox stays on the device and syncs after the next sign-in). */
   function stop() {
+    guest = false
     userId = null
     server = null
     view = null
@@ -301,6 +364,15 @@ export function createProgressStore(deps: StoreDeps) {
     current()
     const before = outbox
     outbox = mutate(outbox)
+    if (guest) {
+      // Straight into the in-memory state, as if a sync had accepted it; nothing is stored or sent.
+      for (let batch = nextBatch(outbox); batch; batch = nextBatch(outbox)) {
+        server = applySent(server!, batch, acceptedLocally(deps.now().toISOString()))
+        outbox = removeSent(outbox, batch)
+      }
+      rebuild()
+      return
+    }
     try {
       persistOutbox()
     } catch (err) {
@@ -312,10 +384,26 @@ export function createProgressStore(deps: StoreDeps) {
 
   const today = () => localDay(deps.now())
 
+  /** The note to change: it must exist, and a note with Claude's feedback is locked. */
+  function changeableNote(id: string): NoteView {
+    const note = current().notes.find((n) => n.id === id)
+    if (!note) throw new Error(`There is no note ${id} (was it deleted on another device?)`)
+    if (note.feedback) throw new Error("This note has Claude's feedback, so it is locked: it cannot be changed or deleted any more.")
+    return note
+  }
+
+  /** Always later than the version it replaces (the merge needs a later updatedAt), even if the clock went back. */
+  function changedAt(before: string): string {
+    return new Date(Math.max(deps.now().getTime(), Date.parse(before) + 1)).toISOString()
+  }
+
   return {
     start,
+    startGuest,
     stop,
     flush,
+    refresh,
+    isGuest: () => guest,
     getView: current,
     hasView: () => view !== null,
     getStatus: () => status,
@@ -372,6 +460,43 @@ export function createProgressStore(deps: StoreDeps) {
       if (changed.length === 0) return
       change((o) => ({ ...o, lessons: { ...o.lessons, ...Object.fromEntries(changed) } }))
     },
+
+    /**
+     * Saves a new note (no id) or a changed one, and starts a sync, like a submitted test. The text
+     * is trimmed. Throws with a message for Hayk if it is empty or too long, or the note is locked.
+     * Returns the note id.
+     */
+    saveNote(text: string, id?: string): string {
+      if (guest) throw new Error("Sign in to write notes: a guest's notes could not be kept, and Claude could not read them.")
+      const problem = noteTextProblem(text)
+      if (problem) throw new Error(problem)
+      const trimmed = text.trim()
+      let noteId: string
+      let record: NoteRecord
+      if (id === undefined) {
+        noteId = deps.newId()
+        const now = deps.now().toISOString()
+        record = { text: trimmed, localDay: today(), createdAt: now, updatedAt: now, deletedAt: null }
+      } else {
+        const note = changeableNote(id)
+        if (note.text === trimmed) return id
+        noteId = id
+        record = { text: trimmed, localDay: note.localDay, createdAt: note.createdAt, updatedAt: changedAt(note.updatedAt), deletedAt: null }
+      }
+      change((o) => ({ ...o, notes: { ...o.notes, [noteId]: record } }))
+      void flush()
+      return noteId
+    },
+
+    /** Deletes a note without feedback (a soft delete, so the other devices learn it too) and starts a sync. */
+    deleteNote(id: string) {
+      if (guest) throw new Error('Guest mode has no notes.')
+      const note = changeableNote(id)
+      const at = changedAt(note.updatedAt)
+      const record: NoteRecord = { text: note.text, localDay: note.localDay, createdAt: note.createdAt, updatedAt: at, deletedAt: at }
+      change((o) => ({ ...o, notes: { ...o.notes, [id]: record } }))
+      void flush()
+    },
   }
 }
 
@@ -417,6 +542,9 @@ export const recordPractice = (entry: ReviewLogEntry) => progressStore().recordP
 export const addExtraNewWords = (n: number) => progressStore().addExtraNewWords(n)
 export const saveResult = (result: Result) => progressStore().saveResult(result)
 export const saveLessonProgress = (p: LessonProgress) => progressStore().saveLessonProgress(p)
+export const saveNote = (text: string, id?: string) => progressStore().saveNote(text, id)
+export const deleteNote = (id: string) => progressStore().deleteNote(id)
+export const refreshState = () => progressStore().refresh()
 
 /** Starts a sync unless the outbox is empty (e.g. after a review round). */
 export function requestFlush(): void {

@@ -4,7 +4,7 @@ import { reportError } from '../lib/errors.ts'
 import { RATES, updateSettings, useSettings } from '../lib/settings.ts'
 import type { Settings } from '../lib/settings.ts'
 import { pickVoice, speak, useSpeech } from '../lib/speech.ts'
-import { useSession } from '../lib/session.ts'
+import { leaveGuest, useSession } from '../lib/session.ts'
 
 function save(patch: Partial<Settings>): void {
   try {
@@ -80,21 +80,34 @@ export function SettingsPage() {
         </label>
       </section>
 
-      <section className="card stack">
-        <h2>Account and sync</h2>
-        {session.phase === 'ready' && <p>Signed in as {session.user.email}.</p>}
-        <p className="muted small">
-          Your progress is saved to your account and is the same on every device. Changes are kept on this device first and sent after a test,
-          after a round of word reviews, every few minutes while you study, and when you leave the page.
-        </p>
-        <p>
-          <SyncStatusLine />
-        </p>
-        <div className="row">
-          <SignOutButton />
-        </div>
-        <p className="muted small">The settings on this page (voice, speed, new words per day) are stored per device.</p>
-      </section>
+      {session.phase === 'guest' ? (
+        <section className="card stack">
+          <h2>Account</h2>
+          <p>Guest mode: nothing you do is saved, and a reload starts fresh. Sign in to keep your progress.</p>
+          <div className="row">
+            <button type="button" className="btn primary" onClick={leaveGuest}>
+              Sign in
+            </button>
+          </div>
+          <p className="muted small">The settings on this page (voice, speed, new words per day) are stored per device, also in guest mode.</p>
+        </section>
+      ) : (
+        <section className="card stack">
+          <h2>Account and sync</h2>
+          {session.phase === 'ready' && <p>Signed in as {session.user.email}.</p>}
+          <p className="muted small">
+            Your progress is saved to your account and is the same on every device. Changes are kept on this device first and sent after a test
+            or a note, after a round of word reviews, every few minutes while you study, and when you leave the page.
+          </p>
+          <p>
+            <SyncStatusLine />
+          </p>
+          <div className="row">
+            <SignOutButton />
+          </div>
+          <p className="muted small">The settings on this page (voice, speed, new words per day) are stored per device.</p>
+        </section>
+      )}
     </div>
   )
 }

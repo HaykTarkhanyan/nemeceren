@@ -1,11 +1,12 @@
 import { content } from './content/load.ts'
 import { AuthGate } from './components/AuthGate.tsx'
-import { ErrorBanner, ErrorBoundary, Header, VoiceWarning } from './components/Chrome.tsx'
+import { ErrorBanner, ErrorBoundary, GuestBanner, Header, VoiceWarning } from './components/Chrome.tsx'
 import { useRoute } from './lib/router.ts'
-import { DailyPage } from './pages/DailyPage.tsx'
+import { ExtrasPage } from './pages/ExtrasPage.tsx'
 import { HomePage } from './pages/HomePage.tsx'
 import { LessonPage, LessonsPage } from './pages/LessonsPage.tsx'
 import { ListenPage } from './pages/ListenPage.tsx'
+import { NotesPage } from './pages/NotesPage.tsx'
 import { ResultDetailPage, ResultsPage } from './pages/ResultsPage.tsx'
 import { SettingsPage } from './pages/SettingsPage.tsx'
 import { StatsPage } from './pages/StatsPage.tsx'
@@ -36,8 +37,10 @@ function Page({ route }: { route: string[] }) {
       return <LessonPage id={arg ?? ''} sectionId={sub} />
     case 'topics':
       return <TopicsPage />
-    case 'daily':
-      return <DailyPage />
+    case 'extras':
+      return <ExtrasPage />
+    case 'notes':
+      return <NotesPage />
     case 'listen':
       return <ListenPage />
     case 'words':
@@ -61,6 +64,7 @@ export function App() {
       <ErrorBanner />
       <AuthGate>
         <Header route={route} />
+        <GuestBanner />
         <VoiceWarning />
         <main className="container">
           <ErrorBoundary key={route.join('/')}>

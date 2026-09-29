@@ -272,40 +272,63 @@ export const Topics = z
     })
   })
 
-// ---------- Daily (content/daily.json): a joke, a fun fact and an everyday sentence per day ----------
+// ---------- Extras (content/extras.json): jokes, fun facts and everyday phrases to browse ----------
 
-/** A real calendar date, not only the YYYY-MM-DD shape (2026-02-30 is rejected). */
-export const RealDate = IsoDate.refine(
-  (s) => {
-    const [y, m, d] = s.split('-').map(Number)
-    const t = new Date(Date.UTC(y, m - 1, d))
-    return t.getUTCFullYear() === y && t.getUTCMonth() === m - 1 && t.getUTCDate() === d
-  },
-  { message: 'is not a real date' },
-)
+export const EXTRA_TYPES = ['joke', 'fact', 'phrase'] as const
+/** The id starts with this letter: j01, f01, p01. */
+export const EXTRA_ID_PREFIX = { joke: 'j', fact: 'f', phrase: 'p' } as const
 
-export const DailyCard = z.strictObject({
-  title: Text,
-  lines: z.array(z.strictObject({ de: Text, en: Text })).min(1),
-  breakdown: z.array(z.strictObject({ de: Text, en: Text, note: Text.optional() })).min(1),
-  explain: RichText,
+export const ExtraItem = z
+  .strictObject({
+    id: z.string().regex(/^[jfp]\d{2,}$/, { message: 'must be j, f or p followed by 2 or more digits, e.g. "j01"' }),
+    type: z.enum(EXTRA_TYPES),
+    title: Text,
+    lines: z.array(z.strictObject({ de: Text, en: Text })).min(1),
+    breakdown: z.array(z.strictObject({ de: Text, en: Text, note: Text.optional() })).min(1),
+    explain: RichText,
+  })
+  .superRefine((it, ctx) => {
+    const prefix = EXTRA_ID_PREFIX[it.type]
+    if (!it.id.startsWith(prefix)) ctx.addIssue({ code: 'custom', path: ['id'], message: `a ${it.type} id starts with "${prefix}"` })
+    // Every line but the last is the setup; the last one is the punchline.
+    if (it.type === 'joke' && it.lines.length < 2) ctx.addIssue({ code: 'custom', path: ['lines'], message: 'a joke needs 2 or more lines (setup and punchline)' })
+  })
+
+export const Extras = z.strictObject({ items: z.array(ExtraItem).min(1) }).superRefine((x, ctx) => {
+  const seen = new Set<string>()
+  x.items.forEach((it, i) => {
+    if (seen.has(it.id)) ctx.addIssue({ code: 'custom', path: ['items', i, 'id'], message: `duplicate id "${it.id}"` })
+    seen.add(it.id)
+  })
 })
 
-export const Daily = z
-  .strictObject({
-    /** Day 1 unlocks on this local date, then one more day per calendar day. */
-    startDate: RealDate,
-    days: z.array(z.strictObject({ id: Text, joke: DailyCard, fact: DailyCard, phrase: DailyCard })).min(1),
+// ---------- Notes (written by Hayk in the app, feedback by Claude; stored in Neon) ----------
+
+export const NOTE_MAX_CHARS = 5000
+
+export const NoteText = z
+  .string()
+  .max(NOTE_MAX_CHARS, { message: `must be at most ${NOTE_MAX_CHARS} characters` })
+  .regex(/\S/, { message: 'must not be empty or only whitespace' })
+
+export const NoteEdit = z
+  .strictObject({ from: Text, to: Text, why: Text, kind: z.enum(['error', 'style']) })
+  .superRefine((e, ctx) => {
+    if (e.from === e.to) ctx.addIssue({ code: 'custom', path: ['to'], message: 'from and to are the same' })
   })
-  .superRefine((d, ctx) => {
-    const seen = new Set<string>()
-    d.days.forEach((day, i) => {
-      const want = `d${String(i + 1).padStart(2, '0')}`
-      if (seen.has(day.id)) ctx.addIssue({ code: 'custom', path: ['days', i, 'id'], message: `duplicate day id "${day.id}"` })
-      else if (day.id !== want) ctx.addIssue({ code: 'custom', path: ['days', i, 'id'], message: `must be "${want}" (days are d01, d02, ... in order)` })
-      seen.add(day.id)
-    })
-  })
+
+/** Claude's feedback on a note, written with backend/scripts/progress.py (which mirrors these rules). */
+export const NoteFeedback = z.strictObject({
+  /** The lesson text format: **bold**, *italic*, lists, [[German]]. */
+  summary: RichText,
+  /** Nudges so Hayk can fix the note himself before looking at the corrections. */
+  hints: z.array(Text).min(1).optional(),
+  /** The whole note corrected. */
+  corrected: Text.optional(),
+  /** "error" is a real mistake; "style" is a suggestion and never counts as a mistake. */
+  edits: z.array(NoteEdit).min(1).optional(),
+  at: IsoDateTime,
+})
 
 const ARTICLE = /^(der|die|das) /
 
@@ -570,8 +593,11 @@ export type Lesson = z.infer<typeof Lesson>
 export type LessonBlock = z.infer<typeof LessonBlock>
 export type Topics = z.infer<typeof Topics>
 export type TopicItem = z.infer<typeof TopicItem>
-export type Daily = z.infer<typeof Daily>
-export type DailyCard = z.infer<typeof DailyCard>
+export type ExtraItem = z.infer<typeof ExtraItem>
+export type ExtraType = ExtraItem['type']
+export type Extras = z.infer<typeof Extras>
+export type NoteEdit = z.infer<typeof NoteEdit>
+export type NoteFeedback = z.infer<typeof NoteFeedback>
 export type TableColumn = z.infer<typeof TableColumn>
 export type LessonProgress = z.infer<typeof LessonProgress>
 export type ReviewMode = z.infer<typeof ReviewMode>

@@ -1,22 +1,28 @@
 // End-to-end check of the app's own sign-in and sync code (src/lib/auth.ts, src/lib/storage.ts)
-// against the DEPLOYED Neon backend, with ONE throwaway user that is deleted at the end.
+// against the DEPLOYED Neon backend.
 // Unit tests fake the API; this is the only check that the real SDK, auth server and API agree
 // (it found that the SDK's token() answers from its session cache, see getToken in auth.ts).
 // Re-run it after upgrading @neondatabase/auth or changing the sync code.
 //
-// Run from app/:  npx tsx scripts/non_essential/app-integration.ts   (about 30 s, about 20 requests)
-// Needs: uv, the Neon CLI signed in, .env.local at the repo root, and sign-up OPEN on Neon Auth
-// (after Hayk's account exists it is closed; re-open it for the run and close it again, see
-// backend/README.md "Hayk's account"). The user is nemeceren-smoke-<12 hex>@example.com, so
-// `uv run backend/scripts/non_essential/smoke_test.py --cleanup <id>` accepts it.
+// Run from app/ (about 40 s, about 30 requests):
+//   npx tsx scripts/non_essential/app-integration.ts --test-account   the usual way since sign-up is closed
+//   npx tsx scripts/non_essential/app-integration.ts                  throwaway user; needs sign-up OPEN
+// --test-account signs in as Claude's test account (NEMECEREN_TEST_EMAIL / NEMECEREN_TEST_PASSWORD in
+// the repo-root .env.local, DECISIONS.md #52). It deletes only that account's progress rows, before
+// and after, and never creates or deletes a user. Without it, a throwaway
+// nemeceren-smoke-<12 hex>@example.com user is signed up and deleted at the end; that needs sign-up
+// open on Neon Auth, which it is not since 2026-09-29 (#52).
+// Needs: uv, .env.local at the repo root, and for the throwaway mode the Neon CLI signed in.
 // Node has no cookie jar, so fetch is wrapped to keep the auth host's cookies and send the app's
-// Origin, like the browser does. Exits 1 if any check fails.
+// Origin, like the browser does. Exits 1 if any check fails. Passwords are never printed.
 import { spawnSync } from 'node:child_process'
 import { randomBytes } from 'node:crypto'
+import { readFileSync } from 'node:fs'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import type { Result, ReviewLogEntry, StoredCard } from '../../src/content/schema.ts'
 import { currentUser, getToken, jwtExpiry, signIn, signOut, signUp } from '../../src/lib/auth.ts'
+import type { AuthUser } from '../../src/lib/auth.ts'
 import { AUTH_URL } from '../../src/lib/config.ts'
 import { localDay } from '../../src/lib/dates.ts'
 import { ApiError, createProgressStore } from '../../src/lib/storage.ts'
@@ -25,6 +31,17 @@ import { emptyState, Rating, review } from '../../src/lib/srs.ts'
 
 const REPO = resolve(dirname(fileURLToPath(import.meta.url)), '../../..')
 const started = Date.now()
+const TEST_ACCOUNT = process.argv.includes('--test-account')
+
+/** A value of the repo-root .env.local (never printed). */
+function envValue(name: string): string {
+  const line = readFileSync(resolve(REPO, '.env.local'), 'utf-8')
+    .split(/\r?\n/)
+    .find((l) => l.startsWith(`${name}=`))
+  const value = line?.slice(name.length + 1).trim().replace(/^"(.*)"$/, '$1')
+  if (!value) throw new Error(`.env.local at the repo root has no value for ${name}`)
+  return value
+}
 
 // ---- fetch as a browser would do it: cookies of the auth host, the app's Origin ----
 const realFetch = globalThis.fetch
@@ -38,6 +55,7 @@ interface SyncReply {
   attempts: { inserted: number; duplicates: number }
   lessons: { written: number }
   newWordExtras: { written: number }
+  notes: { written: number; stale: { id: string; feedback: unknown }[] }
 }
 
 globalThis.fetch = (async (input: RequestInfo | URL, init?: RequestInit) => {
@@ -80,8 +98,8 @@ function check(ok: boolean, what: string, detail?: unknown) {
   console.log(`FAIL ${what}${detail === undefined ? '' : `: ${JSON.stringify(detail)}`}`)
 }
 
-function run(cmd: string, args: string[], cwd: string, shell = false) {
-  const r = spawnSync(cmd, args, { cwd, encoding: 'utf-8', shell })
+function run(cmd: string, args: string[], cwd: string, shell = false, input?: string) {
+  const r = spawnSync(cmd, args, { cwd, encoding: 'utf-8', shell, input })
   const out = `${r.stdout ?? ''}${r.stderr ?? ''}`.trim()
   console.log(`  $ ${cmd} ${args.join(' ')} (exit ${r.status})\n${out.split('\n').map((l) => `    ${l}`).join('\n')}`)
   return { status: r.status, out }
@@ -151,16 +169,27 @@ function result(testId: string): Result {
   }
 }
 
-const email = `nemeceren-smoke-${randomBytes(6).toString('hex')}@example.com`
-const password = randomBytes(18).toString('base64url') // never printed
+const email = TEST_ACCOUNT ? envValue('NEMECEREN_TEST_EMAIL') : `nemeceren-smoke-${randomBytes(6).toString('hex')}@example.com`
+const password = TEST_ACCOUNT ? envValue('NEMECEREN_TEST_PASSWORD') : randomBytes(18).toString('base64url') // never printed
 let userId: string | null = null
+const cleanTestAccount = () =>
+  check(run('uv', ['run', 'backend/scripts/non_essential/smoke_test.py', '--cleanup-test-account'], REPO).status === 0, "the test account's progress rows are deleted")
 
 try {
-  console.log(`\n== 1. sign up ${email}`)
-  const user = await signUp(email, password)
-  userId = user.id
+  let user: AuthUser
+  if (TEST_ACCOUNT) {
+    console.log(`\n== 1. sign in as the test account ${email}`)
+    cleanTestAccount()
+    user = await signIn(email, password)
+    userId = user.id
+    check(user.email.toLowerCase() === email.toLowerCase(), 'signIn returns the test account')
+  } else {
+    console.log(`\n== 1. sign up ${email}`)
+    user = await signUp(email, password)
+    userId = user.id
+    check(user.email === email, 'signUp returns the user')
+  }
   console.log(`  user id ${user.id}`)
-  check(user.email === email, 'signUp returns the user')
   check((await currentUser())?.id === user.id, 'currentUser() sees the session cookie')
   const token = await getToken()
   const exp = jwtExpiry(token)
@@ -168,17 +197,21 @@ try {
   const before1 = requests
   check((await getToken()) === token && requests === before1, 'a second getToken() is served from the SDK cache (no request)')
 
-  console.log('\n== 2. not on the allowlist yet')
-  let err: unknown = null
-  try {
-    await store().start(user)
-  } catch (e) {
-    err = e
-  }
-  check(err instanceof ApiError && err.status === 403 && err.code === 'not_allowed', 'start() -> ApiError 403 not_allowed', String(err))
+  if (TEST_ACCOUNT) {
+    console.log('\n== 2-3. the test account is allowlisted already (the smoke test checks the 403 with it)')
+  } else {
+    console.log('\n== 2. not on the allowlist yet')
+    let err: unknown = null
+    try {
+      await store().start(user)
+    } catch (e) {
+      err = e
+    }
+    check(err instanceof ApiError && err.status === 403 && err.code === 'not_allowed', 'start() -> ApiError 403 not_allowed', String(err))
 
-  console.log('\n== 3. allowlist')
-  check(run('uv', ['run', 'backend/scripts/progress.py', 'allow-user', email], REPO).status === 0, 'progress.py allow-user exit 0')
+    console.log('\n== 3. allowlist')
+    check(run('uv', ['run', 'backend/scripts/progress.py', 'allow-user', email], REPO).status === 0, 'progress.py allow-user exit 0')
+  }
 
   console.log('\n== 4. device A: start, record, one sync')
   const devA = memoryStorage()
@@ -269,6 +302,24 @@ try {
   check(r3?.cards.stale.length === 1 && r3.cards.stale[0].wordId === 'hallo', 'the server answers with its newer card as stale', r3?.cards)
   check(c.getView().reviewState.cards.hallo.last_review === c1.last_review && c.getStatus().pending === 0, 'device C keeps the server card, nothing pending')
 
+  console.log("\n== 7b. notes: save, Claude's feedback locks it, an edit made before seeing it is refused and reported")
+  const noteId = a2.saveNote('  Ich heiße Test. Ich wohne in München.  ')
+  await a2.flush()
+  check(lastSyncReply?.notes.written === 1 && a2.getView().notes[0]?.pending === false, 'a new note is synced at once', lastSyncReply?.notes)
+  const fb = JSON.stringify({ summary: 'Integration check: [[Ich heiße]] is right.', hints: ['Read it aloud.'] })
+  check(run('uv', ['run', 'backend/scripts/progress.py', 'note-feedback', noteId, '-', '--user', email], REPO, false, fb).status === 0, 'progress.py note-feedback exit 0')
+  a2.saveNote('Changed before seeing the feedback.', noteId) // a2 does not know about the feedback yet
+  await a2.flush()
+  check(lastSyncReply?.notes.written === 0 && lastSyncReply.notes.stale[0]?.id === noteId, 'the server refuses the edit and sends its version back', lastSyncReply?.notes)
+  const n2 = a2.getView().notes.find((n) => n.id === noteId)
+  check(n2?.feedback !== null && n2?.text === 'Ich heiße Test. Ich wohne in München.' && !n2.pending, 'device A adopts the locked note with its feedback', n2)
+  const refused = reported.findIndex((m) => m.includes('already has Claude') && m.includes('Changed before seeing the feedback.'))
+  check(refused >= 0, 'the refused edit is reported, with its text', reported)
+  if (refused >= 0) reported.splice(refused, 1)
+  const before7b = requests
+  await c.refresh()
+  check(requests - before7b <= 2 && c.getView().notes.find((n) => n.id === noteId)?.feedback !== null, '"Check for feedback" on device C: one state request, the feedback is there', requests - before7b)
+
   console.log('\n== 8. sign out, wrong password, sign in again')
   await signOut()
   check((await currentUser()) === null, 'signed out: currentUser() is null')
@@ -291,13 +342,16 @@ try {
   const e = store()
   await e.start(back)
   check(e.getView().reviewLog.length === 5 && e.getView().results.length === 2, 'after sign-in: 5 log lines, 2 attempts')
+  check(e.getView().notes.length === 1 && e.getView().notes[0].feedback !== null, 'after sign-in: the note with its feedback')
   check(reported.length === 0, 'nothing was reported to the error banner', reported)
 } catch (e) {
   failures++
   console.log(`FAIL unexpected error: ${e instanceof Error ? e.stack : String(e)}`)
 } finally {
   console.log('\n== cleanup')
-  if (userId) {
+  if (TEST_ACCOUNT) {
+    cleanTestAccount()
+  } else if (userId) {
     const rows = run('uv', ['run', 'backend/scripts/non_essential/smoke_test.py', '--cleanup', userId], REPO)
     check(rows.status === 0, "the test user's rows are deleted")
     const del = run('neon', ['neon-auth', 'user', 'delete', userId], resolve(REPO, 'backend'), true)

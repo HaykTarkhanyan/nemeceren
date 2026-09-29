@@ -1,8 +1,9 @@
-// Shows the sign-in page, loading and account problems; renders the app only once progress is loaded.
+// Shows the sign-in page, loading and account problems; renders the app only once progress is
+// loaded, or for a guest (no account, nothing saved).
 import { useEffect, useState } from 'react'
 import type { FormEvent, ReactNode } from 'react'
 import { messageOf } from '../lib/errors.ts'
-import { boot, retry, signInWith, signOutNow, signUpWith, useSession } from '../lib/session.ts'
+import { boot, continueAsGuest, retry, signInWith, signOutNow, signUpWith, useSession } from '../lib/session.ts'
 import { startAutoSync } from '../lib/storage.ts'
 
 export function AuthGate({ children }: { children: ReactNode }) {
@@ -17,6 +18,7 @@ export function AuthGate({ children }: { children: ReactNode }) {
 
   switch (session.phase) {
     case 'ready':
+    case 'guest':
       return <>{children}</>
     case 'checking':
       return <Centered>Checking your sign-in...</Centered>
@@ -176,6 +178,17 @@ function LoginPage({ notice }: { notice: string | null }) {
           <p className="small muted">No account? Ask Claude.</p>
         )}
       </form>
+      <section className="card stack">
+        <p className="small">
+          Or just look around: lessons, topics, extras, tests and word reviews all work without an account. Nothing is saved, and a reload starts
+          fresh.
+        </p>
+        <div>
+          <button type="button" className="btn" onClick={continueAsGuest}>
+            Continue as guest
+          </button>
+        </div>
+      </section>
     </main>
   )
 }

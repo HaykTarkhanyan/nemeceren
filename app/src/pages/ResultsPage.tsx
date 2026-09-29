@@ -3,13 +3,18 @@ import { itemsForResult } from '../content/lessons.ts'
 import { ResultView } from '../components/ResultView.tsx'
 import { finalScore } from '../lib/grading.ts'
 import { link } from '../lib/router.ts'
+import { useIsGuest } from '../lib/session.ts'
 import { useProgress } from '../lib/storage.ts'
 
 export function ResultsPage() {
   const { results, pendingAttemptIds } = useProgress()
+  const guest = useIsGuest()
   return (
     <div className="stack">
       <h1>Results</h1>
+      {guest && (
+        <p className="warn-text small">Guest mode: only the results of this session. Nothing is saved, and Claude does not review guest answers.</p>
+      )}
       {results.length === 0 && <p className="muted">No attempts yet.</p>}
       {results.map(({ id, result }) => {
         const s = finalScore(result)

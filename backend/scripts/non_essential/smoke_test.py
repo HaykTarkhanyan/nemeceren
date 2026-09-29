@@ -6,32 +6,47 @@
 #     "python-dotenv==1.2.3",
 # ]
 # ///
-"""End-to-end check of the deployed API with a throwaway user. Re-run after every deploy.
+"""End-to-end check of the deployed API. Re-run after every deploy and every new migration.
 
 Run from the repo root:
-    uv run backend/scripts/non_essential/smoke_test.py
-    uv run backend/scripts/non_essential/smoke_test.py --cleanup <user-id>   # after an interrupted run
+    uv run backend/scripts/non_essential/smoke_test.py --test-account          # the usual way since sign-up is closed
+    uv run backend/scripts/non_essential/smoke_test.py                         # throwaway user; needs sign-up OPEN
+    uv run backend/scripts/non_essential/smoke_test.py --cleanup <user-id>     # after an interrupted throwaway run
+    uv run backend/scripts/non_essential/smoke_test.py --cleanup-test-account  # delete the test account's progress rows
 
-Expected runtime: ~15-40 s (a guess: cold starts of the function and the database, ~30 HTTP calls).
+Expected runtime: ~15-40 s (a guess: cold starts of the function and the database, ~45 HTTP calls).
+
+Two ways to get a user:
+  - --test-account signs in as Claude's test account (NEMECEREN_TEST_EMAIL / NEMECEREN_TEST_PASSWORD
+    in .env.local, DECISIONS.md #52). It deletes that account's progress rows before and after the
+    run, and takes it off the allowlist for one check, restoring the entry right after (also in
+    `finally`). It never creates or deletes auth users and never touches any other account's rows.
+  - without it, a throwaway nemeceren-smoke-<random>@example.com user is signed up. That only works
+    while sign-up is open, which it is not since 2026-09-29 (#52).
 
 What it checks, stopping loudly at the first unexpected answer:
   1. health, 404, no token (401), garbage token (401), a foreign Origin (403), CORS preflight;
-  2. signs up nemeceren-smoke-<random>@example.com with email + password and gets a JWT;
-  3. the API refuses that user (403) until it is on the allowlist;
+  2. gets a JWT for the user (sign-in or sign-up with email + password);
+  3. the API refuses the user (403) while it is not on the allowlist;
   4. sync of reviews (one practice), cards, a test and a lesson exercise, lesson progress and
      extra new words: first upload, the same batch again (idempotent), older cards/lessons and a
      smaller extra (stale, not written), newer ones (written), a reused id with new content (409,
      whole batch rolled back), bad bodies (400), an empty batch (400), a "review" from the app
      (400), wrong content type (415);
-  5. writes a Claude review with progress.py's own code and reads everything back through
+  5. notes: new, resent (unchanged), edited, an older version (stale), bad text (400), feedback
+     from the app (400); Claude's feedback via progress.py locks a note, so an edit or a delete
+     of it is refused and the server's version with the feedback comes back as stale; a soft
+     delete of another note; no feedback on a deleted note;
+  6. writes a Claude review with progress.py's own code and reads everything back through
      GET /v1/state (gzip), comparing every field with what was sent;
-  6. ALWAYS deletes the user's rows and allowlist entry at the end, then prints the
-     `neon neon-auth user delete <id>` command for the auth user itself.
+  7. throwaway user: removal from the allowlist takes effect at once. At the end the user's rows
+     and allowlist entry are ALWAYS deleted, and the `neon neon-auth user delete <id>` command for
+     the auth user is printed.
 
 Needs in .env.local at the repo root: DATABASE_URL, NEON_AUTH_BASE_URL and NEON_FUNCTION_API_BASE_URL
-(written by `neon env pull --file ../.env.local` in backend/). Nothing is emailed to a real person:
-example.com is a reserved domain. The password is random and never printed or logged.
-Logs to the console and to logs/smoke_test.log.
+(written by `neon env pull --file ../.env.local` in backend/), and for --test-account the two
+NEMECEREN_TEST_* values. Nothing is emailed to a real person: example.com is a reserved domain.
+Passwords are never printed or logged. Logs to the console and to logs/smoke_test.log.
 """
 
 from __future__ import annotations
@@ -63,7 +78,9 @@ import progress  # noqa: E402
 LOG = logging.getLogger("smoke_test")
 APP_ORIGIN = "http://localhost:5173"
 SMOKE_EMAIL_RE = re.compile(r"^nemeceren-smoke-[0-9a-f]{12}@example\.com$")
-USER_TABLES = ("review_events", "review_cards", "test_attempts", "lesson_progress", "new_word_extras", "allowed_users")
+# A user's progress rows. The test account keeps its allowlist entry; a throwaway user loses it too.
+DATA_TABLES = ("review_events", "review_cards", "test_attempts", "lesson_progress", "new_word_extras", "notes")
+USER_TABLES = (*DATA_TABLES, "allowed_users")
 
 
 class SmokeFailure(AssertionError):
@@ -160,7 +177,41 @@ def cleanup(conn: Any, user_id: str) -> None:
     LOG.info(f"Now delete the auth user itself (run in backend/): neon neon-auth user delete {user_id}")
 
 
-def run(api: str, auth: str, conn: Any, ctx: dict[str, Any]) -> None:
+def test_account_id(conn: Any, test_email: str) -> str:
+    """The Neon Auth id of Claude's test account (exactly one user with that email)."""
+    rows = conn.execute("""SELECT id::text AS id FROM neon_auth."user" WHERE lower(email) = lower(%s)""", (test_email,)).fetchall()
+    if len(rows) != 1:
+        raise RuntimeError(f"{len(rows)} Neon Auth users have the test account's email; expected exactly 1.")
+    return rows[0]["id"]
+
+
+def cleanup_test_account(conn: Any, user_id: str, test_email: str) -> None:
+    """Deletes the test account's progress rows only: never its allowlist entry, never another user's rows."""
+    if user_id != test_account_id(conn, test_email):
+        raise RuntimeError(f"Refusing to delete data of user {user_id}: it is not the test account.")
+    counts = {}
+    with conn.transaction():
+        for table in DATA_TABLES:
+            cur = conn.execute(sql.SQL("DELETE FROM {} WHERE user_id = %s").format(sql.Identifier(table)), (user_id,))
+            counts[table] = cur.rowcount
+    LOG.info(f"cleanup: deleted the test account's progress rows: {counts}")
+    for table in DATA_TABLES:
+        left = conn.execute(sql.SQL("SELECT count(*) AS n FROM {} WHERE user_id = %s").format(sql.Identifier(table)), (user_id,)).fetchone()["n"]
+        check(left == 0, f"cleanup: no {table} rows left for the test account", left)
+
+
+def restore_allowlist(conn: Any, row: dict[str, Any]) -> None:
+    """Puts the test account's allowlist entry back exactly as it was (no-op if it is still there)."""
+    with conn.transaction():
+        conn.execute(
+            "INSERT INTO allowed_users (user_id, email, note, added_at) VALUES (%s, %s, %s, %s) ON CONFLICT (user_id) DO NOTHING",
+            (row["user_id"], row["email"], row["note"], row["added_at"]),
+        )
+    back = conn.execute("SELECT count(*) AS n FROM allowed_users WHERE user_id = %s", (row["user_id"],)).fetchone()["n"]
+    check(back == 1, "the test account is on the allowlist again", back)
+
+
+def run(api: str, auth: str, conn: Any, ctx: dict[str, Any], test_account: dict[str, str] | None) -> None:
     plain = urllib.request.build_opener()  # API calls: no cookies
     jar = http.cookiejar.CookieJar()
     browser = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(jar))  # Neon Auth session
@@ -189,33 +240,55 @@ def run(api: str, auth: str, conn: Any, ctx: dict[str, Any]) -> None:
         (r.status, dict(r.headers.items())),
     )
 
-    # ---- 2. throwaway user through Neon Auth ----
-    email = f"nemeceren-smoke-{secrets.token_hex(6)}@example.com"
-    password = secrets.token_urlsafe(24)
-    r = request(browser, "POST", f"{auth}/sign-up/email", origin=APP_ORIGIN, body={"email": email, "password": password, "name": "smoke test"})
-    check(r.status == 200, f"sign up {email} -> 200", (r.status, r.text()))
-    user_id = r.json()["user"]["id"]
-    ctx["user_id"] = user_id
-    LOG.info(f"    test user id {user_id}")
+    # ---- 2. a user through Neon Auth: Claude's test account, or a throwaway one ----
+    if test_account is not None:
+        email = test_account["email"]
+        r = request(browser, "POST", f"{auth}/sign-in/email", origin=APP_ORIGIN, body={"email": email, "password": test_account["password"]})
+        check(r.status == 200, f"sign in as the test account {email} -> 200", r.status)
+        user_id = r.json()["user"]["id"]
+        check(user_id == test_account_id(conn, email), "the signed-in user is the test account", user_id)
+        ctx["test_user_id"] = user_id
+        # Its rows from earlier browser checks go, so the state starts empty.
+        cleanup_test_account(conn, user_id, email)
+    else:
+        email = f"nemeceren-smoke-{secrets.token_hex(6)}@example.com"
+        password = secrets.token_urlsafe(24)
+        r = request(browser, "POST", f"{auth}/sign-up/email", origin=APP_ORIGIN, body={"email": email, "password": password, "name": "smoke test"})
+        check(r.status == 200, f"sign up {email} -> 200", (r.status, r.text()))
+        user_id = r.json()["user"]["id"]
+        ctx["user_id"] = user_id
+    LOG.info(f"    user id {user_id}")
     r = request(browser, "GET", f"{auth}/token", origin=APP_ORIGIN)
     check(r.status == 200 and isinstance(r.json().get("token"), str), "GET <auth>/token with the session cookie -> JWT", (r.status, r.text()[:300]))
     token = r.json()["token"]
     claims = jwt_claims(token)
-    check(claims.get("sub") == user_id, "JWT sub is the new user's id", {k: claims.get(k) for k in ("sub", "iss", "aud")})
+    check(claims.get("sub") == user_id, "JWT sub is the user's id", {k: claims.get(k) for k in ("sub", "iss", "aud")})
     LOG.info(f"    JWT iss {claims.get('iss')}, aud {claims.get('aud')}, expires in {claims['exp'] - time.time():.0f} s")
 
     # ---- 3. allowlist ----
-    r = request(plain, "GET", f"{api}/v1/state", token=token)
-    check(r.status == 403 and r.error_code() == "not_allowed", "valid token of a user not on the allowlist -> 403 not_allowed", r.text())
-    with conn.transaction():
-        conn.execute("INSERT INTO allowed_users (user_id, email, note) VALUES (%s, %s, 'smoke test, deleted at the end')", (user_id, email))
+    if test_account is not None:
+        row = conn.execute("SELECT user_id, email, note, added_at FROM allowed_users WHERE user_id = %s", (user_id,)).fetchone()
+        check(row is not None, "the test account is on the allowlist", row)
+        ctx["allow_row"] = row
+        with conn.transaction():
+            conn.execute("DELETE FROM allowed_users WHERE user_id = %s", (user_id,))
+        try:
+            r = request(plain, "GET", f"{api}/v1/state", token=token)
+            check(r.status == 403 and r.error_code() == "not_allowed", "the test account, off the allowlist for this check -> 403 not_allowed", r.text())
+        finally:
+            restore_allowlist(conn, row)
+    else:
+        r = request(plain, "GET", f"{api}/v1/state", token=token)
+        check(r.status == 403 and r.error_code() == "not_allowed", "valid token of a user not on the allowlist -> 403 not_allowed", r.text())
+        with conn.transaction():
+            conn.execute("INSERT INTO allowed_users (user_id, email, note) VALUES (%s, %s, 'smoke test, deleted at the end')", (user_id, email))
     r = request(plain, "GET", f"{api}/v1/state", token=token)
     check(r.status == 200, "allowlisted user -> GET /v1/state 200", r.text())
     s = r.json()
     check(
         s["userId"] == user_id and s["cards"] == {} and s["reviewEvents"] == [] and s["attempts"] == [] and s["studyDays"] == []
-        and s["lessonProgress"] == {"version": 1, "lessons": {}} and s["newWordExtras"] == {},
-        "a new user's state is empty",
+        and s["lessonProgress"] == {"version": 1, "lessons": {}} and s["newWordExtras"] == {} and s["notes"] == [],
+        "the user's state is empty",
         s,
     )
 
@@ -360,7 +433,93 @@ def run(api: str, auth: str, conn: Any, ctx: dict[str, Any]) -> None:
     r = request(plain, "GET", f"{api}/v1/state?days=0", token=token)
     check(r.status == 400 and r.error_code() == "invalid_query", "GET /v1/state?days=0 -> 400 invalid_query", r.text())
 
-    # ---- 5. Claude's review, then read everything back ----
+    # ---- 5. notes, and Claude's feedback locking one ----
+    def note(minutes_ago: int, text: str) -> dict[str, Any]:
+        at = iso(now - timedelta(minutes=minutes_ago))
+        return {"id": str(uuid.uuid4()), "text": text, "localDay": today, "createdAt": at, "updatedAt": at, "deletedAt": None}
+
+    note1 = note(9, "Ich heiße Hayk. Ich wohne in München.")
+    note2 = note(8, "Wie sagt man 'deadline' auf Deutsch?")
+    r = sync({"notes": [note1, note2]})
+    check(r.status == 200 and r.json()["notes"] == {"received": 2, "written": 2, "unchanged": 0, "stale": []}, "two new notes are written", r.text())
+    r = sync({"notes": [note1, note2]})
+    check(r.status == 200 and r.json()["notes"] == {"received": 2, "written": 0, "unchanged": 2, "stale": []}, "the same notes again are unchanged", r.text())
+    note1_edit = {**note1, "text": "Ich heiße Hayk. Ich wohne seit Mai in München.", "updatedAt": iso(now - timedelta(minutes=7))}
+    r = sync({"notes": [note1_edit]})
+    check(r.status == 200 and r.json()["notes"]["written"] == 1, "an edit with a later updatedAt is written", r.text())
+    r = sync({"notes": [note1]})
+    check(
+        r.status == 200 and r.json()["notes"] == {"received": 1, "written": 0, "unchanged": 0, "stale": [{**note1_edit, "feedback": None}]},
+        "an older version of a note is not written; the server's newer one comes back as stale",
+        r.text(),
+    )
+    for bad, what, path in (
+        ({**note2, "id": str(uuid.uuid4()), "text": " \n\t "}, "a whitespace-only note", "notes.0.text"),
+        ({**note2, "id": str(uuid.uuid4()), "text": "a" * 5001}, "a note of 5001 characters", "notes.0.text"),
+        ({**note2, "id": str(uuid.uuid4()), "feedback": {"summary": "x"}}, "a note with feedback from the app", "notes.0"),
+        ({**note2, "id": str(uuid.uuid4()), "updatedAt": iso(now - timedelta(days=1))}, "a note changed before it was written", "notes.0.updatedAt"),
+    ):
+        r = sync({"notes": [bad]})
+        issues = r.json().get("error", {}).get("details", {}).get("issues", []) if r.status == 400 else []
+        check(r.status == 400 and r.error_code() == "invalid_body" and any(i["path"] == path for i in issues), f"{what} -> 400 invalid_body at {path}", r.text())
+    r = sync({"notes": [note2, note2]})
+    check(r.status == 400 and r.error_code() == "invalid_body", "the same note id twice in one batch -> 400", r.text())
+    r = sync({"notes": [{**note2, "text": "x" * 5000, "updatedAt": iso(now - timedelta(minutes=6))}]})
+    check(r.status == 200 and r.json()["notes"]["written"] == 1, "a note of exactly 5000 characters is accepted", r.text())
+
+    try:
+        progress.write_note_feedback(conn, user_id, note1["id"], {"summary": "an **open bold"})
+        check(False, "invalid feedback is refused")
+    except progress.FeedbackError:
+        check(True, "invalid feedback is refused (broken markup in the summary)")
+    feedback = progress.write_note_feedback(
+        conn,
+        user_id,
+        note1["id"],
+        {
+            "summary": "Very good. One small thing in the second sentence: [[seit Mai]] is right.",
+            "hints": ["Read the first sentence aloud: is anything missing?"],
+            "corrected": "Ich heiße Hayk. Ich wohne seit Mai in München.",
+            "edits": [{"from": "wohne in", "to": "wohne seit Mai in", "why": "Smoke test edit.", "kind": "style"}],
+        },
+    )
+    check(isinstance(feedback.get("at"), str) and feedback["at"].endswith("Z"), "progress.py saves the feedback with its time in 'at'", feedback)
+    try:
+        progress.write_note_feedback(conn, user_id, note1["id"], {"summary": "again"})
+        check(False, "a second feedback without --replace is refused")
+    except RuntimeError:
+        check(True, "a second feedback without --replace is refused")
+    locked = {**note1_edit, "feedback": feedback}
+    r = sync({"notes": [{**note1_edit, "text": "Changed after the feedback.", "updatedAt": iso(now - timedelta(minutes=5))}]})
+    check(
+        r.status == 200 and r.json()["notes"] == {"received": 1, "written": 0, "unchanged": 0, "stale": [locked]},
+        "an edit of a note with feedback is refused; the server's version with the feedback comes back as stale",
+        r.text(),
+    )
+    r = sync({"notes": [{**note1_edit, "updatedAt": iso(now - timedelta(minutes=5)), "deletedAt": iso(now - timedelta(minutes=5))}]})
+    check(
+        r.status == 200 and r.json()["notes"] == {"received": 1, "written": 0, "unchanged": 0, "stale": [locked]},
+        "deleting a note with feedback is refused the same way",
+        r.text(),
+    )
+    r = sync({"notes": [note1_edit]})
+    check(
+        r.status == 200 and r.json()["notes"] == {"received": 1, "written": 0, "unchanged": 1, "stale": []},
+        "the unchanged note with feedback is just unchanged",
+        r.text(),
+    )
+    note2_gone = {**note2, "text": "x" * 5000, "updatedAt": iso(now - timedelta(minutes=4)), "deletedAt": iso(now - timedelta(minutes=4))}
+    r = sync({"notes": [note2_gone]})
+    check(r.status == 200 and r.json()["notes"]["written"] == 1, "a note without feedback can be deleted (soft delete)", r.text())
+    row = conn.execute("SELECT deleted_at IS NOT NULL AS gone FROM notes WHERE user_id = %s AND id = %s", (user_id, note2["id"])).fetchone()
+    check(row is not None and row["gone"], "the deleted note stays in the table with deleted_at", row)
+    try:
+        progress.write_note_feedback(conn, user_id, note2["id"], {"summary": "too late"})
+        check(False, "no feedback on a deleted note")
+    except RuntimeError:
+        check(True, "no feedback on a deleted note")
+
+    # ---- 6. Claude's review, then read everything back ----
     try:
         progress.validate_review({"summary": "x", "items": [{"index": 3, "correct": True}]}, 3)
         check(False, "validate_review rejects an index out of range")
@@ -398,17 +557,21 @@ def run(api: str, auth: str, conn: Any, ctx: dict[str, Any]) -> None:
         s["lessonProgress"],
     )
     check(s["newWordExtras"] == {today: 8}, "newWordExtras keeps the larger value for today", s["newWordExtras"])
+    check(s["notes"] == [locked], "notes: only the note that is not deleted, with its feedback", s["notes"])
 
-    # ---- 6. removal from the allowlist takes effect at once ----
-    with conn.transaction():
-        conn.execute("DELETE FROM allowed_users WHERE user_id = %s", (user_id,))
-    r = request(plain, "GET", f"{api}/v1/state", token=token)
-    check(r.status == 403 and r.error_code() == "not_allowed", "after removal from the allowlist -> 403 at once", r.text())
+    # ---- 7. removal from the allowlist takes effect at once (the test account had it in step 3) ----
+    if test_account is None:
+        with conn.transaction():
+            conn.execute("DELETE FROM allowed_users WHERE user_id = %s", (user_id,))
+        r = request(plain, "GET", f"{api}/v1/state", token=token)
+        check(r.status == 403 and r.error_code() == "not_allowed", "after removal from the allowlist -> 403 at once", r.text())
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="End-to-end check of the deployed nemeceren API.")
+    parser.add_argument("--test-account", action="store_true", help="sign in as Claude's test account (.env.local NEMECEREN_TEST_*) instead of signing up")
     parser.add_argument("--cleanup", metavar="USER_ID", help="only delete a smoke-test user's rows (after an interrupted run)")
+    parser.add_argument("--cleanup-test-account", action="store_true", help="only delete the test account's progress rows (keeps the account and its allowlist entry)")
     args = parser.parse_args()
 
     progress.setup_logging("smoke_test")
@@ -417,15 +580,27 @@ def main() -> None:
         if args.cleanup:
             cleanup(conn, args.cleanup)
             return
+        if args.cleanup_test_account:
+            email = progress.load_env("NEMECEREN_TEST_EMAIL")["NEMECEREN_TEST_EMAIL"]
+            cleanup_test_account(conn, test_account_id(conn, email), email)
+            return
         env = progress.load_env("NEON_AUTH_BASE_URL", "NEON_FUNCTION_API_BASE_URL")
         api = env["NEON_FUNCTION_API_BASE_URL"].rstrip("/")
         auth = env["NEON_AUTH_BASE_URL"].rstrip("/")
-        ctx: dict[str, Any] = {"user_id": None}
+        test_account = None
+        if args.test_account:
+            creds = progress.load_env("NEMECEREN_TEST_EMAIL", "NEMECEREN_TEST_PASSWORD")
+            test_account = {"email": creds["NEMECEREN_TEST_EMAIL"], "password": creds["NEMECEREN_TEST_PASSWORD"]}
+        ctx: dict[str, Any] = {"user_id": None, "test_user_id": None, "allow_row": None}
         try:
-            run(api, auth, conn, ctx)
+            run(api, auth, conn, ctx, test_account)
         finally:
             if ctx["user_id"] is not None:
                 cleanup(conn, ctx["user_id"])
+            if ctx["allow_row"] is not None:
+                restore_allowlist(conn, ctx["allow_row"])
+            if ctx["test_user_id"] is not None and test_account is not None:
+                cleanup_test_account(conn, ctx["test_user_id"], test_account["email"])
     LOG.info(f"All checks passed in {time.monotonic() - started:.0f} s")
 
 

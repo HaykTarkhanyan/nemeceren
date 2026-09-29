@@ -6,19 +6,33 @@
 //                            mergeStates in app/src/lib/srs.ts)
 //   lessons                  upsert per lesson; the record with the later updatedAt wins
 //   newWordExtras            upsert per local day; the larger value wins (it only grows in a day)
-// For the last three, whatever the server already had in a newer version comes back as "stale",
-// so a device that was offline can adopt it. Each table takes the whole list as one JSON
+//   notes                    upsert per note; the record with the later updatedAt wins, except that
+//                            a note with Claude's feedback is locked and never changed or deleted
+// For the last four, whatever the server already had in a newer version comes back as "stale",
+// so a device that was offline can adopt it. A locked note comes back as stale whenever the
+// upload differs from it, with its feedback. Each table takes the whole list as one JSON
 // parameter (jsonb_to_recordset): one query per table per batch.
 import type { PoolClient } from 'pg'
 import { withTransaction } from './db.ts'
 import { HttpError } from './errors.ts'
-import type { AttemptUpload, CardUpload, LessonUpload, NewWordExtraUpload, ReviewEventUpload, StoredCard, SyncBody } from './schema.ts'
+import type { AttemptUpload, CardUpload, LessonUpload, NewWordExtraUpload, NoteUpload, ReviewEventUpload, StoredCard, SyncBody } from './schema.ts'
 
 interface LessonRecord {
   startedAt: string
   updatedAt: string
   lastSection: number
   doneAt: string | null
+}
+
+/** A note as the server has it (also the shape of GET /v1/state notes). feedback is Claude's, or null. */
+export interface NoteRecord {
+  id: string
+  text: string
+  localDay: string
+  createdAt: string
+  updatedAt: string
+  deletedAt: string | null
+  feedback: unknown
 }
 
 export interface SyncResult {
@@ -29,6 +43,7 @@ export interface SyncResult {
   attempts: { received: number; inserted: number; duplicates: number }
   lessons: { received: number; written: number; unchanged: number; stale: { lessonId: string; progress: LessonRecord }[] }
   newWordExtras: { received: number; written: number; unchanged: number; stale: { localDay: string; extra: number }[] }
+  notes: { received: number; written: number; unchanged: number; stale: NoteRecord[] }
 }
 
 /** timestamptz as the app writes it (Date.prototype.toISOString): 2026-09-29T10:00:00.000Z */
@@ -146,6 +161,38 @@ SELECT
      FROM input i JOIN new_word_extras nx ON nx.user_id = $1 AND nx.local_day = i.local_day
     WHERE nx.extra > i.extra) AS stale`
 
+/** One note as JSON in the app's field names; the same shape as GET /v1/state notes. */
+export const NOTE_JSON = (n: string) => `jsonb_build_object(
+  'id', ${n}.id::text, 'text', ${n}.text, 'localDay', ${n}.local_day::text,
+  'createdAt', ${iso(`${n}.created_at`)}, 'updatedAt', ${iso(`${n}.updated_at`)},
+  'deletedAt', CASE WHEN ${n}.deleted_at IS NULL THEN NULL ELSE ${iso(`${n}.deleted_at`)} END,
+  'feedback', ${n}.feedback)`
+
+// A note with feedback is locked: it is never written, and whenever the upload differs from it in
+// any way the server's version (with the feedback) comes back as stale, so the device adopts it.
+const UPSERT_NOTES = `
+WITH input AS (
+  SELECT * FROM jsonb_to_recordset($2::jsonb) AS x(
+    id uuid, text text, local_day date, created_at timestamptz, updated_at timestamptz, deleted_at timestamptz)
+),
+up AS (
+  INSERT INTO notes AS n (user_id, id, text, local_day, created_at, updated_at, deleted_at)
+  SELECT $1, id, text, local_day, created_at, updated_at, deleted_at FROM input
+  ON CONFLICT (user_id, id) DO UPDATE
+    SET text = excluded.text, local_day = excluded.local_day, created_at = excluded.created_at,
+        updated_at = excluded.updated_at, deleted_at = excluded.deleted_at, received_at = now()
+    WHERE n.feedback IS NULL AND excluded.updated_at > n.updated_at
+  RETURNING id
+)
+SELECT
+  (SELECT count(*)::int FROM up) AS written,
+  (SELECT coalesce(jsonb_agg(${NOTE_JSON('n')} ORDER BY n.id), '[]'::jsonb)
+     FROM input i JOIN notes n ON n.user_id = $1 AND n.id = i.id
+    WHERE (n.feedback IS NULL AND n.updated_at > i.updated_at)
+       OR (n.feedback IS NOT NULL
+           AND (n.text, n.local_day, n.created_at, n.updated_at, n.deleted_at)
+               IS DISTINCT FROM (i.text, i.local_day, i.created_at, i.updated_at, i.deleted_at))) AS stale`
+
 function conflictError(kind: string, ids: string[]): HttpError {
   return new HttpError(
     409,
@@ -229,8 +276,22 @@ async function upsertNewWordExtras(client: PoolClient, userId: string, extras: N
   return { received: extras.length, written: r.written, unchanged: extras.length - r.written - r.stale.length, stale: r.stale }
 }
 
+async function upsertNotes(client: PoolClient, userId: string, notes: NoteUpload[]): Promise<SyncResult['notes']> {
+  const rows = notes.map((n) => ({
+    id: n.id,
+    text: n.text,
+    local_day: n.localDay,
+    created_at: n.createdAt,
+    updated_at: n.updatedAt,
+    deleted_at: n.deletedAt,
+  }))
+  const { rows: [r] } = await client.query<{ written: number; stale: NoteRecord[] }>(UPSERT_NOTES, [userId, JSON.stringify(rows)])
+  return { received: notes.length, written: r.written, unchanged: notes.length - r.written - r.stale.length, stale: r.stale }
+}
+
 export async function applySync(userId: string, body: SyncBody): Promise<SyncResult> {
-  const total = body.reviewEvents.length + body.cards.length + body.attempts.length + body.lessons.length + body.newWordExtras.length
+  const total =
+    body.reviewEvents.length + body.cards.length + body.attempts.length + body.lessons.length + body.newWordExtras.length + body.notes.length
   if (total === 0) {
     // Enforces the free-plan rule: the app only syncs when its outbox has something in it.
     throw new HttpError(400, 'empty_batch', 'Nothing to sync: send at least one item, and skip the request otherwise.')
@@ -246,6 +307,7 @@ export async function applySync(userId: string, body: SyncBody): Promise<SyncRes
       attempts: body.attempts.length > 0 ? await insertAttempts(client, userId, body.attempts) : inserts,
       lessons: body.lessons.length > 0 ? await upsertLessons(client, userId, body.lessons) : upserts,
       newWordExtras: body.newWordExtras.length > 0 ? await upsertNewWordExtras(client, userId, body.newWordExtras) : upserts,
+      notes: body.notes.length > 0 ? await upsertNotes(client, userId, body.notes) : upserts,
     }
   })
 }

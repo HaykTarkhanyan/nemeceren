@@ -2,6 +2,7 @@
 import type { Item } from '../content/schema.ts'
 import { GAP_MARKER } from '../content/schema.ts'
 import type { AnswerValue } from '../lib/grading.ts'
+import { useIsGuest } from '../lib/session.ts'
 import { shuffle } from '../lib/shuffle.ts'
 import { useProgress, useSyncStatus } from '../lib/storage.ts'
 import { countWords } from '../lib/text.ts'
@@ -34,7 +35,11 @@ export type SaveStatus = { state: 'saved'; id: string } | { state: 'error'; mess
 export function SaveLine({ save, onRetry }: { save: SaveStatus | null; onRetry: () => void }) {
   const { pendingAttemptIds } = useProgress()
   const sync = useSyncStatus()
+  const guest = useIsGuest()
   if (!save) return null
+  if (save.state === 'saved' && guest) {
+    return <p className="small muted">Guest mode: this result is kept only until you reload or sign in.</p>
+  }
   if (save.state === 'saved') {
     const pending = pendingAttemptIds.includes(save.id)
     let text = 'Saved and synced to your account.'

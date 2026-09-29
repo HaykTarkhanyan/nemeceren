@@ -7,7 +7,7 @@ done = [
   "Installed Unit 2 (6 lessons, 3 tests, 66 words) after applying the independent review's 33 fixes; deployed.",
   "Review pass over all content: 38 curated popups for misleading generated glosses (Ja, Bitte, er, du, liebt, Welche ...); word cards cross-checked against german_nouns.csv and the Goethe list (no gender/plural errors); taught-before-used scan (added 'Das kostet' to u0-05); Unit 2 re-read (two wording fixes).",
   "Reviewed and committed the Neon wire-up (sign-in, outbox, sync); the agent found the SDK token() bug (see _learnings).",
-  "Hayk signed up (tarkhanyan02@gmail.com), was allowlisted, sign-up disabled and verified closed (HTTP 400 EMAIL_PASSWORD_SIGN_UP_DISABLED). First real-browser sync confirmed in the DB: 2 reviews, 2 cards, lesson u1-06 progress.",
+  "Hayk signed up (his own email), was allowlisted, sign-up disabled and verified closed (HTTP 400 EMAIL_PASSWORD_SIGN_UP_DISABLED). First real-browser sync confirmed in the DB: 2 reviews, 2 cards, lesson u1-06 progress.",
   "Built via agent, reviewed and deployed: Topics page (66 items), Daily page with 10 days of jokes/facts/phrases (content/daily.json, written by Claude; 3 facts web-verified), word-source picker, header on one line + sync dot, System/Light/Dark theme, popup lookup fixes, punctuation-tolerant word review. DECISIONS #45-#51.",
 ]
 

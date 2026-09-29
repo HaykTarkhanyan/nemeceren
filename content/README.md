@@ -6,7 +6,7 @@ Everything in this folder is written by Claude and read by the app in `app/`. Yo
 - `lessons/<id>.json` - one lesson per file (topic, explanation, examples, exercises), see [Lessons](#lessons).
 - `words.json` - the word bank for spaced repetition.
 - `topics.json` - the Topics page: lesson sections worth revisiting, see [Topics](#topics-topicsjson).
-- `daily.json` - the Daily page: a joke, a fun fact and an everyday sentence per day, see [Daily](#daily-page-dailyjson).
+- `extras.json` - the Extras page: jokes, fun facts and everyday phrases to browse, see [Extras](#extras-page-extrasjson).
 - `glossary.json` (written by Claude) and `glossary.generated.json` (written by a script) - the word popups, see [Glossary](#glossary-word-popups).
 - After every edit run, in `app/`: `npm run glossary` (only if German text changed), then `npm run check-content`. check-content prints every problem as `file: field.path: message` and exits 1. The app refuses to start on invalid files (it shows the same list), and the GitHub Pages deploy fails while any problem is left, including a German word with no glossary entry.
 
@@ -276,33 +276,34 @@ The Topics page lists lesson sections worth coming back to, in groups, with the 
 - A section may appear in two groups (a grammar point that is also a word theme), but only once per group.
 - The page shows each item's unit, taken from its lesson.
 
-## Daily page: `daily.json`
+## Extras page: `extras.json`
 
-"German in the wild": each day one joke, one fun fact and one everyday sentence, each with a breakdown. Deliberately not tied to Hayk's level. Day 1 unlocks on `startDate` (Hayk's local date), then one more day per calendar day; later days stay hidden. check-content prints how many days are left after today, so write more before they run out.
+"German in the wild": jokes, fun facts and everyday phrases, each with a breakdown, for Hayk to browse and pick from. Deliberately not tied to Hayk's level. There are no dates and no unlocking: the page lists every item, with filters (All, Jokes, Facts, In the wild) and a "Surprise me" button. Add as many items of each type as you like; check-content prints the count per type.
 
 ```json
 {
-  "startDate": "2026-09-29",
-  "days": [
+  "items": [
     {
-      "id": "d01",
-      "joke": {
-        "title": "The knocking lettuce",
-        "lines": [{ "de": "Was ist grün und klopft an die Tür?", "en": "What is green and knocks on the door?" }, { "de": "Ein Klopfsalat.", "en": "A 'knock lettuce'." }],
-        "breakdown": [{ "de": "klopft", "en": "knocks", "note": "klopfen = to knock" }],
-        "explain": "The pun: [[der Kopfsalat]] is a real word, 'head lettuce'."
-      },
-      "fact": { "title": "...", "lines": [...], "breakdown": [...], "explain": "..." },
-      "phrase": { "title": "...", "lines": [...], "breakdown": [...], "explain": "..." }
-    }
+      "id": "j01",
+      "type": "joke",
+      "title": "The knocking lettuce",
+      "lines": [
+        { "de": "Was ist grün und klopft an die Tür?", "en": "What is green and knocks on the door?" },
+        { "de": "Ein Klopfsalat.", "en": "A 'knock lettuce'." }
+      ],
+      "breakdown": [{ "de": "klopft", "en": "knocks", "note": "klopfen = to knock" }],
+      "explain": "The pun: [[der Kopfsalat]] is a real word, 'head lettuce'."
+    },
+    { "id": "f01", "type": "fact", "title": "...", "lines": [...], "breakdown": [...], "explain": "..." },
+    { "id": "p01", "type": "phrase", "title": "...", "lines": [...], "breakdown": [...], "explain": "..." }
   ]
 }
 ```
 
-- `startDate` must be a real date. Day `id`s are `d01`, `d02`, ... in order.
-- Every card has a `title`, 1 or more `lines` (`de` + `en`), 1 or more `breakdown` entries (`de`, `en`, optional `note`) and an `explain` in the lesson text format.
-- Jokes: every line but the last is the setup. The last line (the punchline), the joke's `title`, the breakdown and `explain` are shown after "Show punchline", so the title may give the joke away.
-- Every German line gets a speaker button. There are no word popups on this page and daily.json is not checked against the glossary: the breakdown is the gloss, and jokes may use made-up words.
+- `type` is `joke`, `fact` or `phrase` (shown as "In the wild"). The `id` is the type's letter (`j`, `f`, `p`) and 2 or more digits: `j11`, `f11`, `p11` are next. Ids are unique and stable. Items are listed in file order, so append new ones at the end.
+- Every item has a `title`, 1 or more `lines` (`de` + `en`), 1 or more `breakdown` entries (`de`, `en`, optional `note`) and an `explain` in the lesson text format.
+- Jokes need 2 or more lines: every line but the last is the setup, the last is the punchline. The list shows a joke by its first line, never by its title, and the title, the punchline, the breakdown and `explain` appear only after "Show punchline", so the title may give the joke away. Facts and phrases are listed by their title.
+- Every German line gets a speaker button. There are no word popups on this page and extras.json is not checked against the glossary: the breakdown is the gloss, and jokes may use made-up words.
 
 ## Content runway
 
@@ -365,7 +366,7 @@ After a test item is submitted, after a word-review card is revealed, and on the
 | words.json | `de`, `plural`, `example.de` |
 | lessons | `[[...]]` in explanation, comparison, tip and warning text; `examples` and `audio` sentences (`de`); table cells in `"words"` columns; exercise items as above |
 
-Not German: `title`, `description`, `instruction`, `hint`, `explanation`, every `en` field, and all of `daily.json` (no popups there).
+Not German: `title`, `description`, `instruction`, `hint`, `explanation`, every `en` field, and all of `extras.json` (no popups there).
 
 **Generating.** In `app/` run `npm run glossary` (TypeScript, like check-content; about 1 s per new word because it fetches kaikki.org one word at a time with a pause; cached words are instant; the cache is `.cache/kaikki/` at the repo root, git-ignored). It needs network, so CI never runs it: commit `glossary.generated.json` together with the content. The script:
 - collects every word from the fields above (plus the lowercase form of capitalized words, which may just start a sentence);

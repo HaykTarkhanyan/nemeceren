@@ -2,6 +2,72 @@
 
 Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
+## 57. A second learner (Anahit, Hayk's friend) gets her own account; progress.py defaults to Hayk through .env.local (asked for by Hayk, 2026-09-30)
+
+- **Date:** 2026-09-30 - **Status:** active; applies #52's "second real learner" case
+- **Why:**
+  - Hayk asked for an account for a friend, with the login "Anahit" and her own progress. Neon Auth logs in with an email, so the account's login ID uses the reserved `.example` domain, which can never be a real address. Sign-up was reopened for a few seconds to create it and closed again. Checks: sign-up answers HTTP 400 `EMAIL_PASSWORD_SIGN_UP_DISABLED`, her sign-in answers 200, and the user list shows exactly Hayk, Anahit and the test account.
+  - Typing just the name "Anahit" at sign-in comes with the next build (username login).
+  - With two real learners, progress.py could no longer pick "the only allowed user". It now defaults to `NEMECEREN_DEFAULT_USER` in the gitignored `.env.local` (Hayk), so Hayk's email stays out of the public repo. `--user` picks anyone else. Claude looks at Anahit's work only when asked.
+  - Her data is separate by design: every table is keyed by the Neon Auth user id (#30).
+- **Alternatives rejected:** hard-coding Hayk's email in progress.py (the repo is public); making every command require `--user` (easy to forget, and the old behaviour silently assumed one learner).
+- **What would change this:** more learners (then a proper username plugin, or real emails and password reset), or Anahit wanting her own teaching setup (content is written for Hayk: English with Russian/Armenian comparisons, his name in some examples).
+
+## 56. The Daily page becomes "Extras": a browsable collection in `content/extras.json`, with no dates (asked for by Hayk, 2026-09-29)
+
+- **Date:** 2026-09-30 - **Status:** active; supersedes #51
+- **Why:**
+  - Hayk does not want a daily drip, just a collection to browse and pick from.
+  - `content/daily.json` was converted by a one-off script into a flat list `{ "items": [ { id, type, title, lines, breakdown, explain } ] }`. Ids are the type's letter and the day number: `j01..j10`, `f01..f10`, `p01..p10`. The file keeps the day order (`j01, f01, p01, j02, ...`), so "All" stays mixed. The script re-read both files and checked that all 448 text strings are identical and in the same order. daily.json is deleted.
+  - Any number of items per type. check-content validates the schema, unique ids, the id letter matching the type, jokes with 2+ lines and non-empty breakdowns, and prints the count per type instead of the Daily runway line (`lib/extras.ts`).
+  - The page (`#/extras`): filter chips All / Jokes / Facts / In the wild with counts, and every item as a card that opens in place. A joke is listed by its first line, never by its title (a spoiler); its title, punchline and explanation still wait for "Show punchline". "Surprise me" opens a random item of the current filter, never the same one twice in a row, closes the others and scrolls to it.
+  - Still no word popups (the gate surface is now `extras`), and extras.json is not glossary-checked, as in #51.
+  - `lib/daily.ts`, its tests and the Daily page are removed. The old `#/daily` link now shows "Unknown page"; no redirect for a one-day-old page.
+- **Alternatives rejected:** keeping daily.json and only dropping the lock in the page (dates that mean nothing would stay in the data); grouping the file by type (the "All" list would be 10 jokes, then 10 facts, then 10 phrases); one file per type (three files for one page).
+- **What would change this:** Hayk wanting favourites or "already seen" marks (that needs saved progress); the list growing past ~100 items (then search or paging).
+
+## 55. Guests can use the materials without an account; their progress lives in memory only (asked for by Hayk, 2026-09-29)
+
+- **Date:** 2026-09-30 - **Status:** active; revisits #43 ("Hayk wanting to use the app without an account")
+- **Why:**
+  - The sign-in page has "Continue as guest". A guest can use Lessons, Topics, Extras, tests, lesson exercises and word reviews.
+  - It is a mode of the same progress store, not a second store (`startGuest` in `lib/storage.ts`): the state starts empty in memory, and every change goes straight into it through the same `applySent` the sync uses, with a reply that accepts everything. So views, stats and results work unchanged, and nothing is ever "waiting to sync". `flush` does nothing for a guest, and "Check for feedback" and notes refuse loudly.
+  - Nothing is stored or sent: no outbox, no offline copy, no remembered user, no API or auth-token request. The only auth request is the sign-in check when the page loads, which is what shows the sign-in page. Tested with mocks at two levels: the store (`storage.test.ts`: fetch, getToken and storage spies never called) and the app wiring (`session.test.ts`: the auth module mocked, `window.fetch` and `localStorage` spied).
+  - A reload shows the sign-in page again, because the guest choice is only in memory. Device settings (theme, voice, speed, new words per day, word pick) still persist per device as before; they are not progress.
+  - A slim banner on every page: "Guest mode: nothing is saved. Sign in to keep your progress." Its "Sign in" drops the guest's progress and returns to the sign-in page, without asking (the banner already says nothing is kept).
+  - Notes are hidden for guests: no nav entry, and `#/notes` says "Sign in to write notes" (Claude could not read a guest's notes). The sync dot and "Sync now" are hidden. Stats and Results say they show only this session; Results adds that Claude does not review guest answers. After a test or exercise the save line says the result is kept until a reload.
+  - No backend change: the API still answers only allowlisted accounts.
+- **Alternatives rejected:** a second, guest-only store (two code paths to keep in step); keeping guest progress in localStorage or sessionStorage (Hayk: nothing saved; it would also need a merge on sign-in); an anonymous Neon Auth user per guest (writes to the database, needs sign-up open, and works against the allowlist, #39/#52); a confirm dialog on the banner's "Sign in".
+- **What would change this:** guests wanting to keep progress (then local storage plus a merge on sign-in, or accounts for them); a second real learner.
+
+## 54. Settings becomes a gear icon next to the theme button, so the nav keeps 8 text links
+
+- **Date:** 2026-09-30 - **Status:** active; revisits #48
+- **Why:**
+  - With Notes the nav would have 9 entries: a third row in the phone's 4-column grid, and more than one line at 900 px. Settings is the least used page.
+  - The nav is Home, Lessons, Topics, Words, Extras, Notes, Results, Stats. The gear is a link with the accessible name "Settings" (`aria-label` and tooltip) and `aria-current` while the page is open. The sync dot still links to Settings. Guests see 7 links (no Notes, #55).
+  - Width, estimated as in #48 (not measured in a browser): the "Settings" link (~70 px) is replaced by "Notes" (~55 px), "Daily" becomes "Extras" (~+8 px), and the gear adds 34 px plus an 8 px gap. That is about +25 px on the ~800 px widest case of #48, so about 825 of the 868 px a 900 px window gives.
+- **Alternatives rejected:** a ninth link (3 rows on the phone); a menu button (hides everything behind a tap, #48); moving Notes into another page (it is a daily-use page).
+- **What would change this:** the header wrapping on Hayk's screen, or another page that needs a nav entry.
+
+## 53. Notes: Hayk writes, Claude gives feedback; notes sync through the outbox, and a note with feedback is locked (asked for by Hayk, 2026-09-29)
+
+- **Date:** 2026-09-30 - **Status:** active
+- **Why:**
+  - A Notes page for free writing practice (mostly German) and the odd question, with Claude's feedback under each note.
+  - Data: table `notes` (migration `002_notes.sql`), keyed by (user_id, id) like the other tables. A note is `{ id (client UUID), text, localDay, createdAt, updatedAt }`; text is at most 5000 characters and not only whitespace (zod, and a CHECK in the table). Delete is soft (`deletedAt`), so a delete made offline on one device reaches the other. `feedback` is jsonb, null until Claude writes it.
+  - Sync: a new `notes` list in `POST /v1/sync` (50 per request: 50 x 5000 characters is at most ~0.5 MB, so a full batch stays under the 2 MB body limit). The later `updatedAt` wins. **A note with feedback is locked**, so the feedback always matches the text: the server never changes or deletes it, and whenever the upload differs it returns its version, with the feedback, as `stale`. The app adopts it and puts the refused change in the error banner with the changed text, so an edit is never lost silently. A change is always at least 1 ms later than the version it replaces, so it wins even if the clock went back.
+  - A saved note syncs at once, like a submitted test: it is what Claude reads next. Otherwise the outbox rules of #41/#42 apply unchanged (localStorage outbox, no empty batches, no polling). Outboxes and offline copies saved before notes existed have no `notes` key and are read as having none.
+  - `GET /v1/state` returns every note that is not deleted, with its feedback (a few small notes a week).
+  - Feedback is written only by Claude with `progress.py note-feedback`, in the shape `{ summary, hints?, corrected?, edits?: [{ from, to, why, kind: "error" | "style" }], at }` (`at` set by the script). It follows the teaching rules: the page shows the summary and hints first, so Hayk can fix the note himself; the corrected text and the edits come after "Show corrections", with mistakes apart from style suggestions.
+  - progress.py validates feedback with the app's rules, including a port of the text-format parser, because a feedback the app cannot parse would stop the whole app from loading (the state is parsed as one). `progress.py self-check` runs 24 cases offline; the smoke test covers the lock rule against the live API.
+  - Feedback arrives with `GET /v1/state` at start. "Check for feedback" loads it once more, one request per press, never on a timer (Free plan, #42), and says which notes got new feedback.
+  - No word popups in notes (gate surface `notes`): not in Hayk's own text, as asked, and not in the feedback either, because it is written after check-content ran, so many words would show "no glossary entry".
+  - The unsaved text box is a per-device, per-user draft in localStorage (`nemeceren.noteDraft.<user id>`), read and written in try/catch; a failure goes to the error banner. Editing a note reuses the same box.
+  - `progress.py`: `notes [--pending]`, `note <id>`, `note-feedback <id> <file|-> [--replace]`, `self-check`, and "Notes waiting for feedback: N" in `summary`. The test account is skipped by default, as before (#52).
+- **Alternatives rejected:** a hard delete (an offline delete could not reach the other device, and a resend would bring the note back); letting Hayk edit a note after feedback (the feedback would no longer match the text); polling for feedback (keeps the compute awake, #42); popups in the feedback with a glossary check for each feedback (more work per feedback for little gain; possible later); validating feedback by calling the app's zod schema from tsx (needs both node_modules trees, #31); a separate feedback table (one feedback per note, no history needed).
+- **What would change this:** Hayk wanting to rework a note after feedback (then a new version linked to the old note, instead of unlocking); notes making the state reply large (over ~100 KB); Hayk asking for popups in feedback.
+
 ## 52. Sign-up stays closed; Claude has a permanent test account for browser checks; the sign-in page no longer offers sign-up (decided with Hayk, 2026-09-29)
 
 - **Date:** 2026-09-29 - **Status:** active
@@ -17,7 +83,7 @@ Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
 ## 51. The Daily page ("German in the wild") unlocks one day of `content/daily.json` per local calendar day, has no word popups and is not glossary-checked (asked for by Hayk, 2026-09-29)
 
-- **Date:** 2026-09-29 - **Status:** active
+- **Date:** 2026-09-29 - **Status:** superseded by #56 (2026-09-30: no dates, a browsable Extras collection)
 - **Why:**
   - Each day brings a joke, a fun fact and an everyday sentence, each with a breakdown. It is deliberately not tied to Hayk's level.
   - Day 1 unlocks on `startDate` in Hayk's local date (`dates.ts` `localDay`, like every other day count in the app), then one more day per calendar day. Today's day comes first, earlier days are a collapsed archive (`<details>`, newest first), and later days are never rendered, so each day is a surprise. They are still in the bundle (~29 KB of JSON). From the last day on, the page says "That's all N days so far. Ask Claude for more."
@@ -53,7 +119,7 @@ Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
 ## 48. The header fits on one line from 900 px: the sync status is a coloured dot, and the header is wider than the page; on a phone the nav is a 4-column grid
 
-- **Date:** 2026-09-29 - **Status:** active
+- **Date:** 2026-09-29 - **Status:** active (revisited 2026-09-30: Settings is a gear icon, #54)
 - **Why:**
   - With 8 links (Home, Lessons, Topics, Words, Daily, Results, Stats, Settings) the header wrapped on a 1180 px window. The real limit was the 760 px page width, which the header shared.
   - The header now has its own maximum width, 960 px. The sync status in the header is a coloured dot (green synced, amber unsynced or offline, red error) with the full text as its tooltip and label. The dot links to Settings, where the full status line still is, and "Sync now" still appears next to it whenever there is something to send. Links are a little tighter (8 px padding instead of 10).
@@ -99,7 +165,7 @@ Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
 ## 43. Login is one page with a "create account" toggle; the PC and the phone use the same backend, and the dev-server file API is gone
 
-- **Date:** 2026-09-29 - **Status:** active
+- **Date:** 2026-09-29 - **Status:** active (revisited 2026-09-30: guests can use the app without an account, #55)
 - **Why:**
   - Hayk creates exactly one account, then sign-up is closed (#39), so "Create one" is a toggle on the sign-in page, not its own route. Passwords need 8+ characters (Better Auth's default minimum).
   - After sign-up the API answers 403 `not_allowed` until Claude allowlists the account. The app then says "Account created. Ask Claude to activate it (allowlist)." with a "Try again" button, instead of a generic error. Every other auth or API error is shown with its message and HTTP status.

@@ -8,8 +8,7 @@ const base = { id: 'u1-01-x', unit: 1, order: 1, level: 'A1', title: 'T', summar
 const words = { file: 'content/words.json', text: JSON.stringify([{ id: 'hallo', de: 'hallo', en: 'hello', level: 'A1', added: '2026-09-29' }]) }
 const lessonFile = { file: 'content/lessons/u1-01-x.json', text: JSON.stringify({ ...base, sections: [{ type: 'tip', text: 't' }, { id: 'verbs', type: 'tip', text: 'v' }] }) }
 const topicsFile = (topics: object) => ({ file: 'content/topics.json', text: JSON.stringify(topics) })
-const card = { title: 'T', lines: [{ de: 'Hallo', en: 'Hello' }], breakdown: [{ de: 'Hallo', en: 'hello' }], explain: 'E' }
-const daily = { file: 'content/daily.json', text: JSON.stringify({ startDate: '2026-09-29', days: [{ id: 'd01', joke: card, fact: card, phrase: card }] }) }
+const extras = { file: 'content/extras.json', text: JSON.stringify({ items: [{ id: 'f01', type: 'fact', title: 'T', lines: [{ de: 'Hallo', en: 'Hello' }], breakdown: [{ de: 'Hallo', en: 'hello' }], explain: 'E' }] }) }
 const group = (id: string, ...items: object[]) => ({ id, title: 'G', summary: 'S', items })
 
 function problemsOf(fn: () => unknown): string[] {
@@ -78,7 +77,7 @@ describe('topics validation', () => {
       tests: [],
       words,
       lessons: [lessonFile],
-      daily,
+      extras,
       topics: topicsFile({
         groups: [
           group(
@@ -97,7 +96,7 @@ describe('topics validation', () => {
   })
 
   it('reports a missing or broken topics file like any other file', () => {
-    const out = checkAllContent({ tests: [], words, lessons: [lessonFile], topics: { file: 'content/topics.json', text: '' }, daily })
+    const out = checkAllContent({ tests: [], words, lessons: [lessonFile], topics: { file: 'content/topics.json', text: '' }, extras })
     expect(out.problems).toHaveLength(1)
     expect(out.problems[0]).toMatch(/^content\/topics\.json: not valid JSON:/)
   })

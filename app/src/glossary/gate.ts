@@ -9,8 +9,10 @@ export type GlossSurface =
   | { kind: 'review-card'; revealed: boolean }
   /** Anywhere else German is shown (results page and similar). */
   | { kind: 'page' }
-  /** The Daily page: never. Its breakdown is the gloss, jokes use made-up words, and daily.json is not in the glossary. */
-  | { kind: 'daily' }
+  /** The Extras page: never. Its breakdown is the gloss, jokes use made-up words, and extras.json is not in the glossary. */
+  | { kind: 'extras' }
+  /** Claude's feedback on a note: never. It is written after the content was glossary-checked, so many words would have no entry. */
+  | { kind: 'notes' }
 
 export function glossEnabled(s: GlossSurface): boolean {
   switch (s.kind) {
@@ -20,7 +22,8 @@ export function glossEnabled(s: GlossSurface): boolean {
       return s.revealed
     case 'page':
       return true
-    case 'daily':
+    case 'extras':
+    case 'notes':
       return false
   }
 }

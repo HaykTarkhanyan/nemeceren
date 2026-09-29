@@ -1,6 +1,7 @@
 // What the app may upload. These mirror the synced types in app/src/content/schema.ts
 // (ReviewLogEntry, StoredCard, Result, ResultItem, LessonProgress, ReviewState.newToday.extra)
-// as of 2026-09-29 02:00, plus a client-generated id on events and attempts.
+// as of 2026-09-29 02:00, plus a client-generated id on events and attempts, and the app's
+// note record (NoteRecord in app/src/lib/outbox.ts, text rules of NoteText in schema.ts; added 2026-09-30).
 // KEEP THEM IN STEP: when the app changes one of those types, change it here and redeploy.
 // Objects are strict on purpose: a key this API does not know is a 400 that names the key,
 // instead of data silently dropped on the way into the database.
@@ -138,6 +139,30 @@ export const LessonUpload = z.strictObject({
 
 export const NewWordExtraUpload = z.strictObject({ localDay: IsoDate, extra: Count.max(1000) })
 
+// ---------- notes (Hayk's free writing; Claude's feedback is never uploaded) ----------
+
+export const NOTE_MAX_CHARS = 5000
+
+export const NoteUpload = z
+  .strictObject({
+    id: ClientId,
+    text: z
+      .string()
+      .max(NOTE_MAX_CHARS, { message: `must be at most ${NOTE_MAX_CHARS} characters` })
+      .regex(/\S/, { message: 'must not be empty or only whitespace' }),
+    localDay: IsoDate,
+    createdAt: IsoDateTime,
+    updatedAt: IsoDateTime,
+    /** Soft delete. */
+    deletedAt: IsoDateTime.nullable(),
+    // No "feedback": only Claude writes it (backend/scripts/progress.py). Sending one is a 400.
+  })
+  .superRefine((n, ctx) => {
+    if (Date.parse(n.updatedAt) < Date.parse(n.createdAt)) {
+      ctx.addIssue({ code: 'custom', path: ['updatedAt'], message: 'is before createdAt' })
+    }
+  })
+
 // ---------- one sync batch ----------
 
 function checkUnique<T>(list: T[], key: (x: T) => string, field: string, name: string, ctx: z.RefinementCtx): void {
@@ -156,6 +181,7 @@ export const SyncBody = z
     attempts: z.array(AttemptUpload).max(SYNC_LIMITS.attempts).default([]),
     lessons: z.array(LessonUpload).max(SYNC_LIMITS.lessons).default([]),
     newWordExtras: z.array(NewWordExtraUpload).max(SYNC_LIMITS.newWordExtras).default([]),
+    notes: z.array(NoteUpload).max(SYNC_LIMITS.notes).default([]),
   })
   .superRefine((b, ctx) => {
     checkUnique(b.reviewEvents, (e) => e.id, 'reviewEvents', 'id', ctx)
@@ -163,6 +189,7 @@ export const SyncBody = z
     checkUnique(b.attempts, (a) => a.id, 'attempts', 'id', ctx)
     checkUnique(b.lessons, (l) => l.lessonId, 'lessons', 'lessonId', ctx)
     checkUnique(b.newWordExtras, (x) => x.localDay, 'newWordExtras', 'localDay', ctx)
+    checkUnique(b.notes, (n) => n.id, 'notes', 'id', ctx)
   })
 
 export type ReviewEventUpload = z.infer<typeof ReviewEventUpload>
@@ -171,4 +198,5 @@ export type CardUpload = z.infer<typeof CardUpload>
 export type AttemptUpload = z.infer<typeof AttemptUpload>
 export type LessonUpload = z.infer<typeof LessonUpload>
 export type NewWordExtraUpload = z.infer<typeof NewWordExtraUpload>
+export type NoteUpload = z.infer<typeof NoteUpload>
 export type SyncBody = z.infer<typeof SyncBody>

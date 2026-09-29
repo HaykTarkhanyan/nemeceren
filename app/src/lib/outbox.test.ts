@@ -1,9 +1,11 @@
 import { describe, expect, it } from 'vitest'
 import type { Result, ReviewLogEntry } from '../content/schema.ts'
 import {
+  acceptedLocally,
   applySent,
   buildView,
   emptyOutbox,
+  lockedRejections,
   nextBatch,
   outboxSize,
   parseOutbox,
@@ -12,7 +14,7 @@ import {
   sameJson,
   SYNC_LIMITS,
 } from './outbox.ts'
-import type { Outbox, ServerState, SyncResponse } from './outbox.ts'
+import type { NoteRecord, Outbox, ServerNote, ServerState, SyncResponse } from './outbox.ts'
 import { emptyState, Rating, review } from './srs.ts'
 
 const t0 = new Date('2026-09-29T10:00:00Z')
@@ -60,6 +62,7 @@ const server = (over: Partial<ServerState> = {}): ServerState => ({
   attempts: [],
   lessonProgress: { version: 1, lessons: {} },
   newWordExtras: {},
+  notes: [],
   ...over,
 })
 
@@ -71,6 +74,7 @@ const reply = (over: Partial<SyncResponse> = {}): SyncResponse => ({
   attempts: { received: 0, inserted: 0, duplicates: 0 },
   lessons: { received: 0, written: 0, unchanged: 0, stale: [] },
   newWordExtras: { received: 0, written: 0, unchanged: 0, stale: [] },
+  notes: { received: 0, written: 0, unchanged: 0, stale: [] },
   ...over,
 })
 
@@ -219,6 +223,7 @@ describe('parsing', () => {
     attempts: [{ id: 'a1', ...result() }],
     lessonProgress: { version: 1, lessons: {} },
     newWordExtras: { '2026-09-29': 5 },
+    notes: [],
   }
 
   it('reads the server state into the app types, keeping the ids', () => {
@@ -239,5 +244,130 @@ describe('parsing', () => {
     expect(() => parseOutbox('outbox', { ...o, attempts: [{ id: 'a1', ...result(), review: { gradedAt: '2026-09-29T10:00:00Z', summary: 's', items: [] } }] })).toThrow(
       /cannot have a review/,
     )
+  })
+})
+
+// ---------- notes ----------
+
+const noteRec = (text: string, updatedAt: string, over: Partial<NoteRecord> = {}): NoteRecord => ({
+  text,
+  localDay: '2026-09-29',
+  createdAt: '2026-09-29T09:00:00.000Z',
+  updatedAt,
+  deletedAt: null,
+  ...over,
+})
+const feedback = { summary: 'Gut! Look at [[wohne]].', hints: ['Check the verb.'], at: '2026-09-29T12:00:00.000Z' }
+const serverNote = (id: string, rec: NoteRecord, fb: ServerNote['feedback'] = null): ServerNote => ({ ...rec, id, feedback: fb })
+
+describe('notes in the outbox', () => {
+  it('batches notes within the API limit and removes exactly what was sent', () => {
+    const notes = Object.fromEntries(Array.from({ length: 55 }, (_, i) => [`n${String(i).padStart(2, '0')}`, noteRec(`Text ${i}`, '2026-09-29T09:00:00.000Z')]))
+    const o: Outbox = { ...emptyOutbox(), notes }
+    expect(outboxSize(o)).toBe(55)
+    const b = nextBatch(o)!
+    expect(b.notes).toHaveLength(SYNC_LIMITS.notes)
+    expect(b.notes![0]).toEqual({ id: 'n00', ...notes.n00 })
+    const changed = { ...o, notes: { ...o.notes, n01: noteRec('Changed while syncing', '2026-09-29T09:05:00.000Z') } }
+    const left = removeSent(changed, b)
+    expect(Object.keys(left.notes)).toEqual(['n01', 'n50', 'n51', 'n52', 'n53', 'n54'])
+  })
+
+  it('reads an outbox saved before notes existed (no "notes" key) as one without notes', () => {
+    const { notes: _notes, ...old } = emptyOutbox()
+    expect(parseOutbox('outbox', old).notes).toEqual({})
+    expect(() => parseOutbox('outbox', { ...emptyOutbox(), notes: { n1: noteRec('   ', '2026-09-29T09:00:00.000Z') } })).toThrow(/outbox: notes\.n1\.text/)
+  })
+})
+
+describe('notes: the lock rule', () => {
+  const t1 = '2026-09-29T10:00:00.000Z'
+  const t2 = '2026-09-29T11:00:00.000Z'
+
+  it('shows the later version, but a note with feedback always as the server has it', () => {
+    const s = server({
+      notes: [
+        serverNote('a', noteRec('Server a', t1)),
+        serverNote('b', noteRec('Server b', t2)),
+        serverNote('c', noteRec('Server c', t1), feedback),
+        serverNote('d', noteRec('Server d', t1)),
+      ],
+    })
+    const o: Outbox = {
+      ...emptyOutbox(),
+      notes: {
+        a: noteRec('Local a', t2),
+        b: noteRec('Local b', t1),
+        c: noteRec('Local c', t2),
+        d: noteRec('Server d', t2, { deletedAt: t2 }),
+        e: noteRec('Local e', t1, { createdAt: '2026-09-29T09:30:00.000Z' }),
+      },
+    }
+    const v = buildView(s, o, '2026-09-29')
+    const byId = Object.fromEntries(v.notes.map((n) => [n.id, n]))
+    expect(byId.a.text).toBe('Local a')
+    expect(byId.b.text).toBe('Server b')
+    expect(byId.c).toMatchObject({ text: 'Server c', feedback, pending: true })
+    expect(byId.d).toBeUndefined() // deleted locally
+    expect(byId.e).toMatchObject({ text: 'Local e', feedback: null, pending: true })
+    // Newest first by creation time.
+    expect(v.notes.map((n) => n.id)).toEqual(['e', 'a', 'b', 'c'])
+  })
+
+  it('keeps a locked note when a sync of a change comes back, and adopts the server version with its feedback', () => {
+    const locked = serverNote('c', noteRec('Server c', t1), feedback)
+    const sent = { notes: [{ id: 'c', ...noteRec('Edited c', t2) }, { id: 'x', ...noteRec('New x', t1) }] }
+    const r = reply({ notes: { received: 2, written: 1, unchanged: 0, stale: [locked] } })
+    // The device did not know about the feedback yet: the stale reply brings it.
+    const after = applySent(server({ notes: [serverNote('c', noteRec('Server c', t1))] }), sent, r)
+    expect(after.notes).toEqual([locked, serverNote('x', noteRec('New x', t1))])
+    // The device knew: its locked note is not overwritten by what it sent.
+    expect(applySent(server({ notes: [locked] }), { notes: [{ id: 'c', ...noteRec('Server c', t2) }] }, reply()).notes).toEqual([locked])
+  })
+
+  it('reports a refused change so the edited text is not lost silently', () => {
+    const locked = serverNote('c', noteRec('Server c', t1), feedback)
+    const r = reply({ notes: { received: 2, written: 0, unchanged: 0, stale: [locked, serverNote('d', noteRec('Server d', t2))] } })
+    const sent = {
+      notes: [
+        { id: 'c', ...noteRec('Edited c', t2) },
+        { id: 'd', ...noteRec('Older d', t1) },
+      ],
+    }
+    expect(lockedRejections(sent, r)).toEqual([
+      "Your note from 2026-09-29 already has Claude's feedback, so it is locked: your change was not saved. Your changed text was: Edited c",
+    ])
+    const deleted = { notes: [{ id: 'c', ...noteRec('Server c', t2, { deletedAt: t2 }) }] }
+    expect(lockedRejections(deleted, reply({ notes: { received: 1, written: 0, unchanged: 0, stale: [locked] } }))).toEqual([
+      "Your note from 2026-09-29 already has Claude's feedback, so it is locked: it was not deleted.",
+    ])
+  })
+
+  it('reads notes and their feedback from the server state, and refuses bad feedback loudly', () => {
+    const raw = {
+      serverTime: t1,
+      userId: 'u1',
+      reviewEventsSince: t1,
+      cards: {},
+      reviewEvents: [],
+      studyDays: [],
+      attempts: [],
+      lessonProgress: { version: 1, lessons: {} },
+      newWordExtras: {},
+      notes: [serverNote('c', noteRec('Server c', t1), feedback)],
+    }
+    expect(parseState('state', raw).notes[0].feedback).toEqual(feedback)
+    // The offline copy is the state as JSON; it must parse back the same.
+    expect(parseState('copy', JSON.parse(JSON.stringify(parseState('state', raw))))).toEqual(parseState('state', raw))
+    const broken = { ...raw, notes: [serverNote('c', noteRec('Server c', t1), { ...feedback, summary: 'an **open bold' })] }
+    expect(() => parseState('state', broken)).toThrow(/state: notes\.0\.feedback\.summary/)
+    const { notes: _n, ...noNotes } = raw
+    expect(() => parseState('state', noNotes)).toThrow(/state: notes/)
+  })
+
+  it('accepts a guest change as it is (nothing stale)', () => {
+    const after = applySent(server(), { notes: [{ id: 'x', ...noteRec('x', t1) }] }, acceptedLocally(t1))
+    expect(after.notes.map((n) => n.text)).toEqual(['x'])
+    expect(after.serverTime).toBe(t1)
   })
 })

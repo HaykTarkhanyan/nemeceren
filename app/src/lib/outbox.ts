@@ -2,11 +2,13 @@
 // batching within the API limits, applying the API's reply, parsing GET /v1/state, and the
 // local view = the server's state plus whatever is still in the outbox.
 // Merge rules are the backend's (backend/README.md, DECISIONS.md #36): per word the card with the
-// later last_review wins, per lesson the later updatedAt, per day the larger extra; events and
-// attempts are identified by client-made UUIDs, so a resend is harmless.
+// later last_review wins, per lesson the later updatedAt, per day the larger extra, per note the
+// later updatedAt unless the server's note has Claude's feedback (then it is locked and the
+// server's version stands); events and attempts are identified by client-made UUIDs, so a resend
+// is harmless.
 import { z } from 'zod'
-import { IsoDate, IsoDateTime, StoredCard as StoredCardSchema } from '../content/schema.ts'
-import type { LessonProgress, Result, ReviewLogEntry, ReviewState, StoredCard } from '../content/schema.ts'
+import { IsoDate, IsoDateTime, NoteFeedback as NoteFeedbackSchema, NoteText, StoredCard as StoredCardSchema } from '../content/schema.ts'
+import type { LessonProgress, NoteFeedback, Result, ReviewLogEntry, ReviewState, StoredCard } from '../content/schema.ts'
 import { ContentError, parseLessonProgress, parseResult, parseReviewLog } from '../content/validate.ts'
 import { laterCard } from './srs.ts'
 
@@ -15,6 +17,17 @@ export type ReviewEventUpload = ReviewLogEntry & { id: string; localDay: string 
 export type AttemptUpload = Omit<Result, 'review'> & { id: string; localDay: string }
 export type ServerEvent = ReviewLogEntry & { id: string }
 export type ServerAttempt = Result & { id: string }
+
+/** A note as the app writes it (the upload, without the id). deletedAt is a soft delete. */
+export interface NoteRecord {
+  text: string
+  localDay: string
+  createdAt: string
+  updatedAt: string
+  deletedAt: string | null
+}
+/** A note as the server has it: with Claude's feedback, or null. */
+export type ServerNote = NoteRecord & { id: string; feedback: NoteFeedback | null }
 
 export interface Outbox {
   version: 1
@@ -26,10 +39,12 @@ export interface Outbox {
   lessons: Record<string, LessonRecord>
   /** Extra new words per local day. */
   newWordExtras: Record<string, number>
+  /** Latest local record per note id. */
+  notes: Record<string, NoteRecord>
 }
 
 export function emptyOutbox(): Outbox {
-  return { version: 1, reviewEvents: [], cards: {}, attempts: [], lessons: {}, newWordExtras: {} }
+  return { version: 1, reviewEvents: [], cards: {}, attempts: [], lessons: {}, newWordExtras: {}, notes: {} }
 }
 
 export function outboxSize(o: Outbox): number {
@@ -38,7 +53,8 @@ export function outboxSize(o: Outbox): number {
     Object.keys(o.cards).length +
     o.attempts.length +
     Object.keys(o.lessons).length +
-    Object.keys(o.newWordExtras).length
+    Object.keys(o.newWordExtras).length +
+    Object.keys(o.notes).length
   )
 }
 
@@ -64,7 +80,7 @@ export function sameJson(a: unknown, b: unknown): boolean {
 // ---------- batches (POST /v1/sync) ----------
 
 /** The API's per-request limits (backend/src/config.ts SYNC_LIMITS). */
-export const SYNC_LIMITS = { reviewEvents: 1000, cards: 2000, attempts: 20, lessons: 500, newWordExtras: 31 } as const
+export const SYNC_LIMITS = { reviewEvents: 1000, cards: 2000, attempts: 20, lessons: 500, newWordExtras: 31, notes: 50 } as const
 
 export interface SyncBatch {
   reviewEvents?: ReviewEventUpload[]
@@ -72,6 +88,7 @@ export interface SyncBatch {
   attempts?: AttemptUpload[]
   lessons?: (LessonRecord & { lessonId: string })[]
   newWordExtras?: { localDay: string; extra: number }[]
+  notes?: (NoteRecord & { id: string })[]
 }
 
 /** The next request's worth of the outbox (empty lists left out), or null when there is nothing to send. */
@@ -96,6 +113,11 @@ export function nextBatch(o: Outbox): SyncBatch | null {
     .slice(0, SYNC_LIMITS.newWordExtras)
     .map((localDay) => ({ localDay, extra: o.newWordExtras[localDay] }))
   if (extras.length) b.newWordExtras = extras
+  const notes = Object.keys(o.notes)
+    .sort()
+    .slice(0, SYNC_LIMITS.notes)
+    .map((id) => ({ id, ...o.notes[id] }))
+  if (notes.length) b.notes = notes
   return Object.keys(b).length > 0 ? b : null
 }
 
@@ -112,6 +134,8 @@ export function removeSent(o: Outbox, sent: SyncBatch): Outbox {
   for (const { lessonId, ...rec } of sent.lessons ?? []) if (sameJson(lessons[lessonId], rec)) delete lessons[lessonId]
   const extras = { ...o.newWordExtras }
   for (const x of sent.newWordExtras ?? []) if (extras[x.localDay] === x.extra) delete extras[x.localDay]
+  const notes = { ...o.notes }
+  for (const { id, ...rec } of sent.notes ?? []) if (sameJson(notes[id], rec)) delete notes[id]
   return {
     version: 1,
     reviewEvents: o.reviewEvents.filter((e) => !eventIds.has(e.id)),
@@ -119,6 +143,7 @@ export function removeSent(o: Outbox, sent: SyncBatch): Outbox {
     attempts: o.attempts.filter((a) => !attemptIds.has(a.id)),
     lessons,
     newWordExtras: extras,
+    notes,
   }
 }
 
@@ -130,6 +155,16 @@ const LessonRecordSchema = z.strictObject({
   lastSection: z.number().int().nonnegative(),
   doneAt: IsoDateTime.nullable(),
 })
+
+const NoteRecordSchema = z.strictObject({
+  text: NoteText,
+  localDay: IsoDate,
+  createdAt: IsoDateTime,
+  updatedAt: IsoDateTime,
+  deletedAt: IsoDateTime.nullable(),
+})
+
+const ServerNoteSchema = NoteRecordSchema.extend({ id: z.string().min(1), feedback: NoteFeedbackSchema.nullable() })
 
 const Inserts = z.object({ received: z.number(), inserted: z.number(), duplicates: z.number() })
 const upserts = <T extends z.ZodType>(stale: T) =>
@@ -143,6 +178,7 @@ export const SyncResponse = z.object({
   attempts: Inserts,
   lessons: upserts(z.object({ lessonId: z.string(), progress: LessonRecordSchema })),
   newWordExtras: upserts(z.object({ localDay: IsoDate, extra: z.number().int().nonnegative() })),
+  notes: upserts(ServerNoteSchema),
 })
 export type SyncResponse = z.infer<typeof SyncResponse>
 
@@ -167,6 +203,8 @@ export interface ServerState {
   attempts: ServerAttempt[]
   lessonProgress: LessonProgress
   newWordExtras: Record<string, number>
+  /** In the API's shape, so the offline copy parses like a reply. GET /v1/state leaves deleted notes out; after a sync a deleted one may be here with deletedAt. */
+  notes: ServerNote[]
 }
 
 const StateEnvelope = z.object({
@@ -179,6 +217,7 @@ const StateEnvelope = z.object({
   attempts: z.array(z.object({ id: z.string().min(1) }).loose()),
   lessonProgress: z.unknown(),
   newWordExtras: z.record(z.string(), z.number().int().nonnegative()),
+  notes: z.array(ServerNoteSchema),
 })
 
 /** Validates the server state (or the offline copy of it); every problem names its field. */
@@ -202,6 +241,7 @@ export function parseState(what: string, data: unknown): ServerState {
     attempts,
     lessonProgress: parseLessonProgress(`${what} lessonProgress`, s.lessonProgress),
     newWordExtras: s.newWordExtras,
+    notes: s.notes,
   }
 }
 
@@ -233,6 +273,14 @@ export function applySent(s: ServerState, sent: SyncBatch, reply: SyncResponse):
   for (const x of sent.newWordExtras ?? []) extras[x.localDay] = x.extra
   for (const x of reply.newWordExtras.stale) extras[x.localDay] = x.extra
 
+  const notes = new Map(s.notes.map((n) => [n.id, n]))
+  for (const { id, ...rec } of sent.notes ?? []) {
+    // Locked by Claude's feedback: the server kept its version (and sends it as stale if it differs).
+    if (notes.get(id)?.feedback) continue
+    notes.set(id, { ...rec, id, feedback: null })
+  }
+  for (const n of reply.notes.stale) notes.set(n.id, n)
+
   const days = new Set(s.studyDays)
   for (const e of sent.reviewEvents ?? []) days.add(e.localDay)
   for (const a of sent.attempts ?? []) {
@@ -248,8 +296,34 @@ export function applySent(s: ServerState, sent: SyncBatch, reply: SyncResponse):
     attempts,
     lessonProgress: { version: 1, lessons },
     newWordExtras: extras,
+    notes: [...notes.values()],
     studyDays: [...days].sort(),
   }
+}
+
+/**
+ * Changes the server refused because the note has Claude's feedback (it came back as stale with
+ * feedback, and differs from what was sent), as messages for the error banner. The device then
+ * adopts the server's version, so an edited text would be gone without this: the message keeps it.
+ */
+export function lockedRejections(sent: SyncBatch, reply: SyncResponse): string[] {
+  const stale = new Map(reply.notes.stale.map((n) => [n.id, n]))
+  const out: string[] = []
+  for (const n of sent.notes ?? []) {
+    const server = stale.get(n.id)
+    if (!server?.feedback) continue
+    const what = `Your note from ${server.localDay} already has Claude's feedback, so it is locked`
+    if (n.deletedAt !== null && server.deletedAt === null) out.push(`${what}: it was not deleted.`)
+    else if (n.text !== server.text) out.push(`${what}: your change was not saved. Your changed text was: ${n.text}`)
+  }
+  return out
+}
+
+/** The reply of a sync that nobody sent: everything accepted as it is (guest mode keeps changes in memory only). */
+export function acceptedLocally(serverTime: string): SyncResponse {
+  const upserts = { received: 0, written: 0, unchanged: 0, stale: [] }
+  const inserts = { received: 0, inserted: 0, duplicates: 0 }
+  return { ok: true, serverTime, reviewEvents: inserts, cards: upserts, attempts: inserts, lessons: upserts, newWordExtras: upserts, notes: upserts }
 }
 
 // ---------- the local view ----------
@@ -274,11 +348,24 @@ export interface ProgressView {
   studyDays: string[]
   /** Attempt ids still waiting in the outbox. */
   pendingAttemptIds: string[]
+  /** Notes that are not deleted, newest first. */
+  notes: NoteView[]
+}
+
+export interface NoteView extends ServerNote {
+  /** A change of this note is still waiting in the outbox. */
+  pending: boolean
 }
 
 /** Later updatedAt wins; on a tie the local (second) record. */
 function laterLesson(a: LessonRecord | undefined, b: LessonRecord): LessonRecord {
   return a && a.updatedAt > b.updatedAt ? a : b
+}
+
+/** The server's note, or the local change when it is not older; a note with feedback is locked, so the server's stands. */
+function mergeNote(server: ServerNote | undefined, id: string, local: NoteRecord): ServerNote {
+  if (server && (server.feedback !== null || server.updatedAt > local.updatedAt)) return server
+  return { ...local, id, feedback: null }
 }
 
 export function buildView(s: ServerState, o: Outbox, today: string): ProgressView {
@@ -307,6 +394,9 @@ export function buildView(s: ServerState, o: Outbox, today: string): ProgressVie
     if (d) days.add(d)
   }
 
+  const notes = new Map(s.notes.map((n) => [n.id, n]))
+  for (const [id, rec] of Object.entries(o.notes)) notes.set(id, mergeNote(notes.get(id), id, rec))
+
   return {
     userId: s.userId,
     serverTime: s.serverTime,
@@ -322,6 +412,10 @@ export function buildView(s: ServerState, o: Outbox, today: string): ProgressVie
     lessonProgress: { version: 1, lessons },
     studyDays: [...days].sort(),
     pendingAttemptIds: o.attempts.map((a) => a.id),
+    notes: [...notes.values()]
+      .filter((n) => n.deletedAt === null)
+      .map((n) => ({ ...n, pending: n.id in o.notes }))
+      .sort((a, b) => b.createdAt.localeCompare(a.createdAt) || a.id.localeCompare(b.id)),
   }
 }
 
@@ -334,6 +428,8 @@ const OutboxEnvelope = z.strictObject({
   attempts: z.array(z.object({ id: z.string().min(1), localDay: IsoDate }).loose()),
   lessons: z.record(z.string(), LessonRecordSchema),
   newWordExtras: z.record(z.string(), z.number().int().nonnegative()),
+  // Optional only because outboxes saved before notes existed (2026-09-30) have no "notes" key.
+  notes: z.record(z.string(), NoteRecordSchema).optional(),
 })
 
 /** Parses a stored outbox; a damaged one is a loud error (its changes would otherwise be lost). */
@@ -356,5 +452,6 @@ export function parseOutbox(what: string, data: unknown): Outbox {
     }),
     lessons: o.lessons,
     newWordExtras: o.newWordExtras,
+    notes: o.notes ?? {},
   }
 }

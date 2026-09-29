@@ -1,6 +1,6 @@
 # Backend: Neon Auth + Functions API + Postgres
 
-Stores Hayk's progress (word reviews, FSRS cards, test attempts, Claude's grading, lesson progress, extra new words per day) in one private Neon Postgres database, so the PC and the phone share it. That is everything `app/src/lib/storage.ts` persists as of 2026-09-29 02:00; the per-device settings in `app/src/lib/settings.ts` (voice, rate, new words per day) stay in each browser. **Neon stays on the Free plan. Never upgrade, add billing, or enable paid features.**
+Stores Hayk's progress (word reviews, FSRS cards, test attempts, Claude's grading, lesson progress, extra new words per day, and notes with Claude's feedback since 2026-09-30) in one private Neon Postgres database, so the PC and the phone share it. That is everything `app/src/lib/storage.ts` persists as of 2026-09-29 02:00; the per-device settings in `app/src/lib/settings.ts` (voice, rate, new words per day) stay in each browser. **Neon stays on the Free plan. Never upgrade, add billing, or enable paid features.**
 
 ```
 GitHub Pages SPA (app/)  --sign in-->  Neon Auth (Managed Better Auth, email + password)
@@ -30,8 +30,8 @@ Postgres (tables in db/migrations/)  <--  Claude: scripts/progress.py (owner rol
 | `src/db.ts`, `src/config.ts`, `src/errors.ts`, `src/types.ts` | pg pool, fixed settings (origins, limits), error format, request context type. |
 | `db/migrations/NNN_*.sql` | Versioned schema. Never edit an applied file; add a new one. |
 | `scripts/migrate.py` | Applies migrations (`status` / `apply`). |
-| `scripts/progress.py` | Claude's tool: list, show and grade test attempts, activity summary, allowlist. |
-| `scripts/non_essential/smoke_test.py` | End-to-end check of the deployed API with a throwaway user. |
+| `scripts/progress.py` | Claude's tool: list, show and grade test attempts, list notes and write feedback on them, activity summary, allowlist. |
+| `scripts/non_essential/smoke_test.py` | End-to-end check of the deployed API, as Claude's test account (`--test-account`) or a throwaway user. |
 
 Scripts are Python run with `uv run` (dependencies pinned inline, PEP 723). They read the repo-root `.env.local` and log to the repo-root `logs/`. Run them from the repo root.
 
@@ -86,7 +86,7 @@ neon neon-auth domain allow-localhost get                     # must be enabled 
 neon neon-auth config email-password get                      # email + password on; email verification off is fine
 ```
 
-**Hayk's account:** Hayk signs up once (the app's sign-in page, from the wire-up task). Then Claude runs `uv run backend/scripts/progress.py allow-user <hayk's email>`, and sign-up is closed with `neon neon-auth config email-password update --disable-sign-up`. Until then, anyone who finds the auth URL can create an account, but the API answers them 403 (`not_allowed`): the allowlist is the real gate. To run the smoke test after sign-up is closed, re-open it for the run and close it again (check the exact boolean form with `neon neon-auth config email-password update --help`).
+**Hayk's account:** Hayk signs up once (the app's sign-in page, from the wire-up task). Then Claude runs `uv run backend/scripts/progress.py allow-user <hayk's email>`, and sign-up is closed with `neon neon-auth config email-password update --disable-sign-up`. Until then, anyone who finds the auth URL can create an account, but the API answers them 403 (`not_allowed`): the allowlist is the real gate. Sign-up is closed since 2026-09-29 (DECISIONS.md #52), so run the smoke test as Claude's test account: `uv run backend/scripts/non_essential/smoke_test.py --test-account`. It deletes only that account's progress rows, and takes it off the allowlist for one check, restoring the entry right away. Do not reopen sign-up for it.
 
 ## Migrations
 
@@ -124,6 +124,17 @@ The review JSON is the `review` object from `progress/README.md` (`gradedAt` may
 ```
 
 The script checks it with the same rules as the app's zod `Review` schema (known keys only, non-empty summary, each `index` in range and at most once, `correct` true/false, optional non-empty `correction`/`note`) and warns about `pending` items left without a verdict. It refuses to overwrite an existing review without `--replace`. The app shows the review on its next load. Minutes in `summary` use the Stats page caps (2 min per card, 20 min per test item), and days are the `localDay` the app recorded; the `--days` window ends at the local date of the machine running the script.
+
+Notes (Hayk's free writing, DECISIONS.md #53):
+
+```bash
+uv run backend/scripts/progress.py notes --pending                    # notes without feedback yet, oldest first (without --pending: all not deleted)
+uv run backend/scripts/progress.py note <note-id>                     # one note in full, with its feedback
+uv run backend/scripts/progress.py note-feedback <note-id> feedback.json   # or "-" for stdin; --replace to overwrite
+uv run backend/scripts/progress.py self-check                         # offline check of the feedback validator (no database)
+```
+
+The feedback JSON is `NoteFeedback` in `app/src/content/schema.ts` without `at`, which the script sets (see `progress/README.md`). The script checks it with the same rules as the app, including the text format of `summary` (a port of `app/src/content/richtext.ts`), because the app refuses to load a state with a feedback it cannot show. Once a note has feedback it is locked: the API refuses to change its text or delete it. A deleted note gets no feedback.
 
 ## API contract (for the "wire the app" task)
 
@@ -173,7 +184,8 @@ Everything the app needs on start, from one snapshot. `days` = window for raw re
   "studyDays": ["2026-09-28", "2026-09-29"],
   "attempts": [ { "id": "<uuid>", "version": 1, "testId": "...", "testTitle": "...", "level": "A1", "mode": "browser", "startedAt": "...", "submittedAt": "...", "localDay": "2026-09-29", "lessonId": "u1-01-sich-vorstellen", "section": 3, "score": { "correct": 6, "wrong": 3, "pending": 2, "total": 11 }, "items": [ ... ], "review": { ... } } ],
   "lessonProgress": { "version": 1, "lessons": { "u1-01-sich-vorstellen": { "startedAt": "...", "updatedAt": "...", "lastSection": 3, "doneAt": null } } },
-  "newWordExtras": { "2026-09-29": 5 }
+  "newWordExtras": { "2026-09-29": 5 },
+  "notes": [ { "id": "<uuid>", "text": "Ich heiße Hayk.", "localDay": "2026-09-30", "createdAt": "...", "updatedAt": "...", "deletedAt": null, "feedback": null } ]
 }
 ```
 
@@ -183,11 +195,12 @@ Everything the app needs on start, from one snapshot. `days` = window for raw re
 - `attempts`: newest first; each is a `Result` plus `id`. `lessonId` + `section` only on lesson exercises, `review` only once Claude graded it. The attempt `id` replaces the old file name as the attempt id (e.g. `TestItemEvent.attemptId`).
 - `lessonProgress`: the app's `LessonProgress`, exactly.
 - `newWordExtras`: extra new words asked for, per local day in the window.
+- `notes`: every note that is not deleted, newest first (by `createdAt`), all time. `deletedAt` is always null here; `feedback` is Claude's `NoteFeedback` or null. Stale notes in a sync reply have the same shape.
 - `ReviewState.newToday` is built, not stored: `count` = `reviewEvents.filter(e => e.localDay === today && e.isNew && !e.practice).length`, `extra` = `newWordExtras[today]` (leave the key out when missing or 0, as `srs.ts` does).
 
 ### `POST /v1/sync`
 
-`Content-Type: application/json`, at most 2 MB, one transaction. Any subset of the five lists; at least one item in total.
+`Content-Type: application/json`, at most 2 MB, one transaction. Any subset of the six lists; at least one item in total.
 
 ```json
 {
@@ -195,11 +208,12 @@ Everything the app needs on start, from one snapshot. `days` = window for raw re
   "cards": [ { "wordId": "uhr", "card": { "...": "StoredCard" } } ],
   "attempts": [ { "id": "<crypto.randomUUID()>", "...": "every Result field except review; localDay required" } ],
   "lessons": [ { "lessonId": "u1-01-sich-vorstellen", "startedAt": "...", "updatedAt": "...", "lastSection": 3, "doneAt": null } ],
-  "newWordExtras": [ { "localDay": "2026-09-29", "extra": 5 } ]
+  "newWordExtras": [ { "localDay": "2026-09-29", "extra": 5 } ],
+  "notes": [ { "id": "<crypto.randomUUID()>", "text": "Ich heiße Hayk.", "localDay": "2026-09-30", "createdAt": "...", "updatedAt": "...", "deletedAt": null } ]
 }
 ```
 
-Limits per request: 1000 review events, 2000 cards, 20 attempts, 500 lessons, 31 extras; ids (and word ids, lesson ids, days) unique within a batch.
+Limits per request: 1000 review events, 2000 cards, 20 attempts, 500 lessons, 31 extras, 50 notes; ids (and word ids, lesson ids, days) unique within a batch. A note's text is 1 to 5000 characters and not only whitespace; `updatedAt` is not before `createdAt`.
 
 ```json
 {
@@ -209,7 +223,8 @@ Limits per request: 1000 review events, 2000 cards, 20 attempts, 500 lessons, 31
   "cards": { "received": 2, "written": 1, "unchanged": 0, "stale": [ { "wordId": "termin", "card": { "...": "the server's newer card" } } ] },
   "attempts": { "received": 1, "inserted": 1, "duplicates": 0 },
   "lessons": { "received": 1, "written": 1, "unchanged": 0, "stale": [] },
-  "newWordExtras": { "received": 1, "written": 0, "unchanged": 0, "stale": [ { "localDay": "2026-09-29", "extra": 8 } ] }
+  "newWordExtras": { "received": 1, "written": 0, "unchanged": 0, "stale": [ { "localDay": "2026-09-29", "extra": 8 } ] },
+  "notes": { "received": 1, "written": 0, "unchanged": 0, "stale": [ { "id": "...", "text": "...", "localDay": "...", "createdAt": "...", "updatedAt": "...", "deletedAt": null, "feedback": { "summary": "...", "at": "..." } } ] }
 }
 ```
 
@@ -218,8 +233,9 @@ Idempotency, so a retry after a timeout is always safe:
 - Cards: per word, the card with the later `last_review` wins (the rule of `mergeStates` in `app/src/lib/srs.ts`).
 - Lessons: per lesson, the record with the later `updatedAt` wins (every change in `app/src/lib/plan.ts` sets `updatedAt`, including un-marking "done").
 - Extras: per day, the larger `extra` wins (it only grows during a day; `mergeStates` takes the max too).
-- For those three, an older or equal value is not written, and when the server has a newer one it comes back in `stale`: adopt it locally.
-- Attempts must not contain `review` (400). Only Claude writes reviews.
+- Notes: per note, the record with the later `updatedAt` wins; a delete is a record with `deletedAt` set (soft delete). **A note with Claude's feedback is locked:** it is never changed or deleted, and whenever the upload differs from it the server's version, with its `feedback`, comes back in `stale`. The app adopts it and tells Hayk that his change was not saved, with the changed text.
+- For those four, an older or equal value is not written, and when the server has a newer one it comes back in `stale`: adopt it locally.
+- Attempts must not contain `review`, and notes must not contain `feedback` (400). Only Claude writes those.
 
 ### Errors
 
@@ -244,12 +260,13 @@ Always JSON: `{"error": {"code", "message", "details"?}, "requestId"}`, with COR
 
 - **Outbox** in localStorage, written before the network: review events (with a fresh id), the latest card per word, submitted attempts (with a fresh id), the latest record per lesson, the latest extra per day. On a 200, remove exactly what was sent (a card, lesson or extra only if it has not changed since), and adopt everything in `stale`.
 - **Flush** as in the budget rules. On tab hide, `fetch(..., { keepalive: true })` only works for bodies under 64 KB; the outbox survives anyway and the next start flushes it.
+- **Check for feedback** (Notes page): one more `GET /v1/state`, only when Hayk presses the button. Never on a timer.
 - **Start:** sign-in check, then flush the outbox if it has anything, then `GET /v1/state`. Build `ReviewState` from `cards` merged with outbox cards (later `last_review` wins) and `newToday` as above; results from `attempts`; `LessonProgress` from `lessonProgress` merged with outbox lessons (later `updatedAt` wins); the Stats events from `reviewEvents` + `attempts[].items` + `studyDays`.
 - Settings (`voice`, `rate`, `newPerDay`) stay per device in localStorage, as today.
 
 ## Keeping the schemas in step
 
-`src/schema.ts` mirrors `ReviewLogEntry`, `StoredCard`, `Result`, `ResultItem`, the entries of `LessonProgress` and `ReviewState.newToday.extra` from `app/src/content/schema.ts` (as of 2026-09-29 02:00), with strict objects: a new field in the app is a loud 400 naming the key until it is added here too. Anything new that `app/src/lib/storage.ts` starts to persist needs a table, a sync list and a state field. When one of those types changes: update `src/schema.ts`, add a migration if a column changes, redeploy, and rerun the smoke test. Claude's review rules are mirrored in `scripts/progress.py` (`validate_review`).
+`src/schema.ts` mirrors `ReviewLogEntry`, `StoredCard`, `Result`, `ResultItem`, the entries of `LessonProgress` and `ReviewState.newToday.extra` from `app/src/content/schema.ts` (as of 2026-09-29 02:00), and the note record (`NoteRecord` in `app/src/lib/outbox.ts`, text rules of `NoteText`, since 2026-09-30), with strict objects: a new field in the app is a loud 400 naming the key until it is added here too. Anything new that `app/src/lib/storage.ts` starts to persist needs a table, a sync list and a state field. When one of those types changes: update `src/schema.ts`, add a migration if a column changes, redeploy, and rerun the smoke test. Claude's review rules are mirrored in `scripts/progress.py` (`validate_review`), and the note feedback rules (`NoteFeedback`, including the text format) in `validate_note_feedback`; `progress.py self-check` tests the latter.
 
 ## Security notes
 

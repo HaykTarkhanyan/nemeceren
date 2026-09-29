@@ -2,6 +2,8 @@
 // two dead ends that need a person: "not activated" (the API allowlist, 403) and errors.
 // Offline starts: if the sign-in server cannot be reached, the last signed-in user on this
 // device is used with the offline copy of their progress (see storage.ts).
+// Guest mode (DECISIONS.md #55): from the sign-in page, without an account. Progress stays in
+// memory (storage.ts startGuest); nothing here remembers it, so a reload shows the sign-in page.
 import { useSyncExternalStore } from 'react'
 import { AuthFailure, currentUser, signIn, signOut, signUp } from './auth.ts'
 import type { AuthUser } from './auth.ts'
@@ -13,6 +15,7 @@ export type Session =
   | { phase: 'signed-out'; notice: string | null }
   | { phase: 'loading'; user: AuthUser }
   | { phase: 'ready'; user: AuthUser }
+  | { phase: 'guest' }
   | { phase: 'not-allowed'; user: AuthUser; justCreated: boolean }
   | { phase: 'error'; user: AuthUser | null; message: string }
 
@@ -103,6 +106,22 @@ export async function signInWith(email: string, password: string): Promise<void>
 
 export async function signUpWith(email: string, password: string): Promise<void> {
   await load(await signUp(email, password), true)
+}
+
+export function useIsGuest(): boolean {
+  return useSession().phase === 'guest'
+}
+
+/** "Continue as guest" on the sign-in page. Makes no request and stores nothing. */
+export function continueAsGuest(): void {
+  progressStore().startGuest()
+  set({ phase: 'guest' })
+}
+
+/** The guest banner's "Sign in": forgets the guest's progress and shows the sign-in page. */
+export function leaveGuest(): void {
+  progressStore().stop()
+  set({ phase: 'signed-out', notice: null })
 }
 
 /** Loads again after an error or after Claude activated the account. */

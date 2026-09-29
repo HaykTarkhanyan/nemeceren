@@ -6,10 +6,13 @@
 //   attempts        every test attempt with its items and Claude's review, newest first
 //   lessonProgress  the app's LessonProgress, exactly
 //   newWordExtras   extra new words asked for, per local day, for the days in the window
+//   notes           every note that is not deleted, with Claude's feedback (or null), newest first
 // The field names match the app's types (app/src/content/schema.ts), plus an `id` on events and
 // attempts. Keys the app models as optional (not nullable) are left out when empty.
 import { withTransaction } from './db.ts'
 import type { StoredCard } from './schema.ts'
+import { NOTE_JSON } from './sync.ts'
+import type { NoteRecord } from './sync.ts'
 
 interface LessonRecord {
   startedAt: string
@@ -28,6 +31,7 @@ export interface StateResponse {
   attempts: Record<string, unknown>[]
   lessonProgress: { version: 1; lessons: Record<string, LessonRecord> }
   newWordExtras: Record<string, number>
+  notes: NoteRecord[]
 }
 
 interface EventRow {
@@ -169,6 +173,13 @@ export async function loadState(userId: string, days: number): Promise<StateResp
     const newWordExtras: Record<string, number> = {}
     for (const x of extraRows.rows) newWordExtras[x.local_day] = x.extra
 
+    const noteRows = await client.query<{ note: NoteRecord }>(
+      `SELECT ${NOTE_JSON('n')} AS note FROM notes n
+        WHERE n.user_id = $1 AND n.deleted_at IS NULL
+        ORDER BY n.created_at DESC, n.id`,
+      [userId],
+    )
+
     return {
       serverTime: clock.now.toISOString(),
       userId,
@@ -179,6 +190,7 @@ export async function loadState(userId: string, days: number): Promise<StateResp
       attempts,
       lessonProgress: { version: 1 as const, lessons },
       newWordExtras,
+      notes: noteRows.rows.map((r) => r.note),
     }
   })
 }
