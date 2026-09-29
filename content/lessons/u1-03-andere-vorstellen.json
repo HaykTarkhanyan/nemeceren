@@ -1,0 +1,126 @@
+{
+  "id": "u1-03-andere-vorstellen",
+  "unit": 1,
+  "order": 3,
+  "level": "A1",
+  "title": "Introducing others and the verb sein (Das ist ...)",
+  "summary": "Introduce colleagues and friends, use sein (to be) and all the personal pronouns, and say how old you are.",
+  "goals": [
+    "Introduce someone with Das ist ...",
+    "Use sein in every person: ich bin, du bist, er ist ...",
+    "Use the personal pronouns, including the three meanings of sie",
+    "Say and ask how old someone is"
+  ],
+  "nicosWeg": [{ "title": "Nicos Weg A1, chapter 1: Meeting people (Das ist Nico, Nico hat ein Problem)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }],
+  "words": ["sein", "das-ist", "freut-mich", "freund", "freundin", "kollege", "kollegin", "herr", "frau", "wer", "nett", "neu", "hier", "alt", "jahr"],
+  "sections": [
+    {
+      "type": "explanation",
+      "title": "Introducing someone",
+      "text": "Point and say [[Das ist ...]]: [[Das ist Anna.]] [[Das ist mein Kollege Aram.]] The usual answer is [[Freut mich!]] (nice to meet you) or simply [[Hallo!]].\n\nWith people you call [[Sie]], use [[Herr]] or [[Frau]] plus the surname: [[Herr Weber]], [[Frau Schmidt]]. First names usually go with [[du]]."
+    },
+    {
+      "type": "table",
+      "title": "sein (to be): learn it by heart",
+      "columns": [{ "header": "Person", "de": "words" }, { "header": "sein", "de": "words" }, { "header": "English" }],
+      "rows": [
+        ["ich", "bin", "I am"],
+        ["du", "bist", "you are (informal)"],
+        ["er / sie / es", "ist", "he / she / it is"],
+        ["wir", "sind", "we are"],
+        ["ihr", "seid", "you are (plural, informal)"],
+        ["sie / Sie", "sind", "they are / you are (polite)"]
+      ]
+    },
+    {
+      "type": "comparison",
+      "text": "Russian drops 'to be' in the present (Я студент), but German never does: [[Ich bin Student.]]\n\nArmenian keeps it too, but at the **end**: Ես ուսանող եմ. German puts it in **second** place: [[Ich bin Student.]] Watch the position."
+    },
+    {
+      "type": "table",
+      "title": "The personal pronouns",
+      "columns": [{ "header": "Pronoun", "de": "words" }, { "header": "English" }, { "header": "Example", "de": "words" }],
+      "rows": [
+        ["ich", "I", "Ich bin Hayk."],
+        ["du", "you (informal)", "Du bist nett."],
+        ["er", "he", "Er ist neu hier."],
+        ["sie", "she", "Sie ist aus Russland."],
+        ["es", "it", "Es ist gut."],
+        ["wir", "we", "Wir sind Kollegen."],
+        ["ihr", "you (plural, informal)", "Ihr seid nett."],
+        ["sie", "they", "Sie sind aus Armenien."],
+        ["Sie", "you (polite, one or many)", "Sind Sie Frau Schmidt?"]
+      ]
+    },
+    {
+      "type": "warning",
+      "text": "[[sie]] has three meanings: she, they, and (with a capital S) polite you. The verb tells you which: [[sie ist]] = she is, [[sie sind]] = they are, [[Sie sind]] = you are (polite). At the start of a sentence all three are capitalized, so only the verb and the context help."
+    },
+    {
+      "type": "examples",
+      "title": "How old are you?",
+      "items": [
+        { "de": "Wie alt bist du?", "en": "How old are you?" },
+        { "de": "Ich bin dreißig.", "en": "I'm thirty." },
+        { "de": "Ich bin dreißig Jahre alt.", "en": "I am thirty years old." },
+        { "de": "Wer ist das? - Das ist Frau Schmidt. Sie ist neu hier.", "en": "Who is that? - That's Ms Schmidt. She's new here." }
+      ]
+    },
+    {
+      "type": "comparison",
+      "text": "Age works like Armenian: 'I am thirty' - [[Ich bin dreißig.]], Ես երեսուն տարեկան եմ. Russian uses a different structure (Мне тридцать лет), so don't translate from Russian here."
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat aloud",
+      "items": [
+        { "de": "Das ist mein Kollege Aram.", "en": "This is my colleague Aram." },
+        { "de": "Freut mich!", "en": "Nice to meet you!" },
+        { "de": "Wer ist das?", "en": "Who is that?" },
+        { "de": "Sie ist sehr nett.", "en": "She is very nice." },
+        { "de": "Wir sind Kollegen.", "en": "We are colleagues." },
+        { "de": "Wie alt bist du?", "en": "How old are you?" }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "gap",
+          "text": "Wir ___ Kollegen.",
+          "answers": [["sind"]],
+          "explanation": "wir sind (we are)."
+        },
+        {
+          "type": "gap",
+          "text": "Du ___ sehr nett!",
+          "answers": [["bist"]],
+          "explanation": "du bist (you are, informal)."
+        },
+        {
+          "type": "mc",
+          "question": "A colleague introduces you to Anna. What do you say?",
+          "questionLang": "en",
+          "options": ["Freut mich!", "Gute Nacht!", "Wie bitte?"],
+          "answer": "Freut mich!",
+          "explanation": "Freut mich! = Nice to meet you!"
+        },
+        {
+          "type": "order",
+          "prompt": "This is my colleague.",
+          "tiles": ["das", "ist", "mein", "Kollege"],
+          "answers": ["Das ist mein Kollege"],
+          "explanation": "Das ist ... introduces someone. The verb ist is in second place."
+        },
+        {
+          "type": "translate",
+          "direction": "en-de",
+          "text": "She is new here.",
+          "references": ["Sie ist neu hier."],
+          "explanation": "sie ist = she is. At the start of the sentence: Sie ist ..."
+        }
+      ]
+    }
+  ]
+}

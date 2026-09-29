@@ -1,0 +1,119 @@
+{
+  "id": "u1-04-beruf",
+  "unit": 1,
+  "order": 4,
+  "level": "A1",
+  "title": "Work and jobs (Beruf und Arbeit)",
+  "summary": "Say what you do, where you work and what you study, and ask others the same.",
+  "goals": [
+    "Say your job and where you work",
+    "Ask others what they do",
+    "Use arbeiten and machen in every person",
+    "Use male and female job names (-in)"
+  ],
+  "nicosWeg": [{ "title": "Nicos Weg A1, chapter 9: Working life (Ich bin Lehrerin, Mein Beruf)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }],
+  "words": ["beruf", "arbeiten", "als", "bei", "firma", "job", "arbeit", "entwickler", "entwicklerin", "student", "studentin", "studieren", "informatik", "lehrer", "lehrerin", "machen", "was", "was-sind-sie-von-beruf"],
+  "tests": ["u1-t2-leute-beruf"],
+  "sections": [
+    {
+      "type": "explanation",
+      "title": "Talking about work",
+      "text": "- [[Was sind Sie von Beruf?]] or [[Was machst du beruflich?]] - What do you do?\n- [[Ich bin Entwickler.]] - I'm a developer.\n- [[Ich arbeite als Entwickler.]] - I work as a developer.\n- [[Ich arbeite bei Siemens.]] - I work at Siemens.\n- [[Ich studiere Informatik.]] - I study computer science.\n\n[[bei]] + company, [[in]] + city: [[Ich arbeite bei Siemens in München.]]"
+    },
+    {
+      "type": "warning",
+      "title": "No 'a' before jobs",
+      "text": "German says [[Ich bin Entwickler.]] with no article, where English says 'I am **a** developer'. Russian works the same way (Я программист), so this one is easy for you."
+    },
+    {
+      "type": "explanation",
+      "title": "Male and female job names",
+      "text": "Most job names have a female form with **-in**:\n\n- [[der Entwickler]] - [[die Entwicklerin]]\n- [[der Lehrer]] - [[die Lehrerin]]\n- [[der Student]] - [[die Studentin]]\n\nThe plural of the -in forms ends in **-innen**: [[die Lehrerinnen]]. In job ads you will also see forms like 'Entwickler (m/w/d)', which means the job is open to everyone."
+    },
+    {
+      "type": "table",
+      "title": "arbeiten and machen",
+      "columns": [{ "header": "Person", "de": "words" }, { "header": "arbeiten", "de": "words" }, { "header": "machen", "de": "words" }],
+      "rows": [
+        ["ich", "arbeite", "mache"],
+        ["du", "arbeitest", "machst"],
+        ["er / sie / es", "arbeitet", "macht"],
+        ["wir", "arbeiten", "machen"],
+        ["ihr", "arbeitet", "macht"],
+        ["sie / Sie", "arbeiten", "machen"]
+      ]
+    },
+    {
+      "type": "tip",
+      "text": "Verbs whose stem ends in **t** or **d** add an extra **e** so you can pronounce them: [[du arbeitest]], [[er arbeitet]] (not 'arbeitst', 'arbeitt'). Same for [[antworten]]: [[du antwortest]]."
+    },
+    {
+      "type": "tip",
+      "title": "In tech",
+      "text": "In Munich tech companies, English job titles are normal German: 'Ich arbeite als Data Scientist' or 'Ich bin Software Engineer' are perfectly fine sentences."
+    },
+    {
+      "type": "examples",
+      "title": "Small talk at work",
+      "items": [
+        { "de": "Was machst du beruflich?", "en": "What do you do for work?" },
+        { "de": "Ich bin Entwickler. Und du?", "en": "I'm a developer. And you?" },
+        { "de": "Ich bin Studentin. Ich studiere Informatik.", "en": "I'm a student. I study computer science." },
+        { "de": "Wo arbeitest du?", "en": "Where do you work?" },
+        { "de": "Die Arbeit ist gut und die Kollegen sind nett.", "en": "The work is good and the colleagues are nice." }
+      ]
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat aloud",
+      "items": [
+        { "de": "Was sind Sie von Beruf?", "en": "What do you do for a living? (polite)" },
+        { "de": "Ich bin Entwickler.", "en": "I'm a developer." },
+        { "de": "Ich arbeite bei einer Firma in München.", "en": "I work at a company in Munich." },
+        { "de": "Ich studiere Informatik.", "en": "I study computer science." },
+        { "de": "Er arbeitet als Lehrer.", "en": "He works as a teacher." }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "gap",
+          "text": "Ich ___ als Entwickler.",
+          "answers": [["arbeite"]],
+          "explanation": "ich arbeite."
+        },
+        {
+          "type": "gap",
+          "text": "Er ___ bei Siemens.",
+          "answers": [["arbeitet"]],
+          "hint": "The stem ends in t.",
+          "explanation": "er arbeitet: an extra e before the ending -t."
+        },
+        {
+          "type": "mc",
+          "question": "How does a woman say 'I am a teacher'?",
+          "questionLang": "en",
+          "options": ["Ich bin Lehrerin.", "Ich bin Lehrer.", "Ich bin die Lehrerin."],
+          "answer": "Ich bin Lehrerin.",
+          "explanation": "No article with jobs, and the female form ends in -in."
+        },
+        {
+          "type": "order",
+          "prompt": "What do you do for a living? (polite)",
+          "tiles": ["was", "sind", "Sie", "von", "Beruf"],
+          "answers": ["Was sind Sie von Beruf"],
+          "explanation": "A fixed question: Was sind Sie von Beruf?"
+        },
+        {
+          "type": "translate",
+          "direction": "en-de",
+          "text": "I study computer science.",
+          "references": ["Ich studiere Informatik."],
+          "explanation": "studieren = to study at university; Informatik = computer science."
+        }
+      ]
+    }
+  ]
+}

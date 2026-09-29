@@ -1,0 +1,107 @@
+{
+  "id": "u1-05-kontaktdaten",
+  "unit": 1,
+  "order": 5,
+  "level": "A1",
+  "title": "Contact details (Adresse, Telefonnummer, E-Mail)",
+  "summary": "Give and ask for an address, a phone number and an email address, at the doctor's, in a course or for a new job.",
+  "goals": [
+    "Ask for and give an address, a phone number and an email address",
+    "Read German addresses and postcodes",
+    "Say an email address aloud"
+  ],
+  "nicosWeg": [{ "title": "Nicos Weg A1, chapter 2: Contact details (Adressen, Auf dem Amt)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }],
+  "words": ["adresse", "nummer", "telefonnummer", "handynummer", "e-mail-adresse", "strasse", "postleitzahl", "stadt", "punkt", "schreiben"],
+  "sections": [
+    {
+      "type": "explanation",
+      "title": "The questions",
+      "text": "At the doctor's, at the gym, in a course, for a new job:\n\n- [[Wie ist Ihre Adresse?]] - What is your address?\n- [[Wie ist Ihre Telefonnummer?]] - What is your phone number?\n- [[Wie ist Ihre E-Mail-Adresse?]] - What is your email address?\n\nInformal: [[Wie ist deine Handynummer?]] Note that German asks [[wie]] (how), not 'what'."
+    },
+    {
+      "type": "comparison",
+      "text": "German asks 'how is your address?' ([[Wie ist Ihre Adresse?]]), just like Russian Какой у вас адрес? uses 'which'. Don't translate English 'what' here: 'Was ist Ihre Adresse?' sounds wrong."
+    },
+    {
+      "type": "explanation",
+      "title": "German addresses",
+      "text": "Street first, then the house number, then the postcode and the city:\n\n[[Hauptstraße 12]]\n[[80331 München]]\n\nThe street is read as written: [[Hauptstraße zwölf]]. Postcodes are usually read digit by digit: [[acht, null, drei, drei, eins]]."
+    },
+    {
+      "type": "table",
+      "title": "Saying an email address aloud",
+      "columns": [{ "header": "Symbol" }, { "header": "Say" }, { "header": "Note" }],
+      "rows": [
+        ["@", "ät", "like English 'at'"],
+        [".", "Punkt", "dot"],
+        ["-", "Bindestrich", "hyphen"],
+        ["_", "Unterstrich", "underscore"]
+      ]
+    },
+    {
+      "type": "examples",
+      "title": "At the reception desk",
+      "items": [
+        { "de": "Wie ist Ihre Adresse? - Hauptstraße zwölf, in München.", "en": "What is your address? - Hauptstraße 12, in Munich." },
+        { "de": "Meine Handynummer ist null, eins, fünf, zwei, drei, vier.", "en": "My mobile number is 0152 34..." },
+        { "de": "Können Sie das bitte schreiben?", "en": "Can you write that down, please?" },
+        { "de": "Wie schreibt man das?", "en": "How do you spell that?" }
+      ]
+    },
+    {
+      "type": "tip",
+      "text": "Forms at offices and doctors usually ask for [[Vorname]] (first name) and [[Nachname]] (surname) separately. Write your name exactly as in your passport, and be ready to spell it (Unit 0, lesson 4)."
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat aloud",
+      "items": [
+        { "de": "Wie ist Ihre Adresse?", "en": "What is your address?" },
+        { "de": "Wie ist Ihre Telefonnummer?", "en": "What is your phone number?" },
+        { "de": "Wie ist Ihre E-Mail-Adresse?", "en": "What is your email address?" },
+        { "de": "Meine Postleitzahl ist acht, null, drei, drei, eins.", "en": "My postcode is 80331." },
+        { "de": "Können Sie das bitte schreiben?", "en": "Can you write that down, please?" }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "gap",
+          "text": "Wie ist Ihre ___? - Hauptstraße zwölf, München.",
+          "answers": [["Adresse"]],
+          "explanation": "die Adresse. Nouns start with a capital letter."
+        },
+        {
+          "type": "listen_mc",
+          "audio": "Wie ist Ihre Telefonnummer?",
+          "question": "What do they want to know?",
+          "questionLang": "en",
+          "options": ["die Telefonnummer", "die Adresse", "der Nachname"],
+          "answer": "die Telefonnummer",
+          "explanation": "Telefonnummer = phone number."
+        },
+        {
+          "type": "order",
+          "prompt": "What is your email address? (polite)",
+          "tiles": ["wie", "ist", "Ihre", "E-Mail-Adresse"],
+          "answers": ["Wie ist Ihre E-Mail-Adresse"],
+          "explanation": "German asks with wie: Wie ist Ihre E-Mail-Adresse?"
+        },
+        {
+          "type": "dictation",
+          "text": "Meine Nummer ist null, eins, sieben, sechs.",
+          "explanation": "Numbers as words, digit by digit."
+        },
+        {
+          "type": "translate",
+          "direction": "de-en",
+          "text": "Können Sie das bitte schreiben?",
+          "references": ["Can you write that down, please?", "Can you write that, please?", "Could you write that down, please?"],
+          "explanation": "schreiben = to write. A very useful sentence when you don't catch a name or a number."
+        }
+      ]
+    }
+  ]
+}

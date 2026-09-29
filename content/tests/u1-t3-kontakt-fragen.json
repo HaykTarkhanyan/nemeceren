@@ -1,0 +1,79 @@
+{
+  "id": "u1-t3-kontakt-fragen",
+  "title": "Contact details, questions and class phrases (Unit 1 final)",
+  "level": "A1",
+  "created": "2026-09-29",
+  "description": "Unit 1 check after lessons 5 and 6, with the unit's final writing task.",
+  "unit": 1,
+  "lesson": "u1-06-fragen-smalltalk",
+  "items": [
+    {
+      "type": "gap",
+      "text": "Wie ist Ihre ___? - Hauptstraße zwölf, München.",
+      "answers": [["Adresse"]],
+      "explanation": "die Adresse."
+    },
+    {
+      "type": "listen_mc",
+      "audio": "Meine Handynummer ist null, eins, sieben, zwei.",
+      "question": "Which number did you hear?",
+      "questionLang": "en",
+      "options": ["0172", "0127", "0162"],
+      "answer": "0172",
+      "explanation": "null, eins, sieben, zwei = 0172."
+    },
+    {
+      "type": "order",
+      "prompt": "Do you work in Munich?",
+      "tiles": ["arbeitest", "du", "in", "München"],
+      "answers": ["Arbeitest du in München"],
+      "explanation": "Yes/no question: the verb comes first."
+    },
+    {
+      "type": "order",
+      "prompt": "Where do you come from? (polite)",
+      "tiles": ["woher", "kommen", "Sie"],
+      "answers": ["Woher kommen Sie"],
+      "explanation": "W-question: question word, then the verb."
+    },
+    {
+      "type": "gap",
+      "text": "___ du eine Frage?",
+      "answers": [["Hast"]],
+      "explanation": "Hast du ...? The verb first, and du hast loses the b."
+    },
+    {
+      "type": "gap",
+      "text": "Er ___ eine Frage.",
+      "answers": [["hat"]],
+      "explanation": "er hat."
+    },
+    {
+      "type": "mc",
+      "question": "In class you didn't catch what the teacher said. What do you say?",
+      "questionLang": "en",
+      "options": ["Können Sie das bitte wiederholen?", "Freut mich!", "Ich bin Entwickler."],
+      "answer": "Können Sie das bitte wiederholen?",
+      "explanation": "wiederholen = to repeat."
+    },
+    {
+      "type": "translate",
+      "direction": "en-de",
+      "text": "I have a question.",
+      "references": ["Ich habe eine Frage."],
+      "explanation": "ich habe; die Frage (eine Frage)."
+    },
+    {
+      "type": "dictation",
+      "text": "Wie ist Ihre E-Mail-Adresse?",
+      "explanation": "E-Mail-Adresse is written with two hyphens; Ihre (polite your) with a capital I."
+    },
+    {
+      "type": "write",
+      "instruction": "Unit 1 final task. Introduce yourself to a new German class in 6-8 sentences: name, country, city, languages, job or studies, how long you have been learning German ('Ich lerne seit ... Deutsch'), and end with one question to the class. Claude will check it.",
+      "prompt": "Introduce yourself to a new German class and ask the class one question.",
+      "promptLang": "en",
+      "minWords": 30
+    }
+  ]
+}

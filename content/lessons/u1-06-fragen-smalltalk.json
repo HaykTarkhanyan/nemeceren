@@ -1,0 +1,139 @@
+{
+  "id": "u1-06-fragen-smalltalk",
+  "unit": 1,
+  "order": 6,
+  "level": "A1",
+  "title": "Questions, class and small talk (Fragen und Smalltalk)",
+  "summary": "Where the verb goes in statements and questions, the verb haben, and the phrases you need in a class and in a first chat.",
+  "goals": [
+    "Put the verb in the right place: second in statements and W-questions, first in yes/no questions",
+    "Use haben in every person",
+    "Ask for help in class: repeat, explain, spell",
+    "Keep a short small talk going"
+  ],
+  "nicosWeg": [{ "title": "Nicos Weg A1, chapter 1: Meeting people (Woher kommst du?)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }],
+  "words": ["haben", "frage", "fragen", "antworten", "wiederholen", "verstehen", "kurs", "gern"],
+  "tests": ["u1-t3-kontakt-fragen"],
+  "sections": [
+    {
+      "type": "explanation",
+      "title": "Where the verb goes",
+      "text": "This is the most important rule of German word order:\n\n- **Statements:** the verb is in **second** place: [[Ich wohne in München.]] Even when something else comes first: [[In München wohne ich.]]\n- **W-questions** (wer, was, wo, woher, wie): question word first, verb second: [[Wo wohnst du?]]\n- **Yes/no questions:** the verb comes **first**: [[Wohnst du in München?]] - [[Ja.]] / [[Nein.]]"
+    },
+    {
+      "type": "table",
+      "title": "The verb position",
+      "columns": [{ "header": "Position 1", "de": "words" }, { "header": "Verb", "de": "words" }, { "header": "Rest", "de": "words" }],
+      "rows": [
+        ["Ich", "wohne", "in München."],
+        ["In München", "wohne", "ich."],
+        ["Wo", "wohnst", "du?"],
+        ["", "Wohnst", "du in München?"],
+        ["Heute", "lerne", "ich Deutsch."]
+      ]
+    },
+    {
+      "type": "comparison",
+      "text": "Russian makes a yes/no question just with the voice (Ты живёшь в Мюнхене?), and Armenian with the voice and the ՞ mark. German normally moves the verb to the front instead: [[Wohnst du in München?]]\n\nAnd unlike Armenian, the verb never waits until the end of a simple sentence: [[Ich lerne heute Deutsch.]]"
+    },
+    {
+      "type": "table",
+      "title": "haben (to have)",
+      "columns": [{ "header": "Person", "de": "words" }, { "header": "haben", "de": "words" }],
+      "rows": [
+        ["ich", "habe"],
+        ["du", "hast"],
+        ["er / sie / es", "hat"],
+        ["wir", "haben"],
+        ["ihr", "habt"],
+        ["sie / Sie", "haben"]
+      ]
+    },
+    {
+      "type": "tip",
+      "text": "[[du hast]] and [[er hat]] lose the b. [[haben]] and [[sein]] are the two verbs you will use most; it pays to know both tables by heart."
+    },
+    {
+      "type": "examples",
+      "title": "In class",
+      "items": [
+        { "de": "Ich habe eine Frage.", "en": "I have a question." },
+        { "de": "Können Sie das bitte wiederholen?", "en": "Can you repeat that, please?" },
+        { "de": "Wie sagt man das auf Deutsch?", "en": "How do you say that in German?" },
+        { "de": "Was bedeutet das?", "en": "What does that mean?" },
+        { "de": "Ich verstehe die Frage nicht.", "en": "I don't understand the question." }
+      ]
+    },
+    {
+      "type": "examples",
+      "title": "A first small talk",
+      "items": [
+        { "de": "Lernst du auch Deutsch?", "en": "Are you learning German too?" },
+        { "de": "Ja, ich lerne gern Deutsch.", "en": "Yes, I like learning German." },
+        { "de": "Wie lange wohnst du schon in München?", "en": "How long have you been living in Munich?", "note": "German uses the present tense here." },
+        { "de": "Seit einem Jahr.", "en": "For a year." }
+      ]
+    },
+    {
+      "type": "comparison",
+      "text": "[[Wie lange wohnst du schon in München?]] uses the present tense for something that started in the past and still goes on, exactly like Russian (Я живу здесь год) and Armenian. English needs 'have been living'; German and your languages don't."
+    },
+    {
+      "type": "tip",
+      "text": "[[gern]] after the verb means you like doing it: [[Ich lerne gern Deutsch.]] = I like learning German. [[Ich arbeite gern hier.]] = I like working here."
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat aloud",
+      "items": [
+        { "de": "Wohnst du in München?", "en": "Do you live in Munich?" },
+        { "de": "Wo arbeitest du?", "en": "Where do you work?" },
+        { "de": "Ich habe eine Frage.", "en": "I have a question." },
+        { "de": "Können Sie das bitte wiederholen?", "en": "Can you repeat that, please?" },
+        { "de": "Was bedeutet das?", "en": "What does that mean?" },
+        { "de": "Ich lerne gern Deutsch.", "en": "I like learning German." }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "order",
+          "prompt": "Do you live in Munich?",
+          "tiles": ["wohnst", "du", "in", "München"],
+          "answers": ["Wohnst du in München"],
+          "explanation": "Yes/no question: the verb comes first."
+        },
+        {
+          "type": "order",
+          "prompt": "Where do you work?",
+          "tiles": ["wo", "arbeitest", "du"],
+          "answers": ["Wo arbeitest du"],
+          "explanation": "W-question: question word first, verb second."
+        },
+        {
+          "type": "gap",
+          "text": "Ich ___ eine Frage.",
+          "answers": [["habe"]],
+          "explanation": "ich habe."
+        },
+        {
+          "type": "gap",
+          "text": "___ du eine Frage?",
+          "answers": [["Hast"]],
+          "hint": "Yes/no question, and the first word of a sentence starts with a capital letter.",
+          "explanation": "Hast du eine Frage? The verb comes first, and du hast loses the b."
+        },
+        {
+          "type": "mc",
+          "question": "The teacher spoke too fast and you missed it. What do you say?",
+          "questionLang": "en",
+          "options": ["Können Sie das bitte wiederholen?", "Ich habe eine Frage.", "Freut mich!"],
+          "answer": "Können Sie das bitte wiederholen?",
+          "explanation": "wiederholen = to repeat."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,131 @@
+{
+  "id": "u1-02-laender-sprachen",
+  "unit": 1,
+  "order": 2,
+  "level": "A1",
+  "title": "Countries and languages (Länder und Sprachen)",
+  "summary": "Say where you and others come from and which languages you speak, and meet your first verb with a vowel change: sprechen.",
+  "goals": [
+    "Say where you come from and which languages you speak",
+    "Use sprechen with every person, including du sprichst and er spricht",
+    "Add information with auch and aber"
+  ],
+  "nicosWeg": [{ "title": "Nicos Weg A1, chapter 4: Around the world (In Europa, Andere Länder)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }],
+  "words": ["land", "sprache", "sprechen", "lernen", "deutschland", "armenien", "russland", "oesterreich", "schweiz", "deutsch", "englisch", "russisch", "armenisch", "auch", "und", "aber"],
+  "tests": ["u1-t1-vorstellen-sprachen"],
+  "sections": [
+    {
+      "type": "explanation",
+      "title": "Two questions you will hear everywhere",
+      "text": "In every class and every new team:\n\n- [[Woher kommen Sie?]] - [[Ich komme aus Armenien.]]\n- [[Welche Sprachen sprechen Sie?]] - [[Ich spreche Armenisch, Russisch und Englisch.]]\n\nMost countries have no article: [[aus Armenien]], [[in Deutschland]]. A few always have one, like [[die Schweiz]]: [[Er kommt aus der Schweiz.]]"
+    },
+    {
+      "type": "table",
+      "title": "Countries and languages",
+      "columns": [{ "header": "Country", "de": "words" }, { "header": "Language", "de": "words" }, { "header": "English" }],
+      "rows": [
+        ["Armenien", "Armenisch", "Armenia - Armenian"],
+        ["Russland", "Russisch", "Russia - Russian"],
+        ["Deutschland", "Deutsch", "Germany - German"],
+        ["Österreich", "Deutsch", "Austria - German"],
+        ["die Schweiz", "Deutsch", "Switzerland - German (and French, Italian)"],
+        ["England", "Englisch", "England - English"],
+        ["Frankreich", "Französisch", "France - French"]
+      ]
+    },
+    {
+      "type": "explanation",
+      "title": "sprechen changes its vowel",
+      "text": "Most verbs keep their vowel, like [[lernen]]. A few change it with **du** and **er/sie/es**, and [[sprechen]] is one of them: e becomes i.\n\n- [[ich spreche]], but [[du sprichst]] and [[er spricht]]\n\nThe endings are the same as always. The dictionary never shows the change, so learn these verbs with their [[er]] form."
+    },
+    {
+      "type": "table",
+      "title": "lernen (regular) and sprechen (e to i)",
+      "columns": [{ "header": "Person", "de": "words" }, { "header": "lernen", "de": "words" }, { "header": "sprechen", "de": "words" }],
+      "rows": [
+        ["ich", "lerne", "spreche"],
+        ["du", "lernst", "sprichst"],
+        ["er / sie / es", "lernt", "spricht"],
+        ["wir", "lernen", "sprechen"],
+        ["ihr", "lernt", "sprecht"],
+        ["sie / Sie", "lernen", "sprechen"]
+      ]
+    },
+    {
+      "type": "comparison",
+      "text": "For languages, German just uses the name: [[Ich spreche Deutsch.]] Russian needs по-немецки (Я говорю по-немецки). Armenian works like German: Ես խոսում եմ գերմաներեն."
+    },
+    {
+      "type": "warning",
+      "text": "Countries and languages start with a capital letter: [[Deutschland]], [[Deutsch]], [[Armenien]], [[Armenisch]]."
+    },
+    {
+      "type": "examples",
+      "title": "auch and aber",
+      "items": [
+        { "de": "Ich spreche Russisch. - Ich auch!", "en": "I speak Russian. - Me too!" },
+        { "de": "Ich spreche auch ein bisschen Deutsch.", "en": "I also speak a little German." },
+        { "de": "Ich lerne Deutsch, aber ich spreche noch nicht gut.", "en": "I'm learning German, but I don't speak well yet." },
+        { "de": "Sprichst du Englisch?", "en": "Do you speak English?" }
+      ]
+    },
+    {
+      "type": "tip",
+      "text": "[[Ich lerne Deutsch.]] is one of the most useful sentences you have. At work and in shops, people slow down and help when they know you're learning."
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat aloud",
+      "items": [
+        { "de": "Ich komme aus Armenien.", "en": "I come from Armenia." },
+        { "de": "Ich wohne in Deutschland.", "en": "I live in Germany." },
+        { "de": "Ich spreche Armenisch, Russisch und Englisch.", "en": "I speak Armenian, Russian and English." },
+        { "de": "Ich lerne Deutsch.", "en": "I'm learning German." },
+        { "de": "Er kommt aus Österreich.", "en": "He comes from Austria." },
+        { "de": "Sie spricht sehr gut Deutsch.", "en": "She speaks German very well." }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "gap",
+          "text": "Du ___ sehr gut Deutsch!",
+          "answers": [["sprichst"]],
+          "hint": "sprechen changes its vowel with du.",
+          "explanation": "du sprichst: e becomes i with du and er/sie/es."
+        },
+        {
+          "type": "gap",
+          "text": "Wir ___ Deutsch.",
+          "answers": [["lernen"]],
+          "explanation": "wir lernen: with wir the verb looks like the infinitive."
+        },
+        {
+          "type": "order",
+          "prompt": "I also speak Russian.",
+          "tiles": ["ich", "spreche", "auch", "Russisch"],
+          "answers": ["Ich spreche auch Russisch"],
+          "explanation": "The verb stays in second place; auch comes after it."
+        },
+        {
+          "type": "listen_mc",
+          "audio": "Er kommt aus Österreich.",
+          "question": "Where is he from?",
+          "questionLang": "en",
+          "options": ["Österreich", "Deutschland", "Russland"],
+          "answer": "Österreich",
+          "explanation": "Österreich = Austria."
+        },
+        {
+          "type": "translate",
+          "direction": "en-de",
+          "text": "I'm learning German.",
+          "references": ["Ich lerne Deutsch."],
+          "explanation": "German has one present tense: Ich lerne = I learn and I'm learning."
+        }
+      ]
+    }
+  ]
+}

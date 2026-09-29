@@ -1,0 +1,80 @@
+{
+  "id": "u1-t1-vorstellen-sprachen",
+  "title": "Introducing yourself, countries and languages",
+  "level": "A1",
+  "created": "2026-09-29",
+  "description": "Unit 1 check after lessons 1 and 2.",
+  "unit": 1,
+  "lesson": "u1-02-laender-sprachen",
+  "items": [
+    {
+      "type": "mc",
+      "question": "How do you ask a new classmate where they come from? (informal)",
+      "questionLang": "en",
+      "options": ["Woher kommst du?", "Wo wohnst du?", "Wie heißt du?"],
+      "answer": "Woher kommst du?",
+      "explanation": "woher = where from; wo = where."
+    },
+    {
+      "type": "gap",
+      "text": "Ich ___ Hayk und ich ___ aus Armenien.",
+      "answers": [["heiße"], ["komme"]],
+      "explanation": "With ich the verb ends in -e: ich heiße, ich komme."
+    },
+    {
+      "type": "gap",
+      "text": "Wo ___ du?",
+      "answers": [["wohnst"]],
+      "explanation": "du wohnst: with du the verb ends in -st."
+    },
+    {
+      "type": "gap",
+      "text": "Er ___ Deutsch und Englisch.",
+      "answers": [["spricht"]],
+      "hint": "sprechen changes its vowel with er/sie/es.",
+      "explanation": "er spricht: e becomes i."
+    },
+    {
+      "type": "listen_mc",
+      "audio": "Ich komme aus Russland, aber ich wohne in Deutschland.",
+      "question": "Where does the person live?",
+      "questionLang": "en",
+      "options": ["Deutschland", "Russland", "Österreich"],
+      "answer": "Deutschland",
+      "explanation": "kommen aus = come from (Russland); wohnen in = live in (Deutschland)."
+    },
+    {
+      "type": "order",
+      "prompt": "I also speak Armenian.",
+      "tiles": ["ich", "spreche", "auch", "Armenisch"],
+      "answers": ["Ich spreche auch Armenisch"],
+      "explanation": "The verb is second; auch follows it."
+    },
+    {
+      "type": "translate",
+      "direction": "en-de",
+      "text": "Where do you live? (polite)",
+      "references": ["Wo wohnen Sie?"],
+      "explanation": "Polite you = Sie, with the verb ending -en."
+    },
+    {
+      "type": "translate",
+      "direction": "en-de",
+      "text": "I'm learning German.",
+      "references": ["Ich lerne Deutsch."],
+      "explanation": "One present tense: Ich lerne = I learn and I'm learning."
+    },
+    {
+      "type": "dictation",
+      "text": "Wir sprechen Armenisch und Russisch.",
+      "explanation": "Languages start with a capital letter."
+    },
+    {
+      "type": "write",
+      "instruction": "Introduce yourself in 4-5 sentences: your name, where you come from, where you live, which languages you speak, and that you are learning German. Claude will check it.",
+      "prompt": "Introduce yourself: name, country, city, languages, learning German.",
+      "promptLang": "en",
+      "minWords": 15
+    }
+  ]
+}

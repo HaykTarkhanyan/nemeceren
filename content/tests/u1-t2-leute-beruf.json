@@ -1,0 +1,82 @@
+{
+  "id": "u1-t2-leute-beruf",
+  "title": "Introducing others, sein, and jobs",
+  "level": "A1",
+  "created": "2026-09-29",
+  "description": "Unit 1 check after lessons 3 and 4.",
+  "unit": 1,
+  "lesson": "u1-04-beruf",
+  "items": [
+    {
+      "type": "gap",
+      "text": "Ich ___ Hayk. Das ___ mein Kollege Aram.",
+      "answers": [["bin"], ["ist"]],
+      "explanation": "ich bin; das ist."
+    },
+    {
+      "type": "gap",
+      "text": "Wir ___ Kollegen.",
+      "answers": [["sind"]],
+      "explanation": "wir sind."
+    },
+    {
+      "type": "gap",
+      "text": "Ihr ___ sehr nett.",
+      "answers": [["seid"]],
+      "explanation": "ihr seid (you, plural informal)."
+    },
+    {
+      "type": "mc",
+      "question": "A colleague introduces you to Anna. What do you say?",
+      "questionLang": "en",
+      "options": ["Freut mich!", "Wie bitte?", "Tschüss!"],
+      "answer": "Freut mich!",
+      "explanation": "Freut mich! = Nice to meet you!"
+    },
+    {
+      "type": "mc",
+      "question": "How does a man say 'I am a developer'?",
+      "questionLang": "en",
+      "options": ["Ich bin Entwickler.", "Ich bin Entwicklerin.", "Ich bin der Entwickler."],
+      "answer": "Ich bin Entwickler.",
+      "explanation": "No article with jobs; Entwicklerin is the female form."
+    },
+    {
+      "type": "gap",
+      "text": "Anna ___ bei einer Firma in München.",
+      "answers": [["arbeitet"]],
+      "hint": "The stem of arbeiten ends in t.",
+      "explanation": "sie arbeitet: an extra e before the ending."
+    },
+    {
+      "type": "listen_mc",
+      "audio": "Das ist Frau Schmidt. Sie ist Lehrerin.",
+      "question": "What is Ms Schmidt's job?",
+      "questionLang": "en",
+      "options": ["Lehrerin", "Entwicklerin", "Studentin"],
+      "answer": "Lehrerin",
+      "explanation": "Lehrerin = teacher (female)."
+    },
+    {
+      "type": "order",
+      "prompt": "What do you do for a living? (polite)",
+      "tiles": ["was", "sind", "Sie", "von", "Beruf"],
+      "answers": ["Was sind Sie von Beruf"],
+      "explanation": "Was sind Sie von Beruf? is a fixed question."
+    },
+    {
+      "type": "translate",
+      "direction": "en-de",
+      "text": "She is new here.",
+      "references": ["Sie ist neu hier."],
+      "explanation": "sie ist = she is."
+    },
+    {
+      "type": "write",
+      "instruction": "Introduce a colleague or a friend in 3-4 sentences: name, where they come from, what they do, and one thing about them (nett, neu hier ...). Claude will check it.",
+      "prompt": "Introduce a colleague or a friend.",
+      "promptLang": "en",
+      "minWords": 12
+    }
+  ]
+}

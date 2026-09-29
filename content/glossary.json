@@ -1,6 +1,36 @@
 {
-  "ignore": ["Hayk", "Charlotte", "Eva", "Meier", "Müller", "Schmidt", "Thomas", "Weber"],
+  "ignore": ["Hayk", "Charlotte", "Eva", "Meier", "Müller", "Schmidt", "Thomas", "Weber", "Aram", "Tarkhanyan", "Goethestraße", "Siemens"],
   "entries": {
+    "Welche": [
+      { "lemma": "welcher", "pos": "determiner", "level": "A1", "gloss": ["which"], "note": "Welche Sprachen sprechen Sie? = Which languages do you speak?" }
+    ],
+    "bedeutet": [
+      { "lemma": "bedeuten", "pos": "verb", "level": "A1", "form": "er/sie/es form, present", "gloss": ["to mean"], "note": "Was bedeutet das? = What does that mean?" }
+    ],
+    "Heute": [
+      { "lemma": "heute", "pos": "adverb", "level": "A1", "gloss": ["today"] }
+    ],
+    "deine": [
+      { "lemma": "dein", "pos": "determiner", "level": "A1", "form": "feminine and plural", "gloss": ["your (informal)"], "note": "deine Handynummer, deine Adresse" }
+    ],
+    "mich": [
+      { "lemma": "ich", "pos": "pronoun", "level": "A1", "form": "accusative", "gloss": ["me"], "note": "Freut mich! = Nice to meet you! (literally: it pleases me)" }
+    ],
+    "Lehrerin": [
+      { "lemma": "Lehrerin", "pos": "noun", "article": "die", "plural": "Lehrerinnen", "level": "A1", "gloss": ["teacher (female)"], "note": "Male: der Lehrer." }
+    ],
+    "Lehrerinnen": [
+      { "lemma": "Lehrerin", "pos": "noun", "article": "die", "form": "plural", "level": "A1", "gloss": ["teachers (female)"] }
+    ],
+    "Freundinnen": [
+      { "lemma": "Freundin", "pos": "noun", "article": "die", "form": "plural", "level": "A1", "gloss": ["friends (female); girlfriends"] }
+    ],
+    "Kolleginnen": [
+      { "lemma": "Kollegin", "pos": "noun", "article": "die", "form": "plural", "level": "A1", "gloss": ["colleagues (female)"] }
+    ],
+    "Studentinnen": [
+      { "lemma": "Studentin", "pos": "noun", "article": "die", "form": "plural", "level": "A1", "gloss": ["students (female)"] }
+    ],
     "der": [
       { "lemma": "der", "pos": "article", "level": "A1", "gloss": ["the (masculine)"], "note": "der Mann, die Frau, das Kind; plural always die. Also the feminine dative: mit der Frau." },
       { "lemma": "der", "pos": "pronoun", "gloss": ["who, that, which", "this one, that one"] }
