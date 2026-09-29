@@ -18,6 +18,7 @@
       "text": "The good news: in the plural the article is **always die**, whatever the gender: [[der Tisch]] - [[die Tische]], [[das Buch]] - [[die Bücher]], [[die Lampe]] - [[die Lampen]].\n\nThe bad news: there are several plural endings, and mostly you learn the plural together with each noun, like the article. Your word cards show every plural."
     },
     {
+      "id": "plural-patterns",
       "type": "table",
       "title": "The main plural patterns",
       "columns": [{ "header": "Pattern" }, { "header": "Singular", "de": "words" }, { "header": "Plural", "de": "words" }],
@@ -42,6 +43,7 @@
       "text": "Two quick rules that are almost always right: feminine nouns ending in **-e** add **-n** ([[die Tasche]] - [[die Taschen]]), and English words add **-s** ([[das Handy]] - [[die Handys]]), except words in -er: [[der Computer]] - [[die Computer]]."
     },
     {
+      "id": "number-plural",
       "type": "comparison",
       "text": "After a number, German uses the plural: [[zwei Bücher]], [[fünf Bücher]] (except measures and money: [[zwei Kaffee]], [[zehn Euro]]). Armenian keeps the singular after numbers (երկու գիրք), and Russian changes the form with the number (два стула, пять стульев). German has neither complication: number + plural."
     },

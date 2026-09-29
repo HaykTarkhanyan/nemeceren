@@ -2,6 +2,7 @@ import { content } from './content/load.ts'
 import { AuthGate } from './components/AuthGate.tsx'
 import { ErrorBanner, ErrorBoundary, Header, VoiceWarning } from './components/Chrome.tsx'
 import { useRoute } from './lib/router.ts'
+import { DailyPage } from './pages/DailyPage.tsx'
 import { HomePage } from './pages/HomePage.tsx'
 import { LessonPage, LessonsPage } from './pages/LessonsPage.tsx'
 import { ListenPage } from './pages/ListenPage.tsx'
@@ -9,6 +10,7 @@ import { ResultDetailPage, ResultsPage } from './pages/ResultsPage.tsx'
 import { SettingsPage } from './pages/SettingsPage.tsx'
 import { StatsPage } from './pages/StatsPage.tsx'
 import { TestPage } from './pages/TestPage.tsx'
+import { TopicsPage } from './pages/TopicsPage.tsx'
 import { WordsPage } from './pages/WordsPage.tsx'
 
 function ContentProblems({ problems }: { problems: string[] }) {
@@ -22,7 +24,7 @@ function ContentProblems({ problems }: { problems: string[] }) {
 }
 
 function Page({ route }: { route: string[] }) {
-  const [section, arg] = route
+  const [section, arg, sub] = route
   switch (section ?? '') {
     case '':
       return <HomePage />
@@ -31,7 +33,11 @@ function Page({ route }: { route: string[] }) {
     case 'lessons':
       return <LessonsPage />
     case 'lesson':
-      return <LessonPage id={arg ?? ''} />
+      return <LessonPage id={arg ?? ''} sectionId={sub} />
+    case 'topics':
+      return <TopicsPage />
+    case 'daily':
+      return <DailyPage />
     case 'listen':
       return <ListenPage />
     case 'words':

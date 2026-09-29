@@ -3,7 +3,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
-import type { CuratedGlossary, GeneratedGlossary, Lesson, Test, Word } from '../src/content/schema.ts'
+import type { CuratedGlossary, Daily, GeneratedGlossary, Lesson, Test, Topics, Word } from '../src/content/schema.ts'
 import { checkAllContent, ContentError, parseCuratedGlossary, parseGeneratedGlossary, parseJsonText } from '../src/content/validate.ts'
 import type { RawFile } from '../src/content/validate.ts'
 
@@ -48,6 +48,8 @@ export interface ContentOnDisk {
   tests: { file: string; test: Test }[]
   words: { file: string; words: Word[] }
   lessons: { file: string; lesson: Lesson }[]
+  topics: Topics
+  daily: Daily
 }
 
 export function readContent(problems: string[]): ContentOnDisk {
@@ -62,10 +64,14 @@ export function readContent(problems: string[]): ContentOnDisk {
     if (text !== undefined) lessonFiles.push({ file: rel(abs), text })
   }
   const wordsPath = path.join(repoRoot, 'content', 'words.json')
+  const topicsPath = path.join(repoRoot, 'content', 'topics.json')
+  const dailyPath = path.join(repoRoot, 'content', 'daily.json')
   const checked = checkAllContent({
     tests: testFiles,
     words: { file: rel(wordsPath), text: readText(wordsPath, problems) ?? '' },
     lessons: lessonFiles,
+    topics: { file: rel(topicsPath), text: readText(topicsPath, problems) ?? '' },
+    daily: { file: rel(dailyPath), text: readText(dailyPath, problems) ?? '' },
   })
   problems.push(...checked.problems)
   return {
@@ -74,6 +80,8 @@ export function readContent(problems: string[]): ContentOnDisk {
     words: { file: rel(wordsPath), words: checked.words },
     // A lesson's id equals its file name too.
     lessons: checked.lessons.map((lesson) => ({ file: `content/lessons/${lesson.id}.json`, lesson })),
+    topics: checked.topics,
+    daily: checked.daily,
   }
 }
 

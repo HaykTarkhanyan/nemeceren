@@ -15,11 +15,13 @@
   "words": ["sein", "das-ist", "freut-mich", "freund", "freundin", "kollege", "kollegin", "herr", "frau", "wer", "nett", "neu", "hier", "alt", "jahr"],
   "sections": [
     {
+      "id": "introducing",
       "type": "explanation",
       "title": "Introducing someone",
       "text": "Point and say [[Das ist ...]]: [[Das ist Anna.]] [[Das ist mein Kollege Aram.]] The usual answer is [[Freut mich!]] (nice to meet you) or simply [[Hallo!]].\n\nWith people you call [[Sie]], use [[Herr]] or [[Frau]] plus the surname: [[Herr Weber]], [[Frau Schmidt]]. First names usually go with [[du]]."
     },
     {
+      "id": "sein",
       "type": "table",
       "title": "sein (to be): learn it by heart",
       "columns": [{ "header": "Person", "de": "words" }, { "header": "sein", "de": "words" }, { "header": "English" }],
@@ -37,6 +39,7 @@
       "text": "Russian drops 'to be' in the present (Я студент), but German never does: [[Ich bin Student.]]\n\nArmenian keeps it too, but at the **end**: Ես ուսանող եմ. German puts it in **second** place: [[Ich bin Student.]] Watch the position."
     },
     {
+      "id": "pronouns",
       "type": "table",
       "title": "The personal pronouns",
       "columns": [{ "header": "Pronoun", "de": "words" }, { "header": "English" }, { "header": "Example", "de": "words" }],
@@ -53,10 +56,12 @@
       ]
     },
     {
+      "id": "three-sie",
       "type": "warning",
       "text": "[[sie]] has three meanings: she, they, and (with a capital S) polite you. The verb tells you which: [[sie ist]] = she is, [[sie sind]] = they are, [[Sie sind]] = you are (polite). At the start of a sentence all three are capitalized, so only the verb and the context help."
     },
     {
+      "id": "age",
       "type": "examples",
       "title": "How old are you?",
       "items": [

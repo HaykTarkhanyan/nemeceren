@@ -16,21 +16,25 @@
   "tests": ["u1-t2-leute-beruf"],
   "sections": [
     {
+      "id": "work-phrases",
       "type": "explanation",
       "title": "Talking about work",
       "text": "- [[Was sind Sie von Beruf?]] or [[Was machst du beruflich?]] - What do you do?\n- [[Ich bin Entwickler.]] - I'm a developer.\n- [[Ich arbeite als Entwickler.]] - I work as a developer.\n- [[Ich arbeite bei Siemens.]] - I work at Siemens.\n- [[Ich studiere Informatik.]] - I study computer science.\n\n[[bei]] + company, [[in]] + city: [[Ich arbeite bei Siemens in München.]]"
     },
     {
+      "id": "no-article-jobs",
       "type": "warning",
       "title": "No 'a' before jobs",
       "text": "German says [[Ich bin Entwickler.]] with no article, where English says 'I am **a** developer'. Russian works the same way (Я программист), so this one is easy for you."
     },
     {
+      "id": "job-forms",
       "type": "explanation",
       "title": "Male and female job names",
       "text": "Most job names have a female form with **-in**:\n\n- [[der Entwickler]] - [[die Entwicklerin]]\n- [[der Lehrer]] - [[die Lehrerin]]\n- [[der Student]] - [[die Studentin]]\n\nThe plural of the -in forms ends in **-innen**: [[die Lehrerinnen]]. In job ads you will also see forms like 'Entwickler (m/w/d)', which means the job is open to everyone."
     },
     {
+      "id": "arbeiten",
       "type": "table",
       "title": "arbeiten and machen",
       "columns": [{ "header": "Person", "de": "words" }, { "header": "arbeiten", "de": "words" }, { "header": "machen", "de": "words" }],
@@ -53,6 +57,7 @@
       "text": "In Munich tech companies, English job titles are normal German: 'Ich arbeite als Data Scientist' or 'Ich bin Software Engineer' are perfectly fine sentences."
     },
     {
+      "id": "work-smalltalk",
       "type": "examples",
       "title": "Small talk at work",
       "items": [

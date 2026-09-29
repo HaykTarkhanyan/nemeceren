@@ -15,6 +15,7 @@
   "tests": ["u0-t3-zahlen"],
   "sections": [
     {
+      "id": "numbers-0-12",
       "type": "table",
       "title": "0 to 12: learn these by heart",
       "columns": [{ "header": "Number" }, { "header": "German", "de": "words" }],
@@ -24,11 +25,13 @@
       ]
     },
     {
+      "id": "numbers-13-19",
       "type": "explanation",
       "title": "13 to 19",
       "text": "From 13 to 19 you say the number and then [[zehn]]: [[dreizehn]], [[vierzehn]], [[fünfzehn]], [[achtzehn]], [[neunzehn]].\n\nTwo of them lose letters: [[sechzehn]] (16, not 'sechs-zehn') and [[siebzehn]] (17, not 'sieben-zehn')."
     },
     {
+      "id": "tens",
       "type": "table",
       "title": "The tens",
       "columns": [{ "header": "Number" }, { "header": "German", "de": "words" }, { "header": "Watch out" }],
@@ -45,6 +48,7 @@
       ]
     },
     {
+      "id": "number-trick",
       "type": "warning",
       "title": "The German number trick",
       "text": "From 21 on, German says the ones **first**, then the tens, joined with [[und]] (and), all in one word:\n\n- 21 = [[einundzwanzig]] (one-and-twenty)\n- 35 = [[fünfunddreißig]] (five-and-thirty)\n- 99 = [[neunundneunzig]] (nine-and-ninety)\n\nWhen you listen, wait for the end of the word: in [[siebenundvierzig]] the tens (40) come last."
@@ -54,6 +58,7 @@
       "text": "Russian двадцать один and Armenian քսանմեկ both say the tens first; German says them last. Even English used to do this ('four-and-twenty blackbirds'). This needs practice with your ears, not your head, so do the listening exercises more than once."
     },
     {
+      "id": "phone-prices",
       "type": "explanation",
       "title": "Phone numbers and prices",
       "text": "Phone numbers are usually read digit by digit or in pairs. The Munich area code 089 is [[null, acht, neun]]. On the phone people often say [[zwo]] instead of [[zwei]], so it doesn't sound like [[drei]].\n\nPrices: [[zwei Euro fünfzig]] is 2,50 € (Germany writes a comma, not a point). The cents come after the word [[Euro]]. In a shop you hear [[Das kostet zwei Euro fünfzig.]] (That costs 2,50 €.)"

@@ -173,16 +173,17 @@ export const RichText = Text.superRefine((s, ctx) => {
   }
 })
 
-const blockTitle = { title: Text.optional() }
+/** `id` names a block so a link can open the lesson at it (content/topics.json); unique within the lesson. */
+const blockCommon = { id: Slug.optional(), title: Text.optional() }
 
-export const ExplanationBlock = z.strictObject({ type: z.literal('explanation'), ...blockTitle, text: RichText })
-export const ComparisonBlock = z.strictObject({ type: z.literal('comparison'), ...blockTitle, text: RichText })
-export const TipBlock = z.strictObject({ type: z.literal('tip'), ...blockTitle, text: RichText })
-export const WarningBlock = z.strictObject({ type: z.literal('warning'), ...blockTitle, text: RichText })
+export const ExplanationBlock = z.strictObject({ type: z.literal('explanation'), ...blockCommon, text: RichText })
+export const ComparisonBlock = z.strictObject({ type: z.literal('comparison'), ...blockCommon, text: RichText })
+export const TipBlock = z.strictObject({ type: z.literal('tip'), ...blockCommon, text: RichText })
+export const WarningBlock = z.strictObject({ type: z.literal('warning'), ...blockCommon, text: RichText })
 
 export const ExamplesBlock = z.strictObject({
   type: z.literal('examples'),
-  ...blockTitle,
+  ...blockCommon,
   items: z.array(z.strictObject({ de: Text, en: Text, note: Text.optional() })).min(1),
 })
 
@@ -190,7 +191,7 @@ export const ExamplesBlock = z.strictObject({
 export const TableColumn = z.strictObject({ header: Text, de: z.enum(['words', 'sound']).optional() })
 
 export const TableBlock = z
-  .strictObject({ type: z.literal('table'), ...blockTitle, columns: z.array(TableColumn).min(1), rows: z.array(z.array(z.string())).min(1) })
+  .strictObject({ type: z.literal('table'), ...blockCommon, columns: z.array(TableColumn).min(1), rows: z.array(z.array(z.string())).min(1) })
   .superRefine((t, ctx) => {
     t.rows.forEach((row, i) => {
       if (row.length !== t.columns.length) {
@@ -199,11 +200,11 @@ export const TableBlock = z
     })
   })
 
-export const ExerciseBlock = z.strictObject({ type: z.literal('exercise'), ...blockTitle, items: z.array(Item).min(1) })
+export const ExerciseBlock = z.strictObject({ type: z.literal('exercise'), ...blockCommon, items: z.array(Item).min(1) })
 
 export const AudioBlock = z.strictObject({
   type: z.literal('audio'),
-  ...blockTitle,
+  ...blockCommon,
   items: z.array(z.strictObject({ de: Text, en: Text.optional(), note: Text.optional() })).min(1),
 })
 
@@ -231,7 +232,80 @@ export const Lesson = z.strictObject({
   /** Test ids that belong to this lesson. */
   tests: z.array(Slug).optional(),
   sections: z.array(LessonBlock).min(1),
+}).superRefine((l, ctx) => {
+  const seen = new Map<string, number>()
+  l.sections.forEach((b, i) => {
+    if (b.id === undefined) return
+    const other = seen.get(b.id)
+    if (other !== undefined) ctx.addIssue({ code: 'custom', path: ['sections', i, 'id'], message: `"${b.id}" is already the id of sections[${other}]` })
+    else seen.set(b.id, i)
+  })
 })
+
+// ---------- Topics (content/topics.json): lesson sections worth revisiting ----------
+
+export const TopicItem = z.strictObject({
+  title: Text,
+  lesson: Slug,
+  /** The `id` of a block in that lesson. */
+  section: Slug,
+  /** A key topic (e.g. a table to learn by heart). Leave out otherwise. */
+  star: z.literal(true).optional(),
+})
+
+export const Topics = z
+  .strictObject({
+    groups: z.array(z.strictObject({ id: Slug, title: Text, summary: Text, items: z.array(TopicItem).min(1) })).min(1),
+  })
+  .superRefine((t, ctx) => {
+    const groupIds = new Set<string>()
+    t.groups.forEach((g, gi) => {
+      if (groupIds.has(g.id)) ctx.addIssue({ code: 'custom', path: ['groups', gi, 'id'], message: `duplicate group id "${g.id}"` })
+      groupIds.add(g.id)
+      // The same section may sit in two groups (a grammar point and a word theme), but not twice in one.
+      const items = new Set<string>()
+      g.items.forEach((it, ii) => {
+        const key = `${it.lesson}/${it.section}`
+        if (items.has(key)) ctx.addIssue({ code: 'custom', path: ['groups', gi, 'items', ii], message: `${key} is already listed in this group` })
+        items.add(key)
+      })
+    })
+  })
+
+// ---------- Daily (content/daily.json): a joke, a fun fact and an everyday sentence per day ----------
+
+/** A real calendar date, not only the YYYY-MM-DD shape (2026-02-30 is rejected). */
+export const RealDate = IsoDate.refine(
+  (s) => {
+    const [y, m, d] = s.split('-').map(Number)
+    const t = new Date(Date.UTC(y, m - 1, d))
+    return t.getUTCFullYear() === y && t.getUTCMonth() === m - 1 && t.getUTCDate() === d
+  },
+  { message: 'is not a real date' },
+)
+
+export const DailyCard = z.strictObject({
+  title: Text,
+  lines: z.array(z.strictObject({ de: Text, en: Text })).min(1),
+  breakdown: z.array(z.strictObject({ de: Text, en: Text, note: Text.optional() })).min(1),
+  explain: RichText,
+})
+
+export const Daily = z
+  .strictObject({
+    /** Day 1 unlocks on this local date, then one more day per calendar day. */
+    startDate: RealDate,
+    days: z.array(z.strictObject({ id: Text, joke: DailyCard, fact: DailyCard, phrase: DailyCard })).min(1),
+  })
+  .superRefine((d, ctx) => {
+    const seen = new Set<string>()
+    d.days.forEach((day, i) => {
+      const want = `d${String(i + 1).padStart(2, '0')}`
+      if (seen.has(day.id)) ctx.addIssue({ code: 'custom', path: ['days', i, 'id'], message: `duplicate day id "${day.id}"` })
+      else if (day.id !== want) ctx.addIssue({ code: 'custom', path: ['days', i, 'id'], message: `must be "${want}" (days are d01, d02, ... in order)` })
+      seen.add(day.id)
+    })
+  })
 
 const ARTICLE = /^(der|die|das) /
 
@@ -494,6 +568,10 @@ export type StoredCard = z.infer<typeof StoredCard>
 export type ReviewState = z.infer<typeof ReviewState>
 export type Lesson = z.infer<typeof Lesson>
 export type LessonBlock = z.infer<typeof LessonBlock>
+export type Topics = z.infer<typeof Topics>
+export type TopicItem = z.infer<typeof TopicItem>
+export type Daily = z.infer<typeof Daily>
+export type DailyCard = z.infer<typeof DailyCard>
 export type TableColumn = z.infer<typeof TableColumn>
 export type LessonProgress = z.infer<typeof LessonProgress>
 export type ReviewMode = z.infer<typeof ReviewMode>

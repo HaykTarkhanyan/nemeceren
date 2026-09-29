@@ -9,6 +9,8 @@ const lessonFile = (lesson: object, file = 'content/lessons/u1-01-x.json') => ({
 const words = { file: 'content/words.json', text: JSON.stringify([{ id: 'hallo', de: 'hallo', en: 'hello', level: 'A1', added: '2026-09-29' }]) }
 const testFile = (t: object) => ({ file: `content/tests/${(t as { id: string }).id}.json`, text: JSON.stringify(t) })
 const aTest = { id: 't1', title: 'T1', level: 'A1', created: '2026-09-29', items: [{ type: 'dictation', text: 'Hallo' }] }
+const card = { title: 'T', lines: [{ de: 'Hallo', en: 'Hello' }], breakdown: [{ de: 'Hallo', en: 'hello' }], explain: 'E' }
+const daily = { file: 'content/daily.json', text: JSON.stringify({ startDate: '2026-09-29', days: [{ id: 'd01', joke: card, fact: card, phrase: card }] }) }
 
 function problemsOf(fn: () => unknown): string[] {
   try {
@@ -63,8 +65,10 @@ describe('lesson validation', () => {
       words,
       lessons: [
         lessonFile({ ...base, words: ['hallo', 'tschuess'], tests: ['t1', 't9'], sections: [{ type: 'exercise', items: [{ type: 'dictation', text: 'Hallo' }] }] }),
-        lessonFile({ ...base, id: 'u1-01-y', sections: [{ type: 'tip', text: 't' }] }, 'content/lessons/u1-01-y.json'),
+        lessonFile({ ...base, id: 'u1-01-y', sections: [{ id: 'tip', type: 'tip', text: 't' }] }, 'content/lessons/u1-01-y.json'),
       ],
+      topics: { file: 'content/topics.json', text: JSON.stringify({ groups: [{ id: 'g', title: 'G', summary: 'S', items: [{ title: 'T', lesson: 'u1-01-y', section: 'tip' }] }] }) },
+      daily,
     })
     expect(out.problems).toEqual([
       'content/lessons/u1-01-x.json: words[1]: no word with id "tschuess" in content/words.json',

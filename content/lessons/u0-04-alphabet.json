@@ -20,6 +20,7 @@
       "text": "With a name like yours, people will ask you to spell it at the doctor's, at every office and on the phone. Most letter names follow the sounds from lesson 1. The table shows how each letter is **named**; press the speaker buttons and repeat."
     },
     {
+      "id": "alphabet",
       "type": "table",
       "title": "The German alphabet",
       "columns": [{ "header": "Letter", "de": "sound" }, { "header": "Its name", "de": "sound" }, { "header": "Watch out" }],
@@ -61,6 +62,7 @@
       "text": "The letters people mix up most are **E** and **I** (German E sounds like English 'eh', German I like English 'ee'), and **J**, **V**, **W**, **Y**, **Z**. Practise spelling your own name until these come out right."
     },
     {
+      "id": "spelling",
       "type": "examples",
       "title": "Spelling conversations",
       "items": [
@@ -83,6 +85,7 @@
       ]
     },
     {
+      "id": "phone-spelling",
       "type": "tip",
       "title": "On the phone",
       "text": "On the phone, Germans often spell with names: 'A wie Anton, B wie Berta', or, officially since 2022, with city names: 'A wie Aachen, B wie Berlin'. The word 'wie' just means 'as in'; only the first letter of each name matters. For email addresses: @ is 'ät', a dot is 'Punkt', and a hyphen is 'Bindestrich'."

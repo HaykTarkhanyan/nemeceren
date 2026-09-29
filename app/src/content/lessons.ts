@@ -17,6 +17,20 @@ export function exerciseTestId(lessonId: string, number: number): string {
   return `${lessonId}-ex${number}`
 }
 
+/** Index of the section with this `id`, or -1. */
+export function sectionIndex(lesson: Lesson, id: string): number {
+  return lesson.sections.findIndex((b) => b.id === id)
+}
+
+/**
+ * The section a lesson page scrolls to when it opens: the one a link asked for (e.g. from the
+ * Topics page), else where Hayk left off last time, else none (the top of the page).
+ */
+export function openAt(linked: number | null, lastSection: number): number | null {
+  if (linked !== null) return linked
+  return lastSection > 0 ? lastSection : null
+}
+
 /** Lessons in course order: unit, then order within the unit. */
 export function byCourseOrder(a: Lesson, b: Lesson): number {
   return a.unit - b.unit || a.order - b.order

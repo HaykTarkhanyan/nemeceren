@@ -16,6 +16,7 @@
   "tests": ["u1-t3-kontakt-fragen"],
   "sections": [
     {
+      "id": "verb-position",
       "type": "explanation",
       "title": "Where the verb goes",
       "text": "This is the most important rule of German word order:\n\n- **Statements:** the verb is in **second** place: [[Ich wohne in München.]] Even when something else comes first: [[In München wohne ich.]]\n- **W-questions** (wer, was, wo, woher, wie): question word first, verb second: [[Wo wohnst du?]]\n- **Yes/no questions:** the verb comes **first**: [[Wohnst du in München?]] - [[Ja.]] / [[Nein.]]"
@@ -37,6 +38,7 @@
       "text": "Russian makes a yes/no question just with the voice (Ты живёшь в Мюнхене?), and Armenian with the voice and the ՞ mark. German normally moves the verb to the front instead: [[Wohnst du in München?]]\n\nAnd unlike Armenian, the verb never waits until the end of a simple sentence: [[Ich lerne heute Deutsch.]]"
     },
     {
+      "id": "haben",
       "type": "table",
       "title": "haben (to have)",
       "columns": [{ "header": "Person", "de": "words" }, { "header": "haben", "de": "words" }],
@@ -54,6 +56,7 @@
       "text": "[[du hast]] and [[er hat]] lose the b. [[haben]] and [[sein]] are the two verbs you will use most; it pays to know both tables by heart."
     },
     {
+      "id": "in-class",
       "type": "examples",
       "title": "In class",
       "items": [
@@ -66,6 +69,7 @@
       ]
     },
     {
+      "id": "smalltalk",
       "type": "examples",
       "title": "A first small talk",
       "items": [

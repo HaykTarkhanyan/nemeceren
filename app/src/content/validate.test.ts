@@ -25,7 +25,9 @@ describe('the seed content', () => {
     const dir = path.join(repoRoot, 'content/tests')
     const tests = fs.readdirSync(dir).map((n) => ({ file: `content/tests/${n}`, text: readText(`content/tests/${n}`) }))
     const lessons = fs.readdirSync(path.join(repoRoot, 'content/lessons')).map((n) => ({ file: `content/lessons/${n}`, text: readText(`content/lessons/${n}`) }))
-    const out = checkAllContent({ tests, words: { file: 'content/words.json', text: readText('content/words.json') }, lessons })
+    const topics = { file: 'content/topics.json', text: readText('content/topics.json') }
+    const daily = { file: 'content/daily.json', text: readText('content/daily.json') }
+    const out = checkAllContent({ tests, words: { file: 'content/words.json', text: readText('content/words.json') }, lessons, topics, daily })
     expect(out.problems).toEqual([])
     expect(out.tests.length).toBeGreaterThan(0)
     const types = new Set(out.tests.flatMap((t) => t.items.map((i) => i.type)))
@@ -72,11 +74,15 @@ describe('test validation names the file and field', () => {
       ],
       words: { file: 'w.json', text: '[]' },
       lessons: [],
+      topics: { file: 't.json', text: '{ "groups": [] }' },
+      daily: { file: 'd.json', text: '{ "startDate": "2026-02-30", "days": [] }' },
     })
     expect(out.problems.some((p) => p.startsWith('x.json: items:'))).toBe(true)
     expect(out.problems.some((p) => p.startsWith('y.json: level:'))).toBe(true)
     expect(out.problems.some((p) => p.startsWith('z.json: not valid JSON:'))).toBe(true)
     expect(out.problems.some((p) => p.startsWith('w.json: (top level):'))).toBe(true)
+    expect(out.problems.some((p) => p.startsWith('t.json: groups:'))).toBe(true)
+    expect(out.problems.some((p) => p.startsWith('d.json: startDate: is not a real date'))).toBe(true)
   })
 })
 

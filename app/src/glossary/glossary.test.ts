@@ -4,7 +4,7 @@ import type { GlossEntry, Item, Test } from '../content/schema.ts'
 import { glossEnabled } from './gate.ts'
 import { formInfo, formNote, isFormEntry, isLemmaEntry, kaikkiUrl, lemmaEntry, mapPos, shortGloss } from './kaikki.ts'
 import type { KaikkiEntry } from './kaikki.ts'
-import { glossaryGaps, lookup, makeGlossary } from './lookup.ts'
+import { glossaryGaps, lookup, makeGlossary, mergeSameGloss } from './lookup.ts'
 import { parseDwdsCsv, pickRelevant, posFromDwds } from './relevance.ts'
 import type { LearnerLists } from './relevance.ts'
 
@@ -139,6 +139,79 @@ describe('sentence starts with learner levels', () => {
 
   it('does not filter in mid-sentence', () => {
     expect(lemmas('Ich', false)).toEqual(['Ich'])
+  })
+})
+
+describe('curated entries at a sentence start', () => {
+  const g = makeGlossary(
+    {
+      source: 'test',
+      entries: {
+        gut: [e('gut', 'adjective', ['good'], { level: 'A1' }), e('gut', 'adverb', ['well'], { level: 'A1' })],
+        Ihr: [e('Ihr', 'determiner', ['your (polite)'], { level: 'A1' })],
+        liebe: [e('lieben', 'verb', ['to love'], { form: 'ich form, present', level: 'A1' })],
+      },
+    },
+    {
+      ignore: [],
+      entries: {
+        Gut: [e('gut', 'adjective', ['good'], { level: 'A1', note: 'Gut, danke.' })],
+        Es: [e('es', 'pronoun', ['it'], { level: 'A1', note: 'Es geht.' })],
+        es: [e('es', 'pronoun', ['it'], { level: 'A1' })],
+        ihr: [e('ihr', 'pronoun', ['you (plural)'], { level: 'A1', note: 'Ihr seid nett.' })],
+        Liebe: [e('Liebe', 'noun', ['love'], { article: 'die', level: 'B1' })],
+      },
+    },
+  )
+  const entries = (w: string, start: boolean) => {
+    const r = lookup(g, w, start)
+    if (r.kind !== 'found') throw new Error(`no entry for ${w}`)
+    return r.entries
+  }
+
+  it('beat the generated lowercase entry for the same reading, so the note shows', () => {
+    expect(entries('Gut', true)).toEqual([
+      e('gut', 'adjective', ['good'], { level: 'A1', note: 'Gut, danke.' }),
+      e('gut', 'adverb', ['well'], { level: 'A1' }),
+    ])
+  })
+
+  it('take the capitalized curated key before the lowercase one', () => {
+    expect(entries('Es', true)).toEqual([e('es', 'pronoun', ['it'], { level: 'A1', note: 'Es geht.' })])
+  })
+
+  it('come first when the lowercase key is the curated one', () => {
+    expect(entries('Ihr', true).map((x) => x.lemma)).toEqual(['ihr', 'Ihr'])
+  })
+
+  it('still yield to lower levels, and change nothing in mid-sentence', () => {
+    expect(entries('Liebe', true).map((x) => x.lemma)).toEqual(['lieben', 'Liebe'])
+    expect(entries('Liebe', false).map((x) => x.lemma)).toEqual(['Liebe'])
+    expect(entries('Ihr', false).map((x) => x.lemma)).toEqual(['Ihr'])
+  })
+})
+
+describe('popup lines', () => {
+  it('merge entries with the same lemma and gloss list, joining the parts of speech', () => {
+    const lines = mergeSameGloss([e('aus', 'adverb', ['from']), e('aus', 'adjective', ['from']), e('aus', 'preposition', ['from'])])
+    expect(lines).toEqual([{ entry: e('aus', 'adverb', ['from']), pos: ['adverb', 'adjective', 'preposition'], notes: [] }])
+  })
+
+  it('keep different gloss lists apart ("seit": since / since, for)', () => {
+    const lines = mergeSameGloss([e('seit', 'conjunction', ['since']), e('seit', 'preposition', ['since', 'for'])])
+    expect(lines.map((l) => l.pos)).toEqual([['conjunction'], ['preposition']])
+  })
+
+  it('keep every note, and the article and plural of a noun that comes second', () => {
+    const lines = mergeSameGloss([
+      e('Entschuldigung', 'interjection', ['Sorry!'], { note: 'to get attention' }),
+      e('Entschuldigung', 'noun', ['Sorry!'], { article: 'die', plural: 'Entschuldigungen', note: 'an apology' }),
+    ])
+    expect(lines).toHaveLength(1)
+    expect(lines[0].pos).toEqual(['interjection', 'noun'])
+    expect(lines[0].notes).toEqual(['to get attention', 'an apology'])
+    expect(lines[0].entry.article).toBe('die')
+    expect(lines[0].entry.plural).toBe('Entschuldigungen')
   })
 })
 

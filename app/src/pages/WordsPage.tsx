@@ -3,16 +3,17 @@
 import { useEffect, useRef, useState } from 'react'
 import type { FormEvent, ReactNode } from 'react'
 import { content } from '../content/load.ts'
-import type { ReviewLogEntry, ReviewMode, ReviewState, StoredCard, Word } from '../content/schema.ts'
+import type { Lesson, ReviewLogEntry, ReviewMode, ReviewState, StoredCard, Word } from '../content/schema.ts'
 import { WhatNext } from '../components/WhatNext.tsx'
 import { nearMissText } from '../components/ResultView.tsx'
 import { De, GlossScope } from '../components/GermanText.tsx'
 import { PlayButtons } from '../components/Speaker.tsx'
 import { UmlautBar } from '../components/UmlautBar.tsx'
 import { localDay } from '../lib/dates.ts'
-import { messageOf } from '../lib/errors.ts'
-import { studyWords } from '../lib/plan.ts'
-import { useSettings } from '../lib/settings.ts'
+import { messageOf, reportError } from '../lib/errors.ts'
+import { lessonStatus, parseSourceKey, sourceKey, sourceLabel, sourceLessons, wordsForSource } from '../lib/plan.ts'
+import type { WordSource } from '../lib/plan.ts'
+import { updateSettings, useSettings } from '../lib/settings.ts'
 import { speak } from '../lib/speech.ts'
 import { counts, GRADES, LEARN_AHEAD_MS, nextCard, previewIntervals, Rating, review } from '../lib/srs.ts'
 import type { Grade } from '../lib/srs.ts'
@@ -41,11 +42,25 @@ export function WordsPage() {
   const [practice, setPractice] = useState<Word[] | null>(null)
   // Each practice start gets a fresh session, even from the "practice done" screen.
   const [practiceRun, setPracticeRun] = useState(0)
+  // The pick applies at once, even if this device cannot save it (that error is shown).
+  const [picked, setPicked] = useState<string | null>(null)
 
-  // Words of lessons that are not open yet wait until their lesson is opened.
-  const words = studyWords(content.words, content.lessons, progress.lessonProgress, state)
+  // Where the words come from (all, a unit, a lesson). With "all", words of lessons that are not
+  // open yet wait until their lesson is opened.
+  const { source, note } = parseSourceKey(picked ?? settings.wordSource, content.lessons)
+  const words = wordsForSource(source, content.words, content.lessons, progress.lessonProgress, state)
+  function pick(key: string) {
+    setPicked(key)
+    try {
+      updateSettings({ wordSource: key })
+    } catch (err) {
+      reportError(`Could not remember the word pick on this device: ${messageOf(err)}`)
+    }
+  }
   const whatNext = (
     <WhatNext
+      words={words}
+      allWords={source.kind === 'all'}
       onMoreNew={() => {
         // More new words: back to normal reviews, also from the "practice done" screen.
         setPractice(null)
@@ -79,6 +94,7 @@ export function WordsPage() {
       <Session
         mode={mode}
         words={words}
+        sourceName={source.kind === 'all' ? null : sourceLabel(source, content.lessons)}
         state={state}
         onExit={() => {
           setMode(null)
@@ -94,6 +110,8 @@ export function WordsPage() {
   return (
     <div className="stack">
       <h1>Words</h1>
+      <SourcePicker source={source} onPick={pick} />
+      {note && <div className="alert warn">{note}</div>}
       <div className="stats">
         <div className="stat">
           <div className="stat-num">{c.due}</div>
@@ -105,9 +123,17 @@ export function WordsPage() {
         </div>
         <div className="stat">
           <div className="stat-num">{words.length}</div>
-          <div className="muted">in the word bank</div>
+          <div className="muted">{source.kind === 'all' ? 'in the word bank' : 'in this pick'}</div>
         </div>
       </div>
+      {c.due === 0 && c.newLeft === 0 && source.kind !== 'all' && (
+        <div className="alert warn">
+          <span>Nothing due in {sourceLabel(source, content.lessons)} and no new words from it today.</span>
+          <button type="button" className="btn small" onClick={() => pick('all')}>
+            Switch to all words
+          </button>
+        </div>
+      )}
       <h2>Choose a mode</h2>
       {MODES.map((m) => (
         <button key={m.mode} type="button" className="card mode-card" onClick={() => setMode(m.mode)}>
@@ -118,11 +144,48 @@ export function WordsPage() {
       <p className="muted small">Keys on desktop: Space shows the answer, Enter checks a typed answer, 1-4 grade.</p>
       {c.due === 0 && c.newLeft === 0 && (
         <>
-          <p>Nothing due and no new words left for today.</p>
+          {source.kind === 'all' && <p>Nothing due and no new words left for today.</p>}
           {whatNext}
         </>
       )}
     </div>
+  )
+}
+
+/** Where the words come from: all, one unit, or one lesson (grouped by unit, in course order). */
+function SourcePicker({ source, onPick }: { source: WordSource; onPick: (key: string) => void }) {
+  const progress = useProgress().lessonProgress
+  const lessons = sourceLessons(content.lessons)
+  const units = [...new Set(lessons.map((l) => l.unit))]
+  const unopened = (l: Lesson) => lessonStatus(progress, l.id) === 'not-started'
+  const pickedLessons = lessons.filter((l) => (source.kind === 'unit' ? l.unit === source.unit : source.kind === 'lesson' && l.id === source.lessonId))
+  const closed = pickedLessons.filter(unopened).length
+  return (
+    <label className="field">
+      <span className="label">Words from</span>
+      <select value={sourceKey(source)} onChange={(e) => onPick(e.target.value)}>
+        <option value="all">All words (lessons unlock their words when opened)</option>
+        {units.map((u) => (
+          <optgroup key={u} label={`Unit ${u}`}>
+            <option value={sourceKey({ kind: 'unit', unit: u })}>{`All of Unit ${u}`}</option>
+            {lessons
+              .filter((l) => l.unit === u)
+              .map((l) => (
+                <option key={l.id} value={sourceKey({ kind: 'lesson', lessonId: l.id })}>
+                  {`${l.unit}.${l.order} ${l.title}${unopened(l) ? ' (not opened yet: its words will be new)' : ''}`}
+                </option>
+              ))}
+          </optgroup>
+        ))}
+      </select>
+      {closed > 0 && (
+        <span className="small warn-text">
+          {source.kind === 'lesson'
+            ? 'This lesson is not opened yet: its words will be new words here.'
+            : `${closed} of its lessons ${closed === 1 ? 'is' : 'are'} not opened yet: their words will be new words here.`}
+        </span>
+      )}
+    </label>
   )
 }
 
@@ -135,12 +198,14 @@ interface Failed {
 function Session(props: {
   mode: ReviewMode
   words: Word[]
+  /** The unit or lesson the words come from; null for all words. */
+  sourceName: string | null
   state: ReviewState
   onExit: () => void
   newLimit: number
   whatNext: ReactNode
 }) {
-  const { mode, words, state, onExit, newLimit, whatNext } = props
+  const { mode, words, sourceName, state, onExit, newLimit, whatNext } = props
   const [now, setNow] = useState(() => new Date())
   const [saving, setSaving] = useState(false)
   const [failed, setFailed] = useState<Failed | null>(null)
@@ -205,7 +270,8 @@ function Session(props: {
         Back to modes
       </button>
       <span className="muted small">
-        {MODES.find((m) => m.mode === mode)?.title} - reviewed {stats.reviewed}
+        {MODES.find((m) => m.mode === mode)?.title}
+        {sourceName ? ` (${sourceName})` : ''} - reviewed {stats.reviewed}
       </span>
     </div>
   )

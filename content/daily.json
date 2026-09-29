@@ -1,0 +1,438 @@
+{
+  "startDate": "2026-09-29",
+  "days": [
+    {
+      "id": "d01",
+      "joke": {
+        "title": "The knocking lettuce",
+        "lines": [
+          { "de": "Was ist grün und klopft an die Tür?", "en": "What is green and knocks on the door?" },
+          { "de": "Ein Klopfsalat.", "en": "A 'knock lettuce'." }
+        ],
+        "breakdown": [
+          { "de": "Was ist ...?", "en": "What is ...?" },
+          { "de": "grün", "en": "green" },
+          { "de": "und", "en": "and" },
+          { "de": "klopft", "en": "knocks", "note": "klopfen = to knock; er/sie/es klopft" },
+          { "de": "an die Tür", "en": "on the door", "note": "die Tür = the door" },
+          { "de": "der Klopfsalat", "en": "made-up word: klopfen (to knock) + der Salat (lettuce)" }
+        ],
+        "explain": "The pun: [[der Kopfsalat]] is a real word, 'head lettuce', the normal round lettuce you buy. Add one letter and **Kopf** (head) becomes **Klopf** (knock).\n\n'Was ist grün und ...?' (What is green and ...?) is a classic pattern of German children's jokes. You will meet more of them."
+      },
+      "fact": {
+        "title": "A glove is a hand shoe",
+        "lines": [
+          { "de": "Ein Handschuh ist ein Schuh für die Hand.", "en": "A glove is a shoe for the hand." }
+        ],
+        "breakdown": [
+          { "de": "der Handschuh", "en": "glove", "note": "literally: hand shoe" },
+          { "de": "ist", "en": "is" },
+          { "de": "der Schuh", "en": "shoe" },
+          { "de": "für", "en": "for" },
+          { "de": "die Hand", "en": "hand" }
+        ],
+        "explain": "German builds new words by gluing plain words together, and read literally they are often funny:\n\n- [[die Glühbirne]] (light bulb) = glow pear\n- [[die Schildkröte]] (turtle) = shield toad\n- [[das Stinktier]] (skunk) = stink animal\n- [[das Faultier]] (sloth) = lazy animal\n- [[der Kühlschrank]] (fridge) = cool cupboard\n\nThe last part decides the article: [[der Schuh]], so [[der Handschuh]]."
+      },
+      "phrase": {
+        "title": "Passt schon.",
+        "lines": [
+          { "de": "Passt schon.", "en": "It's fine. / Don't worry about it." }
+        ],
+        "breakdown": [
+          { "de": "passt", "en": "fits, works", "note": "passen = to fit; the 'es' (it) is dropped" },
+          { "de": "schon", "en": "already; here it softens: 'it's fine, really'" }
+        ],
+        "explain": "Very Bavarian, and you will hear it in Munich many times a day: when you apologise for bumping into someone, when you are a few cents short at the bakery, when you ask 'Is that OK?'. It means 'it's fine, no problem'.\n\nThe full sentence is [[Das passt schon.]], but people drop [[das]]. Even shorter: [[Passt!]] = OK, deal."
+      }
+    },
+    {
+      "id": "d02",
+      "joke": {
+        "title": "Pirates and circles",
+        "lines": [
+          { "de": "Warum können Seeräuber keine Kreise berechnen?", "en": "Why can't sea robbers calculate circles?" },
+          { "de": "Weil sie Pi raten.", "en": "Because they guess pi." }
+        ],
+        "breakdown": [
+          { "de": "warum", "en": "why" },
+          { "de": "können", "en": "can", "note": "with keine: can't" },
+          { "de": "der Seeräuber", "en": "pirate", "note": "literally: sea robber" },
+          { "de": "keine Kreise", "en": "no circles", "note": "der Kreis, die Kreise" },
+          { "de": "berechnen", "en": "to calculate" },
+          { "de": "weil", "en": "because", "note": "sends the verb to the end: weil sie Pi raten" },
+          { "de": "sie", "en": "they" },
+          { "de": "Pi", "en": "pi (π)" },
+          { "de": "raten", "en": "to guess" }
+        ],
+        "explain": "Say the punchline aloud: 'Pi raten' sounds exactly like [[Piraten]] (pirates). And to calculate a circle you need π, so if you only guess it ...\n\nNotice [[weil]]: after it, the verb goes to the end ([[weil sie Pi raten]]). That comes at A2; for now just notice it."
+      },
+      "fact": {
+        "title": "The yes that English doesn't have",
+        "lines": [
+          { "de": "Hast du keinen Hunger? - Doch!", "en": "Aren't you hungry? - Yes, I am!" }
+        ],
+        "breakdown": [
+          { "de": "Hast du ...?", "en": "Do you have ...?" },
+          { "de": "keinen Hunger", "en": "no hunger", "note": "der Hunger; keinen after haben" },
+          { "de": "doch", "en": "yes (disagreeing with something negative)" }
+        ],
+        "explain": "German has a special 'yes'. When someone asks a **negative** question or says something negative and you disagree, **ja** is confusing and **doch** is the answer:\n\n- [[Hast du keinen Hunger?]] - [[Doch!]] (Yes, I am hungry!)\n- [[Das ist nicht teuer.]] - [[Doch!]] (Yes, it is!)\n\nFrench has 'si' for this; English and Russian have no single word. You will also hear [[doch]] as a softener: [[Komm doch mit!]] = Come along, why don't you!"
+      },
+      "phrase": {
+        "title": "Na, alles klar?",
+        "lines": [
+          { "de": "Na, alles klar?", "en": "Hey, how's it going? / All good?" }
+        ],
+        "breakdown": [
+          { "de": "na", "en": "well, so", "note": "a friendly opener" },
+          { "de": "alles", "en": "everything" },
+          { "de": "klar", "en": "clear" }
+        ],
+        "explain": "A casual greeting between friends and colleagues, literally 'Well, everything clear?'. It isn't really asking whether you understood. Answer [[Ja, alles klar. Und bei dir?]] (Yes, all good. And you?).\n\nIn shops and bars, [[Alles klar!]] also means 'OK, got it'."
+      }
+    },
+    {
+      "id": "d03",
+      "joke": {
+        "title": "The shortest German joke",
+        "lines": [
+          { "de": "Treffen sich zwei Jäger.", "en": "Two hunters meet." },
+          { "de": "Beide tot.", "en": "Both dead." }
+        ],
+        "breakdown": [
+          { "de": "sich treffen", "en": "to meet (each other)" },
+          { "de": "treffen", "en": "to hit (a target)" },
+          { "de": "zwei Jäger", "en": "two hunters", "note": "der Jäger, die Jäger" },
+          { "de": "beide", "en": "both" },
+          { "de": "tot", "en": "dead" }
+        ],
+        "explain": "Often called the shortest German joke. [[sich treffen]] means 'to meet', but [[treffen]] also means 'to hit a target'. 'Treffen sich zwei ...' is how many German jokes start (like 'Two guys walk into a bar'), so you expect a meeting. The punchline switches to the other meaning: they hit each other.\n\nThe verb comes first here. That is normal at the start of jokes and stories: [[Kommt ein Mann zum Arzt ...]] (A man goes to the doctor ...)."
+      },
+      "fact": {
+        "title": "ß got a capital letter",
+        "lines": [
+          { "de": "Seit 2017 gibt es auch ein großes ß: ẞ.", "en": "Since 2017 there has also been a capital ß: ẞ." }
+        ],
+        "breakdown": [
+          { "de": "seit 2017", "en": "since 2017" },
+          { "de": "es gibt", "en": "there is, there are", "note": "very common: Es gibt keine Milch. = There's no milk." },
+          { "de": "auch", "en": "also" },
+          { "de": "ein großes ß", "en": "a capital ß", "note": "groß = big" }
+        ],
+        "explain": "For centuries ß was the only German letter without a capital form, so words in capitals used SS: STRASSE. Since 29 June 2017 the capital ẞ is part of the official spelling ([[STRAẞE]]), and SS is still correct too.\n\nIt matters for names in passports: Weiß and Weiss are different family names. You won't type ẞ often, but now you know what it is."
+      },
+      "phrase": {
+        "title": "Stimmt so.",
+        "lines": [
+          { "de": "Das macht achtzehn Euro vierzig.", "en": "That comes to 18.40 euros." },
+          { "de": "Stimmt so.", "en": "Keep the change." }
+        ],
+        "breakdown": [
+          { "de": "das macht", "en": "that comes to", "note": "machen = to make" },
+          { "de": "achtzehn Euro vierzig", "en": "18,40 €" },
+          { "de": "stimmt", "en": "is right", "note": "stimmen = to be correct" },
+          { "de": "so", "en": "like this" }
+        ],
+        "explain": "How Germans tip. In a café or restaurant the waiter tells you the total at the table. You hand over a note and say [[Stimmt so.]] (literally 'it's right like this'), which means 'keep the change'.\n\nOr you name the amount you want to pay, tip included: [[Zwanzig, bitte.]] or [[Machen Sie zwanzig.]] (Make it twenty.) Around 5-10% is normal."
+      }
+    },
+    {
+      "id": "d04",
+      "joke": {
+        "title": "A cookie in the shade",
+        "lines": [
+          { "de": "Was ist ein Keks unter einem Baum?", "en": "What is a cookie under a tree?" },
+          { "de": "Ein schattiges Plätzchen.", "en": "A shady little spot. (Or: a shady cookie.)" }
+        ],
+        "breakdown": [
+          { "de": "der Keks", "en": "biscuit, cookie" },
+          { "de": "unter einem Baum", "en": "under a tree", "note": "der Baum; einem after unter (dative, Unit 6)" },
+          { "de": "schattig", "en": "shady", "note": "der Schatten = shade" },
+          { "de": "das Plätzchen", "en": "1) a nice little spot  2) a Christmas biscuit" }
+        ],
+        "explain": "[[Plätzchen]] has two meanings: a little place ([[der Platz]] + -chen) and a small biscuit, especially the ones Germans bake before Christmas. 'Ein schattiges Plätzchen' is a common phrase for a nice spot in the shade, so a cookie in the shade is ... a shady Plätzchen.\n\nAnd -chen makes it das, as always."
+      },
+      "fact": {
+        "title": "Munich means 'at the monks'",
+        "lines": [
+          { "de": "München bedeutet eigentlich 'bei den Mönchen'.", "en": "'München' actually means 'at the monks'." }
+        ],
+        "breakdown": [
+          { "de": "bedeutet", "en": "means", "note": "bedeuten = to mean" },
+          { "de": "eigentlich", "en": "actually" },
+          { "de": "bei den Mönchen", "en": "at the monks' (place)", "note": "der Mönch, die Mönche" }
+        ],
+        "explain": "The name comes from Old High German 'munichen', 'at the monks', after a settlement of monks where the old town is now. That's why the city's coat of arms shows a figure in a monk's robe, the [[Münchner Kindl]] (Munich child).\n\nOver the centuries the monk got younger and cuter. On souvenirs today it's a child in a hooded robe, often holding a beer mug and a radish. Look for it on city signs."
+      },
+      "phrase": {
+        "title": "Mahlzeit!",
+        "lines": [
+          { "de": "Mahlzeit!", "en": "(the lunchtime greeting at work, roughly 'Enjoy your lunch!')" }
+        ],
+        "breakdown": [
+          { "de": "die Mahlzeit", "en": "meal", "note": "das Mahl (meal, an old word) + die Zeit (time)" }
+        ],
+        "explain": "Walk through a German office around lunchtime and colleagues greet each other with [[Mahlzeit!]] instead of [[Hallo]]. It's short for 'Gesegnete Mahlzeit' (blessed meal). The answer is simply [[Mahlzeit!]] back.\n\nSome people find it old-fashioned or funny, but it's everywhere in offices, canteens and workshops, so it's a real work phrase for you."
+      }
+    },
+    {
+      "id": "d05",
+      "joke": {
+        "title": "The boomerang",
+        "lines": [
+          { "de": "Wie nennt man einen Bumerang, der nicht zurückkommt?", "en": "What do you call a boomerang that doesn't come back?" },
+          { "de": "Stock.", "en": "A stick." }
+        ],
+        "breakdown": [
+          { "de": "Wie nennt man ...?", "en": "What do you call ...?", "note": "nennen = to call, to name" },
+          { "de": "man", "en": "one, people, you (in general)" },
+          { "de": "einen Bumerang", "en": "a boomerang", "note": "der Bumerang; einen: accusative" },
+          { "de": "der nicht zurückkommt", "en": "that doesn't come back", "note": "zurückkommen = to come back; the verb goes to the end" },
+          { "de": "der Stock", "en": "stick" }
+        ],
+        "explain": "No pun this time, just dry logic, which Germans love.\n\nTwo useful things: [[Wie nennt man das auf Deutsch?]] (What do you call that in German?) is a great question for class. And [[man]] means 'people, you in general': [[Man sagt ...]] = People say ..."
+      },
+      "fact": {
+        "title": "Oktoberfest starts in September",
+        "lines": [
+          { "de": "Das Oktoberfest beginnt im September.", "en": "Oktoberfest starts in September." }
+        ],
+        "breakdown": [
+          { "de": "beginnt", "en": "starts", "note": "beginnen = to begin" },
+          { "de": "im September", "en": "in September", "note": "im = in dem; months take im" }
+        ],
+        "explain": "Most of the Oktoberfest happens in September. It starts on a Saturday in the second half of September and ends on the first Sunday in October, or on 3 October if that is later. The reason is better weather.\n\nMunich people call it [[die Wiesn]], after the Theresienwiese (Therese's meadow) where it takes place. The first one, in 1810, was the wedding party of Crown Prince Ludwig and Princess Therese."
+      },
+      "phrase": {
+        "title": "Zusammen oder getrennt?",
+        "lines": [
+          { "de": "Zusammen oder getrennt?", "en": "Together or separately? (paying the bill)" }
+        ],
+        "breakdown": [
+          { "de": "zusammen", "en": "together" },
+          { "de": "oder", "en": "or" },
+          { "de": "getrennt", "en": "separately", "note": "trennen = to separate" }
+        ],
+        "explain": "When a group asks for the bill ([[Zahlen, bitte!]] or [[Die Rechnung, bitte!]]), the waiter asks this. Splitting the bill is completely normal in Germany, even on a date.\n\nAnswer [[Zusammen, bitte.]] (one bill) or [[Getrennt, bitte.]] (each pays their own). Then each person says what they had: [[Ich hatte den Kaffee und die Breze.]]"
+      }
+    },
+    {
+      "id": "d06",
+      "joke": {
+        "title": "Waiter, there's a fly ...",
+        "lines": [
+          { "de": "Herr Ober, da ist eine Fliege in meiner Suppe!", "en": "Waiter, there's a fly in my soup!" },
+          { "de": "Keine Sorge, die isst nicht viel.", "en": "Don't worry, it doesn't eat much." }
+        ],
+        "breakdown": [
+          { "de": "Herr Ober", "en": "waiter!", "note": "an old-fashioned way to call a waiter" },
+          { "de": "da ist", "en": "there is" },
+          { "de": "die Fliege", "en": "fly" },
+          { "de": "in meiner Suppe", "en": "in my soup", "note": "die Suppe; meiner after in (dative, Unit 6)" },
+          { "de": "keine Sorge", "en": "don't worry", "note": "die Sorge = worry" },
+          { "de": "die", "en": "it (the fly)", "note": "der/die/das can replace er/sie/es" },
+          { "de": "isst", "en": "eats", "note": "essen: du isst, er/sie/es isst" },
+          { "de": "nicht viel", "en": "not much" }
+        ],
+        "explain": "'Herr Ober, ...' jokes are a whole genre, the German version of 'Waiter, there's a fly in my soup'.\n\nTwo useful bits: [[Keine Sorge!]] (Don't worry!) is everyday German. And [[die]] here means 'it': Germans often point at something with der/die/das instead of er/sie/es.\n\nNobody says 'Herr Ober' in real life any more. Call a waiter with [[Entschuldigung!]]"
+      },
+      "fact": {
+        "title": "Gift is poison",
+        "lines": [
+          { "de": "Gift ist kein Geschenk.", "en": "'Gift' is not a present." }
+        ],
+        "breakdown": [
+          { "de": "das Gift", "en": "poison" },
+          { "de": "kein", "en": "not a" },
+          { "de": "das Geschenk", "en": "present, gift" }
+        ],
+        "explain": "Watch out for false friends, words that look English but aren't:\n\n- [[das Gift]] = poison (a present is [[das Geschenk]])\n- [[der Chef]] = boss (a cook is [[der Koch]])\n- [[bekommen]] = to get, not 'become': [[Ich bekomme ein Bier.]] = I'll have a beer.\n- [[der Rat]] = advice, council (a rat is [[die Ratte]])\n- [[also]] = so, therefore ('also' is [[auch]])"
+      },
+      "phrase": {
+        "title": "Kann ich mit Karte zahlen?",
+        "lines": [
+          { "de": "Kann ich mit Karte zahlen?", "en": "Can I pay by card?" }
+        ],
+        "breakdown": [
+          { "de": "kann ich", "en": "can I", "note": "können: ich kann; question, so the verb comes first" },
+          { "de": "mit Karte", "en": "by card", "note": "die Karte; no article here" },
+          { "de": "zahlen", "en": "to pay", "note": "with kann, the second verb goes to the end" }
+        ],
+        "explain": "Germany still likes cash more than most countries. Some small bakeries, kiosks and beer gardens take cash only; the sign says [[Nur Barzahlung]] or [[Nur bar]]. So it's worth asking before you order.\n\nAnswers: [[Ja, klar.]] or [[Nur bar, leider.]] (Cash only, sorry.)\n\nUnit 3 preview: with [[kann]], the second verb goes to the end: [[Ich kann mit Karte zahlen.]]"
+      }
+    },
+    {
+      "id": "d07",
+      "joke": {
+        "title": "The hiking fruit",
+        "lines": [
+          { "de": "Was ist orange und wandert durch die Berge?", "en": "What is orange and hikes through the mountains?" },
+          { "de": "Eine Wanderine.", "en": "A 'hikerine'." }
+        ],
+        "breakdown": [
+          { "de": "orange", "en": "orange" },
+          { "de": "wandert", "en": "hikes", "note": "wandern = to hike" },
+          { "de": "durch die Berge", "en": "through the mountains", "note": "durch = through; der Berg, die Berge" },
+          { "de": "die Wanderine", "en": "made-up word: wandern + die Mandarine (mandarin orange)" }
+        ],
+        "explain": "The pun: [[die Mandarine]] + [[wandern]] (to hike).\n\n[[wandern]] is a national hobby, especially in Bavaria, with the Alps about an hour from Munich. It's also a false friend: it means hiking, not wandering around. You'll hear [[Wir gehen am Wochenende wandern.]] (We're going hiking at the weekend.)"
+      },
+      "fact": {
+        "title": "A 63-letter word",
+        "lines": [
+          { "de": "Ein Gesetz hatte einen Namen mit 63 Buchstaben.", "en": "A law had a name with 63 letters." }
+        ],
+        "breakdown": [
+          { "de": "das Gesetz", "en": "law" },
+          { "de": "hatte", "en": "had", "note": "past of haben" },
+          { "de": "einen Namen", "en": "a name", "note": "der Name; einen Namen: accusative" },
+          { "de": "mit", "en": "with" },
+          { "de": "der Buchstabe", "en": "letter (of the alphabet)", "note": "plural: die Buchstaben" }
+        ],
+        "explain": "The law was the [[Rindfleischetikettierungsüberwachungsaufgabenübertragungsgesetz]] of Mecklenburg-Vorpommern, a 'beef labelling supervision duties delegation law'. It was repealed in 2013, and the word went with it.\n\nRead it in parts, from the end:\n\n- Gesetz = law\n- Übertragung = transfer, delegation\n- Aufgaben = duties\n- Überwachung = supervision\n- Etikettierung = labelling\n- Rindfleisch = beef (Rind = cattle, Fleisch = meat)\n\nThat is how to read any long German word: split it up. The last part is the main word and decides the article: [[das Gesetz]]."
+      },
+      "phrase": {
+        "title": "Ich schau nur.",
+        "lines": [
+          { "de": "Kann ich Ihnen helfen?", "en": "Can I help you?" },
+          { "de": "Danke, ich schau nur.", "en": "Thanks, I'm just looking." }
+        ],
+        "breakdown": [
+          { "de": "Kann ich Ihnen helfen?", "en": "Can I help you?", "note": "helfen takes Ihnen (dative, Unit 6)" },
+          { "de": "ich schau", "en": "I'm looking", "note": "schauen = to look; spoken without the -e" },
+          { "de": "nur", "en": "only, just" }
+        ],
+        "explain": "What to say when a shop assistant comes over.\n\nIn speech, Germans often drop the -e of the ich form: [[ich schau]], [[ich hab]], [[ich geh]]. In writing it's [[ich schaue]]. [[schauen]] is the southern word; in the north you'll also hear [[gucken]]. A longer version: [[Ich schaue mich nur um.]] (I'm just looking around.)"
+      }
+    },
+    {
+      "id": "d08",
+      "joke": {
+        "title": "Five animals from Africa",
+        "lines": [
+          { "de": "Die Lehrerin fragt: 'Fritzchen, nenn mir fünf Tiere aus Afrika!'", "en": "The teacher asks: 'Fritzchen, name five animals from Africa!'" },
+          { "de": "Fritzchen: 'Drei Löwen und zwei Elefanten!'", "en": "Fritzchen: 'Three lions and two elephants!'" }
+        ],
+        "breakdown": [
+          { "de": "die Lehrerin", "en": "the (female) teacher" },
+          { "de": "fragt", "en": "asks", "note": "fragen = to ask" },
+          { "de": "Fritzchen", "en": "little Fritz", "note": "Fritz + -chen" },
+          { "de": "nenn mir", "en": "name for me, tell me", "note": "nennen; the du command (Unit 5); mir = to me" },
+          { "de": "fünf Tiere", "en": "five animals", "note": "das Tier, die Tiere" },
+          { "de": "aus Afrika", "en": "from Africa" },
+          { "de": "drei Löwen", "en": "three lions", "note": "der Löwe, die Löwen" },
+          { "de": "zwei Elefanten", "en": "two elephants", "note": "der Elefant, die Elefanten" }
+        ],
+        "explain": "Fritzchen is the cheeky schoolboy of German jokes, like 'Little Johnny' in English. His jokes almost always start in class with a teacher's question.\n\nGood plural practice: [[der Löwe]] - [[die Löwen]], [[der Elefant]] - [[die Elefanten]]."
+      },
+      "fact": {
+        "title": "One bread roll, many names",
+        "lines": [
+          { "de": "In München sagt man Semmel, nicht Brötchen.", "en": "In Munich people say Semmel, not Brötchen (bread roll)." }
+        ],
+        "breakdown": [
+          { "de": "sagt man", "en": "people say", "note": "the verb comes second, after In München" },
+          { "de": "die Semmel", "en": "bread roll (Bavaria, Austria)" },
+          { "de": "nicht", "en": "not" },
+          { "de": "das Brötchen", "en": "bread roll (standard German)", "note": "das Brot + -chen = little bread" }
+        ],
+        "explain": "The bread roll has a different name almost everywhere:\n\n- [[das Brötchen]] (standard German, north and west)\n- [[die Semmel]] (Bavaria, Austria)\n- [[die Schrippe]] (Berlin)\n- [[das Weckle]] (Swabia)\n- [[das Rundstück]] (Hamburg)\n\nIn a Munich bakery, ask for [[zwei Semmeln, bitte]] and [[eine Breze]] (a pretzel; Breze in Bavaria, Brezel elsewhere). Nobody minds Brötchen, but Semmel sounds local."
+      },
+      "phrase": {
+        "title": "Brauchen Sie den Kassenbon?",
+        "lines": [
+          { "de": "Brauchen Sie den Kassenbon?", "en": "Do you need the receipt?" }
+        ],
+        "breakdown": [
+          { "de": "Brauchen Sie ...?", "en": "Do you need ...?", "note": "polite; yes/no question, so the verb comes first" },
+          { "de": "den Kassenbon", "en": "the receipt", "note": "der Kassenbon: die Kasse (till) + der Bon (slip); den: accusative (Unit 4)" }
+        ],
+        "explain": "The cashier's standard question at the supermarket or bakery. Answer [[Nein, danke.]] or [[Ja, bitte.]]\n\nOther words for a receipt: [[der Bon]], [[der Beleg]], and [[die Quittung]] (a proper receipt, e.g. for work expenses).\n\nMore checkout questions: [[Brauchen Sie eine Tüte?]] (Do you need a bag?) and [[Mit Karte oder bar?]] (Card or cash?)"
+      }
+    },
+    {
+      "id": "d09",
+      "joke": {
+        "title": "White and annoying",
+        "lines": [
+          { "de": "Was ist weiß und stört beim Essen?", "en": "What is white and bothers you while you eat?" },
+          { "de": "Eine Lawine.", "en": "An avalanche." }
+        ],
+        "breakdown": [
+          { "de": "weiß", "en": "white" },
+          { "de": "stört", "en": "bothers, disturbs", "note": "stören = to disturb" },
+          { "de": "beim Essen", "en": "while eating", "note": "beim = bei dem; das Essen = eating, food" },
+          { "de": "die Lawine", "en": "avalanche" }
+        ],
+        "explain": "Pure absurd humour, another 'Was ist ... und ...?' classic.\n\nUseful from it: [[Störe ich?]] (Am I disturbing you?), and the hotel door sign [[Bitte nicht stören]] (Do not disturb). [[beim Essen]] = while eating; also [[beim Arbeiten]] = while working."
+      },
+      "fact": {
+        "title": "'Handy' is a German word",
+        "lines": [
+          { "de": "Das Handy ist ein deutsches Wort.", "en": "'Handy' is a German word." }
+        ],
+        "breakdown": [
+          { "de": "das Handy", "en": "mobile phone" },
+          { "de": "ein deutsches Wort", "en": "a German word", "note": "deutsch + -es: adjective ending (A2); das Wort" }
+        ],
+        "explain": "It looks English, but no English speaker calls a phone a 'handy'. German has many such fake English words:\n\n- [[das Handy]] = mobile phone\n- [[der Beamer]] = projector (in English, a 'Beamer' is a BMW)\n- [[das Public Viewing]] = watching football together on big screens (in English: viewing a body before a funeral)\n- [[der Oldtimer]] = vintage car\n- [[der Smoking]] = tuxedo\n\nMeanwhile English borrowed real German words: kindergarten, angst, rucksack, wanderlust, zeitgeist."
+      },
+      "phrase": {
+        "title": "Schönen Feierabend!",
+        "lines": [
+          { "de": "Schönen Feierabend!", "en": "Have a nice evening! (said when work ends)" }
+        ],
+        "breakdown": [
+          { "de": "schönen", "en": "nice", "note": "schön + -en: adjective ending (A2)" },
+          { "de": "der Feierabend", "en": "the time after work", "note": "feiern (to celebrate) + der Abend (evening)" }
+        ],
+        "explain": "[[der Feierabend]] is the moment work ends and your own time begins, and Germans take it seriously. Say [[Schönen Feierabend!]] to colleagues when one of you leaves work. The answer is [[Danke, dir auch!]] or, formally, [[Danke, Ihnen auch!]]\n\nAlso: [[Ich habe Feierabend.]] (I'm done for the day.) and [[das Feierabendbier]] (the after-work beer). The phrase is short for [[Ich wünsche dir einen schönen Feierabend.]]"
+      }
+    },
+    {
+      "id": "d10",
+      "joke": {
+        "title": "A clown at the office",
+        "lines": [
+          { "de": "Was macht ein Clown im Büro?", "en": "What does a clown do at the office?" },
+          { "de": "Faxen.", "en": "Faxes. (Faxen also means 'fooling around'.)" }
+        ],
+        "breakdown": [
+          { "de": "Was macht ...?", "en": "What does ... do?", "note": "machen = to do, to make" },
+          { "de": "der Clown", "en": "clown" },
+          { "de": "im Büro", "en": "at the office", "note": "im = in dem; das Büro" },
+          { "de": "faxen", "en": "to fax" },
+          { "de": "die Faxen", "en": "silly antics, clowning (plural)" }
+        ],
+        "explain": "[[faxen]] is 'to send a fax', and [[die Faxen]] are silly antics: [[Faxen machen]] = to clown around. Germany is also famous for still using fax machines in offices and doctors' practices, which makes the joke a little truer there.\n\nHandy phrase: [[Lass die Faxen!]] = Stop fooling around!"
+      },
+      "fact": {
+        "title": "Germans press their thumbs",
+        "lines": [
+          { "de": "Ich drücke dir die Daumen!", "en": "I'll keep my fingers crossed for you!" }
+        ],
+        "breakdown": [
+          { "de": "ich drücke", "en": "I press", "note": "drücken = to press, to squeeze" },
+          { "de": "dir", "en": "for you", "note": "dative of du (Unit 6)" },
+          { "de": "die Daumen", "en": "the thumbs", "note": "der Daumen, die Daumen" }
+        ],
+        "explain": "Germans don't cross their fingers for luck, they press their thumbs: fold each thumb inside your fist and squeeze. Before an exam or a job interview, a colleague will say [[Ich drücke dir die Daumen!]]\n\nPolite form: [[Ich drücke Ihnen die Daumen.]] The answer is just [[Danke!]]"
+      },
+      "phrase": {
+        "title": "Ist hier noch frei?",
+        "lines": [
+          { "de": "Entschuldigung, ist hier noch frei?", "en": "Excuse me, is this seat free?" },
+          { "de": "Ja, klar!", "en": "Sure!" }
+        ],
+        "breakdown": [
+          { "de": "Entschuldigung", "en": "excuse me" },
+          { "de": "ist hier", "en": "is here", "note": "yes/no question: the verb comes first" },
+          { "de": "noch", "en": "still" },
+          { "de": "frei", "en": "free" },
+          { "de": "Ja, klar!", "en": "Sure! Of course!" }
+        ],
+        "explain": "In beer gardens, canteens and on trains, strangers share tables and benches. Before you sit down, ask [[Ist hier noch frei?]] (literally 'Is here still free?').\n\nIf the seat is taken: [[Nein, leider besetzt.]] (No, sorry, it's taken.) You can also ask about a chair: [[Ist der Platz noch frei?]]"
+      }
+    }
+  ]
+}

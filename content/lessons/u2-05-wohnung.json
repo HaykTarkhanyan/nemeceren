@@ -15,6 +15,7 @@
   "words": ["wohnung", "zimmer", "kueche", "bad", "schlafzimmer", "wohnzimmer", "balkon", "haus", "miete", "hoch", "hell", "dunkel"],
   "sections": [
     {
+      "id": "flat",
       "type": "table",
       "title": "The flat",
       "columns": [{ "header": "German", "de": "words" }, { "header": "Plural", "de": "words" }, { "header": "English" }],
@@ -31,6 +32,7 @@
       ]
     },
     {
+      "id": "compounds",
       "type": "explanation",
       "title": "Compound nouns: the last part decides",
       "text": "German glues words together into new nouns: [[schlafen]] (to sleep) + [[Zimmer]] = [[das Schlafzimmer]]; [[wohnen]] (to live) + [[Zimmer]] = [[das Wohnzimmer]].\n\nThe **last** part decides the article: it is [[das Zimmer]], so it is [[das Schlafzimmer]] and [[das Wohnzimmer]] too. This rule almost never fails, so a long word is often easier than it looks."
@@ -40,6 +42,7 @@
       "text": "Armenian also glues words together (դաս + գիրք = դասագիրք, textbook), so German compounds will feel familiar. Russian more often uses an adjective plus a noun instead."
     },
     {
+      "id": "describing-flat",
       "type": "explanation",
       "title": "Describing your flat",
       "text": "- [[Meine Wohnung ist klein, aber hell.]]\n- [[Die Wohnung hat zwei Zimmer, eine Küche und ein Bad.]]\n- [[Die Miete ist sehr hoch.]] (a sentence you will say often in Munich; people also say [[sehr teuer]])\n\nGermans count rooms without the kitchen and the bathroom: a 'Zwei-Zimmer-Wohnung' has two rooms plus a kitchen and a bathroom. The living room counts as a room, like Russian двухкомнатная квартира (unlike English '2-bedroom')."

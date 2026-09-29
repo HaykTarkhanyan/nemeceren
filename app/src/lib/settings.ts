@@ -8,11 +8,13 @@ const Settings = z.object({
   voiceURI: z.string().nullable(),
   rate: z.union([z.literal(0.7), z.literal(0.85), z.literal(1)]),
   newPerDay: z.number().int().min(0).max(100),
+  /** Where word reviews take their words from, as plan.ts sourceKey: "all", "unit:2", "lesson:<id>". */
+  wordSource: z.string(),
 })
 export type Settings = z.infer<typeof Settings>
 
 const KEY = 'nemeceren.settings'
-const DEFAULTS: Settings = { voiceURI: null, rate: 0.85, newPerDay: 10 }
+const DEFAULTS: Settings = { voiceURI: null, rate: 0.85, newPerDay: 10, wordSource: 'all' }
 
 let current: Settings | null = null
 const listeners = new Set<() => void>()

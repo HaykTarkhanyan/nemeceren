@@ -3,9 +3,11 @@ import { createRoot } from 'react-dom/client'
 import { App } from './App.tsx'
 import { installGlobalErrorHandlers } from './lib/errors.ts'
 import { initSpeech } from './lib/speech.ts'
+import { initTheme } from './lib/theme.ts'
 import './styles.css'
 
 installGlobalErrorHandlers()
+initTheme()
 initSpeech()
 
 const root = document.getElementById('root')

@@ -2,6 +2,8 @@
 // without restarting the server). Files are imported as text and parsed here, so a JSON
 // syntax error is reported like any other problem. Problems are collected and the app shows
 // them instead of rendering, so a bad file can never silently disappear.
+import dailyText from '../../../content/daily.json?raw'
+import topicsText from '../../../content/topics.json?raw'
 import wordsText from '../../../content/words.json?raw'
 import { byCourseOrder } from './lessons.ts'
 import type { Test } from './schema.ts'
@@ -27,6 +29,8 @@ const checked = checkAllContent({
   tests: Object.entries(testFiles).map(([key, text]) => ({ file: repoPath(key), text })),
   words: { file: 'content/words.json', text: wordsText },
   lessons: Object.entries(lessonFiles).map(([key, text]) => ({ file: repoPath(key), text })),
+  topics: { file: 'content/topics.json', text: topicsText },
+  daily: { file: 'content/daily.json', text: dailyText },
 })
 
 const newestFirst = (a: Test, b: Test) => b.created.localeCompare(a.created) || b.id.localeCompare(a.id)
@@ -35,5 +39,7 @@ export const content = {
   tests: [...checked.tests].sort(newestFirst),
   words: checked.words,
   lessons: [...checked.lessons].sort(byCourseOrder),
+  topics: checked.topics,
+  daily: checked.daily,
   problems: checked.problems,
 }

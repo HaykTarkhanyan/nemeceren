@@ -1,6 +1,7 @@
 // Where the progress stands: "Synced 2 min ago", "3 changes not synced", "Offline, will sync",
 // or the error, with a "Sync now" button when there is something to send.
 import { useEffect, useState } from 'react'
+import { link } from '../lib/router.ts'
 import { syncNow, useSyncStatus } from '../lib/storage.ts'
 import type { SyncStatus } from '../lib/storage.ts'
 
@@ -30,7 +31,10 @@ function tone(s: SyncStatus): string {
   return 'ok'
 }
 
-/** The status with a "Sync now" button. `compact` shortens errors for the header. */
+/**
+ * The status with a "Sync now" button. `compact` (the header) shows only a coloured dot, with the
+ * text as its tooltip; the dot links to Settings, where the full line is.
+ */
 export function SyncStatusLine({ compact = false }: { compact?: boolean }) {
   const s = useSyncStatus()
   const [now, setNow] = useState(() => Date.now())
@@ -39,13 +43,17 @@ export function SyncStatusLine({ compact = false }: { compact?: boolean }) {
     const t = window.setInterval(() => setNow(Date.now()), 30_000)
     return () => window.clearInterval(t)
   }, [])
-  const text = compact && s.phase === 'error' ? 'Sync failed' : syncText(s, now)
+  const text = syncText(s, now)
   const canSync = s.phase !== 'syncing' && (s.pending > 0 || s.phase === 'error')
   return (
     <span className="sync-line">
-      <span className={`badge ${tone(s)}`} title={s.error ?? undefined} role="status">
-        {text}
-      </span>
+      {compact ? (
+        <a className={`sync-dot ${tone(s)}`} href={link('settings')} title={text} aria-label={`Sync: ${text}`} />
+      ) : (
+        <span className={`badge ${tone(s)}`} title={s.error ?? undefined} role="status">
+          {text}
+        </span>
+      )}
       {canSync && (
         <button type="button" className="btn small" onClick={() => void syncNow()}>
           Sync now

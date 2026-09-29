@@ -73,6 +73,53 @@ export function studyWords(words: Word[], lessons: Lesson[], p: LessonProgress, 
   return words.filter((w) => state.cards[w.id] || !locked.has(w.id))
 }
 
+// ---------- where a word review takes its words from ----------
+
+/** All words (the default), one unit, or one lesson. Only filters the queue; FSRS is unchanged. */
+export type WordSource = { kind: 'all' } | { kind: 'unit'; unit: number } | { kind: 'lesson'; lessonId: string }
+
+/** Lessons that list words, in course order: the lessons and units a review can be limited to. */
+export function sourceLessons(lessons: Lesson[]): Lesson[] {
+  return lessons.filter((l) => (l.words ?? []).length > 0).sort(byCourseOrder)
+}
+
+/**
+ * The words a review session uses. "all" is studyWords: a lesson's words wait until the lesson is
+ * opened. A unit or lesson takes every word its lessons list, opened or not, because picking it
+ * is the explicit choice to learn them (DECISIONS.md). Order is words.json order, as always.
+ */
+export function wordsForSource(source: WordSource, words: Word[], lessons: Lesson[], p: LessonProgress, state: ReviewState): Word[] {
+  if (source.kind === 'all') return studyWords(words, lessons, p, state)
+  const picked = lessons.filter((l) => (source.kind === 'unit' ? l.unit === source.unit : l.id === source.lessonId))
+  const ids = new Set(picked.flatMap((l) => l.words ?? []))
+  return words.filter((w) => ids.has(w.id))
+}
+
+/** How a source is saved per device: "all", "unit:2" or "lesson:u2-03-plural". */
+export function sourceKey(s: WordSource): string {
+  if (s.kind === 'all') return 'all'
+  return s.kind === 'unit' ? `unit:${s.unit}` : `lesson:${s.lessonId}`
+}
+
+/** A saved source. One whose unit or lesson (with words) no longer exists becomes "all", with a note to show. */
+export function parseSourceKey(key: string, lessons: Lesson[]): { source: WordSource; note: string | null } {
+  if (key === 'all') return { source: { kind: 'all' }, note: null }
+  const usable = sourceLessons(lessons)
+  const unit = /^unit:(\d+)$/.exec(key)
+  if (unit && usable.some((l) => l.unit === Number(unit[1]))) return { source: { kind: 'unit', unit: Number(unit[1]) }, note: null }
+  const lesson = /^lesson:(.+)$/.exec(key)
+  if (lesson && usable.some((l) => l.id === lesson[1])) return { source: { kind: 'lesson', lessonId: lesson[1] }, note: null }
+  return { source: { kind: 'all' }, note: `Your last pick ("${key}") no longer exists, so the review uses all words.` }
+}
+
+export function sourceLabel(s: WordSource, lessons: Lesson[]): string {
+  if (s.kind === 'all') return 'all words'
+  if (s.kind === 'unit') return `Unit ${s.unit}`
+  const l = lessons.find((x) => x.id === s.lessonId)
+  if (!l) throw new Error(`No lesson "${s.lessonId}" for the word review`)
+  return `${l.unit}.${l.order} ${l.title}`
+}
+
 export interface WeakWord {
   word: Word
   reasons: string[]

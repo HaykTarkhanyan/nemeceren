@@ -5,6 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="color-scheme" content="light dark" />
     <title>Nemeceren - German practice</title>
+    <script>
+      // Light or dark before the first paint (no flash). src/lib/theme.ts owns the theme after
+      // that, with the same key and values, and reports it if storage cannot be read.
+      ;(function () {
+        var t = 'system'
+        try {
+          t = localStorage.getItem('nemeceren.theme') || 'system'
+        } catch (e) {}
+        var dark = t === 'dark' || (t !== 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches)
+        document.documentElement.dataset.theme = dark ? 'dark' : 'light'
+      })()
+    </script>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 3 3'%3E%3Crect width='3' height='1' fill='%23000'/%3E%3Crect y='1' width='3' height='1' fill='%23D00'/%3E%3Crect y='2' width='3' height='1' fill='%23FFCE00'/%3E%3C/svg%3E" />
   </head>
   <body>

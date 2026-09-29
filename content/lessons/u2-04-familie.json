@@ -19,6 +19,7 @@
   "tests": ["u2-t2-plural-familie"],
   "sections": [
     {
+      "id": "family",
       "type": "table",
       "title": "The family",
       "columns": [{ "header": "German", "de": "words" }, { "header": "Plural", "de": "words" }, { "header": "English" }],
@@ -37,11 +38,13 @@
       ]
     },
     {
+      "id": "mein-meine",
       "type": "explanation",
       "title": "mein and meine",
       "text": "[[mein]] (my) works like [[ein]]: [[mein Bruder]], [[mein Kind]], but **meine** with feminine nouns and with every plural: [[meine Schwester]], [[meine Eltern]].\n\nThe same goes for [[dein]] (your, informal) and [[Ihr]] (your, polite): [[dein Bruder]], [[deine Schwester]], [[Ihre Familie]]."
     },
     {
+      "id": "possessives",
       "type": "table",
       "title": "my, your, his, her, our, their",
       "columns": [{ "header": "Person", "de": "words" }, { "header": "with der/das words", "de": "words" }, { "header": "with die words and plurals", "de": "words" }, { "header": "English" }],
@@ -56,14 +59,17 @@
       ]
     },
     {
+      "id": "sein-ihr",
       "type": "warning",
       "text": "[[sein]] also means 'his' (not only 'to be'), and [[ihr]] also means 'her' and 'their'. The context tells you which: [[Das ist sein Bruder.]] = That is his brother. [[Ihr Name ist Anna.]] = Her name is Anna. At the start of a sentence, Ihr can also be the polite 'your'; the context decides."
     },
     {
+      "id": "no-svoy",
       "type": "comparison",
       "text": "German has no Russian свой: 'Hayk loves his sister' (Айк любит свою сестру) is simply [[Hayk liebt seine Schwester.]]\n\nArmenian often uses a suffix (եղբայրս = my brother). German always puts a separate word in front: [[mein Bruder]]."
     },
     {
+      "id": "family-talk",
       "type": "examples",
       "title": "Talking about family",
       "items": [

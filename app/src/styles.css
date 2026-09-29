@@ -18,30 +18,30 @@
   --chart-a: #0033a0;
   --chart-b: #d90012;
   --radius: 10px;
-  color-scheme: light dark;
+  color-scheme: light;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #111418;
-    --surface: #1a1f25;
-    --text: #e6e9ed;
-    --muted: #9aa4b1;
-    --border: #2e3640;
-    --accent: #5b9bf0;
-    --accent-text: #0b1220;
-    --ok: #6fd08e;
-    --ok-bg: #16301f;
-    --bad: #ff8a80;
-    --bad-bg: #3a1a18;
-    --warn: #f1c35b;
-    --warn-bg: #3a2f12;
-    --pending: #b9a6f5;
-    --pending-bg: #2a2340;
-    /* Lighter tints of the flag colors, readable on the dark background. */
-    --chart-a: #7d9ef0;
-    --chart-b: #ff6b73;
-  }
+/* Dark colours. data-theme is set from the device setting or Hayk's choice (index.html, lib/theme.ts). */
+:root[data-theme='dark'] {
+  --bg: #111418;
+  --surface: #1a1f25;
+  --text: #e6e9ed;
+  --muted: #9aa4b1;
+  --border: #2e3640;
+  --accent: #5b9bf0;
+  --accent-text: #0b1220;
+  --ok: #6fd08e;
+  --ok-bg: #16301f;
+  --bad: #ff8a80;
+  --bad-bg: #3a1a18;
+  --warn: #f1c35b;
+  --warn-bg: #3a2f12;
+  --pending: #b9a6f5;
+  --pending-bg: #2a2340;
+  /* Lighter tints of the flag colors, readable on the dark background. */
+  --chart-a: #7d9ef0;
+  --chart-b: #ff6b73;
+  color-scheme: dark;
 }
 
 * {
@@ -136,11 +136,13 @@ main.container {
   border-bottom: 1px solid var(--border);
 }
 
+/* Wider than the page (760 px) so brand, 8 links, sync status and theme button fit on one line from 900 px. */
 .header-inner {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 8px 16px;
+  max-width: 960px;
   padding-top: 10px;
   padding-bottom: 10px;
 }
@@ -154,15 +156,66 @@ main.container {
 .nav {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px;
+  gap: 2px;
   flex: 1;
 }
 
 .nav a {
-  padding: 6px 10px;
+  padding: 6px 8px;
   border-radius: 8px;
   color: var(--muted);
   text-decoration: none;
+}
+
+.header-tools {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+/* The header's sync status: a coloured dot (the text is its tooltip) with a finger-sized hit area. */
+.sync-dot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+}
+
+.sync-dot::before {
+  content: '';
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--ok);
+}
+
+.sync-dot.warn::before {
+  background: var(--warn);
+}
+
+.sync-dot.bad::before {
+  background: var(--bad);
+}
+
+/* Below 900 px the nav gets its own row; on a phone it is a 4-column grid (2 rows of 4). */
+@media (max-width: 899px) {
+  .nav {
+    order: 3;
+    flex-basis: 100%;
+  }
+}
+
+@media (max-width: 520px) {
+  .nav {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .nav a {
+    padding: 6px 4px;
+    text-align: center;
+  }
 }
 
 .nav a.active {
@@ -688,14 +741,6 @@ mark.fill.bad {
 }
 
 @media (max-width: 480px) {
-  .nav {
-    order: 3;
-    flex-basis: 100%;
-    gap: 0;
-  }
-  .nav a {
-    padding: 6px 7px;
-  }
   .stats {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -1075,6 +1120,69 @@ rect.tone-b {
   gap: 8px;
 }
 
+/* A section opened from a link (Topics page): a short highlight that fades out. */
+.linked-section {
+  animation: linked-flash 2.5s ease-out;
+}
+
+@keyframes linked-flash {
+  0%,
+  40% {
+    box-shadow: 0 0 0 3px var(--accent);
+  }
+  100% {
+    box-shadow: 0 0 0 3px transparent;
+  }
+}
+
+/* Topics */
+.topic-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.topic-list li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 0;
+  border-top: 1px solid var(--border);
+}
+
+.topic-list li:first-child {
+  border-top: none;
+}
+
+.star {
+  color: var(--warn);
+}
+
+/* Daily */
+.daily-label {
+  background: var(--pending-bg);
+  color: var(--pending);
+}
+
+.breakdown {
+  list-style: none;
+  margin: 0;
+  padding: 8px 0 0;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.daily-archive summary {
+  cursor: pointer;
+}
+
+.daily-archive[open] summary {
+  margin-bottom: 12px;
+}
+
 /* Sign-in and sync */
 .gate {
   max-width: 440px;
@@ -1108,10 +1216,4 @@ rect.tone-b {
   flex-wrap: wrap;
   align-items: center;
   gap: 6px;
-}
-
-.header .sync-line .badge {
-  max-width: 220px;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }

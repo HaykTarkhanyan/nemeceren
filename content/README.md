@@ -5,6 +5,8 @@ Everything in this folder is written by Claude and read by the app in `app/`. Yo
 - `tests/<id>.json` - one test per file. Shows up in the app on its own (no restart while `npm run dev` runs).
 - `lessons/<id>.json` - one lesson per file (topic, explanation, examples, exercises), see [Lessons](#lessons).
 - `words.json` - the word bank for spaced repetition.
+- `topics.json` - the Topics page: lesson sections worth revisiting, see [Topics](#topics-topicsjson).
+- `daily.json` - the Daily page: a joke, a fun fact and an everyday sentence per day, see [Daily](#daily-page-dailyjson).
 - `glossary.json` (written by Claude) and `glossary.generated.json` (written by a script) - the word popups, see [Glossary](#glossary-word-popups).
 - After every edit run, in `app/`: `npm run glossary` (only if German text changed), then `npm run check-content`. check-content prints every problem as `file: field.path: message` and exits 1. The app refuses to start on invalid files (it shows the same list), and the GitHub Pages deploy fails while any problem is left, including a German word with no glossary entry.
 
@@ -180,7 +182,7 @@ Items are graded after the whole test is submitted. Hayk sees per-item feedback,
 | `tests` | no | ids of tests that belong to the lesson (linked at the end of the lesson) |
 | `sections` | yes | the blocks, in order |
 
-**Words and lessons.** A word listed in some lesson's `words` is held back from the daily new words until that lesson is opened for the first time; opening the lesson unlocks its words, so Hayk meets them right after the explanation. Words in no lesson are introduced in `words.json` order as before. Words already introduced are always reviewed. So: add a lesson's words to `words.json` and list them in the lesson.
+**Words and lessons.** A word listed in some lesson's `words` is held back from the daily new words until that lesson is opened for the first time; opening the lesson unlocks its words, so Hayk meets them right after the explanation. Words in no lesson are introduced in `words.json` order as before. Words already introduced are always reviewed. So: add a lesson's words to `words.json` and list them in the lesson. On the Words page Hayk can also limit a review to one unit or one lesson (a word in no lesson belongs to no unit); a picked unit or lesson brings its words even if it was not opened yet, still within the daily new-word limit.
 
 **Text format** of `explanation`, `comparison`, `tip` and `warning` (English text):
 - paragraphs are separated by a blank line (`\n\n` in JSON); a single `\n` is a line break;
@@ -191,7 +193,7 @@ Nothing else is special; there is no HTML. An unclosed `**`, `*` or `[[` is an e
 
 ### Block types
 
-Every block may have an optional `title`. Word popups are on for everything except exercises, which are gated like tests (off until the answers are checked).
+Every block may have an optional `title`, and an optional `id` (kebab-case like `"verb-endings"`, unique within the lesson; put it first in the block) that `topics.json` links to. Word popups are on for everything except exercises, which are gated like tests (off until the answers are checked).
 
 `explanation` - the teaching text:
 ```json
@@ -248,6 +250,59 @@ Every block may have an optional `title`. Word popups are on for everything exce
 Each check is saved like a test attempt (see `progress/README.md`) with the test id `<lesson id>-ex<n>` (`n` counts the lesson's exercise blocks from 1), so no test may have that id. Claude reviews them like tests.
 
 The glossary covers all German in lessons: `[[...]]` in the text blocks, `examples` and `audio` sentences, table cells in `"words"` columns, and the German fields of exercise items.
+
+## Topics: `topics.json`
+
+The Topics page lists lesson sections worth coming back to, in groups, with the key ones starred. Each item opens its lesson at that section (`#/lesson/<lesson id>/<section id>`), scrolled into view and briefly highlighted.
+
+```json
+{
+  "groups": [
+    {
+      "id": "grammar",
+      "title": "Grammar",
+      "summary": "Starred tables: learn them by heart.",
+      "items": [
+        { "title": "sein: bin, bist, ist, sind, seid, sind", "lesson": "u1-03-andere-vorstellen", "section": "sein", "star": true }
+      ]
+    }
+  ]
+}
+```
+
+- Groups and items are shown in file order. Group `id`s are kebab-case and unique.
+- `lesson` is a lesson id; `section` is the `id` of a block in that lesson (add the id to the block first).
+- `star` is `true` or left out.
+- A section may appear in two groups (a grammar point that is also a word theme), but only once per group.
+- The page shows each item's unit, taken from its lesson.
+
+## Daily page: `daily.json`
+
+"German in the wild": each day one joke, one fun fact and one everyday sentence, each with a breakdown. Deliberately not tied to Hayk's level. Day 1 unlocks on `startDate` (Hayk's local date), then one more day per calendar day; later days stay hidden. check-content prints how many days are left after today, so write more before they run out.
+
+```json
+{
+  "startDate": "2026-09-29",
+  "days": [
+    {
+      "id": "d01",
+      "joke": {
+        "title": "The knocking lettuce",
+        "lines": [{ "de": "Was ist grün und klopft an die Tür?", "en": "What is green and knocks on the door?" }, { "de": "Ein Klopfsalat.", "en": "A 'knock lettuce'." }],
+        "breakdown": [{ "de": "klopft", "en": "knocks", "note": "klopfen = to knock" }],
+        "explain": "The pun: [[der Kopfsalat]] is a real word, 'head lettuce'."
+      },
+      "fact": { "title": "...", "lines": [...], "breakdown": [...], "explain": "..." },
+      "phrase": { "title": "...", "lines": [...], "breakdown": [...], "explain": "..." }
+    }
+  ]
+}
+```
+
+- `startDate` must be a real date. Day `id`s are `d01`, `d02`, ... in order.
+- Every card has a `title`, 1 or more `lines` (`de` + `en`), 1 or more `breakdown` entries (`de`, `en`, optional `note`) and an `explain` in the lesson text format.
+- Jokes: every line but the last is the setup. The last line (the punchline), the joke's `title`, the breakdown and `explain` are shown after "Show punchline", so the title may give the joke away.
+- Every German line gets a speaker button. There are no word popups on this page and daily.json is not checked against the glossary: the breakdown is the gloss, and jokes may use made-up words.
 
 ## Content runway
 
@@ -310,7 +365,7 @@ After a test item is submitted, after a word-review card is revealed, and on the
 | words.json | `de`, `plural`, `example.de` |
 | lessons | `[[...]]` in explanation, comparison, tip and warning text; `examples` and `audio` sentences (`de`); table cells in `"words"` columns; exercise items as above |
 
-Not German: `title`, `description`, `instruction`, `hint`, `explanation`, every `en` field.
+Not German: `title`, `description`, `instruction`, `hint`, `explanation`, every `en` field, and all of `daily.json` (no popups there).
 
 **Generating.** In `app/` run `npm run glossary` (TypeScript, like check-content; about 1 s per new word because it fetches kaikki.org one word at a time with a pause; cached words are instant; the cache is `.cache/kaikki/` at the repo root, git-ignored). It needs network, so CI never runs it: commit `glossary.generated.json` together with the content. The script:
 - collects every word from the fields above (plus the lowercase form of capitalized words, which may just start a sentence);
@@ -336,7 +391,7 @@ Not German: `title`, `description`, `instruction`, `hint`, `explanation`, every 
 }
 ```
 
-Keys are the word exactly as written in the content (case matters: "Morgen" the noun, "morgen" tomorrow). A capitalized word at the start of a sentence also finds the lowercase key, so "Ich" at the start is covered by "ich". Each key has 1-3 entries:
+Keys are the word exactly as written in the content (case matters: "Morgen" the noun, "morgen" tomorrow). A capitalized word at the start of a sentence also finds the lowercase key, so "Ich" at the start is covered by "ich". At a sentence start, curated entries of either spelling come before generated ones, the capitalized curated key first: a note on "Es" ("Es geht.") shows even though "es" also has an entry. The popup shows entries that differ only in part of speech (same lemma, form and gloss list) as one line, "adverb, preposition", with every note. Each key has 1-3 entries:
 
 | key | required | notes |
 |---|---|---|

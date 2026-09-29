@@ -5,11 +5,11 @@
 import { createContext, Fragment, useContext, useEffect, useId, useLayoutEffect, useRef, useState, useSyncExternalStore } from 'react'
 import type { KeyboardEvent, ReactNode, RefObject } from 'react'
 import { markSentenceStarts, segments } from '../content/german.ts'
-import type { GlossEntry } from '../content/schema.ts'
 import { glossEnabled } from '../glossary/gate.ts'
 import type { GlossSurface } from '../glossary/gate.ts'
 import { ensureGlossary, useGlossary } from '../glossary/load.ts'
-import { lookup } from '../glossary/lookup.ts'
+import { lookup, mergeSameGloss } from '../glossary/lookup.ts'
+import type { GlossLine } from '../glossary/lookup.ts'
 import { Speaker } from './Speaker.tsx'
 
 const GateContext = createContext<boolean | null>(null)
@@ -183,7 +183,7 @@ function GlossPopup(props: {
   let body: ReactNode
   if (glossary.status === 'ready') {
     const found = lookup(glossary.glossary, word, sentenceStart)
-    if (found.kind === 'found') body = found.entries.map((e, i) => <EntryView key={i} word={word} e={e} />)
+    if (found.kind === 'found') body = mergeSameGloss(found.entries).map((line, i) => <EntryView key={i} word={word} line={line} />)
     else body = <span className="gloss-missing">No glossary entry for "{word}" yet.</span>
   } else if (glossary.status === 'error') {
     body = <span className="gloss-missing">The glossary could not be loaded: {glossary.message}</span>
@@ -210,7 +210,8 @@ function GlossPopup(props: {
   )
 }
 
-function EntryView({ word, e }: { word: string; e: GlossEntry }) {
+function EntryView({ word, line }: { word: string; line: GlossLine }) {
+  const e = line.entry
   const headword = e.article ? `${e.article} ${e.lemma}` : e.lemma
   const inflected = e.form !== undefined || e.lemma.toLowerCase() !== word.toLowerCase()
   return (
@@ -221,13 +222,17 @@ function EntryView({ word, e }: { word: string; e: GlossEntry }) {
         {e.plural && <span lang="de">, die {e.plural}</span>}
         <span className="gloss-pos">
           {' '}
-          {e.pos}
+          {line.pos.join(', ')}
           {e.level ? `, ${e.level}` : ''}
         </span>
       </span>
       {e.form && <span className="gloss-form">{e.form}</span>}
       <span className="gloss-senses">{e.gloss.join('; ')}</span>
-      {e.note && <span className="gloss-note">{e.note}</span>}
+      {line.notes.map((n) => (
+        <span key={n} className="gloss-note">
+          {n}
+        </span>
+      ))}
     </span>
   )
 }

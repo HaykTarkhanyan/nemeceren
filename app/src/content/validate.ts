@@ -2,10 +2,11 @@
 // Every error names the file and the field path, e.g.
 //   content/tests/a1-01.json: items[3].answers[0]: "..." does not use exactly the tiles [...]
 import type { z } from 'zod'
-import { exerciseSections, exerciseTestId } from './lessons.ts'
-import { CuratedGlossary, GeneratedGlossary, Lesson, LessonProgress, Result, ReviewLogEntry, ReviewState, Test, WordList } from './schema.ts'
+import { exerciseSections, exerciseTestId, sectionIndex } from './lessons.ts'
+import { CuratedGlossary, Daily, GeneratedGlossary, Lesson, LessonProgress, Result, ReviewLogEntry, ReviewState, Test, Topics, WordList } from './schema.ts'
 import type {
   CuratedGlossary as CuratedGlossaryT,
+  Daily as DailyT,
   GeneratedGlossary as GeneratedGlossaryT,
   Lesson as LessonT,
   LessonProgress as LessonProgressT,
@@ -13,6 +14,7 @@ import type {
   ReviewLogEntry as ReviewLogEntryT,
   ReviewState as ReviewStateT,
   Test as TestT,
+  Topics as TopicsT,
   Word as WordT,
 } from './schema.ts'
 
@@ -64,6 +66,14 @@ export function parseLesson(file: string, data: unknown): LessonT {
   return lesson
 }
 
+export function parseTopics(file: string, data: unknown): TopicsT {
+  return parseWith(Topics, file, data)
+}
+
+export function parseDaily(file: string, data: unknown): DailyT {
+  return parseWith(Daily, file, data)
+}
+
 export function parseLessonProgress(file: string, data: unknown): LessonProgressT {
   return parseWith(LessonProgress, file, data)
 }
@@ -111,10 +121,12 @@ export interface RawFile {
  * Validate all content at once and collect every problem instead of stopping at the first,
  * so one run shows everything that needs fixing.
  */
-export function checkAllContent(input: { tests: RawFile[]; words: RawFile; lessons: RawFile[] }): {
+export function checkAllContent(input: { tests: RawFile[]; words: RawFile; lessons: RawFile[]; topics: RawFile; daily: RawFile }): {
   tests: TestT[]
   words: WordT[]
   lessons: LessonT[]
+  topics: TopicsT
+  daily: DailyT
   problems: string[]
 } {
   const problems: string[] = []
@@ -139,8 +151,33 @@ export function checkAllContent(input: { tests: RawFile[]; words: RawFile; lesso
   for (const raw of input.lessons) {
     collect(() => lessons.push(parseLesson(raw.file, parseJsonText(raw.file, raw.text))))
   }
+  let topics: TopicsT = { groups: [] }
+  collect(() => {
+    topics = parseTopics(input.topics.file, parseJsonText(input.topics.file, input.topics.text))
+  })
+  // Not German for the glossary: the breakdown is the gloss, and jokes use made-up words.
+  let daily: DailyT = { startDate: '1970-01-01', days: [] }
+  collect(() => {
+    daily = parseDaily(input.daily.file, parseJsonText(input.daily.file, input.daily.text))
+  })
   problems.push(...crossReferences(tests, words, lessons))
-  return { tests, words, lessons, problems }
+  problems.push(...topicReferences(input.topics.file, topics, lessons))
+  return { tests, words, lessons, topics, daily, problems }
+}
+
+/** Every topic points to an existing lesson and to a section id in it. */
+function topicReferences(file: string, topics: TopicsT, lessons: LessonT[]): string[] {
+  const problems: string[] = []
+  const lessonById = new Map(lessons.map((l) => [l.id, l]))
+  topics.groups.forEach((g, gi) =>
+    g.items.forEach((it, ii) => {
+      const at = `${file}: groups[${gi}].items[${ii}]`
+      const l = lessonById.get(it.lesson)
+      if (!l) problems.push(`${at}.lesson: no lesson with id "${it.lesson}" in content/lessons/`)
+      else if (sectionIndex(l, it.section) < 0) problems.push(`${at}.section: lesson "${l.id}" has no section with id "${it.section}"`)
+    }),
+  )
+  return problems
 }
 
 /** References between files: lesson words and tests exist, test lessons exist, no id or position clashes. */

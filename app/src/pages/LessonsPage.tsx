@@ -1,7 +1,7 @@
 // Lessons grouped by syllabus unit, and the view of one lesson.
 import { useEffect, useRef, useState } from 'react'
 import { content } from '../content/load.ts'
-import { byCourseOrder, exerciseSections } from '../content/lessons.ts'
+import { byCourseOrder, exerciseSections, openAt, sectionIndex } from '../content/lessons.ts'
 import type { Lesson } from '../content/schema.ts'
 import { BlockView } from '../components/LessonBlocks.tsx'
 import { messageOf, reportError } from '../lib/errors.ts'
@@ -58,7 +58,8 @@ export function LessonsPage() {
   )
 }
 
-export function LessonPage({ id }: { id: string }) {
+/** `sectionId` (from "#/lesson/<id>/<section id>", e.g. a Topics link) opens the lesson at that section. */
+export function LessonPage({ id, sectionId }: { id: string; sectionId?: string }) {
   const lesson = content.lessons.find((l) => l.id === id)
   if (!lesson) {
     return (
@@ -67,12 +68,20 @@ export function LessonPage({ id }: { id: string }) {
       </div>
     )
   }
-  return <LessonView key={lesson.id} lesson={lesson} />
+  const linked = sectionId === undefined ? null : sectionIndex(lesson, sectionId)
+  if (linked === -1) {
+    return (
+      <div className="alert error">
+        Lesson "{lesson.title}" has no section "{sectionId}". <a href={link('lesson', lesson.id)}>Open the lesson</a>
+      </div>
+    )
+  }
+  return <LessonView key={lesson.id} lesson={lesson} linked={linked} />
 }
 
 const SAVE_POSITION_MS = 1500
 
-function LessonView({ lesson }: { lesson: Lesson }) {
+function LessonView({ lesson, linked }: { lesson: Lesson; linked: number | null }) {
   const view = useProgress()
   const progress = view.lessonProgress
   const state = view.reviewState
@@ -91,13 +100,15 @@ function LessonView({ lesson }: { lesson: Lesson }) {
     }
   }, [lesson.id])
 
-  // Go back to where Hayk was last time.
+  // Go to the linked section, or back to where Hayk was last time. The hash keeps the section,
+  // so a reload or a direct link lands there too.
   useEffect(() => {
     if (!started || restored.current) return
     restored.current = true
     const last = progressStore().getView().lessonProgress.lessons[lesson.id]?.lastSection ?? 0
-    if (last > 0) document.getElementById(`section-${last}`)?.scrollIntoView({ block: 'start' })
-  }, [started, lesson.id])
+    const at = openAt(linked, last)
+    if (at !== null) document.getElementById(`section-${at}`)?.scrollIntoView({ block: 'start' })
+  }, [started, lesson.id, linked])
 
   // Remember the section at the top of the screen (saved a moment after scrolling stops; it goes
   // into the outbox and is sent with the next sync, never one request per scroll).
@@ -214,7 +225,7 @@ function LessonView({ lesson }: { lesson: Lesson }) {
       </section>
 
       {lesson.sections.map((block, i) => (
-        <section key={i} id={`section-${i}`} data-section={i} className="card">
+        <section key={i} id={`section-${i}`} data-section={i} className={`card${i === linked ? ' linked-section' : ''}`}>
           <BlockView lesson={lesson} block={block} section={i} exerciseNumber={exercises.find((e) => e.section === i)?.number ?? null} />
         </section>
       ))}

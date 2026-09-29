@@ -14,6 +14,7 @@
   "words": ["heissen", "kommen", "wohnen", "vorname", "nachname", "wie", "woher", "wo", "aus", "in"],
   "sections": [
     {
+      "id": "intro-verbs",
       "type": "explanation",
       "title": "Three verbs to start with",
       "text": "To introduce yourself you need three verbs: [[heißen]] (to be called), [[kommen]] (to come) and [[wohnen]] (to live). With **ich** the verb ends in **-e**: [[ich heiße]], [[ich komme]], [[ich wohne]].\n\nThree questions and their answers:\n- [[Wie heißen Sie?]] - [[Ich heiße Hayk.]]\n- [[Woher kommen Sie?]] - [[Ich komme aus Armenien.]]\n- [[Wo wohnen Sie?]] - [[Ich wohne in München.]]\n\nIn every sentence the verb is the *second* part."
@@ -32,6 +33,7 @@
       ]
     },
     {
+      "id": "verb-endings",
       "type": "table",
       "title": "heißen, kommen, wohnen in the present tense",
       "columns": [

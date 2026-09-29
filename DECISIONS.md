@@ -2,6 +2,81 @@
 
 Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
+## 51. The Daily page ("German in the wild") unlocks one day of `content/daily.json` per local calendar day, has no word popups and is not glossary-checked (asked for by Hayk, 2026-09-29)
+
+- **Date:** 2026-09-29 - **Status:** active
+- **Why:**
+  - Each day brings a joke, a fun fact and an everyday sentence, each with a breakdown. It is deliberately not tied to Hayk's level.
+  - Day 1 unlocks on `startDate` in Hayk's local date (`dates.ts` `localDay`, like every other day count in the app), then one more day per calendar day. Today's day comes first, earlier days are a collapsed archive (`<details>`, newest first), and later days are never rendered, so each day is a surprise. They are still in the bundle (~29 KB of JSON). From the last day on, the page says "That's all N days so far. Ask Claude for more."
+  - Jokes show every line but the last. The punchline, its translation, the breakdown and the explanation come after "Show punchline". The joke's title is also held back until then, and it is left out of the archive summary, because titles like "The knocking lettuce" give the punchline away.
+  - No popups (a new `daily` gate surface), and daily.json is not in the glossary: the breakdown is the gloss, and puns use made-up words that no dictionary has.
+  - check-content validates the schema, `d01, d02, ...` in order, a real `startDate`, and non-empty lines and breakdowns. It prints how many days are left after today, because this runway runs on the calendar, not on progress in Neon (#44).
+- **Alternatives rejected:** tying the days to study days instead of calendar days (a missed day would hold the next joke back, and a daily feature should not feel like homework); fetching future days from the API so they cannot be peeked at (a backend change for a joke page, and Hayk has no reason to cheat); popups with glossary entries for every pun word (made-up words would need hand-written entries that only repeat the breakdown).
+- **What would change this:** Hayk wanting to catch up on missed days in order, or wanting to mark favourites (then days need saved progress).
+
+## 50. A word review can be limited to one unit or one lesson; a picked unit or lesson brings its words even if not opened yet (asked for by Hayk, 2026-09-29)
+
+- **Date:** 2026-09-29 - **Status:** active; refines #26 (lessons unlock their words when opened)
+- **Why:**
+  - Hayk wants to choose where the words in a review come from. The Words page has a "Words from" select: all words (the default, unchanged), a whole unit, or one lesson, grouped by unit in course order. Only lessons that list words are offered.
+  - The pick filters the words for due reviews, new words (still within the daily limit, in `words.json` order) and weak-word practice. It never changes FSRS: `wordsForSource` (`lib/plan.ts`) only chooses which words enter the queue.
+  - Picking a lesson that was not opened yet includes its words as new words, because picking it is the explicit choice to learn them. A unit works the same way for all its lessons: one rule is easier to predict than "lessons yes, units no". The select marks unopened lessons "(not opened yet: its words will be new)", and a note under it says how many lessons of a picked unit are unopened. Picking does not mark the lesson as started.
+  - The pick is remembered per device as a setting (`wordSource` in `lib/settings.ts`, e.g. `"lesson:u2-03-plural"`), so it reuses the existing per-device storage. A save error is reported through the error banner, and the pick still applies until the page is left. A saved pick whose unit or lesson no longer exists falls back to all words, with a note on the page.
+  - If the pick has nothing due and no new words today, the page says so and offers "Switch to all words".
+- **Alternatives rejected:** a unit pick that keeps the unopened-lesson rule (Hayk picks Unit 2 and sees 0 new words with no obvious reason); a separate review queue or schedule per unit (FSRS keeps one schedule per word, #25); remembering the pick in the account (a device setting like the daily limit; no need to sync it).
+- **What would change this:** Hayk picking unopened lessons and then meeting words before their explanation too often (then ask before including them), or wanting several lessons at once.
+
+## 49. A theme button in the header cycles System, Light and Dark; the choice is per device, applied before the first paint (asked for by Hayk, 2026-09-29)
+
+- **Date:** 2026-09-29 - **Status:** active
+- **Why:**
+  - The colours were two sets of CSS variables switched by `@media (prefers-color-scheme: dark)`. They are now switched by `data-theme="dark"` on `<html>`, so a manual choice and the system setting use the same dark block. System is the default.
+  - A tiny inline script in `index.html` reads `localStorage["nemeceren.theme"]` and sets `data-theme` before the stylesheet paints, so there is no flash. `lib/theme.ts` then owns it: it follows the device setting live while System is chosen, and saves changes.
+  - Storage is read and written in try/catch. If it cannot be read, or holds an unknown value, the app uses System and reports it in the error banner. The inline script cannot use the error banner, so it falls back quietly, and `theme.ts` reports the same failure at start-up.
+  - The button shows the current mode as an icon (half circle, sun, moon) and says the next one in its tooltip. It sits next to the sync dot, so it is one tap away on the phone too.
+  - Both themes keep the existing colour tokens, so popups, badges and warnings look as they did in each mode.
+- **Alternatives rejected:** CSS `light-dark()` (one list of colours, but Safari only since 17.5, and a browser without it would get no colours at all); a Light/Dark toggle without System (Hayk could not go back to following the phone); a select on the Settings page only (a theme is switched on the spot, when a room gets dark).
+- **What would change this:** a third theme (e.g. high contrast), or a flash of the wrong theme seen on the phone.
+
+## 48. The header fits on one line from 900 px: the sync status is a coloured dot, and the header is wider than the page; on a phone the nav is a 4-column grid
+
+- **Date:** 2026-09-29 - **Status:** active
+- **Why:**
+  - With 8 links (Home, Lessons, Topics, Words, Daily, Results, Stats, Settings) the header wrapped on a 1180 px window. The real limit was the 760 px page width, which the header shared.
+  - The header now has its own maximum width, 960 px. The sync status in the header is a coloured dot (green synced, amber unsynced or offline, red error) with the full text as its tooltip and label. The dot links to Settings, where the full status line still is, and "Sync now" still appears next to it whenever there is something to send. Links are a little tighter (8 px padding instead of 10).
+  - Estimated with the system font, the widest case (unsynced changes, so "Sync now" shows) is about 800 px of the 868 px a 900 px window gives. Below 900 px the nav takes its own row. From 520 px down it is a 4-column grid: two rows of 4 equal buttons, all visible, no scrolling. Not checked in a browser.
+- **Alternatives rejected:** a horizontally scrolling nav row on the phone (hides Stats and Settings off-screen); a menu button (hides everything behind a tap and needs open/close state); shorter link names (less clear for no real gain).
+- **What would change this:** more nav entries (a ninth fits the grid, 3 rows), or the header still wrapping on Hayk's screen (then measure it and move Settings behind the brand or into a menu).
+
+## 47. The English-to-German word review ignores punctuation and treats phone apostrophes as '
+
+- **Date:** 2026-09-29 - **Status:** active
+- **Why:** Phrase cards like "Noch einmal, bitte" and "Wie geht's" failed on a missing comma or a curly apostrophe (’) from a phone keyboard. `checkWord` (`lib/text.ts`) now turns `, . ! ? ; :` and quotation marks into spaces and ’ ‘ ` ´ into ' before comparing. Capitals and umlauts still count, with their near-miss labels, and nouns still need their article. Tests keep their own, stricter comparison, because there the exact spelling can be the point of an item.
+- **Alternatives rejected:** ignoring apostrophes completely ("gehts" for "geht's" would pass; the apostrophe is part of the spelling); a case-insensitive comparison (German capitalisation is part of the word, and a slip is already labelled "case").
+- **What would change this:** a card whose punctuation carries meaning, e.g. a word-bank entry that is a question you must mark as one.
+
+## 46. Word popups: at a sentence start curated entries come first; the popup merges readings that share lemma, form and gloss list
+
+- **Date:** 2026-09-29 - **Status:** active
+- **Why:**
+  - At a sentence start, `lookup()` put the lowercase key first and dropped later duplicates (same lemma, part of speech and form). So a curated capitalized key ("Gut", "Welche", "Es") lost to the lowercase entry and its note never showed. Now the curated key comes first: the capitalized curated key before the lowercase one (Claude wrote it for that spelling), and a curated lowercase key before a generated capitalized one. The learner-level filter and the level sort stay as they were, so at the same level a curated entry wins the duplicate check.
+  - Many generated words had the same gloss under 2-3 parts of speech ("aus": adverb, adjective, preposition, each "from (a country or city)"). The popup now shows them as one line with the parts of speech joined, keeping every note, and the noun's article and plural if the noun is merged in. Merged are entries with the same lemma, form and gloss list; "seit" stays two lines ("since" and "since, for").
+  - The 38 curated stopgap entries from the content review (commit 3d6eb8a) are left in place. Some of them fixed misleading generated glosses and are still needed.
+- **Alternatives rejected:** changing the dedupe key to ignore the part of speech in `lookup()` (would change what check-content and the other callers see; the merge is a display matter); merging entries with different lemmas or forms (the headword or form line would be wrong for one of them).
+- **What would change this:** a popup that looks wrong after a merge, e.g. two parts of speech whose same gloss means different things.
+
+## 45. A Topics page links to lesson sections by id; section ids live on the blocks, topics in `content/topics.json` (asked for by Hayk, 2026-09-29)
+
+- **Date:** 2026-09-29 - **Status:** active
+- **Why:**
+  - Hayk wanted a list of "the topics I need to study": lesson sections worth revisiting, grouped, with the key tables starred. Claude drafted 66 items in 4 groups (pronunciation, grammar, phrase kits, word themes).
+  - Lesson blocks got an optional `id` (kebab-case, unique within the lesson); `topics.json` names lesson + section id. Ids, not section indexes, so inserting a block into a lesson does not silently move every link. The 65 ids were added to the lesson files by inserting one line per block (65 insertions, no other change).
+  - check-content checks that every topic's lesson and section exist, group ids are unique, and no section is listed twice in one group. The same section may be in two groups: "Male and female job names" is a grammar point and the "Jobs" word theme.
+  - A topic links to `#/lesson/<id>/<section id>`. The lesson page scrolls that section into view and highlights it for 2.5 s; the hash keeps the section, so a direct link or a reload lands there too. Without a section id it still returns to where Hayk left off. An unknown section id shows an error with a link to the lesson start.
+  - Lessons have no lock: the Lessons page links every lesson, and opening one starts it and unlocks its words (#26). Topic links behave the same way. So opening a Unit 2 topic early starts that lesson and adds its words to the daily new words.
+- **Alternatives rejected:** section indexes in topics.json (break when a lesson gets a new block); anchors inside the hash (`#/lesson/x#sec`, the hash router has one hash); generating the topics from block titles (many blocks have no title, and choosing what is worth revisiting is the teacher's job).
+- **What would change this:** Hayk opening topics of later units by accident and getting their words early (then open topics of unstarted lessons read-only, without starting the lesson).
+
 ## 44. check-content validates content only; the content runway is shown only on the Stats page
 
 - **Date:** 2026-09-29 - **Status:** active

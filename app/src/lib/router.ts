@@ -8,7 +8,10 @@ function subscribe(onChange: () => void): () => void {
 }
 
 export function useRoute(): string[] {
-  const hash = useSyncExternalStore(subscribe, () => window.location.hash)
+  return parseRoute(useSyncExternalStore(subscribe, () => window.location.hash))
+}
+
+export function parseRoute(hash: string): string[] {
   return hash
     .replace(/^#\/?/, '')
     .split('/')

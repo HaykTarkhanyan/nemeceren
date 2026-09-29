@@ -20,6 +20,7 @@
       "text": "In every class and every new team:\n\n- [[Woher kommen Sie?]] - [[Ich komme aus Armenien.]]\n- [[Welche Sprachen sprechen Sie?]] - [[Ich spreche Armenisch, Russisch und Englisch.]]\n\nMost countries have no article: [[aus Armenien]], [[in Deutschland]]. A few always have one, like [[die Schweiz]]: [[Er kommt aus der Schweiz.]] (after [[aus]], [[die]] becomes [[der]]; more in Unit 6)"
     },
     {
+      "id": "countries-languages",
       "type": "table",
       "title": "Countries and languages",
       "columns": [{ "header": "Country", "de": "words" }, { "header": "Language", "de": "words" }, { "header": "English" }],
@@ -39,6 +40,7 @@
       "text": "Most verbs keep their vowel, like [[lernen]]. A few change it with **du** and **er/sie/es**, and [[sprechen]] is one of them: e becomes i.\n\n- [[ich spreche]], but [[du sprichst]] and [[er spricht]]\n\nThe endings are the same as always. The infinitive doesn't show the change, so learn these verbs with their er form: sprechen, spricht."
     },
     {
+      "id": "sprechen",
       "type": "table",
       "title": "lernen (regular) and sprechen (e to i)",
       "columns": [{ "header": "Person", "de": "words" }, { "header": "lernen", "de": "words" }, { "header": "sprechen", "de": "words" }],

@@ -70,6 +70,32 @@ describe('checkWord', () => {
     expect(checkWord('heißen', 'heißen').correct).toBe(true)
     expect(checkWord('der termin', 'der Termin')).toEqual({ correct: false, nearMiss: ['case'] })
   })
+
+  it('ignores a missing or extra comma in phrase cards', () => {
+    expect(checkWord('Noch einmal bitte', 'Noch einmal, bitte')).toEqual({ correct: true, nearMiss: null })
+    expect(checkWord('Noch einmal,bitte', 'Noch einmal, bitte').correct).toBe(true)
+    expect(checkWord('Langsam, bitte', 'Langsam bitte').correct).toBe(true)
+  })
+
+  it('ignores final punctuation, typed or not', () => {
+    expect(checkWord("Wie geht's?", "Wie geht's").correct).toBe(true)
+    expect(checkWord('Wie heißen Sie', 'Wie heißen Sie?').correct).toBe(true)
+    expect(checkWord('Danke!', 'danke')).toEqual({ correct: false, nearMiss: ['case'] })
+  })
+
+  it("treats curly and other apostrophes from phone keyboards as '", () => {
+    expect(checkWord('Wie geht’s', "Wie geht's").correct).toBe(true)
+    expect(checkWord('Wie geht‘s', "Wie geht's").correct).toBe(true)
+    expect(checkWord('Wie geht´s', "Wie geht's").correct).toBe(true)
+    expect(checkWord('Wie gehts', "Wie geht's").correct).toBe(false)
+  })
+
+  it('keeps case and umlaut labels, and nouns still need their article', () => {
+    expect(checkWord('noch einmal bitte', 'Noch einmal, bitte')).toEqual({ correct: false, nearMiss: ['case'] })
+    expect(checkWord('Tschuss!', 'Tschüss!')).toEqual({ correct: false, nearMiss: ['umlaut'] })
+    expect(checkWord('Termin.', 'der Termin')).toEqual({ correct: false, nearMiss: ['article_missing'] })
+    expect(checkWord('der Termin!', 'der Termin').correct).toBe(true)
+  })
 })
 
 describe('countWords', () => {

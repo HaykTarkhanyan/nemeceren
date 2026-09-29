@@ -18,6 +18,7 @@
       "text": "German spelling is very regular. Once you know the rules on this page, you can read almost any word aloud, even one you have never seen.\n\nUse the speaker buttons a lot: listen, then **say every word aloud yourself**. I can't hear you, so the browser voice and the *Nicos Weg* videos are your models."
     },
     {
+      "id": "letters",
       "type": "table",
       "title": "Letters that sound different from English",
       "columns": [{ "header": "Letters", "de": "sound" }, { "header": "Sounds like" }, { "header": "Example", "de": "words" }, { "header": "Meaning" }],
@@ -43,11 +44,13 @@
       "text": "**ei** and **ie** are the classic trap. Read the **second** letter: [[mein]] ends in i, so it sounds like 'eye'; [[Liebe]] has ie, so it is a long ee."
     },
     {
+      "id": "vowels",
       "type": "explanation",
       "title": "Long and short vowels",
       "text": "Every vowel can be long or short, and the spelling usually tells you which (a rule of thumb):\n\n- **long** before a single consonant, before **h**, or when doubled: [[Tag]], [[sehr]], [[Tee]]\n- **short** before two or more consonants: [[Bett]], [[kommen]], [[Hand]]\n\nAt the end of a word, **-e** is a short weak sound, and **-er** sounds almost like a short a: [[Name]], [[Vater]].\n\nMany short everyday words break the rule: [[das]], [[es]], [[in]], [[mit]], [[hat]], [[bin]] are short, and [[Buch]] is long. When in doubt, press the speaker button."
     },
     {
+      "id": "umlauts",
       "type": "table",
       "title": "The umlauts ä, ö, ü",
       "columns": [{ "header": "Letter", "de": "sound" }, { "header": "How to say it" }, { "header": "Example", "de": "words" }, { "header": "Meaning" }],
@@ -62,11 +65,13 @@
       "text": "The dots change the word: [[schon]] (already) and [[schön]] (nice) are different words. If your keyboard has no umlauts, use the ä ö ü ß buttons under every input in this app. Don't write ae, oe, ue or ss instead: the app marks that as a mistake."
     },
     {
+      "id": "ch",
       "type": "explanation",
       "title": "Two kinds of ch",
       "text": "**ch** has two sounds, depending on the vowel in front of it:\n\n- after **a, o, u, au** it is rough, from the back of the throat: [[Bach]], [[Buch]], [[auch]]\n- after **e, i, ä, ö, ü** and after consonants it is soft, like a loud whispered y: [[ich]], [[nicht]], [[Milch]]\n\nAt the start of words like **Ch**ina and **Ch**emie, people in Munich and the south usually say a **k** ('Kina', 'Kemie'); in the north you hear the soft ch."
     },
     {
+      "id": "ru-hy-sounds",
       "type": "comparison",
       "title": "What Russian and Armenian already give you",
       "text": "- **Rough ch:** the ch in [[Buch]] is exactly Russian х (Бах) and Armenian խ.\n- **Soft ch:** the ch in [[ich]] is close to the х in Russian химия, said further forward.\n- **Final devoicing, like Russian:** b, d, g at the end of a word sound like p, t, k, just as год sounds like гот. So [[Tag]] sounds like 'tak'. Armenian doesn't do this, so Armenian habits need a small correction here.\n- **Weak final -e:** the -e in [[Name]] is the Armenian ը sound.\n- **Stress:** German usually stresses the **first** syllable: [[Name]], [[Vater]], [[Wasser]]. Armenian usually stresses the last syllable, so watch this one. Exceptions you will meet soon: words starting with be-, ver- or ent- ([[verstehen]], [[Entschuldigung]]) and verbs in -ieren ([[studieren]]) stress a later syllable.\n- **r:** textbook German uses a throat r, but in Munich and Bavaria many people roll the r with the tongue, like Russian р or Armenian ռ. Your own r is fine here."

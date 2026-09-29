@@ -15,16 +15,19 @@
   "tests": ["u0-t1-laute-gruesse"],
   "sections": [
     {
+      "id": "greetings",
       "type": "explanation",
       "title": "Greetings through the day",
       "text": "- [[Guten Morgen!]] in the morning, until about 11\n- [[Guten Tag!]] during the day, polite\n- [[Guten Abend!]] from about 6 pm\n- [[Gute Nacht!]] only when someone goes to bed\n- [[Hallo!]] any time, informal, and very common at work too\n\nTo say goodbye: [[Tschüss!]] (informal) or [[Auf Wiedersehen!]] (polite)."
     },
     {
+      "id": "munich",
       "type": "tip",
       "title": "In Munich",
       "text": "In Bavaria you will hear [[Grüß Gott!]] (a polite hello in shops and offices) and [[Servus!]] (informal; it means both hi and bye). You don't have to use them, but now you will recognise them."
     },
     {
+      "id": "du-sie",
       "type": "explanation",
       "title": "du or Sie?",
       "text": "German has two words for 'you':\n\n- [[du]] for friends, family, children, and many younger colleagues\n- [[Sie]] (always with a capital S) for strangers, officials, older people, and at work until someone offers [[du]]\n\nWhen in doubt, start with [[Sie]]. Many startups and tech teams use [[du]] from the first day."
@@ -34,6 +37,7 @@
       "text": "The same system as Russian ты / Вы and Armenian դու / Դուք. The polite [[Sie]] is always written with a capital letter, a bit like the polite Вы in a letter."
     },
     {
+      "id": "how-are-you",
       "type": "examples",
       "title": "How are you?",
       "items": [

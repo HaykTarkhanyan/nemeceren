@@ -20,6 +20,7 @@
       "text": "After [[haben]] and [[brauchen]] (and after most verbs), **masculine** [[ein]] becomes **einen**:\n\n- [[Das ist ein Stift.]] but [[Ich brauche einen Stift.]]\n- [[Das ist eine Tasche.]] and [[Ich brauche eine Tasche.]] (no change)\n- [[Das ist ein Ladegerät.]] and [[Ich brauche ein Ladegerät.]] (no change)\n\nOnly the masculine changes, and [[kein]] does the same: [[Ich habe keinen Stift.]] This is the accusative. You will study it properly in Unit 4; for now, learn these as ready-made phrases."
     },
     {
+      "id": "einen",
       "type": "table",
       "title": "ein and kein after haben and brauchen",
       "columns": [{ "header": "Sentence" }, { "header": "masculine", "de": "words" }, { "header": "feminine", "de": "words" }, { "header": "neuter", "de": "words" }, { "header": "plural", "de": "words" }],
@@ -34,6 +35,7 @@
       "text": "You know the accusative from Russian (Я беру ручку). Funny twist: in Russian the feminine changes (ручка becomes ручку) and a masculine thing stays (стол). In German it is the other way round: [[einen Stift]] changes, [[eine Tasche]] stays. With people both languages change the masculine: [[einen Bruder]], брата."
     },
     {
+      "id": "everyday-haben",
       "type": "examples",
       "title": "Everyday sentences",
       "items": [
@@ -45,6 +47,7 @@
       ]
     },
     {
+      "id": "hunger-durst",
       "type": "comparison",
       "text": "German says 'I have hunger' ([[Ich habe Hunger.]]) and 'I have thirst' ([[Ich habe Durst.]]). Russian and Armenian use an adjective here (я голоден, սոված եմ), so don't translate word for word."
     },

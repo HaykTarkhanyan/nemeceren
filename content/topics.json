@@ -1,0 +1,377 @@
+{
+  "groups": [
+    {
+      "id": "pronunciation",
+      "title": "Pronunciation",
+      "summary": "Revisit whenever reading aloud feels shaky.",
+      "items": [
+        {
+          "title": "Letters that sound different from English (w, v, z, j, s, ß, sch, sp/st, ei, ie, eu, h)",
+          "lesson": "u0-01-laute",
+          "section": "letters"
+        },
+        {
+          "title": "Long and short vowels",
+          "lesson": "u0-01-laute",
+          "section": "vowels"
+        },
+        {
+          "title": "The umlauts ä, ö, ü",
+          "lesson": "u0-01-laute",
+          "section": "umlauts"
+        },
+        {
+          "title": "The two ch sounds (Buch vs ich)",
+          "lesson": "u0-01-laute",
+          "section": "ch"
+        },
+        {
+          "title": "What Russian and Armenian already give you",
+          "lesson": "u0-01-laute",
+          "section": "ru-hy-sounds"
+        },
+        {
+          "title": "The alphabet and letter names",
+          "lesson": "u0-04-alphabet",
+          "section": "alphabet",
+          "star": true
+        }
+      ]
+    },
+    {
+      "id": "grammar",
+      "title": "Grammar",
+      "summary": "Starred tables: learn them by heart.",
+      "items": [
+        {
+          "title": "Verb endings: heißen, kommen, wohnen",
+          "lesson": "u1-01-sich-vorstellen",
+          "section": "verb-endings",
+          "star": true
+        },
+        {
+          "title": "lernen (regular) and sprechen (e to i: du sprichst)",
+          "lesson": "u1-02-laender-sprachen",
+          "section": "sprechen",
+          "star": true
+        },
+        {
+          "title": "sein: bin, bist, ist, sind, seid, sind",
+          "lesson": "u1-03-andere-vorstellen",
+          "section": "sein",
+          "star": true
+        },
+        {
+          "title": "The personal pronouns",
+          "lesson": "u1-03-andere-vorstellen",
+          "section": "pronouns",
+          "star": true
+        },
+        {
+          "title": "The three meanings of sie",
+          "lesson": "u1-03-andere-vorstellen",
+          "section": "three-sie"
+        },
+        {
+          "title": "arbeiten and machen (du arbeitest)",
+          "lesson": "u1-04-beruf",
+          "section": "arbeiten",
+          "star": true
+        },
+        {
+          "title": "haben: habe, hast, hat ...",
+          "lesson": "u1-06-fragen-smalltalk",
+          "section": "haben",
+          "star": true
+        },
+        {
+          "title": "Where the verb goes (statements and questions)",
+          "lesson": "u1-06-fragen-smalltalk",
+          "section": "verb-position",
+          "star": true
+        },
+        {
+          "title": "du or Sie?",
+          "lesson": "u0-02-begruessen",
+          "section": "du-sie"
+        },
+        {
+          "title": "No article before jobs: Ich bin Entwickler",
+          "lesson": "u1-04-beruf",
+          "section": "no-article-jobs"
+        },
+        {
+          "title": "Male and female job names (-in)",
+          "lesson": "u1-04-beruf",
+          "section": "job-forms"
+        },
+        {
+          "title": "Numbers 0-12",
+          "lesson": "u0-05-zahlen",
+          "section": "numbers-0-12",
+          "star": true
+        },
+        {
+          "title": "Numbers 13-19",
+          "lesson": "u0-05-zahlen",
+          "section": "numbers-13-19"
+        },
+        {
+          "title": "The tens (20-100)",
+          "lesson": "u0-05-zahlen",
+          "section": "tens",
+          "star": true
+        },
+        {
+          "title": "The number trick: 21 = one-and-twenty",
+          "lesson": "u0-05-zahlen",
+          "section": "number-trick"
+        },
+        {
+          "title": "der, die, das: the articles",
+          "lesson": "u2-01-der-die-das",
+          "section": "articles",
+          "star": true
+        },
+        {
+          "title": "Guessing the gender: endings that (almost) always work",
+          "lesson": "u2-01-der-die-das",
+          "section": "gender-patterns"
+        },
+        {
+          "title": "How to remember genders",
+          "lesson": "u2-01-der-die-das",
+          "section": "remember-gender"
+        },
+        {
+          "title": "ein first, der after",
+          "lesson": "u2-02-was-ist-das",
+          "section": "ein-der"
+        },
+        {
+          "title": "kein or nicht?",
+          "lesson": "u2-02-was-ist-das",
+          "section": "kein-nicht",
+          "star": true
+        },
+        {
+          "title": "Adjectives after ist and sind never change",
+          "lesson": "u2-02-was-ist-das",
+          "section": "adjectives-after-sein"
+        },
+        {
+          "title": "Plurals: the main patterns (the article is always die)",
+          "lesson": "u2-03-plural",
+          "section": "plural-patterns",
+          "star": true
+        },
+        {
+          "title": "After a number: zwei Bücher, but zehn Euro",
+          "lesson": "u2-03-plural",
+          "section": "number-plural"
+        },
+        {
+          "title": "mein or meine?",
+          "lesson": "u2-04-familie",
+          "section": "mein-meine"
+        },
+        {
+          "title": "my, your, his, her, our, their",
+          "lesson": "u2-04-familie",
+          "section": "possessives",
+          "star": true
+        },
+        {
+          "title": "sein = his, ihr = her or their",
+          "lesson": "u2-04-familie",
+          "section": "sein-ihr"
+        },
+        {
+          "title": "No свой in German: Hayk liebt seine Schwester",
+          "lesson": "u2-04-familie",
+          "section": "no-svoy"
+        },
+        {
+          "title": "Compound nouns: the last part decides the article",
+          "lesson": "u2-05-wohnung",
+          "section": "compounds"
+        },
+        {
+          "title": "einen after haben and brauchen",
+          "lesson": "u2-06-haben-brauchen",
+          "section": "einen",
+          "star": true
+        }
+      ]
+    },
+    {
+      "id": "phrases",
+      "title": "Phrase kits",
+      "summary": "Ready-made phrases for real situations.",
+      "items": [
+        {
+          "title": "Greetings through the day",
+          "lesson": "u0-02-begruessen",
+          "section": "greetings"
+        },
+        {
+          "title": "In Munich: Grüß Gott and Servus",
+          "lesson": "u0-02-begruessen",
+          "section": "munich"
+        },
+        {
+          "title": "How are you? And how to answer",
+          "lesson": "u0-02-begruessen",
+          "section": "how-are-you"
+        },
+        {
+          "title": "When you didn't understand",
+          "lesson": "u0-03-ueberleben",
+          "section": "not-understood"
+        },
+        {
+          "title": "Asking about words and languages",
+          "lesson": "u0-03-ueberleben",
+          "section": "asking-words"
+        },
+        {
+          "title": "Please, thank you, sorry",
+          "lesson": "u0-03-ueberleben",
+          "section": "please-thanks"
+        },
+        {
+          "title": "Spelling conversations",
+          "lesson": "u0-04-alphabet",
+          "section": "spelling"
+        },
+        {
+          "title": "Spelling on the phone",
+          "lesson": "u0-04-alphabet",
+          "section": "phone-spelling"
+        },
+        {
+          "title": "Phone numbers and prices",
+          "lesson": "u0-05-zahlen",
+          "section": "phone-prices"
+        },
+        {
+          "title": "Introducing yourself",
+          "lesson": "u1-01-sich-vorstellen",
+          "section": "intro-verbs"
+        },
+        {
+          "title": "Introducing someone else",
+          "lesson": "u1-03-andere-vorstellen",
+          "section": "introducing"
+        },
+        {
+          "title": "How old are you?",
+          "lesson": "u1-03-andere-vorstellen",
+          "section": "age"
+        },
+        {
+          "title": "Talking about work",
+          "lesson": "u1-04-beruf",
+          "section": "work-phrases"
+        },
+        {
+          "title": "Small talk at work",
+          "lesson": "u1-04-beruf",
+          "section": "work-smalltalk"
+        },
+        {
+          "title": "Contact details: the questions",
+          "lesson": "u1-05-kontaktdaten",
+          "section": "contact-questions"
+        },
+        {
+          "title": "German addresses",
+          "lesson": "u1-05-kontaktdaten",
+          "section": "addresses"
+        },
+        {
+          "title": "Saying an email address aloud",
+          "lesson": "u1-05-kontaktdaten",
+          "section": "email-aloud"
+        },
+        {
+          "title": "In class: questions and asking for help",
+          "lesson": "u1-06-fragen-smalltalk",
+          "section": "in-class"
+        },
+        {
+          "title": "A first small talk",
+          "lesson": "u1-06-fragen-smalltalk",
+          "section": "smalltalk"
+        },
+        {
+          "title": "What is that? Naming and describing things",
+          "lesson": "u2-02-was-ist-das",
+          "section": "naming-describing"
+        },
+        {
+          "title": "Talking about your family",
+          "lesson": "u2-04-familie",
+          "section": "family-talk"
+        },
+        {
+          "title": "Describing your flat",
+          "lesson": "u2-05-wohnung",
+          "section": "describing-flat"
+        },
+        {
+          "title": "I have, I need: everyday sentences",
+          "lesson": "u2-06-haben-brauchen",
+          "section": "everyday-haben"
+        },
+        {
+          "title": "Ich habe Hunger, Durst, keine Zeit",
+          "lesson": "u2-06-haben-brauchen",
+          "section": "hunger-durst"
+        }
+      ]
+    },
+    {
+      "id": "words",
+      "title": "Word themes",
+      "summary": "Vocabulary grouped by topic.",
+      "items": [
+        {
+          "title": "Countries and languages",
+          "lesson": "u1-02-laender-sprachen",
+          "section": "countries-languages"
+        },
+        {
+          "title": "Jobs",
+          "lesson": "u1-04-beruf",
+          "section": "job-forms"
+        },
+        {
+          "title": "Things around you",
+          "lesson": "u2-01-der-die-das",
+          "section": "things"
+        },
+        {
+          "title": "Adjectives: groß, klein, neu, alt ...",
+          "lesson": "u2-02-was-ist-das",
+          "section": "describing"
+        },
+        {
+          "title": "Colours",
+          "lesson": "u2-02-was-ist-das",
+          "section": "colours"
+        },
+        {
+          "title": "The family",
+          "lesson": "u2-04-familie",
+          "section": "family"
+        },
+        {
+          "title": "The flat: rooms and rent",
+          "lesson": "u2-05-wohnung",
+          "section": "flat"
+        }
+      ]
+    }
+  ]
+}

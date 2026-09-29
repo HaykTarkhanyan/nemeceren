@@ -20,6 +20,7 @@
       "text": "These phrases are worth more than a hundred other words: they let you stay in a conversation even when you understand very little.\n\nLearn them as **whole chunks**. Don't analyse the grammar yet; that comes in Unit 1."
     },
     {
+      "id": "not-understood",
       "type": "examples",
       "title": "When you didn't understand",
       "items": [
@@ -31,6 +32,7 @@
       ]
     },
     {
+      "id": "asking-words",
       "type": "examples",
       "title": "Asking about words and languages",
       "items": [
@@ -40,6 +42,7 @@
       ]
     },
     {
+      "id": "please-thanks",
       "type": "examples",
       "title": "Please, thank you, sorry",
       "items": [

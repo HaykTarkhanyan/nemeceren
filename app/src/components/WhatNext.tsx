@@ -4,12 +4,13 @@ import { useState } from 'react'
 import { content } from '../content/load.ts'
 import type { Word } from '../content/schema.ts'
 import { messageOf } from '../lib/errors.ts'
-import { listeningWords, lockedWordIds, nextLesson, nextTest, studyWords, weakWords } from '../lib/plan.ts'
+import { listeningWords, lockedWordIds, nextLesson, nextTest, weakWords } from '../lib/plan.ts'
 import { link } from '../lib/router.ts'
 import { addExtraNewWords, useProgress } from '../lib/storage.ts'
 
-export function WhatNext(props: { onMoreNew: () => void; onPractice: (words: Word[]) => void }) {
-  const { onMoreNew, onPractice } = props
+/** `words` are the words the review uses (all, or the unit or lesson Hayk picked); `allWords` says which. */
+export function WhatNext(props: { words: Word[]; allWords: boolean; onMoreNew: () => void; onPractice: (words: Word[]) => void }) {
+  const { words, allWords, onMoreNew, onPractice } = props
   const view = useProgress()
   const state = view.reviewState
   const progress = view.lessonProgress
@@ -28,9 +29,10 @@ export function WhatNext(props: { onMoreNew: () => void; onPractice: (words: Wor
   if (error) return <div className="alert error">{error}</div>
 
   const now = new Date()
-  const available = studyWords(content.words, content.lessons, progress, state).filter((w) => !state.cards[w.id]).length
-  const locked = [...lockedWordIds(content.lessons, progress)].filter((id) => !state.cards[id]).length
-  const weak = weakWords(content.words, state, data.log, now)
+  const available = words.filter((w) => !state.cards[w.id]).length
+  // A picked unit or lesson already includes the words of its unopened lessons.
+  const locked = allWords ? [...lockedWordIds(content.lessons, progress)].filter((id) => !state.cards[id]).length : 0
+  const weak = weakWords(words, state, data.log, now)
   const lesson = nextLesson(content.lessons, progress)
   const test = nextTest(content.tests, content.lessons, data.results)
   const listening = listeningWords(content.words, state)
@@ -59,8 +61,10 @@ export function WhatNext(props: { onMoreNew: () => void; onPractice: (words: Wor
             The next {locked} new words come with a lesson. Open <a href={link('lesson', lesson.lesson.id)}>{lesson.lesson.title}</a> to unlock
             its words.
           </span>
-        ) : (
+        ) : allWords ? (
           <span className="small warn-text">No more new words prepared yet. Ask Claude for more.</span>
+        ) : (
+          <span className="small muted">No new words left in this pick. Choose other words under "Words from" on the Words page.</span>
         )}
       </div>
 

@@ -10,12 +10,18 @@ import {
   markLessonDone,
   nextLesson,
   nextTest,
+  parseSourceKey,
   runwayText,
   setLastSection,
+  sourceKey,
+  sourceLabel,
+  sourceLessons,
   startLesson,
   studyWords,
   weakWords,
+  wordsForSource,
 } from './plan.ts'
+import type { WordSource } from './plan.ts'
 import { addExtraNew, counts, emptyState, extraToday, Rating, review } from './srs.ts'
 import { dailyStats, studyDays } from './stats.ts'
 
@@ -213,5 +219,52 @@ describe('practice in the statistics', () => {
     expect(days.get('2026-09-29')).toMatchObject({ reviews: 1, correct: 1, practice: 1, activeMs: 10000, sessions: 1 })
     const onlyPractice = dailyStats([{ at: 0, localDay: '2026-09-28', timeMs: 1000, rating: 3, isNew: false, practice: true }], [])
     expect([...studyDays(onlyPractice)]).toEqual(['2026-09-28'])
+  })
+})
+
+describe('choosing where the review words come from', () => {
+  const words = ['a', 'l1', 'l2', 'm1', 'n1', 'x'].map((id) => word(id))
+  const lessons = [lesson('L', 1, 1, ['l1', 'l2']), lesson('M', 1, 2, ['m1']), lesson('N', 2, 1, ['n1']), lesson('E', 2, 2)]
+  const opened = startLesson(emptyLessonProgress(), 'L', t0)
+  const ids = (source: WordSource, s = emptyState(t0)) => wordsForSource(source, words, lessons, opened, s).map((w) => w.id)
+
+  it('"all" is today\'s behaviour: words of unopened lessons wait', () => {
+    expect(ids({ kind: 'all' })).toEqual(['a', 'l1', 'l2', 'x'])
+  })
+
+  it('a lesson takes only its words, opened or not (picking it is the choice to learn them)', () => {
+    expect(ids({ kind: 'lesson', lessonId: 'L' })).toEqual(['l1', 'l2'])
+    expect(ids({ kind: 'lesson', lessonId: 'M' })).toEqual(['m1'])
+  })
+
+  it('a unit takes the words of all its lessons, and never words in no lesson', () => {
+    expect(ids({ kind: 'unit', unit: 1 })).toEqual(['l1', 'l2', 'm1'])
+    expect(ids({ kind: 'unit', unit: 2 })).toEqual(['n1'])
+  })
+
+  it('filters due reviews, new words (within the daily limit) and weak words', () => {
+    let s = review(emptyState(t0), 'a', Rating.Again, t0).state
+    s = review(s, 'l1', Rating.Again, t0).state
+    const later = new Date(t0.getTime() + 3_600_000)
+    const picked = wordsForSource({ kind: 'lesson', lessonId: 'L' }, words, lessons, opened, s)
+    // Due: l1 only (a is due too, but not in the pick). New: l2, capped by what is left of the daily limit of 3.
+    expect(counts(picked, s, later, 3)).toEqual({ due: 1, newLeft: 1 })
+    const log: ReviewLogEntry[] = ['a', 'l1'].map((id) => ({
+      ts: t0.toISOString(), wordId: id, de: id, mode: 'recognition', rating: 1, answer: null, correct: null, nearMiss: null,
+      isNew: true, stateBefore: 0, stateAfter: 1, due: t0.toISOString(),
+    }))
+    expect(weakWords(picked, s, log, later).map((w) => w.word.id)).toEqual(['l1'])
+  })
+
+  it('is saved as a short key, and a pick that no longer exists falls back to all words with a note', () => {
+    for (const s of [{ kind: 'all' }, { kind: 'unit', unit: 2 }, { kind: 'lesson', lessonId: 'M' }] as WordSource[]) {
+      expect(parseSourceKey(sourceKey(s), lessons)).toEqual({ source: s, note: null })
+    }
+    expect(parseSourceKey('lesson:gone', lessons)).toEqual({ source: { kind: 'all' }, note: 'Your last pick ("lesson:gone") no longer exists, so the review uses all words.' })
+    // A lesson or unit without words is not offered, so a saved pick of it is gone too.
+    expect(parseSourceKey('lesson:E', lessons).source).toEqual({ kind: 'all' })
+    expect(parseSourceKey('unit:7', lessons).source).toEqual({ kind: 'all' })
+    expect(sourceLessons(lessons).map((l) => l.id)).toEqual(['L', 'M', 'N'])
+    expect(sourceLabel({ kind: 'lesson', lessonId: 'N' }, lessons)).toBe('2.1 N')
   })
 })

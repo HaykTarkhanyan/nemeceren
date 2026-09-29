@@ -14,6 +14,7 @@
   "words": ["adresse", "nummer", "telefonnummer", "handynummer", "e-mail-adresse", "strasse", "postleitzahl", "stadt", "punkt", "schreiben"],
   "sections": [
     {
+      "id": "contact-questions",
       "type": "explanation",
       "title": "The questions",
       "text": "At the doctor's, at the gym, in a course, for a new job:\n\n- [[Wie ist Ihre Adresse?]] - What is your address?\n- [[Wie ist Ihre Telefonnummer?]] - What is your phone number?\n- [[Wie ist Ihre E-Mail-Adresse?]] - What is your email address?\n\nInformal: [[Wie ist deine Handynummer?]] Note that German asks [[wie]] (how), not 'what'."
@@ -23,11 +24,13 @@
       "text": "German asks 'how is your address?' ([[Wie ist Ihre Adresse?]]). Like Russian (Какой у вас адрес?, not Что ...), German avoids 'what' here: 'Was ist Ihre Adresse?' sounds wrong."
     },
     {
+      "id": "addresses",
       "type": "explanation",
       "title": "German addresses",
       "text": "Street first, then the house number, then the postcode and the city:\n\n[[Hauptstraße 12]]\n[[80331 München]]\n\nThe street is read as written: [[Hauptstraße zwölf]]. Postcodes are usually read digit by digit: [[acht, null, drei, drei, eins]]."
     },
     {
+      "id": "email-aloud",
       "type": "table",
       "title": "Saying an email address aloud",
       "columns": [{ "header": "Symbol" }, { "header": "Say" }, { "header": "Note" }],

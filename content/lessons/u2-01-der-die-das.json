@@ -19,6 +19,7 @@
       "text": "Every German noun has a gender: masculine (**der**), feminine (**die**) or neuter (**das**). It is grammar, not meaning: [[der Tisch]], [[die Lampe]], [[das Fenster]].\n\n'A / an' follows the gender too: [[ein Tisch]], [[eine Lampe]], [[ein Fenster]].\n\nThe one rule that matters most: **always learn a noun together with its article.** Not 'Tisch = table' but 'der Tisch'. Your word cards already do this."
     },
     {
+      "id": "articles",
       "type": "table",
       "title": "The articles",
       "columns": [{ "header": "Meaning" }, { "header": "masculine", "de": "words" }, { "header": "feminine", "de": "words" }, { "header": "neuter", "de": "words" }],
@@ -34,6 +35,7 @@
       "text": "Russian has genders too, and sometimes they match: [[der Tisch]] and стол are masculine, [[die Tür]] and дверь feminine, [[das Fenster]] and окно neuter. But often they don't: книга is feminine, [[das Buch]] is neuter. So never copy the Russian gender.\n\nRussian has no articles. Armenian has articles (գիրքը = the book, մի գիրք = a book) but no gender. So 'the' vs 'a' is familiar to you; what is new is that the article also shows the gender. That makes der/die/das the hardest part of German for you. Every learner struggles here; what helps is repetition, not more rules."
     },
     {
+      "id": "gender-patterns",
       "type": "table",
       "title": "Patterns that (almost) always work",
       "columns": [{ "header": "Noun ends in / is" }, { "header": "Article", "de": "words" }, { "header": "Example", "de": "words" }],
@@ -47,11 +49,13 @@
       ]
     },
     {
+      "id": "remember-gender",
       "type": "tip",
       "title": "How to remember",
       "text": "Say nouns with their article every time, even in your head: [[der Stift]], [[die Tasche]], [[das Handy]]. Some learners picture der words as blue, die words as red and das words as green. And if you guess wrong in a conversation, people still understand you."
     },
     {
+      "id": "things",
       "type": "examples",
       "title": "Things around you",
       "items": [

@@ -67,11 +67,22 @@ export function matchAny(typed: string, accepted: string[], caseSensitive = true
 const ARTICLE = /^(der|die|das)\s+(.*)$/i
 
 /**
+ * For word review: punctuation (, . ! ? ; : and quotes) becomes a space, and every apostrophe
+ * a phone keyboard may type (’ ‘ ` ´) becomes '. So "Noch einmal bitte" matches "Noch einmal, bitte".
+ */
+export function dropPunctuation(s: string): string {
+  return s.replace(/[’‘`´]/g, "'").replace(/[,.!?;:"„“”«»‚‹›]/g, ' ')
+}
+
+/**
  * Check a typed German word against a word-bank entry. Nouns must include the right article:
  * "Termin" for "der Termin" is wrong (article_missing), "die Termin" is wrong (article_wrong).
  * The article's capitalization does not matter ("Der Termin" is fine), the noun's does.
+ * Punctuation is ignored (dropPunctuation); capitals and umlauts are not.
  */
-export function checkWord(typed: string, expectedDe: string): Comparison {
+export function checkWord(typedRaw: string, expectedRaw: string): Comparison {
+  const typed = dropPunctuation(typedRaw)
+  const expectedDe = dropPunctuation(expectedRaw)
   const exp = ARTICLE.exec(normalizeSpaces(expectedDe))
   if (!exp) return compareText(typed, expectedDe)
   const typedNorm = normalizeSpaces(typed)
