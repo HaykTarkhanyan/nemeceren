@@ -4,6 +4,8 @@
   "level": "A1",
   "created": "2026-09-28",
   "description": "Introducing yourself, numbers and appointments. Uses every exercise type.",
+  "unit": 1,
+  "lesson": "u1-01-sich-vorstellen",
   "items": [
     {
       "type": "mc",

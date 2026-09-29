@@ -1,14 +1,17 @@
 // Word review with spaced repetition (FSRS). Three modes share one schedule per word.
+// When nothing is left, the "What next" menu offers more work instead of a dead end.
 import { useEffect, useRef, useState } from 'react'
-import type { FormEvent } from 'react'
+import type { FormEvent, ReactNode } from 'react'
 import { content } from '../content/load.ts'
 import type { ReviewLogEntry, ReviewMode, ReviewState, Word } from '../content/schema.ts'
+import { WhatNext } from '../components/WhatNext.tsx'
 import { nearMissText } from '../components/ResultView.tsx'
 import { De, GlossScope } from '../components/GermanText.tsx'
 import { PlayButtons } from '../components/Speaker.tsx'
 import { UmlautBar } from '../components/UmlautBar.tsx'
 import { localDay } from '../lib/dates.ts'
 import { messageOf } from '../lib/errors.ts'
+import { studyWords } from '../lib/plan.ts'
 import { useSettings } from '../lib/settings.ts'
 import { speak } from '../lib/speech.ts'
 import { counts, GRADES, LEARN_AHEAD_MS, nextCard, previewIntervals, Rating, review } from '../lib/srs.ts'
@@ -16,6 +19,7 @@ import type { Grade } from '../lib/srs.ts'
 import { appendReviewLog, loadReviewState, saveReviewState } from '../lib/storage.ts'
 import { checkWord } from '../lib/text.ts'
 import type { Comparison } from '../lib/text.ts'
+import { useLessonProgress } from './LessonsPage.tsx'
 
 const MODES: { mode: ReviewMode; title: string; desc: string }[] = [
   { mode: 'recognition', title: 'German to English', desc: 'See the German word, recall the meaning, grade yourself.' },
@@ -41,15 +45,44 @@ export function useReviewState() {
 
 export function WordsPage() {
   const { state, setState, error } = useReviewState()
+  const lessons = useLessonProgress()
   const settings = useSettings()
   const [mode, setMode] = useState<ReviewMode | null>(null)
-  const words = content.words
+  const [practice, setPractice] = useState<Word[] | null>(null)
+  // Each practice start gets a fresh session, even from the "practice done" screen.
+  const [practiceRun, setPracticeRun] = useState(0)
 
   if (error) return <div className="alert error">Could not load the review state: {error}</div>
-  if (!state) return <p className="muted">Loading...</p>
+  if (lessons.error) return <div className="alert error">Could not load your lesson progress: {lessons.error}</div>
+  if (!state || !lessons.progress) return <p className="muted">Loading...</p>
 
+  // Words of lessons that are not open yet wait until their lesson is opened.
+  const words = studyWords(content.words, content.lessons, lessons.progress, state)
+  const whatNext = (
+    <WhatNext
+      state={state}
+      progress={lessons.progress}
+      onState={(next) => {
+        setState(next)
+        // More new words: back to normal reviews, also from the "practice done" screen.
+        setPractice(null)
+      }}
+      onPractice={(list) => {
+        setPractice(list)
+        setPracticeRun((r) => r + 1)
+        // Practice from the start page uses English to German: recalling the German word.
+        setMode((m) => m ?? 'production')
+      }}
+    />
+  )
+
+  if (mode && practice) {
+    return <PracticeSession key={practiceRun} mode={mode} words={practice} state={state} onExit={() => setPractice(null)} whatNext={whatNext} />
+  }
   if (mode) {
-    return <Session mode={mode} words={words} state={state} onState={setState} onExit={() => setMode(null)} newLimit={settings.newPerDay} />
+    return (
+      <Session mode={mode} words={words} state={state} onState={setState} onExit={() => setMode(null)} newLimit={settings.newPerDay} whatNext={whatNext} />
+    )
   }
 
   const c = counts(words, state, new Date(), settings.newPerDay)
@@ -78,6 +111,12 @@ export function WordsPage() {
         </button>
       ))}
       <p className="muted small">Keys on desktop: Space shows the answer, Enter checks a typed answer, 1-4 grade.</p>
+      {c.due === 0 && c.newLeft === 0 && (
+        <>
+          <p>Nothing due and no new words left for today.</p>
+          {whatNext}
+        </>
+      )}
     </div>
   )
 }
@@ -95,8 +134,9 @@ function Session(props: {
   onState: (s: ReviewState) => void
   onExit: () => void
   newLimit: number
+  whatNext: ReactNode
 }) {
-  const { mode, words, state, onState, onExit, newLimit } = props
+  const { mode, words, state, onState, onExit, newLimit, whatNext } = props
   const [now, setNow] = useState(() => new Date())
   const [saving, setSaving] = useState(false)
   const [failed, setFailed] = useState<Failed | null>(null)
@@ -182,16 +222,17 @@ function Session(props: {
         <div className="card center">
           {next.kind === 'wait' ? (
             <p>
-              Nothing due right now. The next card is due at{' '}
-              {next.due.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}; this page will pick it up.
+              Reviews done for now. The next card is due at {next.due.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}; this page will
+              pick it up.
             </p>
           ) : (
-            <p>All done for today.</p>
+            <p>Today's reviews are done.</p>
           )}
           <p className="muted">
             This session: {stats.reviewed} reviewed, {stats.again} marked Again.
           </p>
         </div>
+        {whatNext}
       </div>
     )
   }
@@ -212,6 +253,111 @@ function Session(props: {
   )
 }
 
+/**
+ * Extra practice of weak words. It does NOT change the FSRS schedule: each answer is only logged,
+ * with practice: true, so the statistics and Claude can see it (DECISIONS.md #25).
+ */
+function PracticeSession(props: { mode: ReviewMode; words: Word[]; state: ReviewState; onExit: () => void; whatNext: ReactNode }) {
+  const { mode, words, state, onExit, whatNext } = props
+  const [index, setIndex] = useState(0)
+  const [again, setAgain] = useState(0)
+  const [saving, setSaving] = useState(false)
+  const [failed, setFailed] = useState<{ entry: ReviewLogEntry; message: string } | null>(null)
+
+  async function persist(entry: ReviewLogEntry) {
+    setSaving(true)
+    try {
+      await appendReviewLog(entry)
+      setFailed(null)
+      setAgain((a) => a + (entry.rating === Rating.Again ? 1 : 0))
+      setIndex((i) => i + 1)
+    } catch (err) {
+      setFailed({ entry, message: messageOf(err) })
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  function grade(word: Word, rating: Grade, typed: { answer: string; check: Comparison } | null, timeMs: number) {
+    const card = state.cards[word.id]
+    if (!card) throw new Error(`Practice word "${word.id}" has never been reviewed`)
+    const at = new Date()
+    void persist({
+      ts: at.toISOString(),
+      localDay: localDay(at),
+      timeMs,
+      wordId: word.id,
+      de: word.de,
+      mode,
+      rating,
+      answer: typed ? typed.answer : null,
+      correct: typed ? typed.check.correct : null,
+      nearMiss: typed ? typed.check.nearMiss : null,
+      isNew: false,
+      stateBefore: card.state,
+      stateAfter: card.state,
+      due: card.due,
+      practice: true,
+    })
+  }
+
+  const header = (
+    <div className="row between">
+      <button type="button" className="btn small" onClick={onExit}>
+        Stop practice
+      </button>
+      <span className="muted small">
+        Practice ({MODES.find((m) => m.mode === mode)?.title}) - {Math.min(index, words.length)}/{words.length}, schedule unchanged
+      </span>
+    </div>
+  )
+
+  if (failed) {
+    return (
+      <div className="stack">
+        {header}
+        <div className="alert error" role="alert">
+          <span>Your last answer was NOT saved: {failed.message}</span>
+          <button type="button" className="btn small" disabled={saving} onClick={() => void persist(failed.entry)}>
+            Retry saving
+          </button>
+        </div>
+      </div>
+    )
+  }
+
+  if (index >= words.length) {
+    return (
+      <div className="stack">
+        {header}
+        <div className="card center">
+          <p>
+            Practice done: {words.length} word{words.length === 1 ? '' : 's'}, {again} marked Again.
+          </p>
+          <p className="muted small">Your review schedule is unchanged; the answers were logged as practice.</p>
+        </div>
+        {whatNext}
+      </div>
+    )
+  }
+
+  const word = words[index]
+  return (
+    <div className="stack">
+      {header}
+      <Card
+        key={`${word.id}-${index}`}
+        word={word}
+        isNew={false}
+        mode={mode}
+        intervals={null}
+        disabled={saving}
+        onGrade={(r, typed, ms) => grade(word, r, typed, ms)}
+      />
+    </div>
+  )
+}
+
 function isTyping(target: EventTarget | null): boolean {
   return (
     (target instanceof HTMLInputElement && !target.readOnly) ||
@@ -223,7 +369,8 @@ function Card(props: {
   word: Word
   isNew: boolean
   mode: ReviewMode
-  intervals: Record<Grade, string>
+  /** Next interval per grade; null in practice, where grades do not reschedule. */
+  intervals: Record<Grade, string> | null
   disabled: boolean
   onGrade: (rating: Grade, typed: { answer: string; check: Comparison } | null, timeMs: number) => void
 }) {
@@ -361,7 +508,7 @@ function Card(props: {
                 <span>
                   {g} {GRADE_LABEL[g]}
                 </span>
-                <span className="small muted">{intervals[g]}</span>
+                {intervals && <span className="small muted">{intervals[g]}</span>}
               </button>
             ))}
           </div>

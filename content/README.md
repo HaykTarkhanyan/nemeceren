@@ -3,6 +3,7 @@
 Everything in this folder is written by Claude and read by the app in `app/`. You do not need to read the app code: this file is the full contract.
 
 - `tests/<id>.json` - one test per file. Shows up in the app on its own (no restart while `npm run dev` runs).
+- `lessons/<id>.json` - one lesson per file (topic, explanation, examples, exercises), see [Lessons](#lessons).
 - `words.json` - the word bank for spaced repetition.
 - `glossary.json` (written by Claude) and `glossary.generated.json` (written by a script) - the word popups, see [Glossary](#glossary-word-popups).
 - After every edit run, in `app/`: `npm run glossary` (only if German text changed), then `npm run check-content`. check-content prints every problem as `file: field.path: message` and exits 1. The app refuses to start on invalid files (it shows the same list), and the GitHub Pages deploy fails while any problem is left, including a German word with no glossary entry.
@@ -35,6 +36,8 @@ General rules:
 | `level` | yes | `A1`, `A2`, `B1` or `B2` |
 | `created` | yes | newest tests are listed first |
 | `description` | no | |
+| `unit` | no | syllabus unit (0-6, see `SYLLABUS.md`). Used for "next test": tests run in unit order, then lesson order, then oldest first; tests with no unit come last |
+| `lesson` | no | id of the lesson this test belongs to (its unit is used when `unit` is left out; if both are set they must agree) |
 | `items` | yes | at least 1 item, any mix of the types below |
 
 Every item may also have these optional keys:
@@ -144,6 +147,112 @@ Items are graded after the whole test is submitted. Hayk sees per-item feedback,
 - `audio` is spoken, never shown before submitting. Same `options`/`answer`/`questionLang` rules as `mc`.
 - Spell out abbreviations in `audio` ("Doktor", not "Dr.") so every voice reads them the same.
 
+## Lessons
+
+`lessons/u1-01-sich-vorstellen.json` (the file name without `.json` must equal `id`). A lesson is a page Hayk reads top to bottom, like a textbook page: topic, explanation, examples, tables, exercises. The Lessons page groups lessons by unit and shows each one as not started / in progress / done. The app remembers the section Hayk last looked at, and has a "Mark lesson as done" button.
+
+```json
+{
+  "id": "u1-01-sich-vorstellen",
+  "unit": 1,
+  "order": 1,
+  "level": "A1",
+  "title": "Introducing yourself (Sich vorstellen)",
+  "summary": "Say who you are and ask others: name, country, city, languages, job.",
+  "goals": ["Say your name, where you come from and where you live"],
+  "nicosWeg": [{ "title": "Nicos Weg A1 (course overview)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }],
+  "words": ["heissen", "kommen", "wohnen"],
+  "tests": ["a1-01-vorstellen-termine"],
+  "sections": [ ... ]
+}
+```
+
+| key | required | notes |
+|---|---|---|
+| `id` | yes | suggested pattern `u<unit>-<nn>-<topic>`, e.g. `u0-03-zahlen` |
+| `unit` | yes | syllabus unit, 0-6 for A1 |
+| `order` | yes | 1, 2, 3... within the unit; no two lessons of a unit may share it |
+| `level` | yes | `A1`, `A2`, `B1`, `B2` (saved with exercise results) |
+| `title`, `summary` | yes | shown in the list and at the top |
+| `goals` | yes | 1 or more can-do statements in English |
+| `nicosWeg` | no | links: `{ "title", "url" }` |
+| `words` | no | ids from `words.json` that this lesson introduces (see below) |
+| `tests` | no | ids of tests that belong to the lesson (linked at the end of the lesson) |
+| `sections` | yes | the blocks, in order |
+
+**Words and lessons.** A word listed in some lesson's `words` is held back from the daily new words until that lesson is opened for the first time; opening the lesson unlocks its words, so Hayk meets them right after the explanation. Words in no lesson are introduced in `words.json` order as before. Words already introduced are always reviewed. So: add a lesson's words to `words.json` and list them in the lesson.
+
+**Text format** of `explanation`, `comparison`, `tip` and `warning` (English text):
+- paragraphs are separated by a blank line (`\n\n` in JSON); a single `\n` is a line break;
+- consecutive lines starting with `- ` form a bullet list, with `1. ` a numbered list (a list may follow a text line directly: `"Three questions:\n- ...\n- ..."`);
+- `**bold**` and `*italic*` (not inside each other);
+- `[[German]]` marks German inside English text: it gets word popups and must be covered by the glossary like all German. Put whole German phrases in one `[[...]]`: `[[Wie heißen Sie?]]`.
+Nothing else is special; there is no HTML. An unclosed `**`, `*` or `[[` is an error in check-content.
+
+### Block types
+
+Every block may have an optional `title`. Word popups are on for everything except exercises, which are gated like tests (off until the answers are checked).
+
+`explanation` - the teaching text:
+```json
+{ "type": "explanation", "title": "Three verbs to start with", "text": "With **ich** the verb ends in **-e**: [[ich heiße]], [[ich komme]].\n\n- [[Wie heißen Sie?]] - [[Ich heiße Hayk.]]\n- [[Woher kommen Sie?]] - [[Ich komme aus Armenien.]]" }
+```
+
+`comparison` - a Russian/Armenian comparison, shown in its own colour. Russian and Armenian are written as plain text; only `[[...]]` is German:
+```json
+{ "type": "comparison", "text": "Like Russian ты / Вы and Armenian դու / Դուք, German has [[du]] and [[Sie]]." }
+```
+
+`examples` - German sentences with English, each with a speaker button:
+```json
+{ "type": "examples", "items": [{ "de": "Ich heiße Hayk.", "en": "My name is Hayk.", "note": "optional short note" }] }
+```
+
+`table` - e.g. conjugations or letters and sounds. Each column says what it holds: `"de": "words"` (German words: popups, speaker, glossary check), `"de": "sound"` (letters or sounds: speaker only, no popups, not checked, e.g. `ei`, `ß`, `ch`), or nothing (English or other text). Every row has one cell per column; an empty cell is `""`.
+```json
+{
+  "type": "table",
+  "title": "heißen in the present tense",
+  "columns": [{ "header": "Person", "de": "words" }, { "header": "heißen", "de": "words" }, { "header": "English" }],
+  "rows": [["ich", "heiße", "I am called"], ["du", "heißt", "you are called"]]
+}
+```
+```json
+{ "type": "table", "columns": [{ "header": "Letters", "de": "sound" }, { "header": "Sounds like" }, { "header": "Example", "de": "words" }], "rows": [["ei", "the 'i' in 'wine'", "mein"]] }
+```
+
+`tip` and `warning` - short notes in the text format, shown with a label:
+```json
+{ "type": "tip", "text": "Answer with the same verb: [[Woher kommen Sie?]] - [[Ich komme aus Armenien.]]" }
+```
+```json
+{ "type": "warning", "text": "Write every noun with a capital letter: [[der Name]], [[das Land]]." }
+```
+
+`audio` - listen and repeat aloud (pronunciation); each line has Play and Slow buttons:
+```json
+{ "type": "audio", "title": "Say these aloud", "items": [{ "de": "Wie heißen Sie?", "en": "What is your name? (polite)", "note": "optional" }] }
+```
+
+`exercise` - items with exactly the same schema and grading as test items (all 7 types above), shown together with one "Check answers" button:
+```json
+{
+  "type": "exercise",
+  "title": "Check yourself",
+  "items": [
+    { "type": "gap", "text": "Ich ___ aus Armenien.", "answers": [["komme"]], "explanation": "ich komme" },
+    { "type": "mc", "question": "How do you ask a colleague's name politely?", "questionLang": "en", "options": ["Wie heißen Sie?", "Wie heißt du?"], "answer": "Wie heißen Sie?" }
+  ]
+}
+```
+Each check is saved like a test result (see `progress/README.md`) under the id `<lesson id>-ex<n>` (`n` counts the lesson's exercise blocks from 1), so no test may have that id. Claude reviews them like tests.
+
+The glossary covers all German in lessons: `[[...]]` in the text blocks, `examples` and `audio` sentences, table cells in `"words"` columns, and the German fields of exercise items.
+
+## Content runway
+
+check-content ends with a line like `runway: 30 of 50 words not introduced yet (about 3 days at 10 a day), 8 of them unlock when their lesson is opened; 2 of 5 tests not taken; 1 of 3 lessons not done`. It is judged from the progress files, at the app's default of 10 new words a day. The Stats page shows the same at Hayk's own daily limit. When it runs low, write more. When something runs out completely the app says so ("No more new words prepared yet. Ask Claude for more.") instead of showing an empty screen.
+
 ## Word bank: `words.json`
 
 A JSON array. New words are introduced in array order (default 10 new per day), so append new words at the end.
@@ -199,6 +308,7 @@ After a test item is submitted, after a word-review card is revealed, and on the
 | `write` | `prompt` (unless `promptLang` is `"en"`) |
 | `dictation` | `text` |
 | words.json | `de`, `plural`, `example.de` |
+| lessons | `[[...]]` in explanation, comparison, tip and warning text; `examples` and `audio` sentences (`de`); table cells in `"words"` columns; exercise items as above |
 
 Not German: `title`, `description`, `instruction`, `hint`, `explanation`, every `en` field.
 
@@ -245,7 +355,7 @@ The ignore list and entries must not overlap, and a word may be listed only once
 
 ## Checklist before telling Hayk a test is ready
 
-1. `cd app && npm run glossary` covers every word (curate or ignore what it lists), then `npm run check-content` prints `OK`.
+1. `cd app && npm run glossary` covers every word (curate or ignore what it lists), then `npm run check-content` prints `OK` and the runway.
 2. Each item has an `explanation` for the rule it practises.
 3. `gap` and `order` items list every correct variant you would accept, otherwise Hayk is marked wrong for a correct answer.
 4. Tell Hayk the test title; it appears at the top of the list on `http://localhost:5173/`.

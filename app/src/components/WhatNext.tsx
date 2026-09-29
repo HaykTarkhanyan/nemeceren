@@ -1,0 +1,137 @@
+// "What next" when the day's reviews are done: more new words, practice of weak words, the next
+// lesson, the next test, listening practice. Every option either works or says plainly why not.
+import { useEffect, useState } from 'react'
+import { content } from '../content/load.ts'
+import type { LessonProgress, Result, ReviewLogEntry, ReviewState, Word } from '../content/schema.ts'
+import { messageOf } from '../lib/errors.ts'
+import { listeningWords, lockedWordIds, nextLesson, nextTest, studyWords, weakWords } from '../lib/plan.ts'
+import { link } from '../lib/router.ts'
+import { addExtraNew } from '../lib/srs.ts'
+import { listResults, loadReviewLog, saveReviewState } from '../lib/storage.ts'
+
+export function WhatNext(props: {
+  state: ReviewState
+  progress: LessonProgress
+  onState: (s: ReviewState) => void
+  onPractice: (words: Word[]) => void
+}) {
+  const { state, progress, onState, onPractice } = props
+  const [data, setData] = useState<{ results: Result[]; log: ReviewLogEntry[] } | null>(null)
+  const [error, setError] = useState<string | null>(null)
+  const [saving, setSaving] = useState(false)
+
+  useEffect(() => {
+    Promise.all([listResults(), loadReviewLog()]).then(
+      ([saved, log]) => setData({ results: saved.map((s) => s.result), log }),
+      (err: unknown) => setError(messageOf(err)),
+    )
+  }, [])
+
+  async function moreNew(n: number) {
+    const next = addExtraNew(state, n, new Date())
+    setSaving(true)
+    try {
+      await saveReviewState(next)
+      onState(next)
+    } catch (err) {
+      setError(`Could not add new words: ${messageOf(err)}`)
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  if (error) return <div className="alert error">{error}</div>
+  if (!data) return <p className="muted">Loading...</p>
+
+  const now = new Date()
+  const available = studyWords(content.words, content.lessons, progress, state).filter((w) => !state.cards[w.id]).length
+  const locked = [...lockedWordIds(content.lessons, progress)].filter((id) => !state.cards[id]).length
+  const weak = weakWords(content.words, state, data.log, now)
+  const lesson = nextLesson(content.lessons, progress)
+  const test = nextTest(content.tests, content.lessons, data.results)
+  const listening = listeningWords(content.words, state)
+
+  return (
+    <section className="card stack what-next">
+      <h2>What next?</h2>
+
+      <div className="option">
+        <strong>Learn more new words today</strong>
+        {available > 0 ? (
+          <>
+            <span className="muted small">
+              {available} new word{available === 1 ? '' : 's'} ready. This only raises today's limit.
+            </span>
+            <div className="row">
+              {[5, 10].map((n) => (
+                <button key={n} type="button" className="btn small" disabled={saving} onClick={() => void moreNew(n)}>
+                  +{Math.min(n, available)} new
+                </button>
+              ))}
+            </div>
+          </>
+        ) : locked > 0 && lesson ? (
+          <span className="small">
+            The next {locked} new words come with a lesson. Open <a href={link('lesson', lesson.lesson.id)}>{lesson.lesson.title}</a> to unlock
+            its words.
+          </span>
+        ) : (
+          <span className="small warn-text">No more new words prepared yet. Ask Claude for more.</span>
+        )}
+      </div>
+
+      <div className="option">
+        <strong>Practise weak words</strong>
+        {weak.length > 0 ? (
+          <>
+            <span className="muted small">
+              {weak.length} word{weak.length === 1 ? '' : 's'} you missed recently or forgot before. Practice does not change your review schedule;
+              it is logged as practice.
+            </span>
+            <div>
+              <button type="button" className="btn small" onClick={() => onPractice(weak.map((w) => w.word))}>
+                Practise {weak.length} word{weak.length === 1 ? '' : 's'}
+              </button>
+            </div>
+          </>
+        ) : (
+          <span className="small muted">No weak words right now: nothing graded Again or close in the last two weeks.</span>
+        )}
+      </div>
+
+      <div className="option">
+        <strong>{lesson?.status === 'in-progress' ? 'Continue lesson' : 'Next lesson'}</strong>
+        {lesson ? (
+          <a href={link('lesson', lesson.lesson.id)}>
+            {lesson.lesson.unit}.{lesson.lesson.order} {lesson.lesson.title}
+          </a>
+        ) : (
+          <span className="small warn-text">
+            {content.lessons.length === 0 ? 'No lessons prepared yet.' : 'All lessons are done.'} Ask Claude for the next one.
+          </span>
+        )}
+      </div>
+
+      <div className="option">
+        <strong>Next test</strong>
+        {test ? (
+          <a href={link('test', test.id)}>{test.title}</a>
+        ) : (
+          <span className="small warn-text">
+            {content.tests.length === 0 ? 'No tests prepared yet.' : 'You have taken every test.'} Ask Claude for a new one, or retake one from{' '}
+            <a href={link()}>Home</a>.
+          </span>
+        )}
+      </div>
+
+      <div className="option">
+        <strong>Listening practice</strong>
+        {listening.length > 0 ? (
+          <a href={link('listen')}>Type what you hear: {listening.length} example sentence{listening.length === 1 ? '' : 's'} from your words</a>
+        ) : (
+          <span className="small muted">Starts once you have learned words that have example sentences.</span>
+        )}
+      </div>
+    </section>
+  )
+}

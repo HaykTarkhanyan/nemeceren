@@ -2,6 +2,57 @@
 
 Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
+## 28. Lesson progress is one file, `progress/lessons.json`, going through `app/src/lib/storage.ts` like all other progress; the position is the section at the top of the screen
+
+- **Date:** 2026-09-29 - **Status:** active (moves to Neon with the rest of progress, #21)
+- **Why:** Per lesson: `startedAt`, `updatedAt`, `lastSection` and `doneAt`. Opening a lesson starts it. The lesson is one scrolling page, like a textbook page, so "where you were" is the section nearest the top of the screen (an IntersectionObserver). It is saved 1.5 s after scrolling stops and restored on the next visit. All reads and writes go through `loadLessonProgress`/`saveLessonProgress` in `storage.ts`, so the Neon swap stays in one module.
+- **Alternatives rejected:** a step-by-step lesson (one section per screen; exact position, but it reads less like a book and makes tables and examples harder to compare); saving on every scroll event (too many writes); keeping lesson progress in browser storage only (the PC must save to the repo like everything else).
+- **What would change this:** Neon (#21) replacing the file with a table; lessons getting so long that a section is too coarse a position.
+
+## 27. "Never run out of work": a What-next menu instead of "All done for today", a Today panel on Home, and a content runway (asked for by Hayk, 2026-09-29)
+
+- **Date:** 2026-09-29 - **Status:** active
+- **Why:** Hayk: "in web I just hit All done for today, I'd like to always have stuff to work on". When reviews are done, the Words page (and its start page, when nothing is due) offers:
+  - +5/+10 new words for today only;
+  - practice of weak words (#25);
+  - the next lesson;
+  - the next untaken test, in course order (unit, lesson order, oldest first; tests got optional `unit`/`lesson`);
+  - listening practice (dictation of example sentences of learned words, no new content needed).
+  Each option either works or says plainly why not ("No more new words prepared yet. Ask Claude for more."), so there is never an empty screen. The extra new words are stored with the day in the review state (`newToday.extra`), so they apply to that day on every device and reset the next day. The runway (words left and roughly how many days at the daily limit, untaken tests, unfinished lessons) is on the Stats page and printed by check-content at the default 10 words a day, so Claude sees when to write more.
+- **Alternatives rejected:** raising the daily limit in Settings (permanent, and Hayk wanted "more today"); an endless random review of all words (hides that the prepared content is running out); putting the runway on Home (it is for the author, not the learner).
+- **What would change this:** Hayk ignoring the menu (then pick one next step automatically), or the runway needing per-unit detail.
+
+## 26. A lesson's words are introduced automatically once the lesson is opened, not by an "add to my word bank" button
+
+- **Date:** 2026-09-29 - **Status:** active
+- **Why:** The word bank already holds every prepared word, and new words are introduced 10 a day in file order. If lesson words were not held back, the app would introduce them days before the lesson explains them. So a word listed in a lesson's `words` waits until that lesson is opened, then joins the daily new words in `words.json` order. Words in no lesson work as before, and words already introduced are always reviewed. Opening the lesson is the natural "I'm learning this now" signal and needs no extra click, which a beginner could forget.
+- **Alternatives rejected:** an "add these words" button (one more thing to forget, and the words are already in the bank); introducing all of a lesson's words at once when it opens (can be 20+ new cards in a day, against the daily limit Hayk set); ignoring lessons when introducing words (words arrive before their explanation).
+- **What would change this:** Hayk wanting to preview a lesson without starting its words, or wanting to learn words ahead of the lessons.
+
+## 25. Practising weak words does not change the FSRS schedule; the answers are logged with `practice: true`
+
+- **Date:** 2026-09-29 - **Status:** active (Claude's suggestion, adopted by the build agent)
+- **Why:** Weak words are those graded Again or a near miss in the last 14 days, or with FSRS lapses. They are extra practice on top of the schedule. If practice also rescheduled the cards, an extra same-day review would distort the FSRS memory model (it would read a review that the algorithm did not ask for as a normal review), and the next due date would move for reasons Hayk cannot see. So practice only appends a log line with `practice: true`, `stateBefore = stateAfter` and the unchanged `due`. The stats count practice as study time, sessions and study days, but not in the reviews chart or % correct. The UI says "schedule unchanged" in the practice header and the menu.
+- **Alternatives rejected:** rescheduling on practice (distorts FSRS; FSRS has no notion of voluntary extra reviews); not logging practice (Claude could not see which words Hayk struggles with).
+- **What would change this:** FSRS support for same-day extra reviews, or evidence from the log that practiced words are still forgotten at their next scheduled review.
+
+## 24. Lesson exercises use the test item schema, grading and result files
+
+- **Date:** 2026-09-29 - **Status:** active
+- **Why:** One item format and one grading path, so everything in `content/README.md` about test items also holds in lessons, and Claude reviews lesson exercises exactly like tests. An exercise block's items are shown together with one "Check answers" button, using the same inputs as tests (`components/ItemInput.tsx`). The result is saved with `testId` `<lesson id>-ex<n>` plus `lessonId` and `section`. check-content rejects a test id that would collide with such an id. Time per item is the time since Hayk last clicked or focused that item.
+- **Alternatives rejected:** a separate, simpler exercise format (two formats for Claude to write and keep in step); not saving lesson exercises (Claude could not review them); one item per screen as in tests (breaks the reading flow of a lesson).
+- **What would change this:** lesson exercises needing a kind of interaction tests do not have (e.g. matching pairs); then add it as a new item type for both.
+
+## 23. Lessons are JSON files of typed blocks, with a tiny text format instead of Markdown (lessons asked for by Hayk, 2026-09-29)
+
+- **Date:** 2026-09-29 - **Status:** active
+- **Why:** Hayk asked for lessons "like in the Schritte book: topic, explanation, examples, exercises". `content/lessons/<id>.json` has unit, order, level, title, summary, goals, optional Nicos Weg links, words and tests, and `sections` made of 8 block types: `explanation`, `comparison`, `examples`, `table`, `tip`, `warning`, `exercise`, `audio`.
+  - Text blocks use a 4-rule format: blank-line paragraphs, `- `/`1. ` lists (also directly under a text line, as in Markdown; the first version required a blank line and the smoke test showed a list rendered as plain lines), `**bold**`/`*italic*`, and `[[German]]` to mark German inside English. The marker is what gives German phrases popups and the glossary check.
+  - It is parsed in about 60 lines (`content/richtext.ts`) and rendered as React nodes, never as HTML, so content cannot inject markup (a render test checks this). Broken markup fails check-content.
+  - Table columns say whether they hold German words (popups and glossary check), letters/sounds (speaker only), or other text.
+- **Alternatives rejected:** a Markdown library such as marked or markdown-it plus a sanitizer (a dependency, and still no way to mark German for popups); raw HTML in JSON (XSS risk, hard to write by hand); one free-text field per lesson (no structure for examples, tables and exercises).
+- **What would change this:** lessons needing images, audio files or video (then add block types), or the text format growing past a handful of rules.
+
 ## 22. The PC stays on Node 20.20.0 (decided by Hayk, 2026-09-29)
 
 - **Date:** 2026-09-29 - **Status:** active

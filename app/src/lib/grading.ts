@@ -199,6 +199,33 @@ export function instructionFor(item: Item): string {
   return DEFAULT_INSTRUCTIONS[item.type]
 }
 
+export function answerForResult(a: AnswerValue): string | string[] | null {
+  if (isBlank(a)) return null
+  return typeof a === 'string' ? a.trim() : a
+}
+
+/** Grade every item and build the per-item records of a result file (tests and lesson exercises alike). */
+export function resultItems(items: Item[], answers: AnswerValue[], timesMs: number[], hints: boolean[], plays: number[]): ResultItem[] {
+  return items.map((it, i) => {
+    const g = gradeItem(it, answers[i])
+    const audio = it.type === 'dictation' || it.type === 'listen_mc'
+    return {
+      index: i,
+      type: it.type,
+      question: describeItem(it),
+      answer: answerForResult(answers[i]),
+      expected: g.expected,
+      status: g.status,
+      nearMiss: g.nearMiss,
+      ...(g.gaps ? { gaps: g.gaps } : {}),
+      ...(g.diff ? { diff: g.diff } : {}),
+      timeMs: Math.round(timesMs[i]),
+      hintUsed: hints[i],
+      ...(audio ? { plays: plays[i] } : {}),
+    }
+  })
+}
+
 export function scoreOf(items: ResultItem[]): Result['score'] {
   const count = (s: ItemStatus) => items.filter((i) => i.status === s).length
   return { correct: count('correct'), wrong: count('wrong'), pending: count('pending'), total: items.length }

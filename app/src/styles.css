@@ -153,6 +153,7 @@ main.container {
 
 .nav {
   display: flex;
+  flex-wrap: wrap;
   gap: 4px;
   flex: 1;
 }
@@ -690,6 +691,10 @@ mark.fill.bad {
   .nav {
     order: 3;
     flex-basis: 100%;
+    gap: 0;
+  }
+  .nav a {
+    padding: 6px 7px;
   }
   .stats {
     grid-template-columns: repeat(3, 1fr);
@@ -887,4 +892,185 @@ rect.tone-b {
 
 .tip-title {
   font-weight: 600;
+}
+
+/* Today panel and What next */
+.today-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.what-next .option {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+}
+
+/* Lessons */
+.lesson h1 {
+  margin-bottom: 4px;
+}
+
+.goals {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.lesson-words {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.badge.word-learning {
+  background: var(--pending-bg);
+  color: var(--pending);
+  border-color: transparent;
+}
+
+.badge.word-known {
+  background: var(--ok-bg);
+  color: var(--ok);
+  border-color: transparent;
+}
+
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.block-title {
+  font-size: 1.05rem;
+  margin: 0;
+}
+
+.block-label {
+  align-self: flex-start;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+.block-comparison .block-label {
+  background: var(--pending-bg);
+  color: var(--pending);
+}
+
+.block-tip .block-label {
+  background: var(--ok-bg);
+  color: var(--ok);
+}
+
+.block-warning .block-label {
+  background: var(--warn-bg);
+  color: var(--warn);
+}
+
+.block-audio .block-label {
+  background: var(--bg);
+  color: var(--muted);
+}
+
+.card:has(> .block-comparison),
+.card:has(> .block-warning),
+.card:has(> .block-tip) {
+  border-left-width: 4px;
+}
+
+.card:has(> .block-comparison) {
+  border-left-color: var(--pending);
+}
+
+.card:has(> .block-tip) {
+  border-left-color: var(--ok);
+}
+
+.card:has(> .block-warning) {
+  border-left-color: var(--warn);
+}
+
+.rich p {
+  margin: 0 0 8px;
+}
+
+.rich ul,
+.rich ol {
+  margin: 0 0 8px;
+  padding-left: 22px;
+}
+
+.de-inline {
+  font-weight: 600;
+}
+
+.examples,
+.audio-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.example-de,
+.audio-de {
+  font-size: 1.1rem;
+}
+
+.audio-list li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+.lesson-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.lesson-table th,
+.lesson-table td {
+  border-bottom: 1px solid var(--border);
+  padding: 6px 8px;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.lesson-table th {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.sound {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.exercise-items {
+  margin: 0;
+  padding-left: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.exercise-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }

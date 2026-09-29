@@ -24,7 +24,8 @@ describe('the seed content', () => {
   it('is valid', () => {
     const dir = path.join(repoRoot, 'content/tests')
     const tests = fs.readdirSync(dir).map((n) => ({ file: `content/tests/${n}`, text: readText(`content/tests/${n}`) }))
-    const out = checkAllContent({ tests, words: { file: 'content/words.json', text: readText('content/words.json') } })
+    const lessons = fs.readdirSync(path.join(repoRoot, 'content/lessons')).map((n) => ({ file: `content/lessons/${n}`, text: readText(`content/lessons/${n}`) }))
+    const out = checkAllContent({ tests, words: { file: 'content/words.json', text: readText('content/words.json') }, lessons })
     expect(out.problems).toEqual([])
     expect(out.tests.length).toBeGreaterThan(0)
     const types = new Set(out.tests.flatMap((t) => t.items.map((i) => i.type)))
@@ -70,6 +71,7 @@ describe('test validation names the file and field', () => {
         { file: 'z.json', text: '{ "id": "z", ' },
       ],
       words: { file: 'w.json', text: '[]' },
+      lessons: [],
     })
     expect(out.problems.some((p) => p.startsWith('x.json: items:'))).toBe(true)
     expect(out.problems.some((p) => p.startsWith('y.json: level:'))).toBe(true)

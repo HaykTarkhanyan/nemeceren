@@ -3,7 +3,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
-import type { CuratedGlossary, GeneratedGlossary, Test, Word } from '../src/content/schema.ts'
+import type { CuratedGlossary, GeneratedGlossary, Lesson, Test, Word } from '../src/content/schema.ts'
 import { checkAllContent, ContentError, parseCuratedGlossary, parseGeneratedGlossary, parseJsonText } from '../src/content/validate.ts'
 import type { RawFile } from '../src/content/validate.ts'
 
@@ -47,6 +47,7 @@ export function collect(problems: string[], fn: () => void): void {
 export interface ContentOnDisk {
   tests: { file: string; test: Test }[]
   words: { file: string; words: Word[] }
+  lessons: { file: string; lesson: Lesson }[]
 }
 
 export function readContent(problems: string[]): ContentOnDisk {
@@ -55,13 +56,24 @@ export function readContent(problems: string[]): ContentOnDisk {
     const text = readText(abs, problems)
     if (text !== undefined) testFiles.push({ file: rel(abs), text })
   }
+  const lessonFiles: RawFile[] = []
+  for (const abs of jsonFiles(path.join(repoRoot, 'content', 'lessons'))) {
+    const text = readText(abs, problems)
+    if (text !== undefined) lessonFiles.push({ file: rel(abs), text })
+  }
   const wordsPath = path.join(repoRoot, 'content', 'words.json')
-  const checked = checkAllContent({ tests: testFiles, words: { file: rel(wordsPath), text: readText(wordsPath, problems) ?? '' } })
+  const checked = checkAllContent({
+    tests: testFiles,
+    words: { file: rel(wordsPath), text: readText(wordsPath, problems) ?? '' },
+    lessons: lessonFiles,
+  })
   problems.push(...checked.problems)
   return {
     // A test's id equals its file name, so the file can be named from the id.
     tests: checked.tests.map((test) => ({ file: `content/tests/${test.id}.json`, test })),
     words: { file: rel(wordsPath), words: checked.words },
+    // A lesson's id equals its file name too.
+    lessons: checked.lessons.map((lesson) => ({ file: `content/lessons/${lesson.id}.json`, lesson })),
   }
 }
 

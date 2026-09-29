@@ -49,11 +49,29 @@ export function newIntroducedToday(state: ReviewState, now: Date): number {
   return state.newToday.date === localDay(now) ? state.newToday.count : 0
 }
 
+/** Extra new words Hayk asked for today on top of the daily limit ("learn more new words"). */
+export function extraToday(state: ReviewState, now: Date): number {
+  return state.newToday.date === localDay(now) ? (state.newToday.extra ?? 0) : 0
+}
+
+function newTodayWith(now: Date, count: number, extra: number): ReviewState['newToday'] {
+  return extra > 0 ? { date: localDay(now), count, extra } : { date: localDay(now), count }
+}
+
+/** Allow n more new words today only. */
+export function addExtraNew(state: ReviewState, n: number, now: Date): ReviewState {
+  return {
+    ...state,
+    updatedAt: now.toISOString(),
+    newToday: newTodayWith(now, newIntroducedToday(state, now), extraToday(state, now) + n),
+  }
+}
+
 export function counts(words: Word[], state: ReviewState, now: Date, newLimit: number): { due: number; newLeft: number } {
   const end = endOfLocalDay(now).getTime()
   const due = words.filter((w) => state.cards[w.id] && Date.parse(state.cards[w.id].due) < end).length
   const unseen = words.filter((w) => !state.cards[w.id]).length
-  const newLeft = Math.min(unseen, Math.max(0, newLimit - newIntroducedToday(state, now)))
+  const newLeft = Math.min(unseen, Math.max(0, newLimit + extraToday(state, now) - newIntroducedToday(state, now)))
   return { due, newLeft }
 }
 
@@ -100,7 +118,7 @@ export function review(state: ReviewState, wordId: string, grade: Grade, now: Da
     state: {
       ...state,
       updatedAt: now.toISOString(),
-      newToday: { date: localDay(now), count: before ? introduced : introduced + 1 },
+      newToday: newTodayWith(now, before ? introduced : introduced + 1, extraToday(state, now)),
       cards: { ...state.cards, [wordId]: after },
     },
   }
@@ -141,7 +159,8 @@ export function mergeStates(a: ReviewState, b: ReviewState): ReviewState {
   }
   let newToday = a.newToday
   if (a.newToday.date === b.newToday.date) {
-    newToday = { date: a.newToday.date, count: Math.max(a.newToday.count, b.newToday.count) }
+    const extra = Math.max(a.newToday.extra ?? 0, b.newToday.extra ?? 0)
+    newToday = { date: a.newToday.date, count: Math.max(a.newToday.count, b.newToday.count), ...(extra > 0 ? { extra } : {}) }
   } else if (b.newToday.date > a.newToday.date) {
     newToday = b.newToday
   }

@@ -1,5 +1,5 @@
 // Per-item feedback for a finished test, including Claude's review when the result has one.
-import type { Item, NearMissKind, Result, ResultItem, Review, Test } from '../content/schema.ts'
+import type { Item, NearMissKind, Result, ResultItem, Review } from '../content/schema.ts'
 import { GAP_MARKER } from '../content/schema.ts'
 import { finalScore, finalStatus } from '../lib/grading.ts'
 import { De, GermanText, GlossScope } from './GermanText.tsx'
@@ -190,7 +190,8 @@ export function ScoreLine({ result }: { result: Result }) {
   )
 }
 
-export function ResultView({ result, test }: { result: Result; test: Test | undefined }) {
+/** items: the exercise items the result was made from, if they still exist (for explanations). */
+export function ResultView({ result, items }: { result: Result; items: Item[] | undefined }) {
   return (
     <GlossScope surface={{ kind: 'test-item', submitted: true }}>
     <div className="stack">
@@ -202,7 +203,7 @@ export function ResultView({ result, test }: { result: Result; test: Test | unde
         </div>
       )}
       {result.items.map((ri) => {
-        const candidate = test?.items[ri.index]
+        const candidate = items?.[ri.index]
         const item = candidate && candidate.type === ri.type ? candidate : null
         return (
           <ItemFeedback

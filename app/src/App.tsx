@@ -2,6 +2,8 @@ import { content } from './content/load.ts'
 import { ErrorBanner, ErrorBoundary, Header, VoiceWarning } from './components/Chrome.tsx'
 import { useRoute } from './lib/router.ts'
 import { HomePage } from './pages/HomePage.tsx'
+import { LessonPage, LessonsPage } from './pages/LessonsPage.tsx'
+import { ListenPage } from './pages/ListenPage.tsx'
 import { ResultDetailPage, ResultsPage } from './pages/ResultsPage.tsx'
 import { SettingsPage } from './pages/SettingsPage.tsx'
 import { StatsPage } from './pages/StatsPage.tsx'
@@ -25,6 +27,12 @@ function Page({ route }: { route: string[] }) {
       return <HomePage />
     case 'test':
       return <TestPage id={arg ?? ''} />
+    case 'lessons':
+      return <LessonsPage />
+    case 'lesson':
+      return <LessonPage id={arg ?? ''} />
+    case 'listen':
+      return <ListenPage />
     case 'words':
       return <WordsPage />
     case 'results':

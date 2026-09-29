@@ -133,7 +133,7 @@ if (problems.length > 0 || !curated) {
 const bankGloss = new Map(content.words.words.map((w) => [w.de.replace(/^(der|die|das) /, ''), w.en]))
 const lists = readLearnerLists(content.words.words)
 
-const fields = germanFields(content.tests, content.words)
+const fields = germanFields(content.tests, content.words, content.lessons)
 const toResolve: string[] = []
 const add = (w: string) => {
   if (!toResolve.includes(w) && !curated.ignore.includes(w) && !curated.entries[w]) toResolve.push(w)

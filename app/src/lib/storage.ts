@@ -3,8 +3,9 @@
 //   browser mode (GitHub Pages): localStorage in this browser only, not synced.
 // Every failure throws with a clear message; callers show it in the UI.
 import snapshot from 'virtual:review-snapshot'
-import type { Result, ReviewLogEntry, ReviewState } from '../content/schema.ts'
-import { parseResult, parseReviewLog, parseReviewState } from '../content/validate.ts'
+import type { LessonProgress, Result, ReviewLogEntry, ReviewState } from '../content/schema.ts'
+import { parseLessonProgress, parseResult, parseReviewLog, parseReviewState } from '../content/validate.ts'
+import { emptyLessonProgress } from './plan.ts'
 import { emptyState, mergeStates } from './srs.ts'
 import type { ReviewEvent, TestItemEvent } from './stats.ts'
 
@@ -57,6 +58,7 @@ const LS = {
   results: 'nemeceren.results',
   reviewState: 'nemeceren.reviewState',
   reviewLog: 'nemeceren.reviewLog',
+  lessons: 'nemeceren.lessons',
 }
 
 function readLs(key: string): unknown {
@@ -168,7 +170,14 @@ export async function loadReviewLog(): Promise<ReviewLogEntry[]> {
  */
 export async function loadActivity(): Promise<{ reviews: ReviewEvent[]; testItems: TestItemEvent[] }> {
   const [log, results] = await Promise.all([loadReviewLog(), listResults()])
-  const reviews = log.map((e) => ({ at: Date.parse(e.ts), localDay: e.localDay, timeMs: e.timeMs, rating: e.rating, isNew: e.isNew }))
+  const reviews = log.map((e) => ({
+    at: Date.parse(e.ts),
+    localDay: e.localDay,
+    timeMs: e.timeMs,
+    rating: e.rating,
+    isNew: e.isNew,
+    practice: e.practice === true,
+  }))
   const testItems = results.flatMap(({ file, result }) =>
     result.items.map((it) => ({
       attemptId: file,
@@ -180,4 +189,25 @@ export async function loadActivity(): Promise<{ reviews: ReviewEvent[]; testItem
     })),
   )
   return { reviews, testItems }
+}
+
+/** Which lessons were started and done, and where Hayk was in each. */
+export async function loadLessonProgress(): Promise<LessonProgress> {
+  if (SAVE_MODE === 'repo') {
+    try {
+      const data = await api('GET', q('path', 'lessons.json'))
+      return parseLessonProgress('progress/lessons.json', data)
+    } catch (err) {
+      // No file yet just means no lesson has been opened yet.
+      if ((err as { status?: number }).status === 404) return emptyLessonProgress()
+      throw err
+    }
+  }
+  const local = readLs(LS.lessons)
+  return local === null ? emptyLessonProgress() : parseLessonProgress(`browser storage "${LS.lessons}"`, local)
+}
+
+export async function saveLessonProgress(p: LessonProgress): Promise<void> {
+  if (SAVE_MODE === 'repo') await api('PUT', q('path', 'lessons.json'), p)
+  else writeLs(LS.lessons, p)
 }

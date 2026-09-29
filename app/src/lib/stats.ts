@@ -1,7 +1,8 @@
 // Study statistics as pure functions over plain event arrays. They do not know where the
 // events come from (today: progress/ files or browser storage via lib/storage.ts; later a
 // database). Definitions, also documented in progress/README.md:
-//   study day   a local calendar day with at least one word review or one answered test item
+//   study day   a local calendar day with at least one word review (practice included) or one
+//               answered test item (lesson exercises included)
 //   streak      consecutive study days ending today, or ending yesterday if today has none yet
 //   activity    one word review, or one test attempt with at least one answered item
 //   session     activities with no gap of SESSION_GAP_MS or more between them; counted on the
@@ -29,6 +30,8 @@ export interface ReviewEvent {
   /** 1 Again, 2 Hard, 3 Good, 4 Easy. Anything but Again counts as correct. */
   rating: number
   isNew: boolean
+  /** Practice of weak words: counts as study time, but not as a scheduled review. */
+  practice?: boolean
 }
 
 export interface TestItemEvent {
@@ -50,6 +53,8 @@ export interface DayStats {
   testItems: number
   activeMs: number
   sessions: number
+  /** Practice reviews (not in reviews, correct or newWords). */
+  practice: number
   /** Reviews without a measured time (old log lines); they count everywhere except minutes. */
   untimed: number
 }
@@ -63,6 +68,7 @@ interface Activity {
   correct: number
   newWords: number
   testItems: number
+  practice: number
   untimed: number
 }
 
@@ -73,10 +79,11 @@ function reviewActivity(e: ReviewEvent, timeZone?: string): Activity {
     end: e.at,
     day: e.localDay ?? localDay(new Date(e.at), timeZone),
     activeMs: ms,
-    reviews: 1,
-    correct: e.rating >= 2 ? 1 : 0,
-    newWords: e.isNew ? 1 : 0,
+    reviews: e.practice ? 0 : 1,
+    correct: !e.practice && e.rating >= 2 ? 1 : 0,
+    newWords: !e.practice && e.isNew ? 1 : 0,
     testItems: 0,
+    practice: e.practice ? 1 : 0,
     untimed: e.timeMs === undefined ? 1 : 0,
   }
 }
@@ -99,6 +106,7 @@ function testActivities(items: TestItemEvent[], timeZone?: string): Activity[] {
       correct: 0,
       newWords: 0,
       testItems: answered,
+      practice: 0,
       untimed: 0,
     })
   }
@@ -106,7 +114,7 @@ function testActivities(items: TestItemEvent[], timeZone?: string): Activity[] {
 }
 
 function emptyDay(day: string): DayStats {
-  return { day, reviews: 0, correct: 0, newWords: 0, testItems: 0, activeMs: 0, sessions: 0, untimed: 0 }
+  return { day, reviews: 0, correct: 0, newWords: 0, testItems: 0, activeMs: 0, sessions: 0, practice: 0, untimed: 0 }
 }
 
 /** Per-day totals, keyed by local day. */
@@ -133,13 +141,14 @@ export function dailyStats(reviews: ReviewEvent[], testItems: TestItemEvent[], t
     d.newWords += a.newWords
     d.testItems += a.testItems
     d.activeMs += a.activeMs
+    d.practice += a.practice
     d.untimed += a.untimed
   }
   return days
 }
 
 export function studyDays(days: Map<string, DayStats>): Set<string> {
-  return new Set([...days.values()].filter((d) => d.reviews > 0 || d.testItems > 0).map((d) => d.day))
+  return new Set([...days.values()].filter((d) => d.reviews > 0 || d.practice > 0 || d.testItems > 0).map((d) => d.day))
 }
 
 export function streaks(study: Set<string>, today: string): { current: number; longest: number } {

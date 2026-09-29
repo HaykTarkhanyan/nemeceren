@@ -3,6 +3,7 @@
 // single source of truth. content/README.md documents the same shapes for authors.
 // Objects are strict: an unknown or misspelled key is an error, not silently ignored.
 import { z } from 'zod'
+import { parseRich, RichTextError } from './richtext.ts'
 
 export const Text = z.string().regex(/\S/, { message: 'must not be empty' })
 export const Level = z.enum(['A1', 'A2', 'B1', 'B2'])
@@ -145,13 +146,91 @@ export const Item = z.discriminatedUnion(
   { error: () => `"type" must be one of: ${ITEM_TYPES.join(', ')}` },
 )
 
+/** Syllabus unit (SYLLABUS.md): 0-6 lead to A1. */
+export const Unit = z.number().int().min(0).max(20)
+
 export const Test = z.strictObject({
   id: Slug,
   title: Text,
   level: Level,
   created: IsoDate,
   description: Text.optional(),
+  /** Course order for "next test": unit, then the lesson's order. */
+  unit: Unit.optional(),
+  lesson: Slug.optional(),
   items: z.array(Item).min(1),
+})
+
+// ---------- Lessons (content/lessons/<id>.json) ----------
+
+/** English text in the small lesson format of content/richtext.ts (**bold**, *italic*, lists, [[German]]). */
+export const RichText = Text.superRefine((s, ctx) => {
+  try {
+    parseRich(s)
+  } catch (err) {
+    if (err instanceof RichTextError) ctx.addIssue({ code: 'custom', message: err.message })
+    else throw err
+  }
+})
+
+const blockTitle = { title: Text.optional() }
+
+export const ExplanationBlock = z.strictObject({ type: z.literal('explanation'), ...blockTitle, text: RichText })
+export const ComparisonBlock = z.strictObject({ type: z.literal('comparison'), ...blockTitle, text: RichText })
+export const TipBlock = z.strictObject({ type: z.literal('tip'), ...blockTitle, text: RichText })
+export const WarningBlock = z.strictObject({ type: z.literal('warning'), ...blockTitle, text: RichText })
+
+export const ExamplesBlock = z.strictObject({
+  type: z.literal('examples'),
+  ...blockTitle,
+  items: z.array(z.strictObject({ de: Text, en: Text, note: Text.optional() })).min(1),
+})
+
+/** "words": German words (popups, glossary check, speaker). "sound": letters or sounds (speaker only). */
+export const TableColumn = z.strictObject({ header: Text, de: z.enum(['words', 'sound']).optional() })
+
+export const TableBlock = z
+  .strictObject({ type: z.literal('table'), ...blockTitle, columns: z.array(TableColumn).min(1), rows: z.array(z.array(z.string())).min(1) })
+  .superRefine((t, ctx) => {
+    t.rows.forEach((row, i) => {
+      if (row.length !== t.columns.length) {
+        ctx.addIssue({ code: 'custom', path: ['rows', i], message: `has ${row.length} cells but there are ${t.columns.length} columns` })
+      }
+    })
+  })
+
+export const ExerciseBlock = z.strictObject({ type: z.literal('exercise'), ...blockTitle, items: z.array(Item).min(1) })
+
+export const AudioBlock = z.strictObject({
+  type: z.literal('audio'),
+  ...blockTitle,
+  items: z.array(z.strictObject({ de: Text, en: Text.optional(), note: Text.optional() })).min(1),
+})
+
+export const BLOCK_TYPES = ['explanation', 'comparison', 'examples', 'table', 'tip', 'warning', 'exercise', 'audio'] as const
+
+export const LessonBlock = z.discriminatedUnion(
+  'type',
+  [ExplanationBlock, ComparisonBlock, ExamplesBlock, TableBlock, TipBlock, WarningBlock, ExerciseBlock, AudioBlock],
+  { error: () => `"type" must be one of: ${BLOCK_TYPES.join(', ')}` },
+)
+
+export const Lesson = z.strictObject({
+  id: Slug,
+  unit: Unit,
+  /** Position within the unit: 1, 2, 3... */
+  order: z.number().int().positive(),
+  level: Level,
+  title: Text,
+  summary: Text,
+  /** Can-do statements, in English. */
+  goals: z.array(Text).min(1),
+  nicosWeg: z.array(z.strictObject({ title: Text, url: z.url() })).optional(),
+  /** Word ids from content/words.json that this lesson introduces. */
+  words: z.array(Slug).optional(),
+  /** Test ids that belong to this lesson. */
+  tests: z.array(Slug).optional(),
+  sections: z.array(LessonBlock).min(1),
 })
 
 const ARTICLE = /^(der|die|das) /
@@ -245,11 +324,17 @@ export const Result = z
     submittedAt: IsoDateTime,
     /** Hayk's local calendar day at submit time. Missing in results saved before 2026-09-29. */
     localDay: IsoDate.optional(),
+    /** Set for an exercise inside a lesson: the lesson id and the index of its section. */
+    lessonId: Slug.optional(),
+    section: Count.optional(),
     score: z.strictObject({ correct: Count, wrong: Count, pending: Count, total: Count }),
     items: z.array(ResultItem),
     review: Review.optional(),
   })
   .superRefine((r, ctx) => {
+    if ((r.lessonId === undefined) !== (r.section === undefined)) {
+      ctx.addIssue({ code: 'custom', path: ['section'], message: 'lessonId and section go together: set both or neither' })
+    }
     const seen = new Set<number>()
     r.review?.items.forEach((ri, i) => {
       if (ri.index >= r.items.length) {
@@ -285,7 +370,8 @@ export const ReviewState = z.strictObject({
   version: z.literal(1),
   scheduler: z.literal('fsrs'),
   updatedAt: IsoDateTime,
-  newToday: z.strictObject({ date: IsoDate, count: Count }),
+  /** New words introduced on `date`, and extra new words Hayk asked for that day ("learn more"). */
+  newToday: z.strictObject({ date: IsoDate, count: Count, extra: Count.optional() }),
   cards: z.record(z.string(), StoredCard),
 })
 
@@ -310,6 +396,24 @@ export const ReviewLogEntry = z.strictObject({
   stateBefore: z.number().int().min(0).max(3),
   stateAfter: z.number().int().min(0).max(3),
   due: IsoDateTime,
+  /** Extra practice of weak words: logged, but the FSRS schedule was not changed. */
+  practice: z.literal(true).optional(),
+})
+
+// ---------- Lesson progress (written by the app) ----------
+
+export const LessonProgress = z.strictObject({
+  version: z.literal(1),
+  lessons: z.record(
+    z.string(),
+    z.strictObject({
+      startedAt: IsoDateTime,
+      updatedAt: IsoDateTime,
+      /** Index of the section Hayk was last looking at. */
+      lastSection: Count,
+      doneAt: IsoDateTime.nullable(),
+    }),
+  ),
 })
 
 // ---------- Glossary (word popups) ----------
@@ -387,6 +491,10 @@ export type Review = z.infer<typeof Review>
 export type Result = z.infer<typeof Result>
 export type StoredCard = z.infer<typeof StoredCard>
 export type ReviewState = z.infer<typeof ReviewState>
+export type Lesson = z.infer<typeof Lesson>
+export type LessonBlock = z.infer<typeof LessonBlock>
+export type TableColumn = z.infer<typeof TableColumn>
+export type LessonProgress = z.infer<typeof LessonProgress>
 export type ReviewMode = z.infer<typeof ReviewMode>
 export type ReviewLogEntry = z.infer<typeof ReviewLogEntry>
 export type Pos = z.infer<typeof POS>

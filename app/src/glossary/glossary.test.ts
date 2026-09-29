@@ -45,7 +45,7 @@ describe('German fields', () => {
   it('names the file and field of every German text', () => {
     const test: Test = { id: 'x', title: 'T', level: 'A1', created: '2026-09-29', items: [{ type: 'dictation', text: 'Hallo!' }] }
     const words = [{ id: 'termin', de: 'der Termin', plural: 'die Termine', en: 'appointment', example: { de: 'Ein Termin.' }, level: 'A1' as const, added: '2026-09-29' }]
-    expect(germanFields([{ file: 't.json', test }], { file: 'w.json', words })).toEqual([
+    expect(germanFields([{ file: 't.json', test }], { file: 'w.json', words }, [])).toEqual([
       { where: 't.json items[0].text', text: 'Hallo!' },
       { where: 'w.json [0].de', text: 'der Termin' },
       { where: 'w.json [0].plural', text: 'die Termine' },

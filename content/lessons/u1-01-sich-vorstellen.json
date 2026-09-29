@@ -1,0 +1,124 @@
+{
+  "id": "u1-01-sich-vorstellen",
+  "unit": 1,
+  "order": 1,
+  "level": "A1",
+  "title": "Introducing yourself (Sich vorstellen)",
+  "summary": "Say who you are and ask others: name, country, city, languages, job.",
+  "goals": [
+    "Say your name, where you come from and where you live",
+    "Ask someone the same questions, politely (Sie) or to a friend (du)",
+    "Use heißen, kommen and wohnen in the present tense"
+  ],
+  "nicosWeg": [{ "title": "Nicos Weg A1 (course overview)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }],
+  "words": ["heissen", "kommen", "wohnen", "name", "vorname", "land", "sprache", "beruf"],
+  "tests": ["a1-01-vorstellen-termine"],
+  "sections": [
+    {
+      "type": "explanation",
+      "title": "Three verbs to start with",
+      "text": "To introduce yourself you need three verbs: [[heißen]] (to be called), [[kommen]] (to come) and [[wohnen]] (to live). With **ich** the verb ends in **-e**: [[ich heiße]], [[ich komme]], [[ich wohne]].\n\nThree questions and their answers:\n- [[Wie heißen Sie?]] - [[Ich heiße Hayk.]]\n- [[Woher kommen Sie?]] - [[Ich komme aus Armenien.]]\n- [[Wo wohnen Sie?]] - [[Ich wohne in München.]]\n\nIn every sentence the verb is the *second* part."
+    },
+    {
+      "type": "examples",
+      "title": "Examples",
+      "items": [
+        { "de": "Ich heiße Hayk.", "en": "My name is Hayk.", "note": "heißen = to be called" },
+        { "de": "Mein Name ist Hayk.", "en": "My name is Hayk." },
+        { "de": "Ich komme aus Armenien.", "en": "I come from Armenia." },
+        { "de": "Ich wohne in München.", "en": "I live in Munich." },
+        { "de": "Ich spreche Armenisch, Russisch und Englisch.", "en": "I speak Armenian, Russian and English." },
+        { "de": "Was sind Sie von Beruf?", "en": "What do you do for a living?" }
+      ]
+    },
+    {
+      "type": "table",
+      "title": "heißen, kommen, wohnen in the present tense",
+      "columns": [
+        { "header": "Person", "de": "words" },
+        { "header": "heißen", "de": "words" },
+        { "header": "kommen", "de": "words" },
+        { "header": "wohnen", "de": "words" }
+      ],
+      "rows": [
+        ["ich", "heiße", "komme", "wohne"],
+        ["du", "heißt", "kommst", "wohnst"],
+        ["er / sie / es", "heißt", "kommt", "wohnt"],
+        ["wir", "heißen", "kommen", "wohnen"],
+        ["ihr", "heißt", "kommt", "wohnt"],
+        ["sie / Sie", "heißen", "kommen", "wohnen"]
+      ]
+    },
+    {
+      "type": "comparison",
+      "text": "Like Russian and Armenian, German changes the verb for each person: [[ich wohne]], [[du wohnst]] - я живу, ты живёшь - ես ապրում եմ, դու ապրում ես.\n\nGerman also has two ways to say *you*, like Russian **ты / Вы** and Armenian **դու / Դուք**: [[du]] for friends, [[Sie]] (always with a capital S) for colleagues you don't know well."
+    },
+    {
+      "type": "table",
+      "title": "Sounds in these words",
+      "columns": [{ "header": "Letters", "de": "sound" }, { "header": "Sounds like" }, { "header": "Example", "de": "words" }],
+      "rows": [
+        ["ei", "the 'i' in 'wine'", "mein"],
+        ["ie", "the 'ee' in 'see'", "Sie"],
+        ["ß", "a sharp 's', as in 'kiss'", "heißen"],
+        ["w", "English 'v'", "wohnen"]
+      ]
+    },
+    {
+      "type": "tip",
+      "text": "Answer with the same verb as the question: [[Woher kommen Sie?]] - [[Ich komme aus Armenien.]]"
+    },
+    {
+      "type": "warning",
+      "text": "Write every noun with a capital letter: [[der Name]], [[das Land]], [[die Sprache]]. Country names too: [[Armenien]], [[Deutschland]]."
+    },
+    {
+      "type": "audio",
+      "title": "Say these questions aloud",
+      "items": [
+        { "de": "Wie heißen Sie?", "en": "What is your name? (polite)" },
+        { "de": "Woher kommen Sie?", "en": "Where are you from?" },
+        { "de": "Wo wohnen Sie?", "en": "Where do you live?" },
+        { "de": "Was sind Sie von Beruf?", "en": "What do you do for a living?" }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "mc",
+          "question": "How do you ask a colleague's name politely?",
+          "questionLang": "en",
+          "options": ["Wie heißen Sie?", "Wie heißt du?", "Wer bist du?"],
+          "answer": "Wie heißen Sie?",
+          "explanation": "Sie is the polite form; du is for friends."
+        },
+        {
+          "type": "gap",
+          "text": "Ich ___ aus Armenien und ich ___ in München.",
+          "answers": [["komme"], ["wohne"]],
+          "explanation": "With ich the verb ends in -e: ich komme, ich wohne."
+        },
+        {
+          "type": "order",
+          "prompt": "Where do you live? (polite)",
+          "tiles": ["wohnen", "Sie", "wo"],
+          "answers": ["Wo wohnen Sie"],
+          "explanation": "Question word first, then the verb, then Sie."
+        },
+        {
+          "type": "translate",
+          "direction": "en-de",
+          "text": "My first name is Hayk.",
+          "references": ["Mein Vorname ist Hayk."]
+        },
+        {
+          "type": "dictation",
+          "text": "Ich wohne in München.",
+          "explanation": "München has an ü."
+        }
+      ]
+    }
+  ]
+}

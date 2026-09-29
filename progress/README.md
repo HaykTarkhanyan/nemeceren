@@ -7,6 +7,7 @@ Written by the app when it runs locally (`npm run dev` in `app/`, "Saving to rep
 | `results/<test-id>__<timestamp>.json` | app, one file per submitted attempt; Claude adds `review` | JSON, see below |
 | `review-state.json` | app, rewritten after every word review | FSRS state per word |
 | `review-log.jsonl` | app, one line appended per word review, never rewritten | JSON Lines |
+| `lessons.json` | app, rewritten when a lesson is opened, scrolled, or marked done | lesson progress, see below |
 
 Run `npm run check-content` in `app/` after editing anything here. It validates every result (including your `review`) and the review state.
 
@@ -46,6 +47,10 @@ Run `npm run check-content` in `app/` after editing anything here. It validates 
 ```
 
 `localDay` is Hayk's local calendar day at submit time (missing in results saved before 2026-09-29). The statistics count the attempt on that day.
+
+The same format is used for:
+- **lesson exercises**: `testId` is `<lesson id>-ex<n>` (the lesson's n-th exercise block), `testTitle` is `"<lesson title>: <exercise title>"`, and two extra keys say where it came from: `"lessonId": "u1-01-sich-vorstellen", "section": 8` (index into the lesson's `sections`; always both or neither);
+- **listening practice** (dictation of example sentences of learned words): `testId` is `listening-practice`; its questions are in the result itself, there is no content file behind it.
 
 Per item:
 - `index` - 0-based position in the test's `items`.
@@ -87,7 +92,7 @@ To grade an attempt, add a `review` key to the result file. Do not change anythi
   }
 }
 ```
-Keyed by word `id` from `content/words.json`; a word with no entry has never been reviewed. `state`: 0 New, 1 Learning, 2 Review, 3 Relearning. `newToday.date` is Hayk's local date. Do not edit this by hand; it is the ts-fsrs card state. It is also baked into the GitHub Pages build, so the phone starts from the state of the last push.
+Keyed by word `id` from `content/words.json`; a word with no entry has never been reviewed. `newToday.extra` (only present when used) is how many extra new words Hayk asked for on that day with "Learn more new words today"; it only raises that day's limit. `state`: 0 New, 1 Learning, 2 Review, 3 Relearning. `newToday.date` is Hayk's local date. Do not edit this by hand; it is the ts-fsrs card state. It is also baked into the GitHub Pages build, so the phone starts from the state of the last push.
 
 ## `review-log.jsonl`
 
@@ -101,6 +106,19 @@ One JSON object per line, appended after every word review:
 - `answer`, `correct`, `nearMiss` - typed modes only, otherwise `null`.
 - `stateBefore`/`stateAfter` - FSRS state as above; `due` - next review time.
 - `localDay` - Hayk's local calendar day when the review happened; `timeMs` - time from showing the card to grading it. Both are missing in lines written before 2026-09-29.
+- `practice: true` - extra practice of weak words ("What next" menu). The FSRS schedule was NOT changed: `stateBefore`/`stateAfter` are the same and `due` is the unchanged due date. Absent for normal reviews.
+
+## `lessons.json`
+
+```json
+{
+  "version": 1,
+  "lessons": {
+    "u1-01-sich-vorstellen": { "startedAt": "2026-09-29T10:00:00.000Z", "updatedAt": "2026-09-29T10:12:40.000Z", "lastSection": 4, "doneAt": null }
+  }
+}
+```
+A lesson with no entry has not been opened. Opening it creates the entry (and unlocks its words, see `content/README.md`); `lastSection` is the index of the section Hayk last had at the top of the screen; `doneAt` is set by "Mark lesson as done" and cleared by "Mark as not done".
 
 ## Statistics (Stats page)
 
@@ -108,7 +126,7 @@ Computed in the app from the review log and the result files, by the pure functi
 
 | term | definition |
 |---|---|
-| study day | a local calendar day with at least one word review or one answered test item. The day is the `localDay` recorded when it happened, so a review at 23:30 in Munich counts for that Munich day even when viewed later from Yerevan. Old records without `localDay` use the day in the time zone of the device showing the stats. |
+| study day | a local calendar day with at least one word review (practice included) or one answered test item (lesson exercises and listening practice included). The day is the `localDay` recorded when it happened, so a review at 23:30 in Munich counts for that Munich day even when viewed later from Yerevan. Old records without `localDay` use the day in the time zone of the device showing the stats. |
 | streak | study days in a row ending today; before anything is done today, the streak still counts up to yesterday |
 | longest streak | the longest such run ever |
 | days this week / month | study days from Monday to today / in the current calendar month |
@@ -116,6 +134,7 @@ Computed in the app from the review log and the result files, by the pure functi
 | session | activities with no gap of 30 minutes or more between the end of one and the start of the next. A session counts on the day of its first activity, so one that runs past midnight is one session on the day it started. |
 | minutes | the sum of measured time: each review's `timeMs` (capped at 2 min, so a card left open does not count) and each test item's `timeMs` (capped at 20 min), counted on the activity's day. Reviews without `timeMs` count everywhere except minutes, and the page says how many there are. |
 | % correct | reviews not graded Again, divided by all reviews |
+| practice | practice reviews count as study time, sessions and study days, but not in the reviews chart or % correct, because they do not change the schedule |
 | known word | a word in `content/words.json` whose FSRS card is in the Review state with an interval (`scheduled_days`) of 21 days or more |
 | learning | a reviewed word that is not known yet |
 | due today | cards due before the end of today (same as the Words page) |

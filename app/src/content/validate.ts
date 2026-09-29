@@ -2,10 +2,13 @@
 // Every error names the file and the field path, e.g.
 //   content/tests/a1-01.json: items[3].answers[0]: "..." does not use exactly the tiles [...]
 import type { z } from 'zod'
-import { CuratedGlossary, GeneratedGlossary, Result, ReviewLogEntry, ReviewState, Test, WordList } from './schema.ts'
+import { exerciseSections, exerciseTestId } from './lessons.ts'
+import { CuratedGlossary, GeneratedGlossary, Lesson, LessonProgress, Result, ReviewLogEntry, ReviewState, Test, WordList } from './schema.ts'
 import type {
   CuratedGlossary as CuratedGlossaryT,
   GeneratedGlossary as GeneratedGlossaryT,
+  Lesson as LessonT,
+  LessonProgress as LessonProgressT,
   Result as ResultT,
   ReviewLogEntry as ReviewLogEntryT,
   ReviewState as ReviewStateT,
@@ -53,6 +56,18 @@ export function parseTest(file: string, data: unknown): TestT {
   return test
 }
 
+export function parseLesson(file: string, data: unknown): LessonT {
+  const lesson = parseWith(Lesson, file, data)
+  if (lesson.id !== baseName(file)) {
+    throw new ContentError([`${file}: id: "${lesson.id}" must match the file name ("${baseName(file)}")`])
+  }
+  return lesson
+}
+
+export function parseLessonProgress(file: string, data: unknown): LessonProgressT {
+  return parseWith(LessonProgress, file, data)
+}
+
 export function parseWords(file: string, data: unknown): WordT[] {
   return parseWith(WordList, file, data)
 }
@@ -96,9 +111,10 @@ export interface RawFile {
  * Validate all content at once and collect every problem instead of stopping at the first,
  * so one run shows everything that needs fixing.
  */
-export function checkAllContent(input: { tests: RawFile[]; words: RawFile }): {
+export function checkAllContent(input: { tests: RawFile[]; words: RawFile; lessons: RawFile[] }): {
   tests: TestT[]
   words: WordT[]
+  lessons: LessonT[]
   problems: string[]
 } {
   const problems: string[] = []
@@ -119,5 +135,44 @@ export function checkAllContent(input: { tests: RawFile[]; words: RawFile }): {
   collect(() => {
     words = parseWords(input.words.file, parseJsonText(input.words.file, input.words.text))
   })
-  return { tests, words, problems }
+  const lessons: LessonT[] = []
+  for (const raw of input.lessons) {
+    collect(() => lessons.push(parseLesson(raw.file, parseJsonText(raw.file, raw.text))))
+  }
+  problems.push(...crossReferences(tests, words, lessons))
+  return { tests, words, lessons, problems }
+}
+
+/** References between files: lesson words and tests exist, test lessons exist, no id or position clashes. */
+function crossReferences(tests: TestT[], words: WordT[], lessons: LessonT[]): string[] {
+  const problems: string[] = []
+  const wordIds = new Set(words.map((w) => w.id))
+  const testIds = new Set(tests.map((t) => t.id))
+  const lessonById = new Map(lessons.map((l) => [l.id, l]))
+  const position = new Map<string, string>()
+  for (const l of lessons) {
+    const file = `content/lessons/${l.id}.json`
+    l.words?.forEach((id, i) => {
+      if (!wordIds.has(id)) problems.push(`${file}: words[${i}]: no word with id "${id}" in content/words.json`)
+    })
+    l.tests?.forEach((id, i) => {
+      if (!testIds.has(id)) problems.push(`${file}: tests[${i}]: no test with id "${id}" in content/tests/`)
+    })
+    const key = `${l.unit}/${l.order}`
+    const other = position.get(key)
+    if (other) problems.push(`${file}: order: unit ${l.unit} already has a lesson with order ${l.order} (${other})`)
+    position.set(key, l.id)
+    for (const ex of exerciseSections(l)) {
+      const id = exerciseTestId(l.id, ex.number)
+      if (testIds.has(id)) problems.push(`${file}: sections[${ex.section}]: its results would be saved as "${id}", which is also a test id`)
+    }
+  }
+  for (const t of tests) {
+    const file = `content/tests/${t.id}.json`
+    if (t.lesson === undefined) continue
+    const l = lessonById.get(t.lesson)
+    if (!l) problems.push(`${file}: lesson: no lesson with id "${t.lesson}" in content/lessons/`)
+    else if (t.unit !== undefined && t.unit !== l.unit) problems.push(`${file}: unit: ${t.unit} but its lesson "${l.id}" is in unit ${l.unit}`)
+  }
+  return problems
 }

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { content } from '../content/load.ts'
+import { itemsForResult } from '../content/lessons.ts'
 import { ResultView } from '../components/ResultView.tsx'
 import { messageOf } from '../lib/errors.ts'
 import { finalScore } from '../lib/grading.ts'
@@ -71,7 +72,7 @@ export function ResultDetailPage({ name }: { name: string }) {
       <p className="muted small">
         {new Date(result.submittedAt).toLocaleString()} - {SAVE_MODE === 'repo' ? `progress/${file}` : 'saved in this browser'}
       </p>
-      <ResultView result={result} test={content.tests.find((t) => t.id === result.testId)} />
+      <ResultView result={result} items={itemsForResult(result, content.tests, content.lessons)} />
     </div>
   )
 }

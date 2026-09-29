@@ -21,7 +21,11 @@ import {
   wordProgress,
 } from '../lib/stats.ts'
 import type { DayStats, ReviewEvent, TestItemEvent } from '../lib/stats.ts'
-import { loadActivity, loadReviewState, SAVE_MODE } from '../lib/storage.ts'
+import { contentRunway, runwayText } from '../lib/plan.ts'
+import { useSettings } from '../lib/settings.ts'
+import { listResults, loadActivity, loadReviewState, SAVE_MODE } from '../lib/storage.ts'
+import type { SavedResult } from '../lib/storage.ts'
+import { useLessonProgress } from './LessonsPage.tsx'
 
 type Activity = { reviews: ReviewEvent[]; testItems: TestItemEvent[] }
 
@@ -75,12 +79,17 @@ export function StatsPage() {
   const { activity, error } = useActivity()
   const [state, setState] = useState<ReviewState | null>(null)
   const [stateError, setStateError] = useState<string | null>(null)
+  const [results, setResults] = useState<SavedResult[] | null>(null)
+  const lessons = useLessonProgress()
+  const settings = useSettings()
   useEffect(() => {
     loadReviewState().then(setState, (err: unknown) => setStateError(messageOf(err)))
+    listResults().then(setResults, (err: unknown) => setStateError(messageOf(err)))
   }, [])
 
-  if (error || stateError) return <div className="alert error">Could not load your progress: {error ?? stateError}</div>
-  if (!activity || !state) return <p className="muted">Loading...</p>
+  const loadError = error ?? stateError ?? lessons.error
+  if (loadError) return <div className="alert error">Could not load your progress: {loadError}</div>
+  if (!activity || !state || !results || !lessons.progress) return <p className="muted">Loading...</p>
 
   const now = new Date()
   const today = localDay(now)
@@ -106,8 +115,14 @@ export function StatsPage() {
     ],
     tooltip:
       d.reviews > 0
-        ? [dayTitle(d.day), `${d.reviews} review${d.reviews === 1 ? '' : 's'}`, `${d.correct} correct (${pct(d.correct, d.reviews)}%)`, `${d.reviews - d.correct} Again`]
-        : [dayTitle(d.day), 'no reviews'],
+        ? [
+            dayTitle(d.day),
+            `${d.reviews} review${d.reviews === 1 ? '' : 's'}`,
+            `${d.correct} correct (${pct(d.correct, d.reviews)}%)`,
+            `${d.reviews - d.correct} Again`,
+            ...(d.practice > 0 ? [`+${d.practice} practice`] : []),
+          ]
+        : [dayTitle(d.day), 'no reviews', ...(d.practice > 0 ? [`+${d.practice} practice`] : [])],
   }))
   const sessionBars: BarDatum[] = last30.map((d, i) => ({
     key: d.day,
@@ -176,10 +191,26 @@ export function StatsPage() {
         )}
       </section>
 
+      <section className="card stack">
+        <h2>Prepared material left</h2>
+        <p className="small">
+          {runwayText(
+            contentRunway(content, lessons.progress, state, results.map((r) => r.result), settings.newPerDay),
+            settings.newPerDay,
+          )}
+          .
+        </p>
+        <p className="muted small">When any of this runs low, ask Claude to prepare more.</p>
+      </section>
+
       <details className="card">
         <summary>How these are counted</summary>
         <ul className="small">
-          <li>A study day is a day with at least one word review or one answered test item, in your local time when you did it.</li>
+          <li>
+            A study day is a day with at least one word review (practice included) or one answered test item (lesson exercises and listening practice
+            included), in your local time when you did it.
+          </li>
+          <li>Practice of weak words counts as study time and sessions, but not in the reviews chart, because it does not change the schedule.</li>
           <li>The streak counts study days in a row up to today; before you study today it still counts up to yesterday.</li>
           <li>A session is a stretch of reviews and tests with no break of {SESSION_GAP_MS / 60_000} minutes or more. It counts on the day it started.</li>
           <li>

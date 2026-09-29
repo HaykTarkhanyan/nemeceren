@@ -27,7 +27,7 @@ Other commands (in `app/`):
 
 | path | what |
 |---|---|
-| `content/` | written by Claude: `tests/*.json`, `words.json`. `content/README.md` is the authoring guide with the exact JSON formats. |
+| `content/` | written by Claude: `lessons/*.json`, `tests/*.json`, `words.json`, the glossary. `content/README.md` is the authoring guide with the exact JSON formats. |
 | `progress/` | written by the app: results, word review state and log. Claude adds grading to result files. See `progress/README.md`. |
 | `app/` | the Vite + React + TypeScript app |
 | `.github/workflows/pages.yml` | checks content, tests, builds and deploys to GitHub Pages on every push to `main` |

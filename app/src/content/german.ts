@@ -1,7 +1,8 @@
 // Which content fields hold German text, and how German text is split into words.
 // Used by the glossary generator, check-content (every German word needs an entry)
 // and the word popups, so all three agree on what a "word" is.
-import type { Item, Test, Word } from './schema.ts'
+import { germanSpans } from './richtext.ts'
+import type { Item, Lesson, LessonBlock, Test, Word } from './schema.ts'
 
 /** A run of letters, optionally joined by hyphens or apostrophes: "E-Mail", "geht's". */
 const WORD = /\p{L}+(?:[-'\u2019]\p{L}+)*/gu
@@ -93,7 +94,35 @@ export function wordGermanFields(w: Word): { field: string; text: string }[] {
   ]
 }
 
-export function germanFields(tests: { file: string; test: Test }[], words: { file: string; words: Word[] }): GermanField[] {
+/**
+ * The German parts of a lesson block: [[German]] spans in explanation, comparison, tip and
+ * warning text; example and audio sentences; table cells in "words" columns; exercise items.
+ * Table cells in "sound" columns (letters, sounds) are spoken but not glossary words.
+ */
+export function blockGermanFields(block: LessonBlock): { field: string; text: string }[] {
+  switch (block.type) {
+    case 'explanation':
+    case 'comparison':
+    case 'tip':
+    case 'warning':
+      return germanSpans(block.text).map((text, i) => ({ field: `text [[German]] #${i + 1}`, text }))
+    case 'examples':
+    case 'audio':
+      return block.items.map((it, i) => ({ field: `items[${i}].de`, text: it.de }))
+    case 'table':
+      return block.rows.flatMap((row, r) =>
+        block.columns.flatMap((col, c) => (col.de === 'words' ? [{ field: `rows[${r}][${c}]`, text: row[c] }] : [])),
+      )
+    case 'exercise':
+      return block.items.flatMap((item, i) => itemGermanFields(item).map((f) => ({ field: `items[${i}].${f.field}`, text: f.text })))
+  }
+}
+
+export function germanFields(
+  tests: { file: string; test: Test }[],
+  words: { file: string; words: Word[] },
+  lessons: { file: string; lesson: Lesson }[],
+): GermanField[] {
   const out: GermanField[] = []
   for (const { file, test } of tests) {
     test.items.forEach((item, i) => {
@@ -103,5 +132,10 @@ export function germanFields(tests: { file: string; test: Test }[], words: { fil
   words.words.forEach((w, i) => {
     for (const f of wordGermanFields(w)) out.push({ where: `${words.file} [${i}].${f.field}`, text: f.text })
   })
+  for (const { file, lesson } of lessons) {
+    lesson.sections.forEach((block, i) => {
+      for (const f of blockGermanFields(block)) out.push({ where: `${file} sections[${i}].${f.field}`, text: f.text })
+    })
+  }
   return out
 }

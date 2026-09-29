@@ -22,6 +22,7 @@ export function Header({ route }: { route: string[] }) {
   const here = route[0] ?? ''
   const nav: [string, string][] = [
     ['', 'Home'],
+    ['lessons', 'Lessons'],
     ['words', 'Words'],
     ['results', 'Results'],
     ['stats', 'Stats'],
