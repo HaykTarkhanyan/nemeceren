@@ -1,6 +1,6 @@
 // Study statistics as pure functions over plain event arrays. They do not know where the
-// events come from (today: progress/ files or browser storage via lib/storage.ts; later a
-// database). Definitions, also documented in progress/README.md:
+// events come from (lib/storage.ts builds them from the progress in Neon, plus unsynced changes).
+// Definitions:
 //   study day   a local calendar day with at least one word review (practice included) or one
 //               answered test item (lesson exercises included)
 //   streak      consecutive study days ending today, or ending yesterday if today has none yet

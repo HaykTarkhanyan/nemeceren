@@ -319,7 +319,8 @@ export const Result = z
     testId: Slug,
     testTitle: z.string(),
     level: Level,
-    mode: z.enum(['repo', 'browser']),
+    /** Where the attempt was made: "repo" and "browser" before 2026-09-29 (file storage), "web" since the Neon backend. */
+    mode: z.enum(['repo', 'browser', 'web']),
     startedAt: IsoDateTime,
     submittedAt: IsoDateTime,
     /** Hayk's local calendar day at submit time. Missing in results saved before 2026-09-29. */
@@ -375,7 +376,7 @@ export const ReviewState = z.strictObject({
   cards: z.record(z.string(), StoredCard),
 })
 
-// ---------- Word review log (one line of progress/review-log.jsonl, written by the app) ----------
+// ---------- Word review log (one review event, written by the app, stored in Neon) ----------
 
 export const ReviewMode = z.enum(['recognition', 'production', 'listening'])
 

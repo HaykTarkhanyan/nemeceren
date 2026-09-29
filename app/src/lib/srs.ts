@@ -147,23 +147,10 @@ export function formatInterval(ms: number): string {
 }
 
 /**
- * Merge two review states (used in phone mode: the build-time snapshot from the repo plus
- * what this browser already has). Per word, the card with the later last review wins.
+ * The newer of two versions of the same card: the later last review wins, and on a tie the
+ * second one (the local change). The API applies the same rule (DECISIONS.md #36).
  */
-export function mergeStates(a: ReviewState, b: ReviewState): ReviewState {
+export function laterCard(a: StoredCard, b: StoredCard): StoredCard {
   const lastReview = (c: StoredCard) => (c.last_review ? Date.parse(c.last_review) : -Infinity)
-  const cards = { ...a.cards }
-  for (const [id, card] of Object.entries(b.cards)) {
-    const mine = cards[id]
-    if (!mine || lastReview(card) > lastReview(mine)) cards[id] = card
-  }
-  let newToday = a.newToday
-  if (a.newToday.date === b.newToday.date) {
-    const extra = Math.max(a.newToday.extra ?? 0, b.newToday.extra ?? 0)
-    newToday = { date: a.newToday.date, count: Math.max(a.newToday.count, b.newToday.count), ...(extra > 0 ? { extra } : {}) }
-  } else if (b.newToday.date > a.newToday.date) {
-    newToday = b.newToday
-  }
-  const updatedAt = Date.parse(a.updatedAt) >= Date.parse(b.updatedAt) ? a.updatedAt : b.updatedAt
-  return { version: 1, scheduler: 'fsrs', updatedAt, newToday, cards }
+  return lastReview(a) > lastReview(b) ? a : b
 }

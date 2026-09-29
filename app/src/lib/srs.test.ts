@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import type { Word } from '../content/schema.ts'
 import { ReviewState as ReviewStateSchema } from '../content/schema.ts'
-import { counts, emptyState, fromStored, mergeStates, nextCard, Rating, review, State, toStored } from './srs.ts'
+import { counts, emptyState, fromStored, laterCard, nextCard, Rating, review, State, toStored } from './srs.ts'
 
 const word = (id: string): Word => ({ id, de: id, en: id, level: 'A1', added: '2026-09-28' })
 const words = ['a', 'b', 'c'].map(word)
@@ -75,22 +75,15 @@ describe('queue', () => {
   })
 })
 
-describe('mergeStates', () => {
-  it('keeps, per word, the card with the later last review', () => {
-    const pc = review(review(emptyState(t0), 'a', Rating.Good, t0).state, 'b', Rating.Good, t0).state
-    const phone = review(pc, 'a', Rating.Good, minutes(t0, 30)).state
-    const olderPhone = { ...phone, cards: { a: phone.cards.a } }
-    const merged = mergeStates(pc, olderPhone)
-    expect(merged.cards.a).toEqual(phone.cards.a)
-    expect(merged.cards.b).toEqual(pc.cards.b)
-    expect(mergeStates(olderPhone, pc).cards.a).toEqual(phone.cards.a)
-  })
-
-  it('takes the larger new-card count for the same day and the later day otherwise', () => {
-    const a = { ...emptyState(t0), newToday: { date: '2026-09-28', count: 3 } }
-    const b = { ...emptyState(t0), newToday: { date: '2026-09-28', count: 5 } }
-    const c = { ...emptyState(t0), newToday: { date: '2026-09-29', count: 1 } }
-    expect(mergeStates(a, b).newToday).toEqual({ date: '2026-09-28', count: 5 })
-    expect(mergeStates(b, c).newToday).toEqual({ date: '2026-09-29', count: 1 })
+describe('laterCard', () => {
+  it('keeps the card with the later last review, and the second one on a tie', () => {
+    const early = review(emptyState(t0), 'a', Rating.Good, t0).after
+    const late = review(emptyState(t0), 'a', Rating.Good, minutes(t0, 30)).after
+    expect(laterCard(early, late)).toBe(late)
+    expect(laterCard(late, early)).toBe(late)
+    const twin = { ...early }
+    expect(laterCard(early, twin)).toBe(twin)
+    const never = { ...early, last_review: null }
+    expect(laterCard(early, never)).toBe(early)
   })
 })

@@ -31,7 +31,7 @@ Evidence and sources are in `_knowledge/2026-09-28_llm-tutoring-and-materials.md
 ## Where things are
 
 - `reference/`: Goethe word lists (PDF + searchable TSV), DWDS lists, noun genders, A1 mock exams, BAMF curriculum. Start with `reference/README.md`.
-- `app/`, `content/`, `progress/`: the learning platform. Claude writes tests and words into `content/` (format in `content/README.md`), and Hayk's results land in `progress/` (format in `progress/README.md`).
+- `app/`, `content/`, `backend/`: the learning platform. Claude writes tests and words into `content/` (format in `content/README.md`). Hayk's progress lives in Neon; Claude reads and grades it with `uv run backend/scripts/progress.py` (commands in `progress/README.md`).
 - `DECISIONS.md` (why things are built this way), `DEFERRED_TODO.md`, `_knowledge/` (research), `_work_sessions/` (session logs), `_learnings/`.
 
 ## Neon (progress database)

@@ -1,47 +1,31 @@
 // "What next" when the day's reviews are done: more new words, practice of weak words, the next
 // lesson, the next test, listening practice. Every option either works or says plainly why not.
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { content } from '../content/load.ts'
-import type { LessonProgress, Result, ReviewLogEntry, ReviewState, Word } from '../content/schema.ts'
+import type { Word } from '../content/schema.ts'
 import { messageOf } from '../lib/errors.ts'
 import { listeningWords, lockedWordIds, nextLesson, nextTest, studyWords, weakWords } from '../lib/plan.ts'
 import { link } from '../lib/router.ts'
-import { addExtraNew } from '../lib/srs.ts'
-import { listResults, loadReviewLog, saveReviewState } from '../lib/storage.ts'
+import { addExtraNewWords, useProgress } from '../lib/storage.ts'
 
-export function WhatNext(props: {
-  state: ReviewState
-  progress: LessonProgress
-  onState: (s: ReviewState) => void
-  onPractice: (words: Word[]) => void
-}) {
-  const { state, progress, onState, onPractice } = props
-  const [data, setData] = useState<{ results: Result[]; log: ReviewLogEntry[] } | null>(null)
+export function WhatNext(props: { onMoreNew: () => void; onPractice: (words: Word[]) => void }) {
+  const { onMoreNew, onPractice } = props
+  const view = useProgress()
+  const state = view.reviewState
+  const progress = view.lessonProgress
+  const data = { results: view.results.map((r) => r.result), log: view.reviewLog }
   const [error, setError] = useState<string | null>(null)
-  const [saving, setSaving] = useState(false)
 
-  useEffect(() => {
-    Promise.all([listResults(), loadReviewLog()]).then(
-      ([saved, log]) => setData({ results: saved.map((s) => s.result), log }),
-      (err: unknown) => setError(messageOf(err)),
-    )
-  }, [])
-
-  async function moreNew(n: number) {
-    const next = addExtraNew(state, n, new Date())
-    setSaving(true)
+  function moreNew(n: number) {
     try {
-      await saveReviewState(next)
-      onState(next)
+      addExtraNewWords(n)
+      onMoreNew()
     } catch (err) {
       setError(`Could not add new words: ${messageOf(err)}`)
-    } finally {
-      setSaving(false)
     }
   }
 
   if (error) return <div className="alert error">{error}</div>
-  if (!data) return <p className="muted">Loading...</p>
 
   const now = new Date()
   const available = studyWords(content.words, content.lessons, progress, state).filter((w) => !state.cards[w.id]).length
@@ -64,7 +48,7 @@ export function WhatNext(props: {
             </span>
             <div className="row">
               {[5, 10].map((n) => (
-                <button key={n} type="button" className="btn small" disabled={saving} onClick={() => void moreNew(n)}>
+                <button key={n} type="button" className="btn small" onClick={() => moreNew(n)}>
                   +{Math.min(n, available)} new
                 </button>
               ))}

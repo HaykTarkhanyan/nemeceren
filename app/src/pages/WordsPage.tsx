@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import type { FormEvent, ReactNode } from 'react'
 import { content } from '../content/load.ts'
-import type { ReviewLogEntry, ReviewMode, ReviewState, Word } from '../content/schema.ts'
+import type { ReviewLogEntry, ReviewMode, ReviewState, StoredCard, Word } from '../content/schema.ts'
 import { WhatNext } from '../components/WhatNext.tsx'
 import { nearMissText } from '../components/ResultView.tsx'
 import { De, GlossScope } from '../components/GermanText.tsx'
@@ -16,10 +16,9 @@ import { useSettings } from '../lib/settings.ts'
 import { speak } from '../lib/speech.ts'
 import { counts, GRADES, LEARN_AHEAD_MS, nextCard, previewIntervals, Rating, review } from '../lib/srs.ts'
 import type { Grade } from '../lib/srs.ts'
-import { appendReviewLog, loadReviewState, saveReviewState } from '../lib/storage.ts'
+import { recordPractice, recordReview, requestFlush, useProgress } from '../lib/storage.ts'
 import { checkWord } from '../lib/text.ts'
 import type { Comparison } from '../lib/text.ts'
-import { useLessonProgress } from './LessonsPage.tsx'
 
 const MODES: { mode: ReviewMode; title: string; desc: string }[] = [
   { mode: 'recognition', title: 'German to English', desc: 'See the German word, recall the meaning, grade yourself.' },
@@ -34,36 +33,20 @@ const GRADE_LABEL: Record<Grade, string> = {
   [Rating.Easy]: 'Easy',
 }
 
-export function useReviewState() {
-  const [state, setState] = useState<ReviewState | null>(null)
-  const [error, setError] = useState<string | null>(null)
-  useEffect(() => {
-    loadReviewState().then(setState, (err: unknown) => setError(messageOf(err)))
-  }, [])
-  return { state, setState, error }
-}
-
 export function WordsPage() {
-  const { state, setState, error } = useReviewState()
-  const lessons = useLessonProgress()
+  const progress = useProgress()
+  const state = progress.reviewState
   const settings = useSettings()
   const [mode, setMode] = useState<ReviewMode | null>(null)
   const [practice, setPractice] = useState<Word[] | null>(null)
   // Each practice start gets a fresh session, even from the "practice done" screen.
   const [practiceRun, setPracticeRun] = useState(0)
 
-  if (error) return <div className="alert error">Could not load the review state: {error}</div>
-  if (lessons.error) return <div className="alert error">Could not load your lesson progress: {lessons.error}</div>
-  if (!state || !lessons.progress) return <p className="muted">Loading...</p>
-
   // Words of lessons that are not open yet wait until their lesson is opened.
-  const words = studyWords(content.words, content.lessons, lessons.progress, state)
+  const words = studyWords(content.words, content.lessons, progress.lessonProgress, state)
   const whatNext = (
     <WhatNext
-      state={state}
-      progress={lessons.progress}
-      onState={(next) => {
-        setState(next)
+      onMoreNew={() => {
         // More new words: back to normal reviews, also from the "practice done" screen.
         setPractice(null)
       }}
@@ -77,11 +60,33 @@ export function WordsPage() {
   )
 
   if (mode && practice) {
-    return <PracticeSession key={practiceRun} mode={mode} words={practice} state={state} onExit={() => setPractice(null)} whatNext={whatNext} />
+    return (
+      <PracticeSession
+        key={practiceRun}
+        mode={mode}
+        words={practice}
+        state={state}
+        onExit={() => {
+          setPractice(null)
+          requestFlush()
+        }}
+        whatNext={whatNext}
+      />
+    )
   }
   if (mode) {
     return (
-      <Session mode={mode} words={words} state={state} onState={setState} onExit={() => setMode(null)} newLimit={settings.newPerDay} whatNext={whatNext} />
+      <Session
+        mode={mode}
+        words={words}
+        state={state}
+        onExit={() => {
+          setMode(null)
+          requestFlush()
+        }}
+        newLimit={settings.newPerDay}
+        whatNext={whatNext}
+      />
     )
   }
 
@@ -122,8 +127,8 @@ export function WordsPage() {
 }
 
 interface Failed {
-  state: ReviewState
   entry: ReviewLogEntry
+  card: StoredCard
   message: string
 }
 
@@ -131,12 +136,11 @@ function Session(props: {
   mode: ReviewMode
   words: Word[]
   state: ReviewState
-  onState: (s: ReviewState) => void
   onExit: () => void
   newLimit: number
   whatNext: ReactNode
 }) {
-  const { mode, words, state, onState, onExit, newLimit, whatNext } = props
+  const { mode, words, state, onExit, newLimit, whatNext } = props
   const [now, setNow] = useState(() => new Date())
   const [saving, setSaving] = useState(false)
   const [failed, setFailed] = useState<Failed | null>(null)
@@ -152,17 +156,22 @@ function Session(props: {
     return () => window.clearTimeout(t)
   }, [waitUntil])
 
-  async function persist(nextState: ReviewState, entry: ReviewLogEntry) {
+  // A review round is over (nothing due now): send it.
+  const roundOver = next.kind !== 'card' && stats.reviewed > 0
+  useEffect(() => {
+    if (roundOver) requestFlush()
+  }, [roundOver])
+
+  /** Saves on this device (the outbox); the store then shows the new state everywhere. */
+  function persist(entry: ReviewLogEntry, card: StoredCard) {
     setSaving(true)
     try {
-      await saveReviewState(nextState)
-      await appendReviewLog(entry)
+      recordReview(entry, card)
       setFailed(null)
-      onState(nextState)
       setStats((s) => ({ reviewed: s.reviewed + 1, again: s.again + (entry.rating === Rating.Again ? 1 : 0) }))
       setNow(new Date())
     } catch (err) {
-      setFailed({ state: nextState, entry, message: messageOf(err) })
+      setFailed({ entry, card, message: messageOf(err) })
     } finally {
       setSaving(false)
     }
@@ -187,7 +196,7 @@ function Session(props: {
       stateAfter: out.after.state,
       due: out.after.due,
     }
-    void persist(out.state, entry)
+    persist(entry, out.after)
   }
 
   const header = (
@@ -207,7 +216,7 @@ function Session(props: {
         {header}
         <div className="alert error" role="alert">
           <span>Your last grade was NOT saved: {failed.message}</span>
-          <button type="button" className="btn small" disabled={saving} onClick={() => void persist(failed.state, failed.entry)}>
+          <button type="button" className="btn small" disabled={saving} onClick={() => persist(failed.entry, failed.card)}>
             Retry saving
           </button>
         </div>
@@ -263,11 +272,16 @@ function PracticeSession(props: { mode: ReviewMode; words: Word[]; state: Review
   const [again, setAgain] = useState(0)
   const [saving, setSaving] = useState(false)
   const [failed, setFailed] = useState<{ entry: ReviewLogEntry; message: string } | null>(null)
+  // The practice round is over: send it.
+  const practiceOver = index >= words.length && index > 0
+  useEffect(() => {
+    if (practiceOver) requestFlush()
+  }, [practiceOver])
 
-  async function persist(entry: ReviewLogEntry) {
+  function persist(entry: ReviewLogEntry) {
     setSaving(true)
     try {
-      await appendReviewLog(entry)
+      recordPractice(entry)
       setFailed(null)
       setAgain((a) => a + (entry.rating === Rating.Again ? 1 : 0))
       setIndex((i) => i + 1)
@@ -282,7 +296,7 @@ function PracticeSession(props: { mode: ReviewMode; words: Word[]; state: Review
     const card = state.cards[word.id]
     if (!card) throw new Error(`Practice word "${word.id}" has never been reviewed`)
     const at = new Date()
-    void persist({
+    persist({
       ts: at.toISOString(),
       localDay: localDay(at),
       timeMs,
@@ -318,7 +332,7 @@ function PracticeSession(props: { mode: ReviewMode; words: Word[]; state: Review
         {header}
         <div className="alert error" role="alert">
           <span>Your last answer was NOT saved: {failed.message}</span>
-          <button type="button" className="btn small" disabled={saving} onClick={() => void persist(failed.entry)}>
+          <button type="button" className="btn small" disabled={saving} onClick={() => persist(failed.entry)}>
             Retry saving
           </button>
         </div>

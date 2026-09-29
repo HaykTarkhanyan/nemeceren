@@ -3,7 +3,7 @@ import type { Item } from '../content/schema.ts'
 import { GAP_MARKER } from '../content/schema.ts'
 import type { AnswerValue } from '../lib/grading.ts'
 import { shuffle } from '../lib/shuffle.ts'
-import { SAVE_MODE } from '../lib/storage.ts'
+import { useProgress, useSyncStatus } from '../lib/storage.ts'
 import { countWords } from '../lib/text.ts'
 import { De } from './GermanText.tsx'
 import { PlayButtons, Speaker } from './Speaker.tsx'
@@ -29,16 +29,26 @@ export function initialLayout(item: Item): string[] | null {
   return null
 }
 
-export type SaveStatus = { state: 'saving' } | { state: 'saved'; file: string } | { state: 'error'; message: string }
+export type SaveStatus = { state: 'saved'; id: string } | { state: 'error'; message: string }
 
 export function SaveLine({ save, onRetry }: { save: SaveStatus | null; onRetry: () => void }) {
-  if (!save || save.state === 'saving') return <p className="muted">Saving...</p>
+  const { pendingAttemptIds } = useProgress()
+  const sync = useSyncStatus()
+  if (!save) return null
   if (save.state === 'saved') {
-    return (
-      <p className="muted small">
-        {SAVE_MODE === 'repo' ? `Saved to progress/${save.file}` : 'Saved in this browser (phone mode, not synced to the repo).'}
-      </p>
-    )
+    const pending = pendingAttemptIds.includes(save.id)
+    let text = 'Saved and synced to your account.'
+    if (pending) {
+      text =
+        sync.phase === 'syncing'
+          ? 'Saved on this device. Syncing...'
+          : sync.phase === 'offline'
+            ? 'Saved on this device. Offline: it syncs when you are back online.'
+            : sync.phase === 'error'
+              ? 'Saved on this device, but the sync failed (see the message above).'
+              : 'Saved on this device, not synced yet.'
+    }
+    return <p className={`small ${pending && sync.phase === 'error' ? 'warn-text' : 'muted'}`}>{text}</p>
   }
   return (
     <div className="alert error" role="alert">

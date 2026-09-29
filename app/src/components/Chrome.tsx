@@ -1,22 +1,10 @@
-// App frame: header with navigation and save-mode badge, error banner, voice warning.
+// App frame: header with navigation and sync status, error banner, voice warning.
 import { Component } from 'react'
 import type { ReactNode } from 'react'
 import { dismissError, useErrors } from '../lib/errors.ts'
 import { link } from '../lib/router.ts'
 import { NO_VOICE_HELP, useSpeech } from '../lib/speech.ts'
-import { SAVE_MODE } from '../lib/storage.ts'
-
-export function ModeBadge() {
-  return SAVE_MODE === 'repo' ? (
-    <span className="badge ok" title="Results are written to the progress/ folder of the repo">
-      Saving to repo
-    </span>
-  ) : (
-    <span className="badge warn" title="Results stay in this browser and are not synced to the repo">
-      Phone mode: saved in this browser only
-    </span>
-  )
-}
+import { SyncStatusLine } from './SyncStatus.tsx'
 
 export function Header({ route }: { route: string[] }) {
   const here = route[0] ?? ''
@@ -41,7 +29,7 @@ export function Header({ route }: { route: string[] }) {
             </a>
           ))}
         </nav>
-        <ModeBadge />
+        <SyncStatusLine compact />
       </div>
     </header>
   )

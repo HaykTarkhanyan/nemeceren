@@ -1,12 +1,9 @@
 // Study dashboard: streaks and study days, word progress, and 30-day charts.
 // All numbers come from the pure functions in lib/stats.ts; this page only loads and draws.
-import { useEffect, useState } from 'react'
 import { content } from '../content/load.ts'
-import type { ReviewState } from '../content/schema.ts'
 import { BarChart } from '../components/BarChart.tsx'
 import type { BarDatum } from '../components/BarChart.tsx'
 import { localDay } from '../lib/dates.ts'
-import { messageOf } from '../lib/errors.ts'
 import { link } from '../lib/router.ts'
 import {
   dailyStats,
@@ -20,23 +17,18 @@ import {
   TEST_ITEM_CAP_MS,
   wordProgress,
 } from '../lib/stats.ts'
-import type { DayStats, ReviewEvent, TestItemEvent } from '../lib/stats.ts'
+import type { DayStats } from '../lib/stats.ts'
 import { contentRunway, runwayText } from '../lib/plan.ts'
 import { useSettings } from '../lib/settings.ts'
-import { listResults, loadActivity, loadReviewState, SAVE_MODE } from '../lib/storage.ts'
-import type { SavedResult } from '../lib/storage.ts'
-import { useLessonProgress } from './LessonsPage.tsx'
+import { activityOf, useProgress } from '../lib/storage.ts'
+import type { ProgressView } from '../lib/storage.ts'
 
-type Activity = { reviews: ReviewEvent[]; testItems: TestItemEvent[] }
-
-/** Loads study activity (for the Stats page and the streak line on Home). */
-export function useActivity(): { activity: Activity | null; error: string | null } {
-  const [activity, setActivity] = useState<Activity | null>(null)
-  const [error, setError] = useState<string | null>(null)
-  useEffect(() => {
-    loadActivity().then(setActivity, (err: unknown) => setError(messageOf(err)))
-  }, [])
-  return { activity, error }
+/**
+ * Study days: the all-time list from the server plus the days in the loaded events (which
+ * include changes not synced yet). The events only cover the last weeks.
+ */
+function allStudyDays(p: ProgressView, days: Map<string, DayStats>): Set<string> {
+  return new Set([...p.studyDays, ...studyDays(days)])
 }
 
 function dayTitle(day: string): string {
@@ -76,25 +68,15 @@ function Tile({ value, label }: { value: string | number; label: string }) {
 }
 
 export function StatsPage() {
-  const { activity, error } = useActivity()
-  const [state, setState] = useState<ReviewState | null>(null)
-  const [stateError, setStateError] = useState<string | null>(null)
-  const [results, setResults] = useState<SavedResult[] | null>(null)
-  const lessons = useLessonProgress()
+  const progress = useProgress()
   const settings = useSettings()
-  useEffect(() => {
-    loadReviewState().then(setState, (err: unknown) => setStateError(messageOf(err)))
-    listResults().then(setResults, (err: unknown) => setStateError(messageOf(err)))
-  }, [])
-
-  const loadError = error ?? stateError ?? lessons.error
-  if (loadError) return <div className="alert error">Could not load your progress: {loadError}</div>
-  if (!activity || !state || !results || !lessons.progress) return <p className="muted">Loading...</p>
+  const state = progress.reviewState
+  const activity = activityOf(progress)
 
   const now = new Date()
   const today = localDay(now)
   const days = dailyStats(activity.reviews, activity.testItems)
-  const study = studyDays(days)
+  const study = allStudyDays(progress, days)
   const streak = streaks(study, today)
   const cal = daysThisWeekAndMonth(study, today)
   const last30 = lastDays(days, today, 30)
@@ -142,9 +124,6 @@ export function StatsPage() {
   return (
     <div className="stack">
       <h1>Stats</h1>
-      {SAVE_MODE === 'browser' && (
-        <p className="muted small">Phone mode: these numbers only include what was done in this browser, not on the PC.</p>
-      )}
 
       <section className="card stack">
         <h2>Study days</h2>
@@ -195,7 +174,13 @@ export function StatsPage() {
         <h2>Prepared material left</h2>
         <p className="small">
           {runwayText(
-            contentRunway(content, lessons.progress, state, results.map((r) => r.result), settings.newPerDay),
+            contentRunway(
+              content,
+              progress.lessonProgress,
+              state,
+              progress.results.map((r) => r.result),
+              settings.newPerDay,
+            ),
             settings.newPerDay,
           )}
           .
@@ -230,11 +215,10 @@ export function StatsPage() {
 
 /** One line for Home: the current streak, with a link to the Stats page. */
 export function StreakLine() {
-  const { activity, error } = useActivity()
-  if (error) return <div className="alert error">Could not load your study days: {error}</div>
-  if (!activity) return null
+  const progress = useProgress()
+  const activity = activityOf(progress)
   const today = localDay(new Date())
-  const study = studyDays(dailyStats(activity.reviews, activity.testItems))
+  const study = allStudyDays(progress, dailyStats(activity.reviews, activity.testItems))
   const s = streaks(study, today)
   const cal = daysThisWeekAndMonth(study, today)
   return (

@@ -1,19 +1,18 @@
 // Listening practice: dictation of the example sentences of words Hayk has already learned.
 // Needs no new content; results are saved like a test (testId "listening-practice").
-import { useMemo } from 'react'
+import { useState } from 'react'
 import { content } from '../content/load.ts'
 import type { Item } from '../content/schema.ts'
 import { InlineExercise } from '../components/InlineExercise.tsx'
 import { listeningWords } from '../lib/plan.ts'
 import { link } from '../lib/router.ts'
-import { useReviewState } from './WordsPage.tsx'
+import { useProgress } from '../lib/storage.ts'
 
 export function ListenPage() {
-  const { state, error } = useReviewState()
-  const words = useMemo(() => (state ? listeningWords(content.words, state) : null), [state])
+  const state = useProgress().reviewState
+  // Fixed when the page opens, so sentences do not change while Hayk types.
+  const [words] = useState(() => listeningWords(content.words, state))
 
-  if (error) return <div className="alert error">Could not load the review state: {error}</div>
-  if (!words) return <p className="muted">Loading...</p>
   if (words.length === 0) {
     return (
       <div className="stack">

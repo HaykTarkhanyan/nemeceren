@@ -1,9 +1,10 @@
-import { ModeBadge } from '../components/Chrome.tsx'
+import { SignOutButton } from '../components/AuthGate.tsx'
+import { SyncStatusLine } from '../components/SyncStatus.tsx'
 import { reportError } from '../lib/errors.ts'
 import { RATES, updateSettings, useSettings } from '../lib/settings.ts'
 import type { Settings } from '../lib/settings.ts'
 import { pickVoice, speak, useSpeech } from '../lib/speech.ts'
-import { SAVE_MODE } from '../lib/storage.ts'
+import { useSession } from '../lib/session.ts'
 
 function save(patch: Partial<Settings>): void {
   try {
@@ -14,6 +15,7 @@ function save(patch: Partial<Settings>): void {
 }
 
 export function SettingsPage() {
+  const session = useSession()
   const settings = useSettings()
   const speech = useSpeech()
   const active = pickVoice(speech.voices, settings.voiceURI)
@@ -79,16 +81,19 @@ export function SettingsPage() {
       </section>
 
       <section className="card stack">
-        <h2>Where your work is saved</h2>
+        <h2>Account and sync</h2>
+        {session.phase === 'ready' && <p>Signed in as {session.user.email}.</p>}
+        <p className="muted small">
+          Your progress is saved to your account and is the same on every device. Changes are kept on this device first and sent after a test,
+          after a round of word reviews, every few minutes while you study, and when you leave the page.
+        </p>
         <p>
-          <ModeBadge />
+          <SyncStatusLine />
         </p>
-        <p className="muted">
-          {SAVE_MODE === 'repo'
-            ? 'Local mode: test results go to progress/results/, word reviews to progress/review-state.json and progress/review-log.jsonl in the repo.'
-            : 'Phone mode: results and reviews stay in this browser and are not synced. Word reviews started from the state the PC had at the last push.'}
-        </p>
-        <p className="muted small">The settings on this page are stored per device.</p>
+        <div className="row">
+          <SignOutButton />
+        </div>
+        <p className="muted small">The settings on this page (voice, speed, new words per day) are stored per device.</p>
       </section>
     </div>
   )

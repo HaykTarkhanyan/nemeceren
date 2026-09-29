@@ -11,7 +11,7 @@ import { messageOf } from '../lib/errors.ts'
 import { instructionFor, isBlank, resultItems, scoreOf } from '../lib/grading.ts'
 import type { AnswerValue } from '../lib/grading.ts'
 import { link } from '../lib/router.ts'
-import { SAVE_MODE, saveResult } from '../lib/storage.ts'
+import { saveResult } from '../lib/storage.ts'
 
 export function TestPage({ id }: { id: string }) {
   const [attempt, setAttempt] = useState(0)
@@ -57,10 +57,10 @@ function Attempt({ test, onRestart }: { test: Test; onRestart: () => void }) {
     setAnswers((prev) => prev.map((a, i) => (i === index ? value : a)))
   }
 
-  async function persist(r: Result) {
-    setSave({ state: 'saving' })
+  /** Saves on this device (and starts a sync); a failure here is shown with a retry button. */
+  function persist(r: Result) {
     try {
-      setSave({ state: 'saved', file: await saveResult(r) })
+      setSave({ state: 'saved', id: saveResult(r) })
     } catch (err) {
       setSave({ state: 'error', message: messageOf(err) })
     }
@@ -77,7 +77,7 @@ function Attempt({ test, onRestart }: { test: Test; onRestart: () => void }) {
       testId: test.id,
       testTitle: test.title,
       level: test.level,
-      mode: SAVE_MODE,
+      mode: 'web',
       startedAt,
       localDay: localDay(submitted),
       submittedAt: submitted.toISOString(),
@@ -86,14 +86,14 @@ function Attempt({ test, onRestart }: { test: Test; onRestart: () => void }) {
     }
     setResult(r)
     window.scrollTo(0, 0)
-    void persist(r)
+    persist(r)
   }
 
   if (result) {
     return (
       <div className="stack">
         <h1>{test.title}</h1>
-        <SaveLine save={save} onRetry={() => void persist(result)} />
+        <SaveLine save={save} onRetry={() => persist(result)} />
         <ResultView result={result} items={test.items} />
         <div className="row">
           <button type="button" className="btn primary" onClick={onRestart}>

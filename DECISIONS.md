@@ -2,9 +2,68 @@
 
 Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
+## 44. check-content validates content only; the content runway is shown only on the Stats page
+
+- **Date:** 2026-09-29 - **Status:** active
+- **Why:** The runway (words not introduced yet, untaken tests, unfinished lessons, #27) depends on Hayk's progress, which is now in Neon (#21). check-content runs in CI and must work offline without secrets, so it prints only the content totals and points to the Stats page and `uv run backend/scripts/progress.py summary`.
+- **Alternatives rejected:** giving check-content a database connection (a secret in CI, and a network dependency for a content lint); keeping a progress snapshot in the repo for it to read (the file storage #21 retired).
+- **What would change this:** Claude needing the runway often while writing content; then add it to `progress.py summary`, which already reads the database.
+
+## 43. Login is one page with a "create account" toggle; the PC and the phone use the same backend, and the dev-server file API is gone
+
+- **Date:** 2026-09-29 - **Status:** active
+- **Why:**
+  - Hayk creates exactly one account, then sign-up is closed (#39), so "Create one" is a toggle on the sign-in page, not its own route. Passwords need 8+ characters (Better Auth's default minimum).
+  - After sign-up the API answers 403 `not_allowed` until Claude allowlists the account. The app then says "Account created. Ask Claude to activate it (allowlist)." with a "Try again" button, instead of a generic error. Every other auth or API error is shown with its message and HTTP status.
+  - Sign-out first tries to sync. If changes are still unsynced it asks, and keeps them on the device; they sync after the next sign-in to the same account.
+  - The app remembers the last signed-in user, so with no network it starts from the cached copy of the last state (#41) instead of a sign-in page it cannot use.
+  - `npm run dev` (localhost:5173) and GitHub Pages talk to the same API. The dev-server file API (`app/server/progress-plugin.ts`), the baked-in review snapshot and the phone merge (`mergeStates`) are removed: one storage path to test instead of two. `npm run preview` (port 4173) cannot sign in, because the API only allows the origins `http://localhost:5173` and `https://hayktarkhanyan.github.io` (#37). Adding 4173 would mean a backend redeploy for a rarely used command.
+- **Alternatives rejected:** keeping the file API on the PC (progress split between the repo and Neon); a separate sign-up page; magic links or OTP (#39).
+- **What would change this:** a second learner, or Hayk wanting to use the app without an account.
+
+## 42. The outbox is sent after a test or lesson exercise, after a review round, every 5 minutes while visible, when the tab is hidden, when the device comes back online, and with "Sync now"; never on a timer when it is empty
+
+- **Date:** 2026-09-29 - **Status:** active
+- **Why:**
+  - A submitted test is what Claude grades next, so it syncs at once.
+  - A review round ends naturally, so one request covers ~10-50 cards instead of one per card.
+  - The 5-minute timer catches lesson reading positions and long rounds, and only fires while the tab is visible and the outbox has something.
+  - The tab being hidden (phone switching apps, window closed) uses `fetch` with `keepalive`, when the body is under 60,000 characters (browsers cap keepalive bodies at 64 KiB; a bigger batch waits for the next trigger).
+  - An empty outbox never makes a request, and nothing polls for the other device's changes. They appear at the next start. Estimate: 5-15 requests on a study day.
+- **Alternatives rejected:** a request per change (~100 a day, and every one fails offline); only a manual "Sync now" (easy to forget on the phone); polling `/v1/state` for live updates from the other device (keeps the compute awake on the Free plan, and one learner uses one device at a time).
+- **What would change this:** Hayk using two devices at the same time and wanting live updates, or CU-hours climbing toward the Free limit (then lengthen the timer).
+
+## 41. Unsynced changes wait in a per-user outbox in localStorage; the app shows the server state merged with the outbox, with the server's own rules
+
+- **Date:** 2026-09-29 - **Status:** active
+- **Why:**
+  - localStorage survives reloads and offline use. Its writes are synchronous, so a submitted test is stored before the tab can close.
+  - A study day is well under 1 MB (~100 reviews at ~0.5 KB, attempts at ~10 KB) against a ~5 MB limit.
+  - Keys carry the user id (`nemeceren.outbox.<id>`, `nemeceren.state.<id>`), so a second account in the same browser never sends someone else's changes.
+  - The last `/v1/state` reply is cached too, so the app can start offline.
+  - The merged view uses the same rules as the server (#36): per word the later `last_review`, per lesson the later `updatedAt`, the larger extra. So what Hayk sees before a sync is what the server keeps. Stale replies are adopted.
+  - A 409 or 400 is an app bug. It shows a banner, keeps the outbox and stops automatic syncs until "Sync now", because resending the same batch would fail again and spend requests. A 5xx or `auth_unavailable` is retried at the next trigger. Offline shows in the status line, not as an error.
+  - The outbox logic is pure functions (`app/src/lib/outbox.ts`), tested apart from `fetch` (`outbox.test.ts`, and `storage.test.ts` with a fake API).
+- **Alternatives rejected:** IndexedDB (an async API and more code, and nothing here needs its size); memory or sessionStorage (lost on reload or tab close); sending each change as it happens (#42).
+- **What would change this:** the outbox nearing the storage limit (weeks offline), or a browser evicting localStorage while changes are unsynced (Safari's 7-day cap on script-writable storage). Then move the outbox to IndexedDB with `navigator.storage.persist()`.
+
+## 40. The app uses Neon's auth SDK `@neondatabase/auth` 0.5.0-beta with the vanilla Better Auth adapter, loaded as a separate chunk; the API token comes from `getSession()`, not `token()`
+
+- **Date:** 2026-09-29 - **Status:** active
+- **Why:**
+  - It is Neon's client for Managed Auth. The neon-auth skill says to stay on this wrapper, not bare `better-auth/client`, because it pins the plugin list and handles the JWT.
+  - It sends the session cookie of the auth host (`credentials: 'include'`, #39). The 15-minute API token comes from `getSession()`: the SDK copies the `set-auth-jwt` reply header into `session.token` and caches the session in memory until 10 s before the JWT expires. That is what the SDK's own `getJWTToken()` does.
+  - Not `token()`: the SDK sends `/token` through the same session cache, and with a cached session it answers `{ session, user }` instead of `{ token }`. The integration probe found this on 2026-09-29 (the first run failed right after sign-up). The auth host exposes `set-auth-jwt` to the app's origin (`access-control-expose-headers: set-auth-jwt`, measured on the same run), so the browser can read it.
+  - `0.5.0-beta` is the only release line (`npm view @neondatabase/auth dist-tags` on 2026-09-29: `latest: 0.5.0-beta`). It is pinned exactly.
+  - Cost: it bundles its Supabase adapter and its own zod 4.3.6, a 344.6 kB / 84.3 kB gzip chunk.
+  - It is imported dynamically so it builds as its own chunk (the main chunk went from 941.7 kB / 252.1 kB gzip to 616.0 kB / 172.4 kB gzip). The app needs it at start anyway, so this splits the download rather than saving it.
+  - After a 401 `token_expired` the app asks for the token once more. If it gets the same token back, the device clock is wrong, and the app says so instead of looping.
+- **Alternatives rejected:** raw `fetch` to the Better Auth endpoints (`/sign-in/email`, `/get-session`, `/token`, ...), ~2 kB and proven by the smoke test, but it hand-codes endpoints that Neon does not document as a public contract; `@neondatabase/neon-js` (the combined SDK, which adds the unused Data API client).
+- **What would change this:** the phone start feeling slow (then try raw fetch first, it is the big cut), a stable SDK release with breaking changes, or the beta misbehaving on Hayk's phone.
+
 ## 39. Login is email + password; sign-up gets closed after Hayk's account exists, and the API has its own allowlist table
 
-- **Date:** 2026-09-29 - **Status:** active (sign-up closing happens in the wire-up task)
+- **Date:** 2026-09-29 - **Status:** active (the app is wired, #43; sign-up stays open until Hayk's account exists, then it is closed as described in `backend/README.md`, "Hayk's account")
 - **Why:** The Neon docs say "Anyone can sign up for your application by default" (auth/authentication-flow). The CLI can close it (`neon neon-auth config email-password update --disable-sign-up`), but not before Hayk has signed up, and a valid token must never be enough on its own. So the function also checks `allowed_users` (one indexed lookup per request; removal takes effect at once, no redeploy). Email + password needs no email round trip per sign-in and works on the shared SMTP sender, which the docs call rate-limited and fit only for development.
 - **Alternatives rejected:** email OTP (a code by email at every sign-in, and it depends on the shared, rate-limited sender); OAuth (Google/GitHub need our own OAuth apps in production; ruled out in the brief); an allowlist in a Function env variable (every change needs a redeploy with an `--env` file); relying on disabled sign-up alone (it is a setting that can be switched back, and the smoke test has to open it temporarily).
 - **What would change this:** a second learner (then roles instead of a flat allowlist), or Neon adding built-in sign-up restrictions per email. Also: the session is a 7-day partitioned (CHIPS) cookie on the Neon Auth host, and bearer sessions are not available on Managed Auth (tested 2026-09-29: `/token` with the session token as a bearer and no cookie gives 401). If Hayk's phone rejects that cookie (Safari before 18.4, or ITP flagging the host), the fix is self-managed Better Auth with the bearer plugin in a Neon Function, which would be a new decision for Hayk.
@@ -81,14 +140,14 @@ Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
 ## 28. Lesson progress is one file, `progress/lessons.json`, going through `app/src/lib/storage.ts` like all other progress; the position is the section at the top of the screen
 
-- **Date:** 2026-09-29 - **Status:** active (moves to Neon with the rest of progress, #21)
+- **Date:** 2026-09-29 - **Status:** active; the storage part is superseded by #21 (2026-09-29): lesson progress is now a Neon table synced through the outbox (#41), not `progress/lessons.json`
 - **Why:** Per lesson: `startedAt`, `updatedAt`, `lastSection` and `doneAt`. Opening a lesson starts it. The lesson is one scrolling page, like a textbook page, so "where you were" is the section nearest the top of the screen (an IntersectionObserver). It is saved 1.5 s after scrolling stops and restored on the next visit. All reads and writes go through `loadLessonProgress`/`saveLessonProgress` in `storage.ts`, so the Neon swap stays in one module.
 - **Alternatives rejected:** a step-by-step lesson (one section per screen; exact position, but it reads less like a book and makes tables and examples harder to compare); saving on every scroll event (too many writes); keeping lesson progress in browser storage only (the PC must save to the repo like everything else).
 - **What would change this:** Neon (#21) replacing the file with a table; lessons getting so long that a section is too coarse a position.
 
 ## 27. "Never run out of work": a What-next menu instead of "All done for today", a Today panel on Home, and a content runway (asked for by Hayk, 2026-09-29)
 
-- **Date:** 2026-09-29 - **Status:** active
+- **Date:** 2026-09-29 - **Status:** active (revisited 2026-09-29: check-content no longer prints the runway, #44)
 - **Why:** Hayk: "in web I just hit All done for today, I'd like to always have stuff to work on". When reviews are done, the Words page (and its start page, when nothing is due) offers:
   - +5/+10 new words for today only;
   - practice of weak words (#25);
@@ -143,7 +202,7 @@ Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
 ## 21. Progress moves to a private Neon Postgres database on the Free plan, via Neon Auth and a Neon Functions API (Hono)
 
-- **Date:** 2026-09-29 - **Status:** active (the app wiring is in progress)
+- **Date:** 2026-09-29 - **Status:** active (the app is wired to it since 2026-09-29, #40-#43)
 - **Why:**
   - Hayk wants sessions done on the website (phone or any browser) saved so we can pick them up, and chose Neon over saving into the repo and over Supabase (Hayk: "neon").
   - Neon's own guidance (its `neon` skill) is to not expose Postgres to the browser via the Data API for new apps, because row-level security policies are easy to get wrong. So the website logs in with Neon Auth (Managed Better Auth), and a small Neon Functions API checks the token and does all database access. Hayk: "whatever u chose".
@@ -279,7 +338,7 @@ Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
 ## 8. Progress is one JSON file per test attempt, one review-state JSON, and an append-only review log (JSONL); phone mode merges per word by the latest review
 
-- **Date:** 2026-09-28 - **Status:** revisited 2026-09-29: storage moves to Neon (#21). The structure (one record per attempt, per-word review state, append-only review log) carries over as tables.
+- **Date:** 2026-09-28 - **Status:** superseded by #21 (2026-09-29). The structure (one record per attempt, per-word review state, append-only review log) carries over as tables, and the per-word merge rule lives on in #36 and #41.
 - **Why:** One file per attempt (`progress/results/<test-id>__<timestamp>.json`) is never rewritten by the app, so Claude can add a `review` to it without conflicts, and each file is self-contained (question, answer, expected, near-miss labels, time). The review log is only appended, so the full history survives for mistake analysis. In phone mode the build embeds `progress/review-state.json`; on load it is merged with the browser's state, keeping for each word the card with the later `last_review`, so the phone picks up PC progress after each deploy without losing phone-only reviews.
 - **Alternatives rejected:** one big `results.json` (rewritten on every attempt, easy to corrupt, noisy diffs); SQLite (binary, Claude cannot read or edit it with plain file tools); Claude's grading in separate files next to the results (two files to keep in step).
 - **What would change this:** hundreds of result files making the Results page slow (add an index file), or phone sync being built (DEFERRED_TODO.md), which replaces the merge rule.
@@ -307,7 +366,7 @@ Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
 ## 4. Results and review state are saved as JSON files in the repo; phone progress stays in the browser
 
-- **Date:** 2026-09-28 - **Status:** superseded by #21 (takes effect when the Neon wiring lands)
+- **Date:** 2026-09-28 - **Status:** superseded by #21 (2026-09-29)
 - **Why:** Hayk mostly practises on the PC with Claude in the chat ("tell me to go on localhost and do this and that and then it gets saved to repo and u check"). The local dev server writes results straight into the repo, and Claude reads them with no token and no service. Phone use is occasional, and Hayk said it's fine if those results aren't saved to the repo.
 - **Alternatives rejected:** committing results through the GitHub API with a personal access token (every device needs token setup, and not needed while use is mostly on the PC); Neon Postgres (a static site can't hold a DB secret, so it would need a backend, and Hayk only floated it as an option); copy/paste of results into the chat (a manual step every session).
 - **What would change this:** phone sessions becoming regular and their results mattering. Then add sync (Neon or GitHub API), see DEFERRED_TODO.md.

@@ -140,9 +140,10 @@ CORS: only `https://hayktarkhanyan.github.io` and `http://localhost:5173`. Any o
    import { createAuthClient } from '@neondatabase/auth'
    export const authClient = createAuthClient(NEON_AUTH_URL)
    await authClient.signIn.email({ email, password })        // { data, error }; signUp.email({ email, password, name }) once for Hayk
-   const { data, error } = await authClient.token()          // JWT in data.token, valid 15 minutes
-   fetch(`${API}/v1/state`, { headers: { Authorization: `Bearer ${data.token}` } })
+   const { data, error } = await authClient.getSession()     // JWT in data.session.token, valid 15 minutes
+   fetch(`${API}/v1/state`, { headers: { Authorization: `Bearer ${data.session.token}` } })
    ```
+   Not `authClient.token()`: in `@neondatabase/auth` 0.5.0-beta it answers from the SDK's session cache with `{ session, user }` instead of `{ token }` (found by the app's integration check on 2026-09-29; see `app/src/lib/auth.ts` and DECISIONS.md #40).
 2. The function checks the signature (EdDSA, keys from `NEON_AUTH_JWKS_URL`), `iss` and `aud` (= the Auth URL's origin), `exp`, and that `sub` is on the allowlist.
 3. The Neon docs disagree on cross-origin cookies: the JWT page says to pass `fetchOptions: { credentials: 'include' }` to `createAuthClient` when the SPA and the Auth URL are on different origins, while the Managed Auth skill says not to put `fetchOptions` on the URL-style config (use an adapter's options instead). Check the installed SDK's types and test on localhost and on Pages.
 

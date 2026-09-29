@@ -6,7 +6,7 @@ import { localDay } from '../lib/dates.ts'
 import { messageOf } from '../lib/errors.ts'
 import { instructionFor, isBlank, resultItems, scoreOf } from '../lib/grading.ts'
 import type { AnswerValue } from '../lib/grading.ts'
-import { SAVE_MODE, saveResult } from '../lib/storage.ts'
+import { saveResult } from '../lib/storage.ts'
 import { GlossScope } from './GermanText.tsx'
 import { initialAnswer, initialLayout, ItemInput, SaveLine } from './ItemInput.tsx'
 import type { SaveStatus } from './ItemInput.tsx'
@@ -53,10 +53,10 @@ function Attempt(props: { items: Item[]; meta: ExerciseMeta; onRetry: () => void
     active.current = { index: i, since: performance.now() }
   }
 
-  async function persist(r: Result) {
-    setSave({ state: 'saving' })
+  /** Saves on this device (and starts a sync); a failure here is shown with a retry button. */
+  function persist(r: Result) {
     try {
-      setSave({ state: 'saved', file: await saveResult(r) })
+      setSave({ state: 'saved', id: saveResult(r) })
     } catch (err) {
       setSave({ state: 'error', message: messageOf(err) })
     }
@@ -77,7 +77,7 @@ function Attempt(props: { items: Item[]; meta: ExerciseMeta; onRetry: () => void
       testId: meta.testId,
       testTitle: meta.testTitle,
       level: meta.level,
-      mode: SAVE_MODE,
+      mode: 'web',
       startedAt,
       submittedAt: submitted.toISOString(),
       localDay: localDay(submitted),
@@ -86,14 +86,14 @@ function Attempt(props: { items: Item[]; meta: ExerciseMeta; onRetry: () => void
       items: graded,
     }
     setResult(r)
-    void persist(r)
+    persist(r)
     onChecked?.()
   }
 
   if (result) {
     return (
       <div className="stack">
-        <SaveLine save={save} onRetry={() => void persist(result)} />
+        <SaveLine save={save} onRetry={() => persist(result)} />
         <ResultView result={result} items={items} />
         <div>
           <button type="button" className="btn" onClick={onRetry}>

@@ -1,6 +1,6 @@
 # nemeceren
 
-Hayk's German practice (A1 towards B1). Claude is the teacher: Claude writes tests and word lists as JSON, Hayk does them in a small web app, and Claude reads the saved results back from this repo to grade the free-text answers and plan the next lesson.
+Hayk's German practice (A1 towards B1). Claude is the teacher: Claude writes lessons, tests and word lists as JSON, Hayk does them in a small web app, and Claude reads the results from the progress database to grade the free-text answers and plan the next lesson.
 
 ## Run the app locally (PC)
 
@@ -10,15 +10,15 @@ npm install
 npm run dev
 ```
 
-Open http://localhost:5173/. The header badge says "Saving to repo": test results and word reviews are written to `progress/` in this repo.
+Open http://localhost:5173/ and sign in. On the phone use https://hayktarkhanyan.github.io/nemeceren/. Both use the same account and the same progress: it is stored in a private Neon Postgres database behind a small API (`backend/`, DECISIONS.md #21). Each device keeps changes in a local outbox and syncs them; the header shows the sync status ("Synced 2 min ago", "3 changes not synced", "Offline, will sync").
 
-On the phone use https://hayktarkhanyan.github.io/nemeceren/ ("Phone mode"). There, results stay in that browser and are not synced; word reviews start from the state of the last push.
+The API only accepts the origins `http://localhost:5173` and `https://hayktarkhanyan.github.io`, so `npm run preview` (port 4173) can build and show the app but cannot sign in or sync. Use `npm run dev` locally.
 
 Other commands (in `app/`):
 
 | command | what it does |
 |---|---|
-| `npm run check-content` | validates `content/` and `progress/` files, lists every problem (about 1 s) |
+| `npm run check-content` | validates `content/` (lessons, tests, words, glossary) and lists every problem (about 1 s) |
 | `npm run glossary` | rebuilds `content/glossary.generated.json` (word popups) from kaikki.org after German text changed; needs network, not run in CI (about 1 s per new word) |
 | `npm test` | unit tests (about 5 s) |
 | `npm run build` | type check and production build into `app/dist/` |
@@ -28,8 +28,9 @@ Other commands (in `app/`):
 | path | what |
 |---|---|
 | `content/` | written by Claude: `lessons/*.json`, `tests/*.json`, `words.json`, the glossary. `content/README.md` is the authoring guide with the exact JSON formats. |
-| `progress/` | written by the app: results, word review state and log. Claude adds grading to result files. See `progress/README.md`. |
+| `progress/` | only a pointer now: progress lives in Neon. Claude reads and grades it with `uv run backend/scripts/progress.py` (see `progress/README.md`). |
 | `app/` | the Vite + React + TypeScript app |
+| `backend/` | the Neon backend: Functions API, migrations, Claude's progress and grading scripts (`backend/README.md`) |
 | `.github/workflows/pages.yml` | checks content, tests, builds and deploys to GitHub Pages on every push to `main` |
 | `reference/`, `scripts/` | Goethe word lists and the script that parses them |
 | `DECISIONS.md` | why things are built the way they are |

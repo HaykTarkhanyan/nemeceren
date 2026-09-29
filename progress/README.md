@@ -1,142 +1,28 @@
-# Progress files
+# Progress (moved to Neon)
 
-Written by the app when it runs locally (`npm run dev` in `app/`, "Saving to repo" badge). Claude reads them to grade and plan lessons. Phone mode (GitHub Pages) does not write here; it keeps its data in the browser.
+Hayk's progress is no longer stored in this folder. Since 2026-09-29 it lives in a private Neon Postgres database behind the API in `backend/` (DECISIONS.md #21): word reviews, FSRS cards, test and lesson-exercise attempts, Claude's reviews, lesson progress and extra new words. The app signs in with Neon Auth and syncs through `GET /v1/state` and `POST /v1/sync`; each device keeps unsynced changes in a local outbox until they are sent.
 
-| file | written by | format |
-|---|---|---|
-| `results/<test-id>__<timestamp>.json` | app, one file per submitted attempt; Claude adds `review` | JSON, see below |
-| `review-state.json` | app, rewritten after every word review | FSRS state per word |
-| `review-log.jsonl` | app, one line appended per word review, never rewritten | JSON Lines |
-| `lessons.json` | app, rewritten when a lesson is opened, scrolled, or marked done | lesson progress, see below |
+Claude reads and grades progress from the repo root:
 
-Run `npm run check-content` in `app/` after editing anything here. It validates every result (including your `review`) and the review state.
+```bash
+uv run backend/scripts/progress.py summary --days 7      # activity, words, most-missed words, lessons
+uv run backend/scripts/progress.py ungraded              # attempts waiting for a review
+uv run backend/scripts/progress.py show <attempt-id>     # one attempt in full
+uv run backend/scripts/progress.py review <attempt-id> review.json
+```
 
-## Result file
-
-`<timestamp>` is the submit time in UTC with `:` and `.` replaced by `-`, e.g. `a1-01-vorstellen-termine__2026-09-28T21-59-04-900Z.json`.
+A review (the file given to `progress.py review`) is Claude's grading of one attempt; the app shows it next to Hayk's answers, and each verdict overrides the auto-grade in the score:
 
 ```json
 {
-  "version": 1,
-  "testId": "a1-01-vorstellen-termine",
-  "testTitle": "Sich vorstellen, Zahlen, Termine",
-  "level": "A1",
-  "mode": "repo",
-  "startedAt": "2026-09-28T21:57:57.000Z",
-  "submittedAt": "2026-09-28T21:59:04.900Z",
-  "localDay": "2026-09-28",
-  "score": { "correct": 6, "wrong": 3, "pending": 2, "total": 11 },
+  "summary": "Good start. Verbs are lowercase (komme). Practise verb position 2.",
   "items": [
-    {
-      "index": 1,
-      "type": "gap",
-      "question": "Ich ___ Hayk und ich ___ aus Armenien.",
-      "answer": ["heiße", "Komme"],
-      "expected": "Ich heiße Hayk und ich komme aus Armenien.",
-      "status": "wrong",
-      "nearMiss": ["case"],
-      "gaps": [
-        { "answer": "heiße", "correct": true, "nearMiss": null },
-        { "answer": "Komme", "correct": false, "nearMiss": ["case"] }
-      ],
-      "timeMs": 13123,
-      "hintUsed": true
-    }
+    { "index": 1, "correct": false, "correction": "Ich komme aus Armenien.", "note": "Verbs are lowercase." },
+    { "index": 2, "correct": true, "note": "Fine." }
   ]
 }
 ```
 
-`localDay` is Hayk's local calendar day at submit time (missing in results saved before 2026-09-29). The statistics count the attempt on that day.
+`summary` is required; `items` lists only the items graded or commented on (`index` = the item's 0-based position, at most once each; every `pending` item should get one); `correction` (German) and `note` are optional; `gradedAt` is filled in by the script. The schema is `Review` in `app/src/content/schema.ts`.
 
-The same format is used for:
-- **lesson exercises**: `testId` is `<lesson id>-ex<n>` (the lesson's n-th exercise block), `testTitle` is `"<lesson title>: <exercise title>"`, and two extra keys say where it came from: `"lessonId": "u1-01-sich-vorstellen", "section": 8` (index into the lesson's `sections`; always both or neither);
-- **listening practice** (dictation of example sentences of learned words): `testId` is `listening-practice`; its questions are in the result itself, there is no content file behind it.
-
-Per item:
-- `index` - 0-based position in the test's `items`.
-- `question` - what was asked (for `listen_mc` it includes the audio text; for `dictation` the text is in `expected`).
-- `answer` - `null` if left empty. A string for `mc`, `listen_mc`, `translate`, `write`, `dictation`; a list with one string per gap for `gap`; the tiles in Hayk's order for `order`.
-- `expected` - the correct answer (first accepted variant), the first translation reference, or `null` (`write`).
-- `status` - `correct`, `wrong` or `pending` (`translate` without an exact reference match, and `write`).
-- `nearMiss` - `null` or a list of `case`, `umlaut`, `article_missing`, `article_wrong`. A near miss is still `wrong`.
-- `gaps` (gap only), `diff` (dictation only: a list of `{ "op": "ok" | "wrong" | "missing" | "extra", "expected", "typed", "nearMiss" }`).
-- `timeMs` - time spent on the item, `hintUsed`, and `plays` (audio items: how often the audio was played).
-
-## Claude's review (the feedback loop)
-
-To grade an attempt, add a `review` key to the result file. Do not change anything else in the file. The app shows it next to Hayk's answers on the Results page, and a review verdict overrides the auto-grade in the score.
-
-```json
-"review": {
-  "gradedAt": "2026-09-29T10:00:00Z",
-  "summary": "Good start. Verbs are lowercase (komme), nouns uppercase (Uhr). Practise verb position 2.",
-  "items": [
-    { "index": 7, "correct": true, "note": "Fine. 'Monday' is capitalized in English." },
-    { "index": 10, "correct": true, "correction": "Ich bin Programmierer.", "note": "'von Beruf' also works; this is the common form." }
-  ]
-}
-```
-- `gradedAt` - ISO date-time with `Z` or an offset. `summary` - required, shown at the top.
-- `items` - only the items you want to grade or comment on; every `pending` item should get an entry. Each needs `index` (matching the item's `index`) and `correct`; `correction` (German, gets a speaker button) and `note` are optional. Each index at most once.
-
-## `review-state.json`
-
-```json
-{
-  "version": 1,
-  "scheduler": "fsrs",
-  "updatedAt": "2026-09-28T22:00:26.133Z",
-  "newToday": { "date": "2026-09-29", "count": 3 },
-  "cards": {
-    "termin": { "due": "2026-09-28T22:09:52.925Z", "stability": 2.3065, "difficulty": 2.1181, "elapsed_days": 0, "scheduled_days": 0, "learning_steps": 1, "reps": 1, "lapses": 0, "state": 1, "last_review": "2026-09-28T21:59:52.925Z" }
-  }
-}
-```
-Keyed by word `id` from `content/words.json`; a word with no entry has never been reviewed. `newToday.extra` (only present when used) is how many extra new words Hayk asked for on that day with "Learn more new words today"; it only raises that day's limit. `state`: 0 New, 1 Learning, 2 Review, 3 Relearning. `newToday.date` is Hayk's local date. Do not edit this by hand; it is the ts-fsrs card state. It is also baked into the GitHub Pages build, so the phone starts from the state of the last push.
-
-## `review-log.jsonl`
-
-One JSON object per line, appended after every word review:
-
-```json
-{"ts":"2026-09-28T22:00:14.479Z","localDay":"2026-09-29","timeMs":8420,"wordId":"uhr","de":"die Uhr","mode":"production","rating":1,"answer":"Uhr","correct":false,"nearMiss":["article_missing"],"isNew":true,"stateBefore":0,"stateAfter":1,"due":"2026-09-28T22:01:14.479Z"}
-```
-- `mode` - `recognition` (German to English, self-graded), `production` (English to German, typed), `listening` (audio, typed).
-- `rating` - 1 Again, 2 Hard, 3 Good, 4 Easy (Hayk's choice; after a typed answer the app suggests 1 or 3).
-- `answer`, `correct`, `nearMiss` - typed modes only, otherwise `null`.
-- `stateBefore`/`stateAfter` - FSRS state as above; `due` - next review time.
-- `localDay` - Hayk's local calendar day when the review happened; `timeMs` - time from showing the card to grading it. Both are missing in lines written before 2026-09-29.
-- `practice: true` - extra practice of weak words ("What next" menu). The FSRS schedule was NOT changed: `stateBefore`/`stateAfter` are the same and `due` is the unchanged due date. Absent for normal reviews.
-
-## `lessons.json`
-
-```json
-{
-  "version": 1,
-  "lessons": {
-    "u1-01-sich-vorstellen": { "startedAt": "2026-09-29T10:00:00.000Z", "updatedAt": "2026-09-29T10:12:40.000Z", "lastSection": 4, "doneAt": null }
-  }
-}
-```
-A lesson with no entry has not been opened. Opening it creates the entry (and unlocks its words, see `content/README.md`); `lastSection` is the index of the section Hayk last had at the top of the screen; `doneAt` is set by "Mark lesson as done" and cleared by "Mark as not done".
-
-## Statistics (Stats page)
-
-Computed in the app from the review log and the result files, by the pure functions in `app/src/lib/stats.ts` (unit-tested in `stats.test.ts`, including midnight and time-zone cases). Nothing extra is stored.
-
-| term | definition |
-|---|---|
-| study day | a local calendar day with at least one word review (practice included) or one answered test item (lesson exercises and listening practice included). The day is the `localDay` recorded when it happened, so a review at 23:30 in Munich counts for that Munich day even when viewed later from Yerevan. Old records without `localDay` use the day in the time zone of the device showing the stats. |
-| streak | study days in a row ending today; before anything is done today, the streak still counts up to yesterday |
-| longest streak | the longest such run ever |
-| days this week / month | study days from Monday to today / in the current calendar month |
-| activity | one word review (from `ts - timeMs` to `ts`), or one test attempt with at least one answered item (from `startedAt` to `submittedAt`) |
-| session | activities with no gap of 30 minutes or more between the end of one and the start of the next. A session counts on the day of its first activity, so one that runs past midnight is one session on the day it started. |
-| minutes | the sum of measured time: each review's `timeMs` (capped at 2 min, so a card left open does not count) and each test item's `timeMs` (capped at 20 min), counted on the activity's day. Reviews without `timeMs` count everywhere except minutes, and the page says how many there are. |
-| % correct | reviews not graded Again, divided by all reviews |
-| practice | practice reviews count as study time, sessions and study days, but not in the reviews chart or % correct, because they do not change the schedule |
-| known word | a word in `content/words.json` whose FSRS card is in the Review state with an interval (`scheduled_days`) of 21 days or more |
-| learning | a reviewed word that is not known yet |
-| due today | cards due before the end of today (same as the Words page) |
-
-In phone mode (GitHub Pages) the Stats page only sees that browser's own activity; nothing from the PC is baked into the build.
+The API contract, the tables and the other formats are in `backend/README.md`. The statistics definitions (study day, streak, session, minutes, known word) are in `app/src/lib/stats.ts`.

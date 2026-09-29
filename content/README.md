@@ -48,7 +48,7 @@ Every item may also have these optional keys:
 | `hint` | behind a "Show hint" button. The result records whether it was used. |
 | `explanation` | shown after the test is submitted. Explain the rule, not only the answer. |
 
-Items are graded after the whole test is submitted. Hayk sees per-item feedback, and the result is saved (see `progress/README.md`).
+Items are graded after the whole test is submitted. Hayk sees per-item feedback, and the attempt is saved to Hayk's progress (Neon, see `progress/README.md`), where Claude reviews it with `uv run backend/scripts/progress.py`.
 
 ### `mc` - multiple choice, auto-graded
 
@@ -245,13 +245,13 @@ Every block may have an optional `title`. Word popups are on for everything exce
   ]
 }
 ```
-Each check is saved like a test result (see `progress/README.md`) under the id `<lesson id>-ex<n>` (`n` counts the lesson's exercise blocks from 1), so no test may have that id. Claude reviews them like tests.
+Each check is saved like a test attempt (see `progress/README.md`) with the test id `<lesson id>-ex<n>` (`n` counts the lesson's exercise blocks from 1), so no test may have that id. Claude reviews them like tests.
 
 The glossary covers all German in lessons: `[[...]]` in the text blocks, `examples` and `audio` sentences, table cells in `"words"` columns, and the German fields of exercise items.
 
 ## Content runway
 
-check-content ends with a line like `runway: 30 of 50 words not introduced yet (about 3 days at 10 a day), 8 of them unlock when their lesson is opened; 2 of 5 tests not taken; 1 of 3 lessons not done`. It is judged from the progress files, at the app's default of 10 new words a day. The Stats page shows the same at Hayk's own daily limit. When it runs low, write more. When something runs out completely the app says so ("No more new words prepared yet. Ask Claude for more.") instead of showing an empty screen.
+How much prepared material is left for Hayk depends on Hayk's progress, which lives in Neon, so check-content (which runs without it, also in CI) only prints the content totals. The runway is on the app's Stats page ("Prepared material left": words not introduced yet and roughly how many days they last at Hayk's daily limit, untaken tests, unfinished lessons), and `uv run backend/scripts/progress.py summary` shows the words introduced and lessons done. When it runs low, write more. When something runs out completely the app says so ("No more new words prepared yet. Ask Claude for more.") instead of showing an empty screen.
 
 ## Word bank: `words.json`
 
@@ -355,7 +355,7 @@ The ignore list and entries must not overlap, and a word may be listed only once
 
 ## Checklist before telling Hayk a test is ready
 
-1. `cd app && npm run glossary` covers every word (curate or ignore what it lists), then `npm run check-content` prints `OK` and the runway.
+1. `cd app && npm run glossary` covers every word (curate or ignore what it lists), then `npm run check-content` prints `OK`.
 2. Each item has an `explanation` for the rule it practises.
 3. `gap` and `order` items list every correct variant you would accept, otherwise Hayk is marked wrong for a correct answer.
 4. Tell Hayk the test title; it appears at the top of the list on `http://localhost:5173/`.

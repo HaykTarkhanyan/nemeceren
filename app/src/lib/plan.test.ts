@@ -16,7 +16,7 @@ import {
   studyWords,
   weakWords,
 } from './plan.ts'
-import { addExtraNew, counts, emptyState, extraToday, mergeStates, Rating, review } from './srs.ts'
+import { addExtraNew, counts, emptyState, extraToday, Rating, review } from './srs.ts'
 import { dailyStats, studyDays } from './stats.ts'
 
 const t0 = new Date(2026, 8, 29, 10, 0, 0)
@@ -113,11 +113,6 @@ describe('extra new words today', () => {
     expect(counts(words, s, tomorrow, 1).newLeft).toBe(1)
   })
 
-  it('merges extra like the count (larger wins on the same day)', () => {
-    const a = addExtraNew(emptyState(t0), 5, t0)
-    const b = addExtraNew(emptyState(t0), 10, t0)
-    expect(mergeStates(a, b).newToday.extra).toBe(10)
-  })
 })
 
 describe('next test', () => {

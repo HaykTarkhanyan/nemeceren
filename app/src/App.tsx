@@ -1,4 +1,5 @@
 import { content } from './content/load.ts'
+import { AuthGate } from './components/AuthGate.tsx'
 import { ErrorBanner, ErrorBoundary, Header, VoiceWarning } from './components/Chrome.tsx'
 import { useRoute } from './lib/router.ts'
 import { HomePage } from './pages/HomePage.tsx'
@@ -36,7 +37,7 @@ function Page({ route }: { route: string[] }) {
     case 'words':
       return <WordsPage />
     case 'results':
-      return arg ? <ResultDetailPage name={arg} /> : <ResultsPage />
+      return arg ? <ResultDetailPage id={arg} /> : <ResultsPage />
     case 'stats':
       return <StatsPage />
     case 'settings':
@@ -51,14 +52,16 @@ export function App() {
   if (content.problems.length > 0) return <ContentProblems problems={content.problems} />
   return (
     <>
-      <Header route={route} />
       <ErrorBanner />
-      <VoiceWarning />
-      <main className="container">
-        <ErrorBoundary key={route.join('/')}>
-          <Page route={route} />
-        </ErrorBoundary>
-      </main>
+      <AuthGate>
+        <Header route={route} />
+        <VoiceWarning />
+        <main className="container">
+          <ErrorBoundary key={route.join('/')}>
+            <Page route={route} />
+          </ErrorBoundary>
+        </main>
+      </AuthGate>
     </>
   )
 }
