@@ -1,0 +1,26 @@
+{
+  "name": "nemeceren-backend",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Neon Functions API (Hono) for the nemeceren learning app. Deploy with `neon deploy` from this folder; see README.md.",
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@neon/functions": "0.11.0",
+    "hono": "4.13.10",
+    "jose": "6.2.12",
+    "pg": "8.23.0",
+    "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "@neon/config": "1.8.2",
+    "@types/node": "24.19.0",
+    "@types/pg": "8.23.1",
+    "typescript": "6.0.3"
+  }
+}

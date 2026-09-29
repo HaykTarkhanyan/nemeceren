@@ -1,0 +1,38 @@
+title = "Popups, stats, lessons, Unit 0 content; Neon backend in progress"
+date = "2026-09-29"
+time = "10:57"  # this Claude session started 10:57; it continues the night work of 2026-09-28-2245 (sessions ended by a laptop sleep and a restart)
+areas = ["app/", "content/", "backend/", ".claude/skills/", "DECISIONS.md", "CLAUDE.md", "_learnings/"]
+
+done = [
+  "Word popups (kaikki.org glossary + curated overrides, gated until answered) and Stats page - e99831e",
+  "Lessons section (typed blocks, inline exercises), What-next menu, content runway - 50ac3db",
+  "Unit 0 content: 5 lessons, 54 words (all lesson-bound), 3 tests, curated glossary fixes - a5fdaf4, deploy green",
+  "Neon: project nemeceren (aged-violet-98333413, eu-central-1, Free plan), CLI 6.2.4, 4 skills in .claude/skills, project .mcp.json",
+  "Neon backend Phase 1 written by agent in backend/ (Hono Functions API, migrations, Python scripts); decisions draft in _knowledge/2026-09-29_neon-backend-decisions.md",
+  "Telegram plugin disabled globally (memory); crash write-up in _learnings/2026-09-29-0111_*",
+  "DECISIONS #21 (Neon, Free plan only) and #22 (stay on Node 20; corrects #11)",
+]
+
+pending = [
+  "Neon backend Phase 2 (install, migrate, deploy, smoke test) - agent running since 11:15",
+  "Merge _knowledge/2026-09-29_neon-backend-decisions.md (A-K) into DECISIONS.md after the agent finishes",
+  "App wire-up to Neon (login once per device, sync queue, storage.ts swap); Hayk uses Android (Chrome) - still prefer bearer tokens over third-party cookies",
+  "Unit 1 content ahead of Hayk (runway ~7 days of words); rework sample test a1-01 and review sample lesson u1-01",
+]
+
+next = [
+  "Review Neon Phase 2 report, then brief the wire-up task",
+  "Write Unit 1 lessons/words/tests",
+  "Hayk starts Unit 0 lesson 1 on localhost",
+]
+
+files = ["content/lessons/u0-*.json", "content/tests/u0-*.json", "content/words.json", "content/glossary.json", "DEFERRED_TODO.md", "backend/ (uncommitted)"]
+
+commits = ["e99831e", "50ac3db", "a5fdaf4"]
+
+notes = """
+Memory on this 16 GB laptop is the main constraint: VS Code reached 8 GB committed; the night crash came from parallel Playwright agents + 3 Claude sessions.
+Rule of thumb used: heavy steps only with >= 1.5 GB free RAM and >= 2.5 GB commit headroom; one browser agent at a time.
+The laptop sleeping ends the Claude session and its background agents.
+Playwright MCP failed to connect in this session (timeout), so Unit 0 lessons were not clicked through in a browser.
+"""
