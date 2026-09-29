@@ -1,0 +1,111 @@
+{
+  "id": "u0-02-begruessen",
+  "unit": 0,
+  "order": 2,
+  "level": "A1",
+  "title": "Hello and goodbye (Begrüßen und verabschieden)",
+  "summary": "Greet people at the right time of day, formally and informally, the Munich way included.",
+  "goals": [
+    "Greet people and say goodbye, formally and informally",
+    "Choose between du and Sie",
+    "Ask how someone is and answer"
+  ],
+  "nicosWeg": [{ "title": "Nicos Weg A1: Welcome to A1 (Hallo! and Tschüss!)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }],
+  "words": ["hallo", "guten-morgen", "guten-tag", "guten-abend", "gute-nacht", "tschuess", "auf-wiedersehen", "servus", "gruess-gott", "wie-gehts", "wie-geht-es-ihnen", "gut"],
+  "tests": ["u0-t1-laute-gruesse"],
+  "sections": [
+    {
+      "type": "explanation",
+      "title": "Greetings through the day",
+      "text": "- [[Guten Morgen!]] in the morning, until about 11\n- [[Guten Tag!]] during the day, polite\n- [[Guten Abend!]] from about 6 pm\n- [[Gute Nacht!]] only when someone goes to bed\n- [[Hallo!]] any time, informal, and very common at work too\n\nTo say goodbye: [[Tschüss!]] (informal) or [[Auf Wiedersehen!]] (polite)."
+    },
+    {
+      "type": "tip",
+      "title": "In Munich",
+      "text": "In Bavaria you will hear [[Grüß Gott!]] (a polite hello in shops and offices) and [[Servus!]] (informal; it means both hi and bye). You don't have to use them, but now you will recognise them."
+    },
+    {
+      "type": "explanation",
+      "title": "du or Sie?",
+      "text": "German has two words for 'you':\n\n- [[du]] for friends, family, children, and many younger colleagues\n- [[Sie]] (always with a capital S) for strangers, officials, older people, and at work until someone offers [[du]]\n\nWhen in doubt, start with [[Sie]]. Many startups and tech teams use [[du]] from the first day."
+    },
+    {
+      "type": "comparison",
+      "text": "The same system as Russian ты / Вы and Armenian դու / Դուք. The polite [[Sie]] is always written with a capital letter, a bit like the polite Вы in a letter."
+    },
+    {
+      "type": "examples",
+      "title": "How are you?",
+      "items": [
+        { "de": "Wie geht's?", "en": "How are you? (informal)" },
+        { "de": "Gut, danke. Und dir?", "en": "Fine, thanks. And you? (informal)" },
+        { "de": "Wie geht es Ihnen?", "en": "How are you? (polite)" },
+        { "de": "Sehr gut, danke. Und Ihnen?", "en": "Very well, thanks. And you? (polite)" },
+        { "de": "Es geht.", "en": "So-so.", "note": "A common honest answer." }
+      ]
+    },
+    {
+      "type": "warning",
+      "text": "Answer in the same form you were asked: [[du]] with [[Und dir?]], [[Sie]] with [[Und Ihnen?]]. Mixing them sounds odd."
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat aloud",
+      "items": [
+        { "de": "Guten Morgen!", "en": "Good morning!" },
+        { "de": "Guten Tag!", "en": "Hello! (polite, daytime)" },
+        { "de": "Guten Abend!", "en": "Good evening!" },
+        { "de": "Gute Nacht!", "en": "Good night!" },
+        { "de": "Hallo!", "en": "Hi!" },
+        { "de": "Tschüss!", "en": "Bye!" },
+        { "de": "Auf Wiedersehen!", "en": "Goodbye! (polite)" },
+        { "de": "Grüß Gott!", "en": "Hello! (Bavaria)" },
+        { "de": "Servus!", "en": "Hi! / Bye! (Bavaria, informal)" }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "mc",
+          "question": "9 am, you walk into a bakery. What do you say?",
+          "questionLang": "en",
+          "options": ["Guten Morgen!", "Gute Nacht!", "Tschüss!"],
+          "answer": "Guten Morgen!",
+          "explanation": "Guten Morgen until about 11. Gute Nacht is only for bedtime."
+        },
+        {
+          "type": "mc",
+          "question": "Your friend is going to bed. What do you say?",
+          "questionLang": "en",
+          "options": ["Gute Nacht!", "Guten Abend!", "Guten Tag!"],
+          "answer": "Gute Nacht!",
+          "explanation": "Gute Nacht when someone goes to bed; Guten Abend to greet someone in the evening."
+        },
+        {
+          "type": "mc",
+          "question": "You meet your manager's manager for the first time. How do you ask how they are?",
+          "questionLang": "en",
+          "options": ["Wie geht es Ihnen?", "Wie geht's?"],
+          "answer": "Wie geht es Ihnen?",
+          "explanation": "A first meeting with a senior person: use Sie. Wie geht es Ihnen? is the polite form."
+        },
+        {
+          "type": "order",
+          "prompt": "How are you? (polite)",
+          "tiles": ["wie", "geht", "es", "Ihnen"],
+          "answers": ["Wie geht es Ihnen"],
+          "explanation": "Wie geht es Ihnen? Ihnen is the polite 'you' here, always with a capital I."
+        },
+        {
+          "type": "gap",
+          "text": "Hallo, wie geht's? - Gut, danke. Und ___?",
+          "answers": [["dir"]],
+          "hint": "The question was informal.",
+          "explanation": "Wie geht's? is informal, so answer informally: Und dir? (polite: Und Ihnen?)"
+        }
+      ]
+    }
+  ]
+}

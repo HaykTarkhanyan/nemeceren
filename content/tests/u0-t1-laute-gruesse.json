@@ -1,0 +1,85 @@
+{
+  "id": "u0-t1-laute-gruesse",
+  "title": "Sounds and greetings",
+  "level": "A1",
+  "created": "2026-09-29",
+  "description": "Unit 0 check after lessons 1 and 2: hear the sounds, greet people at the right time.",
+  "unit": 0,
+  "lesson": "u0-02-begruessen",
+  "items": [
+    {
+      "type": "listen_mc",
+      "audio": "Zeit",
+      "question": "Which word did you hear?",
+      "questionLang": "en",
+      "options": ["Zeit", "seit"],
+      "answer": "Zeit",
+      "explanation": "z is 'ts' (Zeit, time). s before a vowel is a soft z sound (seit, since)."
+    },
+    {
+      "type": "listen_mc",
+      "audio": "Wien",
+      "question": "Which word did you hear?",
+      "questionLang": "en",
+      "options": ["Wein", "Wien"],
+      "answer": "Wien",
+      "explanation": "ie is a long ee: Wien (Vienna). ei sounds like 'eye': Wein (wine)."
+    },
+    {
+      "type": "listen_mc",
+      "audio": "Tür",
+      "question": "Which word did you hear?",
+      "questionLang": "en",
+      "options": ["Tür", "Tor"],
+      "answer": "Tür",
+      "explanation": "ü is i with rounded lips: Tür (door). Tor (gate) has a plain o."
+    },
+    {
+      "type": "dictation",
+      "text": "Guten Morgen!",
+      "explanation": "Guten Morgen: both words start with a capital letter here."
+    },
+    {
+      "type": "dictation",
+      "text": "Wie geht es Ihnen?",
+      "explanation": "Ihnen (polite 'you') always has a capital I."
+    },
+    {
+      "type": "mc",
+      "question": "It's 8 pm and you walk into a restaurant. What do you say?",
+      "questionLang": "en",
+      "options": ["Guten Abend!", "Gute Nacht!", "Guten Morgen!"],
+      "answer": "Guten Abend!",
+      "explanation": "Guten Abend to greet in the evening; Gute Nacht only when someone goes to bed."
+    },
+    {
+      "type": "mc",
+      "question": "Your friend is leaving the party. What do you say?",
+      "questionLang": "en",
+      "options": ["Tschüss!", "Guten Tag!", "Wie bitte?"],
+      "answer": "Tschüss!",
+      "explanation": "Tschüss = bye (informal). With a stranger or an official: Auf Wiedersehen."
+    },
+    {
+      "type": "order",
+      "prompt": "How are you? (informal, long form)",
+      "tiles": ["wie", "geht", "es", "dir"],
+      "answers": ["Wie geht es dir"],
+      "explanation": "Wie geht es dir? is the full informal form; Wie geht's? is the short one."
+    },
+    {
+      "type": "gap",
+      "text": "Guten Tag! Wie geht es Ihnen? - Sehr gut, danke. Und ___?",
+      "answers": [["Ihnen"]],
+      "hint": "The question was polite.",
+      "explanation": "Answer in the same form: Wie geht es Ihnen? - Und Ihnen?"
+    },
+    {
+      "type": "write",
+      "instruction": "Write a short exchange (3-4 lines) between you and a new colleague in the morning: greet them, ask how they are, answer, and say goodbye. Use du or Sie, but stay consistent. Claude will check it.",
+      "prompt": "Morning, new colleague: greet, ask how they are, answer, say goodbye.",
+      "promptLang": "en",
+      "minWords": 10
+    }
+  ]
+}

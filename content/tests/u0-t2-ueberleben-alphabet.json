@@ -1,0 +1,75 @@
+{
+  "id": "u0-t2-ueberleben-alphabet",
+  "title": "Survival phrases and spelling",
+  "level": "A1",
+  "created": "2026-09-29",
+  "description": "Unit 0 check after lessons 3 and 4: keep a conversation going, spell names.",
+  "unit": 0,
+  "lesson": "u0-04-alphabet",
+  "items": [
+    {
+      "type": "mc",
+      "question": "You didn't understand what someone said. What do you say?",
+      "questionLang": "en",
+      "options": ["Ich verstehe nicht.", "Ich spreche Deutsch.", "Gute Nacht!"],
+      "answer": "Ich verstehe nicht.",
+      "explanation": "Ich verstehe nicht = I don't understand."
+    },
+    {
+      "type": "mc",
+      "question": "Someone says 'Danke!' to you. What do you answer?",
+      "questionLang": "en",
+      "options": ["Bitte!", "Danke!", "Tschüss!"],
+      "answer": "Bitte!",
+      "explanation": "Bitte = you're welcome (and also please)."
+    },
+    {
+      "type": "listen_mc",
+      "audio": "Langsam, bitte.",
+      "question": "What did you hear?",
+      "questionLang": "en",
+      "options": ["Langsam, bitte.", "Noch einmal, bitte.", "Danke schön."],
+      "answer": "Langsam, bitte.",
+      "explanation": "Langsam, bitte = slowly, please."
+    },
+    {
+      "type": "order",
+      "prompt": "Do you speak English? (polite)",
+      "tiles": ["sprechen", "Sie", "Englisch"],
+      "answers": ["Sprechen Sie Englisch"],
+      "explanation": "In a yes/no question the verb comes first: Sprechen Sie Englisch?"
+    },
+    {
+      "type": "translate",
+      "direction": "en-de",
+      "text": "Once more, please.",
+      "references": ["Noch einmal, bitte.", "Noch einmal bitte."],
+      "explanation": "noch einmal = once more."
+    },
+    {
+      "type": "translate",
+      "direction": "en-de",
+      "text": "I speak a little German.",
+      "references": ["Ich spreche ein bisschen Deutsch."],
+      "explanation": "ein bisschen = a little. Languages start with a capital letter: Deutsch."
+    },
+    {
+      "type": "gap",
+      "text": "Wie ist Ihr ___? - Mein Name ist Hayk.",
+      "answers": [["Name"]],
+      "explanation": "der Name. Nouns always start with a capital letter."
+    },
+    {
+      "type": "dictation",
+      "text": "Können Sie das bitte buchstabieren?",
+      "explanation": "Können with ö; buchstabieren = to spell."
+    },
+    {
+      "type": "write",
+      "instruction": "Spell your first name and your city letter by letter, using the German letter names (for example: ha, a, ypsilon, ka). Claude will check it.",
+      "prompt": "Spell your first name and your city the German way.",
+      "promptLang": "en",
+      "minWords": 4
+    }
+  ]
+}

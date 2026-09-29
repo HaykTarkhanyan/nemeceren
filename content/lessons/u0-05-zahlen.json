@@ -1,0 +1,117 @@
+{
+  "id": "u0-05-zahlen",
+  "unit": 0,
+  "order": 5,
+  "level": "A1",
+  "title": "Numbers 0-100 (Die Zahlen)",
+  "summary": "Count, understand prices and phone numbers, and learn the one German number trick: 21 is 'one-and-twenty'.",
+  "goals": [
+    "Count from 0 to 100",
+    "Understand and say phone numbers",
+    "Understand simple prices"
+  ],
+  "nicosWeg": [{ "title": "Nicos Weg A1, chapter 2: Contact details (Zahlen von 1 bis 100)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }],
+  "words": ["null", "eins", "zwei", "drei", "vier", "fuenf", "sechs", "sieben", "acht", "neun", "zehn", "elf", "zwoelf", "dreizehn", "sechzehn", "siebzehn", "zwanzig", "einundzwanzig", "dreissig", "vierzig", "fuenfzig", "sechzig", "siebzig", "achtzig", "neunzig", "hundert"],
+  "tests": ["u0-t3-zahlen"],
+  "sections": [
+    {
+      "type": "table",
+      "title": "0 to 12: learn these by heart",
+      "columns": [{ "header": "Number" }, { "header": "German", "de": "words" }],
+      "rows": [
+        ["0", "null"], ["1", "eins"], ["2", "zwei"], ["3", "drei"], ["4", "vier"], ["5", "fünf"], ["6", "sechs"],
+        ["7", "sieben"], ["8", "acht"], ["9", "neun"], ["10", "zehn"], ["11", "elf"], ["12", "zwölf"]
+      ]
+    },
+    {
+      "type": "explanation",
+      "title": "13 to 19",
+      "text": "From 13 to 19 you say the number and then [[zehn]]: [[dreizehn]], [[vierzehn]], [[fünfzehn]], [[achtzehn]], [[neunzehn]].\n\nTwo of them lose letters: [[sechzehn]] (16, not 'sechs-zehn') and [[siebzehn]] (17, not 'sieben-zehn')."
+    },
+    {
+      "type": "table",
+      "title": "The tens",
+      "columns": [{ "header": "Number" }, { "header": "German", "de": "words" }, { "header": "Watch out" }],
+      "rows": [
+        ["20", "zwanzig", ""],
+        ["30", "dreißig", "with ß, not -zig"],
+        ["40", "vierzig", ""],
+        ["50", "fünfzig", ""],
+        ["60", "sechzig", "not 'sechs-zig'"],
+        ["70", "siebzig", "not 'sieben-zig'"],
+        ["80", "achtzig", ""],
+        ["90", "neunzig", ""],
+        ["100", "hundert", ""]
+      ]
+    },
+    {
+      "type": "warning",
+      "title": "The German number trick",
+      "text": "From 21 on, German says the ones **first**, then the tens, joined with [[und]] (and), all in one word:\n\n- 21 = [[einundzwanzig]] (one-and-twenty)\n- 35 = [[fünfunddreißig]] (five-and-thirty)\n- 99 = [[neunundneunzig]] (nine-and-ninety)\n\nWhen you listen, wait for the end of the word: in [[siebenundvierzig]] the tens (40) come last."
+    },
+    {
+      "type": "comparison",
+      "text": "Russian двадцать один and Armenian քսանմեկ both say the tens first; German says them last. Even English used to do this ('four-and-twenty blackbirds'). This needs practice with your ears, not your head, so do the listening exercises more than once."
+    },
+    {
+      "type": "explanation",
+      "title": "Phone numbers and prices",
+      "text": "Phone numbers are usually read digit by digit or in pairs. The Munich area code 089 is [[null, acht, neun]]. On the phone people often say [[zwo]] instead of [[zwei]], so it doesn't sound like [[drei]].\n\nPrices: [[zwei Euro fünfzig]] is 2.50 €. The cents come after the word [[Euro]]."
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat aloud",
+      "items": [
+        { "de": "null, eins, zwei, drei, vier", "en": "0, 1, 2, 3, 4" },
+        { "de": "fünf, sechs, sieben, acht, neun, zehn", "en": "5 to 10" },
+        { "de": "elf, zwölf, dreizehn, sechzehn, siebzehn", "en": "11, 12, 13, 16, 17" },
+        { "de": "zwanzig, dreißig, vierzig, fünfzig", "en": "20, 30, 40, 50" },
+        { "de": "sechzig, siebzig, achtzig, neunzig, hundert", "en": "60, 70, 80, 90, 100" },
+        { "de": "einundzwanzig, zweiunddreißig, siebenundvierzig", "en": "21, 32, 47" }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "listen_mc",
+          "audio": "siebenundvierzig",
+          "question": "Which number did you hear?",
+          "questionLang": "en",
+          "options": ["47", "74", "17"],
+          "answer": "47",
+          "explanation": "sieben-und-vierzig: 7 and 40, so 47. Listen for the end of the word."
+        },
+        {
+          "type": "listen_mc",
+          "audio": "sechzehn",
+          "question": "Which number did you hear?",
+          "questionLang": "en",
+          "options": ["16", "60", "6"],
+          "answer": "16",
+          "explanation": "-zehn means 13 to 19; -zig means the tens. sechzehn = 16, sechzig = 60."
+        },
+        {
+          "type": "mc",
+          "question": "How do you say 21?",
+          "questionLang": "en",
+          "options": ["einundzwanzig", "zwölf", "zweiundzwanzig"],
+          "answer": "einundzwanzig",
+          "explanation": "One-and-twenty: ein-und-zwanzig. zweiundzwanzig is 22."
+        },
+        {
+          "type": "gap",
+          "text": "zwanzig, dreißig, ___, fünfzig",
+          "answers": [["vierzig"]],
+          "explanation": "vier + zig = vierzig (40)."
+        },
+        {
+          "type": "dictation",
+          "text": "dreiundzwanzig",
+          "explanation": "drei-und-zwanzig = 23, written as one word."
+        }
+      ]
+    }
+  ]
+}

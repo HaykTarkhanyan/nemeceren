@@ -11,7 +11,7 @@
     "Use heißen, kommen and wohnen in the present tense"
   ],
   "nicosWeg": [{ "title": "Nicos Weg A1 (course overview)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }],
-  "words": ["heissen", "kommen", "wohnen", "name", "vorname", "land", "sprache", "beruf"],
+  "words": ["heissen", "kommen", "wohnen", "vorname", "land", "sprache", "beruf", "adresse", "nummer"],
   "tests": ["a1-01-vorstellen-termine"],
   "sections": [
     {

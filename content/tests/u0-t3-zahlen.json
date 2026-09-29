@@ -1,0 +1,85 @@
+{
+  "id": "u0-t3-zahlen",
+  "title": "Numbers 0-100",
+  "level": "A1",
+  "created": "2026-09-29",
+  "description": "Unit 0 check after lesson 5: hear and write numbers, phone numbers and prices.",
+  "unit": 0,
+  "lesson": "u0-05-zahlen",
+  "items": [
+    {
+      "type": "listen_mc",
+      "audio": "zwölf",
+      "question": "Which number did you hear?",
+      "questionLang": "en",
+      "options": ["12", "20", "2"],
+      "answer": "12",
+      "explanation": "zwölf = 12, zwanzig = 20, zwei = 2."
+    },
+    {
+      "type": "listen_mc",
+      "audio": "sechzig",
+      "question": "Which number did you hear?",
+      "questionLang": "en",
+      "options": ["60", "16", "6"],
+      "answer": "60",
+      "explanation": "-zig = tens: sechzig = 60. -zehn = teens: sechzehn = 16."
+    },
+    {
+      "type": "listen_mc",
+      "audio": "achtunddreißig",
+      "question": "Which number did you hear?",
+      "questionLang": "en",
+      "options": ["38", "83", "28"],
+      "answer": "38",
+      "explanation": "acht-und-dreißig: 8 and 30, so 38. The tens come last."
+    },
+    {
+      "type": "listen_mc",
+      "audio": "fünfundsiebzig",
+      "question": "Which number did you hear?",
+      "questionLang": "en",
+      "options": ["75", "57", "65"],
+      "answer": "75",
+      "explanation": "fünf-und-siebzig: 5 and 70, so 75."
+    },
+    {
+      "type": "listen_mc",
+      "audio": "Das kostet neun Euro neunzig.",
+      "question": "How much is it?",
+      "questionLang": "en",
+      "options": ["9,90 €", "19,90 €", "9,19 €"],
+      "answer": "9,90 €",
+      "explanation": "neun Euro neunzig = 9.90 €. In Germany prices are written with a comma: 9,90 €."
+    },
+    {
+      "type": "dictation",
+      "text": "einundzwanzig",
+      "explanation": "ein-und-zwanzig, one word, no capital letter."
+    },
+    {
+      "type": "dictation",
+      "text": "siebzehn",
+      "explanation": "siebzehn, not 'siebenzehn'."
+    },
+    {
+      "type": "gap",
+      "text": "neun, zehn, ___, zwölf",
+      "answers": [["elf"]],
+      "explanation": "elf = 11."
+    },
+    {
+      "type": "mc",
+      "question": "How do you write 99?",
+      "questionLang": "en",
+      "options": ["neunundneunzig", "neunzig", "neunzehn"],
+      "answer": "neunundneunzig",
+      "explanation": "nine-and-ninety: neun-und-neunzig."
+    },
+    {
+      "type": "dictation",
+      "text": "Meine Nummer ist null, eins, fünf, zwei.",
+      "explanation": "Phone numbers digit by digit: null, eins, fünf, zwei."
+    }
+  ]
+}

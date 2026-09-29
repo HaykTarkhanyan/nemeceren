@@ -4,6 +4,10 @@ Topics cut from current work so they don't get lost.
 
 - **Phone sync for the learning platform** (Neon Postgres or GitHub API commits). Deferred 2026-09-28: phone use is occasional and Hayk is fine with phone results not being saved. See DECISIONS.md #4.
 - **der/die/das and verb conjugation drills** fed from `reference/goethe_wortliste.tsv` and `reference/german_nouns.csv`. Not picked for platform v1 (2026-09-28).
+- **Unit 1 and Unit 3 content:**
+  - When writing Unit 3 ("Making plans"), re-add the appointment words taken out of `content/words.json` on 2026-09-29 so they wouldn't be introduced before Unit 0: der Termin, die Uhr, die Zeit, morgen, leider, pünktlich. Their old entries are in git history (commit 50ac3db).
+  - The sample test `a1-01-vorstellen-termine` (Unit 1) mixes in Unit 3 material, and its gap hint gives the answer away. Rework or replace it when writing Unit 1.
+  - Review the sample lesson `u1-01-sich-vorstellen` (written by the build agent), including its Russian/Armenian lines.
 - **Pronunciation feedback:** Claude can't hear Hayk. Option: Hayk records on the desktop, and a local phoneme model (`facebook/wav2vec2-xlsr-53-espeak-cv-ft`) is compared against DWDS IPA. Whisper hides mispronunciations. See `_knowledge/2026-09-28_llm-tutoring-and-materials.md`. Heavy on this laptop: ask before running.
 - **Platform follow-ups from the v1 build (2026-09-29):**
   - Bake PC results (with Claude's reviews) into the Pages build so the phone can read feedback.

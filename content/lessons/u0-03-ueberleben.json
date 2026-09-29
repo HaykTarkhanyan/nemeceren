@@ -1,0 +1,121 @@
+{
+  "id": "u0-03-ueberleben",
+  "unit": 0,
+  "order": 3,
+  "level": "A1",
+  "title": "Survival phrases (Wichtige Sätze)",
+  "summary": "The phrases that keep a conversation going when you don't understand, plus please, thank you and sorry.",
+  "goals": [
+    "Ask someone to repeat or to speak slowly",
+    "Say that you don't understand",
+    "Ask what something is in German",
+    "Say please, thank you and sorry"
+  ],
+  "nicosWeg": [{ "title": "Nicos Weg A1 (course overview)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }],
+  "words": ["danke", "bitte", "ja", "nein", "entschuldigung", "wie-bitte", "noch-einmal-bitte", "langsam-bitte", "ich-verstehe-nicht", "ich-verstehe", "was-heisst-das", "sprechen-sie-englisch", "ich-spreche-ein-bisschen-deutsch"],
+  "sections": [
+    {
+      "type": "explanation",
+      "title": "Your emergency kit",
+      "text": "These phrases are worth more than a hundred other words: they let you stay in a conversation even when you understand very little.\n\nLearn them as **whole chunks**. Don't analyse the grammar yet; that comes in Unit 1."
+    },
+    {
+      "type": "examples",
+      "title": "When you didn't understand",
+      "items": [
+        { "de": "Wie bitte?", "en": "Pardon? / Sorry, what?" },
+        { "de": "Noch einmal, bitte.", "en": "Once more, please." },
+        { "de": "Langsam, bitte.", "en": "Slowly, please." },
+        { "de": "Ich verstehe nicht.", "en": "I don't understand." },
+        { "de": "Ah, ich verstehe!", "en": "Ah, I understand!" }
+      ]
+    },
+    {
+      "type": "examples",
+      "title": "Asking about words and languages",
+      "items": [
+        { "de": "Was heißt das auf Deutsch?", "en": "What is that in German?", "note": "Point at something while you ask." },
+        { "de": "Sprechen Sie Englisch?", "en": "Do you speak English? (polite)" },
+        { "de": "Ich spreche ein bisschen Deutsch.", "en": "I speak a little German." }
+      ]
+    },
+    {
+      "type": "examples",
+      "title": "Please, thank you, sorry",
+      "items": [
+        { "de": "Danke! - Bitte!", "en": "Thanks! - You're welcome!" },
+        { "de": "Danke schön! - Bitte schön!", "en": "Thank you very much! - You're very welcome!" },
+        { "de": "Entschuldigung!", "en": "Excuse me! / Sorry!" },
+        { "de": "Ja, bitte. - Nein, danke.", "en": "Yes, please. - No, thank you." }
+      ]
+    },
+    {
+      "type": "comparison",
+      "text": "[[Bitte]] works like Russian пожалуйста and Armenian խնդրեմ: please, you're welcome, and 'here you go' when you hand something over, all in one word. [[Wie bitte?]] means 'pardon?'."
+    },
+    {
+      "type": "warning",
+      "text": "Say [[Ich verstehe nicht.]] with [[nicht]] at the end. There is no 'do' in German: not 'I do not understand' but literally 'I understand not'."
+    },
+    {
+      "type": "tip",
+      "text": "[[Entschuldigung]] is both 'excuse me' (to get attention, e.g. before asking the way) and 'sorry' (after bumping into someone)."
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat aloud",
+      "items": [
+        { "de": "Wie bitte?", "en": "Pardon?" },
+        { "de": "Noch einmal, bitte.", "en": "Once more, please." },
+        { "de": "Langsam, bitte.", "en": "Slowly, please." },
+        { "de": "Ich verstehe nicht.", "en": "I don't understand." },
+        { "de": "Was heißt das auf Deutsch?", "en": "What is that in German?" },
+        { "de": "Sprechen Sie Englisch?", "en": "Do you speak English?" },
+        { "de": "Ich spreche ein bisschen Deutsch.", "en": "I speak a little German." },
+        { "de": "Entschuldigung!", "en": "Excuse me! / Sorry!" }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "mc",
+          "question": "Someone is speaking too fast. What do you say?",
+          "questionLang": "en",
+          "options": ["Langsam, bitte.", "Danke schön!", "Auf Wiedersehen!"],
+          "answer": "Langsam, bitte.",
+          "explanation": "Langsam, bitte = slowly, please."
+        },
+        {
+          "type": "mc",
+          "question": "You didn't catch what someone said. What do you say?",
+          "questionLang": "en",
+          "options": ["Wie bitte?", "Wie geht's?", "Gute Nacht!"],
+          "answer": "Wie bitte?",
+          "explanation": "Wie bitte? = pardon? Wie geht's? = how are you?"
+        },
+        {
+          "type": "order",
+          "prompt": "I don't understand.",
+          "tiles": ["ich", "verstehe", "nicht"],
+          "answers": ["Ich verstehe nicht"],
+          "explanation": "nicht comes at the end: Ich verstehe nicht."
+        },
+        {
+          "type": "gap",
+          "text": "Danke! - ___!",
+          "answers": [["Bitte", "Bitte schön", "Gern"]],
+          "explanation": "Bitte (or Bitte schön) = you're welcome."
+        },
+        {
+          "type": "translate",
+          "direction": "en-de",
+          "text": "I speak a little German.",
+          "references": ["Ich spreche ein bisschen Deutsch."],
+          "explanation": "Ich spreche = I speak; ein bisschen = a little."
+        }
+      ]
+    }
+  ]
+}

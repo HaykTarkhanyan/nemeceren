@@ -1,0 +1,134 @@
+{
+  "id": "u0-01-laute",
+  "unit": 0,
+  "order": 1,
+  "level": "A1",
+  "title": "Sounds: reading German aloud (Die Laute)",
+  "summary": "German is written almost exactly as it is spoken. Learn a handful of rules and you can read any word aloud.",
+  "goals": [
+    "Read short German words aloud correctly",
+    "Tell long and short vowels apart from the spelling",
+    "Say ä, ö, ü, ß, ch, sch, ei and ie"
+  ],
+  "nicosWeg": [{ "title": "Nicos Weg A1: Welcome to A1", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }],
+  "sections": [
+    {
+      "type": "explanation",
+      "title": "Why this lesson comes first",
+      "text": "German spelling is very regular. Once you know the rules on this page, you can read almost any word aloud, even one you have never seen.\n\nUse the speaker buttons a lot: listen, then **say every word aloud yourself**. I can't hear you, so the browser voice and the *Nicos Weg* videos are your models."
+    },
+    {
+      "type": "table",
+      "title": "Letters that sound different from English",
+      "columns": [{ "header": "Letters", "de": "sound" }, { "header": "Sounds like" }, { "header": "Example", "de": "words" }, { "header": "Meaning" }],
+      "rows": [
+        ["w", "v, like Russian в, Armenian վ (never English w)", "Wasser", "water"],
+        ["v", "usually f", "Vater", "father"],
+        ["z", "ts, like Russian ц, Armenian ց", "Zeit", "time"],
+        ["j", "y in 'yes', like Russian й", "ja", "yes"],
+        ["s", "z before a vowel", "sagen", "to say"],
+        ["ß", "always a sharp s", "Straße", "street"],
+        ["sch", "sh, like Russian ш, Armenian շ", "Schule", "school"],
+        ["sp", "shp at the start of a word", "Sport", "sport"],
+        ["st", "sht at the start of a word", "Stadt", "city, town"],
+        ["ei", "like English 'eye'", "mein", "my"],
+        ["ie", "a long ee", "Liebe", "love"],
+        ["eu", "oy, as in 'boy'", "neu", "new"],
+        ["h", "silent after a vowel (the vowel gets long)", "sehr", "very"]
+      ]
+    },
+    {
+      "type": "tip",
+      "text": "**ei** and **ie** are the classic trap. Read the **second** letter: [[mein]] ends in i, so it sounds like 'eye'; [[Liebe]] has ie, so it is a long ee."
+    },
+    {
+      "type": "explanation",
+      "title": "Long and short vowels",
+      "text": "Every vowel can be long or short, and the spelling tells you which:\n\n- **long** before a single consonant, before **h**, or when doubled: [[Tag]], [[sehr]], [[Tee]]\n- **short** before two or more consonants: [[Bett]], [[kommen]], [[Hand]]\n\nAt the end of a word, **-e** is a short weak sound, and **-er** sounds almost like a short a: [[Name]], [[Vater]]."
+    },
+    {
+      "type": "table",
+      "title": "The umlauts ä, ö, ü",
+      "columns": [{ "header": "Letter", "de": "sound" }, { "header": "How to say it" }, { "header": "Example", "de": "words" }, { "header": "Meaning" }],
+      "rows": [
+        ["ä", "like e in 'bed'", "Käse", "cheese"],
+        ["ö", "say e, but round your lips as for o", "schön", "nice, beautiful"],
+        ["ü", "say i, but round your lips as for u", "Tür", "door"]
+      ]
+    },
+    {
+      "type": "warning",
+      "text": "The dots change the word: [[schon]] (already) and [[schön]] (nice) are different words. If your keyboard has no umlauts, use the ä ö ü ß buttons under every input in this app. Don't write ae, oe, ue or ss instead: the app marks that as a mistake."
+    },
+    {
+      "type": "explanation",
+      "title": "Two kinds of ch",
+      "text": "**ch** has two sounds, depending on the vowel in front of it:\n\n- after **a, o, u, au** it is rough, from the back of the throat: [[Bach]], [[Buch]], [[auch]]\n- after **e, i, ä, ö, ü** and after consonants it is soft, like a loud whispered y: [[ich]], [[nicht]], [[Milch]]\n\nAt the start of **Ch**ina or **Ch**emie you will hear both variants in Germany; don't worry about it."
+    },
+    {
+      "type": "comparison",
+      "title": "What Russian and Armenian already give you",
+      "text": "- **Rough ch:** the ch in [[Buch]] is exactly Russian х (Бах) and Armenian խ.\n- **Soft ch:** the ch in [[ich]] is close to the х in Russian химия, said further forward.\n- **Final devoicing, like Russian:** b, d, g at the end of a word sound like p, t, k, just as год sounds like гот. So [[Tag]] sounds like 'tak'. Armenian doesn't do this, so Armenian habits need a small correction here.\n- **Weak final -e:** the -e in [[Name]] is the Armenian ը sound.\n- **Stress:** German usually stresses the **first** syllable: [[Name]], [[Vater]], [[Wasser]]. Armenian usually stresses the last syllable, so watch this one.\n- **r:** textbook German uses a throat r, but in Munich and Bavaria many people roll the r with the tongue, like Russian р or Armenian ռ. Your own r is fine here."
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat aloud",
+      "items": [
+        { "de": "Wasser", "en": "water" },
+        { "de": "Zeit", "en": "time" },
+        { "de": "Straße", "en": "street" },
+        { "de": "Sport", "en": "sport" },
+        { "de": "mein", "en": "my" },
+        { "de": "Liebe", "en": "love" },
+        { "de": "neu", "en": "new" },
+        { "de": "schön", "en": "nice, beautiful" },
+        { "de": "Tür", "en": "door" },
+        { "de": "ich", "en": "I" },
+        { "de": "Buch", "en": "book" },
+        { "de": "München", "en": "Munich", "note": "ü and a soft ch in one word" }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "listen_mc",
+          "audio": "Wein",
+          "question": "Which word did you hear?",
+          "questionLang": "en",
+          "options": ["Wein", "Wien"],
+          "answer": "Wein",
+          "explanation": "ei sounds like 'eye': Wein (wine). ie is a long ee: Wien (Vienna)."
+        },
+        {
+          "type": "listen_mc",
+          "audio": "schön",
+          "question": "Which word did you hear?",
+          "questionLang": "en",
+          "options": ["schon", "schön"],
+          "answer": "schön",
+          "explanation": "ö is e with rounded lips: schön (nice). schon (already) has a plain o."
+        },
+        {
+          "type": "mc",
+          "question": "Which word has the rough ch, like Armenian խ?",
+          "questionLang": "en",
+          "options": ["Buch", "ich", "nicht"],
+          "answer": "Buch",
+          "explanation": "After a, o, u, au the ch is rough: Buch. After i it is soft: ich, nicht."
+        },
+        {
+          "type": "dictation",
+          "text": "Die Straße ist neu.",
+          "explanation": "Straße with ß (a sharp s), die with ie (long ee), neu with eu (oy)."
+        },
+        {
+          "type": "dictation",
+          "text": "Das ist mein Buch.",
+          "explanation": "mein has ei (like 'eye'); Buch has the rough ch."
+        }
+      ]
+    }
+  ]
+}

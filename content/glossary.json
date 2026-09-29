@@ -12,6 +12,24 @@
     "das": [
       { "lemma": "der", "pos": "article", "level": "A1", "gloss": ["the (neuter)"], "note": "das Kind, das Land" },
       { "lemma": "das", "pos": "pronoun", "gloss": ["this, that, it", "which, that"] }
+    ],
+    "Es": [
+      { "lemma": "es", "pos": "pronoun", "level": "A1", "gloss": ["it"], "note": "Es geht. = So-so. (literally: it goes)" }
+    ],
+    "Gut": [
+      { "lemma": "gut", "pos": "adjective", "level": "A1", "gloss": ["good, well, fine"], "note": "Gut, danke. = Fine, thanks." }
+    ],
+    "dir": [
+      { "lemma": "du", "pos": "pronoun", "level": "A1", "form": "dative", "gloss": ["(to) you (informal)"], "note": "Und dir? = And you? (informal). Polite: Und Ihnen?" }
+    ],
+    "Wiedersehen": [
+      { "lemma": "Wiedersehen", "pos": "phrase", "level": "A1", "gloss": ["Auf Wiedersehen = goodbye (polite)"], "note": "Literally 'until we see each other again'." }
+    ],
+    "Grüß": [
+      { "lemma": "grüßen", "pos": "phrase", "level": "A1", "gloss": ["Grüß Gott = hello (Bavaria and Austria, polite)"], "note": "Literally 'may God greet you'. Heard in shops and offices in Munich." }
+    ],
+    "Bach": [
+      { "lemma": "Bach", "pos": "noun", "article": "der", "plural": "Bäche", "gloss": ["brook, stream"], "note": "Also the composer Johann Sebastian Bach." }
     ]
   }
 }

@@ -1,0 +1,126 @@
+{
+  "id": "u0-04-alphabet",
+  "unit": 0,
+  "order": 4,
+  "level": "A1",
+  "title": "The alphabet and spelling (Das Alphabet)",
+  "summary": "Spell your name and understand spelled words. You will need it at every office, doctor's reception and phone call.",
+  "goals": [
+    "Say the names of the German letters",
+    "Spell your name and email address",
+    "Ask someone to spell a word"
+  ],
+  "nicosWeg": [{ "title": "Nicos Weg A1: Welcome to A1 (Von A bis Z)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }],
+  "words": ["buchstabieren", "name", "buchstabe"],
+  "tests": ["u0-t2-ueberleben-alphabet"],
+  "sections": [
+    {
+      "type": "explanation",
+      "title": "Why spelling matters",
+      "text": "With a name like yours, people will ask you to spell it at the doctor's, at every office and on the phone. Most letter names follow the sounds from lesson 1. The table shows how each letter is **named**; press the speaker buttons and repeat."
+    },
+    {
+      "type": "table",
+      "title": "The German alphabet",
+      "columns": [{ "header": "Letter", "de": "sound" }, { "header": "Its name", "de": "sound" }, { "header": "Watch out" }],
+      "rows": [
+        ["A", "a", ""],
+        ["B", "be", ""],
+        ["C", "tse", ""],
+        ["D", "de", ""],
+        ["E", "e", "a long 'eh', not English 'ee'"],
+        ["F", "ef", ""],
+        ["G", "ge", "hard g as in 'go'"],
+        ["H", "ha", ""],
+        ["I", "i", "'ee', not English 'eye'"],
+        ["J", "jot", "not 'jay'"],
+        ["K", "ka", ""],
+        ["L", "el", ""],
+        ["M", "em", ""],
+        ["N", "en", ""],
+        ["O", "o", ""],
+        ["P", "pe", ""],
+        ["Q", "ku", ""],
+        ["R", "er", ""],
+        ["S", "es", ""],
+        ["T", "te", ""],
+        ["U", "u", "'oo'"],
+        ["V", "fau", "not 'vee'"],
+        ["W", "we", "like Russian в + e"],
+        ["X", "iks", ""],
+        ["Y", "ypsilon", "not 'why'"],
+        ["Z", "tset", "not 'zed'"],
+        ["Ä", "ä", ""],
+        ["Ö", "ö", ""],
+        ["Ü", "ü", ""],
+        ["ß", "eszett", "also called 'scharfes S'"]
+      ]
+    },
+    {
+      "type": "warning",
+      "text": "The letters people mix up most are **E** and **I** (German E sounds like English 'eh', German I like English 'ee'), and **J**, **V**, **W**, **Y**, **Z**. Practise spelling your own name until these come out right."
+    },
+    {
+      "type": "examples",
+      "title": "Spelling conversations",
+      "items": [
+        { "de": "Wie ist Ihr Name?", "en": "What is your name? (polite)" },
+        { "de": "Können Sie das bitte buchstabieren?", "en": "Can you spell that, please?" },
+        { "de": "Wie schreibt man das?", "en": "How do you write that?" },
+        { "de": "Das Wort hat fünf Buchstaben.", "en": "The word has five letters." }
+      ]
+    },
+    {
+      "type": "table",
+      "title": "Spell these aloud, then press the speaker to check",
+      "columns": [{ "header": "Spelled", "de": "sound" }, { "header": "Word" }],
+      "rows": [
+        ["H, A, Y, K", "Hayk"],
+        ["M, Ü, N, C, H, E, N", "München (Munich)"],
+        ["J, O, B", "Job"],
+        ["Z, E, I, T", "Zeit (time)"],
+        ["W, A, S, S, E, R", "Wasser (water)"]
+      ]
+    },
+    {
+      "type": "tip",
+      "title": "On the phone",
+      "text": "Germans often spell with names on the phone: 'A wie Anton, B wie Berta'. The word 'wie' just means 'as in'. You don't need the list; the first letter of each name is what matters. For email addresses: @ is 'at' (said like English), a dot is 'Punkt', and a hyphen is 'Bindestrich'."
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "gap",
+          "text": "Wie ist Ihr ___?",
+          "answers": [["Name"]],
+          "hint": "A noun, so it starts with a capital letter.",
+          "explanation": "der Name. Wie ist Ihr Name? = What is your name? (polite)"
+        },
+        {
+          "type": "mc",
+          "question": "You want someone to spell their name. What do you ask?",
+          "questionLang": "en",
+          "options": ["Können Sie das bitte buchstabieren?", "Wie geht es Ihnen?", "Sprechen Sie Englisch?"],
+          "answer": "Können Sie das bitte buchstabieren?",
+          "explanation": "buchstabieren = to spell."
+        },
+        {
+          "type": "order",
+          "prompt": "How do you write that?",
+          "tiles": ["wie", "schreibt", "man", "das"],
+          "answers": ["Wie schreibt man das"],
+          "explanation": "Wie schreibt man das? man = 'one' (people in general)."
+        },
+        {
+          "type": "write",
+          "instruction": "Spell your first name, your surname and the city you live in, letter by letter, using the German letter names (for example: ha, a, ypsilon, ka). Claude will check it.",
+          "prompt": "Spell your first name, your surname and your city the German way.",
+          "promptLang": "en",
+          "minWords": 6
+        }
+      ]
+    }
+  ]
+}
