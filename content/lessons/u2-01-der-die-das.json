@@ -41,7 +41,7 @@
         ["-ung", "die", "die Wohnung"],
         ["-e (most nouns; but der for male people and a few others: der Kollege, der Name)", "die", "die Lampe"],
         ["-in (female people)", "die", "die Lehrerin"],
-        ["-chen (small things)", "das", "das Mädchen"],
+        ["-chen (small versions of things; always das, even for people: das Mädchen, the girl)", "das", "das Mädchen"],
         ["days and months", "der", "der Montag"],
         ["-er (people who do something; but die Mutter, die Schwester, die Tochter)", "der", "der Lehrer"]
       ]

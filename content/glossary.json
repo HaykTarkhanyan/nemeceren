@@ -1,6 +1,120 @@
 {
   "ignore": ["Hayk", "Charlotte", "Eva", "Meier", "Müller", "Schmidt", "Thomas", "Weber", "Aram", "Tarkhanyan", "Goethestraße", "Siemens"],
   "entries": {
+    "ja": [
+      {"lemma": "ja", "pos": "interjection", "level": "A1", "gloss": ["yes"]}
+    ],
+    "Ja": [
+      {"lemma": "ja", "pos": "interjection", "level": "A1", "gloss": ["yes"]}
+    ],
+    "nein": [
+      {"lemma": "nein", "pos": "interjection", "level": "A1", "gloss": ["no"]}
+    ],
+    "Nein": [
+      {"lemma": "nein", "pos": "interjection", "level": "A1", "gloss": ["no"]}
+    ],
+    "hallo": [
+      {"lemma": "hallo", "pos": "interjection", "level": "A1", "gloss": ["hello, hi (informal)"]}
+    ],
+    "Hallo": [
+      {"lemma": "hallo", "pos": "interjection", "level": "A1", "gloss": ["hello, hi (informal)"]}
+    ],
+    "danke": [
+      {"lemma": "danke", "pos": "interjection", "level": "A1", "gloss": ["thank you, thanks"], "note": "Danke schön! = Thank you very much!"}
+    ],
+    "Danke": [
+      {"lemma": "danke", "pos": "interjection", "level": "A1", "gloss": ["thank you, thanks"], "note": "Danke schön! = Thank you very much!"}
+    ],
+    "bitte": [
+      {"lemma": "bitte", "pos": "particle", "level": "A1", "gloss": ["please; you're welcome; here you go"]}
+    ],
+    "Bitte": [
+      {"lemma": "bitte", "pos": "particle", "level": "A1", "gloss": ["please; you're welcome; here you go"]}
+    ],
+    "du": [
+      {"lemma": "du", "pos": "pronoun", "level": "A1", "gloss": ["you (informal, one person)"]}
+    ],
+    "Du": [
+      {"lemma": "du", "pos": "pronoun", "level": "A1", "gloss": ["you (informal, one person)"]}
+    ],
+    "er": [
+      {"lemma": "er", "pos": "pronoun", "level": "A1", "gloss": ["he; it (for der-words)"], "note": "Der Tisch? Er ist neu. = The table? It is new."}
+    ],
+    "gut": [
+      {"lemma": "gut", "pos": "adjective", "level": "A1", "gloss": ["good, well, fine"], "note": "Gut, danke. = Fine, thanks."}
+    ],
+    "welche": [
+      {"lemma": "welcher", "pos": "determiner", "level": "A1", "gloss": ["which"], "note": "Welche Sprachen sprechen Sie? = Which languages do you speak?"}
+    ],
+    "können": [
+      {"lemma": "können", "pos": "verb", "level": "A1", "gloss": ["can, to be able to"], "note": "Können Sie das buchstabieren? = Can you spell that?"}
+    ],
+    "Können": [
+      {"lemma": "können", "pos": "verb", "level": "A1", "gloss": ["can, to be able to"], "note": "Können Sie das buchstabieren? = Can you spell that?"}
+    ],
+    "Entschuldigung": [
+      {"lemma": "Entschuldigung", "pos": "interjection", "level": "A1", "gloss": ["Excuse me! Sorry!"]}
+    ],
+    "Tag": [
+      {"lemma": "Tag", "pos": "noun", "article": "der", "plural": "Tage", "level": "A1", "gloss": ["day"], "note": "Guten Tag! = Hello (polite)"}
+    ],
+    "noch": [
+      {"lemma": "noch", "pos": "adverb", "level": "A1", "gloss": ["still; more"], "note": "Noch einmal, bitte. = Once more, please."}
+    ],
+    "geht": [
+      {"lemma": "gehen", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["to go"], "note": "Wie geht es dir? = How are you? (literally: how does it go?)"}
+    ],
+    "geht's": [
+      {"lemma": "geht es", "pos": "contraction", "level": "A1", "gloss": ["geht es"], "note": "Wie geht's? = How are you? (informal)"}
+    ],
+    "von": [
+      {"lemma": "von", "pos": "preposition", "level": "A1", "gloss": ["from; of"]}
+    ],
+    "in": [
+      {"lemma": "in", "pos": "preposition", "level": "A1", "gloss": ["in"]}
+    ],
+    "und": [
+      {"lemma": "und", "pos": "conjunction", "level": "A1", "gloss": ["and"]}
+    ],
+    "auf": [
+      {"lemma": "auf", "pos": "preposition", "level": "A1", "gloss": ["on"], "note": "Auf Wiedersehen! = Goodbye! (polite)"}
+    ],
+    "lange": [
+      {"lemma": "lange", "pos": "adverb", "level": "A1", "gloss": ["long, for a long time"], "note": "Wie lange? = How long?"}
+    ],
+    "mal": [
+      {"lemma": "mal", "pos": "particle", "gloss": ["once; just (makes a request softer)"], "note": "Noch mal, bitte. = Once more, please."}
+    ],
+    "schon": [
+      {"lemma": "schon", "pos": "adverb", "level": "A1", "gloss": ["already"], "note": "Wie lange wohnst du schon hier? = How long have you lived here?"}
+    ],
+    "freut": [
+      {"lemma": "freuen", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["to please, to make glad"], "note": "Freut mich! = Nice to meet you!"}
+    ],
+    "liebt": [
+      {"lemma": "lieben", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["to love"]}
+    ],
+    "liebe": [
+      {"lemma": "lieben", "pos": "verb", "form": "ich form, present", "level": "A1", "gloss": ["to love"]}
+    ],
+    "Liebe": [
+      {"lemma": "Liebe", "pos": "noun", "article": "die", "level": "B1", "gloss": ["love"]}
+    ],
+    "vielen": [
+      {"lemma": "viel", "pos": "determiner", "form": "dative plural", "level": "A1", "gloss": ["many"], "note": "Vielen Dank! = Thank you very much!"}
+    ],
+    "ihnen": [
+      {"lemma": "sie", "pos": "pronoun", "form": "dative plural", "gloss": ["(to) them"]}
+    ],
+    "Ihnen": [
+      {"lemma": "Sie", "pos": "pronoun", "form": "dative", "level": "A1", "gloss": ["(to) you (polite)"], "note": "Wie geht es Ihnen? = How are you?"}
+    ],
+    "Freunde": [
+      {"lemma": "Freund", "pos": "noun", "article": "der", "plural": "Freunde", "form": "plural", "level": "A1", "gloss": ["friends"]}
+    ],
+    "Hauptstraße": [
+      {"lemma": "Hauptstraße", "pos": "noun", "article": "die", "plural": "Hauptstraßen", "gloss": ["main street"]}
+    ],
     "Brüder": [
       {"lemma": "Bruder", "pos": "noun", "article": "der", "plural": "Brüder", "form": "plural", "level": "A1", "gloss": ["brothers"]}
     ],

@@ -94,7 +94,7 @@
           "questionLang": "en",
           "options": ["Ich habe Hunger.", "Ich bin Hunger.", "Ich habe hungrig."],
           "answer": "Ich habe Hunger.",
-          "explanation": "German says 'I have hunger': Ich habe Hunger."
+          "explanation": "German says 'I have hunger': Ich habe Hunger. (Ich bin hungrig is also correct, but people say it less. Ich habe hungrig mixes the two and is wrong.)"
         },
         {
           "type": "translate",
