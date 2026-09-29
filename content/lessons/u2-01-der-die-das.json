@@ -1,0 +1,127 @@
+{
+  "id": "u2-01-der-die-das",
+  "unit": 2,
+  "order": 1,
+  "level": "A1",
+  "title": "der, die, das: every noun has a gender (Die Artikel)",
+  "summary": "Every German noun is der, die or das. Learn how to live with it: always learn the article with the noun, and use a few reliable patterns.",
+  "goals": [
+    "Name everyday objects with the right article",
+    "Use ein and eine",
+    "Use the patterns that almost always work (-ung, -e, -chen, -in)"
+  ],
+  "nicosWeg": [{ "title": "Nicos Weg A1, chapter 5: Things (Was ist das?, Wem gehört das?)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }],
+  "words": ["tisch", "stuhl", "computer", "laptop", "handy", "buch", "stift", "heft", "tasche", "lampe", "fenster", "tuer", "schluessel", "uhr"],
+  "sections": [
+    {
+      "type": "explanation",
+      "title": "Three genders",
+      "text": "Every German noun has a gender: masculine (**der**), feminine (**die**) or neuter (**das**). It is grammar, not meaning: [[der Tisch]], [[die Lampe]], [[das Fenster]].\n\n'A / an' follows the gender too: [[ein Tisch]], [[eine Lampe]], [[ein Fenster]].\n\nThe one rule that matters most: **always learn a noun together with its article.** Not 'Tisch = table' but 'der Tisch'. Your word cards already do this."
+    },
+    {
+      "type": "table",
+      "title": "The articles",
+      "columns": [{ "header": "Meaning" }, { "header": "masculine", "de": "words" }, { "header": "feminine", "de": "words" }, { "header": "neuter", "de": "words" }],
+      "rows": [
+        ["the", "der", "die", "das"],
+        ["a, an", "ein", "eine", "ein"],
+        ["example", "der Tisch", "die Lampe", "das Fenster"]
+      ]
+    },
+    {
+      "type": "comparison",
+      "title": "Why this is hard for you, and what helps",
+      "text": "Russian has genders too, and sometimes they match: [[der Tisch]] and стол are masculine, [[die Tür]] and дверь feminine, [[das Fenster]] and окно neuter. But often they don't: книга is feminine, [[das Buch]] is neuter. So never copy the Russian gender.\n\nRussian has no articles. Armenian has articles (գիրքը = the book, մի գիրք = a book) but no gender. So 'the' vs 'a' is familiar to you; what is new is that the article also shows the gender. That makes der/die/das the hardest part of German for you. Every learner struggles here; what helps is repetition, not more rules."
+    },
+    {
+      "type": "table",
+      "title": "Patterns that (almost) always work",
+      "columns": [{ "header": "Noun ends in / is" }, { "header": "Article", "de": "words" }, { "header": "Example", "de": "words" }],
+      "rows": [
+        ["-ung", "die", "die Wohnung"],
+        ["-e (most nouns; but der for male people and a few others: der Kollege, der Name)", "die", "die Lampe"],
+        ["-in (female people)", "die", "die Lehrerin"],
+        ["-chen (small things)", "das", "das Mädchen"],
+        ["days and months", "der", "der Montag"],
+        ["-er (people who do something; but die Mutter, die Schwester, die Tochter)", "der", "der Lehrer"]
+      ]
+    },
+    {
+      "type": "tip",
+      "title": "How to remember",
+      "text": "Say nouns with their article every time, even in your head: [[der Stift]], [[die Tasche]], [[das Handy]]. Some learners picture der words as blue, die words as red and das words as green. And if you guess wrong in a conversation, people still understand you."
+    },
+    {
+      "type": "examples",
+      "title": "Things around you",
+      "items": [
+        { "de": "Das ist ein Tisch.", "en": "That's a table." },
+        { "de": "Das ist eine Lampe.", "en": "That's a lamp." },
+        { "de": "Das ist ein Handy.", "en": "That's a mobile phone." },
+        { "de": "Der Laptop ist neu.", "en": "The laptop is new." },
+        { "de": "Wo ist der Schlüssel?", "en": "Where is the key?" }
+      ]
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat: noun plus article",
+      "items": [
+        { "de": "der Tisch", "en": "the table" },
+        { "de": "der Stuhl", "en": "the chair" },
+        { "de": "der Computer", "en": "the computer" },
+        { "de": "der Stift", "en": "the pen" },
+        { "de": "der Schlüssel", "en": "the key" },
+        { "de": "die Tasche", "en": "the bag" },
+        { "de": "die Lampe", "en": "the lamp" },
+        { "de": "die Tür", "en": "the door" },
+        { "de": "die Uhr", "en": "the watch, the clock" },
+        { "de": "das Handy", "en": "the mobile phone" },
+        { "de": "das Buch", "en": "the book" },
+        { "de": "das Fenster", "en": "the window" }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "mc",
+          "question": "Which article goes with Tisch?",
+          "questionLang": "en",
+          "options": ["der", "die", "das"],
+          "answer": "der",
+          "explanation": "der Tisch. Learn it as one unit: der Tisch."
+        },
+        {
+          "type": "mc",
+          "question": "Which of these nouns is feminine (die)?",
+          "questionLang": "en",
+          "options": ["Tasche", "Tisch", "Fenster"],
+          "answer": "Tasche",
+          "explanation": "die Tasche. Most nouns ending in -e are feminine."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: That's a mobile phone.",
+          "text": "Das ist ___ Handy.",
+          "answers": [["ein"]],
+          "explanation": "das Handy is neuter, so ein Handy."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: The lamp is new.",
+          "text": "___ Lampe ist neu.",
+          "answers": [["Die"]],
+          "explanation": "die Lampe. At the start of the sentence: Die."
+        },
+        {
+          "type": "order",
+          "prompt": "That is a window.",
+          "tiles": ["das", "ist", "ein", "Fenster"],
+          "answers": ["Das ist ein Fenster"],
+          "explanation": "das Fenster (neuter), so ein Fenster."
+        }
+      ]
+    }
+  ]
+}

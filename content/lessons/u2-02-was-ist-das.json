@@ -1,0 +1,136 @@
+{
+  "id": "u2-02-was-ist-das",
+  "unit": 2,
+  "order": 2,
+  "level": "A1",
+  "title": "What is that? ein or der, kein or nicht (Was ist das?)",
+  "summary": "Name and describe things: when to say ein and when der, how to say 'not a' with kein, and simple descriptions with adjectives and colours.",
+  "goals": [
+    "Ask Was ist das? and answer",
+    "Choose between ein/eine and der/die/das",
+    "Say no with kein and nicht",
+    "Describe things: groß, klein, teuer, colours"
+  ],
+  "nicosWeg": [{ "title": "Nicos Weg A1, chapter 5: Things (Ich habe kein ..., Das Auto ist rot)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }],
+  "words": ["was-ist-das", "kein", "nicht", "gross", "klein", "teuer", "billig", "schoen", "praktisch", "rot", "blau", "gruen", "schwarz", "weiss"],
+  "tests": ["u2-t1-artikel"],
+  "sections": [
+    {
+      "type": "explanation",
+      "title": "ein first, der after",
+      "text": "When you mention something for the first time, use **ein/eine**. Once it is known, use **der/die/das**:\n\n- [[Was ist das?]] - [[Das ist ein Laptop.]] - [[Der Laptop ist neu.]]\n\nJust like English: 'That's **a** laptop. **The** laptop is new.'"
+    },
+    {
+      "type": "explanation",
+      "title": "kein or nicht?",
+      "text": "- **kein** replaces [[ein]] and negates a noun: [[Das ist kein Laptop.]] (That's not a laptop.) With feminine nouns it is [[keine]]: [[Das ist keine Tasche.]] It also negates a noun with no article: [[Ich habe Zeit.]] - [[Ich habe keine Zeit.]]\n- **nicht** negates everything else, for example an adjective or a verb: [[Der Laptop ist nicht neu.]] [[Ich verstehe nicht.]]"
+    },
+    {
+      "type": "table",
+      "title": "kein works like ein",
+      "columns": [{ "header": "Meaning" }, { "header": "masculine", "de": "words" }, { "header": "feminine", "de": "words" }, { "header": "neuter", "de": "words" }],
+      "rows": [
+        ["a, an", "ein", "eine", "ein"],
+        ["no, not a", "kein", "keine", "kein"]
+      ]
+    },
+    {
+      "type": "comparison",
+      "text": "Russian mostly uses не (Это не ноутбук. Ноутбук не новый.), and нет for 'there is no' (У меня нет денег). Armenian uses չ- and ոչ, and ոչ մի is close to kein. German splits it: **kein** in front of a noun, **nicht** everywhere else. The split is new for you, so the exercises drill it."
+    },
+    {
+      "type": "table",
+      "title": "Describing things",
+      "columns": [{ "header": "German", "de": "words" }, { "header": "English" }],
+      "rows": [
+        ["groß", "big, large; tall"],
+        ["klein", "small"],
+        ["neu", "new"],
+        ["alt", "old"],
+        ["teuer", "expensive"],
+        ["billig", "cheap"],
+        ["schön", "nice, beautiful"],
+        ["praktisch", "practical"]
+      ]
+    },
+    {
+      "type": "table",
+      "title": "Colours",
+      "columns": [{ "header": "German", "de": "words" }, { "header": "English" }],
+      "rows": [
+        ["rot", "red"],
+        ["blau", "blue"],
+        ["grün", "green"],
+        ["schwarz", "black"],
+        ["weiß", "white"]
+      ]
+    },
+    {
+      "type": "tip",
+      "text": "After [[ist]] or [[sind]], adjectives never change: [[Der Laptop ist neu.]] [[Die Tasche ist neu.]] [[Die Bücher sind neu.]] In front of a noun they do change, but that comes later, at A2."
+    },
+    {
+      "type": "examples",
+      "title": "Naming and describing",
+      "items": [
+        { "de": "Ist das ein Stift? - Nein, das ist kein Stift. Das ist ein Schlüssel.", "en": "Is that a pen? - No, that's not a pen. That's a key." },
+        { "de": "Die Uhr ist schön, aber sehr teuer.", "en": "The watch is nice, but very expensive." },
+        { "de": "Mein Laptop ist schwarz.", "en": "My laptop is black." },
+        { "de": "Das Zimmer ist nicht groß.", "en": "The room isn't big." }
+      ]
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat aloud",
+      "items": [
+        { "de": "Was ist das?", "en": "What is that?" },
+        { "de": "Das ist kein Stift.", "en": "That's not a pen." },
+        { "de": "Das ist keine Tasche.", "en": "That's not a bag." },
+        { "de": "Der Laptop ist nicht neu.", "en": "The laptop is not new." },
+        { "de": "Die Uhr ist schön, aber teuer.", "en": "The watch is nice, but expensive." }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: That's not a pen. That's a notebook.",
+          "text": "Das ist ___ Stift. Das ist ein Heft.",
+          "answers": [["kein"]],
+          "explanation": "kein negates a noun: kein Stift (der Stift)."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: That's not a bag.",
+          "text": "Das ist ___ Tasche.",
+          "answers": [["keine"]],
+          "explanation": "die Tasche is feminine, so keine Tasche."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: The laptop is not new.",
+          "text": "Der Laptop ist ___ neu.",
+          "answers": [["nicht"]],
+          "explanation": "nicht negates the adjective neu."
+        },
+        {
+          "type": "mc",
+          "question": "How do you say 'That's not a computer'?",
+          "questionLang": "en",
+          "options": ["Das ist kein Computer.", "Das ist nicht Computer.", "Das ist keine Computer."],
+          "answer": "Das ist kein Computer.",
+          "explanation": "der Computer: kein Computer. nicht can't stand directly before a noun like this."
+        },
+        {
+          "type": "order",
+          "prompt": "The bag is not expensive.",
+          "tiles": ["die", "Tasche", "ist", "nicht", "teuer"],
+          "answers": ["Die Tasche ist nicht teuer"],
+          "explanation": "nicht comes before the adjective it negates."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,109 @@
+{
+  "id": "u2-06-haben-brauchen",
+  "unit": 2,
+  "order": 6,
+  "level": "A1",
+  "title": "What you have and need: einen, keinen (haben, brauchen)",
+  "summary": "Say what you have, need or don't have. Your first taste of the accusative: ein becomes einen, but only with masculine nouns.",
+  "goals": [
+    "Use haben and brauchen with things",
+    "Say einen and keinen with masculine nouns",
+    "Say Ich habe keine Zeit and Ich habe Hunger"
+  ],
+  "nicosWeg": [{ "title": "Nicos Weg A1, chapter 5: Things (Ich habe kein ...)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }],
+  "words": ["brauchen", "ladegeraet", "wasser", "kaffee", "zeit", "geld", "hunger", "durst"],
+  "tests": ["u2-t3-familie-wohnung"],
+  "sections": [
+    {
+      "type": "explanation",
+      "title": "One change: einen",
+      "text": "After [[haben]] and [[brauchen]] (and after most verbs), **masculine** [[ein]] becomes **einen**:\n\n- [[Das ist ein Stift.]] but [[Ich brauche einen Stift.]]\n- [[Das ist eine Tasche.]] and [[Ich brauche eine Tasche.]] (no change)\n- [[Das ist ein Ladegerät.]] and [[Ich brauche ein Ladegerät.]] (no change)\n\nOnly the masculine changes, and [[kein]] does the same: [[Ich habe keinen Stift.]] This is the accusative. You will study it properly in Unit 4; for now, learn these as ready-made phrases."
+    },
+    {
+      "type": "table",
+      "title": "ein and kein after haben and brauchen",
+      "columns": [{ "header": "Sentence" }, { "header": "masculine", "de": "words" }, { "header": "feminine", "de": "words" }, { "header": "neuter", "de": "words" }, { "header": "plural", "de": "words" }],
+      "rows": [
+        ["Das ist / Das sind ...", "ein Stift", "eine Tasche", "ein Handy", "Bücher"],
+        ["Ich habe ...", "einen Stift", "eine Tasche", "ein Handy", "Bücher"],
+        ["Ich habe ...", "keinen Stift", "keine Tasche", "kein Handy", "keine Bücher"]
+      ]
+    },
+    {
+      "type": "comparison",
+      "text": "You know the accusative from Russian (Я беру ручку). Funny twist: in Russian the feminine changes (ручка becomes ручку) and a masculine thing stays (стол). In German it is the other way round: [[einen Stift]] changes, [[eine Tasche]] stays. With people both languages change the masculine: [[einen Bruder]], брата."
+    },
+    {
+      "type": "examples",
+      "title": "Everyday sentences",
+      "items": [
+        { "de": "Ich brauche einen Kaffee!", "en": "I need a coffee!" },
+        { "de": "Hast du ein Ladegerät?", "en": "Do you have a charger?" },
+        { "de": "Ich habe keine Zeit.", "en": "I don't have time." },
+        { "de": "Ich habe Hunger. Hast du Durst?", "en": "I'm hungry. Are you thirsty?" },
+        { "de": "Ich habe kein Geld.", "en": "I have no money." }
+      ]
+    },
+    {
+      "type": "comparison",
+      "text": "German says 'I have hunger' ([[Ich habe Hunger.]]) and 'I have thirst' ([[Ich habe Durst.]]). Russian and Armenian use an adjective here (я голоден, սոված եմ), so don't translate word for word."
+    },
+    {
+      "type": "tip",
+      "text": "[[Ich habe leider keine Zeit.]] (unfortunately) is the polite, very common way to say no to an invitation."
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat aloud",
+      "items": [
+        { "de": "Ich brauche einen Stift.", "en": "I need a pen." },
+        { "de": "Ich habe keinen Laptop.", "en": "I don't have a laptop." },
+        { "de": "Hast du ein Ladegerät?", "en": "Do you have a charger?" },
+        { "de": "Ich habe keine Zeit.", "en": "I don't have time." },
+        { "de": "Ich habe Hunger.", "en": "I'm hungry." }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: I need a pen.",
+          "text": "Ich brauche ___ Stift.",
+          "answers": [["einen"]],
+          "explanation": "der Stift is masculine: after brauchen, ein becomes einen."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: I don't have time.",
+          "text": "Ich habe ___ Zeit.",
+          "answers": [["keine"]],
+          "explanation": "die Zeit is feminine: keine Zeit (no change)."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: Do you have a charger?",
+          "text": "Hast du ___ Ladegerät?",
+          "answers": [["ein"]],
+          "explanation": "das Ladegerät is neuter: ein Ladegerät (no change)."
+        },
+        {
+          "type": "mc",
+          "question": "How do you say 'I'm hungry'?",
+          "questionLang": "en",
+          "options": ["Ich habe Hunger.", "Ich bin Hunger.", "Ich habe hungrig."],
+          "answer": "Ich habe Hunger.",
+          "explanation": "German says 'I have hunger': Ich habe Hunger."
+        },
+        {
+          "type": "translate",
+          "direction": "en-de",
+          "text": "I need a coffee.",
+          "references": ["Ich brauche einen Kaffee."],
+          "explanation": "der Kaffee is masculine, so einen Kaffee."
+        }
+      ]
+    }
+  ]
+}

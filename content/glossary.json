@@ -1,6 +1,36 @@
 {
   "ignore": ["Hayk", "Charlotte", "Eva", "Meier", "Müller", "Schmidt", "Thomas", "Weber", "Aram", "Tarkhanyan", "Goethestraße", "Siemens"],
   "entries": {
+    "Brüder": [
+      {"lemma": "Bruder", "pos": "noun", "article": "der", "plural": "Brüder", "form": "plural", "level": "A1", "gloss": ["brothers"]}
+    ],
+    "Geschwister": [
+      {"lemma": "Geschwister", "pos": "noun", "article": "die", "level": "A1", "gloss": ["brothers and sisters, siblings"], "note": "Plural only in everyday German."}
+    ],
+    "viele": [
+      {"lemma": "viel", "pos": "determiner", "form": "plural", "level": "A1", "gloss": ["many, a lot of"], "note": "viele Bücher = many books"}
+    ],
+    "schlafen": [
+      {"lemma": "schlafen", "pos": "verb", "level": "A1", "gloss": ["to sleep"]}
+    ],
+    "sein": [
+      {"lemma": "sein", "pos": "verb", "level": "A1", "gloss": ["to be"], "note": "ich bin, du bist, er ist"},
+      {"lemma": "sein", "pos": "determiner", "level": "A1", "gloss": ["his, its"], "note": "sein Bruder, seine Schwester"}
+    ],
+    "ihr": [
+      {"lemma": "ihr", "pos": "determiner", "level": "A1", "gloss": ["her; their"], "note": "ihr Name = her name or their name"},
+      {"lemma": "ihr", "pos": "pronoun", "level": "A1", "gloss": ["you (plural, informal)"], "note": "Ihr seid nett."}
+    ],
+    "ihre": [
+      {"lemma": "ihr", "pos": "determiner", "level": "A1", "form": "feminine and plural", "gloss": ["her; their"], "note": "ihre Schwester, ihre Eltern"}
+    ],
+    "Ihr": [
+      {"lemma": "Ihr", "pos": "determiner", "level": "A1", "gloss": ["your (polite)"], "note": "At the start of a sentence also her or their: Ihr Name ist Anna. = Her name is Anna."},
+      {"lemma": "ihr", "pos": "determiner", "level": "A1", "gloss": ["her; their"]}
+    ],
+    "Laptop": [
+      {"lemma": "Laptop", "pos": "noun", "article": "der", "plural": "Laptops", "level": "A2", "gloss": ["laptop"], "note": "Also: das Laptop."}
+    ],
     "Lehrer": [
       {"lemma": "Lehrer", "pos": "noun", "article": "der", "plural": "Lehrer", "level": "A1", "gloss": ["teacher (male)"], "note": "Female: die Lehrerin."}
     ],

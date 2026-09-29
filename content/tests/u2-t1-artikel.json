@@ -1,0 +1,85 @@
+{
+  "id": "u2-t1-artikel",
+  "title": "Articles, kein and nicht, describing things",
+  "level": "A1",
+  "created": "2026-09-29",
+  "description": "Unit 2 check after lessons 1 and 2.",
+  "unit": 2,
+  "lesson": "u2-02-was-ist-das",
+  "items": [
+    {"type": "gap", "instruction": "Fill in the gap: He speaks English.", "text": "Er ___ Englisch.", "answers": [["spricht"]], "explanation": "Review (Unit 1): sprechen, er spricht."},
+    {"type": "listen_mc", "audio": "fünfundvierzig", "question": "Which number did you hear?", "questionLang": "en", "options": ["45", "54", "15"], "answer": "45", "explanation": "Review (Unit 0): fünf-und-vierzig = 45."},
+    {
+      "type": "mc",
+      "question": "Which article goes with Handy?",
+      "questionLang": "en",
+      "options": ["das", "der", "die"],
+      "answer": "das",
+      "explanation": "das Handy."
+    },
+    {
+      "type": "mc",
+      "question": "Which article goes with Schlüssel?",
+      "questionLang": "en",
+      "options": ["der", "die", "das"],
+      "answer": "der",
+      "explanation": "der Schlüssel."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: That's a watch.",
+      "text": "Das ist ___ Uhr.",
+      "answers": [["eine"]],
+      "explanation": "die Uhr is feminine: eine Uhr."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: The pen is new.",
+      "text": "Was ist das? - Das ist ein Stift. ___ Stift ist neu.",
+      "answers": [["Der"]],
+      "explanation": "First mention: ein Stift. Then it is known: der Stift."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: That's not a book. That's a notebook.",
+      "text": "Das ist ___ Buch. Das ist ein Heft.",
+      "answers": [["kein"]],
+      "explanation": "das Buch: kein Buch."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: The bag is not expensive.",
+      "text": "Die Tasche ist ___ teuer.",
+      "answers": [["nicht"]],
+      "explanation": "nicht negates the adjective teuer."
+    },
+    {
+      "type": "listen_mc",
+      "audio": "Mein Laptop ist schwarz, aber die Tasche ist rot.",
+      "question": "What colour is the bag?",
+      "questionLang": "en",
+      "options": ["rot", "schwarz", "blau"],
+      "answer": "rot",
+      "explanation": "die Tasche ist rot = the bag is red."
+    },
+    {
+      "type": "order",
+      "prompt": "That is not a chair.",
+      "tiles": ["das", "ist", "kein", "Stuhl"],
+      "answers": ["Das ist kein Stuhl"],
+      "explanation": "kein in front of the noun."
+    },
+    {
+      "type": "dictation",
+      "text": "Der Schlüssel ist klein und schwarz.",
+      "explanation": "Schlüssel with ü and ss; nouns with a capital letter."
+    },
+    {
+      "type": "write",
+      "instruction": "Look at your desk. Describe 4 things on it in German, with the article and a colour or an adjective (e.g. Der Laptop ist schwarz. Die Lampe ist nicht neu.). Claude will check it.",
+      "prompt": "Describe 4 things on your desk.",
+      "promptLang": "en",
+      "minWords": 12
+    }
+  ]
+}

@@ -1,0 +1,136 @@
+{
+  "id": "u2-04-familie",
+  "unit": 2,
+  "order": 4,
+  "level": "A1",
+  "title": "Family and my, your, his, her (Meine Familie)",
+  "summary": "Talk about your family, and say whose something is: mein, dein, Ihr, sein, ihr, unser.",
+  "goals": [
+    "Name family members",
+    "Use mein/meine, dein/deine and Ihr/Ihre",
+    "Say his, her, our: sein, ihr, unser",
+    "Say whether you are married and have brothers or sisters"
+  ],
+  "nicosWeg": [
+    { "title": "Nicos Weg A1, chapter 15: Family (for the family words)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" },
+    { "title": "Nicos Weg A1, chapter 6: Living (Unser Haus: possessives)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
+  ],
+  "words": ["familie", "eltern", "vater", "mutter", "bruder", "schwester", "sohn", "tochter", "kind", "geschwister", "mann", "verheiratet", "ledig", "mein", "dein", "unser"],
+  "tests": ["u2-t2-plural-familie"],
+  "sections": [
+    {
+      "type": "table",
+      "title": "The family",
+      "columns": [{ "header": "German", "de": "words" }, { "header": "Plural", "de": "words" }, { "header": "English" }],
+      "rows": [
+        ["der Vater", "die Väter", "father"],
+        ["die Mutter", "die Mütter", "mother"],
+        ["die Eltern", "", "parents (plural only)"],
+        ["der Bruder", "die Brüder", "brother"],
+        ["die Schwester", "die Schwestern", "sister"],
+        ["die Geschwister", "", "brothers and sisters (plural only)"],
+        ["der Sohn", "die Söhne", "son"],
+        ["die Tochter", "die Töchter", "daughter"],
+        ["das Kind", "die Kinder", "child"],
+        ["der Mann", "die Männer", "man; husband"],
+        ["die Frau", "die Frauen", "woman; wife"]
+      ]
+    },
+    {
+      "type": "explanation",
+      "title": "mein and meine",
+      "text": "[[mein]] (my) works like [[ein]]: [[mein Bruder]], [[mein Kind]], but **meine** with feminine nouns and with every plural: [[meine Schwester]], [[meine Eltern]].\n\nThe same goes for [[dein]] (your, informal) and [[Ihr]] (your, polite): [[dein Bruder]], [[deine Schwester]], [[Ihre Familie]]."
+    },
+    {
+      "type": "table",
+      "title": "my, your, his, her, our, their",
+      "columns": [{ "header": "Person", "de": "words" }, { "header": "with der/das words", "de": "words" }, { "header": "with die words and plurals", "de": "words" }, { "header": "English" }],
+      "rows": [
+        ["ich", "mein", "meine", "my"],
+        ["du", "dein", "deine", "your (informal)"],
+        ["er", "sein", "seine", "his"],
+        ["sie", "ihr", "ihre", "her"],
+        ["wir", "unser", "unsere", "our"],
+        ["sie", "ihr", "ihre", "their"],
+        ["Sie", "Ihr", "Ihre", "your (polite)"]
+      ]
+    },
+    {
+      "type": "warning",
+      "text": "[[sein]] also means 'his' (not only 'to be'), and [[ihr]] also means 'her' and 'their'. The context tells you which: [[Das ist sein Bruder.]] = That is his brother. [[Ihr Name ist Anna.]] = Her name is Anna. At the start of a sentence, Ihr can also be the polite 'your'; the context decides."
+    },
+    {
+      "type": "comparison",
+      "text": "German has no Russian свой: 'Hayk loves his sister' (Айк любит свою сестру) is simply [[Hayk liebt seine Schwester.]]\n\nArmenian often uses a suffix (եղբայրս = my brother). German always puts a separate word in front: [[mein Bruder]]."
+    },
+    {
+      "type": "examples",
+      "title": "Talking about family",
+      "items": [
+        { "de": "Hast du Geschwister? - Ja, ich habe einen Bruder und eine Schwester.", "en": "Do you have brothers or sisters? - Yes, I have a brother and a sister.", "note": "einen Bruder: see lesson 6 of this unit." },
+        { "de": "Meine Eltern wohnen in Jerewan.", "en": "My parents live in Yerevan." },
+        { "de": "Das sind meine Eltern.", "en": "These are my parents.", "note": "das + sind for more than one person or thing" },
+        { "de": "Bist du verheiratet? - Nein, ich bin ledig.", "en": "Are you married? - No, I'm single." },
+        { "de": "Das ist meine Schwester. Ihr Name ist Anna.", "en": "This is my sister. Her name is Anna." },
+        { "de": "Unsere Familie ist groß.", "en": "Our family is big." }
+      ]
+    },
+    {
+      "type": "tip",
+      "text": "Family is normal small talk with friends and classmates. With colleagues you have just met, Germans usually stick to work, hobbies and weekend plans at first."
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat aloud",
+      "items": [
+        { "de": "Das ist mein Bruder.", "en": "This is my brother." },
+        { "de": "Das ist meine Schwester.", "en": "This is my sister." },
+        { "de": "Meine Eltern wohnen in Jerewan.", "en": "My parents live in Yerevan." },
+        { "de": "Hast du Geschwister?", "en": "Do you have brothers or sisters?" },
+        { "de": "Bist du verheiratet?", "en": "Are you married?" }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: That's my sister.",
+          "text": "Das ist ___ Schwester.",
+          "answers": [["meine"]],
+          "explanation": "die Schwester, so meine Schwester."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: That's my brother.",
+          "text": "Das ist ___ Bruder.",
+          "answers": [["mein"]],
+          "explanation": "der Bruder, so mein Bruder (no ending)."
+        },
+        {
+          "type": "mc",
+          "question": "Which sentence means 'Her name is Anna'?",
+          "questionLang": "en",
+          "options": ["Ihr Name ist Anna.", "Sein Name ist Anna.", "Mein Name ist Anna."],
+          "answer": "Ihr Name ist Anna.",
+          "explanation": "ihr = her; sein = his; mein = my."
+        },
+        {
+          "type": "translate",
+          "direction": "en-de",
+          "text": "My parents live in Munich.",
+          "references": ["Meine Eltern wohnen in München."],
+          "explanation": "Eltern is plural, so meine, and the verb is wohnen."
+        },
+        {
+          "type": "order",
+          "prompt": "Do you have brothers or sisters?",
+          "tiles": ["hast", "du", "Geschwister"],
+          "answers": ["Hast du Geschwister"],
+          "explanation": "Yes/no question: the verb first."
+        }
+      ]
+    }
+  ]
+}

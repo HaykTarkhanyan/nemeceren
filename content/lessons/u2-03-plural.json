@@ -1,0 +1,114 @@
+{
+  "id": "u2-03-plural",
+  "unit": 2,
+  "order": 3,
+  "level": "A1",
+  "title": "One book, two books: plurals (Singular und Plural)",
+  "summary": "German has several plural endings, but the plural article is always die. Learn the main patterns and count things.",
+  "goals": [
+    "Recognise the main plural endings",
+    "Use die for every plural",
+    "Count things: zwei Stühle, drei Bücher"
+  ],
+  "words": ["ding", "viele"],
+  "sections": [
+    {
+      "type": "explanation",
+      "title": "The good news and the bad news",
+      "text": "The good news: in the plural the article is **always die**, whatever the gender: [[der Tisch]] - [[die Tische]], [[das Buch]] - [[die Bücher]], [[die Lampe]] - [[die Lampen]].\n\nThe bad news: there are several plural endings, and mostly you learn the plural together with each noun, like the article. Your word cards show every plural."
+    },
+    {
+      "type": "table",
+      "title": "The main plural patterns",
+      "columns": [{ "header": "Pattern" }, { "header": "Singular", "de": "words" }, { "header": "Plural", "de": "words" }],
+      "rows": [
+        ["-e, often with an umlaut", "der Tisch", "die Tische"],
+        ["", "der Stuhl", "die Stühle"],
+        ["-n or -en (most feminine nouns)", "die Lampe", "die Lampen"],
+        ["", "die Uhr", "die Uhren"],
+        ["-er, with an umlaut if possible", "das Buch", "die Bücher"],
+        ["", "das Kind", "die Kinder"],
+        ["-s (words from English and French)", "das Handy", "die Handys"],
+        ["", "der Laptop", "die Laptops"],
+        ["no ending, sometimes an umlaut (der/das words in -er, -el, -en)", "das Fenster", "die Fenster"],
+        ["", "der Vater", "die Väter"],
+        ["", "der Schlüssel", "die Schlüssel"],
+        ["feminine words in -er add -n", "die Schwester", "die Schwestern"],
+        ["-nen (female -in)", "die Lehrerin", "die Lehrerinnen"]
+      ]
+    },
+    {
+      "type": "tip",
+      "text": "Two quick rules that are almost always right: feminine nouns ending in **-e** add **-n** ([[die Tasche]] - [[die Taschen]]), and English words add **-s** ([[das Handy]] - [[die Handys]]), except words in -er: [[der Computer]] - [[die Computer]]."
+    },
+    {
+      "type": "comparison",
+      "text": "After a number, German uses the plural: [[zwei Bücher]], [[fünf Bücher]] (except measures and money: [[zwei Kaffee]], [[zehn Euro]]). Armenian keeps the singular after numbers (երկու գիրք), and Russian changes the form with the number (два стула, пять стульев). German has neither complication: number + plural."
+    },
+    {
+      "type": "warning",
+      "text": "A plural subject needs the plural verb: [[Der Stuhl ist neu.]] but [[Die Stühle sind neu.]]"
+    },
+    {
+      "type": "examples",
+      "title": "Plurals in sentences",
+      "items": [
+        { "de": "Ich habe zwei Laptops.", "en": "I have two laptops." },
+        { "de": "Die Stühle sind neu.", "en": "The chairs are new." },
+        { "de": "Ich habe viele Bücher.", "en": "I have many books." },
+        { "de": "Das Ding ist praktisch.", "en": "The thing is practical." },
+        { "de": "Die Kinder sind drei und fünf.", "en": "The children are three and five." }
+      ]
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat: singular and plural",
+      "items": [
+        { "de": "der Tisch, die Tische", "en": "the table, the tables" },
+        { "de": "der Stuhl, die Stühle", "en": "the chair, the chairs" },
+        { "de": "die Lampe, die Lampen", "en": "the lamp, the lamps" },
+        { "de": "das Buch, die Bücher", "en": "the book, the books" },
+        { "de": "das Handy, die Handys", "en": "the phone, the phones" },
+        { "de": "das Fenster, die Fenster", "en": "the window, the windows" }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "gap",
+          "text": "ein Stuhl, zwei ___",
+          "answers": [["Stühle"]],
+          "explanation": "der Stuhl, die Stühle: -e with an umlaut."
+        },
+        {
+          "type": "gap",
+          "text": "eine Lampe, drei ___",
+          "answers": [["Lampen"]],
+          "explanation": "Feminine nouns in -e add -n."
+        },
+        {
+          "type": "gap",
+          "text": "ein Handy, zwei ___",
+          "answers": [["Handys"]],
+          "explanation": "Words from English add -s."
+        },
+        {
+          "type": "gap",
+          "text": "Die Bücher ___ gut.",
+          "answers": [["sind"]],
+          "explanation": "Plural subject, plural verb: die Bücher sind."
+        },
+        {
+          "type": "mc",
+          "question": "Which article do all plurals use?",
+          "questionLang": "en",
+          "options": ["die", "der", "das"],
+          "answer": "die",
+          "explanation": "Every plural takes die: die Tische, die Bücher, die Lampen."
+        }
+      ]
+    }
+  ]
+}

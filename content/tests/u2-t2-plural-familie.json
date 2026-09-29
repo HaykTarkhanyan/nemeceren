@@ -1,0 +1,83 @@
+{
+  "id": "u2-t2-plural-familie",
+  "title": "Plurals, family and possessives",
+  "level": "A1",
+  "created": "2026-09-29",
+  "description": "Unit 2 check after lessons 3 and 4.",
+  "unit": 2,
+  "lesson": "u2-04-familie",
+  "items": [
+    {"type": "order", "prompt": "Where do you work?", "tiles": ["wo", "arbeitest", "du"], "answers": ["Wo arbeitest du"], "explanation": "Review (Unit 1): question word, then the verb."},
+    {"type": "mc", "question": "You didn't understand. What do you say?", "questionLang": "en", "options": ["Wie bitte?", "Freut mich!", "Tschüss!"], "answer": "Wie bitte?", "explanation": "Review (Unit 0): Wie bitte? = pardon?"},
+    {
+      "type": "gap",
+      "text": "ein Tisch, zwei ___",
+      "answers": [["Tische"]],
+      "explanation": "der Tisch, die Tische."
+    },
+    {
+      "type": "gap",
+      "text": "ein Buch, drei ___",
+      "answers": [["Bücher"]],
+      "explanation": "das Buch, die Bücher: -er with an umlaut."
+    },
+    {
+      "type": "gap",
+      "text": "eine Tasche, zwei ___",
+      "answers": [["Taschen"]],
+      "explanation": "Feminine nouns in -e add -n."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: That's my mother.",
+      "text": "Das ist ___ Mutter.",
+      "answers": [["meine"]],
+      "explanation": "die Mutter: meine Mutter."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: That's my father.",
+      "text": "Das ist ___ Vater.",
+      "answers": [["mein"]],
+      "explanation": "der Vater: mein Vater."
+    },
+    {
+      "type": "mc",
+      "question": "Which sentence means 'That is his sister'?",
+      "questionLang": "en",
+      "options": ["Das ist seine Schwester.", "Das ist ihre Schwester.", "Das ist sein Schwester."],
+      "answer": "Das ist seine Schwester.",
+      "explanation": "his = sein; die Schwester is feminine, so seine."
+    },
+    {
+      "type": "listen_mc",
+      "audio": "Ich habe zwei Brüder und eine Schwester.",
+      "question": "How many brothers?",
+      "questionLang": "en",
+      "options": ["zwei", "eins", "drei"],
+      "answer": "zwei",
+      "explanation": "zwei Brüder = two brothers (der Bruder, die Brüder)."
+    },
+    {
+      "type": "translate",
+      "direction": "en-de",
+      "text": "Our family is big.",
+      "references": ["Unsere Familie ist groß."],
+      "explanation": "die Familie is feminine: unsere Familie."
+    },
+    {
+      "type": "order",
+      "prompt": "Are you married?",
+      "tiles": ["bist", "du", "verheiratet"],
+      "answers": ["Bist du verheiratet"],
+      "explanation": "Yes/no question: the verb first."
+    },
+    {
+      "type": "write",
+      "instruction": "Write 4-5 sentences about your family: who is in it, where they live, what they do. Use mein/meine. Claude will check it.",
+      "prompt": "Write about your family.",
+      "promptLang": "en",
+      "minWords": 15
+    }
+  ]
+}

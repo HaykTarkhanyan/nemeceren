@@ -1,0 +1,113 @@
+{
+  "id": "u2-05-wohnung",
+  "unit": 2,
+  "order": 5,
+  "level": "A1",
+  "title": "Your flat (Meine Wohnung)",
+  "summary": "Describe where you live: the rooms, size, light and rent - a classic Munich topic.",
+  "goals": [
+    "Name the rooms of a flat",
+    "Describe a flat: groß, klein, hell, dunkel, teuer",
+    "Say how many rooms it has",
+    "Work out the article of compound nouns"
+  ],
+  "nicosWeg": [{ "title": "Nicos Weg A1, chapter 6: Living (So wohne ich, Meine Wohnung)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }],
+  "words": ["wohnung", "zimmer", "kueche", "bad", "schlafzimmer", "wohnzimmer", "balkon", "haus", "miete", "hoch", "hell", "dunkel"],
+  "sections": [
+    {
+      "type": "table",
+      "title": "The flat",
+      "columns": [{ "header": "German", "de": "words" }, { "header": "Plural", "de": "words" }, { "header": "English" }],
+      "rows": [
+        ["die Wohnung", "die Wohnungen", "flat, apartment"],
+        ["das Zimmer", "die Zimmer", "room"],
+        ["die Küche", "die Küchen", "kitchen"],
+        ["das Bad", "die Bäder", "bathroom"],
+        ["das Schlafzimmer", "die Schlafzimmer", "bedroom"],
+        ["das Wohnzimmer", "die Wohnzimmer", "living room"],
+        ["der Balkon", "die Balkone", "balcony"],
+        ["das Haus", "die Häuser", "house; building"],
+        ["die Miete", "die Mieten", "rent"]
+      ]
+    },
+    {
+      "type": "explanation",
+      "title": "Compound nouns: the last part decides",
+      "text": "German glues words together into new nouns: [[schlafen]] (to sleep) + [[Zimmer]] = [[das Schlafzimmer]]; [[wohnen]] (to live) + [[Zimmer]] = [[das Wohnzimmer]].\n\nThe **last** part decides the article: it is [[das Zimmer]], so it is [[das Schlafzimmer]] and [[das Wohnzimmer]] too. This rule almost never fails, so a long word is often easier than it looks."
+    },
+    {
+      "type": "comparison",
+      "text": "Armenian also glues words together (դաս + գիրք = դասագիրք, textbook), so German compounds will feel familiar. Russian more often uses an adjective plus a noun instead."
+    },
+    {
+      "type": "explanation",
+      "title": "Describing your flat",
+      "text": "- [[Meine Wohnung ist klein, aber hell.]]\n- [[Die Wohnung hat zwei Zimmer, eine Küche und ein Bad.]]\n- [[Die Miete ist sehr hoch.]] (a sentence you will say often in Munich; people also say [[sehr teuer]])\n\nGermans count rooms without the kitchen and the bathroom: a 'Zwei-Zimmer-Wohnung' has two rooms plus a kitchen and a bathroom. The living room counts as a room, like Russian двухкомнатная квартира (unlike English '2-bedroom')."
+    },
+    {
+      "type": "examples",
+      "title": "Talking about where you live",
+      "items": [
+        { "de": "Wie ist deine Wohnung?", "en": "What is your flat like?" },
+        { "de": "Meine Wohnung ist klein, aber hell.", "en": "My flat is small, but bright." },
+        { "de": "Die Wohnung hat einen Balkon.", "en": "The flat has a balcony.", "note": "einen Balkon: see lesson 6." },
+        { "de": "Die Miete ist sehr hoch.", "en": "The rent is very high." },
+        { "de": "Das Bad ist dunkel.", "en": "The bathroom is dark." }
+      ]
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat aloud",
+      "items": [
+        { "de": "das Schlafzimmer", "en": "the bedroom" },
+        { "de": "das Wohnzimmer", "en": "the living room" },
+        { "de": "die Küche", "en": "the kitchen" },
+        { "de": "Meine Wohnung ist klein, aber hell.", "en": "My flat is small, but bright." },
+        { "de": "Die Miete ist sehr hoch.", "en": "The rent is very high." }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "mc",
+          "question": "Which article goes with Wohnzimmer?",
+          "questionLang": "en",
+          "options": ["das", "der", "die"],
+          "answer": "das",
+          "explanation": "The last part decides: das Zimmer, so das Wohnzimmer."
+        },
+        {
+          "type": "gap",
+          "text": "Die Wohnung ___ drei Zimmer.",
+          "answers": [["hat"]],
+          "explanation": "die Wohnung hat (haben, er/sie/es form)."
+        },
+        {
+          "type": "order",
+          "prompt": "The flat is small but bright.",
+          "tiles": ["die", "Wohnung", "ist", "klein", "aber", "hell"],
+          "answers": ["Die Wohnung ist klein aber hell"],
+          "explanation": "Written with a comma: Die Wohnung ist klein, aber hell."
+        },
+        {
+          "type": "translate",
+          "direction": "en-de",
+          "text": "The rent is very high.",
+          "references": ["Die Miete ist sehr hoch.", "Die Miete ist sehr teuer."],
+          "explanation": "die Miete = the rent; hoch = high (people also say teuer)."
+        },
+        {
+          "type": "listen_mc",
+          "audio": "Die Wohnung hat zwei Zimmer, eine Küche und einen Balkon.",
+          "question": "How many rooms does the flat have?",
+          "questionLang": "en",
+          "options": ["zwei", "drei", "vier"],
+          "answer": "zwei",
+          "explanation": "zwei Zimmer: two rooms, plus a kitchen and a balcony."
+        }
+      ]
+    }
+  ]
+}

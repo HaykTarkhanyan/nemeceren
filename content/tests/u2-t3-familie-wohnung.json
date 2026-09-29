@@ -1,0 +1,84 @@
+{
+  "id": "u2-t3-familie-wohnung",
+  "title": "Your flat, haben and brauchen (Unit 2 final)",
+  "level": "A1",
+  "created": "2026-09-29",
+  "description": "Unit 2 check after lessons 5 and 6, with the unit's final writing task.",
+  "unit": 2,
+  "lesson": "u2-06-haben-brauchen",
+  "items": [
+    {"type": "gap", "instruction": "Fill in the gap: We are colleagues.", "text": "Wir ___ Kollegen.", "answers": [["sind"]], "explanation": "Review (Unit 1): wir sind."},
+    {"type": "translate", "direction": "en-de", "text": "Where do you come from? (polite)", "references": ["Woher kommen Sie?"], "explanation": "Review (Unit 1): woher = where from."},
+    {
+      "type": "mc",
+      "question": "Which article goes with Schlafzimmer?",
+      "questionLang": "en",
+      "options": ["das", "der", "die"],
+      "answer": "das",
+      "explanation": "The last part decides: das Zimmer, so das Schlafzimmer."
+    },
+    {
+      "type": "gap",
+      "text": "Meine Wohnung ___ zwei Zimmer und einen Balkon.",
+      "answers": [["hat"]],
+      "explanation": "die Wohnung hat."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: I need a computer.",
+      "text": "Ich brauche ___ Computer.",
+      "answers": [["einen"]],
+      "explanation": "der Computer is masculine: einen Computer after brauchen."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: I have no money.",
+      "text": "Ich habe ___ Geld.",
+      "answers": [["kein"]],
+      "explanation": "das Geld is neuter: kein Geld."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: Do you have a pen?",
+      "text": "Hast du ___ Stift?",
+      "answers": [["einen"]],
+      "explanation": "der Stift: einen Stift after haben."
+    },
+    {
+      "type": "listen_mc",
+      "audio": "Die Wohnung ist schön und hell, aber die Miete ist sehr hoch.",
+      "question": "What is the problem with the flat?",
+      "questionLang": "en",
+      "options": ["die Miete", "das Zimmer", "die Küche"],
+      "answer": "die Miete",
+      "explanation": "die Miete ist sehr hoch = the rent is very high."
+    },
+    {
+      "type": "mc",
+      "question": "How do you say 'I'm thirsty'?",
+      "questionLang": "en",
+      "options": ["Ich habe Durst.", "Ich bin Durst.", "Ich habe keinen Durst."],
+      "answer": "Ich habe Durst.",
+      "explanation": "German says 'I have thirst': Ich habe Durst."
+    },
+    {
+      "type": "translate",
+      "direction": "en-de",
+      "text": "I don't have time.",
+      "references": ["Ich habe keine Zeit."],
+      "explanation": "die Zeit: keine Zeit."
+    },
+    {
+      "type": "dictation",
+      "text": "Die Küche ist klein, aber das Bad ist groß.",
+      "explanation": "Küche with ü, groß with ß."
+    },
+    {
+      "type": "write",
+      "instruction": "Unit 2 final task. Describe your family and your flat in 6-8 sentences: who is in your family and where they live, how many rooms your flat has, what it is like (groß, klein, hell, teuer ...), and one thing you need for it (Ich brauche ...). Claude will check it.",
+      "prompt": "Describe your family and your flat.",
+      "promptLang": "en",
+      "minWords": 30
+    }
+  ]
+}
