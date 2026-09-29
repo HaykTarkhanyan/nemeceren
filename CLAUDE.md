@@ -41,6 +41,7 @@ Evidence and sources are in `_knowledge/2026-09-28_llm-tutoring-and-materials.md
 - Architecture: GitHub Pages site -> Neon Auth (Managed Better Auth) login -> Neon Functions API (Hono) -> Postgres. No Data API from the browser (Neon's own guidance).
 - The Neon CLI (`neon`, 6.2.4, global) works on Node 20. `neon skills` needs Node 22.20+, and Hayk chose to stay on Node 20, so update the skills in `.claude/skills/` by re-downloading from `https://neon.com/.well-known/agent-skills` and checking the sha256 digests.
 - The other Neon project `infocom` belongs to something else. Don't touch it.
+- Sign-up is closed (DECISIONS.md #52). For browser checks behind the sign-in, use the test account `claude-test@example.com`, never Hayk's. Its password is in `.env.local` (`NEMECEREN_TEST_PASSWORD`). Playwright echoes the scripts it runs, so a password typed into a script shows up in the transcript. `progress.py` skips this account unless you pass `--user`.
 
 ## Practical
 

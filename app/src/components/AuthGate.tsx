@@ -96,6 +96,8 @@ export function SignOutButton() {
 }
 
 const MIN_PASSWORD = 8
+/** Sign-up is disabled in Neon Auth since 2026-09-29 (Claude creates accounts), so the form hides it. */
+const SIGN_UP_OPEN = false
 
 function LoginPage({ notice }: { notice: string | null }) {
   const [mode, setMode] = useState<'sign-in' | 'sign-up'>('sign-in')
@@ -156,19 +158,23 @@ function LoginPage({ notice }: { notice: string | null }) {
         <button type="submit" className="btn primary" disabled={busy}>
           {busy ? 'Please wait...' : mode === 'sign-in' ? 'Sign in' : 'Create account'}
         </button>
-        <p className="small">
-          {mode === 'sign-in' ? 'No account yet? ' : 'Already have an account? '}
-          <button
-            type="button"
-            className="link-btn"
-            onClick={() => {
-              setMode(mode === 'sign-in' ? 'sign-up' : 'sign-in')
-              setError(null)
-            }}
-          >
-            {mode === 'sign-in' ? 'Create one' : 'Sign in'}
-          </button>
-        </p>
+        {SIGN_UP_OPEN ? (
+          <p className="small">
+            {mode === 'sign-in' ? 'No account yet? ' : 'Already have an account? '}
+            <button
+              type="button"
+              className="link-btn"
+              onClick={() => {
+                setMode(mode === 'sign-in' ? 'sign-up' : 'sign-in')
+                setError(null)
+              }}
+            >
+              {mode === 'sign-in' ? 'Create one' : 'Sign in'}
+            </button>
+          </p>
+        ) : (
+          <p className="small muted">No account? Ask Claude.</p>
+        )}
       </form>
     </main>
   )

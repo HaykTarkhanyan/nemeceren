@@ -2,6 +2,19 @@
 
 Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
+## 52. Sign-up stays closed; Claude has a permanent test account for browser checks; the sign-in page no longer offers sign-up (decided with Hayk, 2026-09-29)
+
+- **Date:** 2026-09-29 - **Status:** active
+- **Why:**
+  - After Hayk's account was allowlisted, sign-up was disabled in Neon Auth (`neon neon-auth config email-password update --disable-sign-up`). Verified: a sign-up request now gets HTTP 400 `EMAIL_PASSWORD_SIGN_UP_DISABLED`.
+  - Browser checks of pages behind sign-in need an account whose progress Claude may change freely, so the checks don't write into Hayk's data. Hayk chose a test account and asked to keep it for future tests: `claude-test@example.com`, allowlisted. Its password is only in the gitignored `.env.local` (`NEMECEREN_TEST_EMAIL`, `NEMECEREN_TEST_PASSWORD`).
+  - `neon neon-auth user create` cannot set a password, so the account was made by reopening sign-up for a few seconds with Hayk's OK. The same user check afterwards showed exactly two users: Hayk and the test account.
+  - `backend/scripts/progress.py` now defaults to the only allowed user apart from the test account, so grading still targets Hayk without `--user`.
+  - The sign-in page hides the "Create one" link (`SIGN_UP_OPEN = false` in `AuthGate.tsx`), because it could only lead to the server's error. The sign-up code stays, for the day sign-up is reopened.
+  - Same pass: the Words page labels unopened lessons "(not opened yet)", shorter than the "(not opened yet: its words will be new)" in #50, because it repeated on every line. The note under the select still explains it.
+- **Alternatives rejected:** Hayk signing in himself in the test browser (the checks would then have to avoid anything that saves, such as opening lessons or reviews); a throwaway account per check (every check would need sign-up reopened).
+- **What would change this:** a second real learner (then reopen sign-up for them and allowlist them); the Better Auth admin API becoming usable to set passwords, so sign-up never has to be reopened.
+
 ## 51. The Daily page ("German in the wild") unlocks one day of `content/daily.json` per local calendar day, has no word popups and is not glossary-checked (asked for by Hayk, 2026-09-29)
 
 - **Date:** 2026-09-29 - **Status:** active

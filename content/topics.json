@@ -44,6 +44,33 @@
       "summary": "Starred tables: learn them by heart.",
       "items": [
         {
+          "title": "du or Sie?",
+          "lesson": "u0-02-begruessen",
+          "section": "du-sie"
+        },
+        {
+          "title": "Numbers 0-12",
+          "lesson": "u0-05-zahlen",
+          "section": "numbers-0-12",
+          "star": true
+        },
+        {
+          "title": "Numbers 13-19",
+          "lesson": "u0-05-zahlen",
+          "section": "numbers-13-19"
+        },
+        {
+          "title": "The tens (20-100)",
+          "lesson": "u0-05-zahlen",
+          "section": "tens",
+          "star": true
+        },
+        {
+          "title": "The number trick: 21 = one-and-twenty",
+          "lesson": "u0-05-zahlen",
+          "section": "number-trick"
+        },
+        {
           "title": "Verb endings: heißen, kommen, wohnen",
           "lesson": "u1-01-sich-vorstellen",
           "section": "verb-endings",
@@ -73,29 +100,6 @@
           "section": "three-sie"
         },
         {
-          "title": "arbeiten and machen (du arbeitest)",
-          "lesson": "u1-04-beruf",
-          "section": "arbeiten",
-          "star": true
-        },
-        {
-          "title": "haben: habe, hast, hat ...",
-          "lesson": "u1-06-fragen-smalltalk",
-          "section": "haben",
-          "star": true
-        },
-        {
-          "title": "Where the verb goes (statements and questions)",
-          "lesson": "u1-06-fragen-smalltalk",
-          "section": "verb-position",
-          "star": true
-        },
-        {
-          "title": "du or Sie?",
-          "lesson": "u0-02-begruessen",
-          "section": "du-sie"
-        },
-        {
           "title": "No article before jobs: Ich bin Entwickler",
           "lesson": "u1-04-beruf",
           "section": "no-article-jobs"
@@ -106,26 +110,22 @@
           "section": "job-forms"
         },
         {
-          "title": "Numbers 0-12",
-          "lesson": "u0-05-zahlen",
-          "section": "numbers-0-12",
+          "title": "arbeiten and machen (du arbeitest)",
+          "lesson": "u1-04-beruf",
+          "section": "arbeiten",
           "star": true
         },
         {
-          "title": "Numbers 13-19",
-          "lesson": "u0-05-zahlen",
-          "section": "numbers-13-19"
-        },
-        {
-          "title": "The tens (20-100)",
-          "lesson": "u0-05-zahlen",
-          "section": "tens",
+          "title": "Where the verb goes (statements and questions)",
+          "lesson": "u1-06-fragen-smalltalk",
+          "section": "verb-position",
           "star": true
         },
         {
-          "title": "The number trick: 21 = one-and-twenty",
-          "lesson": "u0-05-zahlen",
-          "section": "number-trick"
+          "title": "haben: habe, hast, hat ...",
+          "lesson": "u1-06-fragen-smalltalk",
+          "section": "haben",
+          "star": true
         },
         {
           "title": "der, die, das: the articles",

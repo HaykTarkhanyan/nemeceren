@@ -16,7 +16,8 @@ Run from the repo root (uv installs the pinned dependencies above on first use):
     uv run backend/scripts/progress.py show <attempt-id> [--json]  # one attempt in full
     uv run backend/scripts/progress.py review <attempt-id> <review.json|-> [--replace]
     uv run backend/scripts/progress.py summary [--days 7]          # activity of the last N days
-Data commands take --user <email or user id>; the default is the only allowed user.
+Data commands take --user <email or user id>; the default is the only allowed user apart from
+Claude's test account (NEMECEREN_TEST_EMAIL in .env.local).
 
 Expected runtime: ~2-5 s per command (a guess: uv startup plus about a second to wake the
 database if it was suspended). The first `uv run` also downloads psycopg (~4 MB) once.
@@ -117,9 +118,12 @@ def require_auth_schema(conn: psycopg.Connection) -> None:
 
 
 def resolve_user(conn: psycopg.Connection, who: str | None) -> dict[str, Any]:
-    """The allowed user to work on: --user (email or id), or the only allowed user."""
+    """The allowed user to work on: --user (email or id), or the only allowed user apart from
+    Claude's test account (NEMECEREN_TEST_EMAIL in .env.local, used for browser checks)."""
     if who is None:
+        test_email = (dotenv_values(ENV_FILE, encoding="utf-8").get("NEMECEREN_TEST_EMAIL") or "").lower()
         rows = conn.execute("SELECT user_id, email FROM allowed_users ORDER BY added_at").fetchall()
+        rows = [r for r in rows if r["email"].lower() != test_email]
         if len(rows) != 1:
             listed = ", ".join(f"{r['email']} ({r['user_id']})" for r in rows) or "none"
             raise RuntimeError(f"There are {len(rows)} allowed users ({listed}); pass --user <email or id>.")

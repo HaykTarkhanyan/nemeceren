@@ -172,7 +172,7 @@ function SourcePicker({ source, onPick }: { source: WordSource; onPick: (key: st
               .filter((l) => l.unit === u)
               .map((l) => (
                 <option key={l.id} value={sourceKey({ kind: 'lesson', lessonId: l.id })}>
-                  {`${l.unit}.${l.order} ${l.title}${unopened(l) ? ' (not opened yet: its words will be new)' : ''}`}
+                  {`${l.unit}.${l.order} ${l.title}${unopened(l) ? ' (not opened yet)' : ''}`}
                 </option>
               ))}
           </optgroup>
