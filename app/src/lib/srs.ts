@@ -1,8 +1,11 @@
 // Spaced repetition on top of ts-fsrs (FSRS algorithm, default parameters: 90% target
 // retention, learning steps 1m and 10m). One schedule per word, shared by all review modes.
+// Hayk's own words (ids "u-...") are introduced right away, outside the daily new-word limit,
+// because he chose them (DECISIONS.md #58); after that they are normal FSRS cards.
 import { createEmptyCard, fsrs, Rating, State } from 'ts-fsrs'
 import type { Card, Grade } from 'ts-fsrs'
-import type { ReviewState, StoredCard, Word } from '../content/schema.ts'
+import type { ReviewState, StoredCard } from '../content/schema.ts'
+import { isCustomWordId } from './customWords.ts'
 import { localDay } from './dates.ts'
 
 export { Rating, State }
@@ -67,35 +70,46 @@ export function addExtraNew(state: ReviewState, n: number, now: Date): ReviewSta
   }
 }
 
-export function counts(words: Word[], state: ReviewState, now: Date, newLimit: number): { due: number; newLeft: number } {
+/** New content words still allowed today (the daily limit plus today's extra, minus those introduced). */
+function contentNewLeft(state: ReviewState, now: Date, newLimit: number): number {
+  return Math.max(0, newLimit + extraToday(state, now) - newIntroducedToday(state, now))
+}
+
+/** Due today, and new words left today: every unseen custom word plus content words up to the limit. */
+export function counts(words: { id: string }[], state: ReviewState, now: Date, newLimit: number): { due: number; newLeft: number } {
   const end = endOfLocalDay(now).getTime()
   const due = words.filter((w) => state.cards[w.id] && Date.parse(state.cards[w.id].due) < end).length
-  const unseen = words.filter((w) => !state.cards[w.id]).length
-  const newLeft = Math.min(unseen, Math.max(0, newLimit + extraToday(state, now) - newIntroducedToday(state, now)))
+  const unseen = words.filter((w) => !state.cards[w.id])
+  const custom = unseen.filter((w) => isCustomWordId(w.id)).length
+  const newLeft = custom + Math.min(unseen.length - custom, contentNewLeft(state, now, newLimit))
   return { due, newLeft }
 }
 
-export type Next =
-  | { kind: 'card'; word: Word; isNew: boolean }
+export type Next<W = { id: string }> =
+  | { kind: 'card'; word: W; isNew: boolean }
   | { kind: 'wait'; due: Date }
   | { kind: 'done' }
 
 /**
- * Pick the next card: anything due now first, then new words (up to the daily limit, in
- * words.json order), then cards due within LEARN_AHEAD_MS. If only later-today cards remain, wait.
+ * Pick the next card: anything due now first, then new words (custom words first and without a
+ * limit, then content words up to the daily limit, in words.json order), then cards due within
+ * LEARN_AHEAD_MS. If only later-today cards remain, wait. A card that exists but was never
+ * reviewed (reps 0: a content word Hayk added from the "already in lesson" hint) is new too.
  */
-export function nextCard(words: Word[], state: ReviewState, now: Date, newLimit: number): Next {
+export function nextCard<W extends { id: string }>(words: W[], state: ReviewState, now: Date, newLimit: number): Next<W> {
   const seen = words
     .filter((w) => state.cards[w.id])
     .map((w) => ({ word: w, due: Date.parse(state.cards[w.id].due) }))
     .sort((a, b) => a.due - b.due)
   const first = seen[0]
-  if (first && first.due <= now.getTime()) return { kind: 'card', word: first.word, isNew: false }
-  if (counts(words, state, now, newLimit).newLeft > 0) {
+  if (first && first.due <= now.getTime()) return { kind: 'card', word: first.word, isNew: state.cards[first.word.id].reps === 0 }
+  const custom = words.find((w) => !state.cards[w.id] && isCustomWordId(w.id))
+  if (custom) return { kind: 'card', word: custom, isNew: true }
+  if (contentNewLeft(state, now, newLimit) > 0) {
     const fresh = words.find((w) => !state.cards[w.id])
     if (fresh) return { kind: 'card', word: fresh, isNew: true }
   }
-  if (first && first.due <= now.getTime() + LEARN_AHEAD_MS) return { kind: 'card', word: first.word, isNew: false }
+  if (first && first.due <= now.getTime() + LEARN_AHEAD_MS) return { kind: 'card', word: first.word, isNew: state.cards[first.word.id].reps === 0 }
   if (first && first.due < endOfLocalDay(now).getTime()) return { kind: 'wait', due: new Date(first.due) }
   return { kind: 'done' }
 }
@@ -112,13 +126,15 @@ export function review(state: ReviewState, wordId: string, grade: Grade, now: Da
   const card = before ? fromStored(before) : createEmptyCard(now)
   const after = toStored(scheduler.next(card, now, grade).card)
   const introduced = newIntroducedToday(state, now)
+  // Custom words do not count against the daily limit (the store derives the count the same way, lib/outbox.ts).
+  const counted = (before === null || before.reps === 0) && !isCustomWordId(wordId)
   return {
     before,
     after,
     state: {
       ...state,
       updatedAt: now.toISOString(),
-      newToday: newTodayWith(now, before ? introduced : introduced + 1, extraToday(state, now)),
+      newToday: newTodayWith(now, counted ? introduced + 1 : introduced, extraToday(state, now)),
       cards: { ...state.cards, [wordId]: after },
     },
   }
@@ -153,4 +169,9 @@ export function formatInterval(ms: number): string {
 export function laterCard(a: StoredCard, b: StoredCard): StoredCard {
   const lastReview = (c: StoredCard) => (c.last_review ? Date.parse(c.last_review) : -Infinity)
   return lastReview(a) > lastReview(b) ? a : b
+}
+
+/** A card for a word that is introduced now but not reviewed yet (reps 0, no last review): it is due at once. */
+export function introducedCard(now: Date): StoredCard {
+  return toStored(createEmptyCard(now))
 }

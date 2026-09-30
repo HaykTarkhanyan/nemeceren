@@ -2,9 +2,10 @@
 // Every error names the file and the field path, e.g.
 //   content/tests/a1-01.json: items[3].answers[0]: "..." does not use exactly the tiles [...]
 import type { z } from 'zod'
-import { exerciseSections, exerciseTestId, sectionIndex } from './lessons.ts'
+import { exerciseSections, exerciseTestId, isCourseLesson, isThemeLesson, sectionIndex } from './lessons.ts'
 import { CuratedGlossary, Extras, GeneratedGlossary, Lesson, LessonProgress, Result, ReviewLogEntry, ReviewState, Test, Topics, WordList } from './schema.ts'
 import type {
+  CourseLesson,
   CuratedGlossary as CuratedGlossaryT,
   Extras as ExtrasT,
   GeneratedGlossary as GeneratedGlossaryT,
@@ -14,6 +15,7 @@ import type {
   ReviewLogEntry as ReviewLogEntryT,
   ReviewState as ReviewStateT,
   Test as TestT,
+  ThemeLesson,
   Topics as TopicsT,
   Word as WordT,
 } from './schema.ts'
@@ -63,6 +65,20 @@ export function parseLesson(file: string, data: unknown): LessonT {
   if (lesson.id !== baseName(file)) {
     throw new ContentError([`${file}: id: "${lesson.id}" must match the file name ("${baseName(file)}")`])
   }
+  return lesson
+}
+
+/** A file in content/lessons/: a course lesson (unit and order, no theme). */
+export function parseCourseLesson(file: string, data: unknown): CourseLesson {
+  const lesson = parseLesson(file, data)
+  if (!isCourseLesson(lesson)) throw new ContentError([`${file}: theme: content/lessons/ holds course lessons; a theme lesson goes in content/themes/`])
+  return lesson
+}
+
+/** A file in content/themes/: a theme lesson (theme, no unit or order). */
+export function parseThemeLesson(file: string, data: unknown): ThemeLesson {
+  const lesson = parseLesson(file, data)
+  if (!isThemeLesson(lesson)) throw new ContentError([`${file}: theme: content/themes/ holds theme lessons; a course lesson goes in content/lessons/`])
   return lesson
 }
 
@@ -121,10 +137,11 @@ export interface RawFile {
  * Validate all content at once and collect every problem instead of stopping at the first,
  * so one run shows everything that needs fixing.
  */
-export function checkAllContent(input: { tests: RawFile[]; words: RawFile; lessons: RawFile[]; topics: RawFile; extras: RawFile }): {
+export function checkAllContent(input: { tests: RawFile[]; words: RawFile; lessons: RawFile[]; themes: RawFile[]; topics: RawFile; extras: RawFile }): {
   tests: TestT[]
   words: WordT[]
-  lessons: LessonT[]
+  lessons: CourseLesson[]
+  themes: ThemeLesson[]
   topics: TopicsT
   extras: ExtrasT
   problems: string[]
@@ -147,9 +164,14 @@ export function checkAllContent(input: { tests: RawFile[]; words: RawFile; lesso
   collect(() => {
     words = parseWords(input.words.file, parseJsonText(input.words.file, input.words.text))
   })
-  const lessons: LessonT[] = []
+  const lessons: CourseLesson[] = []
   for (const raw of input.lessons) {
-    collect(() => lessons.push(parseLesson(raw.file, parseJsonText(raw.file, raw.text))))
+    collect(() => lessons.push(parseCourseLesson(raw.file, parseJsonText(raw.file, raw.text))))
+  }
+  // Theme lessons are validated like course lessons: schema, section ids, words, tests, exercise ids, glossary.
+  const themes: ThemeLesson[] = []
+  for (const raw of input.themes) {
+    collect(() => themes.push(parseThemeLesson(raw.file, parseJsonText(raw.file, raw.text))))
   }
   let topics: TopicsT = { groups: [] }
   collect(() => {
@@ -160,9 +182,9 @@ export function checkAllContent(input: { tests: RawFile[]; words: RawFile; lesso
   collect(() => {
     extras = parseExtras(input.extras.file, parseJsonText(input.extras.file, input.extras.text))
   })
-  problems.push(...crossReferences(tests, words, lessons))
-  problems.push(...topicReferences(input.topics.file, topics, lessons))
-  return { tests, words, lessons, topics, extras, problems }
+  problems.push(...crossReferences(tests, words, lessons, themes))
+  problems.push(...topicReferences(input.topics.file, topics, [...lessons, ...themes]))
+  return { tests, words, lessons, themes, topics, extras, problems }
 }
 
 /** Every topic points to an existing lesson and to a section id in it. */
@@ -173,7 +195,7 @@ function topicReferences(file: string, topics: TopicsT, lessons: LessonT[]): str
     g.items.forEach((it, ii) => {
       const at = `${file}: groups[${gi}].items[${ii}]`
       const l = lessonById.get(it.lesson)
-      if (!l) problems.push(`${at}.lesson: no lesson with id "${it.lesson}" in content/lessons/`)
+      if (!l) problems.push(`${at}.lesson: no lesson with id "${it.lesson}" in content/lessons/ or content/themes/`)
       else if (sectionIndex(l, it.section) < 0) problems.push(`${at}.section: lesson "${l.id}" has no section with id "${it.section}"`)
     }),
   )
@@ -181,24 +203,27 @@ function topicReferences(file: string, topics: TopicsT, lessons: LessonT[]): str
 }
 
 /** References between files: lesson words and tests exist, test lessons exist, no id or position clashes. */
-function crossReferences(tests: TestT[], words: WordT[], lessons: LessonT[]): string[] {
+function crossReferences(tests: TestT[], words: WordT[], lessons: CourseLesson[], themes: ThemeLesson[]): string[] {
   const problems: string[] = []
   const wordIds = new Set(words.map((w) => w.id))
   const testIds = new Set(tests.map((t) => t.id))
-  const lessonById = new Map(lessons.map((l) => [l.id, l]))
+  const all: LessonT[] = [...lessons, ...themes]
+  const lessonById = new Map(all.map((l) => [l.id, l]))
   const position = new Map<string, string>()
   for (const l of lessons) {
-    const file = `content/lessons/${l.id}.json`
+    const key = `${l.unit}/${l.order}`
+    const other = position.get(key)
+    if (other) problems.push(`content/lessons/${l.id}.json: order: unit ${l.unit} already has a lesson with order ${l.order} (${other})`)
+    position.set(key, l.id)
+  }
+  for (const l of all) {
+    const file = `content/${isThemeLesson(l) ? 'themes' : 'lessons'}/${l.id}.json`
     l.words?.forEach((id, i) => {
       if (!wordIds.has(id)) problems.push(`${file}: words[${i}]: no word with id "${id}" in content/words.json`)
     })
     l.tests?.forEach((id, i) => {
       if (!testIds.has(id)) problems.push(`${file}: tests[${i}]: no test with id "${id}" in content/tests/`)
     })
-    const key = `${l.unit}/${l.order}`
-    const other = position.get(key)
-    if (other) problems.push(`${file}: order: unit ${l.unit} already has a lesson with order ${l.order} (${other})`)
-    position.set(key, l.id)
     for (const ex of exerciseSections(l)) {
       const id = exerciseTestId(l.id, ex.number)
       if (testIds.has(id)) problems.push(`${file}: sections[${ex.section}]: its results would be saved as "${id}", which is also a test id`)
@@ -208,8 +233,10 @@ function crossReferences(tests: TestT[], words: WordT[], lessons: LessonT[]): st
     const file = `content/tests/${t.id}.json`
     if (t.lesson === undefined) continue
     const l = lessonById.get(t.lesson)
-    if (!l) problems.push(`${file}: lesson: no lesson with id "${t.lesson}" in content/lessons/`)
-    else if (t.unit !== undefined && t.unit !== l.unit) problems.push(`${file}: unit: ${t.unit} but its lesson "${l.id}" is in unit ${l.unit}`)
+    if (!l) problems.push(`${file}: lesson: no lesson with id "${t.lesson}" in content/lessons/ or content/themes/`)
+    else if (isThemeLesson(l)) {
+      if (t.unit !== undefined) problems.push(`${file}: unit: ${t.unit} but its lesson "${l.id}" is a theme lesson, which has no unit`)
+    } else if (t.unit !== undefined && t.unit !== l.unit) problems.push(`${file}: unit: ${t.unit} but its lesson "${l.id}" is in unit ${l.unit}`)
   }
   return problems
 }

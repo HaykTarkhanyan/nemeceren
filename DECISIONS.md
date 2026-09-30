@@ -2,9 +2,55 @@
 
 Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
+## 61. Theme lessons (songs, videos, articles, topics) are lessons with a `theme` instead of `unit`/`order`, in `content/themes/`, on their own Lessons tab and outside the course (asked for by Hayk, 2026-09-30)
+
+- **Date:** 2026-09-30 - **Status:** active
+- **Why:**
+  - Hayk will bring songs and videos, and Claude builds lessons from them with `.claude/skills/theme-lesson/SKILL.md`. One format for both kinds of lesson: a theme lesson is the lesson schema plus `theme: { kind: "song" | "video" | "article" | "topic", title, by?, year?, url?, variety? }` and no `unit`/`order`; a course lesson has `unit` and `order` and no `theme`. The schema enforces exactly one of the two, `t-` ids for theme lessons (and never for course lessons), an `https://` url, and no `url`/`by` on a `topic`. Files live in `content/themes/`, and check-content refuses a lesson in the wrong folder.
+  - check-content validates theme lessons like course lessons: schema, section ids, `words` and `tests` exist, exercise test ids, glossary coverage. Topics may link to their sections (the Topics page shows a "Theme" badge instead of a unit).
+  - In the code `content.lessons` stays course-only, typed `CourseLesson` (unit and order always set), so What-next, Home's "next lesson", the course's "Next lesson" button, the unit groups of the "Words from" picker and "lessons left" in the runway ignore theme lessons without a special case each. `content.themes` is its own list, and `content.allLessons` serves everything that works the same for both: opening a lesson, word unlock (#26), exercise results, the Results page, Topics links.
+  - The Lessons page has two tabs in the URL: Course (`#/lessons`) and Themes (`#/lessons/themes`). A theme card shows the kind, title, "by" and year, level, summary and status, and an external Listen/Watch/Read link (new tab, `rel="noopener noreferrer"`). Theme lessons are listed alphabetically by `theme.title`, since they have no date and no course order. An empty tab says "No theme lessons yet. Send Claude a song or video link."
+  - Theme words wait until the theme lesson is opened, like course words. The "Words from" picker lists theme lessons in a Themes group, and "All words" shows the source "Theme: <title>".
+  - No content file yet: the tests use a `topic` fixture, and Hayk writes the real song lessons with Claude.
+- **Alternatives rejected:** a separate theme-lesson schema and loader (a second copy of the block rules and the check-content paths); theme lessons in `content/lessons/` with a flag (mixed into every course list, and each list needs a filter someone can forget); a made-up unit number such as 99 for themes (What-next would offer them as the next lesson).
+- **What would change this:** Hayk wanting the newest theme first (then add a `created` date to the theme), or so many theme lessons that the tab needs filters by kind.
+
+## 60. The sign-in field takes an email or a name; a plain name signs in as `<name>@nemeceren.example` (refines #52 and #57)
+
+- **Date:** 2026-09-30 - **Status:** active
+- **Why:** Friends' accounts use the reserved `.example` domain as a login ID (#57), so Anahit's login is `anahit@nemeceren.example`. Typing "Anahit" is what she expects. `loginEmail` (`lib/auth.ts`) maps the field: input with "@" stays as it is (trimmed); anything else is lowercased and gets `@nemeceren.example`; an empty field or a name with spaces is refused with a message in the form. The field is `type="text"` with `autocomplete="username"`, labelled "Email or name", so password managers still pair it with the password. Unit-tested. No backend or Neon Auth change: the auth server still only sees emails.
+- **Alternatives rejected:** a username plugin on the auth side (a Neon Auth configuration change and recreated accounts, for one friend); two fields or a toggle "email / name" (more to explain on a page Hayk and Anahit see rarely).
+- **What would change this:** a friend with a real email who needs password reset (then use real emails), or two friends with the same first name.
+
+## 59. The Words page gets an "All words" tab: every word with its status, next review, reviews and % correct (asked for by Hayk, 2026-09-30)
+
+- **Date:** 2026-09-30 - **Status:** active
+- **Why:**
+  - Tabs in the URL: Review (`#/words`) and All words (`#/words/all`). The list has every content word, the words of unopened lessons marked "locked", dimmed and left out of "All" by default, and Hayk's own words (#58).
+  - One status per word, first match wins (`wordStatus` in `lib/allWords.ts`, unit-tested): no card: own word "new", content word of an unopened lesson "locked", else "not started"; a card never reviewed (reps 0) "new"; FSRS lapses >= 2, or the last scheduled review graded Again (practice does not count) "struggling", checked before the next three; FSRS state Review with an interval of 21 days or more "known" (the Stats and progress.py rule, #19); state Review "review"; anything else (Learning, Relearning) "learning".
+  - Reviews and % correct come from the review log loaded with the state (the last 35 days, #35), scheduled reviews only, as on the Stats page; the page says so. The last review and the next review come from the card, so they are all-time. The last 10 reviews (practice included, marked) show when a word is opened.
+  - Search matches German and English ignoring case and umlauts (both "uber" and "ueber" find "über"). The status chips carry the counts for the current search and source and are the status filter; a source filter (My words, each course lesson, each theme lesson, words in no lesson); four sorts: next review, A to Z (without the article), hardest first (2 per lapse plus 1 per Again, then the lower % correct), recently added.
+  - Desktop: one compact table, `table-layout: fixed` with a `<colgroup>`, numbers right-aligned under their headers. Up to 640 px the same table becomes a card list in CSS (each value with its column name), so there is one rendering to keep correct.
+  - German in the list is plain text with a speaker button, no word popups: the English is right next to it, and a few hundred popup subscriptions buy nothing.
+- **Alternatives rejected:** all-time review counts (every start would have to load every review event, against #35); a separate phone component (two renderings to keep in step); the raw FSRS states as the statuses (no "known" or "struggling", which are what Hayk asked for).
+- **What would change this:** Hayk wanting all-time counts (then a small per-word aggregate in `GET /v1/state`), or the list getting slow past ~1000 words (then paging).
+
+## 58. Hayk's own words ("My words"): a `custom_words` table synced like notes, practised right away outside the daily limit, checked by Claude with progress.py (asked for by Hayk, 2026-09-30)
+
+- **Date:** 2026-09-30 - **Status:** active; revisits #50 (the picker gets "My words")
+- **Why:**
+  - Hayk hears words in daily life and wants them in his practice. A custom word is `{ id: "u-<uuid>", de, en, plural?, example?: { de, en? }, note?, createdAt, updatedAt, deletedAt? }`, table `custom_words` (migration `003_custom_words.sql`), keyed by (user_id, id) like every table (#30). The `u-` prefix keeps it apart from content ids, and its FSRS card and reviews use the same id in the existing tables (the API's word id rule already accepts it; the smoke test checks). Length limits (German 100, English 200, plural 100, example 300 each, note 500 characters) are the same in the app, the API and the table.
+  - Sync: a `customWords` list in `POST /v1/sync`, 20 per request (at most ~0.1 MB, so a full batch stays under the 2 MB body limit). The later `updatedAt` wins; a delete is soft (the word leaves practice, its reviews stay for the statistics). `check` is never taken from the client (400). A newer version whose fields differ from the stored ones clears Claude's check, because he checked the old text; a delete alone keeps it. `GET /v1/state` returns the words that are not deleted, oldest first. A new word waits for the usual sync triggers (#42) instead of syncing at once like a note, because nothing waits for it.
+  - Practice: a new custom word is introduced right away, outside the daily new-word limit, because Hayk chose it (`counts` and `nextCard` in `srs.ts`), and it does not count in `newToday.count` (`buildView` leaves `u-` ids out). After that it is a normal FSRS card. The "Words from" picker has "My words" (saved as `mine`); "All words" puts own words after the content words.
+  - The add form on the Words page: German, English, optional plural, example and note, the umlaut buttons, a der/die/das hint, and "Add der/die/das?" with one-tap buttons when the German looks like a bare noun (one capitalised word), with saving still allowed. If the German matches a content word (case and a leading der/die/das ignored), it says "Already in Lesson 1.3" and offers "Add that card instead": that writes a never-reviewed FSRS card (reps 0, due now) for the content word, so it is introduced right away without a duplicate. The server never lets such a card replace a reviewed one (#36). Its first review counts as one of the day's new words, as if its lesson had been opened.
+  - Claude's check: `progress.py check-word <id> ok|fix` writes `claude_check` = `WordCheck` `{ at, ok, note?, fixed?: { de?, en?, plural? } }`, validated in Python with the app's rules, because the app refuses the whole state on a check it cannot parse (as for note feedback, #53). The write needs the version the script read (`updated_at`), so an edit made meanwhile is never marked checked. The app shows the corrected fields in practice and in the list, with "corrected by Claude: <note>" and what Hayk wrote, or "checked by Claude". `my-words [--unchecked]` lists them, and `summary` counts "Own words waiting for a check".
+  - Editing and deleting are on the word's row in "All words". Review cards of own words have no word popups (gate surface `custom-word`): it is his own text (as in notes, #53), the card already shows his meaning, and the glossary rarely has the word. Guests can add words; they live in memory like the rest of a guest's progress (#55).
+- **Alternatives rejected:** Claude overwriting Hayk's fields (Hayk would no longer see what he typed next to the correction, and an offline edit would race the fix); locking a checked word like a note with feedback (a word should stay editable; the check just goes away); counting own words against the daily limit (Hayk chose them, and they would push course words out); a custom word for a content match (a second card and schedule for the same word); syncing each new word at once (one request per word for no reader waiting).
+- **What would change this:** Hayk adding so many words a day that reviews pile up (then a daily cap for own words too), or wanting Claude's corrections to replace his text.
+
 ## 57. A second learner (Anahit, Hayk's friend) gets her own account; progress.py defaults to Hayk through .env.local (asked for by Hayk, 2026-09-30)
 
-- **Date:** 2026-09-30 - **Status:** active; applies #52's "second real learner" case
+- **Date:** 2026-09-30 - **Status:** active; applies #52's "second real learner" case (revisited 2026-09-30: the username login came with #60)
 - **Why:**
   - Hayk asked for an account for a friend, with the login "Anahit" and her own progress. Neon Auth logs in with an email, so the account's login ID uses the reserved `.example` domain, which can never be a real address. Sign-up was reopened for a few seconds to create it and closed again. Checks: sign-up answers HTTP 400 `EMAIL_PASSWORD_SIGN_UP_DISABLED`, her sign-in answers 200, and the user list shows exactly Hayk, Anahit and the test account.
   - Typing just the name "Anahit" at sign-in comes with the next build (username login).
@@ -70,7 +116,7 @@ Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
 ## 52. Sign-up stays closed; Claude has a permanent test account for browser checks; the sign-in page no longer offers sign-up (decided with Hayk, 2026-09-29)
 
-- **Date:** 2026-09-29 - **Status:** active
+- **Date:** 2026-09-29 - **Status:** active (refined 2026-09-30: the sign-in field also takes a name, #60)
 - **Why:**
   - After Hayk's account was allowlisted, sign-up was disabled in Neon Auth (`neon neon-auth config email-password update --disable-sign-up`). Verified: a sign-up request now gets HTTP 400 `EMAIL_PASSWORD_SIGN_UP_DISABLED`.
   - Browser checks of pages behind sign-in need an account whose progress Claude may change freely, so the checks don't write into Hayk's data. Hayk chose a test account and asked to keep it for future tests: `claude-test@example.com`, allowlisted. Its password is only in the gitignored `.env.local` (`NEMECEREN_TEST_EMAIL`, `NEMECEREN_TEST_PASSWORD`).
@@ -95,7 +141,7 @@ Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
 ## 50. A word review can be limited to one unit or one lesson; a picked unit or lesson brings its words even if not opened yet (asked for by Hayk, 2026-09-29)
 
-- **Date:** 2026-09-29 - **Status:** active; refines #26 (lessons unlock their words when opened)
+- **Date:** 2026-09-29 - **Status:** active; refines #26 (lessons unlock their words when opened) (revisited 2026-09-30: the picker also offers "My words", #58, and theme lessons in their own group, #61)
 - **Why:**
   - Hayk wants to choose where the words in a review come from. The Words page has a "Words from" select: all words (the default, unchanged), a whole unit, or one lesson, grouped by unit in course order. Only lessons that list words are offered.
   - The pick filters the words for due reviews, new words (still within the daily limit, in `words.json` order) and weak-word practice. It never changes FSRS: `wordsForSource` (`lib/plan.ts`) only chooses which words enter the queue.

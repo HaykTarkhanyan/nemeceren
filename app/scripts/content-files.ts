@@ -3,7 +3,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
-import type { CuratedGlossary, Extras, GeneratedGlossary, Lesson, Test, Topics, Word } from '../src/content/schema.ts'
+import type { CourseLesson, CuratedGlossary, Extras, GeneratedGlossary, Test, ThemeLesson, Topics, Word } from '../src/content/schema.ts'
 import { checkAllContent, ContentError, parseCuratedGlossary, parseGeneratedGlossary, parseJsonText } from '../src/content/validate.ts'
 import type { RawFile } from '../src/content/validate.ts'
 
@@ -47,7 +47,8 @@ export function collect(problems: string[], fn: () => void): void {
 export interface ContentOnDisk {
   tests: { file: string; test: Test }[]
   words: { file: string; words: Word[] }
-  lessons: { file: string; lesson: Lesson }[]
+  lessons: { file: string; lesson: CourseLesson }[]
+  themes: { file: string; lesson: ThemeLesson }[]
   topics: Topics
   extras: Extras
 }
@@ -63,6 +64,11 @@ export function readContent(problems: string[]): ContentOnDisk {
     const text = readText(abs, problems)
     if (text !== undefined) lessonFiles.push({ file: rel(abs), text })
   }
+  const themeFiles: RawFile[] = []
+  for (const abs of jsonFiles(path.join(repoRoot, 'content', 'themes'))) {
+    const text = readText(abs, problems)
+    if (text !== undefined) themeFiles.push({ file: rel(abs), text })
+  }
   const wordsPath = path.join(repoRoot, 'content', 'words.json')
   const topicsPath = path.join(repoRoot, 'content', 'topics.json')
   const extrasPath = path.join(repoRoot, 'content', 'extras.json')
@@ -70,6 +76,7 @@ export function readContent(problems: string[]): ContentOnDisk {
     tests: testFiles,
     words: { file: rel(wordsPath), text: readText(wordsPath, problems) ?? '' },
     lessons: lessonFiles,
+    themes: themeFiles,
     topics: { file: rel(topicsPath), text: readText(topicsPath, problems) ?? '' },
     extras: { file: rel(extrasPath), text: readText(extrasPath, problems) ?? '' },
   })
@@ -80,6 +87,7 @@ export function readContent(problems: string[]): ContentOnDisk {
     words: { file: rel(wordsPath), words: checked.words },
     // A lesson's id equals its file name too.
     lessons: checked.lessons.map((lesson) => ({ file: `content/lessons/${lesson.id}.json`, lesson })),
+    themes: checked.themes.map((lesson) => ({ file: `content/themes/${lesson.id}.json`, lesson })),
     topics: checked.topics,
     extras: checked.extras,
   }

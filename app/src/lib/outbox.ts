@@ -4,12 +4,23 @@
 // Merge rules are the backend's (backend/README.md, DECISIONS.md #36): per word the card with the
 // later last_review wins, per lesson the later updatedAt, per day the larger extra, per note the
 // later updatedAt unless the server's note has Claude's feedback (then it is locked and the
-// server's version stands); events and attempts are identified by client-made UUIDs, so a resend
+// server's version stands), per custom word the later updatedAt (an edit clears Claude's check,
+// a delete keeps it); events and attempts are identified by client-made UUIDs, so a resend
 // is harmless.
 import { z } from 'zod'
-import { IsoDate, IsoDateTime, NoteFeedback as NoteFeedbackSchema, NoteText, StoredCard as StoredCardSchema } from '../content/schema.ts'
-import type { LessonProgress, NoteFeedback, Result, ReviewLogEntry, ReviewState, StoredCard } from '../content/schema.ts'
+import {
+  CustomWord as CustomWordSchema,
+  CustomWordFields as CustomWordFieldsShape,
+  IsoDate,
+  IsoDateTime,
+  NoteFeedback as NoteFeedbackSchema,
+  NoteText,
+  StoredCard as StoredCardSchema,
+} from '../content/schema.ts'
+import type { CustomWord, LessonProgress, NoteFeedback, Result, ReviewLogEntry, ReviewState, StoredCard } from '../content/schema.ts'
 import { ContentError, parseLessonProgress, parseResult, parseReviewLog } from '../content/validate.ts'
+import { isCustomWordId, sameFields } from './customWords.ts'
+import type { CustomWordFields } from './customWords.ts'
 import { laterCard } from './srs.ts'
 
 export type LessonRecord = LessonProgress['lessons'][string]
@@ -29,6 +40,9 @@ export interface NoteRecord {
 /** A note as the server has it: with Claude's feedback, or null. */
 export type ServerNote = NoteRecord & { id: string; feedback: NoteFeedback | null }
 
+/** A custom word as the app writes it (the upload, without the id and without Claude's check). deletedAt is a soft delete. */
+export type CustomWordRecord = CustomWordFields & { createdAt: string; updatedAt: string; deletedAt?: string }
+
 export interface Outbox {
   version: 1
   reviewEvents: ReviewEventUpload[]
@@ -41,10 +55,12 @@ export interface Outbox {
   newWordExtras: Record<string, number>
   /** Latest local record per note id. */
   notes: Record<string, NoteRecord>
+  /** Latest local record per custom word id. */
+  customWords: Record<string, CustomWordRecord>
 }
 
 export function emptyOutbox(): Outbox {
-  return { version: 1, reviewEvents: [], cards: {}, attempts: [], lessons: {}, newWordExtras: {}, notes: {} }
+  return { version: 1, reviewEvents: [], cards: {}, attempts: [], lessons: {}, newWordExtras: {}, notes: {}, customWords: {} }
 }
 
 export function outboxSize(o: Outbox): number {
@@ -54,7 +70,8 @@ export function outboxSize(o: Outbox): number {
     o.attempts.length +
     Object.keys(o.lessons).length +
     Object.keys(o.newWordExtras).length +
-    Object.keys(o.notes).length
+    Object.keys(o.notes).length +
+    Object.keys(o.customWords).length
   )
 }
 
@@ -80,7 +97,7 @@ export function sameJson(a: unknown, b: unknown): boolean {
 // ---------- batches (POST /v1/sync) ----------
 
 /** The API's per-request limits (backend/src/config.ts SYNC_LIMITS). */
-export const SYNC_LIMITS = { reviewEvents: 1000, cards: 2000, attempts: 20, lessons: 500, newWordExtras: 31, notes: 50 } as const
+export const SYNC_LIMITS = { reviewEvents: 1000, cards: 2000, attempts: 20, lessons: 500, newWordExtras: 31, notes: 50, customWords: 20 } as const
 
 export interface SyncBatch {
   reviewEvents?: ReviewEventUpload[]
@@ -89,6 +106,7 @@ export interface SyncBatch {
   lessons?: (LessonRecord & { lessonId: string })[]
   newWordExtras?: { localDay: string; extra: number }[]
   notes?: (NoteRecord & { id: string })[]
+  customWords?: (CustomWordRecord & { id: string })[]
 }
 
 /** The next request's worth of the outbox (empty lists left out), or null when there is nothing to send. */
@@ -118,6 +136,11 @@ export function nextBatch(o: Outbox): SyncBatch | null {
     .slice(0, SYNC_LIMITS.notes)
     .map((id) => ({ id, ...o.notes[id] }))
   if (notes.length) b.notes = notes
+  const words = Object.keys(o.customWords)
+    .sort()
+    .slice(0, SYNC_LIMITS.customWords)
+    .map((id) => ({ id, ...o.customWords[id] }))
+  if (words.length) b.customWords = words
   return Object.keys(b).length > 0 ? b : null
 }
 
@@ -136,6 +159,8 @@ export function removeSent(o: Outbox, sent: SyncBatch): Outbox {
   for (const x of sent.newWordExtras ?? []) if (extras[x.localDay] === x.extra) delete extras[x.localDay]
   const notes = { ...o.notes }
   for (const { id, ...rec } of sent.notes ?? []) if (sameJson(notes[id], rec)) delete notes[id]
+  const customWords = { ...o.customWords }
+  for (const { id, ...rec } of sent.customWords ?? []) if (sameJson(customWords[id], rec)) delete customWords[id]
   return {
     version: 1,
     reviewEvents: o.reviewEvents.filter((e) => !eventIds.has(e.id)),
@@ -144,6 +169,7 @@ export function removeSent(o: Outbox, sent: SyncBatch): Outbox {
     lessons,
     newWordExtras: extras,
     notes,
+    customWords,
   }
 }
 
@@ -166,6 +192,9 @@ const NoteRecordSchema = z.strictObject({
 
 const ServerNoteSchema = NoteRecordSchema.extend({ id: z.string().min(1), feedback: NoteFeedbackSchema.nullable() })
 
+/** A custom word in the outbox: the upload, so no check. */
+const CustomWordRecordSchema = z.strictObject({ ...CustomWordFieldsShape, createdAt: IsoDateTime, updatedAt: IsoDateTime, deletedAt: IsoDateTime.optional() })
+
 const Inserts = z.object({ received: z.number(), inserted: z.number(), duplicates: z.number() })
 const upserts = <T extends z.ZodType>(stale: T) =>
   z.object({ received: z.number(), written: z.number(), unchanged: z.number(), stale: z.array(stale) })
@@ -179,6 +208,7 @@ export const SyncResponse = z.object({
   lessons: upserts(z.object({ lessonId: z.string(), progress: LessonRecordSchema })),
   newWordExtras: upserts(z.object({ localDay: IsoDate, extra: z.number().int().nonnegative() })),
   notes: upserts(ServerNoteSchema),
+  customWords: upserts(CustomWordSchema),
 })
 export type SyncResponse = z.infer<typeof SyncResponse>
 
@@ -205,6 +235,8 @@ export interface ServerState {
   newWordExtras: Record<string, number>
   /** In the API's shape, so the offline copy parses like a reply. GET /v1/state leaves deleted notes out; after a sync a deleted one may be here with deletedAt. */
   notes: ServerNote[]
+  /** The same for custom words: GET /v1/state leaves deleted ones out, a sync may add one with deletedAt. */
+  customWords: CustomWord[]
 }
 
 const StateEnvelope = z.object({
@@ -218,6 +250,7 @@ const StateEnvelope = z.object({
   lessonProgress: z.unknown(),
   newWordExtras: z.record(z.string(), z.number().int().nonnegative()),
   notes: z.array(ServerNoteSchema),
+  customWords: z.array(CustomWordSchema),
 })
 
 /** Validates the server state (or the offline copy of it); every problem names its field. */
@@ -242,6 +275,7 @@ export function parseState(what: string, data: unknown): ServerState {
     lessonProgress: parseLessonProgress(`${what} lessonProgress`, s.lessonProgress),
     newWordExtras: s.newWordExtras,
     notes: s.notes,
+    customWords: s.customWords,
   }
 }
 
@@ -281,6 +315,10 @@ export function applySent(s: ServerState, sent: SyncBatch, reply: SyncResponse):
   }
   for (const n of reply.notes.stale) notes.set(n.id, n)
 
+  const words = new Map(s.customWords.map((w) => [w.id, w]))
+  for (const { id, ...rec } of sent.customWords ?? []) words.set(id, mergeCustomWord(words.get(id), id, rec))
+  for (const w of reply.customWords.stale) words.set(w.id, w)
+
   const days = new Set(s.studyDays)
   for (const e of sent.reviewEvents ?? []) days.add(e.localDay)
   for (const a of sent.attempts ?? []) {
@@ -297,6 +335,7 @@ export function applySent(s: ServerState, sent: SyncBatch, reply: SyncResponse):
     lessonProgress: { version: 1, lessons },
     newWordExtras: extras,
     notes: [...notes.values()],
+    customWords: [...words.values()],
     studyDays: [...days].sort(),
   }
 }
@@ -323,7 +362,17 @@ export function lockedRejections(sent: SyncBatch, reply: SyncResponse): string[]
 export function acceptedLocally(serverTime: string): SyncResponse {
   const upserts = { received: 0, written: 0, unchanged: 0, stale: [] }
   const inserts = { received: 0, inserted: 0, duplicates: 0 }
-  return { ok: true, serverTime, reviewEvents: inserts, cards: upserts, attempts: inserts, lessons: upserts, newWordExtras: upserts, notes: upserts }
+  return {
+    ok: true,
+    serverTime,
+    reviewEvents: inserts,
+    cards: upserts,
+    attempts: inserts,
+    lessons: upserts,
+    newWordExtras: upserts,
+    notes: upserts,
+    customWords: upserts,
+  }
 }
 
 // ---------- the local view ----------
@@ -350,10 +399,17 @@ export interface ProgressView {
   pendingAttemptIds: string[]
   /** Notes that are not deleted, newest first. */
   notes: NoteView[]
+  /** Hayk's own words that are not deleted, oldest first. */
+  customWords: CustomWordView[]
 }
 
 export interface NoteView extends ServerNote {
   /** A change of this note is still waiting in the outbox. */
+  pending: boolean
+}
+
+export type CustomWordView = CustomWord & {
+  /** A change of this word is still waiting in the outbox. */
   pending: boolean
 }
 
@@ -366,6 +422,17 @@ function laterLesson(a: LessonRecord | undefined, b: LessonRecord): LessonRecord
 function mergeNote(server: ServerNote | undefined, id: string, local: NoteRecord): ServerNote {
   if (server && (server.feedback !== null || server.updatedAt > local.updatedAt)) return server
   return { ...local, id, feedback: null }
+}
+
+/**
+ * The server's custom word, or the local change when it is not older (the server applies the
+ * same rule). Claude's check stays only while the fields are the ones he checked: an edit clears
+ * it, a delete keeps it.
+ */
+export function mergeCustomWord(server: CustomWord | undefined, id: string, local: CustomWordRecord): CustomWord {
+  if (server && server.updatedAt > local.updatedAt) return server
+  const check = server?.check !== undefined && sameFields(server, local) ? server.check : undefined
+  return { id, ...local, ...(check ? { check } : {}) }
 }
 
 export function buildView(s: ServerState, o: Outbox, today: string): ProgressView {
@@ -385,7 +452,8 @@ export function buildView(s: ServerState, o: Outbox, today: string): ProgressVie
   for (const [id, rec] of Object.entries(o.lessons)) lessons[id] = laterLesson(lessons[id], rec)
 
   const extra = Math.max(s.newWordExtras[today] ?? 0, o.newWordExtras[today] ?? 0)
-  const count = reviewLog.filter((e) => e.localDay === today && e.isNew && !e.practice).length
+  // Custom words are introduced outside the daily limit, so they do not count (DECISIONS.md #58).
+  const count = reviewLog.filter((e) => e.localDay === today && e.isNew && !e.practice && !isCustomWordId(e.wordId)).length
 
   const days = new Set(s.studyDays)
   for (const e of o.reviewEvents) days.add(e.localDay)
@@ -396,6 +464,9 @@ export function buildView(s: ServerState, o: Outbox, today: string): ProgressVie
 
   const notes = new Map(s.notes.map((n) => [n.id, n]))
   for (const [id, rec] of Object.entries(o.notes)) notes.set(id, mergeNote(notes.get(id), id, rec))
+
+  const words = new Map(s.customWords.map((w) => [w.id, w]))
+  for (const [id, rec] of Object.entries(o.customWords)) words.set(id, mergeCustomWord(words.get(id), id, rec))
 
   return {
     userId: s.userId,
@@ -416,6 +487,10 @@ export function buildView(s: ServerState, o: Outbox, today: string): ProgressVie
       .filter((n) => n.deletedAt === null)
       .map((n) => ({ ...n, pending: n.id in o.notes }))
       .sort((a, b) => b.createdAt.localeCompare(a.createdAt) || a.id.localeCompare(b.id)),
+    customWords: [...words.values()]
+      .filter((w) => w.deletedAt === undefined)
+      .map((w) => ({ ...w, pending: w.id in o.customWords }))
+      .sort((a, b) => a.createdAt.localeCompare(b.createdAt) || a.id.localeCompare(b.id)),
   }
 }
 
@@ -430,6 +505,8 @@ const OutboxEnvelope = z.strictObject({
   newWordExtras: z.record(z.string(), z.number().int().nonnegative()),
   // Optional only because outboxes saved before notes existed (2026-09-30) have no "notes" key.
   notes: z.record(z.string(), NoteRecordSchema).optional(),
+  // The same for custom words (added 2026-09-30, after notes).
+  customWords: z.record(z.string(), CustomWordRecordSchema).optional(),
 })
 
 /** Parses a stored outbox; a damaged one is a loud error (its changes would otherwise be lost). */
@@ -453,5 +530,6 @@ export function parseOutbox(what: string, data: unknown): Outbox {
     lessons: o.lessons,
     newWordExtras: o.newWordExtras,
     notes: o.notes ?? {},
+    customWords: o.customWords ?? {},
   }
 }

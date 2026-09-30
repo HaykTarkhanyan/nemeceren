@@ -7,12 +7,13 @@
 //   lessonProgress  the app's LessonProgress, exactly
 //   newWordExtras   extra new words asked for, per local day, for the days in the window
 //   notes           every note that is not deleted, with Claude's feedback (or null), newest first
+//   customWords     every custom word (Hayk's own words) that is not deleted, with Claude's check, oldest first
 // The field names match the app's types (app/src/content/schema.ts), plus an `id` on events and
 // attempts. Keys the app models as optional (not nullable) are left out when empty.
 import { withTransaction } from './db.ts'
 import type { StoredCard } from './schema.ts'
-import { NOTE_JSON } from './sync.ts'
-import type { NoteRecord } from './sync.ts'
+import { CUSTOM_WORD_JSON, NOTE_JSON } from './sync.ts'
+import type { CustomWordRecord, NoteRecord } from './sync.ts'
 
 interface LessonRecord {
   startedAt: string
@@ -32,6 +33,7 @@ export interface StateResponse {
   lessonProgress: { version: 1; lessons: Record<string, LessonRecord> }
   newWordExtras: Record<string, number>
   notes: NoteRecord[]
+  customWords: CustomWordRecord[]
 }
 
 interface EventRow {
@@ -180,6 +182,13 @@ export async function loadState(userId: string, days: number): Promise<StateResp
       [userId],
     )
 
+    const wordRows = await client.query<{ word: CustomWordRecord }>(
+      `SELECT ${CUSTOM_WORD_JSON('cw')} AS word FROM custom_words cw
+        WHERE cw.user_id = $1 AND cw.deleted_at IS NULL
+        ORDER BY cw.created_at, cw.id`,
+      [userId],
+    )
+
     return {
       serverTime: clock.now.toISOString(),
       userId,
@@ -191,6 +200,7 @@ export async function loadState(userId: string, days: number): Promise<StateResp
       lessonProgress: { version: 1 as const, lessons },
       newWordExtras,
       notes: noteRows.rows.map((r) => r.note),
+      customWords: wordRows.rows.map((r) => r.word),
     }
   })
 }

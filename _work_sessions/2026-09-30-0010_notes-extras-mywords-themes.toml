@@ -1,0 +1,37 @@
+title = "Browser checks, test account, Notes, Extras, guest mode, own words, All words, theme lessons (two songs)"
+date = "2026-09-30"
+time = "00:10"
+areas = ["app/", "backend/", "content/", ".claude/skills/", "DECISIONS.md", "CLAUDE.md", "progress/"]
+
+done = [
+  "First real browser checks via Playwright with a permanent test account (claude-test@example.com, password in .env.local); fixed Daily spacing, phrase titles, Topics order, sign-in 'Create one' link, picker labels.",
+  "Notes with Claude's feedback (hint-first, errors vs style, locked after feedback): migration 002, API, deploy; round trip verified in a browser.",
+  "Daily became Extras: browsable collection, 43 items (13 new, facts checked).",
+  "Guest mode: materials without an account, nothing stored; verified no progress API calls and empty localStorage.",
+  "Second learner Anahit (friend): account created with a few seconds of open sign-up, allowlisted, sign-up closed and verified; name login ('Anahit') added and verified with a wrong password only.",
+  "progress.py defaults to Hayk via NEMECEREN_DEFAULT_USER in .env.local (email kept out of the public repo); removed Hayk's email from the 2026-09-29 session log (still in git history).",
+  "Own words (migration 003, Claude's check-word ok/fix), All words view with statuses, Themes tab for theme lessons.",
+  "theme-lesson skill in .claude/skills; two song lessons installed: Barfuß am Klavier (AnnenMayKantereit) and Sonne (Rammstein), 20 word cards, facts web-verified, short excerpts only; lyrics pasted by Hayk.",
+]
+
+pending = [
+  "Hayk to try Notes, Extras, own words, All words and the song lessons on PC and Android; phone sign-in and sync after 15+ minutes still untested on a real phone.",
+  "Hayk's email remains in git history (commit b72e..73fe range, session log); rewrite only if Hayk asks.",
+  "Prune the stopgap popup entries (DEFERRED_TODO).",
+  "Stats totals and listening practice still count content words only (own words not included).",
+]
+
+next = [
+  "Grade/feedback: run `progress.py summary` at session start (notes waiting, own words waiting for a check).",
+  "Start teaching Unit 0 in the chat.",
+  "More theme lessons when Hayk sends links (skill: theme-lesson).",
+]
+
+files = [
+  "content/extras.json", "content/themes/t-barfuss-am-klavier.json", "content/themes/t-sonne.json", "content/words.json", "content/glossary.json",
+  "backend/db/migrations/002_notes.sql", "backend/db/migrations/003_custom_words.sql", ".claude/skills/theme-lesson/SKILL.md",
+]
+
+commits = ["4112180", "2957d3a", "c98e3f2", "(this commit)"]
+
+notes = "Playwright echoes the scripts it runs: a password filled in a script lands in the transcript. Lyrics sites block curl and WebFetch; the browser needs >= 1.5 GB free physical and >= 2.5 GB virtual memory, otherwise ask Hayk to paste lyrics. mc options are always treated as German: write options in German."

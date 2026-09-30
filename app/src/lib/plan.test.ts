@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest'
-import type { Lesson, Result, ReviewLogEntry, Test, Word } from '../content/schema.ts'
+import type { CourseLesson, Result, ReviewLogEntry, Test, ThemeLesson, Word } from '../content/schema.ts'
+import { checkAllContent } from '../content/validate.ts'
+import type { StudyWord } from './customWords.ts'
 import {
   contentRunway,
   courseTests,
@@ -27,10 +29,21 @@ import { dailyStats, studyDays } from './stats.ts'
 
 const t0 = new Date(2026, 8, 29, 10, 0, 0)
 const word = (id: string, example = false): Word => ({ id, de: id, en: id, level: 'A1', added: '2026-09-29', ...(example ? { example: { de: `${id} Satz.` } } : {}) })
-const lesson = (id: string, unit: number, order: number, words: string[] = []): Lesson => ({
+const lesson = (id: string, unit: number, order: number, words: string[] = []): CourseLesson => ({
   id,
   unit,
   order,
+  level: 'A1',
+  title: id,
+  summary: 's',
+  goals: ['g'],
+  words,
+  sections: [{ type: 'tip', text: 'x' }],
+})
+/** A theme lesson of the kind "topic" (no source), as Claude writes them for topics Hayk asks about. */
+const theme = (id: string, words: string[] = []): ThemeLesson => ({
+  id,
+  theme: { kind: 'topic', title: `Topic ${id}` },
   level: 'A1',
   title: id,
   summary: 's',
@@ -191,7 +204,7 @@ describe('listening words and runway', () => {
     const lessons = [lesson('L', 1, 1, ['l1', 'l2']), lesson('M', 1, 2)]
     const s = review(emptyState(t0), 'a', Rating.Good, t0).state
     const p = markLessonDone(startLesson(emptyLessonProgress(), 'M', t0), 'M', true, t0)
-    const r = contentRunway({ words, tests: [test('t1'), test('t2')], lessons }, p, s, [result('t1')], 3)
+    const r = contentRunway({ words, tests: [test('t1'), test('t2')], lessons, themes: [] }, p, s, [result('t1')], 3)
     expect(r).toEqual({
       newWords: 4,
       newWordsAvailable: 2,
@@ -226,7 +239,7 @@ describe('choosing where the review words come from', () => {
   const words = ['a', 'l1', 'l2', 'm1', 'n1', 'x'].map((id) => word(id))
   const lessons = [lesson('L', 1, 1, ['l1', 'l2']), lesson('M', 1, 2, ['m1']), lesson('N', 2, 1, ['n1']), lesson('E', 2, 2)]
   const opened = startLesson(emptyLessonProgress(), 'L', t0)
-  const ids = (source: WordSource, s = emptyState(t0)) => wordsForSource(source, words, lessons, opened, s).map((w) => w.id)
+  const ids = (source: WordSource, s = emptyState(t0)) => wordsForSource(source, words, [], lessons, opened, s).map((w) => w.id)
 
   it('"all" is today\'s behaviour: words of unopened lessons wait', () => {
     expect(ids({ kind: 'all' })).toEqual(['a', 'l1', 'l2', 'x'])
@@ -246,7 +259,7 @@ describe('choosing where the review words come from', () => {
     let s = review(emptyState(t0), 'a', Rating.Again, t0).state
     s = review(s, 'l1', Rating.Again, t0).state
     const later = new Date(t0.getTime() + 3_600_000)
-    const picked = wordsForSource({ kind: 'lesson', lessonId: 'L' }, words, lessons, opened, s)
+    const picked = wordsForSource({ kind: 'lesson', lessonId: 'L' }, words, [], lessons, opened, s)
     // Due: l1 only (a is due too, but not in the pick). New: l2, capped by what is left of the daily limit of 3.
     expect(counts(picked, s, later, 3)).toEqual({ due: 1, newLeft: 1 })
     const log: ReviewLogEntry[] = ['a', 'l1'].map((id) => ({
@@ -266,5 +279,59 @@ describe('choosing where the review words come from', () => {
     expect(parseSourceKey('unit:7', lessons).source).toEqual({ kind: 'all' })
     expect(sourceLessons(lessons).map((l) => l.id)).toEqual(['L', 'M', 'N'])
     expect(sourceLabel({ kind: 'lesson', lessonId: 'N' }, lessons)).toBe('2.1 N')
+  })
+
+  it('"My words" is saved as "mine" and takes only Hayk\'s own words; "all" puts them after the content words', () => {
+    const mine: StudyWord[] = [{ id: 'u-00000000-0000-4000-8000-000000000001', de: 'der Stau', en: 'traffic jam' }]
+    expect(parseSourceKey('mine', lessons)).toEqual({ source: { kind: 'mine' }, note: null })
+    expect(sourceKey({ kind: 'mine' })).toBe('mine')
+    expect(sourceLabel({ kind: 'mine' }, lessons)).toBe('my words')
+    expect(wordsForSource({ kind: 'mine' }, words, mine, lessons, opened, emptyState(t0)).map((w) => w.id)).toEqual([mine[0].id])
+    expect(wordsForSource({ kind: 'all' }, words, mine, lessons, opened, emptyState(t0)).map((w) => w.id)).toEqual(['a', 'l1', 'l2', 'x', mine[0].id])
+    // A unit or a lesson is content only.
+    expect(wordsForSource({ kind: 'unit', unit: 1 }, words, mine, lessons, opened, emptyState(t0)).map((w) => w.id)).toEqual(['l1', 'l2', 'm1'])
+  })
+
+  it('a theme lesson holds its words back until opened, and can be picked like a lesson', () => {
+    const all = [...lessons, theme('t-arzt', ['x'])]
+    expect(ids({ kind: 'all' })).toContain('x')
+    expect(wordsForSource({ kind: 'all' }, words, [], all, opened, emptyState(t0)).map((w) => w.id)).toEqual(['a', 'l1', 'l2'])
+    expect(wordsForSource({ kind: 'lesson', lessonId: 't-arzt' }, words, [], all, opened, emptyState(t0)).map((w) => w.id)).toEqual(['x'])
+    const openedTheme = startLesson(opened, 't-arzt', t0)
+    expect(wordsForSource({ kind: 'all' }, words, [], all, openedTheme, emptyState(t0)).map((w) => w.id)).toEqual(['a', 'l1', 'l2', 'x'])
+    expect(parseSourceKey('lesson:t-arzt', all)).toEqual({ source: { kind: 'lesson', lessonId: 't-arzt' }, note: null })
+    expect(sourceLabel({ kind: 'lesson', lessonId: 't-arzt' }, all)).toBe('Theme: Topic t-arzt')
+  })
+})
+
+describe('theme lessons are not part of the course (What next, next lesson, runway)', () => {
+  const tip = [{ type: 'tip', text: 'x' }]
+  const file = (folder: string, l: object) => ({ file: `content/${folder}/${(l as { id: string }).id}.json`, text: JSON.stringify(l) })
+  const out = checkAllContent({
+    tests: [],
+    words: { file: 'content/words.json', text: JSON.stringify([word('a'), word('b')]) },
+    lessons: [file('lessons', { id: 'u1-01-a', unit: 1, order: 1, level: 'A1', title: 'A', summary: 's', goals: ['g'], words: ['a'], sections: tip })],
+    themes: [file('themes', { id: 't-arzt', theme: { kind: 'topic', title: 'Beim Arzt' }, level: 'A1', title: 'At the doctor', summary: 's', goals: ['g'], words: ['b'], sections: [{ id: 'about', type: 'tip', text: 'x' }] })],
+    topics: { file: 'content/topics.json', text: JSON.stringify({ groups: [{ id: 'g', title: 'G', summary: 'S', items: [{ title: 'T', lesson: 't-arzt', section: 'about' }] }] }) },
+    extras: { file: 'content/extras.json', text: JSON.stringify({ items: [{ id: 'f01', type: 'fact', title: 'T', lines: [{ de: 'Hallo', en: 'Hello' }], breakdown: [{ de: 'Hallo', en: 'hello' }], explain: 'E' }] }) },
+  })
+
+  it('loads course lessons and theme lessons into separate lists (a topic may link to a theme lesson)', () => {
+    expect(out.problems).toEqual([])
+    expect(out.lessons.map((l) => l.id)).toEqual(['u1-01-a'])
+    expect(out.themes.map((l) => l.id)).toEqual(['t-arzt'])
+  })
+
+  it('What next and the next lesson ignore an unopened theme lesson, and so does "lessons left"', () => {
+    let p = emptyLessonProgress()
+    expect(nextLesson(out.lessons, p)?.lesson.id).toBe('u1-01-a')
+    p = markLessonDone(startLesson(p, 'u1-01-a', t0), 'u1-01-a', true, t0)
+    // The theme lesson is not started, but it is not the "next lesson": the course is done.
+    expect(nextLesson(out.lessons, p)).toBeNull()
+    const r = contentRunway({ words: out.words, tests: [], lessons: out.lessons, themes: out.themes }, p, emptyState(t0), [], 10)
+    expect(r.lessonsLeft).toBe(0)
+    expect(r.totals.lessons).toBe(1)
+    // Its word still waits for the theme lesson to be opened.
+    expect(r.newWordsInLessons).toBe(1)
   })
 })

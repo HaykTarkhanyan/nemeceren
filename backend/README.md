@@ -1,6 +1,6 @@
 # Backend: Neon Auth + Functions API + Postgres
 
-Stores Hayk's progress (word reviews, FSRS cards, test attempts, Claude's grading, lesson progress, extra new words per day, and notes with Claude's feedback since 2026-09-30) in one private Neon Postgres database, so the PC and the phone share it. That is everything `app/src/lib/storage.ts` persists as of 2026-09-29 02:00; the per-device settings in `app/src/lib/settings.ts` (voice, rate, new words per day) stay in each browser. **Neon stays on the Free plan. Never upgrade, add billing, or enable paid features.**
+Stores Hayk's progress (word reviews, FSRS cards, test attempts, Claude's grading, lesson progress, extra new words per day, and since 2026-09-30 notes with Claude's feedback and his own words with Claude's check) in one private Neon Postgres database, so the PC and the phone share it. That is everything `app/src/lib/storage.ts` persists as of 2026-09-29 02:00; the per-device settings in `app/src/lib/settings.ts` (voice, rate, new words per day) stay in each browser. **Neon stays on the Free plan. Never upgrade, add billing, or enable paid features.**
 
 ```
 GitHub Pages SPA (app/)  --sign in-->  Neon Auth (Managed Better Auth, email + password)
@@ -30,7 +30,7 @@ Postgres (tables in db/migrations/)  <--  Claude: scripts/progress.py (owner rol
 | `src/db.ts`, `src/config.ts`, `src/errors.ts`, `src/types.ts` | pg pool, fixed settings (origins, limits), error format, request context type. |
 | `db/migrations/NNN_*.sql` | Versioned schema. Never edit an applied file; add a new one. |
 | `scripts/migrate.py` | Applies migrations (`status` / `apply`). |
-| `scripts/progress.py` | Claude's tool: list, show and grade test attempts, list notes and write feedback on them, activity summary, allowlist. |
+| `scripts/progress.py` | Claude's tool: list, show and grade test attempts, list notes and write feedback on them, list and check Hayk's own words, activity summary, allowlist. |
 | `scripts/non_essential/smoke_test.py` | End-to-end check of the deployed API, as Claude's test account (`--test-account`) or a throwaway user. |
 
 Scripts are Python run with `uv run` (dependencies pinned inline, PEP 723). They read the repo-root `.env.local` and log to the repo-root `logs/`. Run them from the repo root.
@@ -99,7 +99,7 @@ Uses `DATABASE_URL_UNPOOLED` (direct connection, as Neon recommends for DDL). Ea
 
 ## Claude's grading workflow
 
-From the repo root. The default user is the only allowlisted one (`--user <email>` otherwise).
+From the repo root. The default user is `NEMECEREN_DEFAULT_USER` in the gitignored `.env.local` (Hayk); use `--user <email>` for anyone else.
 
 ```bash
 uv run backend/scripts/progress.py summary --days 7        # per day: reviews, % correct, new words, practice, tests, minutes; words known; most-missed words; near misses; lessons
@@ -135,6 +135,16 @@ uv run backend/scripts/progress.py self-check                         # offline 
 ```
 
 The feedback JSON is `NoteFeedback` in `app/src/content/schema.ts` without `at`, which the script sets (see `progress/README.md`). The script checks it with the same rules as the app, including the text format of `summary` (a port of `app/src/content/richtext.ts`), because the app refuses to load a state with a feedback it cannot show. Once a note has feedback it is locked: the API refuses to change its text or delete it. A deleted note gets no feedback.
+
+Hayk's own words ("My words", DECISIONS.md #58):
+
+```bash
+uv run backend/scripts/progress.py my-words --unchecked                       # words without Claude's check yet, oldest first (without --unchecked: all not deleted)
+uv run backend/scripts/progress.py check-word <word-id> ok [--note "..."]      # fine as it is
+uv run backend/scripts/progress.py check-word <word-id> fix --de "der Stau" [--en ..] [--plural "die Staus"] [--note "..."]
+```
+
+The check is `WordCheck` in `app/src/content/schema.ts` (`{ at, ok, note?, fixed?: { de?, en?, plural? } }`), validated with the same rules (`validate_word_check`, covered by `self-check`). `ok` takes no fixed fields, `fix` needs at least one that differs from what Hayk wrote. A second check needs `--replace`; a deleted word gets none. The write only succeeds if the word has not changed since the script read it. When Hayk edits the word, the sync clears the check, so the word is unchecked again.
 
 ## API contract (for the "wire the app" task)
 
@@ -185,7 +195,8 @@ Everything the app needs on start, from one snapshot. `days` = window for raw re
   "attempts": [ { "id": "<uuid>", "version": 1, "testId": "...", "testTitle": "...", "level": "A1", "mode": "browser", "startedAt": "...", "submittedAt": "...", "localDay": "2026-09-29", "lessonId": "u1-01-sich-vorstellen", "section": 3, "score": { "correct": 6, "wrong": 3, "pending": 2, "total": 11 }, "items": [ ... ], "review": { ... } } ],
   "lessonProgress": { "version": 1, "lessons": { "u1-01-sich-vorstellen": { "startedAt": "...", "updatedAt": "...", "lastSection": 3, "doneAt": null } } },
   "newWordExtras": { "2026-09-29": 5 },
-  "notes": [ { "id": "<uuid>", "text": "Ich heiße Hayk.", "localDay": "2026-09-30", "createdAt": "...", "updatedAt": "...", "deletedAt": null, "feedback": null } ]
+  "notes": [ { "id": "<uuid>", "text": "Ich heiße Hayk.", "localDay": "2026-09-30", "createdAt": "...", "updatedAt": "...", "deletedAt": null, "feedback": null } ],
+  "customWords": [ { "id": "u-<uuid>", "de": "Stau", "en": "traffic jam", "example": { "de": "Ich stehe im Stau." }, "createdAt": "...", "updatedAt": "...", "check": { "at": "...", "ok": false, "note": "...", "fixed": { "de": "der Stau" } } } ]
 }
 ```
 
@@ -196,11 +207,12 @@ Everything the app needs on start, from one snapshot. `days` = window for raw re
 - `lessonProgress`: the app's `LessonProgress`, exactly.
 - `newWordExtras`: extra new words asked for, per local day in the window.
 - `notes`: every note that is not deleted, newest first (by `createdAt`), all time. `deletedAt` is always null here; `feedback` is Claude's `NoteFeedback` or null. Stale notes in a sync reply have the same shape.
-- `ReviewState.newToday` is built, not stored: `count` = `reviewEvents.filter(e => e.localDay === today && e.isNew && !e.practice).length`, `extra` = `newWordExtras[today]` (leave the key out when missing or 0, as `srs.ts` does).
+- `customWords`: Hayk's own words that are not deleted, oldest first (by `createdAt`), all time, in the app's `CustomWord` shape: optional keys (`plural`, `example`, `note`, `check`) are left out when empty; `deletedAt` is never present here (a stale word in a sync reply can have it). `check` is Claude's `WordCheck`. The word's FSRS card and reviews are in `cards` and `reviewEvents` under the same `u-...` id.
+- `ReviewState.newToday` is built, not stored: `count` = `reviewEvents.filter(e => e.localDay === today && e.isNew && !e.practice && !e.wordId.startsWith('u-')).length` (own words are introduced outside the daily limit, DECISIONS.md #58), `extra` = `newWordExtras[today]` (leave the key out when missing or 0, as `srs.ts` does).
 
 ### `POST /v1/sync`
 
-`Content-Type: application/json`, at most 2 MB, one transaction. Any subset of the six lists; at least one item in total.
+`Content-Type: application/json`, at most 2 MB, one transaction. Any subset of the seven lists; at least one item in total.
 
 ```json
 {
@@ -209,11 +221,12 @@ Everything the app needs on start, from one snapshot. `days` = window for raw re
   "attempts": [ { "id": "<crypto.randomUUID()>", "...": "every Result field except review; localDay required" } ],
   "lessons": [ { "lessonId": "u1-01-sich-vorstellen", "startedAt": "...", "updatedAt": "...", "lastSection": 3, "doneAt": null } ],
   "newWordExtras": [ { "localDay": "2026-09-29", "extra": 5 } ],
-  "notes": [ { "id": "<crypto.randomUUID()>", "text": "Ich heiße Hayk.", "localDay": "2026-09-30", "createdAt": "...", "updatedAt": "...", "deletedAt": null } ]
+  "notes": [ { "id": "<crypto.randomUUID()>", "text": "Ich heiße Hayk.", "localDay": "2026-09-30", "createdAt": "...", "updatedAt": "...", "deletedAt": null } ],
+  "customWords": [ { "id": "u-<crypto.randomUUID()>", "de": "Stau", "en": "traffic jam", "plural": "...", "example": { "de": "...", "en": "..." }, "note": "...", "createdAt": "...", "updatedAt": "...", "deletedAt": "..." } ]
 }
 ```
 
-Limits per request: 1000 review events, 2000 cards, 20 attempts, 500 lessons, 31 extras, 50 notes; ids (and word ids, lesson ids, days) unique within a batch. A note's text is 1 to 5000 characters and not only whitespace; `updatedAt` is not before `createdAt`.
+Limits per request: 1000 review events, 2000 cards, 20 attempts, 500 lessons, 31 extras, 50 notes, 20 custom words; ids (and word ids, lesson ids, days) unique within a batch. A note's text is 1 to 5000 characters and not only whitespace; `updatedAt` is not before `createdAt`. A custom word's id is `u-` + a lowercase UUID; `de` (at most 100 characters) and `en` (200) are required, `plural` (100), `example.de`/`example.en` (300 each) and `note` (500) are optional and left out when empty, never blank; `deletedAt` is present only for a deleted word; `updatedAt` is not before `createdAt`. Review events and cards take `u-...` word ids like any other word id.
 
 ```json
 {
@@ -224,7 +237,8 @@ Limits per request: 1000 review events, 2000 cards, 20 attempts, 500 lessons, 31
   "attempts": { "received": 1, "inserted": 1, "duplicates": 0 },
   "lessons": { "received": 1, "written": 1, "unchanged": 0, "stale": [] },
   "newWordExtras": { "received": 1, "written": 0, "unchanged": 0, "stale": [ { "localDay": "2026-09-29", "extra": 8 } ] },
-  "notes": { "received": 1, "written": 0, "unchanged": 0, "stale": [ { "id": "...", "text": "...", "localDay": "...", "createdAt": "...", "updatedAt": "...", "deletedAt": null, "feedback": { "summary": "...", "at": "..." } } ] }
+  "notes": { "received": 1, "written": 0, "unchanged": 0, "stale": [ { "id": "...", "text": "...", "localDay": "...", "createdAt": "...", "updatedAt": "...", "deletedAt": null, "feedback": { "summary": "...", "at": "..." } } ] },
+  "customWords": { "received": 1, "written": 1, "unchanged": 0, "stale": [] }
 }
 ```
 
@@ -234,8 +248,9 @@ Idempotency, so a retry after a timeout is always safe:
 - Lessons: per lesson, the record with the later `updatedAt` wins (every change in `app/src/lib/plan.ts` sets `updatedAt`, including un-marking "done").
 - Extras: per day, the larger `extra` wins (it only grows during a day; `mergeStates` takes the max too).
 - Notes: per note, the record with the later `updatedAt` wins; a delete is a record with `deletedAt` set (soft delete). **A note with Claude's feedback is locked:** it is never changed or deleted, and whenever the upload differs from it the server's version, with its `feedback`, comes back in `stale`. The app adopts it and tells Hayk that his change was not saved, with the changed text.
-- For those four, an older or equal value is not written, and when the server has a newer one it comes back in `stale`: adopt it locally.
-- Attempts must not contain `review`, and notes must not contain `feedback` (400). Only Claude writes those.
+- Custom words: per word, the record with the later `updatedAt` wins; a delete is a record with `deletedAt` set (soft delete, so the word leaves practice while its reviews stay for the statistics). **A newer version whose fields (`de`, `en`, `plural`, `example`, `note`) differ from the stored ones clears Claude's check**, so Claude looks again; the same fields with a later time (a delete) keep it. A stale word comes back with its `check`.
+- For those five, an older or equal value is not written, and when the server has a newer one it comes back in `stale`: adopt it locally.
+- Attempts must not contain `review`, notes must not contain `feedback`, and custom words must not contain `check` (400). Only Claude writes those.
 
 ### Errors
 
@@ -266,7 +281,7 @@ Always JSON: `{"error": {"code", "message", "details"?}, "requestId"}`, with COR
 
 ## Keeping the schemas in step
 
-`src/schema.ts` mirrors `ReviewLogEntry`, `StoredCard`, `Result`, `ResultItem`, the entries of `LessonProgress` and `ReviewState.newToday.extra` from `app/src/content/schema.ts` (as of 2026-09-29 02:00), and the note record (`NoteRecord` in `app/src/lib/outbox.ts`, text rules of `NoteText`, since 2026-09-30), with strict objects: a new field in the app is a loud 400 naming the key until it is added here too. Anything new that `app/src/lib/storage.ts` starts to persist needs a table, a sync list and a state field. When one of those types changes: update `src/schema.ts`, add a migration if a column changes, redeploy, and rerun the smoke test. Claude's review rules are mirrored in `scripts/progress.py` (`validate_review`), and the note feedback rules (`NoteFeedback`, including the text format) in `validate_note_feedback`; `progress.py self-check` tests the latter.
+`src/schema.ts` mirrors `ReviewLogEntry`, `StoredCard`, `Result`, `ResultItem`, the entries of `LessonProgress` and `ReviewState.newToday.extra` from `app/src/content/schema.ts` (as of 2026-09-29 02:00), the note record (`NoteRecord` in `app/src/lib/outbox.ts`, text rules of `NoteText`, since 2026-09-30), and the custom word record (`CustomWordRecord` in `app/src/lib/outbox.ts`, fields and limits of `CustomWordFields` / `CUSTOM_WORD_MAX`, since 2026-09-30), with strict objects: a new field in the app is a loud 400 naming the key until it is added here too. Anything new that `app/src/lib/storage.ts` starts to persist needs a table, a sync list and a state field. When one of those types changes: update `src/schema.ts`, add a migration if a column changes, redeploy, and rerun the smoke test. Claude's review rules are mirrored in `scripts/progress.py` (`validate_review`), the note feedback rules (`NoteFeedback`, including the text format) in `validate_note_feedback`, and the word check rules (`WordCheck`) in `validate_word_check`; `progress.py self-check` tests the last two.
 
 ## Security notes
 

@@ -89,6 +89,22 @@ export async function currentUser(): Promise<AuthUser | null> {
   return data?.user ? userOf('Checking your sign-in', data) : null
 }
 
+/** Friends' accounts use a login ID on the reserved .example domain (DECISIONS.md #57, #60). */
+export const NAME_LOGIN_DOMAIN = 'nemeceren.example'
+
+/**
+ * The email to sign in with, from what was typed in "Email or name": an email (with "@") stays as
+ * it is, a plain name becomes <name in lowercase>@nemeceren.example ("Anahit" -> anahit@nemeceren.example).
+ * Surrounding spaces are dropped. Throws with a message for the form when there is nothing to use.
+ */
+export function loginEmail(typed: string): string {
+  const t = typed.trim()
+  if (t === '') throw new Error('Type your email or your name.')
+  if (t.includes('@')) return t
+  if (/\s/.test(t)) throw new Error('A name for signing in is one word, without spaces (or use your email).')
+  return `${t.toLowerCase()}@${NAME_LOGIN_DOMAIN}`
+}
+
 export async function signIn(email: string, password: string): Promise<AuthUser> {
   lastToken = null
   const data = await call('Sign in', async () => (await auth()).signIn.email({ email, password }))

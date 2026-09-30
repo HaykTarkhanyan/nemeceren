@@ -14,7 +14,7 @@ Run from the repo root:
     uv run backend/scripts/non_essential/smoke_test.py --cleanup <user-id>     # after an interrupted throwaway run
     uv run backend/scripts/non_essential/smoke_test.py --cleanup-test-account  # delete the test account's progress rows
 
-Expected runtime: ~15-40 s (a guess: cold starts of the function and the database, ~45 HTTP calls).
+Expected runtime: ~15-40 s (a guess: cold starts of the function and the database, ~60 HTTP calls).
 
 Two ways to get a user:
   - --test-account signs in as Claude's test account (NEMECEREN_TEST_EMAIL / NEMECEREN_TEST_PASSWORD
@@ -37,6 +37,10 @@ What it checks, stopping loudly at the first unexpected answer:
      from the app (400); Claude's feedback via progress.py locks a note, so an edit or a delete
      of it is refused and the server's version with the feedback comes back as stale; a soft
      delete of another note; no feedback on a deleted note;
+  5b. custom words (Hayk's own words): new, resent (unchanged), bad ones (400: no "u-" id, blank or
+     too long German, a check from the app, changed before made), a review event and a card under a
+     "u-" word id; Claude's checks via progress.py (ok, fix, refused without --replace); a delete keeps
+     the check, an edit clears it, an older version comes back as stale;
   6. writes a Claude review with progress.py's own code and reads everything back through
      GET /v1/state (gzip), comparing every field with what was sent;
   7. throwaway user: removal from the allowlist takes effect at once. At the end the user's rows
@@ -79,7 +83,7 @@ LOG = logging.getLogger("smoke_test")
 APP_ORIGIN = "http://localhost:5173"
 SMOKE_EMAIL_RE = re.compile(r"^nemeceren-smoke-[0-9a-f]{12}@example\.com$")
 # A user's progress rows. The test account keeps its allowlist entry; a throwaway user loses it too.
-DATA_TABLES = ("review_events", "review_cards", "test_attempts", "lesson_progress", "new_word_extras", "notes")
+DATA_TABLES = ("review_events", "review_cards", "test_attempts", "lesson_progress", "new_word_extras", "notes", "custom_words")
 USER_TABLES = (*DATA_TABLES, "allowed_users")
 
 
@@ -287,7 +291,8 @@ def run(api: str, auth: str, conn: Any, ctx: dict[str, Any], test_account: dict[
     s = r.json()
     check(
         s["userId"] == user_id and s["cards"] == {} and s["reviewEvents"] == [] and s["attempts"] == [] and s["studyDays"] == []
-        and s["lessonProgress"] == {"version": 1, "lessons": {}} and s["newWordExtras"] == {} and s["notes"] == [],
+        and s["lessonProgress"] == {"version": 1, "lessons": {}} and s["newWordExtras"] == {} and s["notes"] == []
+        and s["customWords"] == [],
         "the user's state is empty",
         s,
     )
@@ -519,6 +524,69 @@ def run(api: str, auth: str, conn: Any, ctx: dict[str, Any], test_account: dict[
     except RuntimeError:
         check(True, "no feedback on a deleted note")
 
+    # ---- 5b. custom words (Hayk's own words) and Claude's check ----
+    def cword(minutes_ago: int, de: str, en: str, **extra: Any) -> dict[str, Any]:
+        at = iso(now - timedelta(minutes=minutes_ago))
+        return {"id": f"u-{uuid.uuid4()}", "de": de, "en": en, "createdAt": at, "updatedAt": at, **extra}
+
+    w1 = cword(9, "Stau", "traffic jam", example={"de": "Ich stehe im Stau.", "en": "I am stuck in traffic."})
+    w2 = cword(8, "die Ampel", "traffic light", plural="die Ampeln", note="heard in Munich")
+    w3 = cword(7, "Feierabend", "end of the working day")
+    r = sync({"customWords": [w1, w2, w3]})
+    check(r.status == 200 and r.json()["customWords"] == {"received": 3, "written": 3, "unchanged": 0, "stale": []}, "three new custom words are written", r.text())
+    r = sync({"customWords": [w1, w2, w3]})
+    check(r.status == 200 and r.json()["customWords"] == {"received": 3, "written": 0, "unchanged": 3, "stale": []}, "the same custom words again are unchanged", r.text())
+    for bad, what, path in (
+        ({**w2, "id": "stau"}, "a custom word id without the u- prefix", "customWords.0.id"),
+        ({**w2, "id": f"u-{uuid.uuid4()}", "de": " "}, "a custom word with blank German", "customWords.0.de"),
+        ({**w2, "id": f"u-{uuid.uuid4()}", "de": "x" * 101}, "a custom word with 101 characters of German", "customWords.0.de"),
+        ({**w2, "id": f"u-{uuid.uuid4()}", "check": {"at": iso(now), "ok": True}}, "a custom word with a check from the app", "customWords.0"),
+        ({**w2, "id": f"u-{uuid.uuid4()}", "updatedAt": iso(now - timedelta(days=1))}, "a custom word changed before it was made", "customWords.0.updatedAt"),
+    ):
+        r = sync({"customWords": [bad]})
+        issues = r.json().get("error", {}).get("details", {}).get("issues", []) if r.status == 400 else []
+        check(r.status == 400 and r.error_code() == "invalid_body" and any(i["path"] == path for i in issues), f"{what} -> 400 invalid_body at {path}", r.text())
+    event_w1 = event(6, w1["id"], "Stau", "recognition", 3, None, None, None, True, 0)
+    card_w1 = {**card_uhr, "last_review": iso(t0 + timedelta(minutes=6)), "due": iso(t0 + timedelta(minutes=16))}
+    r = sync({"reviewEvents": [event_w1], "cards": [{"wordId": w1["id"], "card": card_w1}]})
+    check(
+        r.status == 200 and r.json()["reviewEvents"]["inserted"] == 1 and r.json()["cards"]["written"] == 1,
+        "a review event and a card under a u- word id are accepted",
+        r.text(),
+    )
+
+    try:
+        progress.write_word_check(conn, user_id, w1["id"], True, None, {"de": "der Stau", "en": None, "plural": None})
+        check(False, "an ok check with corrections is refused")
+    except progress.CheckError:
+        check(True, "an ok check with corrections is refused")
+    fix1 = progress.write_word_check(conn, user_id, w1["id"], False, "Nouns take der/die/das.", {"de": "der Stau", "en": None, "plural": "die Staus"})
+    check(fix1["ok"] is False and fix1["fixed"] == {"de": "der Stau", "plural": "die Staus"} and fix1["at"].endswith("Z"), "progress.py saves a correction", fix1)
+    ok2 = progress.write_word_check(conn, user_id, w2["id"], True, None, {"de": None, "en": None, "plural": None})
+    fix3 = progress.write_word_check(conn, user_id, w3["id"], False, "Feierabend is neuter.", {"de": "der Feierabend"})
+    try:
+        progress.write_word_check(conn, user_id, w3["id"], True, None, {"de": None, "en": None, "plural": None})
+        check(False, "a second check without --replace is refused")
+    except RuntimeError:
+        check(True, "a second check without --replace is refused")
+
+    w2_gone = {**w2, "updatedAt": iso(now - timedelta(minutes=6)), "deletedAt": iso(now - timedelta(minutes=6))}
+    r = sync({"customWords": [w2_gone]})
+    check(r.status == 200 and r.json()["customWords"]["written"] == 1, "a custom word can be deleted (soft delete)", r.text())
+    row = conn.execute("SELECT deleted_at IS NOT NULL AS gone, claude_check FROM custom_words WHERE user_id = %s AND id = %s", (user_id, w2["id"])).fetchone()
+    check(row is not None and row["gone"] and row["claude_check"] == ok2, "the deleted word stays in the table, and a delete alone keeps the check", row)
+    w1_edit = {**w1, "de": "der Stau", "updatedAt": iso(now - timedelta(minutes=5))}
+    r = sync({"customWords": [w1_edit]})
+    check(r.status == 200 and r.json()["customWords"]["written"] == 1, "an edit with a later updatedAt is written", r.text())
+    row = conn.execute("SELECT claude_check, checked_at FROM custom_words WHERE user_id = %s AND id = %s", (user_id, w1["id"])).fetchone()
+    check(row["claude_check"] is None and row["checked_at"] is None, "editing a checked word clears the check, so Claude looks again", row)
+    r = sync({"customWords": [w1, w3]})
+    check(
+        r.status == 200 and r.json()["customWords"] == {"received": 2, "written": 0, "unchanged": 1, "stale": [w1_edit]},
+        "an older version is not written (the newer one comes back as stale); a resend keeps the check",
+        r.text(),
+    )
+
     # ---- 6. Claude's review, then read everything back ----
     try:
         progress.validate_review({"summary": "x", "items": [{"index": 3, "correct": True}]}, 3)
@@ -543,8 +611,8 @@ def run(api: str, auth: str, conn: Any, ctx: dict[str, Any], test_account: dict[
     check(r.status == 200, "final GET /v1/state -> 200", r.text())
     check(r.headers.get("content-encoding") == "gzip", "the state reply is gzip-compressed when the client accepts it", dict(r.headers.items()))
     s = r.json()
-    check(s["reviewEvents"] == events, "the 4 review events (one practice) come back exactly as sent, oldest first", s["reviewEvents"])
-    check(s["cards"] == {"smoke-termin": card_termin, "smoke-uhr": card_uhr2}, "cards: newest version of each word", s["cards"])
+    check(s["reviewEvents"] == [*events, event_w1], "the 5 review events (one practice, one of a custom word) come back exactly as sent, oldest first", s["reviewEvents"])
+    check(s["cards"] == {"smoke-termin": card_termin, "smoke-uhr": card_uhr2, w1["id"]: card_w1}, "cards: newest version of each word", s["cards"])
     check(s["studyDays"] == [today], f"studyDays is [{today}]", s["studyDays"])
     check([x["id"] for x in s["attempts"]] == [lesson_attempt["id"], attempt["id"]], "two attempts, newest first", [x["id"] for x in s["attempts"]])
     check(s["attempts"][0] == lesson_attempt, "the lesson exercise comes back exactly as sent (lessonId, section)", s["attempts"][0])
@@ -558,6 +626,11 @@ def run(api: str, auth: str, conn: Any, ctx: dict[str, Any], test_account: dict[
     )
     check(s["newWordExtras"] == {today: 8}, "newWordExtras keeps the larger value for today", s["newWordExtras"])
     check(s["notes"] == [locked], "notes: only the note that is not deleted, with its feedback", s["notes"])
+    check(
+        s["customWords"] == [w1_edit, {**w3, "check": fix3}],
+        "customWords: the ones not deleted, oldest first; the edited one without its old check, the other with Claude's correction",
+        s["customWords"],
+    )
 
     # ---- 7. removal from the allowlist takes effect at once (the test account had it in step 3) ----
     if test_account is None:

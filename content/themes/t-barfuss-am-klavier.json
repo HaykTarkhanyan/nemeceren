@@ -1,0 +1,329 @@
+{
+  "id": "t-barfuss-am-klavier",
+  "theme": {
+    "kind": "song",
+    "title": "Barfuß am Klavier",
+    "by": "AnnenMayKantereit",
+    "year": 2016,
+    "url": "https://www.youtube.com/watch?v=tERRFWuYG48",
+    "variety": "standard German, spoken style"
+  },
+  "level": "B1",
+  "title": "Barefoot at the piano (Barfuß am Klavier)",
+  "summary": "A quiet break-up song from Cologne: simple words, clever wordplay, and the way Germans really drop their endings when they speak.",
+  "goals": [
+    "Understand and sing the chorus",
+    "Hear spoken German: ich sitz, ich hab, war'n",
+    "Catch the two puns: gemeinsam einsam, um zu lieben, lieber",
+    "Learn a false friend: wunderlich is not 'wonderful'"
+  ],
+  "words": [
+    "barfuss",
+    "klavier",
+    "traeumen",
+    "liebeslied",
+    "gemeinsam",
+    "einsam",
+    "wunderlich",
+    "schweigen",
+    "bett",
+    "schon-wieder"
+  ],
+  "sections": [
+    {
+      "id": "about",
+      "type": "explanation",
+      "title": "About this song",
+      "text": "**AnnenMayKantereit** are a band from Cologne. Three school friends started them in 2011 as street musicians, and the name is simply their three surnames: Annen, May, Kantereit. The singer, Henning May, is known for his rough, raspy voice.\n\n'Barfuß am Klavier' is on their first album, **Alles nix Konkretes** (March 2016), which went to number 1 in Germany.\n\nWhy it's good for you: the words are simple (du, ich, sitzen, träumen, lieben), the first chorus line comes back four times, and the song is full of real spoken German. The singer is sitting barefoot at the piano, singing about someone who is gone."
+    },
+    {
+      "id": "spoken",
+      "type": "table",
+      "title": "Spoken German: the endings disappear",
+      "columns": [
+        {
+          "header": "In the song",
+          "de": "words"
+        },
+        {
+          "header": "Written German",
+          "de": "words"
+        },
+        {
+          "header": "English"
+        }
+      ],
+      "rows": [
+        [
+          "ich sitz",
+          "ich sitze",
+          "I sit"
+        ],
+        [
+          "ich träum",
+          "ich träume",
+          "I dream"
+        ],
+        [
+          "ich sing",
+          "ich singe",
+          "I sing"
+        ],
+        [
+          "ich hab",
+          "ich habe",
+          "I have"
+        ],
+        [
+          "wir war'n",
+          "wir waren",
+          "we were"
+        ],
+        [
+          "rumgesessen",
+          "herumgesessen",
+          "sat around"
+        ]
+      ]
+    },
+    {
+      "type": "tip",
+      "text": "Germans drop the -e of the ich form all the time when they speak: [[ich hab]], [[ich geh]], [[ich komm]]. When you write, keep it: [[ich habe]]. The verb endings you learned in Unit 1 are still there, just swallowed."
+    },
+    {
+      "id": "chorus",
+      "type": "examples",
+      "title": "The chorus",
+      "items": [
+        {
+          "de": "Und ich sitz schon wieder barfuß am Klavier",
+          "en": "And here I am again, sitting barefoot at the piano",
+          "note": "schon wieder = (yet) again, often a little annoyed"
+        },
+        {
+          "de": "Ich träume Liebeslieder und sing dabei von dir",
+          "en": "I dream love songs and sing about you while I'm at it",
+          "note": "dabei = at the same time, while doing that"
+        }
+      ]
+    },
+    {
+      "id": "chorus-notes",
+      "type": "explanation",
+      "title": "What's going on in the chorus",
+      "text": "- [[schon wieder]]: 'already again', i.e. yet again. You'll hear it everywhere: [[Der Zug ist schon wieder zu spät.]] (The train is late again.)\n- [[am Klavier]]: [[am]] = [[an dem]], 'at the'. You sit **at** a piano, a desk or a table: [[am Tisch]]. Unit 6 teaches it properly.\n- [[Liebeslieder]]: [[die Liebe]] (love) + [[das Lied]] (song), with an -s- in between as glue. The plural of [[das Lied]] is [[die Lieder]], so [[die Liebeslieder]].\n- [[Ich träume Liebeslieder]] is poetic. Normally you dream **of** something: [[Ich träume von dir.]] Here he 'dreams up' love songs.\n- [[von dir singen]] = to sing about you. [[von]] also means 'about' with singen, träumen and erzählen (to tell)."
+    },
+    {
+      "id": "we-were",
+      "type": "examples",
+      "title": "You and I",
+      "items": [
+        {
+          "de": "Du und ich, wir waren wunderlich",
+          "en": "You and I, we were strange",
+          "note": "wunderlich = strange, odd. NOT 'wonderful' (that's wunderbar)."
+        },
+        {
+          "de": "Du und ich, wir war'n mal wir. Und sind jetzt nichts",
+          "en": "You and I, we used to be an 'us'. And now we're nothing",
+          "note": "mal = once, at one time (short for einmal)"
+        },
+        {
+          "de": "Du da, ich hier",
+          "en": "You there, me here",
+          "note": "No verb at all, and it doesn't need one."
+        }
+      ]
+    },
+    {
+      "type": "warning",
+      "text": "False friend: [[wunderlich]] means strange or odd, a bit old-fashioned. 'Wonderful' is [[wunderbar]] or [[toll]]. Say [[Das ist wunderbar!]] to a host, never [[Das ist wunderlich!]]"
+    },
+    {
+      "id": "wordplay",
+      "type": "examples",
+      "title": "Two puns",
+      "items": [
+        {
+          "de": "Ich hab mit dir gemeinsam einsam rumgesessen und geschwiegen",
+          "en": "Together with you, I sat around lonely and kept quiet",
+          "note": "gemeinsam (together) and einsam (lonely) rhyme: together, but alone."
+        },
+        {
+          "de": "Also sitz ich, um zu lieben, lieber barfuß am Klavier",
+          "en": "So, to do my loving, I'd rather sit barefoot at the piano",
+          "note": "lieben (to love) and lieber (rather) sound almost the same."
+        }
+      ]
+    },
+    {
+      "id": "wordplay-notes",
+      "type": "explanation",
+      "title": "How the puns work",
+      "text": "- [[gemeinsam einsam]]: two people together and still lonely. [[gemeinsam]] = together, shared ([[Wir essen gemeinsam.]]). [[einsam]] = lonely.\n- [[rumgesessen und geschwiegen]]: this is the Perfekt, the spoken past (Unit 5): [[ich hab ... gesessen]] (I sat), [[... geschwiegen]] (kept silent). [[rum-]] is spoken for [[herum-]] (around).\n- [[um zu lieben, lieber]]: [[um ... zu]] + verb = in order to ([[um zu lieben]] = in order to love). Then [[lieber]] = rather, preferably, from [[gern, lieber, am liebsten]] (Unit 4). He'd rather love through songs than in real life.\n- [[Also sitz ich]]: after [[also]] (so), the verb comes straight after, before [[ich]]: verb in second place (Unit 1). And remember [[also]] means 'so', not 'also'."
+    },
+    {
+      "id": "picture",
+      "type": "examples",
+      "title": "The picture",
+      "items": [
+        {
+          "de": "Du nackt im Bett - und ich barfuß am Klavier",
+          "en": "You naked in bed, and me barefoot at the piano",
+          "note": "im Bett = in dem Bett"
+        }
+      ]
+    },
+    {
+      "id": "words",
+      "type": "table",
+      "title": "Words worth keeping",
+      "columns": [
+        {
+          "header": "German",
+          "de": "words"
+        },
+        {
+          "header": "English"
+        }
+      ],
+      "rows": [
+        [
+          "barfuß",
+          "barefoot"
+        ],
+        [
+          "das Klavier",
+          "piano"
+        ],
+        [
+          "träumen (von)",
+          "to dream (of)"
+        ],
+        [
+          "das Liebeslied",
+          "love song"
+        ],
+        [
+          "gemeinsam",
+          "together, shared"
+        ],
+        [
+          "einsam",
+          "lonely"
+        ],
+        [
+          "wunderlich",
+          "strange, odd"
+        ],
+        [
+          "schweigen",
+          "to be silent, to say nothing"
+        ],
+        [
+          "das Bett",
+          "bed"
+        ],
+        [
+          "schon wieder",
+          "(yet) again"
+        ]
+      ]
+    },
+    {
+      "type": "tip",
+      "title": "How to use it",
+      "text": "1. Listen once with the link above, just for the feeling.\n2. Read the chorus here and listen again: it keeps coming back, so by the end you can sing along.\n3. Shadow one line: pause the video after a line and repeat it in the same rhythm. [[Und ich sitz schon wieder barfuß am Klavier]] is a perfect first one.\n4. Notice every dropped -e: sitz, träum, sing, hab."
+    },
+    {
+      "type": "audio",
+      "title": "Say the key lines slowly",
+      "items": [
+        {
+          "de": "Und ich sitz schon wieder barfuß am Klavier",
+          "en": "And here I am again, sitting barefoot at the piano"
+        },
+        {
+          "de": "Ich träume Liebeslieder und sing dabei von dir",
+          "en": "I dream love songs and sing about you while I'm at it"
+        },
+        {
+          "de": "Du und ich, wir waren wunderlich",
+          "en": "You and I, we were strange"
+        },
+        {
+          "de": "Du da, ich hier",
+          "en": "You there, me here"
+        }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: And here I am again, sitting barefoot at the piano.",
+          "text": "Und ich sitz schon ___ barfuß am Klavier",
+          "answers": [
+            [
+              "wieder"
+            ]
+          ],
+          "explanation": "schon wieder = (yet) again."
+        },
+        {
+          "type": "mc",
+          "question": "Which word means 'strange, odd'?",
+          "questionLang": "en",
+          "options": [
+            "wunderlich",
+            "wunderbar",
+            "einsam"
+          ],
+          "answer": "wunderlich",
+          "explanation": "wunderlich = strange, odd. wunderbar = wonderful; einsam = lonely."
+        },
+        {
+          "type": "mc",
+          "question": "In the song, 'ich sitz' is spoken German. How do you write it?",
+          "questionLang": "en",
+          "options": [
+            "ich sitze",
+            "ich sitzt",
+            "ich sitzen"
+          ],
+          "answer": "ich sitze",
+          "explanation": "The ich form ends in -e: ich sitze. In speech the -e often disappears: ich sitz."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap with the word that rhymes with 'gemeinsam': together, but lonely.",
+          "text": "Ich hab mit dir gemeinsam ___ rumgesessen",
+          "answers": [
+            [
+              "einsam"
+            ]
+          ],
+          "explanation": "gemeinsam (together) + einsam (lonely): the pun of the song."
+        },
+        {
+          "type": "order",
+          "prompt": "You and I, we were strange.",
+          "tiles": [
+            "du",
+            "und",
+            "ich",
+            "wir",
+            "waren",
+            "wunderlich"
+          ],
+          "answers": [
+            "Du und ich wir waren wunderlich"
+          ],
+          "explanation": "Du und ich, wir waren wunderlich: the verb (waren) comes second in 'wir waren wunderlich'."
+        }
+      ]
+    }
+  ]
+}

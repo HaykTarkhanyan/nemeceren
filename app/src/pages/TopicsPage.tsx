@@ -1,15 +1,17 @@
 // Lesson sections worth revisiting (content/topics.json), grouped, with the key ones starred.
 // Each links to its lesson, opened at that section.
 import { content } from '../content/load.ts'
+import { isThemeLesson } from '../content/lessons.ts'
 import { link } from '../lib/router.ts'
 
 export function TopicsPage() {
-  const unitOf = new Map(content.lessons.map((l) => [l.id, l.unit]))
-  const unit = (lessonId: string) => {
-    const u = unitOf.get(lessonId)
+  const lessonById = new Map(content.allLessons.map((l) => [l.id, l]))
+  /** "Unit 2", or "Theme" for a theme lesson. */
+  const badge = (lessonId: string) => {
+    const l = lessonById.get(lessonId)
     // check-content and the app's content check reject a topic whose lesson does not exist.
-    if (u === undefined) throw new Error(`Topics: no lesson with id "${lessonId}"`)
-    return u
+    if (l === undefined) throw new Error(`Topics: no lesson with id "${lessonId}"`)
+    return isThemeLesson(l) ? 'Theme' : `Unit ${l.unit}`
   }
   return (
     <div className="stack">
@@ -34,7 +36,7 @@ export function TopicsPage() {
                   )}
                   {it.title}
                 </a>
-                <span className="badge">Unit {unit(it.lesson)}</span>
+                <span className="badge">{badge(it.lesson)}</span>
               </li>
             ))}
           </ul>

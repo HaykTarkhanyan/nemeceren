@@ -27,7 +27,10 @@ describe('the seed content', () => {
     const lessons = fs.readdirSync(path.join(repoRoot, 'content/lessons')).map((n) => ({ file: `content/lessons/${n}`, text: readText(`content/lessons/${n}`) }))
     const topics = { file: 'content/topics.json', text: readText('content/topics.json') }
     const extras = { file: 'content/extras.json', text: readText('content/extras.json') }
-    const out = checkAllContent({ tests, words: { file: 'content/words.json', text: readText('content/words.json') }, lessons, topics, extras })
+    // Theme lessons: the folder exists once Claude wrote the first one.
+    const themeDir = path.join(repoRoot, 'content/themes')
+    const themes = fs.existsSync(themeDir) ? fs.readdirSync(themeDir).map((n) => ({ file: `content/themes/${n}`, text: readText(`content/themes/${n}`) })) : []
+    const out = checkAllContent({ tests, words: { file: 'content/words.json', text: readText('content/words.json') }, lessons, themes, topics, extras })
     expect(out.problems).toEqual([])
     expect(out.tests.length).toBeGreaterThan(0)
     const types = new Set(out.tests.flatMap((t) => t.items.map((i) => i.type)))
@@ -74,6 +77,7 @@ describe('test validation names the file and field', () => {
       ],
       words: { file: 'w.json', text: '[]' },
       lessons: [],
+      themes: [],
       topics: { file: 't.json', text: '{ "groups": [] }' },
       extras: { file: 'e.json', text: '{ "items": [] }' },
     })

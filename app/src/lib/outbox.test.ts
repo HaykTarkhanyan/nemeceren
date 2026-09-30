@@ -14,7 +14,8 @@ import {
   sameJson,
   SYNC_LIMITS,
 } from './outbox.ts'
-import type { NoteRecord, Outbox, ServerNote, ServerState, SyncResponse } from './outbox.ts'
+import type { CustomWordRecord, NoteRecord, Outbox, ServerNote, ServerState, SyncResponse } from './outbox.ts'
+import type { CustomWord } from '../content/schema.ts'
 import { emptyState, Rating, review } from './srs.ts'
 
 const t0 = new Date('2026-09-29T10:00:00Z')
@@ -63,6 +64,7 @@ const server = (over: Partial<ServerState> = {}): ServerState => ({
   lessonProgress: { version: 1, lessons: {} },
   newWordExtras: {},
   notes: [],
+  customWords: [],
   ...over,
 })
 
@@ -75,6 +77,7 @@ const reply = (over: Partial<SyncResponse> = {}): SyncResponse => ({
   lessons: { received: 0, written: 0, unchanged: 0, stale: [] },
   newWordExtras: { received: 0, written: 0, unchanged: 0, stale: [] },
   notes: { received: 0, written: 0, unchanged: 0, stale: [] },
+  customWords: { received: 0, written: 0, unchanged: 0, stale: [] },
   ...over,
 })
 
@@ -224,6 +227,7 @@ describe('parsing', () => {
     lessonProgress: { version: 1, lessons: {} },
     newWordExtras: { '2026-09-29': 5 },
     notes: [],
+    customWords: [],
   }
 
   it('reads the server state into the app types, keeping the ids', () => {
@@ -355,6 +359,7 @@ describe('notes: the lock rule', () => {
       lessonProgress: { version: 1, lessons: {} },
       newWordExtras: {},
       notes: [serverNote('c', noteRec('Server c', t1), feedback)],
+      customWords: [],
     }
     expect(parseState('state', raw).notes[0].feedback).toEqual(feedback)
     // The offline copy is the state as JSON; it must parse back the same.
@@ -369,5 +374,115 @@ describe('notes: the lock rule', () => {
     const after = applySent(server(), { notes: [{ id: 'x', ...noteRec('x', t1) }] }, acceptedLocally(t1))
     expect(after.notes.map((n) => n.text)).toEqual(['x'])
     expect(after.serverTime).toBe(t1)
+  })
+})
+
+// ---------- custom words (Hayk's own words) ----------
+
+const uid = (n: number) => `u-00000000-0000-4000-8000-${String(n).padStart(12, '0')}`
+const wordRec = (de: string, updatedAt: string, over: Partial<CustomWordRecord> = {}): CustomWordRecord => ({
+  de,
+  en: 'traffic jam',
+  createdAt: '2026-09-29T09:00:00.000Z',
+  updatedAt,
+  ...over,
+})
+const okCheck = { at: '2026-09-29T12:00:00.000Z', ok: true }
+const fixCheck = { at: '2026-09-29T12:00:00.000Z', ok: false, note: 'Nouns take der/die/das.', fixed: { de: 'der Stau' } }
+
+describe('custom words in the outbox', () => {
+  it('batches custom words within the API limit and removes exactly what was sent', () => {
+    const customWords = Object.fromEntries(Array.from({ length: 25 }, (_, i) => [uid(i), wordRec(`Wort ${i}`, '2026-09-29T09:00:00.000Z')]))
+    const o: Outbox = { ...emptyOutbox(), customWords }
+    expect(outboxSize(o)).toBe(25)
+    const b = nextBatch(o)!
+    expect(b.customWords).toHaveLength(SYNC_LIMITS.customWords)
+    expect(b.customWords![0]).toEqual({ id: uid(0), ...customWords[uid(0)] })
+    const changed = { ...o, customWords: { ...o.customWords, [uid(1)]: wordRec('Changed while syncing', '2026-09-29T09:05:00.000Z') } }
+    const left = removeSent(changed, b)
+    expect(Object.keys(left.customWords)).toEqual([uid(1), ...[20, 21, 22, 23, 24].map(uid)])
+  })
+
+  it('reads an outbox saved before custom words existed as one without them, and refuses a bad one loudly', () => {
+    const { customWords: _w, ...old } = emptyOutbox()
+    expect(parseOutbox('outbox', old).customWords).toEqual({})
+    expect(() => parseOutbox('outbox', { ...emptyOutbox(), customWords: { [uid(1)]: wordRec('  ', '2026-09-29T09:00:00.000Z') } })).toThrow(
+      /outbox: customWords\.u-.*\.de/,
+    )
+    // Claude's check is never part of an upload.
+    expect(() => parseOutbox('outbox', { ...emptyOutbox(), customWords: { [uid(1)]: { ...wordRec('Stau', '2026-09-29T09:00:00.000Z'), check: okCheck } } })).toThrow(
+      /check/,
+    )
+  })
+})
+
+describe('custom words: merge and Claude\'s check', () => {
+  const t1 = '2026-09-29T10:00:00.000Z'
+  const t2 = '2026-09-29T11:00:00.000Z'
+  const serverWord = (n: number, rec: CustomWordRecord, check?: CustomWord['check']): CustomWord => ({ id: uid(n), ...rec, ...(check ? { check } : {}) })
+
+  it('shows the later version; an edit clears the check, a delete keeps it, and deleted words are hidden', () => {
+    const s = server({
+      customWords: [
+        serverWord(1, wordRec('Stau', t1), fixCheck),
+        serverWord(2, wordRec('Server newer', t2)),
+        serverWord(3, wordRec('Termin', t1), okCheck),
+        serverWord(4, wordRec('Weg', t1), okCheck),
+      ],
+    })
+    const o: Outbox = {
+      ...emptyOutbox(),
+      customWords: {
+        [uid(1)]: wordRec('der Stau', t2),
+        [uid(2)]: wordRec('Local older', t1),
+        [uid(3)]: wordRec('Termin', t2, { deletedAt: t2 }),
+        [uid(4)]: wordRec('Weg', t2),
+      },
+    }
+    const v = buildView(s, o, '2026-09-29')
+    expect(v.customWords.map((w) => [w.id, w.de, w.check ?? null, w.pending])).toEqual([
+      // Edited: the check no longer matches, so it is gone and Claude looks again.
+      [uid(1), 'der Stau', null, true],
+      // The server's newer version wins.
+      [uid(2), 'Server newer', null, true],
+      // uid(3) is deleted. uid(4) was saved again unchanged (a later time only): the check stays.
+      [uid(4), 'Weg', okCheck, true],
+    ])
+  })
+
+  it('applies a sync reply: what was sent, the server\'s newer versions (stale), and keeps a check the upload did not touch', () => {
+    const s = server({ customWords: [serverWord(1, wordRec('Stau', t1), okCheck)] })
+    const newer = serverWord(2, wordRec('Server version', t2), fixCheck)
+    const after = applySent(
+      s,
+      { customWords: [{ id: uid(1), ...wordRec('Stau', t2, { deletedAt: t2 }) }, { id: uid(2), ...wordRec('Mine', t1) }, { id: uid(3), ...wordRec('Neu', t1) }] },
+      reply({ customWords: { received: 3, written: 2, unchanged: 0, stale: [newer] } }),
+    )
+    expect(after.customWords).toEqual([
+      { id: uid(1), ...wordRec('Stau', t2, { deletedAt: t2 }), check: okCheck },
+      newer,
+      { id: uid(3), ...wordRec('Neu', t1) },
+    ])
+  })
+
+  it('reads custom words and their checks from the server state, and refuses a bad check loudly', () => {
+    const raw = { ...server(), customWords: [serverWord(1, wordRec('Stau', t1), fixCheck)] }
+    expect(parseState('state', JSON.parse(JSON.stringify(raw))).customWords[0].check).toEqual(fixCheck)
+    const bad = { ...raw, customWords: [serverWord(1, wordRec('Stau', t1), { at: t1, ok: false })] }
+    expect(() => parseState('state', bad)).toThrow(/customWords\.0\.check\.fixed/)
+    const okWithFix = { ...raw, customWords: [serverWord(1, wordRec('Stau', t1), { at: t1, ok: true, fixed: { de: 'der Stau' } })] }
+    expect(() => parseState('state', okWithFix)).toThrow(/a check that is ok has no corrections/)
+    const badId = { ...raw, customWords: [{ ...serverWord(1, wordRec('Stau', t1)), id: 'stau' }] }
+    expect(() => parseState('state', badId)).toThrow(/customWords\.0\.id/)
+  })
+
+  it('does not count custom words against today\'s new-word limit', () => {
+    const s = server({
+      reviewEvents: [
+        { ...entry(), id: 'e1' },
+        { ...entry({ wordId: uid(1), de: 'der Stau' }), id: 'e2' },
+      ],
+    })
+    expect(buildView(s, emptyOutbox(), '2026-09-29').reviewState.newToday).toEqual({ date: '2026-09-29', count: 1 })
   })
 })

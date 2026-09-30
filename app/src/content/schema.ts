@@ -216,11 +216,44 @@ export const LessonBlock = z.discriminatedUnion(
   { error: () => `"type" must be one of: ${BLOCK_TYPES.join(', ')}` },
 )
 
+/** A theme lesson is built from a song, a video, an article, or just a topic (content/themes/). */
+export const THEME_KINDS = ['song', 'video', 'article', 'topic'] as const
+/** Theme lesson ids start with this; course lesson ids never do. */
+export const THEME_ID_PREFIX = 't-'
+
+export const Theme = z
+  .strictObject({
+    kind: z.enum(THEME_KINDS),
+    /** The song, video or article title, or the topic. */
+    title: Text,
+    /** Artist, channel or author. */
+    by: Text.optional(),
+    year: z.number().int().min(1000).max(2100).optional(),
+    /** Where to listen, watch or read. */
+    url: z.url().optional(),
+    /** "standard German", "Bavarian", "youth slang", ... */
+    variety: Text.optional(),
+  })
+  .superRefine((t, ctx) => {
+    if (t.url !== undefined && !t.url.startsWith('https://')) ctx.addIssue({ code: 'custom', path: ['url'], message: 'must start with https://' })
+    if (t.kind === 'topic') {
+      if (t.url !== undefined) ctx.addIssue({ code: 'custom', path: ['url'], message: 'a topic has no url (it has no source)' })
+      if (t.by !== undefined) ctx.addIssue({ code: 'custom', path: ['by'], message: 'a topic has no "by" (it has no source)' })
+    }
+  })
+
+/**
+ * A course lesson (content/lessons/) has `unit` and `order` and no `theme`; a theme lesson
+ * (content/themes/) has `theme`, no `unit`/`order`, and an id starting with "t-". Exactly one of the two.
+ */
 export const Lesson = z.strictObject({
   id: Slug,
-  unit: Unit,
-  /** Position within the unit: 1, 2, 3... */
-  order: z.number().int().positive(),
+  /** Course lessons only. */
+  unit: Unit.optional(),
+  /** Course lessons only: position within the unit, 1, 2, 3... */
+  order: z.number().int().positive().optional(),
+  /** Theme lessons only. */
+  theme: Theme.optional(),
   level: Level,
   title: Text,
   summary: Text,
@@ -233,6 +266,17 @@ export const Lesson = z.strictObject({
   tests: z.array(Slug).optional(),
   sections: z.array(LessonBlock).min(1),
 }).superRefine((l, ctx) => {
+  if (l.theme !== undefined) {
+    for (const key of ['unit', 'order'] as const) {
+      if (l[key] !== undefined) ctx.addIssue({ code: 'custom', path: [key], message: `a theme lesson has "theme" and no ${key} (a course lesson has unit and order and no theme)` })
+    }
+    if (!l.id.startsWith(THEME_ID_PREFIX)) ctx.addIssue({ code: 'custom', path: ['id'], message: `a theme lesson's id starts with "${THEME_ID_PREFIX}"` })
+  } else {
+    for (const key of ['unit', 'order'] as const) {
+      if (l[key] === undefined) ctx.addIssue({ code: 'custom', path: [key], message: `required for a course lesson (a theme lesson has "theme" instead of unit and order)` })
+    }
+    if (l.id.startsWith(THEME_ID_PREFIX)) ctx.addIssue({ code: 'custom', path: ['id'], message: `"${THEME_ID_PREFIX}" is for theme lesson ids; a course lesson id does not start with it` })
+  }
   const seen = new Map<string, number>()
   l.sections.forEach((b, i) => {
     if (b.id === undefined) return
@@ -329,6 +373,61 @@ export const NoteFeedback = z.strictObject({
   edits: z.array(NoteEdit).min(1).optional(),
   at: IsoDateTime,
 })
+
+// ---------- Custom words (Hayk's own words, added in the app, checked by Claude; stored in Neon) ----------
+
+/** Ids are "u-" + crypto.randomUUID(), so they never clash with content word ids. */
+export const CUSTOM_WORD_PREFIX = 'u-'
+export const CustomWordId = z
+  .string()
+  .regex(/^u-[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/, { message: 'must be "u-" followed by a lowercase UUID' })
+
+/** Most characters per field (the API and the table use the same limits). */
+export const CUSTOM_WORD_MAX = { de: 100, en: 200, plural: 100, example: 300, note: 500 } as const
+
+const upTo = (max: number) => Text.max(max, { message: `must be at most ${max} characters` })
+
+/** Claude's check of a custom word (written only with backend/scripts/progress.py check-word, which mirrors these rules). */
+export const WordCheck = z
+  .strictObject({
+    at: IsoDateTime,
+    /** true: fine as it is. false: corrected, see `fixed`. */
+    ok: z.boolean(),
+    note: upTo(CUSTOM_WORD_MAX.note).optional(),
+    /** The corrected fields; the app shows them instead of Hayk's. */
+    fixed: z
+      .strictObject({ de: upTo(CUSTOM_WORD_MAX.de).optional(), en: upTo(CUSTOM_WORD_MAX.en).optional(), plural: upTo(CUSTOM_WORD_MAX.plural).optional() })
+      .optional(),
+  })
+  .superRefine((c, ctx) => {
+    if (c.ok && c.fixed !== undefined) ctx.addIssue({ code: 'custom', path: ['fixed'], message: 'a check that is ok has no corrections' })
+    if (!c.ok && (c.fixed === undefined || Object.keys(c.fixed).length === 0)) {
+      ctx.addIssue({ code: 'custom', path: ['fixed'], message: 'a correction (ok: false) names at least one fixed field' })
+    }
+  })
+
+/** What Hayk writes: the fields of the form. Optional fields are left out, never empty. */
+export const CustomWordFields = {
+  de: upTo(CUSTOM_WORD_MAX.de),
+  en: upTo(CUSTOM_WORD_MAX.en),
+  plural: upTo(CUSTOM_WORD_MAX.plural).optional(),
+  example: z.strictObject({ de: upTo(CUSTOM_WORD_MAX.example), en: upTo(CUSTOM_WORD_MAX.example).optional() }).optional(),
+  note: upTo(CUSTOM_WORD_MAX.note).optional(),
+}
+
+/** A custom word as the server has it (GET /v1/state, stale in a sync reply). deletedAt is a soft delete. */
+export const CustomWord = z
+  .strictObject({
+    id: CustomWordId,
+    ...CustomWordFields,
+    createdAt: IsoDateTime,
+    updatedAt: IsoDateTime,
+    deletedAt: IsoDateTime.optional(),
+    check: WordCheck.optional(),
+  })
+  .superRefine((w, ctx) => {
+    if (Date.parse(w.updatedAt) < Date.parse(w.createdAt)) ctx.addIssue({ code: 'custom', path: ['updatedAt'], message: 'is before createdAt' })
+  })
 
 const ARTICLE = /^(der|die|das) /
 
@@ -589,7 +688,14 @@ export type Review = z.infer<typeof Review>
 export type Result = z.infer<typeof Result>
 export type StoredCard = z.infer<typeof StoredCard>
 export type ReviewState = z.infer<typeof ReviewState>
+/** Any lesson: a course lesson or a theme lesson. */
 export type Lesson = z.infer<typeof Lesson>
+export type Theme = z.infer<typeof Theme>
+export type ThemeKind = Theme['kind']
+/** A lesson in the course (content/lessons/): it has a unit and an order. */
+export type CourseLesson = Lesson & { unit: number; order: number; theme?: undefined }
+/** A theme lesson (content/themes/): it has a theme and no place in the course. */
+export type ThemeLesson = Lesson & { theme: Theme; unit?: undefined; order?: undefined }
 export type LessonBlock = z.infer<typeof LessonBlock>
 export type Topics = z.infer<typeof Topics>
 export type TopicItem = z.infer<typeof TopicItem>
@@ -598,6 +704,8 @@ export type ExtraType = ExtraItem['type']
 export type Extras = z.infer<typeof Extras>
 export type NoteEdit = z.infer<typeof NoteEdit>
 export type NoteFeedback = z.infer<typeof NoteFeedback>
+export type WordCheck = z.infer<typeof WordCheck>
+export type CustomWord = z.infer<typeof CustomWord>
 export type TableColumn = z.infer<typeof TableColumn>
 export type LessonProgress = z.infer<typeof LessonProgress>
 export type ReviewMode = z.infer<typeof ReviewMode>

@@ -1,7 +1,7 @@
 // nemeceren progress API: a Hono app deployed as the Neon Function "api" (see ../neon.ts).
 //   GET  /v1/health  no auth, no database (safe to call; does not wake the compute)
 //   GET  /v1/state   auth: everything the app needs on start (?days=35 window for raw reviews)
-//   POST /v1/sync    auth: one batched, idempotent upload of reviews, cards, test attempts, lessons, extras and notes
+//   POST /v1/sync    auth: one batched, idempotent upload of reviews, cards, test attempts, lessons, extras, notes and custom words
 // Every other path is a 404. Contract and examples: ../README.md.
 import { Hono } from 'hono'
 import { bodyLimit } from 'hono/body-limit'

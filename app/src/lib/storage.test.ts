@@ -38,6 +38,7 @@ const emptyStateReply = (over: Record<string, unknown> = {}) => ({
   lessonProgress: { version: 1, lessons: {} },
   newWordExtras: {},
   notes: [],
+  customWords: [],
   ...over,
 })
 
@@ -53,6 +54,7 @@ function okSync(body: Record<string, unknown>, over: Record<string, unknown> = {
     lessons: { received: n('lessons'), written: n('lessons'), unchanged: 0, stale: [] },
     newWordExtras: { received: n('newWordExtras'), written: n('newWordExtras'), unchanged: 0, stale: [] },
     notes: { received: n('notes'), written: n('notes'), unchanged: 0, stale: [] },
+    customWords: { received: n('customWords'), written: n('customWords'), unchanged: 0, stale: [] },
     ...over,
   })
 }
@@ -504,5 +506,80 @@ describe('guest mode', () => {
     store.stop()
     expect(store.isGuest()).toBe(false)
     expect(store.hasView()).toBe(false)
+  })
+})
+
+// ---------- custom words ----------
+
+describe('custom words', () => {
+  const draft = (de: string, over: Record<string, string> = {}) => ({ de, en: 'traffic jam', plural: '', exampleDe: '', exampleEn: '', note: '', ...over })
+
+  it('adds a word (trimmed, "u-" id) to the outbox without an immediate request, and sends it with the next sync', async () => {
+    const env = await started([(c) => okSync(c.body!)])
+    const id = env.store.saveCustomWord(draft('  der   Stau ', { exampleDe: 'Ich stehe im Stau.' }))
+    expect(id).toBe('u-00000000-0000-4000-8000-000000000001')
+    expect(env.store.getView().customWords).toMatchObject([{ id, de: 'der Stau', en: 'traffic jam', example: { de: 'Ich stehe im Stau.' }, pending: true }])
+    expect(env.calls).toHaveLength(1)
+    await env.store.flush()
+    expect(env.calls[1].body!.customWords).toEqual([
+      { id, de: 'der Stau', en: 'traffic jam', example: { de: 'Ich stehe im Stau.' }, createdAt: '2026-09-29T10:00:00.000Z', updatedAt: '2026-09-29T10:00:00.000Z' },
+    ])
+    expect(env.store.getView().customWords).toMatchObject([{ id, pending: false }])
+  })
+
+  it('refuses a word without German or English, or one that is too long, without a request', async () => {
+    const env = await started()
+    expect(() => env.store.saveCustomWord(draft('   '))).toThrow(/German word/)
+    expect(() => env.store.saveCustomWord(draft('Stau', { en: '' }))).toThrow(/English/)
+    expect(() => env.store.saveCustomWord(draft('x'.repeat(101)))).toThrow(/at most 100/)
+    expect(() => env.store.saveCustomWord(draft('Stau', { exampleEn: 'only English' }))).toThrow(/German example/)
+    expect(env.store.getStatus().pending).toBe(0)
+  })
+
+  it('edits (later updatedAt, unchanged saves nothing) and soft-deletes a word', async () => {
+    const env = await started()
+    const id = env.store.saveCustomWord(draft('Stau'))
+    expect(env.store.saveCustomWord(draft('Stau'), id)).toBe(id)
+    env.store.saveCustomWord(draft('der Stau', { plural: 'die Staus' }), id)
+    const edited = env.store.getView().customWords[0]
+    expect(edited).toMatchObject({ de: 'der Stau', plural: 'die Staus', createdAt: '2026-09-29T10:00:00.000Z', updatedAt: '2026-09-29T10:00:00.001Z' })
+    env.store.deleteCustomWord(id)
+    expect(env.store.getView().customWords).toEqual([])
+    expect(() => env.store.deleteCustomWord(id)).toThrow(/no word/)
+  })
+
+  it('adds a content card that was never reviewed (due now), once', async () => {
+    const env = await started()
+    env.store.addContentCard('termin')
+    const c = env.store.getView().reviewState.cards.termin
+    expect(c).toMatchObject({ reps: 0, state: 0, last_review: null, due: '2026-09-29T10:00:00.000Z' })
+    expect(() => env.store.addContentCard('termin')).toThrow(/already in your practice/)
+  })
+
+  it('keeps custom words in the offline copy, and reads a copy saved before they existed', async () => {
+    const storage = new Map<string, string>()
+    const first = await started([(c) => okSync(c.body!)], { storage })
+    const id = first.store.saveCustomWord(draft('Stau'))
+    await first.store.flush()
+    const env = setup([() => 'network-error'], { storage })
+    await env.store.start({ id: 'u1' })
+    expect(env.store.getView().customWords.map((w) => w.id)).toEqual([id])
+
+    const { customWords: _w, notes: _n, ...old } = emptyStateReply()
+    const env2 = setup([() => 'network-error'], { storage: new Map([['nemeceren.state.u1', JSON.stringify(old)]]) })
+    await env2.store.start({ id: 'u1' })
+    expect(env2.store.getView().customWords).toEqual([])
+  })
+
+  it('works for a guest, in memory only', () => {
+    const env = setup([])
+    env.store.startGuest()
+    const id = env.store.saveCustomWord(draft('Stau'))
+    env.store.addContentCard('termin')
+    expect(env.store.getView().customWords.map((w) => [w.id, w.pending])).toEqual([[id, false]])
+    expect(env.store.getView().reviewState.cards.termin).toBeDefined()
+    expect(env.store.getStatus().pending).toBe(0)
+    expect(env.storage.size).toBe(0)
+    expect(env.calls).toEqual([])
   })
 })

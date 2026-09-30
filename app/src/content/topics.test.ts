@@ -77,6 +77,7 @@ describe('topics validation', () => {
       tests: [],
       words,
       lessons: [lessonFile],
+      themes: [],
       extras,
       topics: topicsFile({
         groups: [
@@ -90,13 +91,13 @@ describe('topics validation', () => {
       }),
     })
     expect(out.problems).toEqual([
-      'content/topics.json: groups[0].items[1].lesson: no lesson with id "u9-01-x" in content/lessons/',
+      'content/topics.json: groups[0].items[1].lesson: no lesson with id "u9-01-x" in content/lessons/ or content/themes/',
       'content/topics.json: groups[0].items[2].section: lesson "u1-01-x" has no section with id "nouns"',
     ])
   })
 
   it('reports a missing or broken topics file like any other file', () => {
-    const out = checkAllContent({ tests: [], words, lessons: [lessonFile], topics: { file: 'content/topics.json', text: '' }, extras })
+    const out = checkAllContent({ tests: [], words, lessons: [lessonFile], themes: [], topics: { file: 'content/topics.json', text: '' }, extras })
     expect(out.problems).toHaveLength(1)
     expect(out.problems[0]).toMatch(/^content\/topics\.json: not valid JSON:/)
   })

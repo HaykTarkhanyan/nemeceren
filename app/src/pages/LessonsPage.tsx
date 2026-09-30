@@ -1,13 +1,16 @@
-// Lessons grouped by syllabus unit, and the view of one lesson.
+// The Lessons page with two tabs: Course (lessons grouped by syllabus unit) and Themes (theme
+// lessons from songs, videos, articles and topics, DECISIONS.md #61), and the view of one lesson.
+// A theme lesson opens like a course lesson; it is just not part of the course.
 import { useEffect, useRef, useState } from 'react'
 import { content } from '../content/load.ts'
-import { byCourseOrder, exerciseSections, openAt, sectionIndex } from '../content/lessons.ts'
-import type { Lesson } from '../content/schema.ts'
+import { byCourseOrder, exerciseSections, isThemeLesson, openAt, sectionIndex, THEME_KIND_LABEL, THEME_LINK_LABEL } from '../content/lessons.ts'
+import type { Lesson, Theme, ThemeLesson } from '../content/schema.ts'
 import { BlockView } from '../components/LessonBlocks.tsx'
+import { Tabs } from '../components/Tabs.tsx'
 import { messageOf, reportError } from '../lib/errors.ts'
 import { lessonStatus, markLessonDone, setLastSection, startLesson } from '../lib/plan.ts'
 import type { LessonStatus } from '../lib/plan.ts'
-import { link } from '../lib/router.ts'
+import { link, tabLink, tabOf } from '../lib/router.ts'
 import { KNOWN_DAYS } from '../lib/stats.ts'
 import { progressStore, saveLessonProgress, useProgress } from '../lib/storage.ts'
 
@@ -18,20 +21,34 @@ export function StatusBadge({ status }: { status: LessonStatus }) {
   return <span className={`badge ${STATUS_CLASS[status]}`}>{STATUS_LABEL[status]}</span>
 }
 
-export function LessonsPage() {
-  const progress = useProgress().lessonProgress
-  if (content.lessons.length === 0) {
+export const LESSON_TABS = ['course', 'themes'] as const
+const TAB_LABEL = { course: 'Course', themes: 'Themes' } as const
+
+/** `tab` is the part after "#/lessons/": none for Course, "themes" for Themes. */
+export function LessonsPage({ tab }: { tab?: string }) {
+  const current = tabOf(tab, LESSON_TABS)
+  if (current === null) {
     return (
-      <div className="stack">
-        <h1>Lessons</h1>
-        <p className="muted">No lessons prepared yet. Ask Claude to write the next one.</p>
+      <div className="alert error">
+        The Lessons page has no tab "{tab}". <a href={link('lessons')}>Lessons</a>
       </div>
     )
   }
-  const units = [...new Set(content.lessons.map((l) => l.unit))].sort((a, b) => a - b)
   return (
     <div className="stack">
       <h1>Lessons</h1>
+      <Tabs page="lessons" tabs={LESSON_TABS} labels={TAB_LABEL} current={current} />
+      {current === 'course' ? <CourseList /> : <ThemeList />}
+    </div>
+  )
+}
+
+function CourseList() {
+  const progress = useProgress().lessonProgress
+  if (content.lessons.length === 0) return <p className="muted">No lessons prepared yet. Ask Claude to write the next one.</p>
+  const units = [...new Set(content.lessons.map((l) => l.unit))].sort((a, b) => a - b)
+  return (
+    <>
       {units.map((unit) => (
         <section key={unit} className="stack">
           <h2>Unit {unit}</h2>
@@ -54,13 +71,70 @@ export function LessonsPage() {
             ))}
         </section>
       ))}
-    </div>
+    </>
+  )
+}
+
+/** "by Cro, 2019", "2019", or "" when the theme has neither. */
+export function themeByline(t: Theme): string {
+  return [t.by !== undefined ? `by ${t.by}` : null, t.year !== undefined ? String(t.year) : null].filter((x) => x !== null).join(', ')
+}
+
+/** The external "Listen" / "Watch" / "Read" link; a topic has no source. */
+function SourceLink({ theme, className }: { theme: Theme; className?: string }) {
+  if (theme.kind === 'topic' || theme.url === undefined) return null
+  return (
+    <a className={className} href={theme.url} target="_blank" rel="noopener noreferrer" title="Opens in a new tab">
+      {THEME_LINK_LABEL[theme.kind]} ↗
+    </a>
+  )
+}
+
+function ThemeList() {
+  const progress = useProgress().lessonProgress
+  if (content.themes.length === 0) return <p className="muted">No theme lessons yet. Send Claude a song or video link.</p>
+  return (
+    <>
+      <p className="muted small">Lessons built from songs, videos, articles and topics you bring. They are not part of the course, so take them in any order.</p>
+      {content.themes.map((l) => (
+        <ThemeCard key={l.id} lesson={l} status={lessonStatus(progress, l.id)} />
+      ))}
+    </>
+  )
+}
+
+function ThemeCard({ lesson, status }: { lesson: ThemeLesson; status: LessonStatus }) {
+  const t = lesson.theme
+  const byline = themeByline(t)
+  return (
+    <article className="card stack theme-card">
+      <div className="row between">
+        <span className="row">
+          <span className="badge">{THEME_KIND_LABEL[t.kind]}</span>
+          <span className="badge">{lesson.level}</span>
+        </span>
+        <StatusBadge status={status} />
+      </div>
+      <div>
+        <a className="theme-title" href={link('lesson', lesson.id)}>
+          {t.title}
+        </a>
+        {byline && <p className="muted small">{byline}</p>}
+      </div>
+      <p className="muted">{lesson.summary}</p>
+      <div className="row">
+        <a className="btn small primary" href={link('lesson', lesson.id)}>
+          Open lesson
+        </a>
+        <SourceLink theme={t} className="btn small" />
+      </div>
+    </article>
   )
 }
 
 /** `sectionId` (from "#/lesson/<id>/<section id>", e.g. a Topics link) opens the lesson at that section. */
 export function LessonPage({ id, sectionId }: { id: string; sectionId?: string }) {
-  const lesson = content.lessons.find((l) => l.id === id)
+  const lesson = content.allLessons.find((l) => l.id === id)
   if (!lesson) {
     return (
       <div className="alert error">
@@ -160,8 +234,9 @@ function LessonView({ lesson, linked }: { lesson: Lesson; linked: number | null 
   const exercises = exerciseSections(lesson)
   const words = (lesson.words ?? []).map((wid) => content.words.find((w) => w.id === wid)).filter((w) => w !== undefined)
   const tests = content.tests.filter((t) => lesson.tests?.includes(t.id) || t.lesson === lesson.id)
+  // The course's next lesson; a theme lesson is not part of the course, so it has none.
   const ordered = [...content.lessons].sort(byCourseOrder)
-  const following = ordered[ordered.findIndex((l) => l.id === lesson.id) + 1]
+  const following = isThemeLesson(lesson) ? undefined : ordered[ordered.findIndex((l) => l.id === lesson.id) + 1]
   const wordStatus = (wid: string) => {
     const card = state.cards[wid]
     if (!card) return 'new'
@@ -176,15 +251,30 @@ function LessonView({ lesson, linked }: { lesson: Lesson; linked: number | null 
 
   return (
     <div className="stack lesson">
-      <a href={link('lessons')} className="small">
-        All lessons
-      </a>
+      {isThemeLesson(lesson) ? (
+        <a href={tabLink('lessons', LESSON_TABS, 'themes')} className="small">
+          All theme lessons
+        </a>
+      ) : (
+        <a href={link('lessons')} className="small">
+          All lessons
+        </a>
+      )}
       <div>
-        <p className="muted small">
-          Unit {lesson.unit}, lesson {lesson.order} <StatusBadge status={status} />
-        </p>
+        {isThemeLesson(lesson) ? (
+          <p className="muted small">
+            {THEME_KIND_LABEL[lesson.theme.kind]}: {lesson.theme.title}
+            {themeByline(lesson.theme) ? ` (${themeByline(lesson.theme)})` : ''}
+            {lesson.theme.variety ? `, ${lesson.theme.variety}` : ''} <StatusBadge status={status} />
+          </p>
+        ) : (
+          <p className="muted small">
+            Unit {lesson.unit}, lesson {lesson.order} <StatusBadge status={status} />
+          </p>
+        )}
         <h1>{lesson.title}</h1>
         <p>{lesson.summary}</p>
+        {isThemeLesson(lesson) && <SourceLink theme={lesson.theme} className="small" />}
       </div>
 
       <section className="card stack">

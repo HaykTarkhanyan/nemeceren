@@ -32,7 +32,7 @@ function Page({ route }: { route: string[] }) {
     case 'test':
       return <TestPage id={arg ?? ''} />
     case 'lessons':
-      return <LessonsPage />
+      return <LessonsPage tab={arg} />
     case 'lesson':
       return <LessonPage id={arg ?? ''} sectionId={sub} />
     case 'topics':
@@ -44,7 +44,7 @@ function Page({ route }: { route: string[] }) {
     case 'listen':
       return <ListenPage />
     case 'words':
-      return <WordsPage />
+      return <WordsPage tab={arg} />
     case 'results':
       return arg ? <ResultDetailPage id={arg} /> : <ResultsPage />
     case 'stats':

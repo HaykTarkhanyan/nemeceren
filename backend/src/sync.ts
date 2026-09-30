@@ -8,14 +8,26 @@
 //   newWordExtras            upsert per local day; the larger value wins (it only grows in a day)
 //   notes                    upsert per note; the record with the later updatedAt wins, except that
 //                            a note with Claude's feedback is locked and never changed or deleted
-// For the last four, whatever the server already had in a newer version comes back as "stale",
+//   customWords              upsert per word; the record with the later updatedAt wins; a change of
+//                            its fields clears Claude's check (a delete alone keeps it)
+// For the last five, whatever the server already had in a newer version comes back as "stale",
 // so a device that was offline can adopt it. A locked note comes back as stale whenever the
 // upload differs from it, with its feedback. Each table takes the whole list as one JSON
 // parameter (jsonb_to_recordset): one query per table per batch.
 import type { PoolClient } from 'pg'
 import { withTransaction } from './db.ts'
 import { HttpError } from './errors.ts'
-import type { AttemptUpload, CardUpload, LessonUpload, NewWordExtraUpload, NoteUpload, ReviewEventUpload, StoredCard, SyncBody } from './schema.ts'
+import type {
+  AttemptUpload,
+  CardUpload,
+  CustomWordUpload,
+  LessonUpload,
+  NewWordExtraUpload,
+  NoteUpload,
+  ReviewEventUpload,
+  StoredCard,
+  SyncBody,
+} from './schema.ts'
 
 interface LessonRecord {
   startedAt: string
@@ -44,7 +56,14 @@ export interface SyncResult {
   lessons: { received: number; written: number; unchanged: number; stale: { lessonId: string; progress: LessonRecord }[] }
   newWordExtras: { received: number; written: number; unchanged: number; stale: { localDay: string; extra: number }[] }
   notes: { received: number; written: number; unchanged: number; stale: NoteRecord[] }
+  customWords: { received: number; written: number; unchanged: number; stale: CustomWordRecord[] }
 }
+
+/**
+ * A custom word as the server has it (also the shape of GET /v1/state customWords): the app's
+ * CustomWord. Optional keys are left out when empty; check is Claude's (WordCheck), when there is one.
+ */
+export type CustomWordRecord = Record<string, unknown> & { id: string; updatedAt: string }
 
 /** timestamptz as the app writes it (Date.prototype.toISOString): 2026-09-29T10:00:00.000Z */
 const iso = (col: string) => `to_char(${col} AT TIME ZONE 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS.MS"Z"')`
@@ -193,6 +212,43 @@ SELECT
            AND (n.text, n.local_day, n.created_at, n.updated_at, n.deleted_at)
                IS DISTINCT FROM (i.text, i.local_day, i.created_at, i.updated_at, i.deleted_at))) AS stale`
 
+/** One custom word as JSON in the app's field names, empty keys left out; the same shape as GET /v1/state customWords. */
+export const CUSTOM_WORD_JSON = (w: string) => `jsonb_strip_nulls(jsonb_build_object(
+  'id', ${w}.id, 'de', ${w}.de, 'en', ${w}.en, 'plural', ${w}.plural, 'example', ${w}.example, 'note', ${w}.note,
+  'createdAt', ${iso(`${w}.created_at`)}, 'updatedAt', ${iso(`${w}.updated_at`)},
+  'deletedAt', CASE WHEN ${w}.deleted_at IS NULL THEN NULL ELSE ${iso(`${w}.deleted_at`)} END,
+  'check', ${w}.claude_check))`
+
+// The later updated_at wins. A newer version whose fields differ from the stored ones clears
+// Claude's check (he checked the old text); the same fields with a later time (a delete) keep it.
+const UPSERT_CUSTOM_WORDS = `
+WITH input AS (
+  SELECT * FROM jsonb_to_recordset($2::jsonb) AS x(
+    id text, de text, en text, plural text, example jsonb, note text,
+    created_at timestamptz, updated_at timestamptz, deleted_at timestamptz)
+),
+up AS (
+  INSERT INTO custom_words AS cw (user_id, id, de, en, plural, example, note, created_at, updated_at, deleted_at)
+  SELECT $1, id, de, en, plural, example, note, created_at, updated_at, deleted_at FROM input
+  ON CONFLICT (user_id, id) DO UPDATE
+    SET de = excluded.de, en = excluded.en, plural = excluded.plural, example = excluded.example, note = excluded.note,
+        created_at = excluded.created_at, updated_at = excluded.updated_at, deleted_at = excluded.deleted_at,
+        claude_check = CASE WHEN (cw.de, cw.en, cw.plural, cw.example, cw.note)
+                                 IS DISTINCT FROM (excluded.de, excluded.en, excluded.plural, excluded.example, excluded.note)
+                            THEN NULL ELSE cw.claude_check END,
+        checked_at = CASE WHEN (cw.de, cw.en, cw.plural, cw.example, cw.note)
+                               IS DISTINCT FROM (excluded.de, excluded.en, excluded.plural, excluded.example, excluded.note)
+                          THEN NULL ELSE cw.checked_at END,
+        received_at = now()
+    WHERE excluded.updated_at > cw.updated_at
+  RETURNING id
+)
+SELECT
+  (SELECT count(*)::int FROM up) AS written,
+  (SELECT coalesce(jsonb_agg(${CUSTOM_WORD_JSON('cw')} ORDER BY cw.id), '[]'::jsonb)
+     FROM input i JOIN custom_words cw ON cw.user_id = $1 AND cw.id = i.id
+    WHERE cw.updated_at > i.updated_at) AS stale`
+
 function conflictError(kind: string, ids: string[]): HttpError {
   return new HttpError(
     409,
@@ -289,9 +345,31 @@ async function upsertNotes(client: PoolClient, userId: string, notes: NoteUpload
   return { received: notes.length, written: r.written, unchanged: notes.length - r.written - r.stale.length, stale: r.stale }
 }
 
+async function upsertCustomWords(client: PoolClient, userId: string, words: CustomWordUpload[]): Promise<SyncResult['customWords']> {
+  const rows = words.map((w) => ({
+    id: w.id,
+    de: w.de,
+    en: w.en,
+    plural: w.plural ?? null,
+    example: w.example ?? null,
+    note: w.note ?? null,
+    created_at: w.createdAt,
+    updated_at: w.updatedAt,
+    deleted_at: w.deletedAt ?? null,
+  }))
+  const { rows: [r] } = await client.query<{ written: number; stale: CustomWordRecord[] }>(UPSERT_CUSTOM_WORDS, [userId, JSON.stringify(rows)])
+  return { received: words.length, written: r.written, unchanged: words.length - r.written - r.stale.length, stale: r.stale }
+}
+
 export async function applySync(userId: string, body: SyncBody): Promise<SyncResult> {
   const total =
-    body.reviewEvents.length + body.cards.length + body.attempts.length + body.lessons.length + body.newWordExtras.length + body.notes.length
+    body.reviewEvents.length +
+    body.cards.length +
+    body.attempts.length +
+    body.lessons.length +
+    body.newWordExtras.length +
+    body.notes.length +
+    body.customWords.length
   if (total === 0) {
     // Enforces the free-plan rule: the app only syncs when its outbox has something in it.
     throw new HttpError(400, 'empty_batch', 'Nothing to sync: send at least one item, and skip the request otherwise.')
@@ -308,6 +386,7 @@ export async function applySync(userId: string, body: SyncBody): Promise<SyncRes
       lessons: body.lessons.length > 0 ? await upsertLessons(client, userId, body.lessons) : upserts,
       newWordExtras: body.newWordExtras.length > 0 ? await upsertNewWordExtras(client, userId, body.newWordExtras) : upserts,
       notes: body.notes.length > 0 ? await upsertNotes(client, userId, body.notes) : upserts,
+      customWords: body.customWords.length > 0 ? await upsertCustomWords(client, userId, body.customWords) : upserts,
     }
   })
 }

@@ -1,0 +1,296 @@
+{
+  "id": "t-sonne",
+  "theme": {
+    "kind": "song",
+    "title": "Sonne",
+    "by": "Rammstein",
+    "year": 2001,
+    "url": "https://www.youtube.com/watch?v=StZcUAPRRac",
+    "variety": "standard German"
+  },
+  "level": "A2",
+  "title": "Here comes the sun (Sonne)",
+  "summary": "Rammstein's boxing-ring song: count from one to ten with the whole world, and learn why the sun is 'she' and yet 'der hellste Stern'.",
+  "goals": [
+    "Count one to ten at full speed, the way the song does",
+    "Understand the chorus: Hier kommt die Sonne",
+    "Hear the boxing match hidden in the lyrics",
+    "See how gender follows the noun: die Sonne, der Stern"
+  ],
+  "words": [
+    "sonne",
+    "licht",
+    "warten",
+    "scheinen",
+    "auge",
+    "welt",
+    "zaehlen",
+    "laut",
+    "stern",
+    "himmel"
+  ],
+  "sections": [
+    {
+      "id": "about",
+      "type": "explanation",
+      "title": "About this song",
+      "text": "**Rammstein** are a metal band from Berlin, famous far beyond Germany. 'Sonne' was the first single from their album **Mutter**, released on 12 February 2001, and it reached number 2 in Germany.\n\nThe song was first written as a ring entrance song for the Ukrainian boxer **Vitali Klitschko**, who never used it. Once you know that, the lyrics are a boxing match: the count, the fists, the fighter going down. In the video the band are the seven dwarfs, mining gold for Snow White.\n\nWhy it's good for you: the chorus is the numbers from Unit 0, shouted one by one, and the other lines are short and clear."
+    },
+    {
+      "id": "count",
+      "type": "examples",
+      "title": "The count",
+      "items": [
+        {
+          "de": "Eins, zwei, drei, vier, fünf, sechs, sieben, acht, neun, aus!",
+          "en": "One, two, three, four, five, six, seven, eight, nine, out!",
+          "note": "In boxing the referee counts to ten; at 'aus' the fighter is out."
+        }
+      ]
+    },
+    {
+      "id": "count-notes",
+      "type": "explanation",
+      "title": "Counting like a referee",
+      "text": "- The song counts where the boxing referee counts: [[aus]] means **out**, as in knocked out. You know [[aus]] as 'from' ([[Ich komme aus Armenien.]]); here it's the other meaning, 'over, finished': [[Das Licht ist aus.]] (The light is off.)\n- In the chorus each line starts with the next number: (Eins) ... (Zwei) ... up to (Acht, neun). Say the numbers along with the song: it's the fastest number drill you'll get.\n- Listen to the R: Till Lindemann rolls it hard and long, like a very strong Russian р or Armenian ռ. That exaggerated roll is his stage style. Textbook German uses a throat r, and many people in Bavaria roll it lightly (Unit 0), so your own r is fine."
+    },
+    {
+      "id": "waiting",
+      "type": "examples",
+      "title": "Everyone is waiting",
+      "items": [
+        {
+          "de": "Alle warten auf das Licht",
+          "en": "Everyone is waiting for the light",
+          "note": "warten auf = to wait for"
+        },
+        {
+          "de": "Fürchtet euch, fürchtet euch nicht",
+          "en": "Be afraid, do not be afraid",
+          "note": "sich fürchten = to be afraid; a command to several people (ihr)"
+        }
+      ]
+    },
+    {
+      "id": "waiting-notes",
+      "type": "explanation",
+      "title": "What's going on",
+      "text": "- [[Alle warten auf das Licht]]: [[warten auf]] is 'wait **for**', with auf, not 'für'. You'll say it at every bus stop: [[Ich warte auf den Bus.]] [[alle]] = everyone (all of them).\n- [[Fürchtet euch nicht]] is a famous phrase: in Luther's German Bible, it's what the angel says in the Christmas story (Lukas 2,10), 'Fear not'. Rammstein play with it: first 'be afraid', then 'don't be afraid'.\n- [[fürchtet euch]] is a command to a group ([[ihr]]), and [[sich fürchten]] (to be afraid) takes a 'self' word: [[ich fürchte mich]], [[ihr fürchtet euch]]. Commands come in Unit 5; for now, notice the pattern."
+    },
+    {
+      "id": "sun-lines",
+      "type": "examples",
+      "title": "The sun shines out of me",
+      "items": [
+        {
+          "de": "Die Sonne scheint mir aus den Augen",
+          "en": "The sun shines out of my eyes",
+          "note": "mir = to me; here it means 'my' eyes"
+        },
+        {
+          "de": "Sie wird heut Nacht nicht untergeh'n",
+          "en": "It won't set tonight",
+          "note": "heut = heute; untergeh'n = untergehen (to set, of the sun)"
+        },
+        {
+          "de": "Und die Welt zählt laut bis zehn",
+          "en": "And the world counts out loud to ten",
+          "note": "bis zehn = up to ten"
+        }
+      ]
+    },
+    {
+      "id": "sun-notes",
+      "type": "explanation",
+      "title": "Grammar in the lines",
+      "text": "- [[scheint mir aus den Augen]]: German often says whose body part it is with [[mir]] (to me), not with 'my': [[Mir tut der Kopf weh.]] (My head hurts: Unit 6.) So 'the sun shines to me out of the eyes' = out of **my** eyes.\n- [[Sie wird ... nicht untergehen]]: [[werden]] + verb at the end = the future ('will'). [[untergehen]] is what the sun does in the evening: [[Die Sonne geht unter.]] (The sun is setting.) It's a separable verb: Unit 3.\n- [[heut]] and [[untergeh'n]]: song German drops letters to fit the rhythm, like [[ich sitz]] in 'Barfuß am Klavier'. Written: [[heute]], [[untergehen]].\n- [[Die Welt zählt laut bis zehn]]: the whole world is the referee counting. [[laut]] = loud, out loud."
+    },
+    {
+      "id": "chorus",
+      "type": "examples",
+      "title": "The chorus",
+      "items": [
+        {
+          "de": "Hier kommt die Sonne",
+          "en": "Here comes the sun",
+          "note": "verb in second place, after hier"
+        },
+        {
+          "de": "Sie ist der hellste Stern von allen",
+          "en": "She is the brightest star of all",
+          "note": "hell = bright; der hellste = the brightest"
+        }
+      ]
+    },
+    {
+      "id": "gender",
+      "type": "comparison",
+      "title": "She, but der Stern",
+      "text": "[[Sie ist der hellste Stern]]: the sun is [[die Sonne]], so it's [[sie]] (she). But [[der Stern]] is masculine, so 'the brightest star' is [[der hellste Stern]]. Each noun keeps its own gender, whatever it describes.\n\nRussian swaps these two: солнце is neuter and луна feminine, while German has **die** Sonne and **der** Mond (the moon). Don't copy the Russian gender here: the sun is a she in German, the moon a he."
+    },
+    {
+      "id": "knockout",
+      "type": "examples",
+      "title": "The knockout",
+      "items": [
+        {
+          "de": "Lässt dich hart zu Boden geh'n",
+          "en": "Sends you hard to the floor",
+          "note": "zu Boden gehen = to go down (in boxing); lassen = to let, to make"
+        }
+      ]
+    },
+    {
+      "id": "words",
+      "type": "table",
+      "title": "Words worth keeping",
+      "columns": [
+        {
+          "header": "German",
+          "de": "words"
+        },
+        {
+          "header": "English"
+        }
+      ],
+      "rows": [
+        [
+          "die Sonne",
+          "sun"
+        ],
+        [
+          "das Licht",
+          "light"
+        ],
+        [
+          "warten (auf)",
+          "to wait (for)"
+        ],
+        [
+          "scheinen",
+          "to shine; to seem"
+        ],
+        [
+          "das Auge",
+          "eye"
+        ],
+        [
+          "die Welt",
+          "world"
+        ],
+        [
+          "zählen",
+          "to count"
+        ],
+        [
+          "laut",
+          "loud, out loud"
+        ],
+        [
+          "der Stern",
+          "star"
+        ],
+        [
+          "der Himmel",
+          "sky; heaven"
+        ]
+      ]
+    },
+    {
+      "type": "tip",
+      "title": "How to use it",
+      "text": "1. Watch the video once with the link above, just for fun.\n2. Play it again and count along with the chorus, out loud: eins, zwei, drei ... Try to keep up.\n3. Shout [[Hier kommt die Sonne]] with the band. Loud is fine, it's Rammstein.\n4. Close the video and count from one to ten as fast as you can, then backwards from zehn."
+    },
+    {
+      "type": "audio",
+      "title": "Say the key lines slowly",
+      "items": [
+        {
+          "de": "Eins, zwei, drei, vier, fünf, sechs, sieben, acht, neun, aus!",
+          "en": "One to nine, out!"
+        },
+        {
+          "de": "Hier kommt die Sonne",
+          "en": "Here comes the sun"
+        },
+        {
+          "de": "Sie ist der hellste Stern von allen",
+          "en": "She is the brightest star of all"
+        },
+        {
+          "de": "Alle warten auf das Licht",
+          "en": "Everyone is waiting for the light"
+        }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: Here comes the sun.",
+          "text": "Hier ___ die Sonne",
+          "answers": [
+            [
+              "kommt"
+            ]
+          ],
+          "explanation": "kommen, er/sie/es kommt. The verb comes second, right after hier."
+        },
+        {
+          "type": "mc",
+          "question": "At the end of the count, 'aus' means out, over. Which sentence uses 'aus' the same way?",
+          "questionLang": "en",
+          "options": [
+            "Das Licht ist aus.",
+            "Ich komme aus Armenien.",
+            "Sie ist aus Berlin."
+          ],
+          "answer": "Das Licht ist aus.",
+          "explanation": "Das Licht ist aus = the light is off (over, out). In the other two, aus means 'from'."
+        },
+        {
+          "type": "mc",
+          "question": "The sun is 'die Sonne'. Which sentence is correct?",
+          "questionLang": "en",
+          "options": [
+            "Sie ist der hellste Stern.",
+            "Sie ist die hellste Stern.",
+            "Sie ist das hellste Stern."
+          ],
+          "answer": "Sie ist der hellste Stern.",
+          "explanation": "der Stern is masculine, so der hellste Stern, even when it describes die Sonne. Each noun keeps its own gender."
+        },
+        {
+          "type": "listen_mc",
+          "audio": "Und die Welt zählt laut bis zehn",
+          "question": "Up to which number does the world count?",
+          "questionLang": "en",
+          "options": [
+            "zehn",
+            "neun",
+            "elf"
+          ],
+          "answer": "zehn",
+          "explanation": "bis zehn = up to ten, the full boxing count."
+        },
+        {
+          "type": "order",
+          "prompt": "Everyone is waiting for the light.",
+          "tiles": [
+            "alle",
+            "warten",
+            "auf",
+            "das",
+            "Licht"
+          ],
+          "answers": [
+            "Alle warten auf das Licht"
+          ],
+          "explanation": "warten auf = wait for. The verb warten is in second place."
+        }
+      ]
+    }
+  ]
+}

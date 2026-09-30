@@ -61,7 +61,7 @@ export function ResultDetailPage({ id }: { id: string }) {
         {new Date(result.submittedAt).toLocaleString()} - attempt {id}
         {pendingAttemptIds.includes(id) ? ' (not synced yet)' : ''}
       </p>
-      <ResultView result={result} items={itemsForResult(result, content.tests, content.lessons)} />
+      <ResultView result={result} items={itemsForResult(result, content.tests, content.allLessons)} />
     </div>
   )
 }

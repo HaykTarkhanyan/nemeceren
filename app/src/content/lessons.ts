@@ -1,5 +1,5 @@
 // Lesson helpers shared by the app, check-content and the tests.
-import type { Item, Lesson, LessonBlock, Result, Test } from './schema.ts'
+import type { CourseLesson, Item, Lesson, LessonBlock, Result, Test, ThemeKind, ThemeLesson } from './schema.ts'
 
 export type ExerciseSection = { section: number; number: number; block: Extract<LessonBlock, { type: 'exercise' }> }
 
@@ -32,8 +32,28 @@ export function openAt(linked: number | null, lastSection: number): number | nul
 }
 
 /** Lessons in course order: unit, then order within the unit. */
-export function byCourseOrder(a: Lesson, b: Lesson): number {
+export function byCourseOrder(a: CourseLesson, b: CourseLesson): number {
   return a.unit - b.unit || a.order - b.order
+}
+
+export function isThemeLesson(l: Lesson): l is ThemeLesson {
+  return l.theme !== undefined
+}
+
+export function isCourseLesson(l: Lesson): l is CourseLesson {
+  return l.theme === undefined && l.unit !== undefined && l.order !== undefined
+}
+
+export const THEME_KIND_LABEL: Record<ThemeKind, string> = { song: 'Song', video: 'Video', article: 'Article', topic: 'Topic' }
+
+/** The external link's text: "Listen" for a song, "Watch", "Read"; a topic has no source. */
+export const THEME_LINK_LABEL: Record<Exclude<ThemeKind, 'topic'>, string> = { song: 'Listen', video: 'Watch', article: 'Read' }
+
+/** Where a word or a result comes from: "Lesson 1.3" or "Theme: <title>". */
+export function lessonLabel(l: Lesson): string {
+  if (isThemeLesson(l)) return `Theme: ${l.theme.title}`
+  if (!isCourseLesson(l)) throw new Error(`Lesson "${l.id}" has neither a theme nor a unit and order`)
+  return `Lesson ${l.unit}.${l.order}`
 }
 
 /** The items a saved result was made from (a test, or an exercise in a lesson), if they still exist. */

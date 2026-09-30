@@ -13,6 +13,8 @@ import type { LessonProgress, Result, ReviewLogEntry, StoredCard } from '../cont
 import { ContentError } from '../content/validate.ts'
 import { AuthFailure, getToken } from './auth.ts'
 import { API_URL } from './config.ts'
+import { customWordId, customWordProblem, draftOf, fieldsOf, sameFields } from './customWords.ts'
+import type { CustomWordDraft } from './customWords.ts'
 import { localDay } from './dates.ts'
 import { messageOf, reportError } from './errors.ts'
 import { noteTextProblem } from './notes.ts'
@@ -31,10 +33,11 @@ import {
   removeSent,
   sameJson,
 } from './outbox.ts'
-import type { NoteRecord, NoteView, Outbox, ProgressView, SavedResult, ServerState, SyncBatch } from './outbox.ts'
+import type { CustomWordRecord, CustomWordView, NoteRecord, NoteView, Outbox, ProgressView, SavedResult, ServerState, SyncBatch } from './outbox.ts'
+import { introducedCard } from './srs.ts'
 import type { ReviewEvent, TestItemEvent } from './stats.ts'
 
-export type { NoteView, ProgressView, SavedResult }
+export type { CustomWordView, NoteView, ProgressView, SavedResult }
 
 /** An error answer from the API: { error: { code, message, details? }, requestId }. */
 export class ApiError extends Error {
@@ -117,6 +120,7 @@ function emptyServerState(now: Date): ServerState {
     lessonProgress: { version: 1, lessons: {} },
     newWordExtras: {},
     notes: [],
+    customWords: [],
   }
 }
 
@@ -302,8 +306,11 @@ export function createProgressStore(deps: StoreDeps) {
       if (cached === null) {
         throw new NetworkError(`${messageOf(err)}. There is no copy of your progress on this device yet, so the app needs the internet once.`)
       }
-      // Offline copies saved before notes existed (2026-09-30) have no "notes" key: that copy had none.
-      const copy = cached !== null && typeof cached === 'object' && !('notes' in cached) ? { ...cached, notes: [] } : cached
+      // Offline copies saved before notes and custom words existed (2026-09-30) have no such key: that copy had none.
+      const copy =
+        cached !== null && typeof cached === 'object'
+          ? { ...('notes' in cached ? {} : { notes: [] }), ...('customWords' in cached ? {} : { customWords: [] }), ...cached }
+          : cached
       server = parseState('the offline copy of your progress', copy)
       status = { ...status, phase: 'offline', fromCache: true }
     }
@@ -390,6 +397,13 @@ export function createProgressStore(deps: StoreDeps) {
     if (!note) throw new Error(`There is no note ${id} (was it deleted on another device?)`)
     if (note.feedback) throw new Error("This note has Claude's feedback, so it is locked: it cannot be changed or deleted any more.")
     return note
+  }
+
+  /** The custom word to change: it must exist (not deleted). */
+  function customWord(id: string): CustomWordView {
+    const word = current().customWords.find((w) => w.id === id)
+    if (!word) throw new Error(`There is no word ${id} in your words (was it deleted on another device?)`)
+    return word
   }
 
   /** Always later than the version it replaces (the merge needs a later updatedAt), even if the clock went back. */
@@ -488,6 +502,51 @@ export function createProgressStore(deps: StoreDeps) {
       return noteId
     },
 
+    /**
+     * Saves a new custom word (no id) or a change of one; it goes into the outbox and syncs with
+     * the next batch. A new word is practised right away (lib/srs.ts). Editing clears Claude's
+     * check. Throws with a message for Hayk if a field is missing or too long. Returns the word id.
+     * Guests may add words too; they live in memory like the rest of a guest's progress.
+     */
+    saveCustomWord(draft: CustomWordDraft, id?: string): string {
+      const problem = customWordProblem(draft)
+      if (problem) throw new Error(problem)
+      const fields = fieldsOf(draft)
+      let wordId: string
+      let record: CustomWordRecord
+      if (id === undefined) {
+        wordId = customWordId(deps.newId())
+        const now = deps.now().toISOString()
+        record = { ...fields, createdAt: now, updatedAt: now }
+      } else {
+        const word = customWord(id)
+        if (sameFields(fieldsOf(draftOf(word)), fields)) return id
+        wordId = id
+        record = { ...fields, createdAt: word.createdAt, updatedAt: changedAt(word.updatedAt) }
+      }
+      change((o) => ({ ...o, customWords: { ...o.customWords, [wordId]: record } }))
+      return wordId
+    },
+
+    /** Deletes a custom word (soft: it leaves practice, its review history stays for the stats). */
+    deleteCustomWord(id: string) {
+      const word = customWord(id)
+      const at = changedAt(word.updatedAt)
+      const record: CustomWordRecord = { ...fieldsOf(draftOf(word)), createdAt: word.createdAt, updatedAt: at, deletedAt: at }
+      change((o) => ({ ...o, customWords: { ...o.customWords, [id]: record } }))
+    },
+
+    /**
+     * Introduces a content word now ("Already in lesson 1.3: add that card"): a card that was never
+     * reviewed, due at once, so the word is unlocked as if its lesson had been opened, without a
+     * duplicate custom word. The server never lets such a card replace a reviewed one.
+     */
+    addContentCard(wordId: string) {
+      if (current().reviewState.cards[wordId]) throw new Error(`"${wordId}" is already in your practice`)
+      const card = introducedCard(deps.now())
+      change((o) => ({ ...o, cards: { ...o.cards, [wordId]: card } }))
+    },
+
     /** Deletes a note without feedback (a soft delete, so the other devices learn it too) and starts a sync. */
     deleteNote(id: string) {
       if (guest) throw new Error('Guest mode has no notes.')
@@ -544,6 +603,9 @@ export const saveResult = (result: Result) => progressStore().saveResult(result)
 export const saveLessonProgress = (p: LessonProgress) => progressStore().saveLessonProgress(p)
 export const saveNote = (text: string, id?: string) => progressStore().saveNote(text, id)
 export const deleteNote = (id: string) => progressStore().deleteNote(id)
+export const saveCustomWord = (draft: CustomWordDraft, id?: string) => progressStore().saveCustomWord(draft, id)
+export const deleteCustomWord = (id: string) => progressStore().deleteCustomWord(id)
+export const addContentCard = (wordId: string) => progressStore().addContentCard(wordId)
 export const refreshState = () => progressStore().refresh()
 
 /** Starts a sync unless the outbox is empty (e.g. after a review round). */

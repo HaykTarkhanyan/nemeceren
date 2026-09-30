@@ -4,6 +4,7 @@ Everything in this folder is written by Claude and read by the app in `app/`. Yo
 
 - `tests/<id>.json` - one test per file. Shows up in the app on its own (no restart while `npm run dev` runs).
 - `lessons/<id>.json` - one lesson per file (topic, explanation, examples, exercises), see [Lessons](#lessons).
+- `themes/<id>.json` - one theme lesson per file: a lesson built from a song, a video, an article or a topic Hayk brings, outside the course, see [Theme lessons](#theme-lessons-themesidjson).
 - `words.json` - the word bank for spaced repetition.
 - `topics.json` - the Topics page: lesson sections worth revisiting, see [Topics](#topics-topicsjson).
 - `extras.json` - the Extras page: jokes, fun facts and everyday phrases to browse, see [Extras](#extras-page-extrasjson).
@@ -251,6 +252,41 @@ Each check is saved like a test attempt (see `progress/README.md`) with the test
 
 The glossary covers all German in lessons: `[[...]]` in the text blocks, `examples` and `audio` sentences, table cells in `"words"` columns, and the German fields of exercise items.
 
+## Theme lessons: `themes/<id>.json`
+
+A theme lesson is a lesson (everything in [Lessons](#lessons) holds: blocks, text format, words, tests, exercises, glossary) built from something Hayk brings: a song, a video, an article, or just a topic ("going to the doctor"). It is not part of the course: it has a `theme` header instead of `unit` and `order`. The app lists theme lessons under Lessons, tab **Themes** (`#/lessons/themes`, alphabetical by `theme.title`); the What-next menu, Home's "next lesson" and the course's "Next lesson" button ignore them. Opening one works like a course lesson: it starts it (saved under its id), unlocks its `words`, and its exercises are saved as `<id>-ex<n>`. The repo skill `.claude/skills/theme-lesson/SKILL.md` is the workflow for writing one.
+
+```json
+{
+  "id": "t-<slug>",
+  "theme": { "kind": "song", "title": "<song title>", "by": "<artist>", "year": 2019, "url": "https://...", "variety": "youth slang" },
+  "level": "B1",
+  "title": "<English title> (<German title>)",
+  "summary": "One sentence: what it is and what Hayk gets from it.",
+  "goals": ["Understand the chorus"],
+  "words": ["..."],
+  "sections": [ ... ]
+}
+```
+
+| key | required | notes |
+|---|---|---|
+| `id` | yes | starts with `t-` (and equals the file name); course lesson ids never do |
+| `theme.kind` | yes | `song`, `video`, `article` or `topic`; shown as Song, Video, Article, Topic |
+| `theme.title` | yes | the song, video or article title, or the topic; the card's heading |
+| `theme.by` | no | artist, channel or author; a `topic` has none |
+| `theme.year` | no | a whole number |
+| `theme.url` | no | where to listen, watch or read; must start with `https://`; a `topic` has none. The card links to it as "Listen" (song), "Watch" (video) or "Read" (article), in a new tab |
+| `theme.variety` | no | "standard German", "Bavarian", "youth slang", ... |
+| `unit`, `order` | never | a lesson has either `unit` and `order` (course, `lessons/`) or `theme` (`themes/`), exactly one of the two |
+| everything else | | as in [Lessons](#lessons): `level`, `title`, `summary`, `goals`, `words`, `tests`, `nicosWeg`, `sections` |
+
+- check-content validates theme lessons like course lessons (schema, section ids, `words` and `tests` exist, exercise test ids, every German word covered by the glossary), plus the rules above, and that each file is in the right folder.
+- Words: add them to `words.json` as usual (tags `["theme", "<slug>"]`) and list them in `words`; they wait until Hayk opens the theme lesson. In the Words page's "Words from" picker theme lessons have their own group, and "All words" shows their source as "Theme: <title>".
+- `topics.json` may link to a section of a theme lesson; the Topics page shows it with a "Theme" badge instead of a unit.
+- A test that belongs to a theme lesson (`"lesson": "t-..."`) has no `unit`.
+- Quote at most a few lines of lyrics or an article, and link to the source for the rest (the skill's rules).
+
 ## Topics: `topics.json`
 
 The Topics page lists lesson sections worth coming back to, in groups, with the key ones starred. Each item opens its lesson at that section (`#/lesson/<lesson id>/<section id>`), scrolled into view and briefly highlighted.
@@ -271,7 +307,7 @@ The Topics page lists lesson sections worth coming back to, in groups, with the 
 ```
 
 - Groups and items are shown in file order. Group `id`s are kebab-case and unique.
-- `lesson` is a lesson id; `section` is the `id` of a block in that lesson (add the id to the block first).
+- `lesson` is a lesson id (course or theme lesson); `section` is the `id` of a block in that lesson (add the id to the block first).
 - `star` is `true` or left out.
 - A section may appear in two groups (a grammar point that is also a word theme), but only once per group.
 - The page shows each item's unit, taken from its lesson.
@@ -364,7 +400,7 @@ After a test item is submitted, after a word-review card is revealed, and on the
 | `write` | `prompt` (unless `promptLang` is `"en"`) |
 | `dictation` | `text` |
 | words.json | `de`, `plural`, `example.de` |
-| lessons | `[[...]]` in explanation, comparison, tip and warning text; `examples` and `audio` sentences (`de`); table cells in `"words"` columns; exercise items as above |
+| lessons and theme lessons | `[[...]]` in explanation, comparison, tip and warning text; `examples` and `audio` sentences (`de`); table cells in `"words"` columns; exercise items as above |
 
 Not German: `title`, `description`, `instruction`, `hint`, `explanation`, every `en` field, and all of `extras.json` (no popups there).
 

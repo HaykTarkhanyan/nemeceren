@@ -1307,7 +1307,7 @@ rect.tone-b {
   padding-top: 32px;
 }
 
-.login input[type='email'],
+.login input[type='text'],
 .login input[type='password'] {
   font: inherit;
   line-height: 1.3;
@@ -1334,4 +1334,231 @@ rect.tone-b {
   flex-wrap: wrap;
   align-items: center;
   gap: 6px;
+}
+
+/* Tabs of a page, kept in the URL (Lessons: Course / Themes, Words: Review / All words) */
+.tabs {
+  display: flex;
+  gap: 4px;
+  border-bottom: 1px solid var(--border);
+}
+
+.tab {
+  padding: 8px 14px;
+  margin-bottom: -1px;
+  border: 1px solid transparent;
+  border-radius: 8px 8px 0 0;
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.tab.active {
+  background: var(--surface);
+  border-color: var(--border);
+  border-bottom-color: var(--surface);
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* Theme lessons */
+.theme-title {
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+
+/* Words: the add form and the All words list */
+.word-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 12px;
+}
+
+.word-form input[type='text'] {
+  width: 100%;
+}
+
+.words-tools {
+  display: grid;
+  grid-template-columns: 2fr 2fr 1fr;
+  gap: 0 12px;
+}
+
+.words-tools input[type='text'],
+.words-tools select {
+  width: 100%;
+}
+
+/* Desktop: a compact table with fixed columns, each header over its data. */
+.words-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-size: 0.9rem;
+}
+
+.words-table .col-de {
+  width: 20%;
+}
+.words-table .col-en {
+  width: 16%;
+}
+.words-table .col-source {
+  width: 13%;
+}
+.words-table .col-status {
+  width: 12%;
+}
+.words-table .col-due {
+  width: 10%;
+}
+.words-table .col-num {
+  width: 11%;
+}
+.words-table .col-last {
+  width: 7%;
+}
+
+.words-table th,
+.words-table td {
+  padding: 6px 6px;
+  text-align: left;
+  vertical-align: middle;
+  border-bottom: 1px solid var(--border);
+  overflow-wrap: anywhere;
+}
+
+.words-table th {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.words-table th.num,
+.words-table td.num {
+  text-align: right;
+}
+
+.word-row {
+  cursor: pointer;
+}
+
+.word-row:hover,
+.word-row.open {
+  background: var(--bg);
+}
+
+.word-row.status-locked {
+  opacity: 0.55;
+}
+
+.word-toggle {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  font-weight: 600;
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+}
+
+.word-toggle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.words-table .icon-btn {
+  width: 28px;
+  height: 28px;
+}
+
+.words-table .badge {
+  margin-left: 4px;
+}
+
+.words-table td .badge:first-child {
+  margin-left: 0;
+}
+
+.word-detail td {
+  background: var(--bg);
+}
+
+.review-history {
+  margin: 4px 0 0;
+  padding-left: 20px;
+}
+
+.badge.word-status-new,
+.badge.word-status-learning {
+  background: var(--pending-bg);
+  color: var(--pending);
+  border-color: transparent;
+}
+
+.badge.word-status-review,
+.badge.word-status-known {
+  background: var(--ok-bg);
+  color: var(--ok);
+  border-color: transparent;
+}
+
+.badge.word-status-struggling {
+  background: var(--bad-bg);
+  color: var(--bad);
+  border-color: transparent;
+}
+
+/* Phone: the table becomes a list of cards, each value with its column name. */
+@media (max-width: 640px) {
+  .word-form-grid,
+  .words-tools {
+    grid-template-columns: 1fr;
+  }
+  .words-table,
+  .words-table tbody,
+  .words-table tr,
+  .words-table td {
+    display: block;
+    width: 100%;
+  }
+  .words-table colgroup,
+  .words-table thead {
+    display: none;
+  }
+  .words-table tr.word-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px 12px;
+    padding: 10px 12px;
+    margin-top: 8px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+  .words-table tr.word-row.open {
+    border-radius: var(--radius) var(--radius) 0 0;
+  }
+  .words-table td {
+    border: none;
+    padding: 0;
+  }
+  .words-table td.cell-de {
+    grid-column: 1 / -1;
+    font-size: 1.05rem;
+  }
+  .words-table td[data-label]::before {
+    content: attr(data-label) ': ';
+    color: var(--muted);
+    font-size: 0.8rem;
+  }
+  .words-table td.num {
+    text-align: left;
+  }
+  .words-table tr.word-detail td {
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-top: none;
+    border-radius: 0 0 var(--radius) var(--radius);
+  }
 }

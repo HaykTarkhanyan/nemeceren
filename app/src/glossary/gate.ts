@@ -13,6 +13,8 @@ export type GlossSurface =
   | { kind: 'extras' }
   /** Claude's feedback on a note: never. It is written after the content was glossary-checked, so many words would have no entry. */
   | { kind: 'notes' }
+  /** A review card of one of Hayk's own words: never. It is his own text (like notes), the card already shows his meaning, and the glossary rarely has it. */
+  | { kind: 'custom-word' }
 
 export function glossEnabled(s: GlossSurface): boolean {
   switch (s.kind) {
@@ -24,6 +26,7 @@ export function glossEnabled(s: GlossSurface): boolean {
       return true
     case 'extras':
     case 'notes':
+    case 'custom-word':
       return false
   }
 }

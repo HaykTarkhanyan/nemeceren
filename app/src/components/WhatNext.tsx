@@ -2,14 +2,14 @@
 // lesson, the next test, listening practice. Every option either works or says plainly why not.
 import { useState } from 'react'
 import { content } from '../content/load.ts'
-import type { Word } from '../content/schema.ts'
+import type { StudyWord } from '../lib/customWords.ts'
 import { messageOf } from '../lib/errors.ts'
 import { listeningWords, lockedWordIds, nextLesson, nextTest, weakWords } from '../lib/plan.ts'
 import { link } from '../lib/router.ts'
 import { addExtraNewWords, useProgress } from '../lib/storage.ts'
 
 /** `words` are the words the review uses (all, or the unit or lesson Hayk picked); `allWords` says which. */
-export function WhatNext(props: { words: Word[]; allWords: boolean; onMoreNew: () => void; onPractice: (words: Word[]) => void }) {
+export function WhatNext(props: { words: StudyWord[]; allWords: boolean; onMoreNew: () => void; onPractice: (words: StudyWord[]) => void }) {
   const { words, allWords, onMoreNew, onPractice } = props
   const view = useProgress()
   const state = view.reviewState
@@ -30,7 +30,9 @@ export function WhatNext(props: { words: Word[]; allWords: boolean; onMoreNew: (
 
   const now = new Date()
   const available = words.filter((w) => !state.cards[w.id]).length
-  // A picked unit or lesson already includes the words of its unopened lessons.
+  // A picked unit or lesson already includes the words of its unopened lessons. Only course
+  // lessons count here: the message below points to the next course lesson, and theme lessons
+  // are not part of the course (their words wait until Hayk opens them).
   const locked = allWords ? [...lockedWordIds(content.lessons, progress)].filter((id) => !state.cards[id]).length : 0
   const weak = weakWords(words, state, data.log, now)
   const lesson = nextLesson(content.lessons, progress)

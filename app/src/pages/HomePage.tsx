@@ -1,6 +1,7 @@
 import { content } from '../content/load.ts'
 import { finalScore } from '../lib/grading.ts'
-import { courseTests, nextLesson, nextTest, studyWords } from '../lib/plan.ts'
+import { practiceWord } from '../lib/customWords.ts'
+import { courseTests, nextLesson, nextTest, wordsForSource } from '../lib/plan.ts'
 import { link } from '../lib/router.ts'
 import { useSettings } from '../lib/settings.ts'
 import { counts } from '../lib/srs.ts'
@@ -49,7 +50,14 @@ export function HomePage() {
 function TodayPanel() {
   const settings = useSettings()
   const progress = useProgress()
-  const words = studyWords(content.words, content.lessons, progress.lessonProgress, progress.reviewState)
+  const words = wordsForSource(
+    { kind: 'all' },
+    content.words,
+    progress.customWords.map(practiceWord),
+    content.allLessons,
+    progress.lessonProgress,
+    progress.reviewState,
+  )
   const c = counts(words, progress.reviewState, new Date(), settings.newPerDay)
   const lesson = nextLesson(content.lessons, progress.lessonProgress)
   const test = nextTest(

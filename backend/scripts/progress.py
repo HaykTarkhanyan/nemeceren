@@ -19,9 +19,12 @@ Run from the repo root (uv installs the pinned dependencies above on first use):
     uv run backend/scripts/progress.py notes [--pending]           # Hayk's notes; --pending: no feedback yet
     uv run backend/scripts/progress.py note <note-id>              # one note in full, with its feedback
     uv run backend/scripts/progress.py note-feedback <note-id> <feedback.json|-> [--replace]
-    uv run backend/scripts/progress.py self-check                  # offline check of the feedback validator
-Data commands take --user <email or user id>; the default is the only allowed user apart from
-Claude's test account (NEMECEREN_TEST_EMAIL in .env.local).
+    uv run backend/scripts/progress.py my-words [--unchecked]      # Hayk's own words; --unchecked: not checked yet
+    uv run backend/scripts/progress.py check-word <word-id> ok [--note "..."] [--replace]
+    uv run backend/scripts/progress.py check-word <word-id> fix [--de ..] [--en ..] [--plural ..] [--note "..."] [--replace]
+    uv run backend/scripts/progress.py self-check                  # offline check of the feedback and word-check validators
+Data commands take --user <email or user id>; the default is NEMECEREN_DEFAULT_USER in .env.local
+(Hayk), else the only allowed user apart from Claude's test account (NEMECEREN_TEST_EMAIL).
 
 Expected runtime: ~2-5 s per command (a guess: uv startup plus about a second to wake the
 database if it was suspended). The first `uv run` also downloads psycopg (~4 MB) once.
@@ -35,6 +38,11 @@ The note feedback JSON is NoteFeedback in app/src/content/schema.ts, without "at
     {"summary": "text format, [[German]] allowed", "hints": ["..."], "corrected": "...",
      "edits": [{"from": "...", "to": "...", "why": "...", "kind": "error" | "style"}]}
 Only summary is required. A note with feedback is locked: the app can no longer edit or delete it.
+
+check-word saves Claude's check of one of Hayk's own words (WordCheck in app/src/content/schema.ts):
+"ok" means fine as it is; "fix" names the corrected fields, which the app then shows (in practice and
+in the list) instead of Hayk's, with "corrected by Claude: <note>". When Hayk edits the word, the API
+clears the check, so it shows up in `my-words --unchecked` again.
 
 Reads DATABASE_URL from .env.local at the repo root (owner role, server side only; never printed).
 Logs to the console and to logs/progress.log at the repo root.
@@ -73,6 +81,11 @@ FEEDBACK_KEYS = ("summary", "hints", "corrected", "edits")
 EDIT_KEYS = {"from", "to", "why", "kind"}
 EDIT_KINDS = ("error", "style")
 UUID_RE = re.compile(r"[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}")
+# Custom words (Hayk's own words): the app's CUSTOM_WORD_MAX and WordCheck (app/src/content/schema.ts).
+CUSTOM_WORD_ID_RE = re.compile(r"u-[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}")
+CUSTOM_WORD_MAX = {"de": 100, "en": 200, "plural": 100, "example": 300, "note": 500}
+CHECK_KEYS = ("at", "ok", "note", "fixed")
+FIXED_KEYS = ("de", "en", "plural")
 
 
 class ReviewError(ValueError):
@@ -81,6 +94,10 @@ class ReviewError(ValueError):
 
 class FeedbackError(ValueError):
     """The note feedback JSON does not match the shape the app accepts."""
+
+
+class CheckError(ValueError):
+    """A word check that the app could not show (it mirrors the zod WordCheck)."""
 
 
 # ---------- setup ----------
@@ -343,6 +360,118 @@ def validate_note_feedback(feedback: Any) -> dict[str, Any]:
     if problems:
         raise FeedbackError("The feedback is invalid:\n  - " + "\n  - ".join(problems))
     return {k: feedback[k] for k in FEEDBACK_KEYS if k in feedback}
+
+
+# ---------- word check validation (mirrors WordCheck in app/src/content/schema.ts) ----------
+# The app refuses to load the whole state if one check breaks its schema, so this is at least as strict.
+
+
+def _js_len(s: str) -> int:
+    """String length as JavaScript counts it (UTF-16 code units), which the app's max lengths use."""
+    return len(s.encode("utf-16-le")) // 2
+
+
+def validate_word_check(check: Any) -> dict[str, Any]:
+    """Return the check in canonical key order, or raise CheckError listing every problem."""
+    if not isinstance(check, dict):
+        raise CheckError("The check must be a JSON object with at and ok.")
+    problems: list[str] = []
+    extra = set(check) - set(CHECK_KEYS)
+    if extra:
+        problems.append(f"unknown key(s) {sorted(extra)}; allowed: {list(CHECK_KEYS)}")
+    at = check.get("at")
+    if not isinstance(at, str) or ISO_DATETIME.match(at) is None:
+        problems.append(f"at must be an ISO date-time with Z or an offset; got {at!r}")
+    ok = check.get("ok")
+    if type(ok) is not bool:
+        problems.append("ok is required and must be true or false")
+    if "note" in check:
+        note = check["note"]
+        if not _has_text(note):
+            problems.append("note must be non-empty text when present")
+        elif _js_len(note) > CUSTOM_WORD_MAX["note"]:
+            problems.append(f"note must be at most {CUSTOM_WORD_MAX['note']} characters")
+    fixed = check.get("fixed")
+    if "fixed" in check:
+        if not isinstance(fixed, dict):
+            problems.append("fixed must be an object with de, en and/or plural")
+            fixed = None
+        else:
+            bad = set(fixed) - set(FIXED_KEYS)
+            if bad:
+                problems.append(f"fixed: unknown key(s) {sorted(bad)}; allowed: {list(FIXED_KEYS)}")
+            for key in FIXED_KEYS:
+                if key not in fixed:
+                    continue
+                if not _has_text(fixed[key]):
+                    problems.append(f"fixed.{key} must be non-empty text")
+                elif _js_len(fixed[key]) > CUSTOM_WORD_MAX[key]:
+                    problems.append(f"fixed.{key} must be at most {CUSTOM_WORD_MAX[key]} characters")
+    if ok is True and "fixed" in check:
+        problems.append("a check that is ok has no corrections (fixed)")
+    if ok is False and not fixed:
+        problems.append("a correction (ok: false) names at least one fixed field")
+    if problems:
+        raise CheckError("The check is invalid:\n  - " + "\n  - ".join(problems))
+    out: dict[str, Any] = {k: check[k] for k in CHECK_KEYS if k in check}
+    if "fixed" in out:
+        out["fixed"] = {k: out["fixed"][k] for k in FIXED_KEYS if k in out["fixed"]}
+    return out
+
+
+def build_word_check(word: dict[str, Any], ok: bool, note: str | None, fixed: dict[str, str | None]) -> dict[str, Any]:
+    """The check to save for one word (at = now), from the command line: ok, or the fixed fields."""
+    problems: list[str] = []
+    given = {k: v.strip() for k, v in fixed.items() if v is not None}
+    if ok and given:
+        problems.append("`ok` takes no --de/--en/--plural; use `fix` to correct the word")
+    if not ok and not given:
+        problems.append("`fix` needs at least one of --de, --en, --plural")
+    for key, value in given.items():
+        if value == (word.get(key) or "").strip():
+            problems.append(f"--{key} {value!r} is what Hayk already wrote")
+    if problems:
+        raise CheckError("The check is invalid:\n  - " + "\n  - ".join(problems))
+    check: dict[str, Any] = {"at": now_iso(), "ok": ok}
+    if note is not None:
+        check["note"] = note.strip()
+    if given:
+        check["fixed"] = given
+    return validate_word_check(check)
+
+
+def fetch_custom_word(conn: psycopg.Connection, user_id: str, word_id: str) -> dict[str, Any]:
+    if not CUSTOM_WORD_ID_RE.fullmatch(word_id):
+        raise RuntimeError(f"{word_id!r} is not a custom word id (\"u-\" + a UUID). See `progress.py my-words`.")
+    row = conn.execute(
+        """SELECT id, de, en, plural, example, note, created_at, updated_at, deleted_at, claude_check, checked_at
+             FROM custom_words WHERE user_id = %s AND id = %s""",
+        (user_id, word_id),
+    ).fetchone()
+    if row is None:
+        raise RuntimeError(f"No custom word {word_id} for user {user_id}.")
+    return row
+
+
+def write_word_check(
+    conn: psycopg.Connection, user_id: str, word_id: str, ok: bool, note: str | None, fixed: dict[str, str | None], replace: bool = False
+) -> dict[str, Any]:
+    """Validate and save Claude's check of one custom word (used by the CLI and by the smoke test)."""
+    word = fetch_custom_word(conn, user_id, word_id)
+    if word["deleted_at"] is not None:
+        raise RuntimeError(f"Word {word_id} was deleted by Hayk on {word['deleted_at']:%Y-%m-%d}; it gets no check.")
+    if word["claude_check"] is not None and not replace:
+        raise RuntimeError(f"Word {word_id} was already checked ({word['claude_check'].get('at')}). Pass --replace to overwrite the check.")
+    check = build_word_check(word, ok, note, fixed)
+    with conn.transaction():
+        # updated_at must still be the version read above: an edit that synced a moment ago gets its own check.
+        cur = conn.execute(
+            "UPDATE custom_words SET claude_check = %s, checked_at = now() WHERE user_id = %s AND id = %s AND deleted_at IS NULL AND updated_at = %s",
+            (Jsonb(check), user_id, word_id, word["updated_at"]),
+        )
+        if cur.rowcount != 1:
+            raise RuntimeError(f"Expected to update 1 word, updated {cur.rowcount}: word {word_id} changed or was deleted just now. Look at it again.")
+    return check
 
 
 def fetch_attempt(conn: psycopg.Connection, user_id: str, attempt_id: str) -> dict[str, Any]:
@@ -670,6 +799,10 @@ def cmd_summary(conn: psycopg.Connection, args: argparse.Namespace) -> None:
         "SELECT count(*) AS n FROM notes WHERE user_id = %s AND feedback IS NULL AND deleted_at IS NULL", (uid,)
     ).fetchone()["n"]
     lines.append(f"Notes waiting for feedback: {waiting}" + (" (see `progress.py notes --pending`)" if waiting else ""))
+    unchecked = conn.execute(
+        "SELECT count(*) AS n FROM custom_words WHERE user_id = %s AND claude_check IS NULL AND deleted_at IS NULL", (uid,)
+    ).fetchone()["n"]
+    lines.append(f"Own words waiting for a check: {unchecked}" + (" (see `progress.py my-words --unchecked`)" if unchecked else ""))
     LOG.info("\n".join(lines))
 
 
@@ -723,6 +856,100 @@ def cmd_note_feedback(conn: psycopg.Connection, args: argparse.Namespace) -> Non
     clean = write_note_feedback(conn, user["user_id"], args.note_id, feedback, replace=args.replace)
     parts = [f"{len(clean.get('hints', []))} hint(s)", f"{len(clean.get('edits', []))} edit(s)", "corrected text" if "corrected" in clean else "no corrected text"]
     LOG.info(f"Saved the feedback on note {args.note_id} ({', '.join(parts)}). The note is locked now; the app shows it on its next load or 'Check for feedback'.")
+
+
+def _word_text(w: dict[str, Any]) -> str:
+    plural = f" | {w['plural']}" if w["plural"] else ""
+    return f"{w['de']}{plural} = {w['en']}"
+
+
+def cmd_my_words(conn: psycopg.Connection, args: argparse.Namespace) -> None:
+    user = resolve_user(conn, args.user)
+    where = " AND w.claude_check IS NULL" if args.unchecked else ""
+    rows = conn.execute(
+        f"""SELECT w.id, w.de, w.en, w.plural, w.example, w.note, w.created_at, w.updated_at, w.claude_check,
+                   (SELECT count(*) FROM review_events e WHERE e.user_id = w.user_id AND e.word_id = w.id AND NOT e.practice) AS reviews
+              FROM custom_words w WHERE w.user_id = %s AND w.deleted_at IS NULL{where} ORDER BY w.created_at, w.id""",
+        (user["user_id"],),
+    ).fetchall()
+    what = "Own words waiting for a check" if args.unchecked else "Own words (not deleted)"
+    LOG.info(f"{what} of {user['email']}: {len(rows)}, oldest first")
+    for w in rows:
+        c = w["claude_check"]
+        if c is None:
+            status = "unchecked"
+        elif c.get("ok"):
+            status = "ok"
+        else:
+            status = "fixed: " + ", ".join(f"{k}={v!r}" for k, v in c.get("fixed", {}).items())
+        edited = ", edited" if w["updated_at"] != w["created_at"] else ""
+        LOG.info(f"{w['id']}  {w['created_at'].astimezone(timezone.utc):%Y-%m-%d}  {status}{edited}  reviews {w['reviews']}  {_word_text(w)}")
+        if w["example"]:
+            en = f" ({w['example']['en']})" if w["example"].get("en") else ""
+            LOG.info(f"    example: {w['example']['de']}{en}")
+        if w["note"]:
+            LOG.info(f"    note: {w['note']}")
+        if c is not None and c.get("note"):
+            LOG.info(f"    Claude: {c['note']}")
+
+
+def cmd_check_word(conn: psycopg.Connection, args: argparse.Namespace) -> None:
+    user = resolve_user(conn, args.user)
+    check = write_word_check(
+        conn, user["user_id"], args.word_id, args.verdict == "ok", args.note, {"de": args.de, "en": args.en, "plural": args.plural}, replace=args.replace
+    )
+    what = "checked (ok)" if check["ok"] else "corrected: " + ", ".join(f"{k}={v!r}" for k, v in check["fixed"].items())
+    LOG.info(f"Saved the check of word {args.word_id}: {what}. The app shows it on its next load.")
+
+
+def self_check_word_checks() -> int:
+    """Checks validate_word_check against good and bad cases, with no database. Returns the number of cases."""
+    at = "2026-09-30T10:00:00.000Z"
+    ok_cases: list[Any] = [
+        {"at": at, "ok": True},
+        {"at": at, "ok": True, "note": "Fine."},
+        {"at": at, "ok": False, "note": "Nouns take der/die/das.", "fixed": {"de": "der Stau", "plural": "die Staus"}},
+    ]
+    bad_cases: list[tuple[Any, str]] = [
+        ("x", "must be a JSON object"),
+        ({"ok": True}, "at must be an ISO date-time"),
+        ({"at": at}, "ok is required"),
+        ({"at": at, "ok": "yes"}, "ok is required"),
+        ({"at": at, "ok": True, "fixed": {"de": "der Stau"}}, "a check that is ok has no corrections"),
+        ({"at": at, "ok": False}, "names at least one fixed field"),
+        ({"at": at, "ok": False, "fixed": {}}, "names at least one fixed field"),
+        ({"at": at, "ok": False, "fixed": {"article": "der"}}, "fixed: unknown key(s) ['article']"),
+        ({"at": at, "ok": False, "fixed": {"de": " "}}, "fixed.de must be non-empty"),
+        ({"at": at, "ok": False, "fixed": {"de": "x" * 101}}, "fixed.de must be at most 100"),
+        ({"at": at, "ok": True, "note": ""}, "note must be non-empty"),
+        ({"at": at, "ok": True, "hint": "x"}, "unknown key(s) ['hint']"),
+    ]
+    for case in ok_cases:
+        clean = validate_word_check(case)
+        if list(clean) != [k for k in CHECK_KEYS if k in case]:
+            raise AssertionError(f"self-check: keys not in canonical order for {case!r}: {list(clean)}")
+    for case, expected in bad_cases:
+        try:
+            validate_word_check(case)
+        except CheckError as err:
+            if expected not in str(err):
+                raise AssertionError(f"self-check: {case!r} was rejected, but the message lacks {expected!r}:\n{err}") from err
+            continue
+        raise AssertionError(f"self-check: {case!r} should have been rejected ({expected!r})")
+    word = {"de": "Stau", "en": "traffic jam", "plural": None}
+    for ok, fixed, expected in (
+        (True, {"de": "der Stau"}, "`ok` takes no"),
+        (False, {}, "`fix` needs at least one"),
+        (False, {"de": "Stau"}, "is what Hayk already wrote"),
+    ):
+        try:
+            build_word_check(word, ok, None, fixed)
+        except CheckError as err:
+            if expected not in str(err):
+                raise AssertionError(f"self-check: build_word_check({ok}, {fixed}) lacks {expected!r}:\n{err}") from err
+            continue
+        raise AssertionError(f"self-check: build_word_check({ok}, {fixed}) should have been refused ({expected!r})")
+    return len(ok_cases) + len(bad_cases) + 3
 
 
 def self_check() -> int:
@@ -809,14 +1036,27 @@ def main() -> None:
     p.add_argument("feedback_file", help="path to the feedback JSON, or - for stdin")
     p.add_argument("--replace", action="store_true", help="overwrite existing feedback")
     p.add_argument("--user", default=None)
-    sub.add_parser("self-check", help="check the note feedback validator on built-in cases (no database)")
+    p = sub.add_parser("my-words", help="list Hayk's own words (not deleted), oldest first")
+    p.add_argument("--unchecked", action="store_true", help="only words without Claude's check yet")
+    p.add_argument("--user", default=None)
+    p = sub.add_parser("check-word", help="save Claude's check of one own word: ok, or fix with the corrected fields")
+    p.add_argument("word_id", help='the word id ("u-" + a UUID), from my-words')
+    p.add_argument("verdict", choices=["ok", "fix"])
+    p.add_argument("--de", default=None, help="fix: the corrected German (nouns with der/die/das)")
+    p.add_argument("--en", default=None, help="fix: the corrected English")
+    p.add_argument("--plural", default=None, help="fix: the corrected plural (die ...)")
+    p.add_argument("--note", default=None, help="a short explanation, shown to Hayk")
+    p.add_argument("--replace", action="store_true", help="overwrite an existing check")
+    p.add_argument("--user", default=None)
+    sub.add_parser("self-check", help="check the note feedback and word-check validators on built-in cases (no database)")
     args = parser.parse_args()
 
     setup_logging("progress")
     started = time.monotonic()
     if args.command == "self-check":
         n = self_check()
-        LOG.info(f"self-check: all {n} note feedback cases behave as expected ({time.monotonic() - started:.1f} s)")
+        m = self_check_word_checks()
+        LOG.info(f"self-check: all {n} note feedback cases and {m} word-check cases behave as expected ({time.monotonic() - started:.1f} s)")
         return
     commands = {
         "users": cmd_users,
@@ -829,6 +1069,8 @@ def main() -> None:
         "notes": cmd_notes,
         "note": cmd_note,
         "note-feedback": cmd_note_feedback,
+        "my-words": cmd_my_words,
+        "check-word": cmd_check_word,
     }
     with connect() as conn:
         commands[args.command](conn, args)

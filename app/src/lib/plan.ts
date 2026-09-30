@@ -1,8 +1,9 @@
 // What to study next, as pure functions: lesson status, which new words are available,
 // the next lesson and test, weak words for practice, and how much prepared content is left.
 // Used by the Home "Today" panel, the "What next" menu, the Stats page and check-content.
-import { byCourseOrder } from '../content/lessons.ts'
-import type { Lesson, LessonProgress, Result, ReviewLogEntry, ReviewState, Test, Word } from '../content/schema.ts'
+import { byCourseOrder, isThemeLesson } from '../content/lessons.ts'
+import type { CourseLesson, Lesson, LessonProgress, Result, ReviewLogEntry, ReviewState, Test, ThemeLesson, Word } from '../content/schema.ts'
+import type { StudyWord } from './customWords.ts'
 
 // ---------- lessons ----------
 
@@ -39,8 +40,8 @@ export function markLessonDone(p: LessonProgress, lessonId: string, done: boolea
   return { ...p, lessons: { ...p.lessons, [lessonId]: { ...l, doneAt: done ? at : null, updatedAt: at } } }
 }
 
-/** The first lesson in course order that is not done, with its status; null if all are done. */
-export function nextLesson(lessons: Lesson[], p: LessonProgress): { lesson: Lesson; status: LessonStatus } | null {
+/** The first course lesson in course order that is not done, with its status; null if all are done. Theme lessons are not part of the course. */
+export function nextLesson(lessons: CourseLesson[], p: LessonProgress): { lesson: CourseLesson; status: LessonStatus } | null {
   for (const lesson of [...lessons].sort(byCourseOrder)) {
     const status = lessonStatus(p, lesson.id)
     if (status !== 'done') return { lesson, status }
@@ -50,7 +51,7 @@ export function nextLesson(lessons: Lesson[], p: LessonProgress): { lesson: Less
 
 // ---------- words ----------
 
-/** Ids of words that belong to a lesson that has not been started yet. */
+/** Ids of words that belong to a lesson (course or theme) that has not been started yet. */
 export function lockedWordIds(lessons: Lesson[], p: LessonProgress): Set<string> {
   const unlocked = new Set<string>()
   const inLessons = new Set<string>()
@@ -68,43 +69,59 @@ export function lockedWordIds(lessons: Lesson[], p: LessonProgress): Set<string>
  * words that belong to no lesson or to a started lesson. A lesson's words are introduced once
  * the lesson is opened, so Hayk meets them right after the explanation.
  */
-export function studyWords(words: Word[], lessons: Lesson[], p: LessonProgress, state: ReviewState): Word[] {
+export function studyWords<W extends { id: string }>(words: W[], lessons: Lesson[], p: LessonProgress, state: ReviewState): W[] {
   const locked = lockedWordIds(lessons, p)
   return words.filter((w) => state.cards[w.id] || !locked.has(w.id))
 }
 
 // ---------- where a word review takes its words from ----------
 
-/** All words (the default), one unit, or one lesson. Only filters the queue; FSRS is unchanged. */
-export type WordSource = { kind: 'all' } | { kind: 'unit'; unit: number } | { kind: 'lesson'; lessonId: string }
+/** All words (the default), Hayk's own words, one unit, or one lesson (course or theme). Only filters the queue; FSRS is unchanged. */
+export type WordSource = { kind: 'all' } | { kind: 'mine' } | { kind: 'unit'; unit: number } | { kind: 'lesson'; lessonId: string }
 
-/** Lessons that list words, in course order: the lessons and units a review can be limited to. */
-export function sourceLessons(lessons: Lesson[]): Lesson[] {
+/** Course lessons that list words, in course order: the lessons and units a review can be limited to. */
+export function sourceLessons(lessons: CourseLesson[]): CourseLesson[] {
   return lessons.filter((l) => (l.words ?? []).length > 0).sort(byCourseOrder)
 }
 
+/** Theme lessons that list words, in the order given: the "Themes" group of the picker. */
+export function sourceThemes(themes: ThemeLesson[]): ThemeLesson[] {
+  return themes.filter((l) => (l.words ?? []).length > 0)
+}
+
 /**
- * The words a review session uses. "all" is studyWords: a lesson's words wait until the lesson is
- * opened. A unit or lesson takes every word its lessons list, opened or not, because picking it
- * is the explicit choice to learn them (DECISIONS.md). Order is words.json order, as always.
+ * The words a review session uses. "all" is studyWords plus Hayk's own words: a lesson's words
+ * wait until the lesson (course or theme) is opened. "mine" is his own words only. A unit or
+ * lesson takes every word its lessons list, opened or not, because picking it is the explicit
+ * choice to learn them (DECISIONS.md #50). Content words keep words.json order, as always; own
+ * words come after them, oldest first. `lessons` are all lessons, course and theme.
  */
-export function wordsForSource(source: WordSource, words: Word[], lessons: Lesson[], p: LessonProgress, state: ReviewState): Word[] {
-  if (source.kind === 'all') return studyWords(words, lessons, p, state)
+export function wordsForSource(
+  source: WordSource,
+  words: Word[],
+  custom: StudyWord[],
+  lessons: Lesson[],
+  p: LessonProgress,
+  state: ReviewState,
+): StudyWord[] {
+  if (source.kind === 'all') return [...studyWords(words, lessons, p, state), ...custom]
+  if (source.kind === 'mine') return custom
   const picked = lessons.filter((l) => (source.kind === 'unit' ? l.unit === source.unit : l.id === source.lessonId))
   const ids = new Set(picked.flatMap((l) => l.words ?? []))
   return words.filter((w) => ids.has(w.id))
 }
 
-/** How a source is saved per device: "all", "unit:2" or "lesson:u2-03-plural". */
+/** How a source is saved per device: "all", "mine", "unit:2" or "lesson:u2-03-plural". */
 export function sourceKey(s: WordSource): string {
-  if (s.kind === 'all') return 'all'
+  if (s.kind === 'all' || s.kind === 'mine') return s.kind
   return s.kind === 'unit' ? `unit:${s.unit}` : `lesson:${s.lessonId}`
 }
 
-/** A saved source. One whose unit or lesson (with words) no longer exists becomes "all", with a note to show. */
+/** A saved source. One whose unit or lesson (with words) no longer exists becomes "all", with a note to show. `lessons` are all lessons, course and theme. */
 export function parseSourceKey(key: string, lessons: Lesson[]): { source: WordSource; note: string | null } {
   if (key === 'all') return { source: { kind: 'all' }, note: null }
-  const usable = sourceLessons(lessons)
+  if (key === 'mine') return { source: { kind: 'mine' }, note: null }
+  const usable = lessons.filter((l) => (l.words ?? []).length > 0)
   const unit = /^unit:(\d+)$/.exec(key)
   if (unit && usable.some((l) => l.unit === Number(unit[1]))) return { source: { kind: 'unit', unit: Number(unit[1]) }, note: null }
   const lesson = /^lesson:(.+)$/.exec(key)
@@ -114,14 +131,15 @@ export function parseSourceKey(key: string, lessons: Lesson[]): { source: WordSo
 
 export function sourceLabel(s: WordSource, lessons: Lesson[]): string {
   if (s.kind === 'all') return 'all words'
+  if (s.kind === 'mine') return 'my words'
   if (s.kind === 'unit') return `Unit ${s.unit}`
   const l = lessons.find((x) => x.id === s.lessonId)
   if (!l) throw new Error(`No lesson "${s.lessonId}" for the word review`)
-  return `${l.unit}.${l.order} ${l.title}`
+  return isThemeLesson(l) ? `Theme: ${l.theme.title}` : `${l.unit}.${l.order} ${l.title}`
 }
 
-export interface WeakWord {
-  word: Word
+export interface WeakWord<W = StudyWord> {
+  word: W
   reasons: string[]
   score: number
 }
@@ -132,7 +150,7 @@ export const WEAK_WINDOW_DAYS = 14
  * Words worth extra practice: graded Again or a near miss in the last 14 days (scheduled reviews
  * only, not earlier practice), or forgotten before (FSRS lapses). Strongest first, at most limit.
  */
-export function weakWords(words: Word[], state: ReviewState, log: ReviewLogEntry[], now: Date, limit = 10): WeakWord[] {
+export function weakWords<W extends { id: string }>(words: W[], state: ReviewState, log: ReviewLogEntry[], now: Date, limit = 10): WeakWord<W>[] {
   const since = now.getTime() - WEAK_WINDOW_DAYS * 86_400_000
   const byId = new Map<string, { again: number; near: number; last: number }>()
   for (const e of log) {
@@ -144,7 +162,7 @@ export function weakWords(words: Word[], state: ReviewState, log: ReviewLogEntry
     cur.last = Math.max(cur.last, at)
     byId.set(e.wordId, cur)
   }
-  const out: (WeakWord & { last: number })[] = []
+  const out: (WeakWord<W> & { last: number })[] = []
   for (const w of words) {
     const card = state.cards[w.id]
     if (!card) continue
@@ -212,14 +230,15 @@ export interface Runway {
   totals: { words: number; tests: number; lessons: number }
 }
 
+/** Prepared content left: `lessons` are the course lessons (lessons left counts only those); `themes` only hold their words back until opened. */
 export function contentRunway(
-  input: { words: Word[]; tests: Test[]; lessons: Lesson[] },
+  input: { words: Word[]; tests: Test[]; lessons: CourseLesson[]; themes: ThemeLesson[] },
   p: LessonProgress,
   state: ReviewState,
   results: Result[],
   newPerDay: number,
 ): Runway {
-  const locked = lockedWordIds(input.lessons, p)
+  const locked = lockedWordIds([...input.lessons, ...input.themes], p)
   const fresh = input.words.filter((w) => !state.cards[w.id])
   const inLessons = fresh.filter((w) => locked.has(w.id)).length
   const taken = takenTestIds(results)

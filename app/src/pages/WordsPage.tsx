@@ -1,23 +1,32 @@
-// Word review with spaced repetition (FSRS). Three modes share one schedule per word.
-// When nothing is left, the "What next" menu offers more work instead of a dead end.
+// The Words page: word review with spaced repetition (FSRS; three modes share one schedule per
+// word) and the "All words" list, each a tab in the URL ("#/words", "#/words/all"). Hayk adds his
+// own words here too (DECISIONS.md #58). When nothing is left to review, the "What next" menu
+// offers more work instead of a dead end.
 import { useEffect, useRef, useState } from 'react'
 import type { FormEvent, ReactNode } from 'react'
 import { content } from '../content/load.ts'
-import type { Lesson, ReviewLogEntry, ReviewMode, ReviewState, StoredCard, Word } from '../content/schema.ts'
+import type { Lesson, ReviewLogEntry, ReviewMode, ReviewState, StoredCard } from '../content/schema.ts'
+import { AllWords } from '../components/AllWords.tsx'
 import { WhatNext } from '../components/WhatNext.tsx'
 import { nearMissText } from '../components/ResultView.tsx'
 import { De, GlossScope } from '../components/GermanText.tsx'
 import { PlayButtons } from '../components/Speaker.tsx'
+import { Tabs } from '../components/Tabs.tsx'
 import { UmlautBar } from '../components/UmlautBar.tsx'
+import { WordForm } from '../components/WordForm.tsx'
+import { asSentence, checkText, practiceWord } from '../lib/customWords.ts'
+import type { StudyWord } from '../lib/customWords.ts'
 import { localDay } from '../lib/dates.ts'
 import { messageOf, reportError } from '../lib/errors.ts'
-import { lessonStatus, parseSourceKey, sourceKey, sourceLabel, sourceLessons, wordsForSource } from '../lib/plan.ts'
+import { lessonStatus, parseSourceKey, sourceKey, sourceLabel, sourceLessons, sourceThemes, wordsForSource } from '../lib/plan.ts'
 import type { WordSource } from '../lib/plan.ts'
+import { link, tabOf } from '../lib/router.ts'
 import { updateSettings, useSettings } from '../lib/settings.ts'
 import { speak } from '../lib/speech.ts'
 import { counts, GRADES, LEARN_AHEAD_MS, nextCard, previewIntervals, Rating, review } from '../lib/srs.ts'
 import type { Grade } from '../lib/srs.ts'
 import { recordPractice, recordReview, requestFlush, useProgress } from '../lib/storage.ts'
+import type { CustomWordView } from '../lib/storage.ts'
 import { checkWord } from '../lib/text.ts'
 import type { Comparison } from '../lib/text.ts'
 
@@ -34,21 +43,41 @@ const GRADE_LABEL: Record<Grade, string> = {
   [Rating.Easy]: 'Easy',
 }
 
-export function WordsPage() {
+export const WORDS_TABS = ['review', 'all'] as const
+const TAB_LABEL = { review: 'Review', all: 'All words' } as const
+
+/** `tab` is the part after "#/words/": none for Review, "all" for All words. */
+export function WordsPage({ tab }: { tab?: string }) {
+  const current = tabOf(tab, WORDS_TABS)
+  if (current === null) {
+    return (
+      <div className="alert error">
+        The Words page has no tab "{tab}". <a href={link('words')}>Words</a>
+      </div>
+    )
+  }
+  return <Words tab={current} />
+}
+
+function Words({ tab }: { tab: (typeof WORDS_TABS)[number] }) {
   const progress = useProgress()
   const state = progress.reviewState
   const settings = useSettings()
   const [mode, setMode] = useState<ReviewMode | null>(null)
-  const [practice, setPractice] = useState<Word[] | null>(null)
+  const [practice, setPractice] = useState<StudyWord[] | null>(null)
   // Each practice start gets a fresh session, even from the "practice done" screen.
   const [practiceRun, setPracticeRun] = useState(0)
   // The pick applies at once, even if this device cannot save it (that error is shown).
   const [picked, setPicked] = useState<string | null>(null)
+  // The add/edit form for Hayk's own words, and what it last did.
+  const [form, setForm] = useState<{ editing: CustomWordView | null } | null>(null)
+  const [notice, setNotice] = useState<string | null>(null)
 
-  // Where the words come from (all, a unit, a lesson). With "all", words of lessons that are not
-  // open yet wait until their lesson is opened.
-  const { source, note } = parseSourceKey(picked ?? settings.wordSource, content.lessons)
-  const words = wordsForSource(source, content.words, content.lessons, progress.lessonProgress, state)
+  // Where the words come from (all, my words, a unit, a lesson). With "all", words of lessons
+  // (course or theme) that are not open yet wait until their lesson is opened.
+  const { source, note } = parseSourceKey(picked ?? settings.wordSource, content.allLessons)
+  const custom = progress.customWords.map(practiceWord)
+  const words = wordsForSource(source, content.words, custom, content.allLessons, progress.lessonProgress, state)
   function pick(key: string) {
     setPicked(key)
     try {
@@ -94,7 +123,7 @@ export function WordsPage() {
       <Session
         mode={mode}
         words={words}
-        sourceName={source.kind === 'all' ? null : sourceLabel(source, content.lessons)}
+        sourceName={source.kind === 'all' ? null : sourceLabel(source, content.allLessons)}
         state={state}
         onExit={() => {
           setMode(null)
@@ -106,65 +135,110 @@ export function WordsPage() {
     )
   }
 
+  function openForm(editing: CustomWordView | null) {
+    setNotice(null)
+    setForm({ editing })
+    window.scrollTo(0, 0)
+  }
+
   const c = counts(words, state, new Date(), settings.newPerDay)
   return (
     <div className="stack">
       <h1>Words</h1>
-      <SourcePicker source={source} onPick={pick} />
-      {note && <div className="alert warn">{note}</div>}
-      <div className="stats">
-        <div className="stat">
-          <div className="stat-num">{c.due}</div>
-          <div className="muted">due today</div>
-        </div>
-        <div className="stat">
-          <div className="stat-num">{c.newLeft}</div>
-          <div className="muted">new today (limit {settings.newPerDay})</div>
-        </div>
-        <div className="stat">
-          <div className="stat-num">{words.length}</div>
-          <div className="muted">{source.kind === 'all' ? 'in the word bank' : 'in this pick'}</div>
-        </div>
-      </div>
-      {c.due === 0 && c.newLeft === 0 && source.kind !== 'all' && (
-        <div className="alert warn">
-          <span>Nothing due in {sourceLabel(source, content.lessons)} and no new words from it today.</span>
-          <button type="button" className="btn small" onClick={() => pick('all')}>
-            Switch to all words
+      <Tabs page="words" tabs={WORDS_TABS} labels={TAB_LABEL} current={tab} />
+      {notice && (
+        <div className="alert ok" role="status">
+          <span>{notice}</span>
+          <button type="button" className="btn small" onClick={() => setNotice(null)}>
+            OK
           </button>
         </div>
       )}
-      <h2>Choose a mode</h2>
-      {MODES.map((m) => (
-        <button key={m.mode} type="button" className="card mode-card" onClick={() => setMode(m.mode)}>
-          <strong>{m.title}</strong>
-          <span className="muted">{m.desc}</span>
-        </button>
-      ))}
-      <p className="muted small">Keys on desktop: Space shows the answer, Enter checks a typed answer, 1-4 grade.</p>
-      {c.due === 0 && c.newLeft === 0 && (
+      {form ? (
+        <WordForm
+          key={form.editing?.id ?? 'new'}
+          editing={form.editing}
+          onDone={(message) => {
+            setForm(null)
+            setNotice(message)
+          }}
+          onCancel={() => setForm(null)}
+        />
+      ) : (
+        <div>
+          <button type="button" className="btn" onClick={() => openForm(null)}>
+            Add a word
+          </button>
+        </div>
+      )}
+      {tab === 'all' ? (
+        <AllWords onEdit={openForm} onNotice={setNotice} />
+      ) : (
+        // The Review tab: where the words come from, today's counts, the modes, and What next.
         <>
-          {source.kind === 'all' && <p>Nothing due and no new words left for today.</p>}
-          {whatNext}
+          <SourcePicker source={source} onPick={pick} />
+          {note && <div className="alert warn">{note}</div>}
+          <div className="stats">
+            <div className="stat">
+              <div className="stat-num">{c.due}</div>
+              <div className="muted">due today</div>
+            </div>
+            <div className="stat">
+              <div className="stat-num">{c.newLeft}</div>
+              <div className="muted">new today (limit {settings.newPerDay})</div>
+            </div>
+            <div className="stat">
+              <div className="stat-num">{words.length}</div>
+              <div className="muted">{source.kind === 'all' ? 'in the word bank' : 'in this pick'}</div>
+            </div>
+          </div>
+          {c.due === 0 && c.newLeft === 0 && source.kind !== 'all' && (
+            <div className="alert warn">
+              <span>Nothing due in {sourceLabel(source, content.allLessons)} and no new words from it today.</span>
+              <button type="button" className="btn small" onClick={() => pick('all')}>
+                Switch to all words
+              </button>
+            </div>
+          )}
+          <h2>Choose a mode</h2>
+          {MODES.map((m) => (
+            <button key={m.mode} type="button" className="card mode-card" onClick={() => setMode(m.mode)}>
+              <strong>{m.title}</strong>
+              <span className="muted">{m.desc}</span>
+            </button>
+          ))}
+          <p className="muted small">Keys on desktop: Space shows the answer, Enter checks a typed answer, 1-4 grade.</p>
+          {source.kind === 'mine' && words.length === 0 && <p className="muted">You have not added any words yet. Use "Add a word" above.</p>}
+          {c.due === 0 && c.newLeft === 0 && (
+            <>
+              {source.kind === 'all' && <p>Nothing due and no new words left for today.</p>}
+              {whatNext}
+            </>
+          )}
         </>
       )}
     </div>
   )
 }
 
-/** Where the words come from: all, one unit, or one lesson (grouped by unit, in course order). */
+/** Where the words come from: all, my words, one unit, or one lesson (grouped by unit, in course order), or a theme lesson. */
 function SourcePicker({ source, onPick }: { source: WordSource; onPick: (key: string) => void }) {
-  const progress = useProgress().lessonProgress
+  const view = useProgress()
+  const progress = view.lessonProgress
   const lessons = sourceLessons(content.lessons)
+  const themes = sourceThemes(content.themes)
   const units = [...new Set(lessons.map((l) => l.unit))]
   const unopened = (l: Lesson) => lessonStatus(progress, l.id) === 'not-started'
-  const pickedLessons = lessons.filter((l) => (source.kind === 'unit' ? l.unit === source.unit : source.kind === 'lesson' && l.id === source.lessonId))
+  const pickedLessons = [...lessons, ...themes].filter((l) =>
+    source.kind === 'unit' ? l.unit === source.unit : source.kind === 'lesson' && l.id === source.lessonId,
+  )
   const closed = pickedLessons.filter(unopened).length
   return (
     <label className="field">
       <span className="label">Words from</span>
       <select value={sourceKey(source)} onChange={(e) => onPick(e.target.value)}>
         <option value="all">All words (lessons unlock their words when opened)</option>
+        <option value="mine">{`My words (${view.customWords.length})`}</option>
         {units.map((u) => (
           <optgroup key={u} label={`Unit ${u}`}>
             <option value={sourceKey({ kind: 'unit', unit: u })}>{`All of Unit ${u}`}</option>
@@ -177,6 +251,15 @@ function SourcePicker({ source, onPick }: { source: WordSource; onPick: (key: st
               ))}
           </optgroup>
         ))}
+        {themes.length > 0 && (
+          <optgroup label="Themes">
+            {themes.map((l) => (
+              <option key={l.id} value={sourceKey({ kind: 'lesson', lessonId: l.id })}>
+                {`${l.theme.title}${unopened(l) ? ' (not opened yet)' : ''}`}
+              </option>
+            ))}
+          </optgroup>
+        )}
       </select>
       {closed > 0 && (
         <span className="small warn-text">
@@ -197,7 +280,7 @@ interface Failed {
 
 function Session(props: {
   mode: ReviewMode
-  words: Word[]
+  words: StudyWord[]
   /** The unit or lesson the words come from; null for all words. */
   sourceName: string | null
   state: ReviewState
@@ -242,7 +325,7 @@ function Session(props: {
     }
   }
 
-  function grade(word: Word, isNew: boolean, rating: Grade, typed: { answer: string; check: Comparison } | null, timeMs: number) {
+  function grade(word: StudyWord, isNew: boolean, rating: Grade, typed: { answer: string; check: Comparison } | null, timeMs: number) {
     const at = new Date()
     const out = review(state, word.id, rating, at)
     const entry: ReviewLogEntry = {
@@ -332,7 +415,7 @@ function Session(props: {
  * Extra practice of weak words. It does NOT change the FSRS schedule: each answer is only logged,
  * with practice: true, so the statistics and Claude can see it (DECISIONS.md #25).
  */
-function PracticeSession(props: { mode: ReviewMode; words: Word[]; state: ReviewState; onExit: () => void; whatNext: ReactNode }) {
+function PracticeSession(props: { mode: ReviewMode; words: StudyWord[]; state: ReviewState; onExit: () => void; whatNext: ReactNode }) {
   const { mode, words, state, onExit, whatNext } = props
   const [index, setIndex] = useState(0)
   const [again, setAgain] = useState(0)
@@ -358,7 +441,7 @@ function PracticeSession(props: { mode: ReviewMode; words: Word[]; state: Review
     }
   }
 
-  function grade(word: Word, rating: Grade, typed: { answer: string; check: Comparison } | null, timeMs: number) {
+  function grade(word: StudyWord, rating: Grade, typed: { answer: string; check: Comparison } | null, timeMs: number) {
     const card = state.cards[word.id]
     if (!card) throw new Error(`Practice word "${word.id}" has never been reviewed`)
     const at = new Date()
@@ -446,7 +529,7 @@ function isTyping(target: EventTarget | null): boolean {
 }
 
 function Card(props: {
-  word: Word
+  word: StudyWord
   isNew: boolean
   mode: ReviewMode
   /** Next interval per grade; null in practice, where grades do not reschedule. */
@@ -503,11 +586,18 @@ function Card(props: {
   const suggested: Grade | null = check ? (check.correct ? Rating.Good : Rating.Again) : null
   const near = nearMissText(check?.nearMiss)
 
+  const claude = checkText(word.custom?.check)
+  const typedByHayk = word.custom?.typed
   return (
-    // Word popups only once the answer is shown (Hayk, 2026-09-29).
-    <GlossScope surface={{ kind: 'review-card', revealed: done }}>
+    // Word popups only once the answer is shown (Hayk, 2026-09-29); never on his own words (glossary/gate.ts).
+    <GlossScope surface={word.custom ? { kind: 'custom-word' } : { kind: 'review-card', revealed: done }}>
     <section className="card word-card">
-      {isNew && <span className="badge pending">new word</span>}
+      {(isNew || word.custom) && (
+        <span className="row">
+          {isNew && <span className="badge pending">new word</span>}
+          {word.custom && <span className="badge">my word</span>}
+        </span>
+      )}
 
       {mode === 'recognition' && (
         <p className="word-big">
@@ -575,6 +665,19 @@ function Card(props: {
               <De text={word.example.de} />
               {word.example.en && <div className="muted">{word.example.en}</div>}
             </div>
+          )}
+          {word.custom?.note && <p className="small muted">Your note: {word.custom.note}</p>}
+          {claude && (
+            <p className={`small ${word.custom?.check?.ok ? 'muted' : 'warn-text'}`}>
+              {asSentence(claude)}
+              {!word.custom?.check?.ok && typedByHayk && (
+                <>
+                  {' '}
+                  You wrote: <span lang="de">{typedByHayk.de}</span>
+                  {typedByHayk.plural ? `, plural ${typedByHayk.plural}` : ''} = {typedByHayk.en}
+                </>
+              )}
+            </p>
           )}
           <div className="grades">
             {GRADES.map((g) => (

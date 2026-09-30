@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import type { Word } from '../content/schema.ts'
 import { ReviewState as ReviewStateSchema } from '../content/schema.ts'
-import { counts, emptyState, fromStored, laterCard, nextCard, Rating, review, State, toStored } from './srs.ts'
+import { counts, emptyState, fromStored, introducedCard, laterCard, nextCard, Rating, review, State, toStored } from './srs.ts'
 
 const word = (id: string): Word => ({ id, de: id, en: id, level: 'A1', added: '2026-09-28' })
 const words = ['a', 'b', 'c'].map(word)
@@ -85,5 +85,30 @@ describe('laterCard', () => {
     expect(laterCard(early, twin)).toBe(twin)
     const never = { ...early, last_review: null }
     expect(laterCard(early, never)).toBe(early)
+  })
+})
+
+describe('custom words and cards added from a lesson hint', () => {
+  const own = { id: 'u-00000000-0000-4000-8000-000000000001', de: 'der Stau', en: 'traffic jam' }
+
+  it('introduces a custom word right away, outside the daily limit, and does not count it', () => {
+    // The daily limit of 1 is used up by "a".
+    const s = review(emptyState(t0), 'a', Rating.Good, t0).state
+    const later = minutes(t0, 1)
+    expect(counts([...words, own], s, later, 1)).toEqual({ due: 1, newLeft: 1 })
+    expect(nextCard([...words, own], s, later, 1)).toEqual({ kind: 'card', word: own, isNew: true })
+    const after = review(s, own.id, Rating.Good, later)
+    expect(after.state.newToday.count).toBe(1)
+  })
+
+  it('shows a card that exists but was never reviewed as a new word, due at once', () => {
+    const s = { ...emptyState(t0), cards: { b: introducedCard(t0) } }
+    expect(nextCard(words, s, minutes(t0, 1), 0)).toEqual({ kind: 'card', word: words[1], isNew: true })
+    const out = review(s, 'b', Rating.Good, minutes(t0, 1))
+    expect(out.after.reps).toBe(1)
+    // Its first review counts as one of today's new words, like a word whose lesson was opened.
+    expect(out.state.newToday.count).toBe(1)
+    // A card that was never reviewed never replaces a reviewed one.
+    expect(laterCard(out.after, introducedCard(minutes(t0, 5)))).toBe(out.after)
   })
 })

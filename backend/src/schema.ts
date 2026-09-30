@@ -1,7 +1,9 @@
 // What the app may upload. These mirror the synced types in app/src/content/schema.ts
 // (ReviewLogEntry, StoredCard, Result, ResultItem, LessonProgress, ReviewState.newToday.extra)
-// as of 2026-09-29 02:00, plus a client-generated id on events and attempts, and the app's
-// note record (NoteRecord in app/src/lib/outbox.ts, text rules of NoteText in schema.ts; added 2026-09-30).
+// as of 2026-09-29 02:00, plus a client-generated id on events and attempts, the app's
+// note record (NoteRecord in app/src/lib/outbox.ts, text rules of NoteText in schema.ts; added 2026-09-30),
+// and the custom word record (CustomWordRecord in app/src/lib/outbox.ts, fields and limits of
+// CustomWordFields / CUSTOM_WORD_MAX in schema.ts; added 2026-09-30).
 // KEEP THEM IN STEP: when the app changes one of those types, change it here and redeploy.
 // Objects are strict on purpose: a key this API does not know is a 400 that names the key,
 // instead of data silently dropped on the way into the database.
@@ -163,6 +165,35 @@ export const NoteUpload = z
     }
   })
 
+// ---------- custom words (Hayk's own words; Claude's check is never uploaded) ----------
+
+/** The same limits as the app (CUSTOM_WORD_MAX in app/src/content/schema.ts) and the table (003_custom_words.sql). */
+export const CUSTOM_WORD_MAX = { de: 100, en: 200, plural: 100, example: 300, note: 500 } as const
+
+const upTo = (max: number) =>
+  z.string().max(max, { message: `must be at most ${max} characters` }).regex(/\S/, { message: 'must not be empty or only whitespace' })
+
+export const CustomWordUpload = z
+  .strictObject({
+    /** "u-" + crypto.randomUUID(): never a content word id. Also the word id of its card and reviews. */
+    id: z.string().regex(/^u-[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/, { message: 'must be "u-" followed by a lowercase UUID' }),
+    de: upTo(CUSTOM_WORD_MAX.de),
+    en: upTo(CUSTOM_WORD_MAX.en),
+    plural: upTo(CUSTOM_WORD_MAX.plural).optional(),
+    example: z.strictObject({ de: upTo(CUSTOM_WORD_MAX.example), en: upTo(CUSTOM_WORD_MAX.example).optional() }).optional(),
+    note: upTo(CUSTOM_WORD_MAX.note).optional(),
+    createdAt: IsoDateTime,
+    updatedAt: IsoDateTime,
+    /** Soft delete. */
+    deletedAt: IsoDateTime.optional(),
+    // No "check": only Claude writes it (backend/scripts/progress.py check-word). Sending one is a 400.
+  })
+  .superRefine((w, ctx) => {
+    if (Date.parse(w.updatedAt) < Date.parse(w.createdAt)) {
+      ctx.addIssue({ code: 'custom', path: ['updatedAt'], message: 'is before createdAt' })
+    }
+  })
+
 // ---------- one sync batch ----------
 
 function checkUnique<T>(list: T[], key: (x: T) => string, field: string, name: string, ctx: z.RefinementCtx): void {
@@ -182,6 +213,7 @@ export const SyncBody = z
     lessons: z.array(LessonUpload).max(SYNC_LIMITS.lessons).default([]),
     newWordExtras: z.array(NewWordExtraUpload).max(SYNC_LIMITS.newWordExtras).default([]),
     notes: z.array(NoteUpload).max(SYNC_LIMITS.notes).default([]),
+    customWords: z.array(CustomWordUpload).max(SYNC_LIMITS.customWords).default([]),
   })
   .superRefine((b, ctx) => {
     checkUnique(b.reviewEvents, (e) => e.id, 'reviewEvents', 'id', ctx)
@@ -190,6 +222,7 @@ export const SyncBody = z
     checkUnique(b.lessons, (l) => l.lessonId, 'lessons', 'lessonId', ctx)
     checkUnique(b.newWordExtras, (x) => x.localDay, 'newWordExtras', 'localDay', ctx)
     checkUnique(b.notes, (n) => n.id, 'notes', 'id', ctx)
+    checkUnique(b.customWords, (w) => w.id, 'customWords', 'id', ctx)
   })
 
 export type ReviewEventUpload = z.infer<typeof ReviewEventUpload>
@@ -199,4 +232,5 @@ export type AttemptUpload = z.infer<typeof AttemptUpload>
 export type LessonUpload = z.infer<typeof LessonUpload>
 export type NewWordExtraUpload = z.infer<typeof NewWordExtraUpload>
 export type NoteUpload = z.infer<typeof NoteUpload>
+export type CustomWordUpload = z.infer<typeof CustomWordUpload>
 export type SyncBody = z.infer<typeof SyncBody>

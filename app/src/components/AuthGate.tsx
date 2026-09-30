@@ -2,6 +2,7 @@
 // loaded, or for a guest (no account, nothing saved).
 import { useEffect, useState } from 'react'
 import type { FormEvent, ReactNode } from 'react'
+import { loginEmail } from '../lib/auth.ts'
 import { messageOf } from '../lib/errors.ts'
 import { boot, continueAsGuest, retry, signInWith, signOutNow, signUpWith, useSession } from '../lib/session.ts'
 import { startAutoSync } from '../lib/storage.ts'
@@ -117,8 +118,9 @@ function LoginPage({ notice }: { notice: string | null }) {
     }
     setBusy(true)
     try {
-      if (mode === 'sign-in') await signInWith(email.trim(), password)
-      else await signUpWith(email.trim(), password)
+      // "Anahit" signs in as anahit@nemeceren.example (DECISIONS.md #60); an email stays as it is.
+      if (mode === 'sign-in') await signInWith(loginEmail(email), password)
+      else await signUpWith(loginEmail(email), password)
     } catch (err) {
       setError(messageOf(err))
     } finally {
@@ -138,8 +140,17 @@ function LoginPage({ notice }: { notice: string | null }) {
       <form className="card stack login" onSubmit={(e) => void submit(e)}>
         <h2>{mode === 'sign-in' ? 'Sign in' : 'Create account'}</h2>
         <label className="field">
-          <span className="label">Email</span>
-          <input type="email" autoComplete="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
+          <span className="label">Email or name</span>
+          <input
+            type="text"
+            autoComplete="username"
+            autoCapitalize="off"
+            autoCorrect="off"
+            spellCheck={false}
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
         </label>
         <label className="field">
           <span className="label">Password</span>

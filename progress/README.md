@@ -1,21 +1,24 @@
 # Progress (moved to Neon)
 
-Hayk's progress is no longer stored in this folder. Since 2026-09-29 it lives in a private Neon Postgres database behind the API in `backend/` (DECISIONS.md #21): word reviews, FSRS cards, test and lesson-exercise attempts, Claude's reviews, lesson progress, extra new words, and (since 2026-09-30) Hayk's notes with Claude's feedback. The app signs in with Neon Auth and syncs through `GET /v1/state` and `POST /v1/sync`; each device keeps unsynced changes in a local outbox until they are sent.
+Hayk's progress is no longer stored in this folder. Since 2026-09-29 it lives in a private Neon Postgres database behind the API in `backend/` (DECISIONS.md #21): word reviews, FSRS cards, test and lesson-exercise attempts, Claude's reviews, lesson progress, extra new words, and (since 2026-09-30) Hayk's notes with Claude's feedback and his own words with Claude's check. The app signs in with Neon Auth and syncs through `GET /v1/state` and `POST /v1/sync`; each device keeps unsynced changes in a local outbox until they are sent.
 
 Claude reads and grades progress from the repo root:
 
 ```bash
-uv run backend/scripts/progress.py summary --days 7      # activity, words, most-missed words, lessons, attempts and notes waiting
+uv run backend/scripts/progress.py summary --days 7      # activity, words, most-missed words, lessons, attempts, notes and own words waiting
 uv run backend/scripts/progress.py ungraded              # attempts waiting for a review
 uv run backend/scripts/progress.py show <attempt-id>     # one attempt in full
 uv run backend/scripts/progress.py review <attempt-id> review.json
 uv run backend/scripts/progress.py notes --pending       # notes waiting for feedback (without --pending: every note not deleted)
 uv run backend/scripts/progress.py note <note-id>        # one note in full, with its feedback
 uv run backend/scripts/progress.py note-feedback <note-id> feedback.json   # "-" reads stdin; --replace overwrites
-uv run backend/scripts/progress.py self-check            # offline check of the feedback validator
+uv run backend/scripts/progress.py my-words --unchecked  # Hayk's own words without a check yet (without --unchecked: every word not deleted)
+uv run backend/scripts/progress.py check-word <word-id> ok [--note "..."]
+uv run backend/scripts/progress.py check-word <word-id> fix --de "der Stau" [--en "..."] [--plural "die Staus"] [--note "..."]   # --replace overwrites a check
+uv run backend/scripts/progress.py self-check            # offline check of the feedback and word-check validators
 ```
 
-Data commands take `--user <email>`. Without it they use the only allowed user apart from Claude's test account, and stop with an error when there are several.
+Data commands take `--user <email>`. Without it they use `NEMECEREN_DEFAULT_USER` from the gitignored `.env.local` (Hayk), or else the only allowed user apart from Claude's test account, and stop with an error when there are several.
 
 A review (the file given to `progress.py review`) is Claude's grading of one attempt; the app shows it next to Hayk's answers, and each verdict overrides the auto-grade in the score:
 
@@ -57,3 +60,14 @@ The feedback (the file given to `progress.py note-feedback`) follows the teachin
 - `at` is set by the script; do not send it.
 - The app shows the summary and hints at once; the corrected text and the edits appear after "Show corrections", mistakes apart from style suggestions. There are no word popups in notes or feedback.
 - The script refuses feedback that the app could not show (the schema is `NoteFeedback` in `app/src/content/schema.ts`), feedback on a deleted note, and a second feedback without `--replace`.
+
+## Hayk's own words and Claude's check
+
+Hayk adds words he hears in daily life on the app's Words page ("Add a word"). A custom word is `{ id: "u-<uuid>", de, en, plural?, example?: { de, en? }, note?, createdAt, updatedAt, deletedAt? }`; the `u-` prefix keeps it apart from the ids in `content/words.json`, and its FSRS card and reviews are stored under the same id like any other word. It is practised right away, on top of the daily new-word limit, then it is a normal FSRS card. Hayk can edit or delete it; a delete is soft (the word leaves practice, its reviews stay in the statistics).
+
+Claude checks new words with `progress.py`: `my-words --unchecked` lists them (German, plural, English, example, Hayk's note, reviews so far), then for each one either
+
+- `check-word <id> ok [--note "..."]`: fine as it is; the app shows "checked by Claude";
+- `check-word <id> fix --de/--en/--plural ... [--note "..."]`: the corrected fields, which the app shows instead of Hayk's in practice and in the "All words" list, with "corrected by Claude: <note>" and what Hayk wrote. Nouns get their article in `--de` ("der Stau") and the full plural in `--plural` ("die Staus"); check gender and plural in `reference/german_nouns.csv` first (CLAUDE.md).
+
+The check is `WordCheck` in `app/src/content/schema.ts`: `{ at, ok, note?, fixed?: { de?, en?, plural? } }` (`at` is set by the script; `ok: true` has no `fixed`, `ok: false` has at least one fixed field). When Hayk edits a checked word, the check is cleared and the word is "waiting for a check" again; `summary` counts these as "Own words waiting for a check".

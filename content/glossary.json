@@ -1,6 +1,61 @@
 {
-  "ignore": ["Hayk", "Charlotte", "Eva", "Meier", "Müller", "Schmidt", "Thomas", "Weber", "Aram", "Tarkhanyan", "Goethestraße", "Siemens"],
+  "ignore": ["Hayk", "Charlotte", "Eva", "Meier", "Müller", "Schmidt", "Thomas", "Weber", "Aram", "Tarkhanyan", "Goethestraße", "Siemens", "Berlin"],
   "entries": {
+    "sitz": [
+      {"lemma": "sitzen", "pos": "verb", "form": "ich form, spoken", "level": "A1", "gloss": ["to sit"], "note": "ich sitz = ich sitze (the -e is dropped in speech and songs). Also the du command: Sitz!"}
+    ],
+    "träum": [
+      {"lemma": "träumen", "pos": "verb", "form": "ich form, spoken", "level": "A2", "gloss": ["to dream"], "note": "ich träum = ich träume (the -e is dropped in speech and songs)."}
+    ],
+    "sing": [
+      {"lemma": "singen", "pos": "verb", "form": "ich form, spoken", "level": "A1", "gloss": ["to sing"], "note": "ich sing = ich singe (the -e is dropped in speech and songs)."}
+    ],
+    "aus": [
+      {"lemma": "aus", "pos": "preposition", "level": "A1", "gloss": ["from"], "note": "Ich komme aus Armenien."},
+      {"lemma": "aus", "pos": "adverb", "level": "A1", "gloss": ["out, off, over"], "note": "Das Licht ist aus. = The light is off. At the end of a count: out!"}
+    ],
+    "alle": [
+      {"lemma": "alle", "pos": "pronoun", "level": "A1", "gloss": ["everyone, all"], "note": "Alle warten. = Everyone is waiting."}
+    ],
+    "Alle": [
+      {"lemma": "alle", "pos": "pronoun", "level": "A1", "gloss": ["everyone, all"], "note": "Alle warten. = Everyone is waiting."}
+    ],
+    "allen": [
+      {"lemma": "all", "pos": "determiner", "form": "dative plural", "level": "A1", "gloss": ["all"], "note": "von allen = of all"}
+    ],
+    "wird": [
+      {"lemma": "werden", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["will (future); becomes"], "note": "Sie wird nicht untergehen. = It will not set."}
+    ],
+    "lässt": [
+      {"lemma": "lassen", "pos": "verb", "form": "du and er/sie/es form, present", "level": "A2", "gloss": ["lets; makes (someone do something)"]}
+    ],
+    "euch": [
+      {"lemma": "ihr", "pos": "pronoun", "form": "accusative and dative", "level": "A1", "gloss": ["you (plural); yourselves"], "note": "Fürchtet euch nicht! = Don't be afraid (you all)!"}
+    ],
+    "dabei": [
+      {"lemma": "dabei", "pos": "adverb", "level": "A2", "gloss": ["while doing it, at the same time"], "note": "Ich singe dabei. = I sing while I'm at it."}
+    ],
+    "nackt": [
+      {"lemma": "nackt", "pos": "adjective", "gloss": ["naked"]}
+    ],
+    "Boden": [
+      {"lemma": "Boden", "pos": "noun", "article": "der", "plural": "Böden", "level": "B1", "gloss": ["floor; ground"], "note": "zu Boden gehen = to go down (in boxing)"}
+    ],
+    "war'n": [
+      {"lemma": "sein", "pos": "verb", "form": "wir/sie form, past", "level": "A1", "gloss": ["were"], "note": "Sung or spoken short form of waren."}
+    ],
+    "rum": [
+      {"lemma": "herum", "pos": "adverb", "level": "B1", "gloss": ["around"], "note": "Spoken short form of herum: rumsitzen = herumsitzen (to sit around)."}
+    ],
+    "heut": [
+      {"lemma": "heute", "pos": "adverb", "level": "A1", "gloss": ["today"], "note": "Sung or spoken short form of heute. heut Nacht = tonight."}
+    ],
+    "untergeh'n": [
+      {"lemma": "untergehen", "pos": "verb", "gloss": ["to set (the sun); to sink, to go down"], "note": "Sung short form of untergehen. Die Sonne geht unter. = The sun is setting."}
+    ],
+    "geh'n": [
+      {"lemma": "gehen", "pos": "verb", "level": "A1", "gloss": ["to go"], "note": "Sung short form of gehen. zu Boden gehen = to go down (in boxing)."}
+    ],
     "ja": [
       {"lemma": "ja", "pos": "interjection", "level": "A1", "gloss": ["yes"]}
     ],

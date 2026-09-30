@@ -10,14 +10,14 @@ export function normalizeSpaces(s: string): string {
   return s.trim().replace(/\s+/g, ' ')
 }
 
-function foldSpelled(s: string): string {
+export function foldSpelled(s: string): string {
   return s
     .replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue')
     .replace(/Ä/g, 'Ae').replace(/Ö/g, 'Oe').replace(/Ü/g, 'Ue')
     .replace(/ß/g, 'ss').replace(/ẞ/g, 'SS')
 }
 
-function foldBare(s: string): string {
+export function foldBare(s: string): string {
   return s
     .replace(/ä/g, 'a').replace(/ö/g, 'o').replace(/ü/g, 'u')
     .replace(/Ä/g, 'A').replace(/Ö/g, 'O').replace(/Ü/g, 'U')

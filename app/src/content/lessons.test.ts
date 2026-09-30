@@ -66,15 +66,16 @@ describe('lesson validation', () => {
         lessonFile({ ...base, words: ['hallo', 'tschuess'], tests: ['t1', 't9'], sections: [{ type: 'exercise', items: [{ type: 'dictation', text: 'Hallo' }] }] }),
         lessonFile({ ...base, id: 'u1-01-y', sections: [{ id: 'tip', type: 'tip', text: 't' }] }, 'content/lessons/u1-01-y.json'),
       ],
+      themes: [],
       topics: { file: 'content/topics.json', text: JSON.stringify({ groups: [{ id: 'g', title: 'G', summary: 'S', items: [{ title: 'T', lesson: 'u1-01-y', section: 'tip' }] }] }) },
       extras,
     })
     expect(out.problems).toEqual([
+      'content/lessons/u1-01-y.json: order: unit 1 already has a lesson with order 1 (u1-01-x)',
       'content/lessons/u1-01-x.json: words[1]: no word with id "tschuess" in content/words.json',
       'content/lessons/u1-01-x.json: tests[1]: no test with id "t9" in content/tests/',
       'content/lessons/u1-01-x.json: sections[0]: its results would be saved as "u1-01-x-ex1", which is also a test id',
-      'content/lessons/u1-01-y.json: order: unit 1 already has a lesson with order 1 (u1-01-x)',
-      'content/tests/t2.json: lesson: no lesson with id "nope" in content/lessons/',
+      'content/tests/t2.json: lesson: no lesson with id "nope" in content/lessons/ or content/themes/',
       'content/tests/t3.json: unit: 2 but its lesson "u1-01-x" is in unit 1',
     ])
   })
