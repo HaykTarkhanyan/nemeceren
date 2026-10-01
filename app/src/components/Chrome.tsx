@@ -1,6 +1,6 @@
-// App frame: header with navigation, sync status, theme and settings buttons, the guest banner,
-// error banner, voice warning.
-import { Component } from 'react'
+// App frame: header with navigation, sync status, study timer, theme and settings buttons, the
+// guest banner, error banner, voice warning.
+import { Component, useState } from 'react'
 import type { ReactNode } from 'react'
 import { dismissError, useErrors } from '../lib/errors.ts'
 import { link } from '../lib/router.ts'
@@ -8,11 +8,15 @@ import { leaveGuest, useIsGuest } from '../lib/session.ts'
 import { NO_VOICE_HELP, useSpeech } from '../lib/speech.ts'
 import { nextTheme, setTheme, useTheme } from '../lib/theme.ts'
 import type { Theme } from '../lib/theme.ts'
+import type { StopPlan } from '../lib/timer.ts'
+import { HeaderTimer, TimerStopPanel } from './StudyTimer.tsx'
 import { SyncStatusLine } from './SyncStatus.tsx'
 
 export function Header({ route }: { route: string[] }) {
   const here = route[0] ?? ''
   const guest = useIsGuest()
+  // What Stop would save, while the stop panel is open under the header bar.
+  const [stopping, setStopping] = useState<StopPlan | null>(null)
   const nav: [string, string][] = [
     ['', 'Home'],
     ['lessons', 'Lessons'],
@@ -39,10 +43,12 @@ export function Header({ route }: { route: string[] }) {
         </nav>
         <div className="header-tools">
           {!guest && <SyncStatusLine compact />}
+          <HeaderTimer onStop={setStopping} stopping={stopping !== null} />
           <ThemeButton />
           <SettingsButton active={here === 'settings'} />
         </div>
       </div>
+      {stopping && <TimerStopPanel key={`${stopping.startedAt}-${stopping.endedAt}`} plan={stopping} onClose={() => setStopping(null)} />}
     </header>
   )
 }

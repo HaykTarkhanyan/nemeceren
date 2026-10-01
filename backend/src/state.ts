@@ -2,18 +2,21 @@
 //   cards           every FSRS card (the review state)
 //   reviewEvents    raw word reviews from the last `days` days, oldest first (Stats charts,
 //                   weak words, newToday)
-//   studyDays       every local day with any activity, ever (streaks need the whole history)
+//   studyDays       every local day with any activity, ever (streaks need the whole history):
+//                   a review, an answered test item, or a study session that is not deleted
 //   attempts        every test attempt with its items and Claude's review, newest first
 //   lessonProgress  the app's LessonProgress, exactly
 //   newWordExtras   extra new words asked for, per local day, for the days in the window
 //   notes           every note that is not deleted, with Claude's feedback (or null), newest first
 //   customWords     every custom word (Hayk's own words) that is not deleted, with Claude's check, oldest first
+//   studySessions   study sessions (the timer, or added by hand) that are not deleted and started in the
+//                   last `days` days (the same window as reviewEvents), oldest first
 // The field names match the app's types (app/src/content/schema.ts), plus an `id` on events and
 // attempts. Keys the app models as optional (not nullable) are left out when empty.
 import { withTransaction } from './db.ts'
 import type { StoredCard } from './schema.ts'
-import { CUSTOM_WORD_JSON, NOTE_JSON } from './sync.ts'
-import type { CustomWordRecord, NoteRecord } from './sync.ts'
+import { CUSTOM_WORD_JSON, NOTE_JSON, STUDY_SESSION_JSON } from './sync.ts'
+import type { CustomWordRecord, NoteRecord, StudySessionRecord } from './sync.ts'
 
 interface LessonRecord {
   startedAt: string
@@ -34,6 +37,7 @@ export interface StateResponse {
   newWordExtras: Record<string, number>
   notes: NoteRecord[]
   customWords: CustomWordRecord[]
+  studySessions: StudySessionRecord[]
 }
 
 interface EventRow {
@@ -121,11 +125,14 @@ export async function loadState(userId: string, days: number): Promise<StateResp
     }))
 
     // A test attempt makes a study day only if at least one item was answered (as in app/src/lib/stats.ts).
-    // Practice reviews count (they are review_events rows too).
+    // Practice reviews count (they are review_events rows too), and so does a study session that is not
+    // deleted (the timer, or time added by hand; DECISIONS.md #62).
     const dayRows = await client.query<{ day: string }>(
       `SELECT local_day AS day FROM review_events WHERE user_id = $1
        UNION
        SELECT local_day FROM test_attempts WHERE user_id = $1 AND answered_items > 0
+       UNION
+       SELECT local_day FROM study_sessions WHERE user_id = $1 AND deleted_at IS NULL
        ORDER BY 1`,
       [userId],
     )
@@ -189,6 +196,13 @@ export async function loadState(userId: string, days: number): Promise<StateResp
       [userId],
     )
 
+    const sessionRows = await client.query<{ session: StudySessionRecord }>(
+      `SELECT ${STUDY_SESSION_JSON('ss')} AS session FROM study_sessions ss
+        WHERE ss.user_id = $1 AND ss.deleted_at IS NULL AND ss.started_at >= $2
+        ORDER BY ss.started_at, ss.id`,
+      [userId, clock.since],
+    )
+
     return {
       serverTime: clock.now.toISOString(),
       userId,
@@ -201,6 +215,7 @@ export async function loadState(userId: string, days: number): Promise<StateResp
       newWordExtras,
       notes: noteRows.rows.map((r) => r.note),
       customWords: wordRows.rows.map((r) => r.word),
+      studySessions: sessionRows.rows.map((r) => r.session),
     }
   })
 }

@@ -1,5 +1,6 @@
-// Guest mode through the app's real wiring (session.ts + the app's progress store): no call to the
-// auth module, no fetch, no browser storage. The auth module is replaced by spies that fail loudly.
+// Guest mode through the app's real wiring (session.ts + the app's progress store and study timer):
+// no call to the auth module, no fetch, no browser storage. The auth module is replaced by spies
+// that fail loudly.
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import type { Result } from '../content/schema.ts'
 
@@ -20,6 +21,7 @@ vi.mock('./auth.ts', () => ({ ...auth, AuthFailure: class AuthFailure extends Er
 import { continueAsGuest, leaveGuest } from './session.ts'
 import { emptyState, Rating, review } from './srs.ts'
 import { progressStore } from './storage.ts'
+import { planStop, timerStore } from './timer.ts'
 
 afterEach(() => {
   vi.unstubAllGlobals()
@@ -72,9 +74,25 @@ describe('guest mode in the app', () => {
     await store.flush({ manual: true })
     expect(store.getView().results).toHaveLength(1)
 
+    // The study timer runs in memory: start, pause, resume, stop and save a session.
+    const timer = timerStore()
+    expect(timer.getSnapshot()).toEqual({ attached: true, state: null })
+    timer.start()
+    timer.pause()
+    timer.resume()
+    const running = timer.getSnapshot().state!
+    const plan = planStop(running, running.startedAt + 25 * 60_000)
+    store.saveStudySession({ startedAt: new Date(plan.startedAt).toISOString(), endedAt: new Date(plan.endedAt).toISOString(), activeMs: plan.activeMs, label: 'guest' })
+    timer.clear()
+    store.addManualStudySession('2026-09-29', 10, '')
+    expect(store.getView().studySessions).toHaveLength(2)
+    timer.start()
+
     leaveGuest()
     expect(store.isGuest()).toBe(false)
     expect(store.hasView()).toBe(false)
+    // Leaving guest mode drops the running guest timer too.
+    expect(timer.getSnapshot()).toEqual({ attached: false, state: null })
 
     expect(fetchSpy).not.toHaveBeenCalled()
     for (const fn of Object.values(auth)) expect(fn).not.toHaveBeenCalled()

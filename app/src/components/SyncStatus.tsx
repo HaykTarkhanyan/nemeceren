@@ -33,7 +33,7 @@ function tone(s: SyncStatus): string {
 
 /**
  * The status with a "Sync now" button. `compact` (the header) shows only a coloured dot, with the
- * text as its tooltip; the dot links to Settings, where the full line is.
+ * text as its tooltip, and "Sync now" as an icon; the dot links to Settings, where the full line is.
  */
 export function SyncStatusLine({ compact = false }: { compact?: boolean }) {
   const s = useSyncStatus()
@@ -54,11 +54,20 @@ export function SyncStatusLine({ compact = false }: { compact?: boolean }) {
           {text}
         </span>
       )}
-      {canSync && (
-        <button type="button" className="btn small" onClick={() => void syncNow()}>
-          Sync now
-        </button>
-      )}
+      {canSync &&
+        (compact ? (
+          // An icon in the header, so the timer fits on one line from 900 px (DECISIONS.md #63).
+          <button type="button" className="icon-btn" aria-label="Sync now" title={`Sync now: ${text}`} onClick={() => void syncNow()}>
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+              <path d="M19.5 10A8 8 0 0 0 5.6 7M4.5 14a8 8 0 0 0 13.9 3" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+              <path fill="currentColor" d="M3.5 3.5v6h6zM20.5 20.5v-6h-6z" />
+            </svg>
+          </button>
+        ) : (
+          <button type="button" className="btn small" onClick={() => void syncNow()}>
+            Sync now
+          </button>
+        ))}
     </span>
   )
 }

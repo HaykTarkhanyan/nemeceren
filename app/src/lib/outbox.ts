@@ -5,8 +5,8 @@
 // later last_review wins, per lesson the later updatedAt, per day the larger extra, per note the
 // later updatedAt unless the server's note has Claude's feedback (then it is locked and the
 // server's version stands), per custom word the later updatedAt (an edit clears Claude's check,
-// a delete keeps it); events and attempts are identified by client-made UUIDs, so a resend
-// is harmless.
+// a delete keeps it), per study session the later updatedAt; events and attempts are identified
+// by client-made UUIDs, so a resend is harmless.
 import { z } from 'zod'
 import {
   CustomWord as CustomWordSchema,
@@ -16,8 +16,20 @@ import {
   NoteFeedback as NoteFeedbackSchema,
   NoteText,
   StoredCard as StoredCardSchema,
+  StudySession as StudySessionSchema,
+  StudySessionRecord as StudySessionRecordSchema,
 } from '../content/schema.ts'
-import type { CustomWord, LessonProgress, NoteFeedback, Result, ReviewLogEntry, ReviewState, StoredCard } from '../content/schema.ts'
+import type {
+  CustomWord,
+  LessonProgress,
+  NoteFeedback,
+  Result,
+  ReviewLogEntry,
+  ReviewState,
+  StoredCard,
+  StudySession,
+  StudySessionRecord,
+} from '../content/schema.ts'
 import { ContentError, parseLessonProgress, parseResult, parseReviewLog } from '../content/validate.ts'
 import { isCustomWordId, sameFields } from './customWords.ts'
 import type { CustomWordFields } from './customWords.ts'
@@ -43,6 +55,9 @@ export type ServerNote = NoteRecord & { id: string; feedback: NoteFeedback | nul
 /** A custom word as the app writes it (the upload, without the id and without Claude's check). deletedAt is a soft delete. */
 export type CustomWordRecord = CustomWordFields & { createdAt: string; updatedAt: string; deletedAt?: string }
 
+/** StudySessionRecord: a study session as the app writes it (the upload, without the id); deletedAt is a soft delete. */
+export type { StudySession, StudySessionRecord }
+
 export interface Outbox {
   version: 1
   reviewEvents: ReviewEventUpload[]
@@ -57,10 +72,12 @@ export interface Outbox {
   notes: Record<string, NoteRecord>
   /** Latest local record per custom word id. */
   customWords: Record<string, CustomWordRecord>
+  /** Latest local record per study session id. */
+  studySessions: Record<string, StudySessionRecord>
 }
 
 export function emptyOutbox(): Outbox {
-  return { version: 1, reviewEvents: [], cards: {}, attempts: [], lessons: {}, newWordExtras: {}, notes: {}, customWords: {} }
+  return { version: 1, reviewEvents: [], cards: {}, attempts: [], lessons: {}, newWordExtras: {}, notes: {}, customWords: {}, studySessions: {} }
 }
 
 export function outboxSize(o: Outbox): number {
@@ -71,7 +88,8 @@ export function outboxSize(o: Outbox): number {
     Object.keys(o.lessons).length +
     Object.keys(o.newWordExtras).length +
     Object.keys(o.notes).length +
-    Object.keys(o.customWords).length
+    Object.keys(o.customWords).length +
+    Object.keys(o.studySessions).length
   )
 }
 
@@ -97,7 +115,7 @@ export function sameJson(a: unknown, b: unknown): boolean {
 // ---------- batches (POST /v1/sync) ----------
 
 /** The API's per-request limits (backend/src/config.ts SYNC_LIMITS). */
-export const SYNC_LIMITS = { reviewEvents: 1000, cards: 2000, attempts: 20, lessons: 500, newWordExtras: 31, notes: 50, customWords: 20 } as const
+export const SYNC_LIMITS = { reviewEvents: 1000, cards: 2000, attempts: 20, lessons: 500, newWordExtras: 31, notes: 50, customWords: 20, studySessions: 100 } as const
 
 export interface SyncBatch {
   reviewEvents?: ReviewEventUpload[]
@@ -107,6 +125,7 @@ export interface SyncBatch {
   newWordExtras?: { localDay: string; extra: number }[]
   notes?: (NoteRecord & { id: string })[]
   customWords?: (CustomWordRecord & { id: string })[]
+  studySessions?: (StudySessionRecord & { id: string })[]
 }
 
 /** The next request's worth of the outbox (empty lists left out), or null when there is nothing to send. */
@@ -141,6 +160,11 @@ export function nextBatch(o: Outbox): SyncBatch | null {
     .slice(0, SYNC_LIMITS.customWords)
     .map((id) => ({ id, ...o.customWords[id] }))
   if (words.length) b.customWords = words
+  const sessions = Object.keys(o.studySessions)
+    .sort()
+    .slice(0, SYNC_LIMITS.studySessions)
+    .map((id) => ({ id, ...o.studySessions[id] }))
+  if (sessions.length) b.studySessions = sessions
   return Object.keys(b).length > 0 ? b : null
 }
 
@@ -161,6 +185,8 @@ export function removeSent(o: Outbox, sent: SyncBatch): Outbox {
   for (const { id, ...rec } of sent.notes ?? []) if (sameJson(notes[id], rec)) delete notes[id]
   const customWords = { ...o.customWords }
   for (const { id, ...rec } of sent.customWords ?? []) if (sameJson(customWords[id], rec)) delete customWords[id]
+  const studySessions = { ...o.studySessions }
+  for (const { id, ...rec } of sent.studySessions ?? []) if (sameJson(studySessions[id], rec)) delete studySessions[id]
   return {
     version: 1,
     reviewEvents: o.reviewEvents.filter((e) => !eventIds.has(e.id)),
@@ -170,6 +196,7 @@ export function removeSent(o: Outbox, sent: SyncBatch): Outbox {
     newWordExtras: extras,
     notes,
     customWords,
+    studySessions,
   }
 }
 
@@ -209,6 +236,7 @@ export const SyncResponse = z.object({
   newWordExtras: upserts(z.object({ localDay: IsoDate, extra: z.number().int().nonnegative() })),
   notes: upserts(ServerNoteSchema),
   customWords: upserts(CustomWordSchema),
+  studySessions: upserts(StudySessionSchema),
 })
 export type SyncResponse = z.infer<typeof SyncResponse>
 
@@ -237,6 +265,8 @@ export interface ServerState {
   notes: ServerNote[]
   /** The same for custom words: GET /v1/state leaves deleted ones out, a sync may add one with deletedAt. */
   customWords: CustomWord[]
+  /** Study sessions that started in the window (as reviewEvents); a deleted one only after a sync. */
+  studySessions: StudySession[]
 }
 
 const StateEnvelope = z.object({
@@ -251,6 +281,7 @@ const StateEnvelope = z.object({
   newWordExtras: z.record(z.string(), z.number().int().nonnegative()),
   notes: z.array(ServerNoteSchema),
   customWords: z.array(CustomWordSchema),
+  studySessions: z.array(StudySessionSchema),
 })
 
 /** Validates the server state (or the offline copy of it); every problem names its field. */
@@ -276,6 +307,7 @@ export function parseState(what: string, data: unknown): ServerState {
     newWordExtras: s.newWordExtras,
     notes: s.notes,
     customWords: s.customWords,
+    studySessions: s.studySessions,
   }
 }
 
@@ -319,11 +351,19 @@ export function applySent(s: ServerState, sent: SyncBatch, reply: SyncResponse):
   for (const { id, ...rec } of sent.customWords ?? []) words.set(id, mergeCustomWord(words.get(id), id, rec))
   for (const w of reply.customWords.stale) words.set(w.id, w)
 
+  const sessions = new Map(s.studySessions.map((x) => [x.id, x]))
+  for (const { id, ...rec } of sent.studySessions ?? []) sessions.set(id, { id, ...rec })
+  for (const x of reply.studySessions.stale) sessions.set(x.id, x)
+
   const days = new Set(s.studyDays)
   for (const e of sent.reviewEvents ?? []) days.add(e.localDay)
   for (const a of sent.attempts ?? []) {
     const d = answeredDay(a)
     if (d) days.add(d)
+  }
+  for (const { id } of sent.studySessions ?? []) {
+    const x = sessions.get(id)
+    if (x && x.deletedAt === undefined) days.add(x.localDay)
   }
 
   return {
@@ -336,6 +376,7 @@ export function applySent(s: ServerState, sent: SyncBatch, reply: SyncResponse):
     newWordExtras: extras,
     notes: [...notes.values()],
     customWords: [...words.values()],
+    studySessions: [...sessions.values()],
     studyDays: [...days].sort(),
   }
 }
@@ -372,6 +413,7 @@ export function acceptedLocally(serverTime: string): SyncResponse {
     newWordExtras: upserts,
     notes: upserts,
     customWords: upserts,
+    studySessions: upserts,
   }
 }
 
@@ -401,6 +443,8 @@ export interface ProgressView {
   notes: NoteView[]
   /** Hayk's own words that are not deleted, oldest first. */
   customWords: CustomWordView[]
+  /** Study sessions that are not deleted (the state's window plus unsynced ones), newest first. */
+  studySessions: StudySessionView[]
 }
 
 export interface NoteView extends ServerNote {
@@ -410,6 +454,11 @@ export interface NoteView extends ServerNote {
 
 export type CustomWordView = CustomWord & {
   /** A change of this word is still waiting in the outbox. */
+  pending: boolean
+}
+
+export type StudySessionView = StudySession & {
+  /** A change of this session is still waiting in the outbox. */
   pending: boolean
 }
 
@@ -433,6 +482,12 @@ export function mergeCustomWord(server: CustomWord | undefined, id: string, loca
   if (server && server.updatedAt > local.updatedAt) return server
   const check = server?.check !== undefined && sameFields(server, local) ? server.check : undefined
   return { id, ...local, ...(check ? { check } : {}) }
+}
+
+/** The server's session, or the local change when it is not older (the server applies the same rule). */
+function mergeSession(server: StudySession | undefined, id: string, local: StudySessionRecord): StudySession {
+  if (server && server.updatedAt > local.updatedAt) return server
+  return { id, ...local }
 }
 
 export function buildView(s: ServerState, o: Outbox, today: string): ProgressView {
@@ -468,6 +523,15 @@ export function buildView(s: ServerState, o: Outbox, today: string): ProgressVie
   const words = new Map(s.customWords.map((w) => [w.id, w]))
   for (const [id, rec] of Object.entries(o.customWords)) words.set(id, mergeCustomWord(words.get(id), id, rec))
 
+  // A day with a study session is a study day (DECISIONS.md #62). A session deleted on this device
+  // cannot take back a day the server listed; that day goes at the next load if nothing else is on it.
+  const sessions = new Map(s.studySessions.map((x) => [x.id, x]))
+  for (const [id, rec] of Object.entries(o.studySessions)) {
+    const x = mergeSession(sessions.get(id), id, rec)
+    sessions.set(id, x)
+    if (x.deletedAt === undefined) days.add(x.localDay)
+  }
+
   return {
     userId: s.userId,
     serverTime: s.serverTime,
@@ -491,6 +555,10 @@ export function buildView(s: ServerState, o: Outbox, today: string): ProgressVie
       .filter((w) => w.deletedAt === undefined)
       .map((w) => ({ ...w, pending: w.id in o.customWords }))
       .sort((a, b) => a.createdAt.localeCompare(b.createdAt) || a.id.localeCompare(b.id)),
+    studySessions: [...sessions.values()]
+      .filter((x) => x.deletedAt === undefined)
+      .map((x) => ({ ...x, pending: x.id in o.studySessions }))
+      .sort((a, b) => b.startedAt.localeCompare(a.startedAt) || a.id.localeCompare(b.id)),
   }
 }
 
@@ -507,6 +575,8 @@ const OutboxEnvelope = z.strictObject({
   notes: z.record(z.string(), NoteRecordSchema).optional(),
   // The same for custom words (added 2026-09-30, after notes).
   customWords: z.record(z.string(), CustomWordRecordSchema).optional(),
+  // The same for study sessions (added 2026-10-02).
+  studySessions: z.record(z.string(), StudySessionRecordSchema).optional(),
 })
 
 /** Parses a stored outbox; a damaged one is a loud error (its changes would otherwise be lost). */
@@ -531,5 +601,6 @@ export function parseOutbox(what: string, data: unknown): Outbox {
     newWordExtras: o.newWordExtras,
     notes: o.notes ?? {},
     customWords: o.customWords ?? {},
+    studySessions: o.studySessions ?? {},
   }
 }

@@ -41,6 +41,11 @@ What it checks, stopping loudly at the first unexpected answer:
      too long German, a check from the app, changed before made), a review event and a card under a
      "u-" word id; Claude's checks via progress.py (ok, fix, refused without --replace); a delete keeps
      the check, an edit clears it, an older version comes back as stale;
+  5c. study sessions (the study timer, or time added by hand): new, resent (unchanged), edited
+     (minutes and label), an older version (stale), a soft delete, bad ones (400: active time longer
+     than start to stop, ended before started, over 16 hours, a label over 100 characters or blank,
+     manual: false, changed before made), the table's own CHECKs (direct inserts, rolled back), the
+     state window (?days=1 and the default 35) and study days from sessions (a deleted one makes none);
   6. writes a Claude review with progress.py's own code and reads everything back through
      GET /v1/state (gzip), comparing every field with what was sent;
   7. throwaway user: removal from the allowlist takes effect at once. At the end the user's rows
@@ -68,11 +73,12 @@ import time
 import urllib.error
 import urllib.request
 import uuid
-from datetime import date, datetime, timedelta, timezone
+from datetime import date, datetime, time as dtime, timedelta, timezone
 from email.message import Message
 from pathlib import Path
 from typing import Any
 
+import psycopg
 from psycopg import sql
 
 sys.dont_write_bytecode = True  # importing progress.py must not leave a __pycache__ folder in the repo
@@ -83,7 +89,7 @@ LOG = logging.getLogger("smoke_test")
 APP_ORIGIN = "http://localhost:5173"
 SMOKE_EMAIL_RE = re.compile(r"^nemeceren-smoke-[0-9a-f]{12}@example\.com$")
 # A user's progress rows. The test account keeps its allowlist entry; a throwaway user loses it too.
-DATA_TABLES = ("review_events", "review_cards", "test_attempts", "lesson_progress", "new_word_extras", "notes", "custom_words")
+DATA_TABLES = ("review_events", "review_cards", "test_attempts", "lesson_progress", "new_word_extras", "notes", "custom_words", "study_sessions")
 USER_TABLES = (*DATA_TABLES, "allowed_users")
 
 
@@ -292,7 +298,7 @@ def run(api: str, auth: str, conn: Any, ctx: dict[str, Any], test_account: dict[
     check(
         s["userId"] == user_id and s["cards"] == {} and s["reviewEvents"] == [] and s["attempts"] == [] and s["studyDays"] == []
         and s["lessonProgress"] == {"version": 1, "lessons": {}} and s["newWordExtras"] == {} and s["notes"] == []
-        and s["customWords"] == [],
+        and s["customWords"] == [] and s["studySessions"] == [],
         "the user's state is empty",
         s,
     )
@@ -587,6 +593,91 @@ def run(api: str, auth: str, conn: Any, ctx: dict[str, Any], test_account: dict[
         r.text(),
     )
 
+    # ---- 5c. study sessions (the timer, or time added by hand) ----
+    def day_ago(n: int) -> str:
+        return (date.today() - timedelta(days=n)).isoformat()
+
+    def session(started: datetime, wall_min: float, active_min: float, local_day: str, **extra: Any) -> dict[str, Any]:
+        ended = started + timedelta(minutes=wall_min)
+        return {"id": str(uuid.uuid4()), "startedAt": iso(started), "endedAt": iso(ended), "activeMs": int(active_min * 60_000),
+                "localDay": local_day, "createdAt": iso(ended), "updatedAt": iso(ended), **extra}
+
+    def noon(local_day: str) -> datetime:
+        return datetime.combine(date.fromisoformat(local_day), dtime(12, 0), tzinfo=timezone.utc)
+
+    # Timed today with a 5-minute pause; added by hand 3 days ago (umlaut in the label); 40 days ago
+    # (outside the state window); 5 days ago, deleted below (its day must not count).
+    s1 = session(now - timedelta(minutes=50), 45, 40, today, label="smoke lesson 0.3")
+    s2 = session(noon(day_ago(3)), 30, 30, day_ago(3), label="Schritte, Übung 12", manual=True)
+    s3 = session(noon(day_ago(40)), 20, 20, day_ago(40), manual=True)
+    s4 = session(noon(day_ago(5)), 15, 15, day_ago(5))
+    r = sync({"studySessions": [s1, s2, s3, s4]})
+    check(r.status == 200 and r.json()["studySessions"] == {"received": 4, "written": 4, "unchanged": 0, "stale": []}, "four new study sessions are written", r.text())
+    r = sync({"studySessions": [s1, s2, s3, s4]})
+    check(r.status == 200 and r.json()["studySessions"] == {"received": 4, "written": 0, "unchanged": 4, "stale": []}, "the same sessions again are unchanged", r.text())
+    s1_edit = {**s1, "activeMs": 42 * 60_000, "label": "smoke lesson 0.3 and 0.4", "updatedAt": iso(now - timedelta(minutes=2))}
+    r = sync({"studySessions": [s1_edit]})
+    check(r.status == 200 and r.json()["studySessions"]["written"] == 1, "an edit of minutes and label with a later updatedAt is written", r.text())
+    r = sync({"studySessions": [s1]})
+    check(
+        r.status == 200 and r.json()["studySessions"] == {"received": 1, "written": 0, "unchanged": 0, "stale": [s1_edit]},
+        "an older version of a session is not written; the server's newer one comes back as stale",
+        r.text(),
+    )
+    s4_gone = {**s4, "updatedAt": iso(now - timedelta(minutes=1)), "deletedAt": iso(now - timedelta(minutes=1))}
+    r = sync({"studySessions": [s4_gone]})
+    check(r.status == 200 and r.json()["studySessions"]["written"] == 1, "a study session can be deleted (soft delete)", r.text())
+    row = conn.execute("SELECT deleted_at IS NOT NULL AS gone FROM study_sessions WHERE user_id = %s AND id = %s", (user_id, s4["id"])).fetchone()
+    check(row is not None and row["gone"], "the deleted session stays in the table with deleted_at", row)
+
+    fresh_start = now - timedelta(minutes=30)
+    for bad, what, path in (
+        (session(fresh_start, 10, 11, today), "a session with more active time than start to stop", "studySessions.0.activeMs"),
+        ({**session(fresh_start, 10, 5, today), "endedAt": iso(fresh_start - timedelta(minutes=1))}, "a session that ended before it started", "studySessions.0.endedAt"),
+        (session(now - timedelta(hours=17), 17 * 60, 16 * 60 + 1, today), "a session of over 16 hours", "studySessions.0.activeMs"),
+        (session(fresh_start, 10, 5, today, label="x" * 101), "a session label of 101 characters", "studySessions.0.label"),
+        (session(fresh_start, 10, 5, today, label="   "), "a blank session label", "studySessions.0.label"),
+        (session(fresh_start, 10, 5, today, manual=False), "manual: false (only true or left out)", "studySessions.0.manual"),
+        ({**session(fresh_start, 10, 5, today), "updatedAt": iso(fresh_start - timedelta(days=1))}, "a session changed before it was made", "studySessions.0.updatedAt"),
+        ({**session(fresh_start, 10, 5, today), "localDay": "2026-02-30"}, "a session on a day that does not exist", "studySessions.0.localDay"),
+    ):
+        r = sync({"studySessions": [bad]})
+        issues = r.json().get("error", {}).get("details", {}).get("issues", []) if r.status == 400 else []
+        check(r.status == 400 and r.error_code() == "invalid_body" and any(i["path"] == path for i in issues), f"{what} -> 400 invalid_body at {path}", r.text())
+    r = sync({"studySessions": [s2, s2]})
+    check(r.status == 400 and r.error_code() == "invalid_body", "the same session id twice in one batch -> 400", r.text())
+    longest = session(now - timedelta(hours=16, minutes=1), 16 * 60 + 1, 16 * 60, today, label="x" * 100)
+    r = sync({"studySessions": [longest]})
+    check(r.status == 200 and r.json()["studySessions"]["written"] == 1, "a session of exactly 16 hours with a 100-character label is accepted", r.text())
+    # The smoke test's own row goes again, so the state checks below see only s1 to s4.
+    with conn.transaction():
+        conn.execute("DELETE FROM study_sessions WHERE user_id = %s AND id = %s", (user_id, longest["id"]))
+
+    # The table refuses the same things on its own (in case a bug lets one past the API's validation).
+    base = {"started_at": now - timedelta(minutes=10), "ended_at": now, "active_ms": 5 * 60_000, "label": None}
+    for what, over in (
+        ("ended_at before started_at", {"ended_at": now - timedelta(minutes=11)}),
+        ("active_ms longer than started_at to ended_at", {"active_ms": 11 * 60_000}),
+        ("active_ms over 16 hours", {"started_at": now - timedelta(hours=17), "active_ms": 16 * 60 * 60_000 + 1}),
+        ("a negative active_ms", {"active_ms": -1}),
+        ("a label over 100 characters", {"label": "x" * 101}),
+        ("a blank label", {"label": " "}),
+    ):
+        v = {**base, **over}
+        try:
+            with conn.transaction():
+                conn.execute(
+                    """INSERT INTO study_sessions (user_id, id, started_at, ended_at, active_ms, local_day, label, created_at, updated_at)
+                       VALUES (%s, %s, %s, %s, %s, %s, %s, now(), now())""",
+                    (user_id, str(uuid.uuid4()), v["started_at"], v["ended_at"], v["active_ms"], today, v["label"]),
+                )
+            check(False, f"the table refuses {what}")
+        except psycopg.errors.CheckViolation:
+            check(True, f"the table refuses {what} (CHECK constraint)")
+
+    r = request(plain, "GET", f"{api}/v1/state?days=1", token=token)
+    check(r.status == 200 and r.json()["studySessions"] == [s1_edit], "GET /v1/state?days=1 returns only the session that started in the last day", r.text())
+
     # ---- 6. Claude's review, then read everything back ----
     try:
         progress.validate_review({"summary": "x", "items": [{"index": 3, "correct": True}]}, 3)
@@ -613,7 +704,17 @@ def run(api: str, auth: str, conn: Any, ctx: dict[str, Any], test_account: dict[
     s = r.json()
     check(s["reviewEvents"] == [*events, event_w1], "the 5 review events (one practice, one of a custom word) come back exactly as sent, oldest first", s["reviewEvents"])
     check(s["cards"] == {"smoke-termin": card_termin, "smoke-uhr": card_uhr2, w1["id"]: card_w1}, "cards: newest version of each word", s["cards"])
-    check(s["studyDays"] == [today], f"studyDays is [{today}]", s["studyDays"])
+    days_expected = sorted([day_ago(40), day_ago(3), today])
+    check(
+        s["studyDays"] == days_expected,
+        f"studyDays is {days_expected}: today's activity plus the days of sessions that are not deleted (also outside the window)",
+        s["studyDays"],
+    )
+    check(
+        s["studySessions"] == [s2, s1_edit],
+        "studySessions: the ones not deleted that started in the last 35 days, oldest first, exactly as sent (umlauts included)",
+        s["studySessions"],
+    )
     check([x["id"] for x in s["attempts"]] == [lesson_attempt["id"], attempt["id"]], "two attempts, newest first", [x["id"] for x in s["attempts"]])
     check(s["attempts"][0] == lesson_attempt, "the lesson exercise comes back exactly as sent (lessonId, section)", s["attempts"][0])
     a = s["attempts"][1]

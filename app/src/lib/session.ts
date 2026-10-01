@@ -4,11 +4,13 @@
 // device is used with the offline copy of their progress (see storage.ts).
 // Guest mode (DECISIONS.md #55): from the sign-in page, without an account. Progress stays in
 // memory (storage.ts startGuest); nothing here remembers it, so a reload shows the sign-in page.
+// The study timer (timer.ts) follows the session: per user on this device, in memory for a guest.
 import { useSyncExternalStore } from 'react'
 import { AuthFailure, currentUser, signIn, signOut, signUp } from './auth.ts'
 import type { AuthUser } from './auth.ts'
 import { messageOf } from './errors.ts'
 import { ApiError, isSignedOut, onSignedOut, progressStore } from './storage.ts'
+import { timerStore } from './timer.ts'
 
 export type Session =
   | { phase: 'checking' }
@@ -55,6 +57,7 @@ const EXPIRED = 'Your sign-in has expired. Please sign in again. Unsynced change
 
 onSignedOut(() => {
   progressStore().stop()
+  timerStore().detach()
   set({ phase: 'signed-out', notice: EXPIRED })
 })
 
@@ -63,6 +66,7 @@ async function load(user: AuthUser, justCreated: boolean): Promise<void> {
   set({ phase: 'loading', user })
   try {
     await progressStore().start(user)
+    timerStore().attachUser(user.id)
     set({ phase: 'ready', user })
   } catch (err) {
     if (err instanceof ApiError && err.code === 'not_allowed') {
@@ -115,12 +119,14 @@ export function useIsGuest(): boolean {
 /** "Continue as guest" on the sign-in page. Makes no request and stores nothing. */
 export function continueAsGuest(): void {
   progressStore().startGuest()
+  timerStore().attachGuest()
   set({ phase: 'guest' })
 }
 
 /** The guest banner's "Sign in": forgets the guest's progress and shows the sign-in page. */
 export function leaveGuest(): void {
   progressStore().stop()
+  timerStore().detach()
   set({ phase: 'signed-out', notice: null })
 }
 
@@ -144,6 +150,7 @@ export async function signOutNow(): Promise<void> {
   }
   await signOut()
   store.stop()
+  timerStore().detach()
   localStorage.removeItem(LAST_USER)
   set({ phase: 'signed-out', notice: null })
 }

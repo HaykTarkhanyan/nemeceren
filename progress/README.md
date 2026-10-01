@@ -1,11 +1,12 @@
 # Progress (moved to Neon)
 
-Hayk's progress is no longer stored in this folder. Since 2026-09-29 it lives in a private Neon Postgres database behind the API in `backend/` (DECISIONS.md #21): word reviews, FSRS cards, test and lesson-exercise attempts, Claude's reviews, lesson progress, extra new words, and (since 2026-09-30) Hayk's notes with Claude's feedback and his own words with Claude's check. The app signs in with Neon Auth and syncs through `GET /v1/state` and `POST /v1/sync`; each device keeps unsynced changes in a local outbox until they are sent.
+Hayk's progress is no longer stored in this folder. Since 2026-09-29 it lives in a private Neon Postgres database behind the API in `backend/` (DECISIONS.md #21): word reviews, FSRS cards, test and lesson-exercise attempts, Claude's reviews, lesson progress, extra new words, (since 2026-09-30) Hayk's notes with Claude's feedback and his own words with Claude's check, and (since 2026-10-02) the study timer's sessions. The app signs in with Neon Auth and syncs through `GET /v1/state` and `POST /v1/sync`; each device keeps unsynced changes in a local outbox until they are sent.
 
 Claude reads and grades progress from the repo root:
 
 ```bash
-uv run backend/scripts/progress.py summary --days 7      # activity, words, most-missed words, lessons, attempts, notes and own words waiting
+uv run backend/scripts/progress.py summary --days 7      # activity (measured and timer minutes), words, most-missed words, lessons, attempts, notes and own words waiting
+uv run backend/scripts/progress.py sessions --days 7     # study timer sessions, oldest first: day, minutes, start-stop (UTC), pauses, label
 uv run backend/scripts/progress.py ungraded              # attempts waiting for a review
 uv run backend/scripts/progress.py show <attempt-id>     # one attempt in full
 uv run backend/scripts/progress.py review <attempt-id> review.json
@@ -71,3 +72,19 @@ Claude checks new words with `progress.py`: `my-words --unchecked` lists them (G
 - `check-word <id> fix --de/--en/--plural ... [--note "..."]`: the corrected fields, which the app shows instead of Hayk's in practice and in the "All words" list, with "corrected by Claude: <note>" and what Hayk wrote. Nouns get their article in `--de` ("der Stau") and the full plural in `--plural` ("die Staus"); check gender and plural in `reference/german_nouns.csv` first (CLAUDE.md).
 
 The check is `WordCheck` in `app/src/content/schema.ts`: `{ at, ok, note?, fixed?: { de?, en?, plural? } }` (`at` is set by the script; `ok: true` has no `fixed`, `ok: false` has at least one fixed field). When Hayk edits a checked word, the check is cleared and the word is "waiting for a check" again; `summary` counts these as "Own words waiting for a check".
+
+## The study timer
+
+Hayk times their study with the timer in the app's header (Start, Pause/Resume, Stop), or adds time by hand on the Stats page (DECISIONS.md #62). A study session is `{ id, startedAt, endedAt, activeMs, localDay, label?, manual?: true, createdAt, updatedAt, deletedAt? }`:
+
+- `activeMs` is the time the timer ran, without pauses, at most 16 hours; `localDay` is the local day of `startedAt`, and the whole session counts on that day.
+- `label` is optional (up to 100 characters), e.g. "lesson 0.3".
+- `manual: true` marks time added by hand; its `startedAt` is local noon of the chosen day and its `endedAt` follows its minutes.
+- Hayk can edit the minutes and the label, or delete a session (a soft delete); the later `updatedAt` wins.
+- A stop under 1 minute is not saved; a stop over 3 hours asks Hayk to confirm or correct the minutes first.
+
+In `progress.py`:
+
+- `summary` shows two kinds of minutes per day and in total: **measured** (the time the app measured on word cards and test items, capped as on the Stats page) and **timer** (the sessions, with their count in brackets). The timer usually shows more: it also covers lessons, videos and books.
+- `sessions [--days N]` lists the sessions (default 7 days, by the local day of the start), oldest first: id, day, minutes, start and stop in UTC with the paused minutes (or "added by hand"), "edited", and the label.
+- A day with a timer session (also one added by hand) counts as a study day in `summary`, in the streak and in the study-day counts, like a day with a review or an answered test item.

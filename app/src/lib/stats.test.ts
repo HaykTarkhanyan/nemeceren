@@ -10,6 +10,9 @@ import {
   streaks,
   studyDays,
   TEST_ITEM_CAP_MS,
+  lastTimerDays,
+  timerByDay,
+  timerTotals,
   wordProgress,
 } from './stats.ts'
 import type { ReviewEvent, TestItemEvent } from './stats.ts'
@@ -149,5 +152,42 @@ describe('wordProgress', () => {
     s = review(s, 'b', Rating.Easy, t0).state
     s = { ...s, cards: { ...s.cards, b: { ...s.cards.b, state: 2, scheduled_days: 21 }, c: { ...s.cards.a, state: 2, scheduled_days: 20 } } }
     expect(wordProgress(words, s, t0)).toMatchObject({ total: 4, introduced: 3, known: 1, learning: 2, notStarted: 1 })
+  })
+})
+
+describe('the study timer', () => {
+  const session = (localDay: string, minutes: number) => ({ localDay, activeMs: minutes * MIN })
+
+  it('adds up timer minutes per local day of the session start', () => {
+    // A session started at 23:40 in Munich and ran past midnight: all of it counts on the day it started.
+    const days = timerByDay([session('2026-09-28', 50), session('2026-09-29', 20), session('2026-09-29', 15)])
+    expect(days.get('2026-09-28')).toEqual({ day: '2026-09-28', activeMs: 50 * MIN, sessions: 1 })
+    expect(days.get('2026-09-29')).toEqual({ day: '2026-09-29', activeMs: 35 * MIN, sessions: 2 })
+    expect(days.has('2026-09-30')).toBe(false)
+    const list = lastTimerDays(days, '2026-09-30', 30)
+    expect(list).toHaveLength(30)
+    expect(list[29]).toEqual({ day: '2026-09-30', activeMs: 0, sessions: 0 })
+    expect(list[28].activeMs).toBe(35 * MIN)
+  })
+
+  it('totals today, this week (from Monday), this month, and the average per day with a session', () => {
+    const days = timerByDay([
+      session('2026-08-25', 600), // outside the 30 days and the month
+      session('2026-09-27', 40), // Sunday: last week, this month
+      session('2026-09-28', 30), // Monday
+      session('2026-09-30', 20),
+      session('2026-09-30', 10),
+      session('2026-10-01', 5), // after "today": ignored
+    ])
+    expect(timerTotals(days, '2026-09-30', 30)).toEqual({
+      todayMs: 30 * MIN,
+      weekMs: 60 * MIN,
+      monthMs: 100 * MIN,
+      daysWithSession: 3,
+      averageMs: (100 * MIN) / 3,
+    })
+    // A new month and week start on Thursday 2026-10-01.
+    expect(timerTotals(days, '2026-10-01', 30)).toMatchObject({ todayMs: 5 * MIN, weekMs: 65 * MIN, monthMs: 5 * MIN, daysWithSession: 4 })
+    expect(timerTotals(new Map(), '2026-10-01', 30)).toEqual({ todayMs: 0, weekMs: 0, monthMs: 0, daysWithSession: 0, averageMs: null })
   })
 })

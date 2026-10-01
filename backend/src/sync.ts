@@ -10,7 +10,8 @@
 //                            a note with Claude's feedback is locked and never changed or deleted
 //   customWords              upsert per word; the record with the later updatedAt wins; a change of
 //                            its fields clears Claude's check (a delete alone keeps it)
-// For the last five, whatever the server already had in a newer version comes back as "stale",
+//   studySessions            upsert per session; the record with the later updatedAt wins
+// For the last six, whatever the server already had in a newer version comes back as "stale",
 // so a device that was offline can adopt it. A locked note comes back as stale whenever the
 // upload differs from it, with its feedback. Each table takes the whole list as one JSON
 // parameter (jsonb_to_recordset): one query per table per batch.
@@ -26,6 +27,7 @@ import type {
   NoteUpload,
   ReviewEventUpload,
   StoredCard,
+  StudySessionUpload,
   SyncBody,
 } from './schema.ts'
 
@@ -57,6 +59,7 @@ export interface SyncResult {
   newWordExtras: { received: number; written: number; unchanged: number; stale: { localDay: string; extra: number }[] }
   notes: { received: number; written: number; unchanged: number; stale: NoteRecord[] }
   customWords: { received: number; written: number; unchanged: number; stale: CustomWordRecord[] }
+  studySessions: { received: number; written: number; unchanged: number; stale: StudySessionRecord[] }
 }
 
 /**
@@ -64,6 +67,12 @@ export interface SyncResult {
  * CustomWord. Optional keys are left out when empty; check is Claude's (WordCheck), when there is one.
  */
 export type CustomWordRecord = Record<string, unknown> & { id: string; updatedAt: string }
+
+/**
+ * A study session as the server has it (also the shape of GET /v1/state studySessions): the app's
+ * StudySession. Optional keys (label, manual, deletedAt) are left out when empty.
+ */
+export type StudySessionRecord = Record<string, unknown> & { id: string; updatedAt: string }
 
 /** timestamptz as the app writes it (Date.prototype.toISOString): 2026-09-29T10:00:00.000Z */
 const iso = (col: string) => `to_char(${col} AT TIME ZONE 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS.MS"Z"')`
@@ -249,6 +258,39 @@ SELECT
      FROM input i JOIN custom_words cw ON cw.user_id = $1 AND cw.id = i.id
     WHERE cw.updated_at > i.updated_at) AS stale`
 
+/** One study session as JSON in the app's field names, empty keys left out; the same shape as GET /v1/state studySessions. */
+export const STUDY_SESSION_JSON = (x: string) => `jsonb_strip_nulls(jsonb_build_object(
+  'id', ${x}.id::text, 'startedAt', ${iso(`${x}.started_at`)}, 'endedAt', ${iso(`${x}.ended_at`)},
+  'activeMs', ${x}.active_ms, 'localDay', ${x}.local_day::text, 'label', ${x}.label,
+  'manual', CASE WHEN ${x}.manual THEN true ELSE NULL END,
+  'createdAt', ${iso(`${x}.created_at`)}, 'updatedAt', ${iso(`${x}.updated_at`)},
+  'deletedAt', CASE WHEN ${x}.deleted_at IS NULL THEN NULL ELSE ${iso(`${x}.deleted_at`)} END))`
+
+// The later updated_at wins (Hayk edits minutes and label, or deletes the session).
+const UPSERT_STUDY_SESSIONS = `
+WITH input AS (
+  SELECT * FROM jsonb_to_recordset($2::jsonb) AS x(
+    id uuid, started_at timestamptz, ended_at timestamptz, active_ms integer, local_day date, label text,
+    manual boolean, created_at timestamptz, updated_at timestamptz, deleted_at timestamptz)
+),
+up AS (
+  INSERT INTO study_sessions AS ss (user_id, id, started_at, ended_at, active_ms, local_day, label, manual,
+                                    created_at, updated_at, deleted_at)
+  SELECT $1, id, started_at, ended_at, active_ms, local_day, label, manual, created_at, updated_at, deleted_at FROM input
+  ON CONFLICT (user_id, id) DO UPDATE
+    SET started_at = excluded.started_at, ended_at = excluded.ended_at, active_ms = excluded.active_ms,
+        local_day = excluded.local_day, label = excluded.label, manual = excluded.manual,
+        created_at = excluded.created_at, updated_at = excluded.updated_at, deleted_at = excluded.deleted_at,
+        received_at = now()
+    WHERE excluded.updated_at > ss.updated_at
+  RETURNING id
+)
+SELECT
+  (SELECT count(*)::int FROM up) AS written,
+  (SELECT coalesce(jsonb_agg(${STUDY_SESSION_JSON('ss')} ORDER BY ss.id), '[]'::jsonb)
+     FROM input i JOIN study_sessions ss ON ss.user_id = $1 AND ss.id = i.id
+    WHERE ss.updated_at > i.updated_at) AS stale`
+
 function conflictError(kind: string, ids: string[]): HttpError {
   return new HttpError(
     409,
@@ -361,6 +403,23 @@ async function upsertCustomWords(client: PoolClient, userId: string, words: Cust
   return { received: words.length, written: r.written, unchanged: words.length - r.written - r.stale.length, stale: r.stale }
 }
 
+async function upsertStudySessions(client: PoolClient, userId: string, sessions: StudySessionUpload[]): Promise<SyncResult['studySessions']> {
+  const rows = sessions.map((x) => ({
+    id: x.id,
+    started_at: x.startedAt,
+    ended_at: x.endedAt,
+    active_ms: x.activeMs,
+    local_day: x.localDay,
+    label: x.label ?? null,
+    manual: x.manual === true,
+    created_at: x.createdAt,
+    updated_at: x.updatedAt,
+    deleted_at: x.deletedAt ?? null,
+  }))
+  const { rows: [r] } = await client.query<{ written: number; stale: StudySessionRecord[] }>(UPSERT_STUDY_SESSIONS, [userId, JSON.stringify(rows)])
+  return { received: sessions.length, written: r.written, unchanged: sessions.length - r.written - r.stale.length, stale: r.stale }
+}
+
 export async function applySync(userId: string, body: SyncBody): Promise<SyncResult> {
   const total =
     body.reviewEvents.length +
@@ -369,7 +428,8 @@ export async function applySync(userId: string, body: SyncBody): Promise<SyncRes
     body.lessons.length +
     body.newWordExtras.length +
     body.notes.length +
-    body.customWords.length
+    body.customWords.length +
+    body.studySessions.length
   if (total === 0) {
     // Enforces the free-plan rule: the app only syncs when its outbox has something in it.
     throw new HttpError(400, 'empty_batch', 'Nothing to sync: send at least one item, and skip the request otherwise.')
@@ -387,6 +447,7 @@ export async function applySync(userId: string, body: SyncBody): Promise<SyncRes
       newWordExtras: body.newWordExtras.length > 0 ? await upsertNewWordExtras(client, userId, body.newWordExtras) : upserts,
       notes: body.notes.length > 0 ? await upsertNotes(client, userId, body.notes) : upserts,
       customWords: body.customWords.length > 0 ? await upsertCustomWords(client, userId, body.customWords) : upserts,
+      studySessions: body.studySessions.length > 0 ? await upsertStudySessions(client, userId, body.studySessions) : upserts,
     }
   })
 }

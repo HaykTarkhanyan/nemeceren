@@ -1,8 +1,9 @@
 // Study statistics as pure functions over plain event arrays. They do not know where the
 // events come from (lib/storage.ts builds them from the progress in Neon, plus unsynced changes).
 // Definitions:
-//   study day   a local calendar day with at least one word review (practice included) or one
-//               answered test item (lesson exercises included)
+//   study day   a local calendar day with at least one word review (practice included), one
+//               answered test item (lesson exercises included), or one study session of the timer
+//               (also one added by hand; DECISIONS.md #62)
 //   streak      consecutive study days ending today, or ending yesterday if today has none yet
 //   activity    one word review, or one test attempt with at least one answered item
 //   session     activities with no gap of SESSION_GAP_MS or more between them; counted on the
@@ -10,6 +11,8 @@
 //   minutes     sum of measured activity time: each review's card time (capped at
 //               REVIEW_CAP_MS) plus each test item's screen time (capped at TEST_ITEM_CAP_MS),
 //               counted on the activity's local day
+//   timer       study sessions timed with the study timer (or added by hand): their active minutes,
+//               counted on the local day the session started; kept apart from the measured minutes
 //   known word  FSRS state Review with an interval of KNOWN_DAYS days or more
 import type { ReviewState, Word } from '../content/schema.ts'
 import { addDays, daysBetween, localDay, mondayOf } from './dates.ts'
@@ -189,6 +192,74 @@ export function lastDays(days: Map<string, DayStats>, today: string, n: number):
     const day = addDays(today, i - (n - 1))
     return days.get(day) ?? emptyDay(day)
   })
+}
+
+// ---------- the study timer ----------
+
+/** One study session, as the timer stats need it. */
+export interface TimerSession {
+  /** Local day of the session's start. */
+  localDay: string
+  activeMs: number
+}
+
+export interface TimerDay {
+  day: string
+  activeMs: number
+  sessions: number
+}
+
+/** Timer time per local day (the day each session started). */
+export function timerByDay(sessions: TimerSession[]): Map<string, TimerDay> {
+  const days = new Map<string, TimerDay>()
+  for (const x of sessions) {
+    const d = days.get(x.localDay) ?? { day: x.localDay, activeMs: 0, sessions: 0 }
+    d.activeMs += x.activeMs
+    d.sessions += 1
+    days.set(x.localDay, d)
+  }
+  return days
+}
+
+/** The last n days ending today, oldest first, with zeros for days without a session. */
+export function lastTimerDays(days: Map<string, TimerDay>, today: string, n: number): TimerDay[] {
+  return Array.from({ length: n }, (_, i) => {
+    const day = addDays(today, i - (n - 1))
+    return days.get(day) ?? { day, activeMs: 0, sessions: 0 }
+  })
+}
+
+export interface TimerTotals {
+  todayMs: number
+  /** Monday to today. */
+  weekMs: number
+  /** The calendar month up to today. */
+  monthMs: number
+  /** Days with at least one session among the last `n` days, and their average time (null when there is none). */
+  daysWithSession: number
+  averageMs: number | null
+}
+
+export function timerTotals(days: Map<string, TimerDay>, today: string, n: number): TimerTotals {
+  const monday = mondayOf(today)
+  const month = today.slice(0, 7)
+  const first = addDays(today, -(n - 1))
+  let todayMs = 0
+  let weekMs = 0
+  let monthMs = 0
+  let windowMs = 0
+  let daysWithSession = 0
+  for (const d of days.values()) {
+    if (d.day > today) continue
+    if (d.day === today) todayMs += d.activeMs
+    if (d.day >= monday) weekMs += d.activeMs
+    if (d.day.startsWith(month)) monthMs += d.activeMs
+    if (d.day >= first && d.sessions > 0) {
+      windowMs += d.activeMs
+      daysWithSession += 1
+    }
+  }
+  return { todayMs, weekMs, monthMs, daysWithSession, averageMs: daysWithSession > 0 ? windowMs / daysWithSession : null }
 }
 
 export interface WordProgress {

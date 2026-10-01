@@ -15,7 +15,8 @@ Run from the repo root (uv installs the pinned dependencies above on first use):
     uv run backend/scripts/progress.py ungraded                    # test attempts without a review
     uv run backend/scripts/progress.py show <attempt-id> [--json]  # one attempt in full
     uv run backend/scripts/progress.py review <attempt-id> <review.json|-> [--replace]
-    uv run backend/scripts/progress.py summary [--days 7]          # activity of the last N days
+    uv run backend/scripts/progress.py summary [--days 7]          # activity of the last N days (measured and timer minutes)
+    uv run backend/scripts/progress.py sessions [--days 7]         # study timer sessions of the last N days
     uv run backend/scripts/progress.py notes [--pending]           # Hayk's notes; --pending: no feedback yet
     uv run backend/scripts/progress.py note <note-id>              # one note in full, with its feedback
     uv run backend/scripts/progress.py note-feedback <note-id> <feedback.json|-> [--replace]
@@ -38,6 +39,9 @@ The note feedback JSON is NoteFeedback in app/src/content/schema.ts, without "at
     {"summary": "text format, [[German]] allowed", "hints": ["..."], "corrected": "...",
      "edits": [{"from": "...", "to": "...", "why": "...", "kind": "error" | "style"}]}
 Only summary is required. A note with feedback is locked: the app can no longer edit or delete it.
+
+summary has two kinds of minutes: "measured" is the time the app measured on word cards and test
+items (capped as on the Stats page), "timer" is what Hayk timed with the study timer or added by hand.
 
 check-word saves Claude's check of one of Hayk's own words (WordCheck in app/src/content/schema.ts):
 "ok" means fine as it is; "fix" names the corrected fields, which the app then shows (in practice and
@@ -719,7 +723,8 @@ def cmd_summary(conn: psycopg.Connection, args: argparse.Namespace) -> None:
     since = today - timedelta(days=args.days - 1)
     p = {"u": uid, "since": since, "today": today, "rcap": REVIEW_CAP_MS, "tcap": TEST_ITEM_CAP_MS}
     # Same definitions as the Stats page: practice reviews count as study time and study days,
-    # but not as reviews, correct or new words; tests count when at least one item was answered.
+    # but not as reviews, correct or new words; tests count when at least one item was answered;
+    # a study session (the timer, or added by hand) that is not deleted makes a study day too.
     days = conn.execute(
         """WITH days AS (SELECT d::date AS day FROM generate_series(%(since)s::date, %(today)s::date, interval '1 day') d),
            r AS (SELECT local_day,
@@ -733,31 +738,42 @@ def cmd_summary(conn: psycopg.Connection, args: argparse.Namespace) -> None:
            t AS (SELECT a.local_day, count(DISTINCT a.id) AS tests, sum(least((it->>'timeMs')::numeric, %(tcap)s)) AS ms
                    FROM test_attempts a CROSS JOIN LATERAL jsonb_array_elements(a.items) it
                   WHERE a.user_id = %(u)s AND a.answered_items > 0 AND a.local_day BETWEEN %(since)s AND %(today)s
-                  GROUP BY a.local_day)
+                  GROUP BY a.local_day),
+           s AS (SELECT local_day, count(*) AS sessions, sum(active_ms) AS ms
+                   FROM study_sessions
+                  WHERE user_id = %(u)s AND deleted_at IS NULL AND local_day BETWEEN %(since)s AND %(today)s
+                  GROUP BY local_day)
            SELECT days.day, coalesce(r.reviews, 0) AS reviews, coalesce(r.correct, 0) AS correct,
                   coalesce(r.new_words, 0) AS new_words, coalesce(r.practice, 0) AS practice,
-                  coalesce(t.tests, 0) AS tests, coalesce(r.ms, 0) + coalesce(t.ms, 0) AS ms
+                  coalesce(t.tests, 0) AS tests, coalesce(r.ms, 0) + coalesce(t.ms, 0) AS ms,
+                  coalesce(s.sessions, 0) AS sessions, coalesce(s.ms, 0) AS timer_ms
              FROM days LEFT JOIN r ON r.local_day = days.day LEFT JOIN t ON t.local_day = days.day
+                  LEFT JOIN s ON s.local_day = days.day
             ORDER BY days.day""",
         p,
     ).fetchall()
     lines = [
         f"Activity of {user['email']}, {since} to {today} ({args.days} days, by the local day recorded in the app)",
-        f"{'day':<12}{'reviews':>8}{'correct':>9}{'new':>5}{'practice':>10}{'tests':>7}{'minutes':>9}",
+        "Minutes: 'measured' = time on word cards and test items as the Stats page measures it; "
+        "'timer' = time Hayk timed with the study timer or added by hand (sessions in brackets).",
+        f"{'day':<12}{'reviews':>8}{'correct':>9}{'new':>5}{'practice':>10}{'tests':>7}{'measured':>10}{'timer':>12}",
     ]
     for d in days:
         pct = f"{100 * d['correct'] / d['reviews']:.0f}%" if d["reviews"] else "-"
+        timer = f"{float(d['timer_ms']) / 60000:.0f} ({d['sessions']})" if d["sessions"] else "0"
         lines.append(
-            f"{d['day']!s:<12}{d['reviews']:>8}{pct:>9}{d['new_words']:>5}{d['practice']:>10}{d['tests']:>7}{float(d['ms']) / 60000:>9.0f}"
+            f"{d['day']!s:<12}{d['reviews']:>8}{pct:>9}{d['new_words']:>5}{d['practice']:>10}{d['tests']:>7}"
+            f"{float(d['ms']) / 60000:>10.0f}{timer:>12}"
         )
     reviews = sum(d["reviews"] for d in days)
     correct = sum(d["correct"] for d in days)
-    study_days = sum(1 for d in days if d["reviews"] or d["practice"] or d["tests"])
+    study_days = sum(1 for d in days if d["reviews"] or d["practice"] or d["tests"] or d["sessions"])
     pct_total = f" ({100 * correct / reviews:.0f}% correct)" if reviews else ""
     lines.append(
         f"Total: {study_days} study days, {reviews} reviews{pct_total}, {sum(d['new_words'] for d in days)} new words, "
         f"{sum(d['practice'] for d in days)} practice, {sum(d['tests'] for d in days)} tests, "
-        f"{sum(float(d['ms']) for d in days) / 60000:.0f} minutes"
+        f"{sum(float(d['ms']) for d in days) / 60000:.0f} measured minutes, "
+        f"{sum(float(d['timer_ms']) for d in days) / 60000:.0f} timer minutes in {sum(d['sessions'] for d in days)} sessions"
     )
 
     w = conn.execute(
@@ -804,6 +820,38 @@ def cmd_summary(conn: psycopg.Connection, args: argparse.Namespace) -> None:
     ).fetchone()["n"]
     lines.append(f"Own words waiting for a check: {unchecked}" + (" (see `progress.py my-words --unchecked`)" if unchecked else ""))
     LOG.info("\n".join(lines))
+
+
+def cmd_sessions(conn: psycopg.Connection, args: argparse.Namespace) -> None:
+    if args.days < 1 or args.days > 366:
+        raise RuntimeError("--days must be between 1 and 366")
+    user = resolve_user(conn, args.user)
+    today = date.today()
+    since = today - timedelta(days=args.days - 1)
+    rows = conn.execute(
+        """SELECT id::text AS id, local_day::text AS local_day, started_at, ended_at, active_ms, label, manual, created_at, updated_at
+             FROM study_sessions
+            WHERE user_id = %s AND deleted_at IS NULL AND local_day BETWEEN %s AND %s
+            ORDER BY started_at, id""",
+        (user["user_id"], since, today),
+    ).fetchall()
+    total = sum(r["active_ms"] for r in rows) / 60000
+    LOG.info(
+        f"Study sessions of {user['email']}, {since} to {today} (local day of the start): {len(rows)}, {total:.0f} timer minutes, oldest first. "
+        "Times are UTC."
+    )
+    for r in rows:
+        minutes = r["active_ms"] / 60000
+        if r["manual"]:
+            when = "added by hand"
+        else:
+            start = r["started_at"].astimezone(timezone.utc)
+            end = r["ended_at"].astimezone(timezone.utc)
+            paused = (end - start).total_seconds() / 60 - minutes
+            when = f"{start:%H:%M}-{end:%H:%M}" + (f", paused {paused:.0f} min" if paused >= 1 else "")
+        edited = ", edited" if r["updated_at"] != r["created_at"] else ""
+        label = f"  {r['label']}" if r["label"] else ""
+        LOG.info(f"{r['id']}  {r['local_day']}  {minutes:>4.0f} min  {when}{edited}{label}")
 
 
 def _one_line(text: str, width: int = 70) -> str:
@@ -1011,10 +1059,14 @@ def main() -> None:
     p.add_argument("--note", default=None)
     p = sub.add_parser("disallow-user", help="remove an account from the allowlist (keeps its data)")
     p.add_argument("who", help="email or user id")
-    for name, help_text in (("ungraded", "list test attempts without a review"), ("summary", "activity of the last N days")):
+    for name, help_text in (
+        ("ungraded", "list test attempts without a review"),
+        ("summary", "activity of the last N days"),
+        ("sessions", "study timer sessions of the last N days, oldest first"),
+    ):
         p = sub.add_parser(name, help=help_text)
-        p.add_argument("--user", default=None, help="email or user id (default: the only allowed user)")
-        if name == "summary":
+        p.add_argument("--user", default=None, help="email or user id (default: NEMECEREN_DEFAULT_USER in .env.local)")
+        if name in ("summary", "sessions"):
             p.add_argument("--days", type=int, default=7)
     p = sub.add_parser("show", help="print one attempt in full")
     p.add_argument("attempt_id")
@@ -1066,6 +1118,7 @@ def main() -> None:
         "show": cmd_show,
         "review": cmd_review,
         "summary": cmd_summary,
+        "sessions": cmd_sessions,
         "notes": cmd_notes,
         "note": cmd_note,
         "note-feedback": cmd_note_feedback,

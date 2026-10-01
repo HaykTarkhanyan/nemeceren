@@ -429,6 +429,44 @@ export const CustomWord = z
     if (Date.parse(w.updatedAt) < Date.parse(w.createdAt)) ctx.addIssue({ code: 'custom', path: ['updatedAt'], message: 'is before createdAt' })
   })
 
+// ---------- Study sessions (the study timer, or time added by hand; stored in Neon) ----------
+
+/** Longest session: 16 hours (the API and the table have the same limit). */
+export const STUDY_SESSION_MAX_MS = 16 * 60 * 60_000
+/** Most characters in a session's label, e.g. "lesson 0.3". */
+export const STUDY_LABEL_MAX = 100
+
+const StudySessionFields = {
+  /** Start pressed; for a session added by hand, noon of the chosen day. */
+  startedAt: IsoDateTime,
+  /** Stop pressed, or the pause the timer was stopped in. */
+  endedAt: IsoDateTime,
+  /** Running time without pauses. */
+  activeMs: z.number().int().nonnegative().max(STUDY_SESSION_MAX_MS, { message: 'must be at most 16 hours' }),
+  /** Local day of startedAt. */
+  localDay: IsoDate,
+  label: Text.max(STUDY_LABEL_MAX, { message: `must be at most ${STUDY_LABEL_MAX} characters` }).optional(),
+  /** Added by hand on the Stats page, not timed. */
+  manual: z.literal(true).optional(),
+  createdAt: IsoDateTime,
+  updatedAt: IsoDateTime,
+  /** Soft delete. */
+  deletedAt: IsoDateTime.optional(),
+}
+
+function checkSession(x: { startedAt: string; endedAt: string; activeMs: number; createdAt: string; updatedAt: string }, ctx: z.RefinementCtx): void {
+  const span = Date.parse(x.endedAt) - Date.parse(x.startedAt)
+  if (span < 0) ctx.addIssue({ code: 'custom', path: ['endedAt'], message: 'is before startedAt' })
+  else if (x.activeMs > span) ctx.addIssue({ code: 'custom', path: ['activeMs'], message: 'is longer than the time from startedAt to endedAt' })
+  if (Date.parse(x.updatedAt) < Date.parse(x.createdAt)) ctx.addIssue({ code: 'custom', path: ['updatedAt'], message: 'is before createdAt' })
+}
+
+/** A study session as the app writes it (the upload without the id). */
+export const StudySessionRecord = z.strictObject(StudySessionFields).superRefine(checkSession)
+
+/** A study session as the server has it (GET /v1/state, stale in a sync reply). */
+export const StudySession = z.strictObject({ id: z.string().min(1), ...StudySessionFields }).superRefine(checkSession)
+
 const ARTICLE = /^(der|die|das) /
 
 export const Word = z
@@ -706,6 +744,8 @@ export type NoteEdit = z.infer<typeof NoteEdit>
 export type NoteFeedback = z.infer<typeof NoteFeedback>
 export type WordCheck = z.infer<typeof WordCheck>
 export type CustomWord = z.infer<typeof CustomWord>
+export type StudySessionRecord = z.infer<typeof StudySessionRecord>
+export type StudySession = z.infer<typeof StudySession>
 export type TableColumn = z.infer<typeof TableColumn>
 export type LessonProgress = z.infer<typeof LessonProgress>
 export type ReviewMode = z.infer<typeof ReviewMode>

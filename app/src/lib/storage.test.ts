@@ -39,6 +39,7 @@ const emptyStateReply = (over: Record<string, unknown> = {}) => ({
   newWordExtras: {},
   notes: [],
   customWords: [],
+  studySessions: [],
   ...over,
 })
 
@@ -55,6 +56,7 @@ function okSync(body: Record<string, unknown>, over: Record<string, unknown> = {
     newWordExtras: { received: n('newWordExtras'), written: n('newWordExtras'), unchanged: 0, stale: [] },
     notes: { received: n('notes'), written: n('notes'), unchanged: 0, stale: [] },
     customWords: { received: n('customWords'), written: n('customWords'), unchanged: 0, stale: [] },
+    studySessions: { received: n('studySessions'), written: n('studySessions'), unchanged: 0, stale: [] },
     ...over,
   })
 }
@@ -578,6 +580,135 @@ describe('custom words', () => {
     env.store.addContentCard('termin')
     expect(env.store.getView().customWords.map((w) => [w.id, w.pending])).toEqual([[id, false]])
     expect(env.store.getView().reviewState.cards.termin).toBeDefined()
+    expect(env.store.getStatus().pending).toBe(0)
+    expect(env.storage.size).toBe(0)
+    expect(env.calls).toEqual([])
+  })
+})
+
+// ---------- study sessions (the timer) ----------
+
+describe('study sessions', () => {
+  const MIN = 60_000
+  const stop = { startedAt: '2026-09-29T09:00:00.000Z', endedAt: '2026-09-29T09:50:00.000Z', activeMs: 40 * MIN, label: '  lesson 0.3 ' }
+  const ok = (c: Call) => okSync(c.body!)
+
+  it('saves a stopped timer as a session, syncs it at once, and counts its day as a study day', async () => {
+    const env = await started([ok])
+    const id = env.store.saveStudySession(stop)
+    expect(env.store.getView().studySessions).toMatchObject([{ id, activeMs: 40 * MIN, label: 'lesson 0.3', localDay: '2026-09-29', pending: true }])
+    expect(env.store.getView().studyDays).toEqual(['2026-09-29'])
+    await env.store.flush()
+    expect(env.calls.map((c) => `${c.method} ${c.path}`)).toEqual(['GET /v1/state?days=35', 'POST /v1/sync'])
+    expect(env.calls[1].body!.studySessions).toEqual([
+      {
+        id,
+        startedAt: stop.startedAt,
+        endedAt: stop.endedAt,
+        activeMs: 40 * MIN,
+        localDay: '2026-09-29',
+        label: 'lesson 0.3',
+        createdAt: '2026-09-29T10:00:00.000Z',
+        updatedAt: '2026-09-29T10:00:00.000Z',
+      },
+    ])
+    expect(env.store.getView().studySessions[0].pending).toBe(false)
+    expect(env.store.getView().studyDays).toEqual(['2026-09-29'])
+    expect(env.store.getStatus().pending).toBe(0)
+  })
+
+  it('refuses a session that breaks the rules, without a request', async () => {
+    const env = await started()
+    expect(() => env.store.saveStudySession({ ...stop, activeMs: 51 * MIN })).toThrow(/cannot be saved: activeMs: is longer than the time from startedAt to endedAt/)
+    expect(() => env.store.saveStudySession({ ...stop, label: 'x'.repeat(101) })).toThrow(/at most 100 characters/)
+    expect(env.store.getStatus().pending).toBe(0)
+    expect(env.calls).toHaveLength(1)
+  })
+
+  it('adds time by hand at local noon of the chosen day, never for a day still to come', async () => {
+    const env = await started([ok])
+    expect(() => env.store.addManualStudySession('2026-09-30', 30, '')).toThrow(/not for a day still to come/)
+    expect(() => env.store.addManualStudySession('2026-09-28', 0, '')).toThrow(/at least 1/)
+    expect(() => env.store.addManualStudySession('2026-09-28', 961, '')).toThrow(/At most 960 minutes/)
+    const id = env.store.addManualStudySession('2026-09-28', 30, ' Schritte ')
+    const noon = new Date('2026-09-28T12:00:00')
+    expect(env.store.getView().studySessions).toMatchObject([
+      {
+        id,
+        manual: true,
+        localDay: '2026-09-28',
+        startedAt: noon.toISOString(),
+        endedAt: new Date(noon.getTime() + 30 * MIN).toISOString(),
+        activeMs: 30 * MIN,
+        label: 'Schritte',
+      },
+    ])
+    // A day studied without the app fills that day in (the streak counts it).
+    expect(env.store.getView().studyDays).toEqual(['2026-09-28'])
+    await env.store.flush()
+    expect(env.calls[1].body!.studySessions).toMatchObject([{ id, manual: true }])
+  })
+
+  it('edits minutes and label within the time from start to stop; a session added by hand moves its end', async () => {
+    const env = await started([ok, ok, ok, ok, ok])
+    const id = env.store.saveStudySession(stop)
+    await env.store.flush()
+    expect(() => env.store.editStudySession(id, 51, '')).toThrow(/ran 50 min from start to stop, so it can have at most 50 minutes/)
+    env.store.editStudySession(id, 50, 'lesson 0.3')
+    await env.store.flush()
+    expect(env.store.getView().studySessions[0]).toMatchObject({ activeMs: 50 * MIN, endedAt: stop.endedAt, label: 'lesson 0.3', updatedAt: '2026-09-29T10:00:00.001Z' })
+    // Saved unchanged: nothing to sync.
+    env.store.editStudySession(id, 50, 'lesson 0.3')
+    expect(env.store.getStatus().pending).toBe(0)
+    // An empty label removes it.
+    env.store.editStudySession(id, 50, '  ')
+    await env.store.flush()
+    expect(env.store.getView().studySessions[0].label).toBeUndefined()
+    expect(env.calls[3].body!.studySessions).toEqual([expect.not.objectContaining({ label: expect.anything() })])
+
+    const m = env.store.addManualStudySession('2026-09-28', 30, '')
+    await env.store.flush()
+    env.store.editStudySession(m, 90, '')
+    await env.store.flush()
+    const noon = new Date('2026-09-28T12:00:00')
+    expect(env.store.getView().studySessions.find((x) => x.id === m)).toMatchObject({ activeMs: 90 * MIN, endedAt: new Date(noon.getTime() + 90 * MIN).toISOString() })
+    expect(env.calls).toHaveLength(6)
+  })
+
+  it('deletes a session (soft, later than the version it replaces) and syncs the delete', async () => {
+    const env = await started([ok, ok])
+    const id = env.store.saveStudySession(stop)
+    await env.store.flush()
+    env.store.deleteStudySession(id)
+    expect(env.store.getView().studySessions).toEqual([])
+    await env.store.flush()
+    expect(env.calls[2].body!.studySessions).toMatchObject([{ id, updatedAt: '2026-09-29T10:00:00.001Z', deletedAt: '2026-09-29T10:00:00.001Z' }])
+    expect(() => env.store.deleteStudySession(id)).toThrow(/no study session/)
+  })
+
+  it('keeps sessions in the offline copy, and reads a copy saved before they existed', async () => {
+    const storage = new Map<string, string>()
+    const first = await started([ok], { storage })
+    const id = first.store.saveStudySession(stop)
+    await first.store.flush()
+    const env = setup([() => 'network-error'], { storage })
+    await env.store.start({ id: 'u1' })
+    expect(env.store.getView().studySessions.map((x) => x.id)).toEqual([id])
+
+    const { studySessions: _x, ...old } = emptyStateReply()
+    const env2 = setup([() => 'network-error'], { storage: new Map([['nemeceren.state.u1', JSON.stringify(old)]]) })
+    await env2.store.start({ id: 'u1' })
+    expect(env2.store.getView().studySessions).toEqual([])
+  })
+
+  it('works for a guest, in memory only', () => {
+    const env = setup([])
+    env.store.startGuest()
+    const id = env.store.saveStudySession(stop)
+    const m = env.store.addManualStudySession('2026-09-27', 20, 'book')
+    env.store.editStudySession(id, 45, 'edited')
+    env.store.deleteStudySession(m)
+    expect(env.store.getView().studySessions.map((x) => [x.id, x.activeMs / MIN, x.label, x.pending])).toEqual([[id, 45, 'edited', false]])
     expect(env.store.getStatus().pending).toBe(0)
     expect(env.storage.size).toBe(0)
     expect(env.calls).toEqual([])

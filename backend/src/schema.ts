@@ -2,8 +2,9 @@
 // (ReviewLogEntry, StoredCard, Result, ResultItem, LessonProgress, ReviewState.newToday.extra)
 // as of 2026-09-29 02:00, plus a client-generated id on events and attempts, the app's
 // note record (NoteRecord in app/src/lib/outbox.ts, text rules of NoteText in schema.ts; added 2026-09-30),
-// and the custom word record (CustomWordRecord in app/src/lib/outbox.ts, fields and limits of
-// CustomWordFields / CUSTOM_WORD_MAX in schema.ts; added 2026-09-30).
+// the custom word record (CustomWordRecord in app/src/lib/outbox.ts, fields and limits of
+// CustomWordFields / CUSTOM_WORD_MAX in schema.ts; added 2026-09-30), and the study session record
+// (StudySessionRecord in app/src/content/schema.ts, with STUDY_LABEL_MAX and STUDY_SESSION_MAX_MS; added 2026-10-02).
 // KEEP THEM IN STEP: when the app changes one of those types, change it here and redeploy.
 // Objects are strict on purpose: a key this API does not know is a 400 that names the key,
 // instead of data silently dropped on the way into the database.
@@ -194,6 +195,38 @@ export const CustomWordUpload = z
     }
   })
 
+// ---------- study sessions (the study timer, or time added by hand) ----------
+
+/** The same limits as the app (STUDY_LABEL_MAX, STUDY_SESSION_MAX_MS in app/src/content/schema.ts) and the table (004_study_sessions.sql). */
+export const STUDY_LABEL_MAX = 100
+export const STUDY_SESSION_MAX_MS = 16 * 60 * 60_000
+
+export const StudySessionUpload = z
+  .strictObject({
+    id: ClientId,
+    startedAt: IsoDateTime,
+    endedAt: IsoDateTime,
+    /** Running time without pauses. */
+    activeMs: Count.max(STUDY_SESSION_MAX_MS, { message: 'must be at most 16 hours' }),
+    /** Hayk's local day of startedAt. */
+    localDay: IsoDate,
+    label: upTo(STUDY_LABEL_MAX).optional(),
+    /** Added by hand on the Stats page, not timed. */
+    manual: z.literal(true).optional(),
+    createdAt: IsoDateTime,
+    updatedAt: IsoDateTime,
+    /** Soft delete. */
+    deletedAt: IsoDateTime.optional(),
+  })
+  .superRefine((x, ctx) => {
+    const span = Date.parse(x.endedAt) - Date.parse(x.startedAt)
+    if (span < 0) ctx.addIssue({ code: 'custom', path: ['endedAt'], message: 'is before startedAt' })
+    else if (x.activeMs > span) ctx.addIssue({ code: 'custom', path: ['activeMs'], message: 'is longer than the time from startedAt to endedAt' })
+    if (Date.parse(x.updatedAt) < Date.parse(x.createdAt)) {
+      ctx.addIssue({ code: 'custom', path: ['updatedAt'], message: 'is before createdAt' })
+    }
+  })
+
 // ---------- one sync batch ----------
 
 function checkUnique<T>(list: T[], key: (x: T) => string, field: string, name: string, ctx: z.RefinementCtx): void {
@@ -214,6 +247,7 @@ export const SyncBody = z
     newWordExtras: z.array(NewWordExtraUpload).max(SYNC_LIMITS.newWordExtras).default([]),
     notes: z.array(NoteUpload).max(SYNC_LIMITS.notes).default([]),
     customWords: z.array(CustomWordUpload).max(SYNC_LIMITS.customWords).default([]),
+    studySessions: z.array(StudySessionUpload).max(SYNC_LIMITS.studySessions).default([]),
   })
   .superRefine((b, ctx) => {
     checkUnique(b.reviewEvents, (e) => e.id, 'reviewEvents', 'id', ctx)
@@ -223,6 +257,7 @@ export const SyncBody = z
     checkUnique(b.newWordExtras, (x) => x.localDay, 'newWordExtras', 'localDay', ctx)
     checkUnique(b.notes, (n) => n.id, 'notes', 'id', ctx)
     checkUnique(b.customWords, (w) => w.id, 'customWords', 'id', ctx)
+    checkUnique(b.studySessions, (x) => x.id, 'studySessions', 'id', ctx)
   })
 
 export type ReviewEventUpload = z.infer<typeof ReviewEventUpload>
@@ -233,4 +268,5 @@ export type LessonUpload = z.infer<typeof LessonUpload>
 export type NewWordExtraUpload = z.infer<typeof NewWordExtraUpload>
 export type NoteUpload = z.infer<typeof NoteUpload>
 export type CustomWordUpload = z.infer<typeof CustomWordUpload>
+export type StudySessionUpload = z.infer<typeof StudySessionUpload>
 export type SyncBody = z.infer<typeof SyncBody>

@@ -2,6 +2,36 @@
 
 Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
+## 63. The header keeps one line from 900 px with the study timer: "Sync now" becomes an icon there, and the nav and header spacing get tighter (revisits #48 and #54)
+
+- **Date:** 2026-10-02 - **Status:** active
+- **Why:**
+  - The running timer (#62) is a pill of about 118 px (pause 28, time up to "8:88:88" 52, stop 28, padding and border). The header had no room for it.
+  - Widths measured with Windows' own text measurement (`System.Drawing`, Segoe UI at 16 px and 14.4 px, the font the app uses on Windows), not in a browser: the 8 nav texts 356.4 px together, the bold brand 85.6 px, "Sync now" 60.4 px (a ~86 px button), the clock "8:88:88" at 14 px 43.8 px. The widest case before this change (unsynced changes, so "Sync now" shows) was ~823 px, close to #54's estimate of ~825. With the running timer it would be ~941 px.
+  - Available at a 900 px window: 868 px without a scrollbar (#48's figure), 851 px with a 17 px classic Windows scrollbar. This entry counts the scrollbar.
+  - Changes: in the header, "Sync now" is an icon button (34 px, accessible name "Sync now", tooltip with the status), saving ~56 px; Settings keeps the text button. Nav links have 6 px side padding instead of 8 and no gap between them (~46 px); the header's column gap is 12 px instead of 16 (~8 px). Widest case after: ~844 px of 851.
+  - Phone (390 px wide, 358 px inside the page padding): brand and tools share the first row. With 8 px between them, 4 px between the tools, 32 px icon buttons and 26 px timer buttons, the widest first row is ~350 px. On a narrower phone the tools wrap to their own row; the 4-column nav grid is not affected.
+  - None of this was checked in a browser (no Playwright for this task); Hayk does the browser check.
+- **Alternatives rejected:** hiding "Sync now" while the timer runs (the header would change shape with the sync state); shorter nav names (#48 rejected them); a menu button (#48); only the elapsed time in the header with pause and stop in a popup (the brief asked for pause/resume and stop in the header).
+- **What would change this:** the header wrapping on Hayk's screen at 900 px or more (then measure in the browser and move the timer into its own row below 1000 px), or Hayk missing the "Sync now" text.
+
+## 62. A study timer in the header records study sessions, synced to Neon (migration 004) and shown on the Stats page and in progress.py; a day with a session is a study day (asked for by Hayk, 2026-10-02)
+
+- **Date:** 2026-10-02 - **Status:** active; revisits #19 (study days) and #35 (what `GET /v1/state` returns)
+- **Why:**
+  - Hayk: "a timer feature so that I can conveniently start sessions and end them, so I can track how much time I put in, and include it in stats".
+  - A session is `{ id (client UUID), startedAt, endedAt, activeMs, localDay, label?, manual?: true, createdAt, updatedAt, deletedAt? }`. `activeMs` leaves pauses out and is at most 16 hours; `localDay` is the local day of `startedAt` (`dates.ts` `localDay`, as everywhere), and the whole session counts on that day; the label is at most 100 characters. Table `study_sessions` (`004_study_sessions.sql`), keyed by (user_id, id) like every table (#30), with CHECKs for `ended_at >= started_at`, `0 <= active_ms <= ended_at - started_at`, `active_ms <= 16 h` and the label. The same rules are in the app's zod schema and the API's.
+  - The header: idle, a start button ("Start study timer"); running, the time without pauses (mm:ss, then h:mm:ss) with pause/resume and stop. The running timer is per device and per user in localStorage (`nemeceren.timer.<user id>`: startedAt, activeMs so far, runningSince or pausedAt), so it survives reloads and closing the tab. Elapsed time comes from those timestamps, never from counted ticks, so a sleeping laptop or a hidden tab does not drift; the display redraws once per second only while the tab is visible. A second tab follows it through the `storage` event, and Start in a tab adopts a timer another tab already runs. Every storage failure is reported in the error banner (the timer then goes on in that tab only). Guests: memory only, no storage and no requests (#55).
+  - Stop opens a panel under the header bar; nothing is saved until Save, so "Keep timing" goes back to the running timer. Under 1 minute it only asks "Discard this short session?". Over 3 hours it asks "Did you study the whole X?" with the minutes to correct. A paused timer ends at its pause. The label is optional. Discard asks for a confirmation (one click must not lose an hour). A saved session goes into the outbox and syncs at once, like a test (#42); edits, deletes and time added by hand sync at once too (rare actions).
+  - A timed session never gets more minutes than the time from its start to its stop, also when edited ("Add time by hand" is for the rest), so the timestamps stay true. Time added by hand starts at local noon of the chosen day (a time every day has, also on clock-change days) and ends after its minutes; days still to come are refused.
+  - Sync: a `studySessions` list in `POST /v1/sync`, 100 per request (~0.05 MB); the later `updatedAt` wins; a delete is soft. `GET /v1/state` returns the sessions that are not deleted and **started in the same window as `reviewEvents`** (`started_at >= now() - days`, default 35 days), oldest first, so this week, this month and the 30-day chart are always covered.
+  - **Study days:** a day with a session that is not deleted (also one added by hand) is a study day, on top of #19's rule (a word review, practice included, or an answered test item). `studyDays` in the state now includes those days over all time, as does `progress.py summary`. Consequences: studying from a book with the timer keeps the streak without opening a lesson; adding time by hand for a past day fills that day in, so a missed day in the streak can be filled later (accepted: that is what adding time by hand is for). A session deleted on this device leaves its day in the list until the next load, because the server's `studyDays` lists days, not why each one counts.
+  - The Stats page keeps the measured minutes apart and names them clearly: a "Study timer" section (today, this week, this month, the average per day with a session over the last 30 days, a 30-day chart of timer minutes with the minutes on each bar, "Add time by hand", recent sessions with edit and delete) and a "Measured activity" section (the old charts; "Sessions per day" is now "Activity sessions per day", since "session" also means a timer session).
+  - `progress.py summary` shows "measured" and "timer" minutes per day and in total, and `progress.py sessions [--days N]` lists the sessions.
+  - Known limit (as before for every change): two open tabs each keep the outbox in memory, so if both are offline and both save, the last outbox written wins. A saved session syncs at once, so this needs both tabs offline.
+- **Alternatives rejected:** counting ticks (drifts in a background tab and in sleep); keeping the running timer on the server (a request on every start and pause, and live updates on the other device would need polling, against the Free plan, #42); sessionStorage for the running timer (gone when the tab closes); stretching the end of a timed session when its minutes are edited upward (the timestamps would lie); adding timer minutes into the measured minutes (they measure different things, and Hayk wants to compare them); not counting a day with only a timer session as a study day (a day spent on a book would break the streak).
+- **What would change this:** Hayk wanting one timer running across the PC and the phone at once (then the running state belongs on the server), the 3-hour question coming up for real sessions often, or a combined "total time" figure being wanted (then decide how to avoid counting app time twice when the timer ran during reviews).
+
 ## 61. Theme lessons (songs, videos, articles, topics) are lessons with a `theme` instead of `unit`/`order`, in `content/themes/`, on their own Lessons tab and outside the course (asked for by Hayk, 2026-09-30)
 
 - **Date:** 2026-09-30 - **Status:** active
@@ -88,7 +118,7 @@ Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
 ## 54. Settings becomes a gear icon next to the theme button, so the nav keeps 8 text links
 
-- **Date:** 2026-09-30 - **Status:** active; revisits #48
+- **Date:** 2026-09-30 - **Status:** active; revisits #48 (revisited 2026-10-02: the study timer joins the header tools, #63)
 - **Why:**
   - With Notes the nav would have 9 entries: a third row in the phone's 4-column grid, and more than one line at 900 px. Settings is the least used page.
   - The nav is Home, Lessons, Topics, Words, Extras, Notes, Results, Stats. The gear is a link with the accessible name "Settings" (`aria-label` and tooltip) and `aria-current` while the page is open. The sync dot still links to Settings. Guests see 7 links (no Notes, #55).
@@ -165,7 +195,7 @@ Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
 ## 48. The header fits on one line from 900 px: the sync status is a coloured dot, and the header is wider than the page; on a phone the nav is a 4-column grid
 
-- **Date:** 2026-09-29 - **Status:** active (revisited 2026-09-30: Settings is a gear icon, #54)
+- **Date:** 2026-09-29 - **Status:** active (revisited 2026-09-30: Settings is a gear icon, #54; revisited 2026-10-02: "Sync now" is an icon in the header and the spacing is tighter, to fit the study timer, #63)
 - **Why:**
   - With 8 links (Home, Lessons, Topics, Words, Daily, Results, Stats, Settings) the header wrapped on a 1180 px window. The real limit was the 760 px page width, which the header shared.
   - The header now has its own maximum width, 960 px. The sync status in the header is a coloured dot (green synced, amber unsynced or offline, red error) with the full text as its tooltip and label. The dot links to Settings, where the full status line still is, and "Sync now" still appears next to it whenever there is something to send. Links are a little tighter (8 px padding instead of 10).
@@ -291,7 +321,7 @@ Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
 ## 35. `GET /v1/state` returns all cards, raw reviews of the last 35 days, all-time study days, all attempts in full, lesson progress and recent extras, gzip-compressed
 
-- **Date:** 2026-09-29 - **Status:** active
+- **Date:** 2026-09-29 - **Status:** active (revisited 2026-10-02: it also returns the study sessions of the same window, and studyDays include days with a session, #62)
 - **Why:** One request on start gives the app everything, in the app's own field names (`lessonProgress` is the app's `LessonProgress` exactly). Raw reviews are windowed because they grow fastest (~100 a day); the Stats page charts 30 days, and streaks only need the list of study days, which is sent for all time. Attempts are sent in full because the Results page shows them with Claude's reviews and they grow slowly (a few per week, ~10 KB each). Estimated reply after a year: ~1 MB raw, ~100-200 KB gzipped, ~30 MB/month of the 5 GB egress.
 - **Alternatives rejected:** incremental sync with `since` cursors and a client cache (more client code to get wrong, not needed at this size); attempt summaries plus a detail endpoint (the Results page would need a second request per attempt and the score logic would have to move); all review events every time (would grow without bound).
 - **What would change this:** more than ~300 attempts or a state reply over ~500 KB gzipped; then add `?since=` for attempts and events.
@@ -425,7 +455,7 @@ Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
 ## 19. Study statistics use the recorded local day, 30-minute sessions, measured and capped minutes, and "known" = interval of 21 days or more
 
-- **Date:** 2026-09-29 - **Status:** active
+- **Date:** 2026-09-29 - **Status:** active (revisited 2026-10-02: a day with a study timer session is a study day too; timer minutes are shown apart from the measured minutes, #62)
 - **Why:**
   - Hayk splits time between Munich and Armenia, so each review and test result now records `localDay` when it happens. A review at 23:30 in Munich stays on that Munich day wherever the stats are viewed, and a snapshot built in CI (UTC) cannot shift days.
   - Minutes come from time actually measured (card open to grade, and time on each test item), capped at 2 min per card and 20 min per test item, so an open tab does not count as study. Summing session wall-clock time was rejected because a 25-minute break inside a session would count as study.

@@ -14,7 +14,7 @@ import {
   sameJson,
   SYNC_LIMITS,
 } from './outbox.ts'
-import type { CustomWordRecord, NoteRecord, Outbox, ServerNote, ServerState, SyncResponse } from './outbox.ts'
+import type { CustomWordRecord, NoteRecord, Outbox, ServerNote, ServerState, StudySession, StudySessionRecord, SyncResponse } from './outbox.ts'
 import type { CustomWord } from '../content/schema.ts'
 import { emptyState, Rating, review } from './srs.ts'
 
@@ -65,6 +65,7 @@ const server = (over: Partial<ServerState> = {}): ServerState => ({
   newWordExtras: {},
   notes: [],
   customWords: [],
+  studySessions: [],
   ...over,
 })
 
@@ -78,6 +79,7 @@ const reply = (over: Partial<SyncResponse> = {}): SyncResponse => ({
   newWordExtras: { received: 0, written: 0, unchanged: 0, stale: [] },
   notes: { received: 0, written: 0, unchanged: 0, stale: [] },
   customWords: { received: 0, written: 0, unchanged: 0, stale: [] },
+  studySessions: { received: 0, written: 0, unchanged: 0, stale: [] },
   ...over,
 })
 
@@ -228,6 +230,7 @@ describe('parsing', () => {
     newWordExtras: { '2026-09-29': 5 },
     notes: [],
     customWords: [],
+    studySessions: [],
   }
 
   it('reads the server state into the app types, keeping the ids', () => {
@@ -360,6 +363,7 @@ describe('notes: the lock rule', () => {
       newWordExtras: {},
       notes: [serverNote('c', noteRec('Server c', t1), feedback)],
       customWords: [],
+      studySessions: [],
     }
     expect(parseState('state', raw).notes[0].feedback).toEqual(feedback)
     // The offline copy is the state as JSON; it must parse back the same.
@@ -484,5 +488,122 @@ describe('custom words: merge and Claude\'s check', () => {
       ],
     })
     expect(buildView(s, emptyOutbox(), '2026-09-29').reviewState.newToday).toEqual({ date: '2026-09-29', count: 1 })
+  })
+})
+
+// ---------- study sessions ----------
+
+const sid = (n: number) => `00000000-0000-4000-8000-${String(n).padStart(12, '0')}`
+const sessionRec = (localDay: string, updatedAt: string, over: Partial<StudySessionRecord> = {}): StudySessionRecord => ({
+  startedAt: `${localDay}T08:00:00.000Z`,
+  endedAt: `${localDay}T09:00:00.000Z`,
+  activeMs: 45 * 60_000,
+  localDay,
+  createdAt: `${localDay}T09:00:00.000Z`,
+  updatedAt,
+  ...over,
+})
+const serverSession = (n: number, rec: StudySessionRecord): StudySession => ({ id: sid(n), ...rec })
+
+describe('study sessions in the outbox', () => {
+  it('batches sessions within the API limit and removes exactly what was sent', () => {
+    const studySessions = Object.fromEntries(
+      Array.from({ length: 105 }, (_, i) => [sid(i), sessionRec('2026-09-29', '2026-09-29T09:00:00.000Z')]),
+    )
+    const o: Outbox = { ...emptyOutbox(), studySessions }
+    expect(outboxSize(o)).toBe(105)
+    const b = nextBatch(o)!
+    expect(Object.keys(b)).toEqual(['studySessions'])
+    expect(b.studySessions).toHaveLength(SYNC_LIMITS.studySessions)
+    expect(b.studySessions![0]).toEqual({ id: sid(0), ...studySessions[sid(0)] })
+    // Edited while the batch was on its way: it stays for the next sync.
+    const changed = { ...o, studySessions: { ...o.studySessions, [sid(1)]: sessionRec('2026-09-29', '2026-09-29T10:00:00.000Z', { label: 'later' }) } }
+    const left = removeSent(changed, b)
+    expect(Object.keys(left.studySessions)).toEqual([sid(1), ...[100, 101, 102, 103, 104].map(sid)])
+  })
+
+  it('reads an outbox saved before study sessions existed as one without them, and refuses a bad one loudly', () => {
+    const { studySessions: _x, ...old } = emptyOutbox()
+    expect(parseOutbox('outbox', old).studySessions).toEqual({})
+    const tooLong = sessionRec('2026-09-29', '2026-09-29T09:00:00.000Z', { activeMs: 61 * 60_000 })
+    expect(() => parseOutbox('outbox', { ...emptyOutbox(), studySessions: { [sid(1)]: tooLong } })).toThrow(
+      /outbox: studySessions\..*\.activeMs: is longer than the time from startedAt to endedAt/,
+    )
+    const blank = sessionRec('2026-09-29', '2026-09-29T09:00:00.000Z', { label: '  ' })
+    expect(() => parseOutbox('outbox', { ...emptyOutbox(), studySessions: { [sid(1)]: blank } })).toThrow(/label/)
+  })
+})
+
+describe('study sessions: merge, view and study days', () => {
+  const t1 = '2026-09-29T09:00:00.000Z'
+  const t2 = '2026-09-29T11:00:00.000Z'
+
+  it('shows the later version of each session, hides deleted ones, and lists them newest first', () => {
+    const s = server({
+      studySessions: [
+        serverSession(1, sessionRec('2026-09-27', t1, { label: 'server' })),
+        serverSession(2, sessionRec('2026-09-28', t2, { label: 'server newer' })),
+        serverSession(3, sessionRec('2026-09-26', t1)),
+      ],
+    })
+    const o: Outbox = {
+      ...emptyOutbox(),
+      studySessions: {
+        [sid(1)]: sessionRec('2026-09-27', t2, { label: 'edited here', activeMs: 30 * 60_000 }),
+        [sid(2)]: sessionRec('2026-09-28', t1, { label: 'local older' }),
+        [sid(3)]: sessionRec('2026-09-26', t2, { deletedAt: t2 }),
+        [sid(4)]: sessionRec('2026-09-29', t1, { manual: true }),
+      },
+    }
+    const v = buildView(s, o, '2026-09-29')
+    expect(v.studySessions.map((x) => [x.id, x.localDay, x.label ?? null, x.activeMs / 60_000, x.pending])).toEqual([
+      [sid(4), '2026-09-29', null, 45, true],
+      [sid(2), '2026-09-28', 'server newer', 45, true],
+      [sid(1), '2026-09-27', 'edited here', 30, true],
+    ])
+  })
+
+  it('makes a day with a session a study day, but not one whose only session is deleted', () => {
+    const s = server({ studyDays: ['2026-09-20'] })
+    const o: Outbox = {
+      ...emptyOutbox(),
+      studySessions: {
+        [sid(1)]: sessionRec('2026-09-28', t1, { manual: true }),
+        [sid(2)]: sessionRec('2026-09-27', t2, { deletedAt: t2 }),
+      },
+    }
+    expect(buildView(s, o, '2026-09-29').studyDays).toEqual(['2026-09-20', '2026-09-28'])
+  })
+
+  it("applies a sync reply: what was sent and the server's newer versions (stale), and adds the study days", () => {
+    const s = server({ studySessions: [serverSession(1, sessionRec('2026-09-27', t1))] })
+    const newer = serverSession(2, sessionRec('2026-09-28', t2, { label: 'from the phone' }))
+    const after = applySent(
+      s,
+      {
+        studySessions: [
+          { id: sid(1), ...sessionRec('2026-09-27', t2, { deletedAt: t2 }) },
+          { id: sid(2), ...sessionRec('2026-09-28', t1) },
+          { id: sid(3), ...sessionRec('2026-09-29', t1, { label: 'lesson 0.3' }) },
+        ],
+      },
+      reply({ studySessions: { received: 3, written: 2, unchanged: 0, stale: [newer] } }),
+    )
+    expect(after.studySessions).toEqual([
+      { id: sid(1), ...sessionRec('2026-09-27', t2, { deletedAt: t2 }) },
+      newer,
+      { id: sid(3), ...sessionRec('2026-09-29', t1, { label: 'lesson 0.3' }) },
+    ])
+    expect(after.studyDays).toEqual(['2026-09-28', '2026-09-29'])
+    expect(buildView(after, emptyOutbox(), '2026-09-29').studySessions.map((x) => x.id)).toEqual([sid(3), sid(2)])
+  })
+
+  it('reads sessions from the server state, and refuses a bad one loudly', () => {
+    const raw = { ...server(), studySessions: [serverSession(1, sessionRec('2026-09-29', t1, { manual: true, label: 'Schritte' }))] }
+    expect(parseState('state', JSON.parse(JSON.stringify(raw))).studySessions).toEqual(raw.studySessions)
+    const bad = { ...raw, studySessions: [{ ...raw.studySessions[0], endedAt: '2026-09-29T07:00:00.000Z' }] }
+    expect(() => parseState('state', bad)).toThrow(/studySessions\.0\.endedAt: is before startedAt/)
+    const manualFalse = { ...raw, studySessions: [{ ...raw.studySessions[0], manual: false }] }
+    expect(() => parseState('state', manualFalse)).toThrow(/studySessions\.0\.manual/)
   })
 })

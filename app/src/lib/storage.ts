@@ -9,6 +9,7 @@
 // Guest mode (startGuest, DECISIONS.md #55): the same store with an empty state in memory; changes
 // go straight into it, nothing is written to browser storage and no request is ever made.
 import { useSyncExternalStore } from 'react'
+import { StudySessionRecord as StudySessionRecordSchema } from '../content/schema.ts'
 import type { LessonProgress, Result, ReviewLogEntry, StoredCard } from '../content/schema.ts'
 import { ContentError } from '../content/validate.ts'
 import { AuthFailure, getToken } from './auth.ts'
@@ -33,11 +34,24 @@ import {
   removeSent,
   sameJson,
 } from './outbox.ts'
-import type { CustomWordRecord, CustomWordView, NoteRecord, NoteView, Outbox, ProgressView, SavedResult, ServerState, SyncBatch } from './outbox.ts'
+import type {
+  CustomWordRecord,
+  CustomWordView,
+  NoteRecord,
+  NoteView,
+  Outbox,
+  ProgressView,
+  SavedResult,
+  ServerState,
+  StudySessionRecord,
+  StudySessionView,
+  SyncBatch,
+} from './outbox.ts'
 import { introducedCard } from './srs.ts'
 import type { ReviewEvent, TestItemEvent } from './stats.ts'
+import { activeMsFor, cleanLabel, manualStart } from './timer.ts'
 
-export type { CustomWordView, NoteView, ProgressView, SavedResult }
+export type { CustomWordView, NoteView, ProgressView, SavedResult, StudySessionView }
 
 /** An error answer from the API: { error: { code, message, details? }, requestId }. */
 export class ApiError extends Error {
@@ -121,6 +135,7 @@ function emptyServerState(now: Date): ServerState {
     newWordExtras: {},
     notes: [],
     customWords: [],
+    studySessions: [],
   }
 }
 
@@ -306,10 +321,16 @@ export function createProgressStore(deps: StoreDeps) {
       if (cached === null) {
         throw new NetworkError(`${messageOf(err)}. There is no copy of your progress on this device yet, so the app needs the internet once.`)
       }
-      // Offline copies saved before notes and custom words existed (2026-09-30) have no such key: that copy had none.
+      // Offline copies saved before notes and custom words (2026-09-30) or study sessions (2026-10-02)
+      // existed have no such key: that copy had none.
       const copy =
         cached !== null && typeof cached === 'object'
-          ? { ...('notes' in cached ? {} : { notes: [] }), ...('customWords' in cached ? {} : { customWords: [] }), ...cached }
+          ? {
+              ...('notes' in cached ? {} : { notes: [] }),
+              ...('customWords' in cached ? {} : { customWords: [] }),
+              ...('studySessions' in cached ? {} : { studySessions: [] }),
+              ...cached,
+            }
           : cached
       server = parseState('the offline copy of your progress', copy)
       status = { ...status, phase: 'offline', fromCache: true }
@@ -404,6 +425,26 @@ export function createProgressStore(deps: StoreDeps) {
     const word = current().customWords.find((w) => w.id === id)
     if (!word) throw new Error(`There is no word ${id} in your words (was it deleted on another device?)`)
     return word
+  }
+
+  /** The study session to change: it must exist (not deleted). */
+  function studySession(id: string): StudySessionView {
+    const x = current().studySessions.find((v) => v.id === id)
+    if (!x) throw new Error(`There is no study session ${id} (was it deleted on another device?)`)
+    return x
+  }
+
+  /** Validates a session record before it goes into the outbox, so a bad one never reaches the API. */
+  function checkedSession(record: StudySessionRecord): StudySessionRecord {
+    const r = StudySessionRecordSchema.safeParse(record)
+    if (!r.success) throw new Error(`This study session cannot be saved: ${r.error.issues.map((i) => `${i.path.join('.')}: ${i.message}`).join('; ')}`)
+    return r.data
+  }
+
+  function putSession(id: string, record: StudySessionRecord) {
+    const checked = checkedSession(record)
+    change((o) => ({ ...o, studySessions: { ...o.studySessions, [id]: checked } }))
+    void flush()
   }
 
   /** Always later than the version it replaces (the merge needs a later updatedAt), even if the clock went back. */
@@ -547,6 +588,76 @@ export function createProgressStore(deps: StoreDeps) {
       change((o) => ({ ...o, cards: { ...o.cards, [wordId]: card } }))
     },
 
+    /**
+     * Saves a stopped timer as a study session (localDay = the local day of its start) and starts a
+     * sync, like a submitted test. Throws with a message for Hayk if a value is out of range. Returns the id.
+     */
+    saveStudySession(s: { startedAt: string; endedAt: string; activeMs: number; label: string }): string {
+      const id = deps.newId()
+      const now = deps.now().toISOString()
+      const label = cleanLabel(s.label)
+      putSession(id, {
+        startedAt: s.startedAt,
+        endedAt: s.endedAt,
+        activeMs: s.activeMs,
+        localDay: localDay(new Date(s.startedAt)),
+        ...(label ? { label } : {}),
+        createdAt: now,
+        updatedAt: now,
+      })
+      return id
+    },
+
+    /** "Add time by hand": a session of `minutes` on `day` (not in the future), starting at local noon. Returns the id. */
+    addManualStudySession(day: string, minutes: number, label: string): string {
+      if (day > today()) throw new Error('You can add time for today or an earlier day, not for a day still to come.')
+      const r = activeMsFor(minutes, null, null)
+      if ('problem' in r) throw new Error(r.problem)
+      const start = manualStart(day)
+      const clean = cleanLabel(label)
+      const id = deps.newId()
+      const now = deps.now().toISOString()
+      putSession(id, {
+        startedAt: start.toISOString(),
+        endedAt: new Date(start.getTime() + r.activeMs).toISOString(),
+        activeMs: r.activeMs,
+        localDay: day,
+        ...(clean ? { label: clean } : {}),
+        manual: true,
+        createdAt: now,
+        updatedAt: now,
+      })
+      return id
+    },
+
+    /**
+     * Changes a session's minutes and label. A timed session cannot get more minutes than the time
+     * from its start to its stop; a session added by hand ends its minutes after its start.
+     */
+    editStudySession(id: string, minutes: number, label: string) {
+      const x = studySession(id)
+      const span = Date.parse(x.endedAt) - Date.parse(x.startedAt)
+      const r = activeMsFor(minutes, x.activeMs, x.manual ? null : span)
+      if ('problem' in r) throw new Error(r.problem)
+      const clean = cleanLabel(label)
+      if (r.activeMs === x.activeMs && clean === x.label) return
+      const { id: _id, pending: _pending, label: _label, ...rest } = x
+      putSession(id, {
+        ...rest,
+        activeMs: r.activeMs,
+        ...(x.manual ? { endedAt: new Date(Date.parse(x.startedAt) + r.activeMs).toISOString() } : {}),
+        ...(clean ? { label: clean } : {}),
+        updatedAt: changedAt(x.updatedAt),
+      })
+    },
+
+    /** Deletes a study session (soft, so the other devices learn it too) and starts a sync. */
+    deleteStudySession(id: string) {
+      const { id: _id, pending: _pending, ...rest } = studySession(id)
+      const at = changedAt(rest.updatedAt)
+      putSession(id, { ...rest, updatedAt: at, deletedAt: at })
+    },
+
     /** Deletes a note without feedback (a soft delete, so the other devices learn it too) and starts a sync. */
     deleteNote(id: string) {
       if (guest) throw new Error('Guest mode has no notes.')
@@ -606,6 +717,10 @@ export const deleteNote = (id: string) => progressStore().deleteNote(id)
 export const saveCustomWord = (draft: CustomWordDraft, id?: string) => progressStore().saveCustomWord(draft, id)
 export const deleteCustomWord = (id: string) => progressStore().deleteCustomWord(id)
 export const addContentCard = (wordId: string) => progressStore().addContentCard(wordId)
+export const saveStudySession = (s: { startedAt: string; endedAt: string; activeMs: number; label: string }) => progressStore().saveStudySession(s)
+export const addManualStudySession = (day: string, minutes: number, label: string) => progressStore().addManualStudySession(day, minutes, label)
+export const editStudySession = (id: string, minutes: number, label: string) => progressStore().editStudySession(id, minutes, label)
+export const deleteStudySession = (id: string) => progressStore().deleteStudySession(id)
 export const refreshState = () => progressStore().refresh()
 
 /** Starts a sync unless the outbox is empty (e.g. after a review round). */
