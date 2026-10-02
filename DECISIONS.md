@@ -2,6 +2,13 @@
 
 Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
+## 68. Unit 3 teaches times, dates, separable verbs and können/wollen/müssen in full, and keeps the case forms it needs as chunks (written with the course-unit skill, 2026-10-02)
+
+- **Date:** 2026-10-02 - **Status:** active
+- **Why:** making plans needs `am Montag`, `am dritten Oktober`, `im Mai`, `Ich rufe dich an`, `ins Kino`, `Tut mir leid`, `Wir treffen uns`, `zu Hause` from the first message, but their grammar comes later: the dative (`am`, `im`, `mir`, `zu`) in Unit 6, the accusative (`dich`, `ins`) in Unit 4, reflexive verbs at A2. The research order (`_knowledge/2026-09-29_syllabus-research.md`, items 5-6) puts separable verbs, am/um/von...bis and the modal verbs with the verb bracket here, and Nicos Weg ch. 7-8 teaches the same. So these are full topics, with tables and tests; the rest is chunks, each with a pointer to the unit that explains it. Ordinal dates are taught as two fixed patterns, `der ...te` and `am ...ten`; the ending rule waits for Unit 6. The Munich forms `viertel vier` and `dreiviertel vier` are for recognition only. `dürfen` stays in Unit 5; Unit 3 only says that "mustn't" is `darf nicht`. Four A2 words got cards because the situations need them (früh, zuerst, Lust, schade); B1 words (danach, Verabredung, absagen) stay out of the cards. The end task gives Eva's four messages in the prompt (a new `pre-line` style on `.question` keeps them on separate lines), and Hayk writes only the replies, one of them moving the time.
+- **Alternatives rejected:** teaching the dative endings of `am dritten` now (Unit 6 teaches the dative as a system; three cases in one unit is too much at level 0); leaving out `Ich rufe dich an` and `Wir treffen uns` until their grammar comes (you can't arrange anything without them); a free-form end task with no messages to answer (harder to grade, and it doesn't practise reacting to someone).
+- **What would change this:** Hayk tripping over the chunks in Unit 3's tests (then mark them more clearly, or teach `dich` earlier); the Unit 4 accusative lesson finding the `dich` chunk confusing rather than helpful.
+
 ## 67. A test or exercise item can say `digits: true`, so its answer box types real digits instead of umlauts (found by the course-unit skill review, 2026-10-02; built at Hayk's request)
 
 - **Date:** 2026-10-02 - **Status:** active; refines #64

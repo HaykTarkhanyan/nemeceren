@@ -1,0 +1,200 @@
+{
+  "id": "u3-04-datum",
+  "unit": 3,
+  "order": 4,
+  "level": "A1",
+  "title": "Dates, months and birthdays (Das Datum)",
+  "summary": "Say the date, your birthday, and the month or season something happens. Learn the ordinal numbers: der erste, der dritte.",
+  "goals": [
+    "Name the months and the seasons",
+    "Say the date: Heute ist der dritte Oktober",
+    "Say when: am dritten Oktober, im Oktober, im Sommer",
+    "Ask about birthdays, say yours, and congratulate someone"
+  ],
+  "nicosWeg": [
+    { "title": "Nicos Weg A1, chapter 8: Appointments (Hast du morgen Zeit?)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
+  ],
+  "words": ["januar", "februar", "maerz", "april", "mai", "juni", "juli", "august", "september", "oktober", "november", "dezember", "monat", "datum", "geburtstag", "erste", "dritte", "fruehling", "sommer", "herbst", "winter", "geboren", "feiertag", "alles-gute-zum-geburtstag"],
+  "tests": ["u3-t2-tagesablauf-datum"],
+  "sections": [
+    {
+      "id": "months",
+      "type": "table",
+      "title": "The months",
+      "columns": [{ "header": "Month", "de": "words" }, { "header": "English" }],
+      "rows": [
+        ["der Januar", "January"],
+        ["der Februar", "February"],
+        ["der März", "March"],
+        ["der April", "April"],
+        ["der Mai", "May"],
+        ["der Juni", "June"],
+        ["der Juli", "July"],
+        ["der August", "August"],
+        ["der September", "September"],
+        ["der Oktober", "October"],
+        ["der November", "November"],
+        ["der Dezember", "December"]
+      ]
+    },
+    {
+      "type": "explanation",
+      "text": "All months are [[der]], like the days, and most look like English. Watch the spelling of [[März]] (with ä) and the sound of [[Juni]] and [[Juli]]: they are easy to mix up when you listen, so people often say [[Juno]] and [[Julei]] on the phone to keep them apart.\n\n[[der Monat]] = the month, [[das Jahr]] = the year: [[Das Jahr hat zwölf Monate.]]"
+    },
+    {
+      "id": "seasons",
+      "type": "table",
+      "title": "The seasons",
+      "columns": [{ "header": "Season", "de": "words" }, { "header": "English" }, { "header": "When?", "de": "words" }],
+      "rows": [
+        ["der Frühling", "spring", "im Frühling"],
+        ["der Sommer", "summer", "im Sommer"],
+        ["der Herbst", "autumn", "im Herbst"],
+        ["der Winter", "winter", "im Winter"]
+      ]
+    },
+    {
+      "id": "um-am-im",
+      "type": "table",
+      "title": "When? um, am, im",
+      "columns": [{ "header": "Word", "de": "words" }, { "header": "With" }, { "header": "Examples", "de": "words" }],
+      "rows": [
+        ["um", "clock times", "um drei Uhr, um halb neun"],
+        ["am", "days, parts of the day, dates", "am Montag, am Abend, am dritten Mai"],
+        ["im", "months, seasons", "im Oktober, im Sommer"],
+        ["in der", "the night", "in der Nacht"]
+      ]
+    },
+    {
+      "type": "explanation",
+      "title": "am and im are chunks for now",
+      "text": "[[am]] is short for 'an dem' and [[im]] for 'in dem'. Why German needs [[dem]] here comes in Unit 6. For now, learn the table above as it is: [[um]] for the clock, [[am]] for days and dates, [[im]] for months and seasons."
+    },
+    {
+      "id": "ordinals",
+      "type": "explanation",
+      "title": "First, second, third: ordinal numbers",
+      "text": "For dates German uses ordinal numbers (first, second, third ...). The rule:\n- up to 19: number + **-te**: [[vier]], [[vierte]]; [[zehn]], [[zehnte]]; [[neunzehn]], [[neunzehnte]]\n- from 20: number + **-ste**: [[zwanzig]], [[zwanzigste]]; [[einunddreißig]], [[einunddreißigste]]\n\nOnly three are irregular: [[erste]] (1st), [[dritte]] (3rd), [[siebte]] (7th). And [[achte]] (8th) has just one t.\n\nIn writing, a dot after the number makes it ordinal: '3.' means [[dritte]]."
+    },
+    {
+      "id": "ordinals-table",
+      "type": "table",
+      "title": "Ordinal numbers",
+      "columns": [{ "header": "Written" }, { "header": "Say it", "de": "words" }],
+      "rows": [
+        ["1.", "erste"],
+        ["2.", "zweite"],
+        ["3.", "dritte"],
+        ["4.", "vierte"],
+        ["5.", "fünfte"],
+        ["6.", "sechste"],
+        ["7.", "siebte"],
+        ["8.", "achte"],
+        ["9.", "neunte"],
+        ["10.", "zehnte"],
+        ["12.", "zwölfte"],
+        ["19.", "neunzehnte"],
+        ["20.", "zwanzigste"],
+        ["21.", "einundzwanzigste"],
+        ["30.", "dreißigste"],
+        ["31.", "einunddreißigste"]
+      ]
+    },
+    {
+      "id": "saying-date",
+      "type": "explanation",
+      "title": "Saying the date",
+      "text": "- To ask: [[Welches Datum ist heute?]] (or [[Der Wievielte ist heute?]])\n- The date: [[Heute ist der dritte Oktober.]] After [[der]], the ending is **-te**.\n- On a date: [[am dritten Oktober]]. After [[am]], the ending is **-ten**.\n\nSo: **der ...te, am ...ten**: [[der erste Mai]], [[am ersten Mai]]. Unit 6 explains the -n; for now it's a chunk.\n\nDates are written day first: 3.10. or 3. Oktober. In speech most people say the month's name: [[der dritte Oktober]]. You may also hear the month as a number: [[der dritte Zehnte]] (the tenth month)."
+    },
+    {
+      "type": "comparison",
+      "text": "Russian also uses ordinal numbers for dates: третье октября is [[der dritte Oktober]], and третьего октября is [[am dritten Oktober]]. Armenian uses the plain number instead (հոկտեմբերի երեքը), so don't copy that: it's never 'am drei Oktober'."
+    },
+    {
+      "id": "birthday",
+      "type": "explanation",
+      "title": "Birthdays",
+      "text": "- [[Wann hast du Geburtstag?]] = When is your birthday? (Literally: when do you have birthday?)\n- [[Ich habe am zwölften März Geburtstag.]] or [[Mein Geburtstag ist am zwölften März.]]\n- [[Ich bin am zwölften März geboren.]] = I was born on the twelfth of March. It looks like 'I am born'; learn it as a chunk.\n- [[Alles Gute zum Geburtstag!]] = Happy birthday!\n\nYears up to 1999 are said in hundreds: 1999 = [[neunzehnhundertneunundneunzig]]. From 2000 they are said in thousands: 2026 = [[zweitausendsechsundzwanzig]]."
+    },
+    {
+      "type": "tip",
+      "title": "Not before the day",
+      "text": "Many Germans think it brings bad luck to say [[Alles Gute zum Geburtstag!]] before the actual day. Wait until the day itself, or say it a day late."
+    },
+    {
+      "id": "munich-dates",
+      "type": "tip",
+      "title": "Two dates in Munich",
+      "text": "[[Der dritte Oktober ist ein Feiertag.]] It's German Unity Day, and the shops are closed. And the Oktoberfest takes place mostly in September: [[Das Oktoberfest fängt im September an.]]"
+    },
+    {
+      "id": "date-examples",
+      "type": "examples",
+      "title": "Examples",
+      "items": [
+        { "de": "Welches Datum ist heute? - Heute ist der zwölfte Mai.", "en": "What's the date today? - Today is the twelfth of May." },
+        { "de": "Wann hast du Geburtstag? - Am dritten März.", "en": "When is your birthday? - On the third of March." },
+        { "de": "Ich habe im Juli Geburtstag.", "en": "My birthday is in July." },
+        { "de": "Im Winter ist es früh dunkel.", "en": "In winter it gets dark early." },
+        { "de": "Der Kurs fängt am ersten Februar an.", "en": "The class starts on the first of February." },
+        { "de": "Alles Gute zum Geburtstag!", "en": "Happy birthday!" }
+      ]
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat",
+      "items": [
+        { "de": "Januar, Februar, März, April", "en": "January, February, March, April" },
+        { "de": "Mai, Juni, Juli, August", "en": "May, June, July, August" },
+        { "de": "September, Oktober, November, Dezember", "en": "September, October, November, December" },
+        { "de": "der erste, der zweite, der dritte", "en": "the first, the second, the third" },
+        { "de": "am dritten Oktober", "en": "on the third of October" },
+        { "de": "Alles Gute zum Geburtstag!", "en": "Happy birthday!" }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: Today is the third of October.",
+          "text": "Heute ist der ___ Oktober.",
+          "answers": [["dritte"]],
+          "explanation": "3rd is irregular: dritte. After der: der dritte Oktober."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: on the first of May",
+          "text": "am ___ Mai",
+          "answers": [["ersten"]],
+          "explanation": "After am the ending is -ten: am ersten Mai."
+        },
+        {
+          "type": "mc",
+          "question": "Which one means 'in October'?",
+          "questionLang": "en",
+          "options": ["im Oktober", "am Oktober", "um Oktober"],
+          "answer": "im Oktober",
+          "explanation": "Months and seasons take im: im Oktober, im Sommer."
+        },
+        {
+          "type": "listen_mc",
+          "audio": "Mein Geburtstag ist am siebten Juli.",
+          "question": "When is the birthday?",
+          "questionLang": "en",
+          "options": ["7. Juli", "17. Juli", "7. Juni"],
+          "answer": "7. Juli",
+          "explanation": "am siebten Juli = on the 7th of July. siebte (7th) is irregular; siebzehnte would be the 17th."
+        },
+        {
+          "type": "translate",
+          "direction": "en-de",
+          "text": "Happy birthday!",
+          "references": ["Alles Gute zum Geburtstag!"],
+          "explanation": "Alles Gute zum Geburtstag! Literally: all the best for the birthday."
+        }
+      ]
+    }
+  ]
+}

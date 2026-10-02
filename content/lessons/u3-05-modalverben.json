@@ -1,0 +1,161 @@
+{
+  "id": "u3-05-modalverben",
+  "unit": 3,
+  "order": 5,
+  "level": "A1",
+  "title": "Can, want, must: the verb bracket (können, wollen, müssen)",
+  "summary": "Say what you can, want and have to do. The second verb goes to the end: Ich kann heute nicht kommen.",
+  "goals": [
+    "Use können, wollen and müssen with every person",
+    "Put the second verb at the end (the verb bracket)",
+    "Suggest something: Wollen wir ...?",
+    "Say what you don't have to do: Ich muss nicht ..."
+  ],
+  "nicosWeg": [
+    { "title": "Nicos Weg A1, chapter 8: Appointments (Wann spielen wir?)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
+  ],
+  "words": ["koennen", "wollen", "muessen", "vielleicht", "noch", "bleiben", "zu-hause", "zusammen"],
+  "sections": [
+    {
+      "id": "modal-intro",
+      "type": "explanation",
+      "title": "You already know this shape",
+      "text": "You have used these verbs already: [[Können Sie das bitte wiederholen?]] (Unit 1), and in the song lesson 'Sieben Tage lang': [[Was wollen wir trinken?]] and [[Jetzt müssen wir streiken.]]\n\nAll of them have the same shape. The modal verb ([[können]], [[wollen]], [[müssen]]) is in second place, and the main verb goes to the **end**, unchanged (the infinitive):\n- [[Ich kann heute nicht kommen.]] = I can't come today.\n- [[Ich will Deutsch lernen.]] = I want to learn German.\n- [[Ich muss morgen arbeiten.]] = I have to work tomorrow.\n\nThe two verbs make a bracket around the rest of the sentence. Germans call it the Satzklammer."
+    },
+    {
+      "id": "modal-verbs",
+      "type": "table",
+      "title": "können, wollen, müssen",
+      "columns": [{ "header": "Person", "de": "words" }, { "header": "können (can)", "de": "words" }, { "header": "wollen (want)", "de": "words" }, { "header": "müssen (must)", "de": "words" }],
+      "rows": [
+        ["ich", "kann", "will", "muss"],
+        ["du", "kannst", "willst", "musst"],
+        ["er / sie / es", "kann", "will", "muss"],
+        ["wir", "können", "wollen", "müssen"],
+        ["ihr", "könnt", "wollt", "müsst"],
+        ["sie / Sie", "können", "wollen", "müssen"]
+      ]
+    },
+    {
+      "type": "warning",
+      "text": "With [[ich]] and with [[er]], [[sie]], [[es]] the form is the same and has no ending: [[ich kann]], [[er kann]] (not 'er kannt'). And the vowel changes in the singular: [[ich muss]] but [[wir müssen]]; [[ich will]] but [[wir wollen]]."
+    },
+    {
+      "id": "verb-bracket",
+      "type": "table",
+      "title": "The verb bracket",
+      "columns": [{ "header": "Position 1", "de": "words" }, { "header": "Modal verb", "de": "words" }, { "header": "Middle", "de": "words" }, { "header": "End", "de": "words" }],
+      "rows": [
+        ["Ich", "kann", "heute nicht", "kommen."],
+        ["Am Samstag", "muss", "ich", "arbeiten."],
+        ["Wir", "wollen", "zusammen", "lernen."],
+        ["Wann", "kannst", "du", "kommen?"],
+        ["", "Kannst", "du am Montag", "kommen?"],
+        ["Ich", "muss", "morgen früh", "aufstehen."]
+      ]
+    },
+    {
+      "id": "separable-modal",
+      "type": "tip",
+      "title": "Separable verbs stay in one piece at the end",
+      "text": "Without a modal verb, a separable verb splits: [[Ich stehe um sechs auf.]] With a modal verb, it waits at the end in one piece: [[Ich muss um sechs aufstehen.]] [[Kannst du morgen anrufen?]] [[Ich will am Samstag einkaufen.]]"
+    },
+    {
+      "type": "comparison",
+      "text": "Armenian puts the main verb at the end too: Ես այսօր չեմ կարող գալ is [[Ich kann heute nicht kommen.]], with գալ (to come) last, like [[kommen]]. So the bracket may feel natural.\n\nRussian often keeps the two verbs together (Я не могу прийти сегодня). In a German main clause they split, and everything else goes **between** them."
+    },
+    {
+      "id": "ich-will",
+      "type": "warning",
+      "title": "Ich will is not 'I will'",
+      "text": "[[Ich will]] means **I want**, like Russian я хочу. It's never the future.\n\nAnd [[Ich will ...]] can sound pushy when you ask for something in a shop or a café. There, Germans say [[Ich möchte ...]] (I'd like), which comes in Unit 4."
+    },
+    {
+      "id": "muss-nicht",
+      "type": "explanation",
+      "title": "muss nicht = don't have to",
+      "text": "[[Ich muss nicht arbeiten.]] means I **don't have to** work (there's no need). It does not mean 'I mustn't'. 'Mustn't' is [[darf nicht]], which comes in Unit 5.\n\n- [[Am Sonntag muss ich nicht früh aufstehen.]] = On Sunday I don't have to get up early."
+    },
+    {
+      "id": "wollen-wir",
+      "type": "explanation",
+      "title": "Suggesting something: Wollen wir ...?",
+      "text": "[[Wollen wir ...?]] = Shall we ...? It's the friendly way to suggest something, as in the song:\n- [[Wollen wir zusammen lernen?]] = Shall we study together?\n- [[Wollen wir ins Kino gehen?]] = Shall we go to the cinema?\n\n[[ins Kino]] (to the cinema) is a chunk for now. Units 4 and 6 explain the endings of little words like [[ins]]."
+    },
+    {
+      "id": "zu-hause",
+      "type": "comparison",
+      "title": "zu Hause, nach Hause",
+      "text": "[[zu Hause]] = at home (where you are), [[nach Hause]] = home (where you're going), exactly like Russian дома and домой:\n- [[Heute bleibe ich zu Hause.]] = Today I'm staying at home. (дома)\n- [[Um sechs gehe ich nach Hause.]] = At six I go home. (домой)\n\nBoth are fixed phrases; Unit 6 explains the [[zu]] and the [[nach]]."
+    },
+    {
+      "id": "modal-examples",
+      "type": "examples",
+      "title": "Examples",
+      "items": [
+        { "de": "Ich kann heute nicht kommen. Ich muss arbeiten.", "en": "I can't come today. I have to work." },
+        { "de": "Kannst du am Samstag kommen?", "en": "Can you come on Saturday?" },
+        { "de": "Heute muss ich zu Hause bleiben.", "en": "Today I have to stay at home." },
+        { "de": "Vielleicht kann ich am Sonntag.", "en": "Maybe I can on Sunday.", "note": "kommen is left out because it's clear: ... am Sonntag (kommen)" },
+        { "de": "Ich muss noch einkaufen.", "en": "I still have to do the shopping." },
+        { "de": "Was willst du am Wochenende machen?", "en": "What do you want to do at the weekend?" },
+        { "de": "Wollen wir zusammen lernen?", "en": "Shall we study together?" }
+      ]
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat",
+      "items": [
+        { "de": "Ich kann heute nicht kommen.", "en": "I can't come today." },
+        { "de": "Ich muss morgen arbeiten.", "en": "I have to work tomorrow." },
+        { "de": "Ich will Deutsch lernen.", "en": "I want to learn German." },
+        { "de": "Kannst du am Samstag kommen?", "en": "Can you come on Saturday?" },
+        { "de": "Ich muss um sechs aufstehen.", "en": "I have to get up at six." },
+        { "de": "Wollen wir zusammen lernen?", "en": "Shall we study together?" }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: I can't come today.",
+          "text": "Ich ___ heute nicht kommen.",
+          "answers": [["kann"]],
+          "explanation": "ich kann: no ending with ich. The main verb, kommen, waits at the end."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: Do you have to work tomorrow? (informal)",
+          "text": "___ du morgen arbeiten?",
+          "answers": [["Musst"]],
+          "explanation": "du musst. In a yes/no question the modal verb comes first: Musst du morgen arbeiten?"
+        },
+        {
+          "type": "order",
+          "prompt": "I have to get up early.",
+          "tiles": ["ich", "muss", "früh", "aufstehen"],
+          "answers": ["Ich muss früh aufstehen", "Früh muss ich aufstehen", "Aufstehen muss ich früh"],
+          "explanation": "muss in second place, aufstehen at the end in one piece."
+        },
+        {
+          "type": "mc",
+          "question": "Which sentence means 'I want to learn German'?",
+          "questionLang": "en",
+          "options": ["Ich will Deutsch lernen.", "Ich will lernen Deutsch.", "Ich lerne will Deutsch."],
+          "answer": "Ich will Deutsch lernen.",
+          "explanation": "will in second place, lernen at the end. And remember: ich will = I want, not 'I will'."
+        },
+        {
+          "type": "mc",
+          "question": "Which sentence means 'I don't have to work today'?",
+          "questionLang": "en",
+          "options": ["Ich muss heute nicht arbeiten.", "Ich kann heute nicht arbeiten.", "Ich will heute nicht arbeiten."],
+          "answer": "Ich muss heute nicht arbeiten.",
+          "explanation": "muss nicht = don't have to. kann nicht = can't, will nicht = don't want to."
+        }
+      ]
+    }
+  ]
+}

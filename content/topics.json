@@ -201,6 +201,74 @@
           "lesson": "u2-06-haben-brauchen",
           "section": "einen",
           "star": true
+        },
+        {
+          "title": "Telling the time the official way: vierzehn Uhr dreißig",
+          "lesson": "u3-01-uhrzeit",
+          "section": "official-time",
+          "star": true
+        },
+        {
+          "title": "Telling the time the everyday way: Viertel nach, halb, Viertel vor",
+          "lesson": "u3-01-uhrzeit",
+          "section": "everyday-time",
+          "star": true
+        },
+        {
+          "title": "The trap: halb vier = 3:30",
+          "lesson": "u3-01-uhrzeit",
+          "section": "halb"
+        },
+        {
+          "title": "Time first, verb second: Am Montag arbeite ich",
+          "lesson": "u3-02-wochentage",
+          "section": "time-first",
+          "star": true
+        },
+        {
+          "title": "Separable verbs: Ich stehe um sieben Uhr auf",
+          "lesson": "u3-03-tagesablauf",
+          "section": "separable",
+          "star": true
+        },
+        {
+          "title": "Separable verbs of Unit 3: aufstehen, anrufen, einkaufen ...",
+          "lesson": "u3-03-tagesablauf",
+          "section": "separable-verbs"
+        },
+        {
+          "title": "When? um, am, im",
+          "lesson": "u3-04-datum",
+          "section": "um-am-im",
+          "star": true
+        },
+        {
+          "title": "Ordinal numbers: erste, zweite, dritte ...",
+          "lesson": "u3-04-datum",
+          "section": "ordinals",
+          "star": true
+        },
+        {
+          "title": "können, wollen, müssen",
+          "lesson": "u3-05-modalverben",
+          "section": "modal-verbs",
+          "star": true
+        },
+        {
+          "title": "The verb bracket: Ich kann heute nicht kommen",
+          "lesson": "u3-05-modalverben",
+          "section": "verb-bracket",
+          "star": true
+        },
+        {
+          "title": "Ich will = I want, not 'I will'",
+          "lesson": "u3-05-modalverben",
+          "section": "ich-will"
+        },
+        {
+          "title": "muss nicht = don't have to",
+          "lesson": "u3-05-modalverben",
+          "section": "muss-nicht"
         }
       ]
     },
@@ -328,6 +396,68 @@
           "title": "Ich habe Hunger, Durst, keine Zeit",
           "lesson": "u2-06-haben-brauchen",
           "section": "hunger-durst"
+        },
+        {
+          "title": "What time is it? Asking and answering",
+          "lesson": "u3-01-uhrzeit",
+          "section": "two-ways"
+        },
+        {
+          "title": "At what time? um, wann",
+          "lesson": "u3-01-uhrzeit",
+          "section": "um"
+        },
+        {
+          "title": "In Munich: viertel vier, dreiviertel vier",
+          "lesson": "u3-01-uhrzeit",
+          "section": "munich-time"
+        },
+        {
+          "title": "From ... to: von ... bis, and opening hours",
+          "lesson": "u3-02-wochentage",
+          "section": "von-bis"
+        },
+        {
+          "title": "Feierabend",
+          "lesson": "u3-03-tagesablauf",
+          "section": "feierabend"
+        },
+        {
+          "title": "Saying the date: der dritte, am dritten",
+          "lesson": "u3-04-datum",
+          "section": "saying-date",
+          "star": true
+        },
+        {
+          "title": "Birthdays",
+          "lesson": "u3-04-datum",
+          "section": "birthday"
+        },
+        {
+          "title": "Suggesting something: Wollen wir ...?",
+          "lesson": "u3-05-modalverben",
+          "section": "wollen-wir"
+        },
+        {
+          "title": "Making plans: ask, say yes, say no, move the time",
+          "lesson": "u3-06-verabredungen",
+          "section": "plans-phrases",
+          "star": true
+        },
+        {
+          "title": "Saying no nicely",
+          "lesson": "u3-06-verabredungen",
+          "section": "saying-no"
+        },
+        {
+          "title": "Moving a time, and being late",
+          "lesson": "u3-06-verabredungen",
+          "section": "moving-time"
+        },
+        {
+          "title": "Appointments at work with Sie",
+          "lesson": "u3-06-verabredungen",
+          "section": "sie-appointments"
         }
       ]
     },
@@ -370,6 +500,26 @@
           "title": "The flat: rooms and rent",
           "lesson": "u2-05-wohnung",
           "section": "flat"
+        },
+        {
+          "title": "Days of the week",
+          "lesson": "u3-02-wochentage",
+          "section": "days"
+        },
+        {
+          "title": "Parts of the day",
+          "lesson": "u3-02-wochentage",
+          "section": "parts-of-day"
+        },
+        {
+          "title": "Months",
+          "lesson": "u3-04-datum",
+          "section": "months"
+        },
+        {
+          "title": "Seasons",
+          "lesson": "u3-04-datum",
+          "section": "seasons"
         }
       ]
     }

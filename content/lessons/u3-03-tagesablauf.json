@@ -1,0 +1,137 @@
+{
+  "id": "u3-03-tagesablauf",
+  "unit": 3,
+  "order": 3,
+  "level": "A1",
+  "title": "Your day: separable verbs (Mein Tag)",
+  "summary": "Describe your day: when you get up, start work, take a break and go home. Meet the separable verbs, whose first part jumps to the end of the sentence.",
+  "goals": [
+    "Describe your daily routine with times",
+    "Use separable verbs: Ich stehe um sieben Uhr auf",
+    "Put your day in order with zuerst and dann"
+  ],
+  "nicosWeg": [
+    { "title": "Nicos Weg A1, chapter 7: Days and times (Tageszeiten, Emmas Wochenende)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
+  ],
+  "words": ["aufstehen", "anrufen", "einkaufen", "anfangen", "aufhoeren", "mitkommen", "fernsehen", "abholen", "fruehstuecken", "kochen", "schlafen", "spielen", "pause", "feierabend", "frueh", "zuerst", "dann", "gehen", "nach-hause"],
+  "sections": [
+    {
+      "id": "evas-day",
+      "type": "examples",
+      "title": "Eva's day",
+      "items": [
+        { "de": "Eva steht um sieben Uhr auf.", "en": "Eva gets up at seven." },
+        { "de": "Sie frühstückt um halb acht.", "en": "She has breakfast at half past seven." },
+        { "de": "Um neun Uhr fängt die Arbeit an.", "en": "Work starts at nine." },
+        { "de": "Um zwölf Uhr macht sie Pause.", "en": "At twelve she takes a break." },
+        { "de": "Um fünf hat sie Feierabend.", "en": "At five she finishes work." },
+        { "de": "Dann kauft sie ein.", "en": "Then she does the shopping." },
+        { "de": "Am Abend kocht sie und sieht fern.", "en": "In the evening she cooks and watches TV." },
+        { "de": "Um elf geht sie schlafen.", "en": "At eleven she goes to bed.", "note": "schlafen gehen = to go to bed (literally: go sleeping)" }
+      ]
+    },
+    {
+      "id": "separable",
+      "type": "explanation",
+      "title": "Verbs that split",
+      "text": "Some verbs have a small first part: [[aufstehen]] is [[auf]] + [[stehen]], [[anrufen]] is [[an]] + [[rufen]], [[einkaufen]] is [[ein]] + [[kaufen]].\n\nIn a normal sentence the verb splits. The main part goes to second place as usual, and the small part jumps to the **very end**:\n- [[Ich stehe um sieben Uhr auf.]]\n- [[Ich rufe meine Mutter an.]]\n- [[Am Samstag kaufe ich ein.]]\n\nQuestions work the same way: [[Wann stehst du auf?]] [[Kommst du mit?]]\n\nThe small part carries the stress: **AUF**stehen, **AN**rufen. On your word cards the verb appears in one piece, as in a dictionary: [[aufstehen]]."
+    },
+    {
+      "id": "separable-verbs",
+      "type": "table",
+      "title": "Separable verbs in this unit",
+      "columns": [{ "header": "Verb", "de": "words" }, { "header": "ich", "de": "words" }, { "header": "er / sie / es", "de": "words" }, { "header": "English" }],
+      "rows": [
+        ["aufstehen", "ich stehe ... auf", "sie steht ... auf", "to get up"],
+        ["anrufen", "ich rufe ... an", "er ruft ... an", "to phone, to call"],
+        ["einkaufen", "ich kaufe ... ein", "sie kauft ... ein", "to do the shopping"],
+        ["anfangen", "ich fange ... an", "es fängt ... an", "to start"],
+        ["aufhören", "ich höre ... auf", "er hört ... auf", "to stop"],
+        ["mitkommen", "ich komme ... mit", "sie kommt ... mit", "to come along"],
+        ["fernsehen", "ich sehe ... fern", "er sieht ... fern", "to watch TV"],
+        ["abholen", "ich hole ... ab", "sie holt ... ab", "to pick up"]
+      ]
+    },
+    {
+      "type": "warning",
+      "text": "Two of these change their vowel with [[du]] and [[er]]/[[sie]]/[[es]]: [[anfangen]] becomes [[es fängt ... an]], [[fernsehen]] becomes [[er sieht ... fern]]. More verbs like this come in Unit 4.\n\n[[frühstücken]] looks like a two-part verb, but it never splits: [[Ich frühstücke um acht.]]"
+    },
+    {
+      "type": "comparison",
+      "text": "English does something similar: 'get up', 'pick up', 'call back'. [[Ich hole dich ab.]] = I'll pick you up. The difference: the German small part goes to the very end, after everything else: [[Ich stehe am Montag um sieben Uhr auf.]]\n\nRussian has prefixes too (вставать, позвонить, покупать), but they never leave the verb. In German they do, whenever the verb is in second place."
+    },
+    {
+      "id": "dich-chunks",
+      "type": "tip",
+      "title": "Two ready-made phrases",
+      "text": "[[Ich rufe dich an.]] = I'll call you. [[Ich hole dich ab.]] = I'll pick you up. [[dich]] is 'you' as the person something happens to. You'll learn this form properly in Unit 4; for now, use these two as they are."
+    },
+    {
+      "id": "zuerst-dann",
+      "type": "explanation",
+      "title": "First, then: zuerst, dann",
+      "text": "To tell your day in order: [[zuerst]] (first), [[dann]] (then). They take position 1, so the verb comes right after them, just as after a time:\n- [[Zuerst frühstücke ich, dann arbeite ich.]]\n- [[Dann gehe ich nach Hause.]]\n\n[[nach Hause]] = (going) home: [[Um sechs gehe ich nach Hause.]] It's a fixed phrase; Unit 6 explains it. Lesson 5 adds [[zu Hause]], at home."
+    },
+    {
+      "id": "feierabend",
+      "type": "tip",
+      "title": "Feierabend",
+      "text": "[[Feierabend]] is the moment work ends, and the free time after it: [[Um fünf habe ich Feierabend.]] = I finish work at five. When colleagues leave, they say [[Schönen Feierabend!]] = Have a nice evening!"
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat",
+      "items": [
+        { "de": "Ich stehe um sieben auf.", "en": "I get up at seven." },
+        { "de": "Ich rufe dich an.", "en": "I'll call you." },
+        { "de": "Am Samstag kaufe ich ein.", "en": "On Saturday I do the shopping." },
+        { "de": "Der Kurs fängt um neun an.", "en": "The class starts at nine." },
+        { "de": "Kommst du mit?", "en": "Are you coming along?" },
+        { "de": "Zuerst frühstücke ich, dann arbeite ich.", "en": "First I have breakfast, then I work." },
+        { "de": "Um fünf habe ich Feierabend.", "en": "I finish work at five." }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "gap",
+          "instruction": "Fill in the gaps: I get up at seven.",
+          "text": "Ich ___ um sieben Uhr ___.",
+          "answers": [["stehe"], ["auf"]],
+          "explanation": "aufstehen splits: stehe in second place, auf at the very end."
+        },
+        {
+          "type": "order",
+          "prompt": "On Saturday I do the shopping.",
+          "tiles": ["am", "Samstag", "kaufe", "ich", "ein"],
+          "answers": ["Am Samstag kaufe ich ein", "Ich kaufe am Samstag ein"],
+          "explanation": "einkaufen: kaufe in second place, ein at the end."
+        },
+        {
+          "type": "mc",
+          "question": "Which sentence means 'I'm calling my mother'?",
+          "questionLang": "en",
+          "options": ["Ich rufe meine Mutter an.", "Ich anrufe meine Mutter.", "Ich rufe an meine Mutter."],
+          "answer": "Ich rufe meine Mutter an.",
+          "explanation": "anrufen splits, and an goes to the very end, after meine Mutter."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: Are you coming along?",
+          "text": "Kommst du ___?",
+          "answers": [["mit"]],
+          "explanation": "mitkommen: Kommst du mit? The small part goes to the end, in questions too."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: First I have breakfast, then I work.",
+          "text": "Zuerst frühstücke ich, dann ___ ich.",
+          "answers": [["arbeite"]],
+          "explanation": "dann takes position 1, so the verb comes next: dann arbeite ich."
+        }
+      ]
+    }
+  ]
+}

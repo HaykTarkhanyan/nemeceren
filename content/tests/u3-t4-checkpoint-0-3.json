@@ -1,0 +1,131 @@
+{
+  "id": "u3-t4-checkpoint-0-3",
+  "title": "Checkpoint: Units 0-3",
+  "level": "A1",
+  "created": "2026-10-02",
+  "description": "Mixed review of Units 0-3, after the Unit 3 final test.",
+  "unit": 3,
+  "lesson": "u3-06-verabredungen",
+  "items": [
+    {
+      "type": "listen_mc",
+      "audio": "siebenundsechzig",
+      "question": "Which number do you hear?",
+      "questionLang": "en",
+      "options": ["67", "76", "57"],
+      "answer": "67",
+      "explanation": "Unit 0: German says the ones first: sieben-und-sechzig = 7 and 60 = 67."
+    },
+    {
+      "type": "mc",
+      "question": "You walk into a bakery in Munich at 10 a.m. Which greeting fits best?",
+      "questionLang": "en",
+      "options": ["Grüß Gott!", "Gute Nacht!", "Tschüss!"],
+      "answer": "Grüß Gott!",
+      "explanation": "Unit 0: Grüß Gott is the usual hello in Bavaria and Austria. Gute Nacht and Tschüss are goodbyes."
+    },
+    {
+      "type": "mc",
+      "question": "You leave a doctor's office. Which goodbye is polite?",
+      "questionLang": "en",
+      "options": ["Auf Wiedersehen!", "Hallo!", "Guten Abend!"],
+      "answer": "Auf Wiedersehen!",
+      "explanation": "Unit 0: Auf Wiedersehen is the polite goodbye. Hallo and Guten Abend are greetings."
+    },
+    {
+      "type": "translate",
+      "direction": "en-de",
+      "text": "I don't understand.",
+      "references": ["Ich verstehe nicht.", "Ich verstehe das nicht."],
+      "explanation": "Unit 0: Ich verstehe nicht. Then ask: Noch einmal, bitte!"
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: Where are you from? (informal)",
+      "text": "Woher ___ du?",
+      "answers": [["kommst"]],
+      "explanation": "Unit 1: du kommst. Answer with aus: Ich komme aus Armenien."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: He is a teacher.",
+      "text": "Er ___ Lehrer.",
+      "answers": [["ist"]],
+      "explanation": "Unit 1: er ist. Jobs come without ein: Er ist Lehrer."
+    },
+    {
+      "type": "order",
+      "prompt": "Today I'm studying German.",
+      "tiles": ["heute", "lerne", "ich", "Deutsch"],
+      "answers": ["Heute lerne ich Deutsch", "Ich lerne heute Deutsch", "Deutsch lerne ich heute"],
+      "explanation": "Units 1 and 3: the verb is always second. With heute first, ich moves behind the verb."
+    },
+    {
+      "type": "mc",
+      "question": "Which article goes with Kind?",
+      "questionLang": "en",
+      "options": ["das", "der", "die"],
+      "answer": "das",
+      "explanation": "Unit 2: das Kind, plural die Kinder."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: I don't have a key.",
+      "text": "Ich habe ___ Schlüssel.",
+      "answers": [["keinen"]],
+      "explanation": "Unit 2: der Schlüssel is masculine, so keinen after haben."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: two books",
+      "text": "zwei ___",
+      "answers": [["Bücher"]],
+      "explanation": "Unit 2: das Buch, die Bücher (umlaut plus -er)."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: This is my sister.",
+      "text": "Das ist ___ Schwester.",
+      "answers": [["meine"]],
+      "explanation": "Unit 2: die Schwester is feminine, so meine Schwester."
+    },
+    {
+      "type": "listen_mc",
+      "audio": "Der Termin ist am Donnerstag um Viertel nach elf.",
+      "question": "When is the appointment?",
+      "questionLang": "en",
+      "options": ["Donnerstag, 11:15", "Dienstag, 11:15", "Donnerstag, 10:45"],
+      "answer": "Donnerstag, 11:15",
+      "explanation": "Unit 3: Viertel nach elf = quarter past eleven, 11:15. Donnerstag = Thursday, Dienstag = Tuesday."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gaps: In the evening I watch TV.",
+      "text": "Am Abend ___ ich ___.",
+      "answers": [["sehe"], ["fern"]],
+      "explanation": "Unit 3: fernsehen splits: sehe in second place, fern at the end."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: She has to work today.",
+      "text": "Sie ___ heute arbeiten.",
+      "answers": [["muss"]],
+      "explanation": "Unit 3: sie muss, with no ending, the same as ich muss. arbeiten waits at the end."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: on the third of October",
+      "text": "am ___ Oktober",
+      "answers": [["dritten"]],
+      "explanation": "Unit 3: dritte is irregular; after am the ending is -ten: am dritten Oktober."
+    },
+    {
+      "type": "write",
+      "instruction": "Checkpoint writing. Introduce yourself to a new classmate in 5-6 sentences: your name, where you're from, where you live, your job, your family, and one plan for this week (Am Samstag will ich ...). Claude will check it.",
+      "prompt": "Introduce yourself to a new classmate.",
+      "promptLang": "en",
+      "digits": true,
+      "minWords": 30
+    }
+  ]
+}

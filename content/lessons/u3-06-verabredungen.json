@@ -1,0 +1,138 @@
+{
+  "id": "u3-06-verabredungen",
+  "unit": 3,
+  "order": 6,
+  "level": "A1",
+  "title": "Making, moving and declining plans (Verabredungen)",
+  "summary": "Ask if someone has time, say yes or no politely, move a time, and say you're late: with friends (du), colleagues (Sie) and classmates.",
+  "goals": [
+    "Ask if someone has time and suggest something",
+    "Say yes, or say no politely with a reason",
+    "Suggest another time",
+    "Say you're late",
+    "Make an appointment with a colleague (Sie)"
+  ],
+  "nicosWeg": [
+    { "title": "Nicos Weg A1, chapter 8: Appointments (Hast du morgen Zeit?, Zu spät!?)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
+  ],
+  "words": ["termin", "leider", "puenktlich", "lust", "kino", "party", "film", "treffen", "tut-mir-leid", "schade", "frei", "problem", "spaeter", "bis-dann", "das-geht"],
+  "tests": ["u3-t3-verabredungen", "u3-t4-checkpoint-0-3"],
+  "sections": [
+    {
+      "id": "plans-phrases",
+      "type": "table",
+      "title": "Ask, say yes, say no, move the time",
+      "columns": [{ "header": "You want to ..." }, { "header": "Say", "de": "words" }],
+      "rows": [
+        ["ask if they're free", "Hast du am Samstag Zeit?"],
+        ["ask if they're free", "Bist du am Samstag frei?"],
+        ["suggest something", "Wollen wir ins Kino gehen?"],
+        ["ask if they feel like it", "Hast du Lust?"],
+        ["invite them along", "Kommst du mit?"],
+        ["say yes", "Ja, gern! / Gute Idee! / Super!"],
+        ["say no", "Leider nicht. / Tut mir leid, ich kann nicht."],
+        ["give a reason", "Ich muss arbeiten."],
+        ["move the time", "Um drei kann ich nicht. Geht es auch um vier?"],
+        ["agree", "Ja, das geht."],
+        ["fix the time", "Wir treffen uns um sieben."],
+        ["end", "Bis dann! / Bis Samstag!"]
+      ]
+    },
+    {
+      "id": "saying-no",
+      "type": "explanation",
+      "title": "Saying no nicely",
+      "text": "A German no is short but friendly. Use [[leider]] (unfortunately) or [[Tut mir leid]] (I'm sorry), give a reason with [[müssen]], and suggest something else:\n\n[[Am Samstag kann ich leider nicht. Ich muss arbeiten. Geht es auch am Sonntag?]]\n\nThe other person may answer [[Schade!]] (too bad) or [[Kein Problem!]]\n\n[[Tut mir leid]] literally means 'it does me sorrow'. It's a fixed phrase; Unit 6 explains [[mir]]."
+    },
+    {
+      "id": "moving-time",
+      "type": "explanation",
+      "title": "Moving a time, and being late",
+      "text": "- [[Um drei kann ich nicht. Geht es auch um vier?]] = I can't at three. Does four work too?\n- [[Ich habe am Nachmittag frei. Geht es am Nachmittag?]] = I'm free in the afternoon. Does the afternoon work?\n- [[Ich komme zehn Minuten später.]] = I'll be ten minutes late. (Literally: I come ten minutes later.)\n- [[Tut mir leid, ich bin zu spät!]] = Sorry, I'm late!\n\n[[Das geht]] = that works. [[Das geht nicht]] = that doesn't work. [[Geht es ...?]] = does ... work?\n\nWhen the main verb is clear, Germans drop it: [[Um drei kann ich nicht.]] means [[Um drei kann ich nicht kommen.]] Same with [[Tut mir leid, ich kann nicht.]] and [[Vielleicht kann ich am Sonntag.]]"
+    },
+    {
+      "id": "treffen-uns",
+      "type": "comparison",
+      "title": "Wir treffen uns",
+      "text": "[[Wir treffen uns]] = we meet (each other). The [[uns]] works like Russian -ся in встречаемся. Verbs like this come properly at A2; for now it's a chunk:\n- [[Wir treffen uns um sieben.]]\n- [[Wann treffen wir uns?]]"
+    },
+    {
+      "id": "sie-appointments",
+      "type": "explanation",
+      "title": "At work: appointments with Sie",
+      "text": "With your boss, a colleague you don't know well, or an office, use [[Sie]] and [[der Termin]]:\n- [[Haben Sie am Dienstag Zeit?]]\n- [[Der Termin ist am Dienstag um zehn Uhr.]]\n- [[Geht es auch um elf?]] - [[Ja, das geht.]]\n- [[Ich habe um drei einen Termin.]] ([[einen]]: the Unit 2 chunk after [[haben]])\n\nBe [[pünktlich]] (on time) for a [[Termin]]. With friends, five minutes late is normal if you send a message first."
+    },
+    {
+      "type": "tip",
+      "text": "Two phrases from lesson 3 are perfect for the end of a plan: [[Ich rufe dich an.]] = I'll call you. [[Ich hole dich ab.]] = I'll pick you up. [[Gut, ich hole dich um sieben ab. Bis dann!]]"
+    },
+    {
+      "id": "chat",
+      "type": "examples",
+      "title": "A message exchange",
+      "items": [
+        { "de": "Hallo Eva! Hast du am Samstag Zeit?", "en": "Hi Eva! Are you free on Saturday?", "note": "Aram" },
+        { "de": "Ja! Was wollen wir machen?", "en": "Yes! What shall we do?", "note": "Eva" },
+        { "de": "Wollen wir ins Kino gehen? Der Film fängt um drei an.", "en": "Shall we go to the cinema? The film starts at three.", "note": "Aram" },
+        { "de": "Um drei kann ich leider nicht. Ich muss einkaufen. Geht es auch um sechs?", "en": "Unfortunately I can't at three. I have to do the shopping. Does six work too?", "note": "Eva" },
+        { "de": "Ja, das geht. Der Film fängt um sechs an. Wir treffen uns um Viertel vor sechs.", "en": "Yes, that works. The film starts at six. Let's meet at quarter to six.", "note": "Aram" },
+        { "de": "Super! Bis Samstag!", "en": "Great! See you Saturday!", "note": "Eva" }
+      ]
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat",
+      "items": [
+        { "de": "Hast du am Samstag Zeit?", "en": "Are you free on Saturday?" },
+        { "de": "Hast du Lust?", "en": "Do you feel like it?" },
+        { "de": "Leider nicht. Ich muss arbeiten.", "en": "Unfortunately not. I have to work." },
+        { "de": "Geht es auch um vier?", "en": "Does four work too?" },
+        { "de": "Ja, das geht.", "en": "Yes, that works." },
+        { "de": "Tut mir leid, ich bin zu spät!", "en": "Sorry, I'm late!" },
+        { "de": "Bis dann!", "en": "See you then!" }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "mc",
+          "question": "Your friend asks: 'Hast du am Freitag Zeit?' You're busy. What do you say?",
+          "questionLang": "en",
+          "options": ["Leider nicht. Ich muss arbeiten.", "Ja, gern!", "Bis dann!"],
+          "answer": "Leider nicht. Ich muss arbeiten.",
+          "explanation": "A friendly no: leider, then a reason with müssen."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: Three o'clock? Yes, that works.",
+          "text": "Um drei? Ja, das ___.",
+          "answers": [["geht"]],
+          "explanation": "Das geht = that works. Das geht nicht = that doesn't work."
+        },
+        {
+          "type": "order",
+          "prompt": "We're meeting at seven.",
+          "tiles": ["wir", "treffen", "uns", "um", "sieben"],
+          "answers": ["Wir treffen uns um sieben", "Um sieben treffen wir uns"],
+          "explanation": "Wir treffen uns is a chunk. With the time first: Um sieben treffen wir uns."
+        },
+        {
+          "type": "translate",
+          "direction": "en-de",
+          "text": "Unfortunately I can't come.",
+          "references": ["Leider kann ich nicht kommen.", "Ich kann leider nicht kommen."],
+          "explanation": "kann in second place, kommen at the end. leider can start the sentence (then the verb follows) or come after the verb."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: I'll be ten minutes late.",
+          "text": "Ich komme zehn Minuten ___.",
+          "answers": [["später"]],
+          "explanation": "Ich komme zehn Minuten später: literally, I come ten minutes later."
+        }
+      ]
+    }
+  ]
+}

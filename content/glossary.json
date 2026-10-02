@@ -150,7 +150,7 @@
       {"lemma": "noch", "pos": "adverb", "level": "A1", "gloss": ["still; more"], "note": "Noch einmal, bitte. = Once more, please."}
     ],
     "geht": [
-      {"lemma": "gehen", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["to go"], "note": "Wie geht es dir? = How are you? (literally: how does it go?)"}
+      {"lemma": "gehen", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["to go", "to work, to be possible"], "note": "Wie geht es dir? = How are you? Das geht. = That works."}
     ],
     "geht's": [
       {"lemma": "geht es", "pos": "contraction", "level": "A1", "gloss": ["geht es"], "note": "Wie geht's? = How are you? (informal)"}
@@ -165,7 +165,8 @@
       {"lemma": "und", "pos": "conjunction", "level": "A1", "gloss": ["and"]}
     ],
     "auf": [
-      {"lemma": "auf", "pos": "preposition", "level": "A1", "gloss": ["on"], "note": "Auf Wiedersehen! = Goodbye! (polite)"}
+      {"lemma": "auf", "pos": "preposition", "level": "A1", "gloss": ["on"], "note": "Auf Wiedersehen! = Goodbye! (polite)"},
+      {"lemma": "auf", "pos": "particle", "gloss": ["separable part of a verb"], "note": "aufstehen: Ich stehe um sieben auf. aufhören: Ich höre um fünf auf."}
     ],
     "lange": [
       {"lemma": "lange", "pos": "adverb", "level": "A1", "gloss": ["long, for a long time"], "note": "Wie lange? = How long?"}
@@ -322,6 +323,236 @@
     ],
     "Bach": [
       { "lemma": "Bach", "pos": "noun", "article": "der", "plural": "Bäche", "gloss": ["brook, stream"], "note": "Also the composer Johann Sebastian Bach." }
+    ],
+    "stehe": [
+      {"lemma": "aufstehen", "pos": "verb", "form": "ich form, present", "level": "A1", "gloss": ["to get up"], "note": "Separable: Ich stehe um sieben Uhr auf."},
+      {"lemma": "stehen", "pos": "verb", "form": "ich form, present", "level": "A1", "gloss": ["to stand"]}
+    ],
+    "stehst": [
+      {"lemma": "aufstehen", "pos": "verb", "form": "du form, present", "level": "A1", "gloss": ["to get up"], "note": "Separable: Wann stehst du auf?"},
+      {"lemma": "stehen", "pos": "verb", "form": "du form, present", "level": "A1", "gloss": ["to stand"]}
+    ],
+    "steht": [
+      {"lemma": "aufstehen", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["to get up"], "note": "Separable: Eva steht um sieben Uhr auf."},
+      {"lemma": "stehen", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["to stand"]}
+    ],
+    "rufe": [
+      {"lemma": "anrufen", "pos": "verb", "form": "ich form, present", "level": "A1", "gloss": ["to phone, to call"], "note": "Separable: Ich rufe dich an. = I'll call you."},
+      {"lemma": "rufen", "pos": "verb", "form": "ich form, present", "level": "A1", "gloss": ["to call, to shout"]}
+    ],
+    "ruft": [
+      {"lemma": "anrufen", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["to phone, to call"], "note": "Separable: Er ruft morgen an."},
+      {"lemma": "rufen", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["to call, to shout"]}
+    ],
+    "kaufe": [
+      {"lemma": "einkaufen", "pos": "verb", "form": "ich form, present", "level": "A1", "gloss": ["to do the shopping"], "note": "Separable: Am Samstag kaufe ich ein."},
+      {"lemma": "kaufen", "pos": "verb", "form": "ich form, present", "level": "A1", "gloss": ["to buy"]}
+    ],
+    "kauft": [
+      {"lemma": "einkaufen", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["to do the shopping"], "note": "Separable: Dann kauft sie ein."},
+      {"lemma": "kaufen", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["to buy"]}
+    ],
+    "fange": [
+      {"lemma": "anfangen", "pos": "verb", "form": "ich form, present", "level": "A1", "gloss": ["to start, to begin"], "note": "Separable: Ich fange um neun an."}
+    ],
+    "fängt": [
+      {"lemma": "anfangen", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["to start, to begin"], "note": "Separable, with ä: Der Kurs fängt um neun an."}
+    ],
+    "höre": [
+      {"lemma": "aufhören", "pos": "verb", "form": "ich form, present", "level": "A1", "gloss": ["to stop, to finish"], "note": "Separable: Um fünf Uhr höre ich auf."},
+      {"lemma": "hören", "pos": "verb", "form": "ich form, present", "level": "A1", "gloss": ["to hear, to listen"]}
+    ],
+    "hört": [
+      {"lemma": "aufhören", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["to stop, to finish"], "note": "Separable: Er hört um fünf auf."},
+      {"lemma": "hören", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["to hear, to listen"]}
+    ],
+    "sehe": [
+      {"lemma": "fernsehen", "pos": "verb", "form": "ich form, present", "level": "A1", "gloss": ["to watch TV"], "note": "Separable: Am Abend sehe ich fern."},
+      {"lemma": "sehen", "pos": "verb", "form": "ich form, present", "level": "A1", "gloss": ["to see"]}
+    ],
+    "sieht": [
+      {"lemma": "fernsehen", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["to watch TV"], "note": "Separable, with ie: Er sieht fern."},
+      {"lemma": "sehen", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["to see"]}
+    ],
+    "hole": [
+      {"lemma": "abholen", "pos": "verb", "form": "ich form, present", "level": "A1", "gloss": ["to pick up"], "note": "Separable: Ich hole dich ab. = I'll pick you up."},
+      {"lemma": "holen", "pos": "verb", "form": "ich form, present", "level": "A1", "gloss": ["to fetch, to get"]}
+    ],
+    "holt": [
+      {"lemma": "abholen", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["to pick up"], "note": "Separable: Sie holt dich um sieben ab."},
+      {"lemma": "holen", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["to fetch, to get"]}
+    ],
+    "komme": [
+      {"lemma": "kommen", "pos": "verb", "form": "ich form, present", "level": "A1", "gloss": ["to come"]},
+      {"lemma": "mitkommen", "pos": "verb", "form": "ich form, present", "level": "A1", "gloss": ["to come along"], "note": "Separable: Ich komme mit."}
+    ],
+    "kommst": [
+      {"lemma": "kommen", "pos": "verb", "form": "du form, present", "level": "A1", "gloss": ["to come"]},
+      {"lemma": "mitkommen", "pos": "verb", "form": "du form, present", "level": "A1", "gloss": ["to come along"], "note": "Separable: Kommst du mit? = Are you coming along?"}
+    ],
+    "kommt": [
+      {"lemma": "kommen", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["to come"]},
+      {"lemma": "mitkommen", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["to come along"], "note": "Separable: Sie kommt mit."}
+    ],
+    "an": [
+      {"lemma": "an", "pos": "preposition", "level": "A1", "gloss": ["at, on"], "note": "am = an dem: am Montag"},
+      {"lemma": "an", "pos": "particle", "gloss": ["separable part of a verb"], "note": "anrufen: Ich rufe dich an. anfangen: Der Kurs fängt um neun an."}
+    ],
+    "mit": [
+      {"lemma": "mit", "pos": "preposition", "level": "A1", "gloss": ["with"]},
+      {"lemma": "mit", "pos": "particle", "gloss": ["separable part of a verb"], "note": "mitkommen: Kommst du mit? = Are you coming along?"}
+    ],
+    "fern": [
+      {"lemma": "fern", "pos": "particle", "gloss": ["separable part of a verb"], "note": "fernsehen: Am Abend sehe ich fern."},
+      {"lemma": "fern", "pos": "adjective", "gloss": ["far, distant"]}
+    ],
+    "ab": [
+      {"lemma": "ab", "pos": "particle", "gloss": ["separable part of a verb"], "note": "abholen: Ich hole dich ab. = I'll pick you up."},
+      {"lemma": "ab", "pos": "preposition", "level": "A1", "gloss": ["from (a time on)"], "note": "ab Montag = from Monday on"}
+    ],
+    "morgen": [
+      {"lemma": "morgen", "pos": "adverb", "level": "A1", "gloss": ["tomorrow"], "note": "morgen früh = tomorrow morning; der Morgen = the morning"}
+    ],
+    "will": [
+      {"lemma": "wollen", "pos": "verb", "form": "ich and er/sie/es form, present", "level": "A1", "gloss": ["want(s)"], "note": "Ich will = I want, not 'I will'."}
+    ],
+    "leid": [
+      {"lemma": "leid", "pos": "phrase", "level": "A1", "gloss": ["Tut mir leid = I'm sorry"], "note": "Literally: it does me sorrow."}
+    ],
+    "März": [
+      {"lemma": "März", "pos": "noun", "article": "der", "level": "A1", "gloss": ["March"], "note": "im März = in March"}
+    ],
+    "siebenten": [
+      {"lemma": "siebte", "pos": "numeral", "form": "after am", "gloss": ["seventh (a longer, rarer form of siebten)"], "note": "am siebten Juli; siebenten is also correct"}
+    ],
+    "geboren": [
+      {"lemma": "geboren", "pos": "adjective", "level": "A1", "gloss": ["born"], "note": "Ich bin am dritten Mai geboren. = I was born on the third of May."}
+    ],
+    "montags": [
+      {"lemma": "montags", "pos": "adverb", "level": "A1", "gloss": ["on Mondays, every Monday"]}
+    ],
+    "viertel": [
+      {"lemma": "viertel", "pos": "numeral", "gloss": ["a quarter (of the way to the next hour)"], "note": "viertel vier = 3:15 (Bavaria and eastern Germany)"}
+    ],
+    "dreiviertel": [
+      {"lemma": "dreiviertel", "pos": "numeral", "gloss": ["three quarters (of the way to the next hour)"], "note": "dreiviertel vier = 3:45 (Bavaria and eastern Germany)"}
+    ],
+    "Juno": [
+      {"lemma": "Juni", "pos": "noun", "article": "der", "gloss": ["June, said 'Juno' on the phone"], "note": "So it isn't confused with Juli."}
+    ],
+    "Julei": [
+      {"lemma": "Juli", "pos": "noun", "article": "der", "gloss": ["July, said 'Julei' on the phone"], "note": "So it isn't confused with Juni."}
+    ],
+    "Wievielte": [
+      {"lemma": "wievielte", "pos": "adjective", "level": "A1", "gloss": ["which (in a row)"], "note": "Der Wievielte ist heute? = What's the date today?"}
+    ],
+    "Zehnte": [
+      {"lemma": "zehnte", "pos": "numeral", "gloss": ["the tenth (month), October"], "note": "der dritte Zehnte = 3 October"}
+    ],
+    "neunzehnhundertneunundneunzig": [
+      {"lemma": "neunzehnhundertneunundneunzig", "pos": "numeral", "gloss": ["1999"], "note": "Years before 2000 are said in hundreds."}
+    ],
+    "zweitausendsechsundzwanzig": [
+      {"lemma": "zweitausendsechsundzwanzig", "pos": "numeral", "gloss": ["2026"]}
+    ],
+    "siebten": [
+      {"lemma": "siebte", "pos": "numeral", "form": "after am", "level": "A1", "gloss": ["seventh"], "note": "am siebten Juli = on the seventh of July"}
+    ],
+    "Tut": [
+      {"lemma": "tun", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["to do"], "note": "Tut mir leid. = I'm sorry."}
+    ],
+    "mir": [
+      {"lemma": "ich", "pos": "pronoun", "form": "dative", "level": "A1", "gloss": ["(to) me"], "note": "Tut mir leid. = I'm sorry. Unit 6 explains mir."}
+    ],
+    "dich": [
+      {"lemma": "du", "pos": "pronoun", "form": "accusative", "level": "A1", "gloss": ["you"], "note": "Ich rufe dich an. = I'll call you. Unit 4 explains dich."}
+    ],
+    "uns": [
+      {"lemma": "wir", "pos": "pronoun", "form": "accusative/dative", "level": "A1", "gloss": ["us; each other"], "note": "Wir treffen uns. = We meet (each other)."}
+    ],
+    "Hause": [
+      {"lemma": "Haus", "pos": "noun", "form": "old form, only in set phrases", "level": "A1", "gloss": ["home"], "note": "zu Hause = at home; nach Hause = (going) home"}
+    ],
+    "welches": [
+      {"lemma": "welcher", "pos": "determiner", "level": "A1", "gloss": ["which"], "note": "Welches Datum ist heute? = What's the date today?"}
+    ],
+    "Gute": [
+      {"lemma": "gut", "pos": "adjective", "level": "A1", "gloss": ["good"], "note": "Gute Nacht! Gute Idee!"},
+      {"lemma": "Gute", "pos": "noun", "article": "das", "gloss": ["the good"], "note": "Alles Gute! = All the best! Alles Gute zum Geburtstag! = Happy birthday!"}
+    ],
+    "alles": [
+      {"lemma": "alles", "pos": "pronoun", "level": "A1", "gloss": ["everything, all"], "note": "Alles Gute! = All the best!"}
+    ],
+    "um": [
+      {"lemma": "um", "pos": "preposition", "level": "A1", "gloss": ["at (a clock time)"], "note": "um drei Uhr = at three o'clock"}
+    ],
+    "am": [
+      {"lemma": "am", "pos": "contraction", "level": "A1", "gloss": ["on (days, dates); in (parts of the day)"], "note": "an + dem: am Montag, am Abend, am dritten Mai"}
+    ],
+    "Oktoberfest": [
+      {"lemma": "Oktoberfest", "pos": "noun", "article": "das", "gloss": ["the Oktoberfest (Munich's beer festival)"], "note": "It starts in September."}
+    ],
+    "tut": [
+      {"lemma": "tun", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["to do"], "note": "Tut mir leid. = I'm sorry."}
+    ],
+    "gute": [
+      {"lemma": "gut", "pos": "adjective", "level": "A1", "gloss": ["good"], "note": "Gute Nacht! Gute Idee!"}
+    ],
+    "ein": [
+      {"lemma": "ein", "pos": "article", "level": "A1", "gloss": ["a, an"]},
+      {"lemma": "ein", "pos": "particle", "gloss": ["separable part of a verb"], "note": "einkaufen: Am Samstag kaufe ich ein."}
+    ],
+    "Viertel": [
+      {"lemma": "Viertel", "pos": "noun", "article": "das", "plural": "Viertel", "level": "A1", "gloss": ["quarter (of an hour)"], "note": "Viertel nach drei = 3:15, Viertel vor drei = 2:45"}
+    ],
+    "siebte": [
+      {"lemma": "siebte", "pos": "numeral", "level": "A1", "gloss": ["seventh"], "note": "Irregular: siebte, not siebente. am siebten Juli"}
+    ],
+    "achte": [
+      {"lemma": "achte", "pos": "numeral", "level": "A1", "gloss": ["eighth"], "note": "One t: der achte Mai, am achten Mai"}
+    ],
+    "darf": [
+      {"lemma": "dürfen", "pos": "verb", "form": "ich and er/sie/es form, present", "level": "A1", "gloss": ["may, is allowed to"], "note": "darf nicht = mustn't (Unit 5)"}
+    ],
+    "Wollen": [
+      {"lemma": "wollen", "pos": "verb", "level": "A1", "gloss": ["to want"], "note": "Wollen wir ...? = Shall we ...?"}
+    ],
+    "dem": [
+      {"lemma": "der", "pos": "article", "form": "dative", "level": "A1", "gloss": ["the (dative of der and das)"], "note": "am = an dem, im = in dem. Unit 6 explains it."}
+    ],
+    "nach": [
+      {"lemma": "nach", "pos": "preposition", "level": "A1", "gloss": ["after; (in times) past", "to (a place)"], "note": "zehn nach drei = 3:10; nach Hause = home"}
+    ],
+    "zu": [
+      {"lemma": "zu", "pos": "preposition", "level": "A1", "gloss": ["to; at"], "note": "zu Hause = at home"},
+      {"lemma": "zu", "pos": "adverb", "level": "A1", "gloss": ["too"], "note": "zu spät = too late"}
+    ],
+    "anrufe": [
+      {"lemma": "anrufen", "pos": "verb", "form": "ich form", "level": "A1", "gloss": ["to phone, to call"], "note": "In a normal sentence it splits: Ich rufe meine Mutter an."}
+    ],
+    "Mitkommst": [
+      {"lemma": "mitkommen", "pos": "verb", "form": "du form", "level": "A1", "gloss": ["to come along"], "note": "Wrong word order: say Kommst du mit?"}
+    ],
+    "halb": [
+      {"lemma": "halb", "pos": "adjective", "level": "A1", "gloss": ["half"], "note": "halb drei = 2:30 (half an hour before three)"}
+    ],
+    "vor": [
+      {"lemma": "vor", "pos": "preposition", "level": "A1", "gloss": ["before; (in times) to"], "note": "zehn vor drei = 2:50"}
+    ],
+    "bis": [
+      {"lemma": "bis", "pos": "preposition", "level": "A1", "gloss": ["until, to"], "note": "von neun bis fünf = from nine to five; Bis morgen! = See you tomorrow!"}
+    ],
+    "erste": [
+      {"lemma": "erste", "pos": "numeral", "level": "A1", "gloss": ["first"], "note": "der erste Mai; am ersten Mai"}
+    ],
+    "dritte": [
+      {"lemma": "dritte", "pos": "numeral", "level": "A1", "gloss": ["third"], "note": "der dritte Oktober; am dritten Oktober"}
+    ],
+    "Lust": [
+      {"lemma": "Lust", "pos": "noun", "article": "die", "level": "A2", "gloss": ["wish, desire (to do something)"], "note": "Hast du Lust? = Do you feel like it?"}
+    ],
+    "frei": [
+      {"lemma": "frei", "pos": "adjective", "level": "A1", "gloss": ["free, not busy"], "note": "Ich habe frei. = I'm off work."}
     ]
   }
 }

@@ -1,0 +1,92 @@
+{
+  "id": "u3-t3-verabredungen",
+  "title": "Modal verbs and making plans (Unit 3 final)",
+  "level": "A1",
+  "created": "2026-10-02",
+  "description": "Unit 3 check after lessons 5 and 6, with the unit's final task.",
+  "unit": 3,
+  "lesson": "u3-06-verabredungen",
+  "items": [
+    {"type": "translate", "direction": "en-de", "text": "I need a key.", "references": ["Ich brauche einen Schlüssel."], "explanation": "Review (Unit 2): der Schlüssel is masculine, so einen Schlüssel after brauchen."},
+    {
+      "type": "mc",
+      "question": "How do you ask a new colleague's name politely?",
+      "questionLang": "en",
+      "options": ["Wie heißen Sie?", "Wie heißt du?", "Wer bist du?"],
+      "answer": "Wie heißen Sie?",
+      "explanation": "Review (Unit 1): Sie for people you don't know well at work: Wie heißen Sie?"
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: Can you come on Saturday? (informal)",
+      "text": "___ du am Samstag kommen?",
+      "answers": [["Kannst"]],
+      "explanation": "du kannst. In a yes/no question the modal verb comes first, and kommen waits at the end."
+    },
+    {
+      "type": "order",
+      "prompt": "On Sunday I have to stay at home.",
+      "tiles": ["am", "Sonntag", "muss", "ich", "zu", "Hause", "bleiben"],
+      "answers": ["Am Sonntag muss ich zu Hause bleiben", "Ich muss am Sonntag zu Hause bleiben", "Zu Hause muss ich am Sonntag bleiben"],
+      "explanation": "muss in second place, bleiben at the end: the verb bracket. zu Hause = at home."
+    },
+    {
+      "type": "mc",
+      "question": "Your boss tells you that you don't have to come in tomorrow. Which sentence says that?",
+      "questionLang": "en",
+      "options": ["Sie müssen morgen nicht kommen.", "Sie können morgen nicht kommen.", "Sie wollen morgen nicht kommen."],
+      "answer": "Sie müssen morgen nicht kommen.",
+      "explanation": "müssen nicht = don't have to. können nicht = can't, wollen nicht = don't want to."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: We want to go to the cinema.",
+      "text": "Wir ___ ins Kino gehen.",
+      "answers": [["wollen"]],
+      "explanation": "wir wollen. And remember: wollen = to want, never the future."
+    },
+    {
+      "type": "listen_mc",
+      "audio": "Hallo, hier ist Eva. Um drei kann ich leider nicht. Geht es auch um halb fünf?",
+      "question": "What time does Eva suggest?",
+      "questionLang": "en",
+      "options": ["4:30", "5:30", "3:30"],
+      "answer": "4:30",
+      "explanation": "halb fünf = halfway to five = 4:30. Eva can't at three (um drei kann ich leider nicht)."
+    },
+    {
+      "type": "mc",
+      "question": "A friend writes: 'Hast du Lust? Wir gehen ins Kino.' You want to go. What do you answer?",
+      "questionLang": "en",
+      "options": ["Ja, gern!", "Tut mir leid.", "Schade!"],
+      "answer": "Ja, gern!",
+      "explanation": "Ja, gern! = Yes, I'd love to. Tut mir leid starts a no; Schade! = too bad."
+    },
+    {
+      "type": "translate",
+      "direction": "en-de",
+      "text": "Unfortunately I don't have time on Friday.",
+      "references": ["Am Freitag habe ich leider keine Zeit.", "Leider habe ich am Freitag keine Zeit.", "Ich habe am Freitag leider keine Zeit."],
+      "explanation": "keine Zeit (die Zeit), am Freitag, and leider. Whatever comes first, the verb habe is second."
+    },
+    {
+      "type": "dictation",
+      "text": "Tut mir leid, ich komme zehn Minuten später.",
+      "explanation": "Tut mir leid = I'm sorry. später = later, with ä."
+    },
+    {
+      "type": "order",
+      "prompt": "I'll call you tomorrow.",
+      "tiles": ["ich", "rufe", "dich", "morgen", "an"],
+      "answers": ["Ich rufe dich morgen an", "Morgen rufe ich dich an", "Dich rufe ich morgen an"],
+      "explanation": "anrufen splits: rufe in second place, an at the very end. Ich rufe dich an is a chunk; dich comes properly in Unit 4."
+    },
+    {
+      "type": "write",
+      "instruction": "Unit 3 final task. Your friend Eva sends you four messages. Write your four replies, one after each message, 1-3 sentences each. Reply 1: say yes, and what you do on Saturday morning. Reply 2: you can't at 14 Uhr; say why (Ich muss ...) and suggest another time. Reply 3: answer her question. Reply 4: say goodbye. Claude will check it. Then ask Claude for the live chat: Claude plays Eva.",
+      "prompt": "Eva: Hallo! Hast du am Samstag Zeit?\nEva: Super! Wollen wir ins Kino gehen? Der Film fängt um vierzehn Uhr an.\nEva: Kein Problem, das geht auch! Wollen wir dann noch einen Kaffee trinken?\nEva: Gut! Ich rufe dich am Samstag an. Bis dann!",
+      "digits": true,
+      "minWords": 35
+    }
+  ]
+}

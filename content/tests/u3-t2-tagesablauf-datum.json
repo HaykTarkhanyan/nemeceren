@@ -1,0 +1,92 @@
+{
+  "id": "u3-t2-tagesablauf-datum",
+  "title": "Your day, separable verbs and dates",
+  "level": "A1",
+  "created": "2026-10-02",
+  "description": "Unit 3 check after lessons 3 and 4.",
+  "unit": 3,
+  "lesson": "u3-04-datum",
+  "items": [
+    {"type": "order", "prompt": "Where do you live? (informal)", "tiles": ["wo", "wohnst", "du"], "answers": ["Wo wohnst du"], "explanation": "Review (Unit 1): in a W-question the question word comes first, then the verb."},
+    {
+      "type": "mc",
+      "question": "Which article goes with Wohnung?",
+      "questionLang": "en",
+      "options": ["die", "der", "das"],
+      "answer": "die",
+      "explanation": "Review (Unit 2): nouns ending in -ung are always die: die Wohnung."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gaps: I get up at half past six.",
+      "text": "Ich ___ um halb sieben ___.",
+      "answers": [["stehe"], ["auf"]],
+      "explanation": "aufstehen splits: stehe in second place, auf at the very end. halb sieben = 6:30."
+    },
+    {
+      "type": "order",
+      "prompt": "The class starts at nine.",
+      "tiles": ["der", "Kurs", "fängt", "um", "neun", "an"],
+      "answers": ["Der Kurs fängt um neun an", "Um neun fängt der Kurs an"],
+      "explanation": "anfangen splits: fängt in second place, an at the end. fängt has an ä with er/sie/es."
+    },
+    {
+      "type": "mc",
+      "question": "Which sentence means 'Are you coming along?'",
+      "questionLang": "en",
+      "options": ["Kommst du mit?", "Mitkommst du?", "Kommst mit du?"],
+      "answer": "Kommst du mit?",
+      "explanation": "mitkommen: in a yes/no question the verb comes first, and mit still goes to the end."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: First I have breakfast, then I work.",
+      "text": "___ frühstücke ich, dann arbeite ich.",
+      "answers": [["Zuerst"]],
+      "explanation": "zuerst = first; it takes position 1, so the verb follows: Zuerst frühstücke ich."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: Today is the first of May.",
+      "text": "Heute ist der ___ Mai.",
+      "answers": [["erste"]],
+      "explanation": "1st is irregular: erste. After der: der erste Mai."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: My birthday is on the seventh of July.",
+      "text": "Mein Geburtstag ist am ___ Juli.",
+      "answers": [["siebten", "siebenten"]],
+      "explanation": "7th is irregular: siebte. After am the ending is -ten: am siebten Juli."
+    },
+    {
+      "type": "listen_mc",
+      "audio": "Ich habe im Juni Geburtstag.",
+      "question": "When is the birthday?",
+      "questionLang": "en",
+      "options": ["im Juni", "im Juli", "im Januar"],
+      "answer": "im Juni",
+      "explanation": "Juni and Juli sound alike: listen for the n or the l. That's why people say Juno and Julei on the phone."
+    },
+    {
+      "type": "dictation",
+      "text": "Im Winter ist es früh dunkel.",
+      "explanation": "im + season: im Winter. früh = early, with ü."
+    },
+    {
+      "type": "mc",
+      "question": "Your colleague has a birthday today. What do you say?",
+      "questionLang": "en",
+      "options": ["Alles Gute zum Geburtstag!", "Bis morgen!", "Guten Abend!"],
+      "answer": "Alles Gute zum Geburtstag!",
+      "explanation": "Alles Gute zum Geburtstag! = Happy birthday! On the day itself, not before."
+    },
+    {
+      "type": "write",
+      "instruction": "Write 4-5 sentences: when your birthday is, and what you do on a Saturday and when (get up, shopping, evening). Use at least two separable verbs (aufstehen, einkaufen, fernsehen ...). Claude will check it.",
+      "prompt": "Wann hast du Geburtstag? Was machst du am Samstag?",
+      "digits": true,
+      "minWords": 25
+    }
+  ]
+}

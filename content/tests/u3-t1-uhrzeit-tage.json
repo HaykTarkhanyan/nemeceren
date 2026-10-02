@@ -1,0 +1,86 @@
+{
+  "id": "u3-t1-uhrzeit-tage",
+  "title": "Times and days",
+  "level": "A1",
+  "created": "2026-10-02",
+  "description": "Unit 3 check after lessons 1 and 2.",
+  "unit": 3,
+  "lesson": "u3-02-wochentage",
+  "items": [
+    {"type": "gap", "instruction": "Fill in the gap: I have no time.", "text": "Ich habe ___ Zeit.", "answers": [["keine"]], "explanation": "Review (Unit 2): die Zeit is feminine, so keine Zeit."},
+    {
+      "type": "mc",
+      "question": "You meet a colleague at 7 p.m. What do you say?",
+      "questionLang": "en",
+      "options": ["Guten Abend!", "Gute Nacht!", "Guten Morgen!"],
+      "answer": "Guten Abend!",
+      "explanation": "Review (Unit 0): Guten Abend is a hello in the evening. Gute Nacht is only a goodbye, late at night or before bed."
+    },
+    {
+      "type": "listen_mc",
+      "audio": "Es ist halb drei.",
+      "question": "What time is it?",
+      "questionLang": "en",
+      "options": ["2:30", "3:30", "3:15"],
+      "answer": "2:30",
+      "explanation": "halb drei = halfway to three = 2:30. Think of Russian половина третьего."
+    },
+    {
+      "type": "mc",
+      "question": "Which one is 9:45?",
+      "questionLang": "en",
+      "options": ["Viertel vor zehn", "Viertel nach zehn", "Viertel vor neun"],
+      "answer": "Viertel vor zehn",
+      "explanation": "9:45 is a quarter before ten: Viertel vor zehn."
+    },
+    {
+      "type": "gap",
+      "instruction": "Write the time the official way: 18:20.",
+      "text": "Es ist ___ Uhr ___.",
+      "answers": [["achtzehn"], ["zwanzig"]],
+      "explanation": "Official times: hours, then Uhr, then minutes: achtzehn Uhr zwanzig."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: I work eight hours.",
+      "text": "Ich arbeite acht ___.",
+      "answers": [["Stunden"]],
+      "explanation": "die Stunde (plural die Stunden) = an hour, how long something takes. Uhr is only a time on the clock: um acht Uhr."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: On Saturday I have time.",
+      "text": "___ Samstag habe ich Zeit.",
+      "answers": [["Am"]],
+      "explanation": "am + day: am Samstag."
+    },
+    {
+      "type": "order",
+      "prompt": "In the evening I study German.",
+      "tiles": ["am", "Abend", "lerne", "ich", "Deutsch"],
+      "answers": ["Am Abend lerne ich Deutsch", "Ich lerne am Abend Deutsch", "Deutsch lerne ich am Abend"],
+      "explanation": "All three are right. With the time first, the verb still comes second and ich moves behind it: Am Abend lerne ich Deutsch."
+    },
+    {
+      "type": "dictation",
+      "text": "Ich arbeite von Montag bis Freitag.",
+      "explanation": "von ... bis = from ... to. Days are nouns, so they start with a capital letter."
+    },
+    {
+      "type": "listen_mc",
+      "audio": "Geöffnet: Montag bis Samstag, von acht bis zwanzig Uhr. Am Sonntag geschlossen.",
+      "question": "When is the shop closed?",
+      "questionLang": "en",
+      "options": ["am Sonntag", "am Samstag", "am Montag"],
+      "answer": "am Sonntag",
+      "explanation": "geschlossen = closed. Most shops in Germany are closed on Sundays."
+    },
+    {
+      "type": "write",
+      "instruction": "Describe your usual Monday in 3-4 sentences, with times: when you work or study, and what you do in the evening. Start at least one sentence with the time (Am Abend ...). Claude will check it.",
+      "prompt": "Was machst du am Montag?",
+      "digits": true,
+      "minWords": 20
+    }
+  ]
+}

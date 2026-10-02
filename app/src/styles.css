@@ -560,6 +560,8 @@ textarea.text {
 
 .question {
   font-size: 1.15rem;
+  /* A prompt may hold several lines, e.g. a friend's messages in a write task. */
+  white-space: pre-line;
 }
 
 .gap-text {

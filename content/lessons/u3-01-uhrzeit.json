@@ -1,0 +1,156 @@
+{
+  "id": "u3-01-uhrzeit",
+  "unit": 3,
+  "order": 1,
+  "level": "A1",
+  "title": "What time is it? (Wie spät ist es?)",
+  "summary": "Ask and tell the time two ways: the official way (14:30, vierzehn Uhr dreißig) and the everyday way (halb drei). Say when something happens: um neun Uhr.",
+  "goals": [
+    "Ask what time it is and answer",
+    "Say times the official way, as on timetables and at work",
+    "Say times the everyday way: Viertel nach, halb, Viertel vor",
+    "Say when something happens: um drei Uhr"
+  ],
+  "nicosWeg": [
+    { "title": "Nicos Weg A1, chapter 7: Days and times (Emmas Tag)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" },
+    { "title": "Nicos Weg A1, chapter 8: Appointments (Wie spät ist es?)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
+  ],
+  "words": ["wie-spaet-ist-es", "halb", "viertel", "vor", "nach", "um", "wann", "minute", "stunde", "jetzt", "spaet"],
+  "sections": [
+    {
+      "id": "two-ways",
+      "type": "explanation",
+      "title": "Two ways to tell the time",
+      "text": "To ask: [[Wie spät ist es?]] or [[Wie viel Uhr ist es?]] Both mean 'What time is it?'. The answer starts with [[Es ist ...]]: [[Es ist drei Uhr.]]\n\nGerman has two ways to say a time:\n- **Official:** the 24-hour clock, read like the numbers on a screen: 14:30 = [[vierzehn Uhr dreißig]]. You hear it on timetables, at work, on the radio and for appointments.\n- **Everyday:** the 12-hour clock with [[nach]], [[vor]], [[Viertel]] and [[halb]]: 14:30 = [[halb drei]]. Friends and colleagues talk like this.\n\nYou need to understand both. When you speak, either is fine."
+    },
+    {
+      "id": "official-time",
+      "type": "table",
+      "title": "The official way: hours, Uhr, minutes",
+      "columns": [{ "header": "Time" }, { "header": "Say it", "de": "words" }],
+      "rows": [
+        ["7:00", "sieben Uhr"],
+        ["7:05", "sieben Uhr fünf"],
+        ["9:15", "neun Uhr fünfzehn"],
+        ["12:30", "zwölf Uhr dreißig"],
+        ["14:45", "vierzehn Uhr fünfundvierzig"],
+        ["18:10", "achtzehn Uhr zehn"],
+        ["0:20", "null Uhr zwanzig"]
+      ]
+    },
+    {
+      "id": "everyday-time",
+      "type": "table",
+      "title": "The everyday way",
+      "columns": [{ "header": "Time" }, { "header": "Say it", "de": "words" }, { "header": "Literally" }],
+      "rows": [
+        ["3:00", "drei Uhr", "three o'clock"],
+        ["3:05", "fünf nach drei", "five after three"],
+        ["3:10", "zehn nach drei", "ten after three"],
+        ["3:15", "Viertel nach drei", "quarter after three"],
+        ["3:20", "zwanzig nach drei", "twenty after three"],
+        ["3:25", "fünf vor halb vier", "five before half (to) four"],
+        ["3:30", "halb vier", "half (to) four"],
+        ["3:35", "fünf nach halb vier", "five after half (to) four"],
+        ["3:40", "zwanzig vor vier", "twenty before four"],
+        ["3:45", "Viertel vor vier", "quarter before four"],
+        ["3:50", "zehn vor vier", "ten before four"]
+      ]
+    },
+    {
+      "id": "halb",
+      "type": "warning",
+      "title": "The trap: halb",
+      "text": "[[halb vier]] is **3:30**, not 4:30. German counts the half hour *towards* the next hour: halfway to four.\n\nSo [[halb neun]] = 8:30, [[halb zwölf]] = 11:30, [[halb eins]] = 12:30. Every time: halb + the **next** hour.\n\nThe everyday way uses only 1 to 12. 15:00 is just [[drei]] or [[drei Uhr]]; the situation tells you which three."
+    },
+    {
+      "id": "ru-hy-time",
+      "type": "comparison",
+      "title": "Think in Russian here",
+      "text": "Russian counts like German: половина четвёртого is 3:30, 'half of the fourth hour', just like [[halb vier]].\n\nArmenian and English count from the hour that has passed: երեքն անց կես and 'half past three' are 3:30 too, but they name the three. Translate from them and you'll say [[halb drei]], which is 2:30: a full hour too early.\n\nAnd Russian час and Armenian ժամ mean both 'hour' and 'o'clock'. German has two words: [[drei Uhr]] is a point on the clock, [[drei Stunden]] is how long something takes."
+    },
+    {
+      "id": "munich-time",
+      "type": "tip",
+      "title": "In Munich you'll also hear ...",
+      "text": "In Bavaria and in the east of Germany, many people say [[viertel vier]] for 3:15 (a quarter of the way to four) and [[dreiviertel vier]] for 3:45 (three quarters of the way). It's the logic of [[halb]], and of Russian четверть четвёртого (3:15). You don't need to say these yourself; just recognise them when a colleague says [[Der Kurs ist um viertel vier.]]"
+    },
+    {
+      "id": "um",
+      "type": "explanation",
+      "title": "At what time? um",
+      "text": "To say *when* something happens, use [[um]] + the time: [[Der Kurs ist um neun Uhr.]]\n\nTo ask: [[Wann?]] or [[Um wie viel Uhr?]]\n- [[Wann ist der Kurs?]] - [[Um halb zehn.]]\n- [[Um wie viel Uhr kommst du?]] - [[Um acht.]]\n\nCompare: [[Wie spät ist es?]] asks for the time now; [[Wann?]] asks when something happens."
+    },
+    {
+      "id": "time-examples",
+      "type": "examples",
+      "title": "Examples",
+      "items": [
+        { "de": "Wie spät ist es? - Es ist zehn nach acht.", "en": "What time is it? - It's ten past eight." },
+        { "de": "Es ist jetzt Viertel vor zwölf.", "en": "It's quarter to twelve now." },
+        { "de": "Der Kurs ist um halb zehn.", "en": "The class is at half past nine." },
+        { "de": "Ich arbeite acht Stunden.", "en": "I work eight hours.", "note": "Stunden = how long; Uhr = a time on the clock" },
+        { "de": "Es ist schon spät.", "en": "It's already late." },
+        { "de": "Eine Minute, bitte!", "en": "One minute, please!" }
+      ]
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat",
+      "items": [
+        { "de": "Wie spät ist es?", "en": "What time is it?" },
+        { "de": "Es ist halb drei.", "en": "It's half past two (2:30)." },
+        { "de": "Es ist Viertel nach acht.", "en": "It's quarter past eight." },
+        { "de": "Es ist zehn vor neun.", "en": "It's ten to nine." },
+        { "de": "vierzehn Uhr dreißig", "en": "14:30" },
+        { "de": "Um wie viel Uhr?", "en": "At what time?" },
+        { "de": "Um halb zehn.", "en": "At half past nine." }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "mc",
+          "question": "Which one is 3:30?",
+          "questionLang": "en",
+          "options": ["halb vier", "halb drei", "Viertel nach drei"],
+          "answer": "halb vier",
+          "explanation": "halb + the next hour: halfway to four = 3:30. The official way, drei Uhr dreißig, would be right too."
+        },
+        {
+          "type": "mc",
+          "question": "Which one is 8:45?",
+          "questionLang": "en",
+          "options": ["Viertel vor neun", "Viertel nach neun", "Viertel vor acht"],
+          "answer": "Viertel vor neun",
+          "explanation": "8:45 is a quarter before nine: Viertel vor neun."
+        },
+        {
+          "type": "gap",
+          "instruction": "Write the time the everyday way: 7:10.",
+          "text": "Es ist ___ nach sieben.",
+          "answers": [["zehn"]],
+          "explanation": "10 minutes after seven: zehn nach sieben."
+        },
+        {
+          "type": "listen_mc",
+          "audio": "Der Kurs ist um halb zehn.",
+          "question": "When is the class?",
+          "questionLang": "en",
+          "options": ["9:30", "10:30", "9:15"],
+          "answer": "9:30",
+          "explanation": "halb zehn = halfway to ten = 9:30."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: What time is it?",
+          "text": "Wie ___ ist es?",
+          "answers": [["spät"]],
+          "explanation": "Wie spät ist es? Literally: how late is it? You can also ask: Wie viel Uhr ist es?"
+        }
+      ]
+    }
+  ]
+}

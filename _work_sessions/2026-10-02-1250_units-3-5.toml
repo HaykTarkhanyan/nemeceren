@@ -1,0 +1,51 @@
+title = "Units 3-5 with the course-unit skill"
+date = "2026-10-02"
+time = "12:50"
+areas = ["content/lessons", "content/tests", "content/words.json", "content/glossary.json", "content/topics.json", "app/src/styles.css"]
+done = [
+  "Digit fix committed and deployed (f88e8bb): write items can say digits: true (DECISIONS #67).",
+  "Unit 3 written, checked and reviewed: 6 lessons, 4 tests (incl. the Units 0-3 checkpoint), 98 new cards. Reviewer agent (~250k tokens): no wrong German or answer keys; all 13 RU/HY claims correct; fixed 4 wrong popups (Viertel article, achte, siebte, darf), English-only card meanings (no German giveaways in en-de review), dropped-verb note (Um drei kann ich nicht), in der Nacht note, extra word orders, chat example, Unit 6 pointers.",
+]
+pending = [
+  "Unit 4: plan, draft, check, review agent, ship.",
+  "Unit 5: plan, draft, check, review agent, ship.",
+]
+next = "Unit 4 drafting (plan below). Lesson learned in Unit 3: card `en` must be English only (en-de review shows it), and curated glossary keys need one entry per lemma+pos+form (the lookup drops duplicates)."
+files = ["content/lessons/u3-*.json", "content/tests/u3-*.json", "content/words.json", "content/glossary.json", "content/glossary.generated.json", "content/topics.json", "app/src/styles.css", "DECISIONS.md (#68)", "SYLLABUS.md", "DEFERRED_TODO.md"]
+commits = ["f88e8bb Add a per-item digits flag so write answers can type real digits"]
+notes = """
+Hayk approved (2026-10-02): all three units now, one reviewer agent per unit run one after another, push each unit live when done.
+
+UNIT 3 PLAN (Making plans; Nicos Weg ch. 7, 8; BAMF D 2.5, D 2.6, 2.1.5, 11.2.2, opening hours)
+Lessons:
+1. u3-01-uhrzeit  What time is it? (Wie spät ist es?)  official vs everyday times, um; Uhr vs Stunde (RU час / HY ժամ cover both); halb = RU половина третьего, Armenian counts like English (երեքն անց կես = 3:30); Munich viertel/dreiviertel (recognise only).
+   words: wie-spaet-ist-es, halb, viertel, vor, nach, um, minute, stunde, jetzt, spaet  (uhr card en gets "o'clock")
+2. u3-02-wochentage  Days and parts of the day (Wochentage und Tageszeiten)  am + day/part of day, in der Nacht, von ... bis, opening hours, time-first order (builds on u1-06 verb-position), Guten Morgen/Abend/Gute Nacht review (Hayk's most-missed cards).
+   words: montag..sonntag, wochenende, woche, tag (theme card), heute, morgen, morgen-2, vormittag, mittag, nachmittag, abend, nacht, am, von, bis, geoeffnet, geschlossen
+   -> test u3-t1-uhrzeit-tage
+3. u3-03-tagesablauf  Your day: separable verbs (Mein Tag)  prefix to the end; zuerst/dann + verb second; Ich rufe dich an / Ich hole dich ab as chunks (Unit 4).
+   words: aufstehen, anrufen, einkaufen, anfangen, aufhoeren, mitkommen, fernsehen, abholen, fruehstuecken, kochen, schlafen, spielen, pause, feierabend, frueh, zuerst, dann, gehen, nach-hause
+4. u3-04-datum  Dates, months, birthdays (Das Datum)  ordinals (erste, dritte, siebte irregular; -te to 19, -ste from 20); der dritte Oktober / am dritten Oktober (chunk, Unit 6); im Oktober / im Sommer (chunk); years recognition.
+   words: januar..dezember, monat, datum, geburtstag, erste, dritte, fruehling, sommer, herbst, winter, geboren, feiertag, alles-gute-zum-geburtstag
+   -> test u3-t2-tagesablauf-datum
+5. u3-05-modalverben  können, wollen, müssen: the verb bracket  builds on Können Sie das bitte wiederholen? (u1-06) and the song Sieben Tage lang; Ich will != I will; muss nicht = don't have to; separable infinitive together at the end.
+   words: koennen, wollen, muessen, vielleicht, noch, bleiben, zu-hause, zusammen (theme card)
+6. u3-06-verabredungen  Making, moving and declining plans (Verabredungen)  friends (du), colleagues (Sie), classmates; Wir treffen uns (chunk, A2); ins Kino (chunk).
+   words: termin, leider, puenktlich (re-added, ids kept), lust, kino, party, film, treffen, tut-mir-leid, schade, frei, problem, spaeter, bis-dann, das-geht
+   -> tests u3-t3-verabredungen (final task: reply to Lena's 4 messages, move the time once; digits: true; live chat after) and u3-t4-checkpoint-0-3 (about 15 items, Units 0-3)
+App change: .question gets white-space: pre-line so the final task's message thread shows one message per line.
+
+UNIT 4 PLAN (Eating out and free time; Nicos Weg ch. 3, 11, 12; BAMF B 1.5, B 2.3 likes/dislikes, 7.2.1 prices, 3.1.3 what you like doing)
+Lessons (7):
+1. u4-01-im-cafe  In a café (Im Café)  möchte (full table), Ich hätte gern (Extras p13), einen/eine/ein Kaffee from the Unit 2 chunk; Was möchtest du trinken?
+2. u4-02-akkusativ  The accusative: den, einen, keinen  full table; after haben, brauchen, möchten, nehmen, kaufen, es gibt; RU: feminine changes in Russian, masculine in German (u2-06 comparison).
+   -> u4-t1
+3. u4-03-essen  Food, essen and nehmen  vowel-change verbs (e->i essen/nehmen/sprechen review, e->ie lesen/sehen, a->ä fahren/schlafen); food words.
+4. u4-04-einkaufen  Shopping for food  Kilo, Gramm, Flasche, Stück, kosten, Was darf es sein?, Sonst noch etwas?, prices (Unit 0 numbers).
+5. u4-05-moegen-gern  Likes: mögen, gern, lieber, am liebsten  hobbies, oft/immer/nie, schmecken (Es schmeckt mir = chunk, Unit 6).
+   -> u4-t2
+6. u4-06-pronomen  ihn, sie, es; mich, dich; für, ohne  explains Unit 3's Ich rufe dich an.
+7. u4-07-restaurant  Ordering and paying (Im Restaurant)  Speisekarte, empfehlen, Ich nehme ..., Zahlen bitte, Zusammen oder getrennt? (p05), Stimmt so (p03).
+   -> u4-t3 (final: written restaurant dialogue with the waiter's lines given; live role-play after)
+Fix Extras p13: "you don't need to change any endings" is misleading once einen Kaffee is taught.
+"""

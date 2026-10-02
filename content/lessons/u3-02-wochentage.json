@@ -1,0 +1,166 @@
+{
+  "id": "u3-02-wochentage",
+  "unit": 3,
+  "order": 2,
+  "level": "A1",
+  "title": "Days and parts of the day (Wochentage und Tageszeiten)",
+  "summary": "Name the days and the parts of the day, say when you do things (am Montag, am Abend), from when to when (von ... bis), and start a sentence with the time.",
+  "goals": [
+    "Name the days of the week",
+    "Say when: am Montag, am Abend, in der Nacht",
+    "Say from when to when: von neun bis fünf",
+    "Read opening hours",
+    "Start a sentence with the time, with the verb second"
+  ],
+  "nicosWeg": [
+    { "title": "Nicos Weg A1, chapter 7: Days and times (Tageszeiten, Am Sonntag koche ich)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
+  ],
+  "words": ["montag", "dienstag", "mittwoch", "donnerstag", "freitag", "samstag", "sonntag", "wochenende", "woche", "tag", "heute", "morgen", "morgen-2", "vormittag", "mittag", "nachmittag", "abend", "nacht", "am", "von", "bis", "geoeffnet", "geschlossen"],
+  "tests": ["u3-t1-uhrzeit-tage"],
+  "sections": [
+    {
+      "id": "days",
+      "type": "table",
+      "title": "The days of the week",
+      "columns": [{ "header": "Day", "de": "words" }, { "header": "English" }, { "header": "Short" }],
+      "rows": [
+        ["der Montag", "Monday", "Mo"],
+        ["der Dienstag", "Tuesday", "Di"],
+        ["der Mittwoch", "Wednesday", "Mi"],
+        ["der Donnerstag", "Thursday", "Do"],
+        ["der Freitag", "Friday", "Fr"],
+        ["der Samstag", "Saturday", "Sa"],
+        ["der Sonntag", "Sunday", "So"]
+      ]
+    },
+    {
+      "type": "explanation",
+      "title": "All days are der",
+      "text": "Every day is masculine: [[der Montag]], [[der Sonntag]]. All end in -tag except [[Mittwoch]], which means 'mid-week'.\n\n- *On* a day: [[am Montag]], [[am Samstag]].\n- *Every* Monday: add -s and write it small: [[montags]] = on Mondays.\n- [[am Wochenende]] = at the weekend. [[die Woche]] = the week.\n- [[heute]] = today, [[morgen]] = tomorrow: [[Heute ist Montag. Morgen ist Dienstag.]]"
+    },
+    {
+      "type": "comparison",
+      "title": "Days you already know",
+      "text": "Russian среда (Wednesday) comes from 'middle', just like [[Mittwoch]]. And [[Samstag]], Russian суббота and Armenian շաբաթ all go back to the same Hebrew word, Sabbath. In Armenian, շաբաթ also means 'week'; in German the week is a different word, [[die Woche]]."
+    },
+    {
+      "id": "parts-of-day",
+      "type": "table",
+      "title": "Parts of the day",
+      "columns": [{ "header": "Part of the day", "de": "words" }, { "header": "Roughly" }, { "header": "When?", "de": "words" }, { "header": "Greeting", "de": "words" }],
+      "rows": [
+        ["der Morgen", "6-10", "am Morgen", "Guten Morgen!"],
+        ["der Vormittag", "9-12", "am Vormittag", "Guten Morgen! / Guten Tag!"],
+        ["der Mittag", "12-14", "am Mittag", "Guten Tag!"],
+        ["der Nachmittag", "14-18", "am Nachmittag", "Guten Tag!"],
+        ["der Abend", "18-22", "am Abend", "Guten Abend!"],
+        ["die Nacht", "22-6 (Gute Nacht is a goodbye)", "in der Nacht", "Gute Nacht!"]
+      ]
+    },
+    {
+      "id": "in-der-nacht",
+      "type": "warning",
+      "title": "in der Nacht, and Gute Nacht",
+      "text": "Every part of the day takes [[am]], except the night: [[in der Nacht]]. The [[der]] is not a mistake: after [[in]], [[die Nacht]] becomes [[der Nacht]]. Unit 6 explains why; for now, learn [[in der Nacht]] as one chunk.\n\nWith [[heute]] and [[morgen]]: [[heute Abend]] = this evening, [[heute Morgen]] = this morning, [[morgen Abend]] = tomorrow evening. But tomorrow morning is [[morgen früh]], never 'morgen Morgen'.\n\nReview (Unit 0): [[Guten Abend!]] is a hello in the evening. [[Gute Nacht!]] is only a goodbye, late at night or before bed."
+    },
+    {
+      "id": "von-bis",
+      "type": "explanation",
+      "title": "From ... to: von ... bis",
+      "text": "[[von]] ... [[bis]] gives a stretch of time: [[Ich arbeite von neun bis fünf.]] [[Der Kurs ist von Montag bis Freitag.]]\n\n[[bis]] alone means 'until': [[Bis morgen!]] = See you tomorrow! (literally: until tomorrow).\n\nShop doors show opening hours like this:\n- [[Geöffnet: Montag bis Freitag, von neun bis achtzehn Uhr.]]\n- [[Am Sonntag geschlossen.]]\n\nOn signs it's short: Mo-Fr 9-18 Uhr. Read it as [[Montag bis Freitag, neun bis achtzehn Uhr]]."
+    },
+    {
+      "type": "tip",
+      "title": "Sunday is quiet",
+      "text": "In Germany almost all shops are [[geschlossen]] on Sundays and public holidays. Bakeries open for a few hours, and shops in big train stations stay open. So do your shopping on Saturday."
+    },
+    {
+      "id": "time-first",
+      "type": "explanation",
+      "title": "Time first, verb second",
+      "text": "You know from Unit 1 that the verb is always in second place, even when something else comes first: [[In München wohne ich.]] [[Heute lerne ich Deutsch.]]\n\nGerman loves to start with the time. The verb comes right after it, and [[ich]], [[du]] and the rest move behind the verb:\n- [[Ich arbeite am Montag.]] or [[Am Montag arbeite ich.]]\n- [[Ich habe morgen Zeit.]] or [[Morgen habe ich Zeit.]]\n- [[Wir lernen am Abend Deutsch.]] or [[Am Abend lernen wir Deutsch.]]\n\nOne thing before the verb, never two: not 'Am Montag ich arbeite'."
+    },
+    {
+      "type": "table",
+      "title": "The verb stays second",
+      "columns": [{ "header": "Position 1", "de": "words" }, { "header": "Verb", "de": "words" }, { "header": "Rest", "de": "words" }],
+      "rows": [
+        ["Ich", "arbeite", "am Montag."],
+        ["Am Montag", "arbeite", "ich."],
+        ["Heute", "habe", "ich Zeit."],
+        ["Am Abend", "lernen", "wir Deutsch."],
+        ["Von neun bis fünf", "arbeitet", "Eva."]
+      ]
+    },
+    {
+      "id": "week-examples",
+      "type": "examples",
+      "title": "Examples",
+      "items": [
+        { "de": "Heute ist Mittwoch.", "en": "Today is Wednesday." },
+        { "de": "Am Samstag habe ich Zeit.", "en": "On Saturday I have time." },
+        { "de": "Am Sonntag arbeite ich nicht.", "en": "On Sunday I don't work." },
+        { "de": "Am Abend lerne ich Deutsch.", "en": "In the evening I study German." },
+        { "de": "Ich arbeite von Montag bis Freitag.", "en": "I work from Monday to Friday." },
+        { "de": "Montags habe ich einen Kurs.", "en": "On Mondays I have a class.", "note": "einen: the Unit 2 chunk after haben" },
+        { "de": "Bis morgen!", "en": "See you tomorrow!" }
+      ]
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat",
+      "items": [
+        { "de": "Montag, Dienstag, Mittwoch", "en": "Monday, Tuesday, Wednesday" },
+        { "de": "Donnerstag, Freitag", "en": "Thursday, Friday" },
+        { "de": "Samstag, Sonntag", "en": "Saturday, Sunday" },
+        { "de": "am Wochenende", "en": "at the weekend" },
+        { "de": "Guten Morgen! Guten Abend! Gute Nacht!", "en": "Good morning! Good evening! Good night!" },
+        { "de": "Am Montag arbeite ich von neun bis fünf.", "en": "On Monday I work from nine to five." }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "mc",
+          "question": "Which day comes after Dienstag?",
+          "questionLang": "en",
+          "options": ["Mittwoch", "Montag", "Donnerstag"],
+          "answer": "Mittwoch",
+          "explanation": "Montag, Dienstag, Mittwoch: Mittwoch is 'mid-week'."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: In the evening I study German.",
+          "text": "___ Abend lerne ich Deutsch.",
+          "answers": [["Am"]],
+          "explanation": "am + part of the day: am Abend. At the start of the sentence: Am."
+        },
+        {
+          "type": "mc",
+          "question": "How do you say 'at night'?",
+          "questionLang": "en",
+          "options": ["in der Nacht", "am Nacht", "um Nacht"],
+          "answer": "in der Nacht",
+          "explanation": "All parts of the day take am, except the night: in der Nacht."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: On Saturday I have time.",
+          "text": "Am Samstag ___ ich Zeit.",
+          "answers": [["habe"]],
+          "explanation": "The time comes first, then the verb (second place), then ich: Am Samstag habe ich Zeit."
+        },
+        {
+          "type": "mc",
+          "question": "It's 11 p.m. and you're leaving a friend's place. What do you say?",
+          "questionLang": "en",
+          "options": ["Gute Nacht!", "Guten Abend!", "Guten Morgen!"],
+          "answer": "Gute Nacht!",
+          "explanation": "Gute Nacht is a goodbye late at night. Guten Abend is a hello in the evening."
+        }
+      ]
+    }
+  ]
+}
