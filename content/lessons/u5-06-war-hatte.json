@@ -1,0 +1,130 @@
+{
+  "id": "u5-06-war-hatte",
+  "unit": 5,
+  "order": 6,
+  "level": "A1",
+  "title": "How was it? war and hatte (Wie war dein Wochenende?)",
+  "summary": "With sein and haben, Germans use a short past: war and hatte. Then put Unit 5 together and tell a colleague about your weekend.",
+  "goals": [
+    "Use war and hatte",
+    "Ask Wie war ...? and answer",
+    "Tell someone about your weekend in 5-6 sentences"
+  ],
+  "nicosWeg": [
+    { "title": "Nicos Weg A1, chapter 13: Weather and holiday (Wie war dein Urlaub?)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" },
+    { "title": "Nicos Weg A1, chapter 8: Appointments (Zu spät!?)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
+  ],
+  "words": ["wie-war-dein-wochenende", "wetter", "regen", "toll", "super", "langweilig", "interessant", "see", "ausflug", "urlaub", "schlecht"],
+  "tests": ["u5-t3-wochenende"],
+  "sections": [
+    {
+      "id": "war-hatte",
+      "type": "explanation",
+      "title": "war and hatte",
+      "text": "For [[sein]] and [[haben]], Germans don't usually use the Perfekt. They use a short past form instead:\n- [[Ich war zu Hause.]] = I was at home.\n- [[Ich hatte keine Zeit.]] = I didn't have time.\n- [[Wie war dein Wochenende?]] = How was your weekend?\n\nSo: [[Ich war am See]] ([[am See]] = at the lake, a chunk: Unit 6), not 'Ich bin am See gewesen' (correct, but less common in speech).\n\nIn Bavaria you'll often hear [[Ich habe keine Zeit gehabt.]] It's correct, but use [[hatte]] yourself."
+    },
+    {
+      "id": "war-hatte-table",
+      "type": "table",
+      "title": "war and hatte",
+      "columns": [{ "header": "Person", "de": "words" }, { "header": "sein", "de": "words" }, { "header": "haben", "de": "words" }],
+      "rows": [
+        ["ich", "war", "hatte"],
+        ["du", "warst", "hattest"],
+        ["er / sie / es", "war", "hatte"],
+        ["wir", "waren", "hatten"],
+        ["ihr", "wart", "hattet"],
+        ["sie / Sie", "waren", "hatten"]
+      ]
+    },
+    {
+      "type": "tip",
+      "text": "As with the modal verbs: [[ich war]] = [[er war]], [[ich hatte]] = [[er hatte]]. No -t."
+    },
+    {
+      "type": "comparison",
+      "text": "Russian был, была, было change with gender. German [[war]] doesn't: [[er war]], [[sie war]], [[es war]]."
+    },
+    {
+      "id": "weekend-talk",
+      "type": "explanation",
+      "title": "How was the weekend?",
+      "text": "On Monday colleagues ask [[Wie war dein Wochenende?]] or [[Was hast du am Wochenende gemacht?]] Answer with a short verdict and one or two details:\n- [[Super! Ich war am See.]]\n- [[Gut. Ich hatte Zeit und habe lange geschlafen.]]\n- [[Nicht so toll. Das Wetter war schlecht.]]\n- [[Langweilig. Ich habe nur gearbeitet.]]\n\nThen ask back: [[Und du?]] or [[Und dein Wochenende?]]"
+    },
+    {
+      "id": "weekend-report",
+      "type": "explanation",
+      "title": "Your weekend in six sentences",
+      "text": "A good order: when, what, how it was. Mix the Perfekt with [[war]] and [[hatte]]:\n1. [[Am Samstag bin ich spät aufgestanden.]]\n2. [[Dann habe ich eingekauft.]]\n3. [[Am Nachmittag war ich am See.]]\n4. [[Am Abend haben wir gegrillt.]]\n5. [[Am Sonntag habe ich Deutsch gelernt.]]\n6. [[Das Wochenende war super!]]"
+    },
+    {
+      "id": "weekend-examples",
+      "type": "examples",
+      "title": "Monday morning",
+      "items": [
+        { "de": "Guten Morgen! Wie war dein Wochenende?", "en": "Good morning! How was your weekend?", "note": "Eva" },
+        { "de": "Super! Am Samstag war ich am See.", "en": "Great! On Saturday I was at the lake.", "note": "Aram" },
+        { "de": "Toll! Das Wetter war schön.", "en": "Great! The weather was nice.", "note": "Eva" },
+        { "de": "Ja! Und du? Was hast du gemacht?", "en": "Yes! And you? What did you do?", "note": "Aram" },
+        { "de": "Meine Eltern waren hier.", "en": "My parents were here.", "note": "Eva" },
+        { "de": "Wir haben zusammen gekocht und viel erzählt.", "en": "We cooked together and talked a lot.", "note": "Eva" }
+      ]
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat",
+      "items": [
+        { "de": "Wie war dein Wochenende?", "en": "How was your weekend?" },
+        { "de": "Es war super!", "en": "It was great!" },
+        { "de": "Ich hatte keine Zeit.", "en": "I didn't have time." },
+        { "de": "Das Wetter war schlecht.", "en": "The weather was bad." },
+        { "de": "Am Samstag war ich am See.", "en": "On Saturday I was at the lake." },
+        { "de": "Und du? Was hast du gemacht?", "en": "And you? What did you do?" }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: How was your weekend?",
+          "text": "Wie ___ dein Wochenende?",
+          "answers": [["war"]],
+          "explanation": "sein in the past: war."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: I didn't have time.",
+          "text": "Ich ___ keine Zeit.",
+          "answers": [["hatte"]],
+          "explanation": "haben in the past: ich hatte."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: We were at home on Saturday.",
+          "text": "Wir ___ am Samstag zu Hause.",
+          "answers": [["waren"]],
+          "explanation": "wir waren."
+        },
+        {
+          "type": "mc",
+          "question": "A colleague asks 'Wie war dein Wochenende?'. Which answer fits?",
+          "questionLang": "en",
+          "options": ["Super! Ich war am See.", "Ja, gern!", "Bis dann!"],
+          "answer": "Super! Ich war am See.",
+          "explanation": "A short verdict, then a detail."
+        },
+        {
+          "type": "listen_mc",
+          "audio": "Am Samstag hatte ich keine Zeit, aber am Sonntag war ich am See.",
+          "question": "When was the person at the lake?",
+          "questionLang": "en",
+          "options": ["am Sonntag", "am Samstag", "am Montag"],
+          "answer": "am Sonntag",
+          "explanation": "am Samstag hatte ich keine Zeit; am Sonntag war ich am See."
+        }
+      ]
+    }
+  ]
+}

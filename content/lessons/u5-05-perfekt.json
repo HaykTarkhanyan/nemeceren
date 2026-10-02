@@ -1,0 +1,168 @@
+{
+  "id": "u5-05-perfekt",
+  "unit": 5,
+  "order": 5,
+  "level": "A1",
+  "title": "Talking about the past: the Perfekt (Ich habe gearbeitet)",
+  "summary": "Say what you did: Ich habe gearbeitet, Ich bin gefahren. In speech, German uses this form for almost everything in the past.",
+  "goals": [
+    "Make the Perfekt with haben: Ich habe gearbeitet",
+    "Make the Perfekt with sein for movement: Ich bin gefahren",
+    "Form the participle: ge- ... -t and ge- ... -en",
+    "Recognise separable verbs and verbs without ge- in the past"
+  ],
+  "nicosWeg": [
+    { "title": "Nicos Weg A1, chapter 13: Weather and holiday (Wie war dein Urlaub?, Der Ausflug)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
+  ],
+  "words": ["gestern", "schon", "noch-nicht", "lange", "erzaehlen", "feiern", "grillen", "mitbringen", "fliegen", "zug", "muede"],
+  "sections": [
+    {
+      "id": "perfekt-shape",
+      "type": "explanation",
+      "title": "The verb bracket again",
+      "text": "To talk about the past, spoken German mostly uses the **Perfekt**: [[haben]] or [[sein]] in second place, and a participle at the **end**. It's the verb bracket from Unit 3:\n- [[Ich habe gestern gearbeitet.]] = I worked yesterday.\n- [[Wir haben Fisch gegessen.]] = We ate fish.\n- [[Ich bin nach Hause gefahren.]] = I went home.\n\nEnglish uses 'I have worked' only sometimes; German uses [[Ich habe gearbeitet]] also where English says 'I worked'."
+    },
+    {
+      "id": "participles-regular",
+      "type": "table",
+      "title": "Regular verbs: ge- ... -t",
+      "columns": [{ "header": "Verb", "de": "words" }, { "header": "Participle", "de": "words" }, { "header": "Example", "de": "words" }],
+      "rows": [
+        ["machen", "gemacht", "Ich habe Sport gemacht."],
+        ["arbeiten", "gearbeitet", "Ich habe viel gearbeitet."],
+        ["lernen", "gelernt", "Ich habe Deutsch gelernt."],
+        ["kaufen", "gekauft", "Ich habe Brot gekauft."],
+        ["kochen", "gekocht", "Wir haben zusammen gekocht."],
+        ["spielen", "gespielt", "Sie haben Fußball gespielt."],
+        ["hören", "gehört", "Ich habe Musik gehört."],
+        ["feiern", "gefeiert", "Wir haben Geburtstag gefeiert."],
+        ["grillen", "gegrillt", "Wir haben gegrillt."]
+      ]
+    },
+    {
+      "type": "tip",
+      "text": "A verb whose stem ends in -t or -d gets -et: [[arbeiten]], [[gearbeitet]]. Most German verbs are regular like [[machen]]; the irregular ones below need learning one by one, like English 'eat, eaten'."
+    },
+    {
+      "id": "participles-irregular",
+      "type": "table",
+      "title": "Irregular verbs: ge- ... -en",
+      "columns": [{ "header": "Verb", "de": "words" }, { "header": "Participle", "de": "words" }, { "header": "Example", "de": "words" }],
+      "rows": [
+        ["essen", "gegessen", "Ich habe Fisch gegessen."],
+        ["trinken", "getrunken", "Wir haben Kaffee getrunken."],
+        ["lesen", "gelesen", "Ich habe ein Buch gelesen."],
+        ["sehen", "gesehen", "Hast du den Film gesehen?"],
+        ["schlafen", "geschlafen", "Ich habe lange geschlafen."],
+        ["schreiben", "geschrieben", "Ich habe eine E-Mail geschrieben."],
+        ["nehmen", "genommen", "Ich habe den Zug genommen."],
+        ["treffen", "getroffen", "Ich habe Eva getroffen."],
+        ["sprechen", "gesprochen", "Wir haben Deutsch gesprochen."]
+      ]
+    },
+    {
+      "id": "haben-sein",
+      "type": "explanation",
+      "title": "haben or sein?",
+      "text": "Most verbs take [[haben]]. Verbs of **movement** ([[gehen]], [[fahren]], [[fliegen]], [[schwimmen]], [[wandern]]) and of **change** ([[aufstehen]]) take [[sein]], and so does [[bleiben]] (to stay):\n- [[Ich bin nach Hause gegangen.]]\n- [[Wir sind nach Salzburg gefahren.]]\n- [[Ich bin um sieben aufgestanden.]]\n- [[Am Sonntag bin ich zu Hause geblieben.]]"
+    },
+    {
+      "id": "sein-verbs",
+      "type": "table",
+      "title": "Verbs with sein",
+      "columns": [{ "header": "Verb", "de": "words" }, { "header": "Perfekt", "de": "words" }],
+      "rows": [
+        ["gehen", "ich bin gegangen"],
+        ["kommen", "ich bin gekommen"],
+        ["fahren", "ich bin gefahren"],
+        ["fliegen", "ich bin geflogen"],
+        ["aufstehen", "ich bin aufgestanden"],
+        ["schwimmen", "ich bin geschwommen"],
+        ["wandern", "ich bin gewandert"],
+        ["bleiben", "ich bin geblieben"]
+      ]
+    },
+    {
+      "id": "special-participles",
+      "type": "explanation",
+      "title": "Two special groups",
+      "text": "- **Separable verbs** put ge- in the middle: [[aufstehen]], [[aufgestanden]]; [[einkaufen]], [[eingekauft]]; [[anrufen]], [[angerufen]]; [[fernsehen]], [[ferngesehen]]; [[mitbringen]], [[mitgebracht]].\n- **Verbs starting with be-, er-, ver-, and verbs ending in -ieren, take no ge-:** [[besuchen]], [[besucht]]; [[bezahlen]], [[bezahlt]]; [[bekommen]], [[bekommen]]; [[erzählen]], [[erzählt]]; [[verstehen]], [[verstanden]]; [[telefonieren]], [[telefoniert]]; [[studieren]], [[studiert]].\n\nThese two groups come back at A2. For now, recognise them, and use the ones you need for your weekend."
+    },
+    {
+      "type": "comparison",
+      "text": "Armenian builds this kind of past in two parts too: աշխատել եմ (I have worked) is a participle plus the verb 'to be', and German [[Ich habe gearbeitet]] is [[haben]] plus a participle. Russian has just one word (работал), so the two-part German form is the new thing. Armenian uses 'to be' for every verb, so it matches German most closely for the [[sein]] verbs: գնացել եմ, [[ich bin gegangen]]."
+    },
+    {
+      "type": "warning",
+      "text": "The participle goes to the **very end**: [[Ich habe gestern Fisch gegessen.]], not 'Ich habe gegessen gestern Fisch'. And [[haben]] or [[sein]] stays in second place: [[Gestern habe ich Fisch gegessen.]]"
+    },
+    {
+      "id": "past-examples",
+      "type": "examples",
+      "title": "Examples",
+      "items": [
+        { "de": "Was hast du am Wochenende gemacht?", "en": "What did you do at the weekend?" },
+        { "de": "Ich habe lange geschlafen.", "en": "I slept for a long time." },
+        { "de": "Am Samstag haben wir gegrillt.", "en": "On Saturday we had a barbecue." },
+        { "de": "Am Sonntag bin ich zu Hause geblieben.", "en": "On Sunday I stayed at home." },
+        { "de": "Ich bin um sieben aufgestanden.", "en": "I got up at seven." },
+        { "de": "Hast du schon gegessen? - Nein, noch nicht.", "en": "Have you eaten yet? - No, not yet." },
+        { "de": "Ich habe meine Eltern angerufen.", "en": "I called my parents." }
+      ]
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat",
+      "items": [
+        { "de": "Ich habe gestern gearbeitet.", "en": "I worked yesterday." },
+        { "de": "Wir haben Fisch gegessen.", "en": "We ate fish." },
+        { "de": "Ich bin nach Hause gefahren.", "en": "I went home." },
+        { "de": "Ich bin um sieben aufgestanden.", "en": "I got up at seven." },
+        { "de": "Was hast du am Wochenende gemacht?", "en": "What did you do at the weekend?" },
+        { "de": "Ich habe meine Eltern besucht.", "en": "I visited my parents." }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: I worked a lot yesterday.",
+          "text": "Ich ___ gestern viel gearbeitet.",
+          "answers": [["habe"]],
+          "explanation": "arbeiten takes haben: ich habe ... gearbeitet."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: We went home. (by car or train)",
+          "text": "Wir ___ nach Hause gefahren.",
+          "answers": [["sind"]],
+          "explanation": "fahren is movement from A to B, so sein: wir sind gefahren."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: Have you seen the film?",
+          "text": "Hast du den Film ___?",
+          "answers": [["gesehen"]],
+          "explanation": "sehen is irregular: gesehen. The participle goes to the end."
+        },
+        {
+          "type": "mc",
+          "question": "Which sentence means 'I got up at seven'?",
+          "questionLang": "en",
+          "options": ["Ich bin um sieben aufgestanden.", "Ich habe um sieben aufgestanden.", "Ich bin um sieben aufstanden."],
+          "answer": "Ich bin um sieben aufgestanden.",
+          "explanation": "aufstehen takes sein, and the separable part goes before ge-: aufgestanden."
+        },
+        {
+          "type": "order",
+          "prompt": "On Saturday we had a barbecue.",
+          "tiles": ["am", "Samstag", "haben", "wir", "gegrillt"],
+          "answers": ["Am Samstag haben wir gegrillt", "Wir haben am Samstag gegrillt"],
+          "explanation": "haben in second place, gegrillt at the end."
+        }
+      ]
+    }
+  ]
+}

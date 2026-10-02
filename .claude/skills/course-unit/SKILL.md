@@ -130,7 +130,7 @@ Rules from Units 0-2 and real mistakes:
    - rare senses ("müssen: to need the bathroom", "rein: purely");
    - **separable verbs (Unit 3 onward):** "rufe ... an" shows "rufen" and the preposition "an". Give every verb form the unit uses (rufe/ruft/rufst, stehe/steht, kaufe/kauft ...) a curated entry with the separable verb as its lemma and a note ("Ich rufe dich an. = I'll call you."). For the particles: the curated `auf` entry is currently only the preposition (note "Auf Wiedersehen!"), and `an` comes from the generated glossary. Because a curated key replaces the generated one, keep the preposition reading and add the particle reading as a second entry (1-3 entries per key).
 
-   Also check wrong mc options ("Ich anrufe ...") and every ordinal, pronoun and article form the unit uses: in Units 3-4 the generated glossary gave `Viertel` the article der, `siebte` "to sieve", `achte` "to respect", `ihn` "them", `den` "nominative", `darf` "must" and `Prost` "a response to sneezing".
+   Also check wrong mc options ("Ich anrufe ...") and every ordinal, pronoun and article form the unit uses: in Units 3-4 the generated glossary gave `Viertel` the article der, `siebte` "to sieve", `achte` "to respect", `ihn` "them", `den` "nominative", `darf` "must" and `Prost` "a response to sneezing". Wiktionary also keeps vulgar senses ("gekocht: cooked, fucked", "französisch: oral sex"): grep `glossary.generated.json` glosses for vulgar words after every build and curate the hits.
 
    Fix these in `content/glossary.json`. **The lookup keeps only one entry per lemma + part of speech + form**, so two senses of the same form ("geht": to go / to work) go into one entry with two glosses.
 2. `npm run check-content` must say OK.

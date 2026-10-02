@@ -1,0 +1,85 @@
+{
+  "id": "u5-t1-arbeit-imperativ",
+  "title": "Work and instructions",
+  "level": "A1",
+  "created": "2026-10-02",
+  "description": "Unit 5 check after lessons 1 and 2.",
+  "unit": 5,
+  "lesson": "u5-02-imperativ",
+  "items": [
+    {"type": "gap", "instruction": "Fill in the gap: I'll have the salad.", "text": "Ich nehme ___ Salat.", "answers": [["den"]], "explanation": "Review (Unit 4): der Salat is masculine and the object: den Salat."},
+    {"type": "gap", "instruction": "Fill in the gap: I have to work tomorrow.", "text": "Ich ___ morgen arbeiten.", "answers": [["muss"]], "explanation": "Review (Unit 3): ich muss, and arbeiten at the end."},
+    {
+      "type": "mc",
+      "question": "Which word means 'boss'?",
+      "questionLang": "en",
+      "options": ["der Chef", "der Kunde", "das Team"],
+      "answer": "der Chef",
+      "explanation": "der Chef, die Chefin = the boss. der Kunde = customer."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: I still have to send the email.",
+      "text": "Ich muss die E-Mail noch ___.",
+      "answers": [["schicken"]],
+      "explanation": "schicken = to send. After muss, the verb goes to the end."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap with beginnen: What time does the class start?",
+      "text": "Um wie viel Uhr ___ der Kurs?",
+      "answers": [["beginnt"]],
+      "explanation": "der Kurs beginnt. beginnen is not separable."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: Please write the answer. (polite)",
+      "text": "___ Sie bitte die Antwort.",
+      "answers": [["Schreiben"]],
+      "explanation": "Sie form: the verb first, then Sie."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: Listen! (to a friend)",
+      "text": "___ zu!",
+      "answers": [["Hör", "Höre"]],
+      "explanation": "du hörst zu becomes Hör zu! The separable part stays at the end."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: Take the book! (to a friend)",
+      "text": "___ das Buch!",
+      "answers": [["Nimm"]],
+      "explanation": "du nimmst becomes Nimm! The vowel change stays."
+    },
+    {
+      "type": "mc",
+      "question": "Which is the polite way to say 'Please close the door'?",
+      "questionLang": "en",
+      "options": ["Schließen Sie bitte die Tür.", "Schließ bitte die Tür.", "Schließt bitte die Tür."],
+      "answer": "Schließen Sie bitte die Tür.",
+      "explanation": "Sie form: Schließen Sie. Schließ! is for a friend, Schließt! for a group of friends."
+    },
+    {
+      "type": "listen_mc",
+      "audio": "Lesen Sie bitte Seite zwölf.",
+      "question": "Which page?",
+      "questionLang": "en",
+      "options": ["12", "20", "2"],
+      "answer": "12",
+      "explanation": "zwölf = 12. die Seite = the page."
+    },
+    {
+      "type": "dictation",
+      "text": "Kreuzen Sie an: richtig oder falsch?",
+      "explanation": "ankreuzen is separable: Kreuzen Sie ... an. richtig = right, falsch = wrong."
+    },
+    {
+      "type": "write",
+      "instruction": "A new colleague starts tomorrow and asks you what to do. Write 3-4 instructions or tips for their first day, with du or Sie: when to come, what to do first, who to call. Use the imperative (Komm ..., Lies ..., Ruf ... an). Claude will check it.",
+      "prompt": "Was mache ich morgen?",
+      "digits": true,
+      "minWords": 20
+    }
+  ]
+}

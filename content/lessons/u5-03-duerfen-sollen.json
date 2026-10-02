@@ -1,0 +1,129 @@
+{
+  "id": "u5-03-duerfen-sollen",
+  "unit": 5,
+  "order": 3,
+  "level": "A1",
+  "title": "Allowed and supposed to: dürfen and sollen (Regeln)",
+  "summary": "Say what is allowed and what isn't (dürfen), and what someone wants you to do (sollen). And finally: muss nicht or darf nicht?",
+  "goals": [
+    "Ask for permission: Darf ich ...?",
+    "Understand rules: Hier darf man nicht rauchen.",
+    "Pass on an instruction: Der Chef sagt, ich soll ...",
+    "Tell muss nicht (no need) from darf nicht (not allowed)"
+  ],
+  "nicosWeg": [
+    { "title": "Nicos Weg A1, chapter 17: Health (Beim Arzt)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" },
+    { "title": "Nicos Weg A1, chapter 15: Family (Mein Bruder)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
+  ],
+  "words": ["duerfen", "sollen", "man", "rauchen", "verboten", "leise"],
+  "sections": [
+    {
+      "id": "duerfen-sollen-table",
+      "type": "table",
+      "title": "dürfen and sollen",
+      "columns": [{ "header": "Person", "de": "words" }, { "header": "dürfen (may)", "de": "words" }, { "header": "sollen (should)", "de": "words" }],
+      "rows": [
+        ["ich", "darf", "soll"],
+        ["du", "darfst", "sollst"],
+        ["er / sie / es", "darf", "soll"],
+        ["wir", "dürfen", "sollen"],
+        ["ihr", "dürft", "sollt"],
+        ["sie / Sie", "dürfen", "sollen"]
+      ]
+    },
+    {
+      "type": "tip",
+      "text": "They work like [[können]], [[wollen]] and [[müssen]] from Unit 3: the modal verb in second place, the main verb at the end, and [[ich]] = [[er]]: [[ich darf]], [[er darf]]."
+    },
+    {
+      "id": "duerfen",
+      "type": "explanation",
+      "title": "dürfen: allowed to",
+      "text": "- [[Darf ich das Fenster öffnen?]] = May I open the window?\n- [[Darf ich?]] = May I? (taking a seat, or a piece of cake)\n- [[Hier darf man nicht rauchen.]] = You're not allowed to smoke here.\n\n[[man]] = you, people, one (anyone in general). It takes the er form: [[man darf]], [[man muss]], [[Wie sagt man das auf Deutsch?]]\n\nYou've seen [[darf]] in a fixed phrase since Unit 4: [[Was darf es sein?]] = What may it be? (What can I get you?)"
+    },
+    {
+      "type": "comparison",
+      "text": "Russian often has no subject here: Здесь нельзя курить. German needs one, and [[man]] fills the gap: [[Hier darf man nicht rauchen.]]"
+    },
+    {
+      "id": "muss-darf-nicht",
+      "type": "warning",
+      "title": "muss nicht or darf nicht?",
+      "text": "This is the trap from Unit 3:\n- [[Du musst nicht kommen.]] = You **don't have to** come. (no need)\n- [[Du darfst nicht kommen.]] = You **mustn't** come. (not allowed)\n\nEnglish 'must not' looks like [[muss nicht]], but it means [[darf nicht]]. Russian splits it the same way as German: не нужно приходить is [[Du musst nicht kommen.]], нельзя приходить is [[Du darfst nicht kommen.]]"
+    },
+    {
+      "id": "sollen",
+      "type": "explanation",
+      "title": "sollen: someone wants it",
+      "text": "[[sollen]] = should, to be supposed to, because someone else wants it:\n- [[Der Chef sagt, ich soll morgen früh kommen.]] = The boss says I'm supposed to come tomorrow morning.\n- [[Was soll ich machen?]] = What should I do?\n- [[Soll ich das Fenster öffnen?]] = Shall I open the window? (offering help)\n\nWhen the teacher says [[Kommen Sie um neun!]], you tell your friend: [[Ich soll um neun kommen.]]"
+    },
+    {
+      "id": "rules",
+      "type": "examples",
+      "title": "Rules at work and in class",
+      "items": [
+        { "de": "Hier darf man Kaffee trinken.", "en": "You're allowed to drink coffee here." },
+        { "de": "Hier darf man nicht rauchen.", "en": "You're not allowed to smoke here." },
+        { "de": "Rauchen verboten!", "en": "No smoking!", "note": "a sign" },
+        { "de": "Darf ich telefonieren?", "en": "May I make a phone call?" },
+        { "de": "Hier muss man leise sein.", "en": "You have to be quiet here." },
+        { "de": "Heute müssen wir nicht arbeiten. Es ist ein Feiertag.", "en": "We don't have to work today. It's a public holiday." },
+        { "de": "Was soll ich jetzt machen?", "en": "What should I do now?" }
+      ]
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat",
+      "items": [
+        { "de": "Darf ich das Fenster öffnen?", "en": "May I open the window?" },
+        { "de": "Hier darf man nicht rauchen.", "en": "You're not allowed to smoke here." },
+        { "de": "Du musst nicht kommen.", "en": "You don't have to come." },
+        { "de": "Du darfst nicht kommen.", "en": "You mustn't come." },
+        { "de": "Was soll ich machen?", "en": "What should I do?" },
+        { "de": "Soll ich das Fenster schließen?", "en": "Shall I close the window?" }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: May I open the window?",
+          "text": "___ ich das Fenster öffnen?",
+          "answers": [["Darf"]],
+          "explanation": "ich darf; in a yes/no question the verb comes first."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: You're not allowed to smoke here.",
+          "text": "Hier ___ man nicht rauchen.",
+          "answers": [["darf"]],
+          "explanation": "man takes the er form: man darf. darf nicht = not allowed."
+        },
+        {
+          "type": "mc",
+          "question": "Which sentence means 'You don't have to come tomorrow'?",
+          "questionLang": "en",
+          "options": ["Du musst morgen nicht kommen.", "Du darfst morgen nicht kommen.", "Du sollst morgen kommen."],
+          "answer": "Du musst morgen nicht kommen.",
+          "explanation": "muss nicht = no need. darf nicht = not allowed."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: The boss says I'm supposed to come at eight.",
+          "text": "Der Chef sagt, ich ___ um acht kommen.",
+          "answers": [["soll"]],
+          "explanation": "sollen: someone else wants it. ich soll, with no ending."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: Shall I close the window? (offering)",
+          "text": "___ ich das Fenster schließen?",
+          "answers": [["Soll"]],
+          "explanation": "Soll ich ...? offers help: Shall I ...?"
+        }
+      ]
+    }
+  ]
+}

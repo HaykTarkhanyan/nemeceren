@@ -2,6 +2,13 @@
 
 Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
+## 70. Unit 5 teaches the participles of separable, be-/er-/ver- and -ieren verbs briefly, as two rules for recognition, and keeps its dative forms as chunks (written with the course-unit skill, 2026-10-02)
+
+- **Date:** 2026-10-02 - **Status:** active
+- **Why:** the research puts the Perfekt of separable, inseparable and -ieren verbs at A2 (item 12), but a weekend report at A1 needs aufgestanden, eingekauft, angerufen, besucht, telefoniert, and Hayk already knows those verbs from Units 3-5. Both rules are mechanical ("ge- goes in the middle", "no ge- after be-, er-, ver- and in -ieren"), so one short section teaches them, marked as "recognise now, A2 practises them". Tests ask only for the most common ones (angerufen, aufgestanden, besucht). The rest of the syllabus row is taught as planned: the imperative (Sie, du, ihr), dürfen and sollen (with Nicos ch. 15 and 17 linked, outside the row's chapters), "Könnten Sie ...?" as the polite step up from Unit 1's "Können Sie ...?", the Perfekt with haben and sein, and war/hatte. The muss nicht / darf nicht trap from Unit 3 is resolved here. Chunks with a pointer: `mir` in `Können Sie mir helfen?` and `am See` (Unit 6), and `langsamer` in `Könnten Sie bitte langsamer sprechen?` (comparatives: A2). Bavarian speech says `Ich habe keine Zeit gehabt`; the lesson mentions it but teaches `hatte`. 73 new cards, fewer than Units 3-4, because this unit is mostly grammar on known words.
+- **Alternatives rejected:** chunks only for those participles (Hayk would memorise ten forms without the two rules that generate them); teaching the modal verbs' Präteritum (musste, konnte) for the weekend report (A2 in the research; the lesson avoids it).
+- **What would change this:** Hayk confusing the two participle rules in the end task (then move them out to an A2 lesson and keep only angerufen and besucht as chunks).
+
 ## 69. Unit 4 has seven lessons, teaches the accusative in full (articles, pronouns, für and ohne), and keeps its dative forms as chunks (written with the course-unit skill, 2026-10-02)
 
 - **Date:** 2026-10-02 - **Status:** active

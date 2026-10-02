@@ -1,0 +1,140 @@
+{
+  "id": "u5-02-imperativ",
+  "unit": 5,
+  "order": 2,
+  "level": "A1",
+  "title": "Instructions: the imperative (Lesen Sie! Lies!)",
+  "summary": "Understand and give instructions, as teachers and bosses do: Lesen Sie bitte ..., Hör zu!, Kommt mal!",
+  "goals": [
+    "Understand a teacher's instructions in class",
+    "Give polite instructions with Sie: Öffnen Sie bitte ...",
+    "Give instructions to a friend (du) or a group (ihr)"
+  ],
+  "nicosWeg": [
+    { "title": "Nicos Weg A1, chapter 16: Sports and exercise (Ist das gesund?)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
+  ],
+  "words": ["hausaufgabe", "pruefung", "raum", "seite", "wort", "satz", "text", "antwort", "richtig", "falsch", "fehler", "papier", "oeffnen", "schliessen", "ankreuzen", "erklaeren", "sagen", "bringen", "zuhoeren", "unterricht", "mal"],
+  "tests": ["u5-t1-arbeit-imperativ"],
+  "sections": [
+    {
+      "id": "imperativ-sie",
+      "type": "explanation",
+      "title": "The Sie form: verb first",
+      "text": "The polite instruction is easy: the verb comes first, then [[Sie]]. [[Lesen Sie!]] = Read! [[Kommen Sie!]] = Come!\n\nAdd [[bitte]] to be polite: [[Lesen Sie bitte Seite zehn.]] It looks like a yes/no question, but the voice goes down at the end, and it ends with a full stop or an exclamation mark.\n\nSeparable verbs split as usual: [[Hören Sie zu!]] (zuhören) [[Kreuzen Sie an!]] (ankreuzen)"
+    },
+    {
+      "id": "class-instructions",
+      "type": "table",
+      "title": "In class",
+      "columns": [{ "header": "The teacher says", "de": "words" }, { "header": "English" }],
+      "rows": [
+        ["Öffnen Sie das Buch.", "Open the book."],
+        ["Lesen Sie den Text.", "Read the text."],
+        ["Hören Sie zu.", "Listen."],
+        ["Schreiben Sie die Antwort.", "Write the answer."],
+        ["Kreuzen Sie an: richtig oder falsch?", "Tick: true or false?"],
+        ["Wiederholen Sie bitte.", "Repeat, please."],
+        ["Machen Sie die Hausaufgaben.", "Do the homework."],
+        ["Schließen Sie das Buch.", "Close the book."]
+      ]
+    },
+    {
+      "id": "imperativ-du",
+      "type": "explanation",
+      "title": "The du and ihr forms",
+      "text": "For **du**, take the du form, drop the -st and the [[du]]: [[du kommst]] becomes [[Komm!]], [[du machst]] becomes [[Mach!]], [[du hörst zu]] becomes [[Hör zu!]] After s or ß only the -t goes: [[du liest]], [[Lies!]]; [[du isst]], [[Iss!]]\n- e→i and e→ie verbs keep the change: [[du nimmst]], [[Nimm!]]; [[Lies!]] and [[Iss!]] too\n- a→ä verbs lose the umlaut: [[du fährst]], [[Fahr!]]; [[du schläfst]], [[Schlaf!]]\n- [[sein]] is special: [[Sei pünktlich!]]\n\nFor **ihr** (two or more friends), use the ihr form without [[ihr]]: [[Kommt!]] [[Hört bitte zu!]] [[Seid leise!]]"
+    },
+    {
+      "id": "imperativ-table",
+      "type": "table",
+      "title": "The imperative",
+      "columns": [{ "header": "Verb", "de": "words" }, { "header": "Sie", "de": "words" }, { "header": "du", "de": "words" }, { "header": "ihr", "de": "words" }],
+      "rows": [
+        ["kommen", "Kommen Sie!", "Komm!", "Kommt!"],
+        ["machen", "Machen Sie!", "Mach!", "Macht!"],
+        ["nehmen", "Nehmen Sie!", "Nimm!", "Nehmt!"],
+        ["lesen", "Lesen Sie!", "Lies!", "Lest!"],
+        ["fahren", "Fahren Sie!", "Fahr!", "Fahrt!"],
+        ["zuhören", "Hören Sie zu!", "Hör zu!", "Hört zu!"],
+        ["sein", "Seien Sie!", "Sei!", "Seid!"]
+      ]
+    },
+    {
+      "type": "comparison",
+      "text": "Russian has a polite and an informal command too: Читайте! and Читай! German [[Lesen Sie!]] and [[Lies!]] work the same way. Armenian as well: կարդացե՛ք and կարդա՛. Читайте! and կարդացե՛ք are also the plural forms, so they cover German [[Lest!]] too."
+    },
+    {
+      "id": "softer",
+      "type": "tip",
+      "title": "Make it softer",
+      "text": "A bare command can sound bossy. Add [[bitte]], and with friends also [[mal]] (just): [[Komm mal bitte!]] [[Öffne bitte das Fenster.]] [[Sag mal, ...]] = Tell me, ..."
+    },
+    {
+      "id": "boss-instructions",
+      "type": "examples",
+      "title": "From the boss",
+      "items": [
+        { "de": "Schicken Sie bitte die E-Mail.", "en": "Please send the email." },
+        { "de": "Drucken Sie das bitte.", "en": "Please print this." },
+        { "de": "Rufen Sie bitte Frau Weber an.", "en": "Please call Ms Weber." },
+        { "de": "Kommen Sie bitte um neun.", "en": "Please come at nine." },
+        { "de": "Mach mal Pause!", "en": "Take a break!", "note": "a colleague, informal" },
+        { "de": "Bringt bitte Papier mit.", "en": "Please bring some paper.", "note": "to a group (ihr)" }
+      ]
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat",
+      "items": [
+        { "de": "Lesen Sie bitte den Text.", "en": "Please read the text." },
+        { "de": "Hören Sie zu!", "en": "Listen!" },
+        { "de": "Komm mal bitte!", "en": "Come here a moment, please!" },
+        { "de": "Nimm den Kuchen!", "en": "Take the cake!" },
+        { "de": "Sei pünktlich!", "en": "Be on time!" },
+        { "de": "Kreuzen Sie an: richtig oder falsch?", "en": "Tick: true or false?" }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: Please read the text. (polite)",
+          "text": "___ Sie bitte den Text.",
+          "answers": [["Lesen"]],
+          "explanation": "Sie form: the verb first, then Sie."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: Come, please! (to a friend)",
+          "text": "___ bitte!",
+          "answers": [["Komm", "Komme"]],
+          "explanation": "du kommst without -st and without du: Komm! (Komme is the older, longer form.)"
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: Take the cake! (to a friend)",
+          "text": "___ den Kuchen!",
+          "answers": [["Nimm"]],
+          "explanation": "du nimmst becomes Nimm! The vowel change stays."
+        },
+        {
+          "type": "mc",
+          "question": "Which is the polite way to say 'Listen!'?",
+          "questionLang": "en",
+          "options": ["Hören Sie zu!", "Hör zu!", "Hört zu!"],
+          "answer": "Hören Sie zu!",
+          "explanation": "Sie form: Hören Sie zu! Hör zu! is for a friend, Hört zu! for a group of friends."
+        },
+        {
+          "type": "order",
+          "prompt": "Please open the window. (polite)",
+          "tiles": ["öffnen", "Sie", "bitte", "das", "Fenster"],
+          "answers": ["Öffnen Sie bitte das Fenster", "Öffnen Sie das Fenster bitte", "Bitte öffnen Sie das Fenster"],
+          "explanation": "The verb first, then Sie. bitte can go after Sie, at the end or at the start."
+        }
+      ]
+    }
+  ]
+}

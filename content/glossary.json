@@ -190,7 +190,7 @@
       {"lemma": "Liebe", "pos": "noun", "article": "die", "level": "B1", "gloss": ["love"]}
     ],
     "vielen": [
-      {"lemma": "viel", "pos": "determiner", "form": "dative plural", "level": "A1", "gloss": ["many"], "note": "Vielen Dank! = Thank you very much!"}
+      {"lemma": "viel", "pos": "determiner", "form": "fixed phrase", "level": "A1", "gloss": ["many"], "note": "Vielen Dank! = Thank you very much!"}
     ],
     "ihnen": [
       {"lemma": "sie", "pos": "pronoun", "form": "dative plural", "gloss": ["(to) them"]}
@@ -363,7 +363,7 @@
       {"lemma": "aufhören", "pos": "verb", "form": "ich form, present", "level": "A1", "gloss": ["to stop, to finish"], "note": "Separable: Um fünf Uhr höre ich auf."}
     ],
     "hört": [
-      {"lemma": "hören", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["to hear, to listen"]},
+      {"lemma": "hören", "pos": "verb", "form": "er/sie/es and ihr form; ihr imperative", "level": "A1", "gloss": ["to hear, to listen"], "note": "Hört zu! = Listen! (to a group)"},
       {"lemma": "aufhören", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["to stop, to finish"], "note": "Separable: Er hört um fünf auf."}
     ],
     "sehe": [
@@ -391,7 +391,7 @@
       {"lemma": "mitkommen", "pos": "verb", "form": "du form, present", "level": "A1", "gloss": ["to come along"], "note": "Separable: Kommst du mit? = Are you coming along?"}
     ],
     "kommt": [
-      {"lemma": "kommen", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["to come"]},
+      {"lemma": "kommen", "pos": "verb", "form": "er/sie/es and ihr form; ihr imperative", "level": "A1", "gloss": ["to come"], "note": "Kommt! = Come! (to a group)"},
       {"lemma": "mitkommen", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["to come along"], "note": "Separable: Sie kommt mit."}
     ],
     "an": [
@@ -512,7 +512,7 @@
       {"lemma": "achte", "pos": "numeral", "level": "A1", "gloss": ["eighth"], "note": "One t: der achte Mai, am achten Mai"}
     ],
     "darf": [
-      {"lemma": "dürfen", "pos": "verb", "form": "ich and er/sie/es form, present", "level": "A1", "gloss": ["may, is allowed to"], "note": "darf nicht = mustn't (Unit 5)"}
+      {"lemma": "dürfen", "pos": "verb", "form": "ich and er/sie/es form, present", "level": "A1", "gloss": ["may, is allowed to"], "note": "Darf ich? = May I? darf nicht = mustn't"}
     ],
     "Wollen": [
       {"lemma": "wollen", "pos": "verb", "level": "A1", "gloss": ["to want"], "note": "Wollen wir ...? = Shall we ...?"}
@@ -525,7 +525,8 @@
     ],
     "zu": [
       {"lemma": "zu", "pos": "preposition", "level": "A1", "gloss": ["to; at"], "note": "zu Hause = at home"},
-      {"lemma": "zu", "pos": "adverb", "level": "A1", "gloss": ["too"], "note": "zu spät = too late"}
+      {"lemma": "zu", "pos": "adverb", "level": "A1", "gloss": ["too"], "note": "zu spät = too late"},
+      {"lemma": "zu", "pos": "particle", "level": "A1", "gloss": ["separable part of a verb"], "note": "zuhören: Hör zu! Hören Sie zu! = Listen!"}
     ],
     "anrufe": [
       {"lemma": "anrufen", "pos": "verb", "form": "ich form", "level": "A1", "gloss": ["to phone, to call"], "note": "In a normal sentence it splits: Ich rufe meine Mutter an."}
@@ -653,7 +654,7 @@
       {"lemma": "gern", "pos": "adverb", "level": "A1", "gloss": ["gladly; (I) like to"], "note": "gerne = gern"}
     ],
     "macht": [
-      {"lemma": "machen", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["makes, does"], "note": "Das macht sechs Euro. = That comes to six euros."}
+      {"lemma": "machen", "pos": "verb", "form": "er/sie/es and ihr form; ihr imperative", "level": "A1", "gloss": ["makes, does"], "note": "Das macht sechs Euro. = That comes to six euros."}
     ],
     "Reis": [
       {"lemma": "Reis", "pos": "noun", "article": "der", "level": "A1", "gloss": ["rice"]}
@@ -663,6 +664,97 @@
     ],
     "Gramm": [
       {"lemma": "Gramm", "pos": "noun", "article": "das", "level": "A1", "gloss": ["gram"], "note": "zweihundert Gramm (no plural ending)"}
+    ],
+    "gekocht": [
+      {"lemma": "kochen", "pos": "verb", "form": "past participle", "level": "A1", "gloss": ["cooked"], "note": "Wir haben zusammen gekocht."}
+    ],
+    "Kreuzen": [
+      {"lemma": "ankreuzen", "pos": "verb", "form": "Sie imperative", "level": "A1", "gloss": ["to tick, to mark with a cross"], "note": "Separable: Kreuzen Sie an: richtig oder falsch?"}
+    ],
+    "Sei": [
+      {"lemma": "sein", "pos": "verb", "form": "du imperative", "level": "A1", "gloss": ["be!"], "note": "Sei pünktlich! = Be on time!"}
+    ],
+    "sei": [
+      {"lemma": "sein", "pos": "verb", "form": "du imperative", "level": "A1", "gloss": ["be!"], "note": "Sei pünktlich! = Be on time!"}
+    ],
+    "Seien": [
+      {"lemma": "sein", "pos": "verb", "form": "Sie imperative", "level": "A1", "gloss": ["be!"], "note": "Seien Sie pünktlich!"}
+    ],
+    "Könnten": [
+      {"lemma": "können", "pos": "verb", "form": "Sie/wir form, polite (Konjunktiv II)", "level": "A1", "gloss": ["could"], "note": "Könnten Sie das bitte wiederholen? = Could you repeat that, please?"}
+    ],
+    "könnten": [
+      {"lemma": "können", "pos": "verb", "form": "Sie/wir form, polite (Konjunktiv II)", "level": "A1", "gloss": ["could"], "note": "Könnten Sie ...? = Could you ...? (very polite)"}
+    ],
+    "Öffne": [
+      {"lemma": "öffnen", "pos": "verb", "form": "du imperative", "level": "A1", "gloss": ["open!"], "note": "Öffne bitte das Fenster."}
+    ],
+    "Rufen": [
+      {"lemma": "anrufen", "pos": "verb", "form": "Sie imperative; wir/sie form", "level": "A1", "gloss": ["to phone, to call"], "note": "Separable: Rufen Sie bitte Frau Weber an."},
+      {"lemma": "rufen", "pos": "verb", "form": "wir/sie/Sie form", "level": "A1", "gloss": ["to call, to shout"]}
+    ],
+    "wart": [
+      {"lemma": "sein", "pos": "verb", "form": "ihr form, past", "level": "A1", "gloss": ["were"], "note": "Wo wart ihr? = Where were you?"}
+    ],
+    "gefahrt": [
+      {"lemma": "fahren", "pos": "verb", "form": "wrong participle", "gloss": ["(not a word)"], "note": "The participle of fahren is gefahren."}
+    ],
+    "Kundinnen": [
+      {"lemma": "Kundin", "pos": "noun", "article": "die", "form": "plural", "level": "A1", "gloss": ["customers (women)"]}
+    ],
+    "französisch": [
+      {"lemma": "französisch", "pos": "adjective", "level": "A1", "gloss": ["French"], "note": "The language: Französisch"}
+    ],
+    "Kundin": [
+      {"lemma": "Kundin", "pos": "noun", "article": "die", "plural": "Kundinnen", "level": "A1", "gloss": ["customer, client (a woman)"], "note": "Male: der Kunde."}
+    ],
+    "Nimm": [
+      {"lemma": "nehmen", "pos": "verb", "form": "du imperative", "level": "A1", "gloss": ["take!"], "note": "du nimmst → Nimm!"}
+    ],
+    "nimm": [
+      {"lemma": "nehmen", "pos": "verb", "form": "du imperative", "level": "A1", "gloss": ["take!"], "note": "du nimmst → Nimm!"}
+    ],
+    "langsamer": [
+      {"lemma": "langsam", "pos": "adverb", "form": "comparative", "level": "A1", "gloss": ["more slowly"], "note": "Langsamer, bitte! The -er form comes at A2."}
+    ],
+    "Langsamer": [
+      {"lemma": "langsam", "pos": "adverb", "form": "comparative", "level": "A1", "gloss": ["more slowly"], "note": "Langsamer, bitte! The -er form comes at A2."}
+    ],
+    "gehabt": [
+      {"lemma": "haben", "pos": "verb", "form": "past participle", "level": "A1", "gloss": ["had"], "note": "Ich habe keine Zeit gehabt. (Bavarian speech; use: Ich hatte keine Zeit.)"}
+    ],
+    "Bringt": [
+      {"lemma": "mitbringen", "pos": "verb", "form": "ihr imperative", "level": "A1", "gloss": ["bring along!"], "note": "Separable: Bringt bitte Papier mit."},
+      {"lemma": "bringen", "pos": "verb", "form": "er/sie/es and ihr form", "level": "A1", "gloss": ["brings"]}
+    ],
+    "Hör": [
+      {"lemma": "zuhören", "pos": "verb", "form": "du imperative", "level": "A1", "gloss": ["listen!"], "note": "Separable: Hör zu!"},
+      {"lemma": "hören", "pos": "verb", "form": "du imperative", "level": "A1", "gloss": ["hear! listen!"]}
+    ],
+    "Hören": [
+      {"lemma": "zuhören", "pos": "verb", "form": "Sie imperative", "level": "A1", "gloss": ["listen!"], "note": "Separable: Hören Sie zu!"},
+      {"lemma": "hören", "pos": "verb", "form": "wir/sie/Sie form", "level": "A1", "gloss": ["to hear, to listen"]}
+    ],
+    "Drucken": [
+      {"lemma": "drucken", "pos": "verb", "form": "Sie imperative", "level": "A1", "gloss": ["print!"], "note": "Drucken Sie das bitte."}
+    ],
+    "aufstanden": [
+      {"lemma": "aufstehen", "pos": "verb", "form": "wrong participle", "gloss": ["(wrong here)"], "note": "The participle is aufgestanden."}
+    ],
+    "Hausaufgaben": [
+      {"lemma": "Hausaufgabe", "pos": "noun", "article": "die", "form": "plural", "level": "A1", "gloss": ["homework"], "note": "Usually plural: Hausaufgaben machen."}
+    ],
+    "Guten": [
+      {"lemma": "gut", "pos": "adjective", "level": "A1", "gloss": ["good"], "note": "Guten Morgen! Guten Tag! Guten Abend!"}
+    ],
+    "sieben": [
+      {"lemma": "sieben", "pos": "numeral", "level": "A1", "gloss": ["seven"]}
+    ],
+    "klar": [
+      {"lemma": "klar", "pos": "adjective", "level": "A1", "gloss": ["clear", "of course (Klar!)"], "note": "Ja, klar! = Yes, of course!"}
+    ],
+    "da": [
+      {"lemma": "da", "pos": "adverb", "level": "A1", "gloss": ["there; here, in (present)"], "note": "Der Chef ist nicht da. = The boss isn't in."}
     ]
   }
 }

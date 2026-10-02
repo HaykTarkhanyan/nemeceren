@@ -46,6 +46,8 @@
 
 **Unit 4 as written (2026-10-02, DECISIONS.md #69):** seven lessons, with shopping for food as its own lesson. The accusative includes the object pronouns and `für` / `ohne`. Chunks with a pointer: `zum Frühstück`, `Es schmeckt mir`, `mit Milch`, `mit Karte` (Unit 6), `Was darf es sein?` (Unit 5).
 
+**Unit 5 as written (2026-10-02, DECISIONS.md #70):** the participles of separable verbs (aufgestanden) and of be-/er-/ver-/-ieren verbs (besucht, telefoniert) come as two short rules for recognition; A2 practises them. Chunks: `Können Sie mir helfen?`, `am See` (Unit 6), `langsamer` (A2).
+
 **Total about 100 hours and about 650 words.** Goethe estimates 60-150 h for A1 (search snippet, not verified).
 - 20 min/day: about 10 months
 - 30 min/day: about 6-7 months

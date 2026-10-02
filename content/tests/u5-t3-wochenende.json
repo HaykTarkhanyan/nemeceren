@@ -1,0 +1,84 @@
+{
+  "id": "u5-t3-wochenende",
+  "title": "The past and your weekend (Unit 5 final)",
+  "level": "A1",
+  "created": "2026-10-02",
+  "description": "Unit 5 check after lessons 5 and 6, with the unit's final task.",
+  "unit": 5,
+  "lesson": "u5-06-war-hatte",
+  "items": [
+    {"type": "gap", "instruction": "Fill in the gap: What are you eating?", "text": "Was ___ du?", "answers": [["isst"]], "explanation": "Review (Unit 4): essen changes e to i: du isst."},
+    {"type": "gap", "instruction": "Fill in the gap: The film starts at eight.", "text": "Der Film ___ um acht an.", "answers": [["fängt"]], "explanation": "Review (Unit 3): anfangen splits: fängt ... an."},
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: Yesterday I slept for a long time.",
+      "text": "Ich ___ gestern lange geschlafen.",
+      "answers": [["habe"]],
+      "explanation": "schlafen takes haben: ich habe geschlafen."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: On Sunday I stayed at home.",
+      "text": "Am Sonntag ___ ich zu Hause geblieben.",
+      "answers": [["bin"]],
+      "explanation": "bleiben takes sein: ich bin geblieben."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: We ate fish.",
+      "text": "Wir haben Fisch ___.",
+      "answers": [["gegessen"]],
+      "explanation": "essen is irregular: gegessen."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: I called my parents.",
+      "text": "Ich habe meine Eltern ___.",
+      "answers": [["angerufen"]],
+      "explanation": "anrufen is separable: ge- goes in the middle: angerufen."
+    },
+    {
+      "type": "mc",
+      "question": "Which sentence means 'I went home'? (by train)",
+      "questionLang": "en",
+      "options": ["Ich bin nach Hause gefahren.", "Ich habe nach Hause gefahren.", "Ich bin nach Hause gefahrt."],
+      "answer": "Ich bin nach Hause gefahren.",
+      "explanation": "fahren takes sein (movement), and it's irregular: gefahren."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: On Saturday I didn't have time.",
+      "text": "Am Samstag ___ ich keine Zeit.",
+      "answers": [["hatte"]],
+      "explanation": "haben in the past: ich hatte."
+    },
+    {
+      "type": "listen_mc",
+      "audio": "Am Samstag war ich am See, und am Sonntag habe ich meine Eltern besucht.",
+      "question": "What did the person do on Sunday?",
+      "questionLang": "en",
+      "options": ["die Eltern besucht", "am See", "zu Hause geblieben"],
+      "answer": "die Eltern besucht",
+      "explanation": "am Sonntag habe ich meine Eltern besucht. besuchen has no ge-: besucht."
+    },
+    {
+      "type": "dictation",
+      "text": "Das Wochenende war super, aber ich bin müde.",
+      "explanation": "war = was. müde with ü."
+    },
+    {
+      "type": "order",
+      "prompt": "What did you do at the weekend?",
+      "tiles": ["was", "hast", "du", "am", "Wochenende", "gemacht"],
+      "answers": ["Was hast du am Wochenende gemacht"],
+      "explanation": "Question word, then hast, and the participle gemacht at the end."
+    },
+    {
+      "type": "write",
+      "instruction": "Unit 5 final task, in two parts. Part 1: your colleague asks the first question below. Answer in 5-6 sentences: what you did on Saturday and on Sunday, and how it was (Perfekt, war, hatte). Part 2: in class, the teacher explains something much too fast and asks the second question. Answer in 2-3 sentences: ask them to repeat it more slowly and to explain one word (Könnten Sie ...?). Claude will check it. Then ask Claude for the live role-play: Claude plays the colleague, then the teacher.",
+      "prompt": "Kollegin: Guten Morgen! Wie war dein Wochenende?\nLehrer: ... Haben Sie das verstanden?",
+      "digits": true,
+      "minWords": 50
+    }
+  ]
+}

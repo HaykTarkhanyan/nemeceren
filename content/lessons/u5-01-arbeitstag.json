@@ -1,0 +1,123 @@
+{
+  "id": "u5-01-arbeitstag",
+  "unit": 5,
+  "order": 1,
+  "level": "A1",
+  "title": "A day at work (Mein Arbeitstag)",
+  "summary": "Talk about your work day: the people (Chef, Kunde, Team), the tasks (E-Mails, telefonieren, drucken), and when things start and end.",
+  "goals": [
+    "Name people and things at work: Chef, Kunde, Team, Büro",
+    "Say what you do at work: E-Mails schreiben, telefonieren, drucken",
+    "Say when you start and whether you're finished"
+  ],
+  "nicosWeg": [
+    { "title": "Nicos Weg A1, chapter 9: Working life (Ich bin Lehrerin, Mein Beruf)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
+  ],
+  "words": ["chef", "chefin", "buero", "aufgabe", "e-mail", "telefonieren", "kunde", "kundin", "team", "projekt", "fertig", "wichtig", "schicken", "drucken", "drucker", "beginnen"],
+  "sections": [
+    {
+      "id": "arams-day",
+      "type": "examples",
+      "title": "Aram's work day",
+      "items": [
+        { "de": "Aram ist Entwickler.", "en": "Aram is a developer." },
+        { "de": "Er beginnt um neun Uhr.", "en": "He starts at nine." },
+        { "de": "Zuerst liest er seine E-Mails.", "en": "First he reads his emails." },
+        { "de": "Um zehn hat er einen Termin.", "en": "At ten he has an appointment." },
+        { "de": "Dann telefoniert er.", "en": "Then he's on the phone." },
+        { "de": "Um zwölf macht er Pause.", "en": "At twelve he takes a break." },
+        { "de": "Am Nachmittag hat er viele Aufgaben.", "en": "In the afternoon he has lots of tasks." },
+        { "de": "Um fünf ist er fertig und hat Feierabend.", "en": "At five he's done and finishes work." }
+      ]
+    },
+    {
+      "id": "work-words",
+      "type": "table",
+      "title": "At work",
+      "columns": [{ "header": "Word", "de": "words" }, { "header": "English" }],
+      "rows": [
+        ["der Chef / die Chefin", "the boss"],
+        ["der Kollege / die Kollegin", "the colleague (Unit 1)"],
+        ["der Kunde / die Kundin", "the customer, the client"],
+        ["das Team", "the team"],
+        ["das Büro", "the office"],
+        ["das Projekt", "the project"],
+        ["die Aufgabe", "the task"],
+        ["die E-Mail", "the email"],
+        ["der Drucker", "the printer"],
+        ["der Termin", "the appointment (Unit 3)"]
+      ]
+    },
+    {
+      "id": "work-verbs",
+      "type": "explanation",
+      "title": "What you do at work",
+      "text": "- [[E-Mails schreiben]], [[eine E-Mail schicken]]\n- [[telefonieren]] = to be on the phone: [[Der Chef telefoniert.]]\n- [[drucken]] = to print\n- [[beginnen]] = to begin: [[Der Kurs beginnt um neun.]] (the same as [[anfangen]] from Unit 3, but not separable)\n- [[Pause machen]], [[Feierabend haben]] (Unit 3)\n\nWith the modal verbs from Unit 3: [[Ich muss das noch drucken.]] [[Kannst du die E-Mail schicken?]]\n\n[[fertig]] = done, finished: [[Bist du fertig?]] - [[Ja!]] / [[Noch nicht.]] And [[wichtig]] = important: [[Das ist wichtig.]]"
+    },
+    {
+      "type": "tip",
+      "title": "-in for women",
+      "text": "As with [[Lehrer]] and [[Lehrerin]] in Unit 1: [[der Chef]], [[die Chefin]]; [[der Kunde]], [[die Kundin]]; [[der Kollege]], [[die Kollegin]]."
+    },
+    {
+      "id": "du-at-work",
+      "type": "tip",
+      "title": "du or Sie at work?",
+      "text": "In many German offices, especially in tech, colleagues say [[du]] from the first day. With the boss and with customers, start with [[Sie]]. Usually the boss or the older person offers [[du]]: [[Wir können gern du sagen.]]"
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat",
+      "items": [
+        { "de": "Ich beginne um neun Uhr.", "en": "I start at nine." },
+        { "de": "Zuerst lese ich meine E-Mails.", "en": "First I read my emails." },
+        { "de": "Der Chef telefoniert.", "en": "The boss is on the phone." },
+        { "de": "Ich muss das noch drucken.", "en": "I still have to print that." },
+        { "de": "Bist du fertig? - Noch nicht.", "en": "Are you done? - Not yet." },
+        { "de": "Das Projekt ist sehr wichtig.", "en": "The project is very important." }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "mc",
+          "question": "Which word means 'customer'?",
+          "questionLang": "en",
+          "options": ["der Kunde", "der Chef", "der Kollege"],
+          "answer": "der Kunde",
+          "explanation": "der Kunde, die Kundin = customer. der Chef = boss, der Kollege = colleague."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap with beginnen: Work starts at nine.",
+          "text": "Um neun ___ die Arbeit.",
+          "answers": [["beginnt"]],
+          "explanation": "die Arbeit beginnt: the time first, then the verb."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: I still have to print that.",
+          "text": "Ich muss das noch ___.",
+          "answers": [["drucken"]],
+          "explanation": "muss in second place, drucken at the end."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: Are you done?",
+          "text": "Bist du ___?",
+          "answers": [["fertig"]],
+          "explanation": "fertig = done, finished."
+        },
+        {
+          "type": "order",
+          "prompt": "In the afternoon I write emails.",
+          "tiles": ["am", "Nachmittag", "schreibe", "ich", "E-Mails"],
+          "answers": ["Am Nachmittag schreibe ich E-Mails", "Ich schreibe am Nachmittag E-Mails", "Ich schreibe E-Mails am Nachmittag", "E-Mails schreibe ich am Nachmittag"],
+          "explanation": "Whatever comes first, the verb is second."
+        }
+      ]
+    }
+  ]
+}

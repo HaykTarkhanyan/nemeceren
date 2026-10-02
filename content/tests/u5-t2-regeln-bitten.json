@@ -1,0 +1,90 @@
+{
+  "id": "u5-t2-regeln-bitten",
+  "title": "Rules and polite requests",
+  "level": "A1",
+  "created": "2026-10-02",
+  "description": "Unit 5 check after lessons 3 and 4.",
+  "unit": 5,
+  "lesson": "u5-04-koennten-sie",
+  "items": [
+    {"type": "gap", "instruction": "Fill in the gap: I'll call him tomorrow.", "text": "Ich rufe ___ morgen an.", "answers": [["ihn"]], "explanation": "Review (Unit 4): er becomes ihn as the object."},
+    {
+      "type": "mc",
+      "question": "Which one is 4:30?",
+      "questionLang": "en",
+      "options": ["halb fünf", "halb vier", "Viertel nach vier"],
+      "answer": "halb fünf",
+      "explanation": "Review (Unit 3): halb + the next hour: halb fünf = 4:30."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: May I smoke here?",
+      "text": "___ ich hier rauchen?",
+      "answers": [["Darf"]],
+      "explanation": "dürfen = to be allowed to: Darf ich ...?"
+    },
+    {
+      "type": "mc",
+      "question": "Which sentence means 'We don't have to work today'?",
+      "questionLang": "en",
+      "options": ["Wir müssen heute nicht arbeiten.", "Wir dürfen heute nicht arbeiten.", "Wir können heute nicht arbeiten."],
+      "answer": "Wir müssen heute nicht arbeiten.",
+      "explanation": "muss nicht = no need. darf nicht = not allowed. kann nicht = can't."
+    },
+    {
+      "type": "mc",
+      "question": "Which sentence means 'You mustn't smoke here'? (polite)",
+      "questionLang": "en",
+      "options": ["Sie dürfen hier nicht rauchen.", "Sie müssen hier nicht rauchen.", "Sie sollen hier rauchen."],
+      "answer": "Sie dürfen hier nicht rauchen.",
+      "explanation": "'Mustn't' = darf nicht. 'Müssen nicht' would mean there's no need to smoke."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: The teacher says we're supposed to do the homework.",
+      "text": "Der Lehrer sagt, wir ___ die Hausaufgaben machen.",
+      "answers": [["sollen"]],
+      "explanation": "sollen: someone else wants it. wir sollen."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: Shall I open the window? (offering)",
+      "text": "___ ich das Fenster öffnen?",
+      "answers": [["Soll"]],
+      "explanation": "Soll ich ...? offers help."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: Could you explain that, please? (very polite)",
+      "text": "___ Sie das bitte erklären?",
+      "answers": [["Könnten"]],
+      "explanation": "Könnten Sie ...? = Could you ...?, one step more polite than Können Sie ...?"
+    },
+    {
+      "type": "order",
+      "prompt": "Could you speak more slowly, please?",
+      "tiles": ["könnten", "Sie", "bitte", "langsamer", "sprechen"],
+      "answers": ["Könnten Sie bitte langsamer sprechen", "Könnten Sie langsamer sprechen bitte"],
+      "explanation": "Könnten Sie first, sprechen at the end. langsamer = more slowly."
+    },
+    {
+      "type": "dictation",
+      "text": "Könnten Sie das bitte wiederholen?",
+      "explanation": "Könnten with ö. wiederholen = to repeat."
+    },
+    {
+      "type": "translate",
+      "direction": "en-de",
+      "text": "Could you help me, please?",
+      "references": ["Könnten Sie mir bitte helfen?", "Könnten Sie mir helfen?", "Können Sie mir bitte helfen?", "Kannst du mir helfen?"],
+      "explanation": "Könnten Sie mir helfen? mir = me, the chunk you know from Tut mir leid."
+    },
+    {
+      "type": "write",
+      "instruction": "In class, you didn't understand the teacher. Write 3-4 sentences: say sorry, ask them to repeat it more slowly, ask what one word means, and say thank you. Use Könnten Sie ...? at least once. Claude will check it.",
+      "prompt": "In class, you didn't understand something.",
+      "promptLang": "en",
+      "minWords": 20
+    }
+  ]
+}

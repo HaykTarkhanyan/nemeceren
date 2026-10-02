@@ -325,6 +325,74 @@
           "title": "für and ohne + accusative",
           "lesson": "u4-06-pronomen",
           "section": "fuer-ohne"
+        },
+        {
+          "title": "The imperative: Lesen Sie! Lies! Lest!",
+          "lesson": "u5-02-imperativ",
+          "section": "imperativ-table",
+          "star": true
+        },
+        {
+          "title": "The du imperative: Komm!, Nimm!, Fahr!",
+          "lesson": "u5-02-imperativ",
+          "section": "imperativ-du"
+        },
+        {
+          "title": "dürfen and sollen",
+          "lesson": "u5-03-duerfen-sollen",
+          "section": "duerfen-sollen-table",
+          "star": true
+        },
+        {
+          "title": "muss nicht or darf nicht?",
+          "lesson": "u5-03-duerfen-sollen",
+          "section": "muss-darf-nicht",
+          "star": true
+        },
+        {
+          "title": "The Perfekt: Ich habe gearbeitet",
+          "lesson": "u5-05-perfekt",
+          "section": "perfekt-shape",
+          "star": true
+        },
+        {
+          "title": "Participles: gemacht, gearbeitet ...",
+          "lesson": "u5-05-perfekt",
+          "section": "participles-regular",
+          "star": true
+        },
+        {
+          "title": "Irregular participles: gegessen, gesehen ...",
+          "lesson": "u5-05-perfekt",
+          "section": "participles-irregular",
+          "star": true
+        },
+        {
+          "title": "haben or sein in the Perfekt?",
+          "lesson": "u5-05-perfekt",
+          "section": "haben-sein",
+          "star": true
+        },
+        {
+          "title": "Participles of separable and be-/er-/ver-/-ieren verbs",
+          "lesson": "u5-05-perfekt",
+          "section": "special-participles"
+        },
+        {
+          "title": "war and hatte",
+          "lesson": "u5-06-war-hatte",
+          "section": "war-hatte-table",
+          "star": true
+        },
+        {
+          "title": "Verbs with sein in the Perfekt",
+          "lesson": "u5-05-perfekt",
+          "section": "sein-verbs"
+        },
+        {
+          "title": "sollen: someone wants it",
+          "lesson": "u5-03-duerfen-sollen",
+          "section": "sollen"
         }
       ]
     },
@@ -557,6 +625,60 @@
           "title": "Paying and tipping: zusammen oder getrennt, Stimmt so",
           "lesson": "u4-07-restaurant",
           "section": "paying"
+        },
+        {
+          "title": "At work: what you do",
+          "lesson": "u5-01-arbeitstag",
+          "section": "work-verbs"
+        },
+        {
+          "title": "du or Sie at work?",
+          "lesson": "u5-01-arbeitstag",
+          "section": "du-at-work"
+        },
+        {
+          "title": "A teacher's instructions in class",
+          "lesson": "u5-02-imperativ",
+          "section": "class-instructions",
+          "star": true
+        },
+        {
+          "title": "Making instructions softer: bitte, mal",
+          "lesson": "u5-02-imperativ",
+          "section": "softer"
+        },
+        {
+          "title": "Asking for permission: Darf ich ...?",
+          "lesson": "u5-03-duerfen-sollen",
+          "section": "duerfen"
+        },
+        {
+          "title": "Könnten Sie ...? Asking very politely",
+          "lesson": "u5-04-koennten-sie",
+          "section": "koennten",
+          "star": true
+        },
+        {
+          "title": "When you don't understand",
+          "lesson": "u5-04-koennten-sie",
+          "section": "not-understood",
+          "star": true
+        },
+        {
+          "title": "Asking for help, saying thanks",
+          "lesson": "u5-04-koennten-sie",
+          "section": "help"
+        },
+        {
+          "title": "How was your weekend?",
+          "lesson": "u5-06-war-hatte",
+          "section": "weekend-talk",
+          "star": true
+        },
+        {
+          "title": "Your weekend in six sentences",
+          "lesson": "u5-06-war-hatte",
+          "section": "weekend-report"
         }
       ]
     },
@@ -639,6 +761,11 @@
           "title": "Free time and hobbies",
           "lesson": "u4-05-moegen-gern",
           "section": "hobbies"
+        },
+        {
+          "title": "At work: Chef, Kunde, Büro, Aufgabe ...",
+          "lesson": "u5-01-arbeitstag",
+          "section": "work-words"
         }
       ]
     }

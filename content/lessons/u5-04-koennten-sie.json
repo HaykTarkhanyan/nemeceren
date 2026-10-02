@@ -1,0 +1,120 @@
+{
+  "id": "u5-04-koennten-sie",
+  "unit": 5,
+  "order": 4,
+  "level": "A1",
+  "title": "Asking politely: Könnten Sie ...? (Höflich bitten)",
+  "summary": "Ask a teacher, a colleague or an official to repeat, explain or slow down, as politely as German gets: Könnten Sie ...?",
+  "goals": [
+    "Ask someone to repeat, explain or speak more slowly",
+    "Use Könnten Sie ...? for very polite requests",
+    "Ask what a word means",
+    "Ask for help and say thank you"
+  ],
+  "words": ["koennten-sie", "helfen", "hilfe", "moment", "langsam", "vielen-dank", "bedeuten", "schnell"],
+  "tests": ["u5-t2-regeln-bitten"],
+  "sections": [
+    {
+      "id": "koennten",
+      "type": "explanation",
+      "title": "From Können Sie to Könnten Sie",
+      "text": "In Unit 1 you learned [[Können Sie das bitte wiederholen?]] One small change makes it more polite: [[Könnten Sie das bitte wiederholen?]] [[könnten]] is 'could', just as English goes from 'can you' to 'could you'.\n\nThe shape stays the same: [[Könnten Sie]] first, the main verb at the end.\n- [[Könnten Sie das bitte erklären?]] = Could you explain that, please?\n- [[Könnten Sie bitte langsamer sprechen?]] = Could you speak more slowly, please? ([[langsamer]] = more slowly; learn it as a phrase, the -er form comes at A2)\n- [[Könnten Sie das bitte buchstabieren?]] (Unit 0)\n\nWith friends, [[Kannst du ...?]] is enough: [[Kannst du das noch einmal sagen?]]"
+    },
+    {
+      "id": "not-understood",
+      "type": "table",
+      "title": "When you don't understand",
+      "columns": [{ "header": "You want ..." }, { "header": "Say", "de": "words" }],
+      "rows": [
+        ["to hear it again", "Könnten Sie das bitte wiederholen?"],
+        ["it slower", "Könnten Sie bitte langsamer sprechen?"],
+        ["an explanation", "Könnten Sie das bitte erklären?"],
+        ["a word explained", "Was bedeutet das Wort?"],
+        ["a moment to think", "Einen Moment, bitte."],
+        ["to check", "Ist das richtig so?"]
+      ]
+    },
+    {
+      "type": "comparison",
+      "text": "Russian uses the same trick: Вы не могли бы повторить? (could you) is more polite than Вы можете повторить? (can you). German [[Könnten Sie ...?]] is that polite 'could'."
+    },
+    {
+      "id": "help",
+      "type": "explanation",
+      "title": "Help and thanks",
+      "text": "- [[Können Sie mir helfen?]] / [[Kannst du mir helfen?]] = Can you help me? [[mir]] is a chunk you know from [[Tut mir leid]]; Unit 6 explains it.\n- [[Kann ich helfen?]] = Can I help?\n- [[Danke für die Hilfe!]] [[Vielen Dank!]] = Thank you very much!\n- The answer: [[Gern!]] or [[Bitte!]] or [[Kein Problem!]]\n\n[[helfen]] changes its vowel: [[du hilfst]], [[er hilft]]."
+    },
+    {
+      "id": "zu-schnell",
+      "type": "tip",
+      "title": "Too fast?",
+      "text": "Colleagues and officials often speak fast: [[Sie sprechen sehr schnell.]] Asking [[Langsamer, bitte!]] is completely normal, and nobody minds. Saying [[Ich lerne noch Deutsch.]] helps too."
+    },
+    {
+      "id": "polite-examples",
+      "type": "examples",
+      "title": "Examples",
+      "items": [
+        { "de": "Entschuldigung, könnten Sie das bitte wiederholen?", "en": "Sorry, could you repeat that, please?" },
+        { "de": "Könnten Sie bitte langsamer sprechen? Ich lerne noch Deutsch.", "en": "Could you speak more slowly, please? I'm still learning German." },
+        { "de": "Was bedeutet das Wort?", "en": "What does the word mean?" },
+        { "de": "Einen Moment, bitte.", "en": "One moment, please." },
+        { "de": "Kannst du mir helfen? - Ja, klar!", "en": "Can you help me? - Yes, of course!" },
+        { "de": "Vielen Dank für die Hilfe!", "en": "Thank you very much for the help!" }
+      ]
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat",
+      "items": [
+        { "de": "Könnten Sie das bitte wiederholen?", "en": "Could you repeat that, please?" },
+        { "de": "Könnten Sie bitte langsamer sprechen?", "en": "Could you speak more slowly, please?" },
+        { "de": "Könnten Sie das bitte erklären?", "en": "Could you explain that, please?" },
+        { "de": "Was bedeutet das Wort?", "en": "What does the word mean?" },
+        { "de": "Vielen Dank!", "en": "Thank you very much!" }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: Could you repeat that, please? (very polite)",
+          "text": "___ Sie das bitte wiederholen?",
+          "answers": [["Könnten"]],
+          "explanation": "Könnten Sie ...? = Could you ...? More polite than Können Sie ...?"
+        },
+        {
+          "type": "order",
+          "prompt": "Could you explain that, please?",
+          "tiles": ["könnten", "Sie", "das", "bitte", "erklären"],
+          "answers": ["Könnten Sie das bitte erklären", "Könnten Sie bitte das erklären", "Könnten Sie das erklären bitte"],
+          "explanation": "Könnten Sie first, erklären at the end: the verb bracket."
+        },
+        {
+          "type": "mc",
+          "question": "The teacher speaks too fast. What do you say?",
+          "questionLang": "en",
+          "options": ["Könnten Sie bitte langsamer sprechen?", "Könnten Sie das bitte buchstabieren?", "Kann ich helfen?"],
+          "answer": "Könnten Sie bitte langsamer sprechen?",
+          "explanation": "langsamer = more slowly."
+        },
+        {
+          "type": "translate",
+          "direction": "en-de",
+          "text": "Thank you very much for the help!",
+          "references": ["Vielen Dank für die Hilfe!", "Danke für die Hilfe!", "Danke schön für die Hilfe!"],
+          "explanation": "Vielen Dank für ... (für + accusative): die Hilfe."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: One moment, please.",
+          "text": "Einen ___, bitte.",
+          "answers": [["Moment"]],
+          "explanation": "der Moment: einen Moment (accusative), a fixed phrase."
+        }
+      ]
+    }
+  ]
+}
