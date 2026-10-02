@@ -30,7 +30,7 @@ What to teach (the reference syllabuses):
 - **`_knowledge/2026-09-29_syllabus-research.md`:** the consensus grammar order across Schritte, Menschen, Nicos Weg and Linie 1, the source list, the hours, and the v1 draft units. Use it to decide what belongs in this unit, and what is only a chunk now and taught properly later.
 - **`reference/dw_nicos_weg_lessons.txt`:** every Nicos Weg lesson (title | topic | grammar), by chapter. Read the chapters the syllabus row names. Mirror their situations and grammar points, and put matching links in each lesson's `nicosWeg` (chapter titles exactly as listed; course URL `https://learngerman.dw.com/en/nicos-weg/c-36519789`).
 - **`reference/bamf_lernziele.tsv`:** the BAMF integration-course learning goals (`niveau`, `hf_title` = daily-life field, `lernziel` = can-do), 185 at A1. Filter A1 goals for the unit's fields (work, appointments, shopping, health ...) and turn the useful ones into lesson goals and test situations. Example: `awk -F'\t' '$6=="A1"' reference/bamf_lernziele.tsv | grep -i termin`.
-- **`reference/goethe_wortgruppen.txt`:** the closed word groups (numbers, times, days, months, seasons, countries, school words ...). They are not in the TSV. Units 3 (times, dates) and 4 (food) need them.
+- **`reference/goethe_wortgruppen.txt`:** the closed word groups (numbers, times, days, months, seasons, countries, school words ...). They are not in the TSV. Unit 3 needs them (times incl. "halb" and "Viertel", days, months, dates). There is no food group: Unit 4's food words come from the TSV.
 - **`reference/goethe_A1_modellsatz.pdf`** and **`reference/exams_A1/uebungssatz01.pdf`, `uebungssatz02.pdf`:** real A1 task types (filling in a form, a short message, asking and answering with cards). Model end tasks and the realistic test items on them, but this is daily-life German, not exam drill (CLAUDE.md: no exam).
 - **`_knowledge/2026-09-28_llm-tutoring-and-materials.md`:** why the teaching works the way it does.
 
@@ -47,10 +47,11 @@ A short plan in the scratchpad:
 - the word list.
 
 - **Lessons:** 5-7, ids `u<N>-<NN>-<slug>` (`u3-01-uhrzeit`), `order` 1, 2, 3 ... Title "English (German)". Each lesson has one job: a situation or a grammar point, plus its words. Grammar goes from chunk to pattern: use it first as a fixed phrase, then show the pattern.
-- **Words:** about 80-100 per unit, each card in exactly one lesson's `words`.
+- **Words:** about 80-100 new cards per unit, each listed in the `words` of the lesson that teaches it.
   - Pick A1 words from `reference/goethe_wortliste.tsv` and the word groups first. A2 only when the situation needs it, and give it that level.
-  - Search `content/words.json` for every candidate: ids must be unique, and existing words are reused, not re-added.
-  - Song lessons have their own cards (tag `theme`), e.g. trinken, der Tag, zusammen. Don't duplicate them.
+  - Search `content/words.json` for every candidate. Ids must be unique, and an existing word never gets a second card.
+  - **A card may be listed in several lessons; it unlocks when any of them is opened** (`lockedWordIds` in `app/src/lib/plan.ts`). Song lessons own some core A1 cards (tag `theme`: trinken, der Tag, genug, zusammen, allein, das Leben, die Sonne, das Licht, warten, das Auge, die Welt ...). When the unit teaches such a word, list the existing id in the course lesson's `words` too, so Hayk gets it even without opening the song.
+  - A word already listed by an earlier course lesson doesn't need listing again: just use it.
 - **Tests:** 3 per unit, `u<N>-t1..t3`, 10-12 items, attached to the lessons they check (`tests` on the lesson).
   - Every test starts with 2 review items from earlier units, about 20% (SYLLABUS.md).
   - The last test ends with the unit's end task as a `write` item ("Unit N final task: ... Claude will check it", with `minWords`).
@@ -124,7 +125,7 @@ Apply the fixes. Disagree with a finding only with evidence (a reference file or
 2. Add the unit's revisitable sections to `content/topics.json`, keeping each group in course order (unit, lesson, section).
 3. Run `npm run glossary` again if anything changed, then `npm run check-content` and `check-taught.ts <N>` again.
 4. Update `DEFERRED_TODO.md` (what this unit took care of) and `SYLLABUS.md` (deviations, if any).
-5. Commit only the content and doc files for this unit ("Add Unit N content: ..."), push, and watch the Pages deploy in the background.
+5. Commit only the content and doc files for this unit ("Add Unit N content: ..."), push, and watch the Pages deploy in the background. CI runs check-content, the tests and the build.
 6. Write a short `_work_sessions/` note after each unit, so a fresh session can resume mid-way.
 7. Tell Hayk in one short list: lessons, tests, the number of new words, and where to start.
 
