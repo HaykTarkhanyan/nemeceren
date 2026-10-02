@@ -1,0 +1,89 @@
+{
+  "id": "u4-t1-cafe-akkusativ",
+  "title": "In a café, and the accusative",
+  "level": "A1",
+  "created": "2026-10-02",
+  "description": "Unit 4 check after lessons 1 and 2.",
+  "unit": 4,
+  "lesson": "u4-02-akkusativ",
+  "items": [
+    {"type": "gap", "instruction": "Fill in the gaps: I get up at seven.", "text": "Ich ___ um sieben Uhr ___.", "answers": [["stehe"], ["auf"]], "explanation": "Review (Unit 3): aufstehen splits: stehe in second place, auf at the end."},
+    {
+      "type": "listen_mc",
+      "audio": "Der Kurs fängt um halb neun an.",
+      "question": "When does the class start?",
+      "questionLang": "en",
+      "options": ["8:30", "9:30", "8:15"],
+      "answer": "8:30",
+      "explanation": "Review (Unit 3): halb neun = halfway to nine = 8:30."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: I'd like a tea.",
+      "text": "Ich ___ einen Tee.",
+      "answers": [["möchte"]],
+      "explanation": "ich möchte: the same form as er möchte, with no -t."
+    },
+    {
+      "type": "mc",
+      "question": "Which order sounds polite?",
+      "questionLang": "en",
+      "options": ["Ich hätte gern einen Kaffee.", "Ich will einen Kaffee.", "Kaffee!"],
+      "answer": "Ich hätte gern einen Kaffee.",
+      "explanation": "Ich hätte gern ... or Ich möchte ... Ich will sounds pushy, and 'Kaffee!' alone sounds rude."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: What would you like to drink? (informal)",
+      "text": "Was ___ du trinken?",
+      "answers": [["möchtest"]],
+      "explanation": "du möchtest, and trinken waits at the end."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: I'll have the cake.",
+      "text": "Ich nehme ___ Kuchen.",
+      "answers": [["den"]],
+      "explanation": "der Kuchen is masculine and the object: den Kuchen."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: I'm buying the milk.",
+      "text": "Ich kaufe ___ Milch.",
+      "answers": [["die"]],
+      "explanation": "die Milch is feminine, and feminine never changes."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: There's no café here.",
+      "text": "Hier gibt es ___ Café.",
+      "answers": [["kein"]],
+      "explanation": "das Café is neuter: kein stays kein."
+    },
+    {
+      "type": "order",
+      "prompt": "I'm looking for the key.",
+      "tiles": ["ich", "suche", "den", "Schlüssel"],
+      "answers": ["Ich suche den Schlüssel", "Den Schlüssel suche ich"],
+      "explanation": "der Schlüssel is the object: den Schlüssel. The verb stays second."
+    },
+    {
+      "type": "dictation",
+      "text": "Eine Tasse Tee und ein Glas Wasser, bitte.",
+      "explanation": "eine Tasse (feminine), ein Glas (neuter): no change, and no 'of'."
+    },
+    {
+      "type": "translate",
+      "direction": "en-de",
+      "text": "I'll have a coffee with milk.",
+      "references": ["Ich nehme einen Kaffee mit Milch.", "Ich bekomme einen Kaffee mit Milch.", "Ich möchte einen Kaffee mit Milch.", "Ich hätte gern einen Kaffee mit Milch."],
+      "explanation": "der Kaffee is the object: einen Kaffee. nehmen, bekommen, möchte or hätte gern all work."
+    },
+    {
+      "type": "write",
+      "instruction": "You're in a café with a friend. Write your order in 3-4 sentences: a drink for you, a drink for your friend (er/sie möchte ...), and maybe cake. Use möchte or hätte gern, and einen / eine / ein. Claude will check it.",
+      "prompt": "Was möchten Sie?",
+      "minWords": 15
+    }
+  ]
+}

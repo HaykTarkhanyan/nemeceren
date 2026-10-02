@@ -1,0 +1,126 @@
+{
+  "id": "u4-04-einkaufen",
+  "unit": 4,
+  "order": 4,
+  "level": "A1",
+  "title": "Shopping for food (Einkaufen)",
+  "summary": "Buy food at the market, the bakery and the supermarket: ask for an amount, ask what it costs, and pay.",
+  "goals": [
+    "Ask for an amount: ein Kilo, zweihundert Gramm, eine Flasche",
+    "Ask what something costs and understand the price",
+    "Answer Sonst noch etwas? and pay, in cash or by card"
+  ],
+  "nicosWeg": [
+    { "title": "Nicos Weg A1, chapter 12: Food (Mengen und Preise, Was darf es sein?, Sonst noch etwas?)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
+  ],
+  "words": ["kilo", "gramm", "liter", "stueck", "euro", "cent", "kosten", "preis", "wie-viel-kostet-das", "supermarkt", "markt", "kasse", "viel", "bezahlen", "bar", "karte", "sonst-noch-etwas", "das-ist-alles", "was-darf-es-sein"],
+  "sections": [
+    {
+      "id": "amounts",
+      "type": "table",
+      "title": "Amounts",
+      "columns": [{ "header": "Ask for", "de": "words" }, { "header": "English" }],
+      "rows": [
+        ["ein Kilo Tomaten", "a kilo of tomatoes"],
+        ["zwei Kilo Kartoffeln", "two kilos of potatoes"],
+        ["zweihundert Gramm Käse", "200 grams of cheese"],
+        ["ein Liter Milch", "a litre of milk"],
+        ["eine Flasche Wasser", "a bottle of water"],
+        ["ein Stück Kuchen", "a piece of cake"],
+        ["vier Brötchen", "four rolls"]
+      ]
+    },
+    {
+      "type": "tip",
+      "text": "As with [[ein Glas Wasser]] in lesson 1, there's no 'of'. Masculine and neuter measures don't take a plural ending after a number: [[zwei Kilo]], [[drei Liter]], [[zwei Stück Kuchen]], and prices: [[zehn Euro]]. Feminine ones do: [[zwei Flaschen Wasser]], [[zwei Tassen Tee]]."
+    },
+    {
+      "id": "prices",
+      "type": "explanation",
+      "title": "Prices",
+      "text": "[[Was kostet das?]] or [[Wie viel kostet das?]] = How much is it? For more than one thing: [[Was kosten die Äpfel?]]\n\nPrices are said like this:\n- 2,50 € = [[zwei Euro fünfzig]]\n- 12,90 € = [[zwölf Euro neunzig]]\n- 0,99 € = [[neunundneunzig Cent]]\n\nYou practised the numbers in Unit 0. Germans write a comma in prices: 2,50 €, not 2.50."
+    },
+    {
+      "id": "at-the-counter",
+      "type": "explanation",
+      "title": "At the counter",
+      "text": "- [[Was darf es sein?]] = What can I get you? (A fixed phrase; [[darf]] comes in Unit 5.)\n- [[Ich hätte gern ...]] or [[Ich nehme ...]]\n- [[Sonst noch etwas?]] = Anything else?\n- [[Nein, danke. Das ist alles.]] = No thanks, that's all.\n- [[Das macht sechs Euro achtzig.]] = That comes to 6.80 euros.\n- [[Bar oder mit Karte?]] = Cash or card? - [[Mit Karte, bitte.]] or [[Bar.]] ([[mit Karte]] is a chunk; Unit 6 explains [[mit]].)\n\nIn a supermarket you pay at [[die Kasse]] (the checkout)."
+    },
+    {
+      "id": "cash",
+      "type": "tip",
+      "title": "Cash",
+      "text": "Germans still like cash. Most shops take cards, but some small bakeries and market stalls take only cash. If you're not sure, ask: [[Kann ich mit Karte zahlen?]]"
+    },
+    {
+      "id": "market-dialogue",
+      "type": "examples",
+      "title": "At the market",
+      "items": [
+        { "de": "Guten Tag! Was darf es sein?", "en": "Hello! What can I get you?", "note": "the seller" },
+        { "de": "Ich hätte gern ein Kilo Tomaten.", "en": "I'd like a kilo of tomatoes." },
+        { "de": "Sonst noch etwas?", "en": "Anything else?", "note": "the seller" },
+        { "de": "Ja, zweihundert Gramm Käse, bitte. Was kostet das?", "en": "Yes, 200 grams of cheese, please. How much is that?" },
+        { "de": "Das macht sechs Euro achtzig.", "en": "That's 6.80 euros.", "note": "the seller" },
+        { "de": "Kann ich mit Karte zahlen?", "en": "Can I pay by card?" },
+        { "de": "Nein, leider nur bar.", "en": "No, unfortunately only cash.", "note": "the seller" }
+      ]
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat",
+      "items": [
+        { "de": "Was kostet das?", "en": "How much is it?" },
+        { "de": "Ein Kilo Äpfel, bitte.", "en": "A kilo of apples, please." },
+        { "de": "zwei Euro fünfzig", "en": "2.50 euros" },
+        { "de": "Sonst noch etwas?", "en": "Anything else?" },
+        { "de": "Nein, danke. Das ist alles.", "en": "No, thanks. That's all." },
+        { "de": "Kann ich mit Karte zahlen?", "en": "Can I pay by card?" }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "listen_mc",
+          "audio": "Das macht vier Euro fünfzig.",
+          "question": "How much is it?",
+          "questionLang": "en",
+          "options": ["4,50 €", "5,40 €", "4,15 €"],
+          "answer": "4,50 €",
+          "explanation": "vier Euro fünfzig = 4,50 €: euros first, then the cents."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: How much are the apples?",
+          "text": "Was ___ die Äpfel?",
+          "answers": [["kosten"]],
+          "explanation": "die Äpfel is plural, so kosten. One thing: Was kostet der Apfel?"
+        },
+        {
+          "type": "mc",
+          "question": "The seller asks 'Sonst noch etwas?'. You have everything. What do you say?",
+          "questionLang": "en",
+          "options": ["Nein, danke. Das ist alles.", "Ja, gern.", "Was darf es sein?"],
+          "answer": "Nein, danke. Das ist alles.",
+          "explanation": "Sonst noch etwas? = Anything else? Das ist alles = that's all."
+        },
+        {
+          "type": "order",
+          "prompt": "A kilo of apples, please.",
+          "tiles": ["ein", "Kilo", "Äpfel", "bitte"],
+          "answers": ["Ein Kilo Äpfel bitte", "Bitte ein Kilo Äpfel"],
+          "explanation": "ein Kilo Äpfel: the amount, then the food, with no 'of'."
+        },
+        {
+          "type": "translate",
+          "direction": "en-de",
+          "text": "Can I pay by card?",
+          "references": ["Kann ich mit Karte zahlen?", "Kann ich mit Karte bezahlen?"],
+          "explanation": "kann in first place (a yes/no question), zahlen or bezahlen at the end."
+        }
+      ]
+    }
+  ]
+}

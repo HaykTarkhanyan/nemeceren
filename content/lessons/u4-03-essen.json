@@ -1,0 +1,153 @@
+{
+  "id": "u4-03-essen",
+  "unit": 4,
+  "order": 3,
+  "level": "A1",
+  "title": "Food, and verbs that change their vowel (Essen)",
+  "summary": "Name everyday food and say what you eat. Some verbs change their vowel with du and er/sie/es: essen, du isst; nehmen, du nimmst.",
+  "goals": [
+    "Name everyday food",
+    "Say what you eat for breakfast",
+    "Use essen, nehmen, lesen, sehen and fahren with du and er/sie/es"
+  ],
+  "nicosWeg": [
+    { "title": "Nicos Weg A1, chapter 11: Eating and leisure (Lebensmittel)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" },
+    { "title": "Nicos Weg A1, chapter 3: In company (Eine Pizza bitte!)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
+  ],
+  "words": ["essen", "essen-2", "fruehstueck", "brot", "broetchen", "semmel", "butter", "ei", "kaese", "wurst", "fleisch", "fisch", "gemuese", "obst", "apfel", "banane", "tomate", "kartoffel", "reis", "salat", "suppe", "lesen", "sehen", "fahren"],
+  "sections": [
+    {
+      "id": "food",
+      "type": "table",
+      "title": "Everyday food",
+      "columns": [{ "header": "Food", "de": "words" }, { "header": "English" }],
+      "rows": [
+        ["das Brot", "bread"],
+        ["das Brötchen", "bread roll"],
+        ["die Butter", "butter"],
+        ["das Ei", "egg"],
+        ["der Käse", "cheese"],
+        ["die Wurst", "sausage, cold cuts"],
+        ["das Fleisch", "meat"],
+        ["der Fisch", "fish"],
+        ["das Gemüse", "vegetables"],
+        ["das Obst", "fruit"],
+        ["der Apfel", "apple"],
+        ["die Banane", "banana"],
+        ["die Tomate", "tomato"],
+        ["die Kartoffel", "potato"],
+        ["der Reis", "rice"],
+        ["der Salat", "salad, lettuce"],
+        ["die Suppe", "soup"]
+      ]
+    },
+    {
+      "type": "comparison",
+      "text": "Russian овощи and фрукты are plural. German [[das Gemüse]] and [[das Obst]] are singular, like one big heap: [[Das Gemüse ist billig.]] [[Das Obst ist gut.]]"
+    },
+    {
+      "id": "semmel",
+      "type": "tip",
+      "title": "In Munich",
+      "text": "A bread roll is [[das Brötchen]] in most of Germany, but in Bavaria it's [[die Semmel]]. A pretzel is [[die Breze]]. At a Munich bakery: [[Zwei Semmeln und eine Breze, bitte.]]"
+    },
+    {
+      "id": "meals",
+      "type": "explanation",
+      "title": "Meals",
+      "text": "[[das Frühstück]] (breakfast), [[das Mittagessen]] (lunch), [[das Abendessen]] (dinner). [[das Essen]] is food in general, or a meal: [[Das Essen ist gut.]]\n\n[[Zum Frühstück esse ich ein Brötchen.]] = For breakfast I have a roll. [[zum]] is a chunk here; Unit 6 explains it.\n\nFor amounts you can't count, there's no article: [[Ich esse Brot.]] [[Ich esse kein Fleisch.]] = I don't eat meat."
+    },
+    {
+      "id": "vowel-change",
+      "type": "explanation",
+      "title": "Verbs that change their vowel",
+      "text": "You know some already: [[sprechen]], [[du sprichst]] (Unit 1); [[es fängt an]], [[er sieht fern]] (Unit 3); and from the Unit 3 word cards, [[er schläft]], [[er trifft]].\n\nThe change happens **only** with [[du]] and [[er]]/[[sie]]/[[es]]. [[ich]], [[wir]], [[ihr]] and [[sie]]/[[Sie]] stay regular. There are three patterns:\n- e becomes i: [[essen]], [[du isst]]; [[nehmen]], [[du nimmst]]; [[sprechen]], [[du sprichst]]\n- e becomes ie: [[lesen]], [[du liest]]; [[sehen]], [[du siehst]]\n- a becomes ä: [[fahren]], [[du fährst]]; [[schlafen]], [[du schläfst]]\n\nThe word list shows the change on the card: 'to eat (du isst, er isst)'."
+    },
+    {
+      "id": "vowel-change-table",
+      "type": "table",
+      "title": "essen, nehmen, lesen, fahren",
+      "columns": [{ "header": "Person", "de": "words" }, { "header": "essen", "de": "words" }, { "header": "nehmen", "de": "words" }, { "header": "lesen", "de": "words" }, { "header": "fahren", "de": "words" }],
+      "rows": [
+        ["ich", "esse", "nehme", "lese", "fahre"],
+        ["du", "isst", "nimmst", "liest", "fährst"],
+        ["er / sie / es", "isst", "nimmt", "liest", "fährt"],
+        ["wir", "essen", "nehmen", "lesen", "fahren"],
+        ["ihr", "esst", "nehmt", "lest", "fahrt"],
+        ["sie / Sie", "essen", "nehmen", "lesen", "fahren"]
+      ]
+    },
+    {
+      "type": "warning",
+      "text": "[[nehmen]] changes more than the vowel: [[du nimmst]], [[er nimmt]], with mm and no h. And with [[essen]], [[du isst]] and [[er isst]] are the same.\n\n[[fahren]] is to go by car, bus, train or bike: [[Ich fahre nach Hause.]] On foot it's [[gehen]]: [[Ich gehe nach Hause.]]"
+    },
+    {
+      "id": "food-examples",
+      "type": "examples",
+      "title": "Examples",
+      "items": [
+        { "de": "Zum Frühstück esse ich ein Brötchen mit Butter.", "en": "For breakfast I have a roll with butter." },
+        { "de": "Isst du Fleisch? - Nein, ich esse kein Fleisch.", "en": "Do you eat meat? - No, I don't eat meat." },
+        { "de": "Was nimmst du? - Ich nehme den Fisch.", "en": "What are you having? - I'll have the fish." },
+        { "de": "Am Abend liest er ein Buch.", "en": "In the evening he reads a book." },
+        { "de": "Siehst du den Supermarkt?", "en": "Do you see the supermarket?" },
+        { "de": "Am Samstag fährt sie nach Hause.", "en": "On Saturday she's going home." }
+      ]
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat",
+      "items": [
+        { "de": "ich esse, du isst, er isst", "en": "I eat, you eat, he eats" },
+        { "de": "ich nehme, du nimmst, er nimmt", "en": "I take, you take, he takes" },
+        { "de": "ich lese, du liest, sie liest", "en": "I read, you read, she reads" },
+        { "de": "ich fahre, du fährst, er fährt", "en": "I go, you go, he goes (by car, bus, train)" },
+        { "de": "Ich esse kein Fleisch.", "en": "I don't eat meat." },
+        { "de": "Zwei Semmeln, bitte.", "en": "Two rolls, please." }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: What do you eat for breakfast?",
+          "text": "Was ___ du zum Frühstück?",
+          "answers": [["isst"]],
+          "explanation": "essen changes e to i: du isst."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap with nehmen: He's having the fish.",
+          "text": "Er ___ den Fisch.",
+          "answers": [["nimmt"]],
+          "explanation": "nehmen: er nimmt, with mm and no h."
+        },
+        {
+          "type": "mc",
+          "question": "Which sentence means 'She's reading a book'?",
+          "questionLang": "en",
+          "options": ["Sie liest ein Buch.", "Sie lest ein Buch.", "Sie lesen ein Buch."],
+          "answer": "Sie liest ein Buch.",
+          "explanation": "lesen changes e to ie: sie liest. (Sie lesen would be the polite you, or they.)"
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: Are you going home on Saturday? (by train)",
+          "text": "___ du am Samstag nach Hause?",
+          "answers": [["Fährst"]],
+          "explanation": "fahren changes a to ä: du fährst. By train, bus or car it's fahren."
+        },
+        {
+          "type": "mc",
+          "question": "Which article goes with Gemüse?",
+          "questionLang": "en",
+          "options": ["das", "der", "die"],
+          "answer": "das",
+          "explanation": "das Gemüse, and it's singular: Das Gemüse ist billig."
+        }
+      ]
+    }
+  ]
+}

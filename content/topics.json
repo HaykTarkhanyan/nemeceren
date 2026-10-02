@@ -269,6 +269,62 @@
           "title": "muss nicht = don't have to",
           "lesson": "u3-05-modalverben",
           "section": "muss-nicht"
+        },
+        {
+          "title": "möchten: möchte, möchtest ...",
+          "lesson": "u4-01-im-cafe",
+          "section": "moechten",
+          "star": true
+        },
+        {
+          "title": "The accusative: den, einen, keinen",
+          "lesson": "u4-02-akkusativ",
+          "section": "akkusativ-table",
+          "star": true
+        },
+        {
+          "title": "Which verbs take the accusative (and not sein)",
+          "lesson": "u4-02-akkusativ",
+          "section": "akk-verbs"
+        },
+        {
+          "title": "es gibt = there is, there are",
+          "lesson": "u4-02-akkusativ",
+          "section": "es-gibt"
+        },
+        {
+          "title": "Verbs that change their vowel: du isst, du nimmst, du liest, du fährst",
+          "lesson": "u4-03-essen",
+          "section": "vowel-change-table",
+          "star": true
+        },
+        {
+          "title": "mögen: mag, magst ...",
+          "lesson": "u4-05-moegen-gern",
+          "section": "moegen-table",
+          "star": true
+        },
+        {
+          "title": "gern, lieber, am liebsten",
+          "lesson": "u4-05-moegen-gern",
+          "section": "gern-lieber",
+          "star": true
+        },
+        {
+          "title": "mag or möchte?",
+          "lesson": "u4-05-moegen-gern",
+          "section": "mag-moechte"
+        },
+        {
+          "title": "Pronouns as objects: mich, dich, ihn, sie, es, uns, euch",
+          "lesson": "u4-06-pronomen",
+          "section": "pronouns-akk",
+          "star": true
+        },
+        {
+          "title": "für and ohne + accusative",
+          "lesson": "u4-06-pronomen",
+          "section": "fuer-ohne"
         }
       ]
     },
@@ -458,6 +514,49 @@
           "title": "Appointments at work with Sie",
           "lesson": "u3-06-verabredungen",
           "section": "sie-appointments"
+        },
+        {
+          "title": "Ordering in a café: Ich möchte, Ich hätte gern",
+          "lesson": "u4-01-im-cafe",
+          "section": "ordering",
+          "star": true
+        },
+        {
+          "title": "At the market or the bakery counter",
+          "lesson": "u4-04-einkaufen",
+          "section": "at-the-counter",
+          "star": true
+        },
+        {
+          "title": "Prices: zwei Euro fünfzig",
+          "lesson": "u4-04-einkaufen",
+          "section": "prices"
+        },
+        {
+          "title": "Does it taste good? schmecken",
+          "lesson": "u4-05-moegen-gern",
+          "section": "schmecken"
+        },
+        {
+          "title": "How often? immer, oft, manchmal, nie",
+          "lesson": "u4-05-moegen-gern",
+          "section": "how-often"
+        },
+        {
+          "title": "In a restaurant: from the door to the bill",
+          "lesson": "u4-07-restaurant",
+          "section": "restaurant-phrases",
+          "star": true
+        },
+        {
+          "title": "Asking about a dish",
+          "lesson": "u4-07-restaurant",
+          "section": "asking-about-dish"
+        },
+        {
+          "title": "Paying and tipping: zusammen oder getrennt, Stimmt so",
+          "lesson": "u4-07-restaurant",
+          "section": "paying"
         }
       ]
     },
@@ -520,6 +619,26 @@
           "title": "Seasons",
           "lesson": "u3-04-datum",
           "section": "seasons"
+        },
+        {
+          "title": "Drinks and cake",
+          "lesson": "u4-01-im-cafe",
+          "section": "drinks"
+        },
+        {
+          "title": "Everyday food",
+          "lesson": "u4-03-essen",
+          "section": "food"
+        },
+        {
+          "title": "Amounts: Kilo, Gramm, Flasche, Stück",
+          "lesson": "u4-04-einkaufen",
+          "section": "amounts"
+        },
+        {
+          "title": "Free time and hobbies",
+          "lesson": "u4-05-moegen-gern",
+          "section": "hobbies"
         }
       ]
     }

@@ -1,0 +1,151 @@
+{
+  "id": "u4-01-im-cafe",
+  "unit": 4,
+  "order": 1,
+  "level": "A1",
+  "title": "In a café: ordering drinks (Im Café)",
+  "summary": "Order a drink or a piece of cake politely with Ich möchte ... and Ich hätte gern ..., and ask a friend what they'd like.",
+  "goals": [
+    "Order a drink or a piece of cake politely",
+    "Use möchten with every person",
+    "Ask what someone would like: Was möchtest du?",
+    "Use einen, eine, ein when you order"
+  ],
+  "nicosWeg": [
+    { "title": "Nicos Weg A1, chapter 3: In company (Was trinkst du?, Eine Pizza bitte!)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
+  ],
+  "words": ["moechten", "ich-haette-gern", "cafe", "tee", "saft", "milch", "zucker", "wein", "bier", "glas", "flasche", "tasse", "kuchen", "sehr", "trinken"],
+  "sections": [
+    {
+      "id": "ordering",
+      "type": "explanation",
+      "title": "Three ways to order",
+      "text": "In a café you can order in three ways, from short to polite:\n- [[Einen Kaffee, bitte.]] Short and completely normal.\n- [[Ich möchte einen Kaffee.]] = I'd like a coffee.\n- [[Ich hätte gern einen Kaffee.]] = I'd like a coffee. A little more polite; you may know it from the Extras page.\n\nThe waiter or the person at the counter asks [[Was möchten Sie?]] or [[Was darf es sein?]] (What can I get you? [[darf]] comes in Unit 5). A friend asks [[Was möchtest du trinken?]]\n\n[[trinken]] (to drink) you know from the song 'Sieben Tage lang'."
+    },
+    {
+      "id": "moechten",
+      "type": "table",
+      "title": "möchten (would like)",
+      "columns": [{ "header": "Person", "de": "words" }, { "header": "möchten", "de": "words" }],
+      "rows": [
+        ["ich", "möchte"],
+        ["du", "möchtest"],
+        ["er / sie / es", "möchte"],
+        ["wir", "möchten"],
+        ["ihr", "möchtet"],
+        ["sie / Sie", "möchten"]
+      ]
+    },
+    {
+      "type": "tip",
+      "text": "[[möchten]] works like the verbs from Unit 3 ([[können]], [[wollen]], [[müssen]]): [[ich]] and [[er]]/[[sie]]/[[es]] have the same form, [[möchte]], with no -t (not 'er möchtet'), and a second verb goes to the end: [[Ich möchte bezahlen.]] [[Was möchtest du trinken?]]"
+    },
+    {
+      "id": "einen-order",
+      "type": "explanation",
+      "title": "einen, eine, ein when you order",
+      "text": "You know from Unit 2 that masculine [[ein]] becomes [[einen]] after [[haben]] and [[brauchen]]. The same happens when you order, after [[möchten]] and [[hätte gern]], and also in the short version with just [[bitte]]:\n- [[der Kaffee]]: [[Einen Kaffee, bitte.]]\n- [[die Tasse]]: [[Eine Tasse Tee, bitte.]]\n- [[das Bier]]: [[Ein Bier, bitte.]]\n\nOnly the masculine changes. Lesson 2 shows the whole pattern. [[mit Milch]] (with milk) is a chunk; Unit 6 explains [[mit]]. In speech you'll also hear [[Ein Kaffee, bitte.]]: people say it, and you'll be understood either way."
+    },
+    {
+      "id": "drinks",
+      "type": "table",
+      "title": "Drinks and cake",
+      "columns": [{ "header": "Word", "de": "words" }, { "header": "Order it", "de": "words" }, { "header": "English" }],
+      "rows": [
+        ["der Kaffee", "einen Kaffee", "a coffee"],
+        ["der Tee", "einen Tee", "a tea"],
+        ["der Saft", "einen Saft", "a juice"],
+        ["der Wein", "einen Wein", "a wine"],
+        ["der Kuchen", "ein Stück Kuchen", "a piece of cake"],
+        ["das Bier", "ein Bier", "a beer"],
+        ["das Wasser", "ein Glas Wasser", "a glass of water"],
+        ["die Milch", "einen Kaffee mit Milch", "a coffee with milk"],
+        ["die Flasche", "eine Flasche Wasser", "a bottle of water"],
+        ["die Tasse", "eine Tasse Tee", "a cup of tea"]
+      ]
+    },
+    {
+      "type": "comparison",
+      "text": "German puts the amount and the drink side by side, with no 'of' and no change: [[ein Glas Wasser]], [[eine Tasse Tee]]. Armenian does the same (մի բաժակ ջուր), but Russian changes the drink: стакан воды, чашка чая. So don't look for a Russian genitive here."
+    },
+    {
+      "id": "will-moechte",
+      "type": "warning",
+      "text": "Remember Unit 3: [[Ich will einen Kaffee.]] sounds like a child or a boss. Order with [[Ich möchte ...]] or [[Ich hätte gern ...]]."
+    },
+    {
+      "id": "beer-garden",
+      "type": "tip",
+      "title": "In a Munich beer garden",
+      "text": "Beer often comes in big glasses: [[eine Maß]] is one litre, [[eine Halbe]] half a litre. [[Eine Maß, bitte!]] is a complete order."
+    },
+    {
+      "id": "cafe-dialogue",
+      "type": "examples",
+      "title": "At the café",
+      "items": [
+        { "de": "Guten Tag! Was möchten Sie?", "en": "Hello! What would you like?", "note": "the waiter" },
+        { "de": "Ich hätte gern einen Kaffee mit Milch.", "en": "I'd like a coffee with milk." },
+        { "de": "Und Sie?", "en": "And you?", "note": "the waiter" },
+        { "de": "Einen Tee, bitte.", "en": "A tea, please." },
+        { "de": "Möchten Sie auch Kuchen?", "en": "Would you like some cake too?", "note": "the waiter" },
+        { "de": "Ja, gern. Ein Stück Kuchen, bitte.", "en": "Yes, please. A piece of cake, please." },
+        { "de": "Der Kuchen ist sehr gut!", "en": "The cake is very good!" }
+      ]
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat",
+      "items": [
+        { "de": "Ich möchte einen Kaffee.", "en": "I'd like a coffee." },
+        { "de": "Ich hätte gern einen Tee.", "en": "I'd like a tea." },
+        { "de": "Ein Bier, bitte!", "en": "A beer, please!" },
+        { "de": "Eine Flasche Wasser, bitte.", "en": "A bottle of water, please." },
+        { "de": "Was möchtest du trinken?", "en": "What would you like to drink?" },
+        { "de": "Was möchten Sie?", "en": "What would you like? (polite)" }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: I'd like a tea, please.",
+          "text": "Ich ___ einen Tee, bitte.",
+          "answers": [["möchte"]],
+          "explanation": "ich möchte: the same form as er möchte, with no -t."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: I'd like a coffee.",
+          "text": "Ich möchte ___ Kaffee.",
+          "answers": [["einen"]],
+          "explanation": "der Kaffee is masculine, so einen Kaffee, as after haben."
+        },
+        {
+          "type": "mc",
+          "question": "Which order sounds polite?",
+          "questionLang": "en",
+          "options": ["Ich hätte gern einen Saft.", "Ich will einen Saft.", "Saft!"],
+          "answer": "Ich hätte gern einen Saft.",
+          "explanation": "Ich hätte gern ... (or Ich möchte ...) is the polite way. Ich will ... sounds pushy."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: What would you like to drink? (informal)",
+          "text": "Was ___ du trinken?",
+          "answers": [["möchtest"]],
+          "explanation": "du möchtest. trinken waits at the end, as after a modal verb."
+        },
+        {
+          "type": "order",
+          "prompt": "A glass of water, please.",
+          "tiles": ["ein", "Glas", "Wasser", "bitte"],
+          "answers": ["Ein Glas Wasser bitte", "Bitte ein Glas Wasser"],
+          "explanation": "ein Glas Wasser: no 'of' in German. das Glas, so ein."
+        }
+      ]
+    }
+  ]
+}

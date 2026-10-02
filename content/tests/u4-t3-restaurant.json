@@ -1,0 +1,92 @@
+{
+  "id": "u4-t3-restaurant",
+  "title": "Pronouns and the restaurant (Unit 4 final)",
+  "level": "A1",
+  "created": "2026-10-02",
+  "description": "Unit 4 check after lessons 6 and 7, with the unit's final task.",
+  "unit": 4,
+  "lesson": "u4-07-restaurant",
+  "items": [
+    {"type": "gap", "instruction": "Fill in the gaps: The film starts at eight.", "text": "Der Film ___ um acht ___.", "answers": [["fängt"], ["an"]], "explanation": "Review (Unit 3): anfangen splits: fängt (with ä) in second place, an at the end."},
+    {
+      "type": "mc",
+      "question": "Your friend asks: 'Hast du am Freitag Zeit?' You can't. What do you say?",
+      "questionLang": "en",
+      "options": ["Leider nicht. Ich muss arbeiten.", "Ja, gern!", "Guten Appetit!"],
+      "answer": "Leider nicht. Ich muss arbeiten.",
+      "explanation": "Review (Unit 3): a friendly no with leider and a reason."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: The cake is good. I'll have it.",
+      "text": "Der Kuchen ist gut. Ich nehme ___.",
+      "answers": [["ihn"]],
+      "explanation": "der Kuchen is masculine: as the object, er becomes ihn."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: Will you visit us on Sunday? (informal)",
+      "text": "Besuchst du ___ am Sonntag?",
+      "answers": [["uns"]],
+      "explanation": "wir becomes uns as the object."
+    },
+    {
+      "type": "mc",
+      "question": "Which sentence means 'A tea without sugar, please'?",
+      "questionLang": "en",
+      "options": ["Einen Tee ohne Zucker, bitte.", "Einen Tee für Zucker, bitte.", "Einen Tee mit Zucker, bitte."],
+      "answer": "Einen Tee ohne Zucker, bitte.",
+      "explanation": "ohne = without, für = for, mit = with."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: What are you having? (informal)",
+      "text": "Was ___ du?",
+      "answers": [["nimmst", "bekommst"]],
+      "explanation": "nehmen: du nimmst, with mm and no h. du bekommst is right too."
+    },
+    {
+      "type": "listen_mc",
+      "audio": "Das macht vierundzwanzig Euro achtzig.",
+      "question": "How much is the bill?",
+      "questionLang": "en",
+      "options": ["24,80 €", "42,80 €", "24,18 €"],
+      "answer": "24,80 €",
+      "explanation": "vierundzwanzig = 4 and 20 = 24, then the cents: 24,80 €."
+    },
+    {
+      "type": "mc",
+      "question": "The waiter asks 'Zusammen oder getrennt?'. You're paying for your friend too. What do you say?",
+      "questionLang": "en",
+      "options": ["Zusammen, bitte.", "Getrennt, bitte.", "Stimmt so."],
+      "answer": "Zusammen, bitte.",
+      "explanation": "zusammen = one bill for both. getrennt = each pays their own."
+    },
+    {
+      "type": "translate",
+      "direction": "en-de",
+      "text": "The bill, please.",
+      "references": ["Die Rechnung, bitte.", "Zahlen, bitte."],
+      "explanation": "Die Rechnung, bitte! or Zahlen, bitte!"
+    },
+    {
+      "type": "dictation",
+      "text": "Für mich die Suppe und für ihn den Salat.",
+      "explanation": "für + accusative: für mich, für ihn. der Salat becomes den Salat."
+    },
+    {
+      "type": "order",
+      "prompt": "The fish for me, please.",
+      "tiles": ["für", "mich", "den", "Fisch", "bitte"],
+      "answers": ["Für mich den Fisch bitte", "Den Fisch für mich bitte", "Für mich bitte den Fisch", "Bitte für mich den Fisch", "Bitte den Fisch für mich"],
+      "explanation": "für mich, and der Fisch becomes den Fisch."
+    },
+    {
+      "type": "write",
+      "instruction": "Unit 4 final task. You're in a restaurant with a friend, and the waiter's lines are below. Write your reply after each line, 1-2 sentences each. Reply 1: order drinks for both of you. Reply 2: ask about the soup (Ist ...?). Reply 3: order food for both of you (für mich ..., für ihn / für sie ...); after eating, ask for the bill. Reply 4: say how you pay. Reply 5: pay, with a tip. Claude will check it. Then ask Claude for the live role-play: Claude plays the waiter.",
+      "prompt": "Kellner: Guten Abend! Was möchten Sie trinken?\nKellner: Und was möchten Sie essen? Heute gibt es Fisch, Suppe und Salat.\nKellner: Die Suppe? Ja, sie ist ein bisschen scharf. Was nehmen Sie?\nKellner: (später) Zusammen oder getrennt?\nKellner: Das macht zweiunddreißig Euro vierzig.",
+      "digits": true,
+      "minWords": 35
+    }
+  ]
+}

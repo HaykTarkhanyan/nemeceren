@@ -4,10 +4,10 @@ time = "12:50"
 areas = ["content/lessons", "content/tests", "content/words.json", "content/glossary.json", "content/topics.json", "app/src/styles.css"]
 done = [
   "Digit fix committed and deployed (f88e8bb): write items can say digits: true (DECISIONS #67).",
-  "Unit 3 written, checked and reviewed: 6 lessons, 4 tests (incl. the Units 0-3 checkpoint), 98 new cards. Reviewer agent (~250k tokens): no wrong German or answer keys; all 13 RU/HY claims correct; fixed 4 wrong popups (Viertel article, achte, siebte, darf), English-only card meanings (no German giveaways in en-de review), dropped-verb note (Um drei kann ich nicht), in der Nacht note, extra word orders, chat example, Unit 6 pointers.",
+  "Unit 3 written, checked and reviewed: 6 lessons, 4 tests (incl. the Units 0-3 checkpoint), 98 new cards. Reviewer agent (~250k tokens): no wrong German or answer keys; all 13 RU/HY claims correct; fixed 4 wrong popups (Viertel article, achte, siebte, darf), English-only card meanings (no German giveaways in en-de review), dropped-verb note (Um drei kann ich nicht), in der Nacht note, extra word orders, chat example, Unit 6 pointers. Pushed 48da16c, deployed.",
+  "Unit 4 written, checked and reviewed: 7 lessons, 3 tests, 99 new cards (DECISIONS #69). Reviewer agent (~245k tokens): no wrong German sentences; RU/HY claims correct; fixed 5 popups (Butter, den dative plural for t-sonne, rufst, gerne, plus kaufe/höre order), the false 'measures never take a plural' tip (zwei Flaschen), möchte 'no ending' wording, extra accepted answers, dictation sie/Sie ambiguity, mag before it was taught, card en clashes (zahlen/bezahlen, möchten/hätte gern). Extras p13 corrected. Skill updated with the Unit 3 lessons (en English only; one glossary entry per lemma+pos+form; generated-gloss traps).",
 ]
 pending = [
-  "Unit 4: plan, draft, check, review agent, ship.",
   "Unit 5: plan, draft, check, review agent, ship.",
 ]
 next = "Unit 4 drafting (plan below). Lesson learned in Unit 3: card `en` must be English only (en-de review shows it), and curated glossary keys need one entry per lemma+pos+form (the lookup drops duplicates)."
@@ -47,5 +47,17 @@ Lessons (7):
 6. u4-06-pronomen  ihn, sie, es; mich, dich; für, ohne  explains Unit 3's Ich rufe dich an.
 7. u4-07-restaurant  Ordering and paying (Im Restaurant)  Speisekarte, empfehlen, Ich nehme ..., Zahlen bitte, Zusammen oder getrennt? (p05), Stimmt so (p03).
    -> u4-t3 (final: written restaurant dialogue with the waiter's lines given; live role-play after)
-Fix Extras p13: "you don't need to change any endings" is misleading once einen Kaffee is taught.
+Fix Extras p13: "you don't need to change any endings" is misleading once einen Kaffee is taught. (Done.)
+
+UNIT 5 PLAN (Work and class day; Nicos Weg ch. 9, 13, 16.4; dürfen 17.2, sollen 15.4; BAMF A 4.2 ask to repeat / slower / other words, 2.1.2 instructions)
+Lessons (6):
+1. u5-01-arbeitstag  A day at work and in class  Büro, Chef/Chefin, Aufgabe, E-Mail, telefonieren, Hausaufgabe, Prüfung, Seite ...; review of Unit 3 routine.
+2. u5-02-imperativ  Instructions (Imperativ): Sie and du forms; teacher and boss instructions (Lesen Sie ..., Hör zu!, Mach bitte ...).
+   -> u5-t1
+3. u5-03-duerfen-sollen  dürfen and sollen; darf nicht = mustn't vs muss nicht; man; Soll ich ...?
+4. u5-04-koennten-sie  Polite requests: Könnten Sie ...? (step up from u1-06 Können Sie ...?), langsamer, mit anderen Worten (chunk).
+   -> u5-t2
+5. u5-05-perfekt  Perfekt with haben and sein (ge-t, ge-en; sein for movement and bleiben); decide separable/inseparable/-ieren (DECISIONS).
+6. u5-06-war-hatte  war, hatte, and the weekend report (Wie war dein Wochenende?)
+   -> u5-t3 (final: weekend report to a colleague + ask a teacher to repeat and explain; live role-play after)
 """

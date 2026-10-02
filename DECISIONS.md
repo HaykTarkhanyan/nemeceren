@@ -2,6 +2,13 @@
 
 Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
+## 69. Unit 4 has seven lessons, teaches the accusative in full (articles, pronouns, für and ohne), and keeps its dative forms as chunks (written with the course-unit skill, 2026-10-02)
+
+- **Date:** 2026-10-02 - **Status:** active
+- **Why:** the syllabus row asks for ordering, paying, shopping for food, hobbies and likes. Shopping (amounts, prices, the counter phrases from Nicos Weg ch. 12) didn't fit in the café or restaurant lessons, so it got its own lesson, making seven (the skill allows 5-7). The accusative comes in full as the research order puts it (item 4): den/einen/keinen, then the object pronouns, which finally explain Unit 3's `Ich rufe dich an`. `für` and `ohne` come with the pronouns because ordering needs `Für mich ...` and `ohne Milch`. Vowel-change verbs: essen, nehmen, lesen, sehen, fahren as a table, plus empfehlen and einladen; sprechen (Unit 1) and schlafen, treffen, anfangen, fernsehen (Unit 3) are named as review. Chunks with a pointer: `zum Frühstück`, `Es schmeckt mir`, `mit Milch`, `mit Karte` (dative, Unit 6), `Was darf es sein?` (dürfen, Unit 5), `Ist da Fleisch drin?`. Comparison stops at gern / lieber / am liebsten. Two B1 cards (die Semmel, Prost) because Hayk lives in Munich. Extras p13 said "Ich hätte gern" needs no ending changes; it now says a masculine word takes einen. Tests never ask for the article in the bare order "Einen Kaffee, bitte", because "Ein Kaffee, bitte" is common in speech.
+- **Alternatives rejected:** six lessons with shopping inside the café lesson (too long, and it mixes drinks with market amounts); leaving the pronouns to Unit 5 (Unit 3's chunks need explaining, and ordering for a friend needs `für ihn`); teaching `mit` as a preposition now (it takes the dative).
+- **What would change this:** Hayk mixing up `den` and `dem` once Unit 6 starts (then add a contrast lesson); the seven-lesson unit taking much longer than ~15 hours.
+
 ## 68. Unit 3 teaches times, dates, separable verbs and können/wollen/müssen in full, and keeps the case forms it needs as chunks (written with the course-unit skill, 2026-10-02)
 
 - **Date:** 2026-10-02 - **Status:** active

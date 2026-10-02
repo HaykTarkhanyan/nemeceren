@@ -1,0 +1,163 @@
+{
+  "id": "u4-05-moegen-gern",
+  "unit": 4,
+  "order": 5,
+  "level": "A1",
+  "title": "Likes and free time: mögen, gern, lieber, am liebsten (Was magst du?)",
+  "summary": "Say what you like, what you prefer and what you like most, about food, drinks and your free time, and how often you do things.",
+  "goals": [
+    "Say what you like: Ich mag ... and Ich ... gern",
+    "Say what you prefer and like most: lieber, am liebsten",
+    "Talk about your hobbies and how often you do them"
+  ],
+  "nicosWeg": [
+    { "title": "Nicos Weg A1, chapter 11: Eating and leisure (Ich mag (nicht)!, Was macht dir Spaß?)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
+  ],
+  "words": ["moegen", "lieber", "am-liebsten", "schmecken", "hobby", "freizeit", "sport", "fussball", "schwimmen", "tanzen", "reisen", "wandern", "musik", "hoeren", "oft", "immer", "nie", "manchmal"],
+  "tests": ["u4-t2-essen-freizeit"],
+  "sections": [
+    {
+      "id": "mag-gern",
+      "type": "explanation",
+      "title": "Two ways to like",
+      "text": "- [[mögen]] + a thing: [[Ich mag Kaffee.]] [[Ich mag den Film.]] (the accusative from lesson 2)\n- a verb + [[gern]]: [[Ich trinke gern Kaffee.]] [[Ich schwimme gern.]] = I like swimming.\n\nYou met [[gern]] in Unit 1: [[Ich lerne gern Deutsch.]] It comes after the verb. With [[mögen]] you like a thing; with [[gern]] you like doing something.\n\nNot liking: [[Ich mag keinen Fisch.]] [[Ich schwimme nicht gern.]]"
+    },
+    {
+      "id": "moegen-table",
+      "type": "table",
+      "title": "mögen (to like)",
+      "columns": [{ "header": "Person", "de": "words" }, { "header": "mögen", "de": "words" }],
+      "rows": [
+        ["ich", "mag"],
+        ["du", "magst"],
+        ["er / sie / es", "mag"],
+        ["wir", "mögen"],
+        ["ihr", "mögt"],
+        ["sie / Sie", "mögen"]
+      ]
+    },
+    {
+      "id": "mag-moechte",
+      "type": "warning",
+      "title": "mag or möchte?",
+      "text": "[[Ich mag Kaffee.]] = I like coffee (in general). [[Ich möchte einen Kaffee.]] = I'd like a coffee (now, please). So order with [[möchte]], never with [[mag]]."
+    },
+    {
+      "id": "gern-lieber",
+      "type": "table",
+      "title": "gern, lieber, am liebsten",
+      "columns": [{ "header": "Say", "de": "words" }, { "header": "English" }],
+      "rows": [
+        ["Ich trinke gern Kaffee.", "I like (drinking) coffee."],
+        ["Ich trinke lieber Tee.", "I prefer tea."],
+        ["Am liebsten trinke ich Wasser.", "Most of all I like (drinking) water."],
+        ["Ich trinke nicht gern Bier.", "I don't like (drinking) beer."]
+      ]
+    },
+    {
+      "type": "explanation",
+      "text": "[[lieber]] (more gladly) and [[am liebsten]] (most gladly) are the 'more' and 'most' of [[gern]]. They sit where [[gern]] sits: after the verb, or [[am liebsten]] first with the verb second. Other comparisons (bigger, the biggest) come at A2."
+    },
+    {
+      "type": "comparison",
+      "text": "Russian люблю and Armenian սիրում եմ cover both: я люблю кофе, я люблю плавать. German splits them: [[Ich mag Kaffee.]] but [[Ich schwimme gern.]] And [[lieben]] is mostly for people: [[Ich liebe dich.]] For coffee, [[mögen]] or [[gern]] is the everyday choice."
+    },
+    {
+      "id": "schmecken",
+      "type": "explanation",
+      "title": "Does it taste good?",
+      "text": "[[Das schmeckt gut!]] = That tastes good. [[Schmeckt's?]] = Do you like it? (said about food).\n\n[[Es schmeckt mir.]] = I like the taste. [[mir]] is the chunk you know from [[Tut mir leid]]; Unit 6 explains it. And the one-word compliment you'll hear everywhere: [[Lecker!]] = Yummy!"
+    },
+    {
+      "id": "hobbies",
+      "type": "table",
+      "title": "Free time",
+      "columns": [{ "header": "Activity", "de": "words" }, { "header": "English" }],
+      "rows": [
+        ["Sport machen", "to do sport"],
+        ["Fußball spielen", "to play football"],
+        ["schwimmen", "to swim"],
+        ["tanzen", "to dance"],
+        ["reisen", "to travel"],
+        ["wandern", "to hike"],
+        ["lesen", "to read"],
+        ["Musik hören", "to listen to music"],
+        ["kochen", "to cook"],
+        ["fernsehen", "to watch TV"]
+      ]
+    },
+    {
+      "id": "how-often",
+      "type": "explanation",
+      "title": "How often?",
+      "text": "[[immer]] (always), [[oft]] (often), [[manchmal]] (sometimes), [[nie]] (never). They come after the verb, or first with the verb second:\n- [[Ich koche oft.]]\n- [[Ich trinke nie Kaffee.]]\n- [[Manchmal koche ich am Abend.]]\n\nTo ask about hobbies: [[Was machst du gern?]] or [[Was ist dein Hobby?]] Munich is close to the Alps, so expect [[Ich wandere gern.]] a lot."
+    },
+    {
+      "id": "likes-examples",
+      "type": "examples",
+      "title": "Examples",
+      "items": [
+        { "de": "Was machst du gern? - Ich lese gern und ich wandere gern.", "en": "What do you like doing? - I like reading and hiking." },
+        { "de": "Magst du Fisch? - Nein, ich mag keinen Fisch.", "en": "Do you like fish? - No, I don't like fish." },
+        { "de": "Ich trinke gern Tee, aber am liebsten trinke ich Kaffee.", "en": "I like tea, but most of all I like coffee." },
+        { "de": "Am Wochenende mache ich oft Sport.", "en": "At the weekend I often do sport." },
+        { "de": "Mein Hobby ist Fußball.", "en": "My hobby is football." },
+        { "de": "Der Kuchen schmeckt sehr gut!", "en": "The cake tastes very good!" }
+      ]
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat",
+      "items": [
+        { "de": "Ich mag Kaffee.", "en": "I like coffee." },
+        { "de": "Ich trinke lieber Tee.", "en": "I prefer tea." },
+        { "de": "Am liebsten trinke ich Wasser.", "en": "Most of all I like water." },
+        { "de": "Was machst du gern?", "en": "What do you like doing?" },
+        { "de": "Ich schwimme gern.", "en": "I like swimming." },
+        { "de": "Das schmeckt gut!", "en": "That tastes good!" }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: I like coffee.",
+          "text": "Ich ___ Kaffee.",
+          "answers": [["mag"]],
+          "explanation": "mögen + a thing: ich mag, with no ending."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: I like swimming.",
+          "text": "Ich schwimme ___.",
+          "answers": [["gern", "gerne"]],
+          "explanation": "verb + gern = to like doing it. gerne is the same word."
+        },
+        {
+          "type": "mc",
+          "question": "Which sentence means 'I prefer tea'?",
+          "questionLang": "en",
+          "options": ["Ich trinke lieber Tee.", "Ich trinke gern Tee.", "Ich trinke nie Tee."],
+          "answer": "Ich trinke lieber Tee.",
+          "explanation": "lieber = more gladly, so 'prefer'. gern = like, nie = never."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: Do you like fish? (informal)",
+          "text": "___ du Fisch?",
+          "answers": [["Magst"]],
+          "explanation": "du magst. In a yes/no question the verb comes first."
+        },
+        {
+          "type": "order",
+          "prompt": "I often do sport.",
+          "tiles": ["ich", "mache", "oft", "Sport"],
+          "answers": ["Ich mache oft Sport", "Oft mache ich Sport", "Sport mache ich oft"],
+          "explanation": "oft comes after the verb, or first with the verb second."
+        }
+      ]
+    }
+  ]
+}

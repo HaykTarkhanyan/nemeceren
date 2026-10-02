@@ -117,7 +117,8 @@ Rules from Units 0-2 and real mistakes:
   - an example sentence using known words (no grammar from later units in it);
   - tags `["<topic>", "unit<N>"]` and `added` = today;
   - one line per card in `words.json`;
-  - phrase cards without final punctuation ("Wie geht's").
+  - phrase cards without final punctuation ("Wie geht's");
+  - **`en` in English only.** English-to-German review shows `en` as the prompt, so German in it gives the answer away ("halb drei = 2:30", "separable: ich stehe ... auf"). Irregular forms in brackets are the accepted exception ("to speak (du sprichst)"). Usage notes go in the example, or in a curated glossary note, because the generated popups copy `en` (rerun `npm run glossary` after changing `en`).
 - **Scope:** moving grammar between units, or deciding to teach something only as a chunk, gets a `DECISIONS.md` entry (global CLAUDE.md) as well as a SYLLABUS deviation note.
 
 ## 3. Check (from `app/`; one heavy step at a time; free RAM per CLAUDE.md; long commands in the background)
@@ -129,7 +130,9 @@ Rules from Units 0-2 and real mistakes:
    - rare senses ("müssen: to need the bathroom", "rein: purely");
    - **separable verbs (Unit 3 onward):** "rufe ... an" shows "rufen" and the preposition "an". Give every verb form the unit uses (rufe/ruft/rufst, stehe/steht, kaufe/kauft ...) a curated entry with the separable verb as its lemma and a note ("Ich rufe dich an. = I'll call you."). For the particles: the curated `auf` entry is currently only the preposition (note "Auf Wiedersehen!"), and `an` comes from the generated glossary. Because a curated key replaces the generated one, keep the preposition reading and add the particle reading as a second entry (1-3 entries per key).
 
-   Fix these in `content/glossary.json`.
+   Also check wrong mc options ("Ich anrufe ...") and every ordinal, pronoun and article form the unit uses: in Units 3-4 the generated glossary gave `Viertel` the article der, `siebte` "to sieve", `achte` "to respect", `ihn` "them", `den` "nominative", `darf` "must" and `Prost` "a response to sneezing".
+
+   Fix these in `content/glossary.json`. **The lookup keeps only one entry per lemma + part of speech + form**, so two senses of the same form ("geht": to go / to work) go into one entry with two glosses.
 2. `npm run check-content` must say OK.
 3. `npx tsx scripts/non_essential/check-taught.ts <N>` (a few seconds): the German that the unit's exercises and tests need before any lesson or card showed it. Read every line: either teach the word earlier (lesson text, examples or a card) or change the item. Sound pairs and number words built from known parts are fine.
 4. Re-read every German sentence once yourself: verb position, articles and cases, umlauts and ß.

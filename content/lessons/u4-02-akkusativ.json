@@ -1,0 +1,126 @@
+{
+  "id": "u4-02-akkusativ",
+  "unit": 4,
+  "order": 2,
+  "level": "A1",
+  "title": "The accusative: den, einen, keinen (Der Akkusativ)",
+  "summary": "The thing an action happens to takes the accusative. Only masculine words change: der becomes den, ein becomes einen, kein becomes keinen.",
+  "goals": [
+    "Use den, einen and keinen after verbs like haben, nehmen and kaufen",
+    "Know which words change (only masculine) and which stay the same",
+    "Say what there is: es gibt"
+  ],
+  "nicosWeg": [
+    { "title": "Nicos Weg A1, chapter 11: Eating and leisure (Lebensmittel)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
+  ],
+  "words": ["nehmen", "kaufen", "suchen", "finden", "es-gibt", "bekommen"],
+  "tests": ["u4-t1-cafe-akkusativ"],
+  "sections": [
+    {
+      "id": "subject-object",
+      "type": "explanation",
+      "title": "Who does it, and what it's done to",
+      "text": "In [[Der Mann kauft einen Laptop.]] the man does the buying: he is the subject, in the dictionary form (the nominative). The laptop is what he buys: the object. In German the object takes the **accusative**.\n\nThe good news: only **masculine** words show it. [[der]] becomes [[den]], [[ein]] becomes [[einen]], [[kein]] becomes [[keinen]]. Feminine, neuter and plural stay exactly the same.\n\nYou've used this since Unit 2 ([[Ich brauche einen Stift.]]) and in lesson 1 ([[Ich möchte einen Kaffee.]]). Here is the whole picture."
+    },
+    {
+      "id": "akkusativ-table",
+      "type": "table",
+      "title": "Nominative and accusative",
+      "columns": [{ "header": "Use" }, { "header": "masculine", "de": "words" }, { "header": "feminine", "de": "words" }, { "header": "neuter", "de": "words" }, { "header": "plural", "de": "words" }],
+      "rows": [
+        ["the: who does it", "der Kaffee", "die Milch", "das Bier", "die Äpfel"],
+        ["the: what it's done to", "den Kaffee", "die Milch", "das Bier", "die Äpfel"],
+        ["a: who does it", "ein Kaffee", "eine Tasse", "ein Bier", "Äpfel"],
+        ["a: what it's done to", "einen Kaffee", "eine Tasse", "ein Bier", "Äpfel"],
+        ["no: what it's done to", "keinen Kaffee", "keine Milch", "kein Bier", "keine Äpfel"]
+      ]
+    },
+    {
+      "id": "akk-verbs",
+      "type": "explanation",
+      "title": "Which verbs?",
+      "text": "Most verbs take an object in the accusative: [[haben]], [[brauchen]], [[möchten]], [[nehmen]], [[kaufen]], [[suchen]], [[finden]], [[bekommen]], [[trinken]] and many more.\n- [[Ich nehme den Kuchen.]] = I'll have the cake.\n- [[Ich suche den Schlüssel.]] = I'm looking for the key.\n- [[Ich finde den Film gut.]] = I think the film is good.\n- [[Ich bekomme einen Kaffee.]] = I'll have a coffee. ([[bekommen]] means to get, never 'to become'.)\n\n**Not after [[sein]]:** [[Das ist ein Kaffee.]] [[Das ist der Schlüssel.]] With [[sein]] both sides are the same thing, so nothing changes."
+    },
+    {
+      "id": "es-gibt",
+      "type": "explanation",
+      "title": "es gibt = there is, there are",
+      "text": "[[Es gibt]] is followed by the accusative too:\n- [[Hier gibt es einen Supermarkt.]] = There's a supermarket here.\n- [[Gibt es hier ein Café?]] = Is there a café here?\n- [[Heute gibt es keinen Kuchen.]] = There's no cake today.\n\nIt's always [[es gibt]], for one thing or many: [[Hier gibt es drei Cafés.]]"
+    },
+    {
+      "type": "comparison",
+      "text": "Russian has an accusative too (Я беру ручку). Remember the twist from Unit 2: in Russian the feminine changes (ручка becomes ручку) and a masculine thing stays (стол). German is the other way round: [[einen Stift]] changes, [[eine Tasche]] stays."
+    },
+    {
+      "id": "den-trap",
+      "type": "warning",
+      "text": "[[den]] is only for masculine words: [[den Kaffee]], [[den Kuchen]]. Never 'den Milch' or 'den Bier'. So the gender you learn with every noun pays off here: [[der Tisch]] tells you it's [[den Tisch]] and [[einen Tisch]]."
+    },
+    {
+      "id": "akk-examples",
+      "type": "examples",
+      "title": "Examples",
+      "items": [
+        { "de": "Ich nehme den Kuchen.", "en": "I'll have the cake." },
+        { "de": "Wir kaufen einen Tisch.", "en": "We're buying a table." },
+        { "de": "Ich habe keinen Kaffee.", "en": "I don't have any coffee." },
+        { "de": "Hast du den Schlüssel?", "en": "Do you have the key?" },
+        { "de": "Ich finde den Kuchen sehr gut.", "en": "I think the cake is very good." },
+        { "de": "Gibt es hier einen Supermarkt?", "en": "Is there a supermarket here?" }
+      ]
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat",
+      "items": [
+        { "de": "der Kaffee, den Kaffee, einen Kaffee", "en": "the coffee, the coffee (object), a coffee (object)" },
+        { "de": "Ich nehme den Kuchen.", "en": "I'll have the cake." },
+        { "de": "Ich suche den Schlüssel.", "en": "I'm looking for the key." },
+        { "de": "Gibt es hier ein Café?", "en": "Is there a café here?" },
+        { "de": "Ich bekomme einen Tee.", "en": "I'll have a tea." }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: I'll have the cake.",
+          "text": "Ich nehme ___ Kuchen.",
+          "answers": [["den"]],
+          "explanation": "der Kuchen is masculine and it's the object: den Kuchen."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: I'm buying the milk.",
+          "text": "Ich kaufe ___ Milch.",
+          "answers": [["die"]],
+          "explanation": "die Milch is feminine: feminine never changes, so die Milch."
+        },
+        {
+          "type": "mc",
+          "question": "Which sentence means 'I'm looking for a pen'?",
+          "questionLang": "en",
+          "options": ["Ich suche einen Stift.", "Ich suche ein Stift.", "Ich suche eine Stift."],
+          "answer": "Ich suche einen Stift.",
+          "explanation": "der Stift is masculine and the object: einen Stift."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: That's a coffee.",
+          "text": "Das ist ___ Kaffee.",
+          "answers": [["ein"]],
+          "explanation": "After sein nothing changes: Das ist ein Kaffee."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: There's no café here.",
+          "text": "Hier gibt es ___ Café.",
+          "answers": [["kein"]],
+          "explanation": "das Café is neuter, so kein stays kein after es gibt."
+        }
+      ]
+    }
+  ]
+}

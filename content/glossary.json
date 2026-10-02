@@ -63,7 +63,7 @@
       {"lemma": "lassen", "pos": "verb", "form": "du and er/sie/es form, present", "level": "A2", "gloss": ["lets; makes (someone do something)"]}
     ],
     "euch": [
-      {"lemma": "ihr", "pos": "pronoun", "form": "accusative and dative", "level": "A1", "gloss": ["you (plural); yourselves"], "note": "Fürchtet euch nicht! = Don't be afraid (you all)!"}
+      {"lemma": "ihr", "pos": "pronoun", "form": "accusative", "level": "A1", "gloss": ["you (plural, as the object)", "yourselves"], "note": "Ich hole euch ab."}
     ],
     "dabei": [
       {"lemma": "dabei", "pos": "adverb", "level": "A2", "gloss": ["while doing it, at the same time"], "note": "Ich singe dabei. = I sing while I'm at it."}
@@ -345,12 +345,12 @@
       {"lemma": "rufen", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["to call, to shout"]}
     ],
     "kaufe": [
-      {"lemma": "einkaufen", "pos": "verb", "form": "ich form, present", "level": "A1", "gloss": ["to do the shopping"], "note": "Separable: Am Samstag kaufe ich ein."},
-      {"lemma": "kaufen", "pos": "verb", "form": "ich form, present", "level": "A1", "gloss": ["to buy"]}
+      {"lemma": "kaufen", "pos": "verb", "form": "ich form, present", "level": "A1", "gloss": ["to buy"]},
+      {"lemma": "einkaufen", "pos": "verb", "form": "ich form, present", "level": "A1", "gloss": ["to do the shopping"], "note": "Separable: Am Samstag kaufe ich ein."}
     ],
     "kauft": [
-      {"lemma": "einkaufen", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["to do the shopping"], "note": "Separable: Dann kauft sie ein."},
-      {"lemma": "kaufen", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["to buy"]}
+      {"lemma": "kaufen", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["to buy"]},
+      {"lemma": "einkaufen", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["to do the shopping"], "note": "Separable: Dann kauft sie ein."}
     ],
     "fange": [
       {"lemma": "anfangen", "pos": "verb", "form": "ich form, present", "level": "A1", "gloss": ["to start, to begin"], "note": "Separable: Ich fange um neun an."}
@@ -359,12 +359,12 @@
       {"lemma": "anfangen", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["to start, to begin"], "note": "Separable, with ä: Der Kurs fängt um neun an."}
     ],
     "höre": [
-      {"lemma": "aufhören", "pos": "verb", "form": "ich form, present", "level": "A1", "gloss": ["to stop, to finish"], "note": "Separable: Um fünf Uhr höre ich auf."},
-      {"lemma": "hören", "pos": "verb", "form": "ich form, present", "level": "A1", "gloss": ["to hear, to listen"]}
+      {"lemma": "hören", "pos": "verb", "form": "ich form, present", "level": "A1", "gloss": ["to hear, to listen"]},
+      {"lemma": "aufhören", "pos": "verb", "form": "ich form, present", "level": "A1", "gloss": ["to stop, to finish"], "note": "Separable: Um fünf Uhr höre ich auf."}
     ],
     "hört": [
-      {"lemma": "aufhören", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["to stop, to finish"], "note": "Separable: Er hört um fünf auf."},
-      {"lemma": "hören", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["to hear, to listen"]}
+      {"lemma": "hören", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["to hear, to listen"]},
+      {"lemma": "aufhören", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["to stop, to finish"], "note": "Separable: Er hört um fünf auf."}
     ],
     "sehe": [
       {"lemma": "fernsehen", "pos": "verb", "form": "ich form, present", "level": "A1", "gloss": ["to watch TV"], "note": "Separable: Am Abend sehe ich fern."},
@@ -553,6 +553,116 @@
     ],
     "frei": [
       {"lemma": "frei", "pos": "adjective", "level": "A1", "gloss": ["free, not busy"], "note": "Ich habe frei. = I'm off work."}
+    ],
+    "lade": [
+      {"lemma": "einladen", "pos": "verb", "form": "ich form, present", "level": "A1", "gloss": ["to invite; to pay for someone"], "note": "Separable: Ich lade dich ein. = It's my treat."},
+      {"lemma": "laden", "pos": "verb", "form": "ich form, present", "gloss": ["to load"]}
+    ],
+    "lädst": [
+      {"lemma": "einladen", "pos": "verb", "form": "du form, present", "level": "A1", "gloss": ["to invite; to pay for someone"], "note": "Separable, with ä: Lädst du mich ein?"}
+    ],
+    "lädt": [
+      {"lemma": "einladen", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["to invite; to pay for someone"], "note": "Separable, with ä: Er lädt uns ein."}
+    ],
+    "möchte": [
+      {"lemma": "möchten", "pos": "verb", "form": "ich and er/sie/es form", "level": "A1", "gloss": ["would like"], "note": "Ich möchte einen Kaffee. = I'd like a coffee."}
+    ],
+    "möchtest": [
+      {"lemma": "möchten", "pos": "verb", "form": "du form, present", "level": "A1", "gloss": ["would like"], "note": "Was möchtest du trinken?"}
+    ],
+    "möchten": [
+      {"lemma": "möchten", "pos": "verb", "form": "wir/sie/Sie form", "level": "A1", "gloss": ["would like"], "note": "Was möchten Sie? = What would you like?"}
+    ],
+    "möchtet": [
+      {"lemma": "möchten", "pos": "verb", "form": "ihr form", "level": "A1", "gloss": ["would like"]}
+    ],
+    "hätte": [
+      {"lemma": "haben", "pos": "verb", "form": "ich form, polite (Konjunktiv II)", "level": "A1", "gloss": ["would have"], "note": "Ich hätte gern ... = I'd like ... (ordering)"}
+    ],
+    "liebsten": [
+      {"lemma": "am liebsten", "pos": "phrase", "level": "A1", "gloss": ["most of all, best of all"], "note": "Am liebsten trinke ich Kaffee."}
+    ],
+    "Zahlen": [
+      {"lemma": "zahlen", "pos": "verb", "level": "A1", "gloss": ["to pay"], "note": "Zahlen, bitte! = The bill, please!"},
+      {"lemma": "Zahl", "pos": "noun", "article": "die", "form": "plural", "gloss": ["numbers"]}
+    ],
+    "Stimmt": [
+      {"lemma": "stimmen", "pos": "verb", "form": "er/sie/es form, present", "level": "B1", "gloss": ["is right"], "note": "Stimmt so. = Keep the change."}
+    ],
+    "getrennt": [
+      {"lemma": "getrennt", "pos": "adverb", "level": "B1", "gloss": ["separately"], "note": "Getrennt, bitte. = Separate bills, please."}
+    ],
+    "Getrennt": [
+      {"lemma": "getrennt", "pos": "adverb", "level": "B1", "gloss": ["separately"], "note": "Getrennt, bitte. = Separate bills, please."}
+    ],
+    "gibt": [
+      {"lemma": "geben", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["gives"], "note": "es gibt = there is, there are"}
+    ],
+    "Gibt": [
+      {"lemma": "geben", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["gives"], "note": "Gibt es hier ein Café? = Is there a café here?"}
+    ],
+    "Maß": [
+      {"lemma": "Maß", "pos": "noun", "article": "die", "gloss": ["a litre of beer (Bavaria)"], "note": "Eine Maß, bitte!"}
+    ],
+    "Halbe": [
+      {"lemma": "Halbe", "pos": "noun", "article": "die", "gloss": ["half a litre of beer (Bavaria)"], "note": "Eine Halbe, bitte!"}
+    ],
+    "Breze": [
+      {"lemma": "Breze", "pos": "noun", "article": "die", "plural": "Brezen", "gloss": ["pretzel (Bavaria)"], "note": "Elsewhere: die Brezel"}
+    ],
+    "drin": [
+      {"lemma": "drin", "pos": "adverb", "gloss": ["in it, inside"], "note": "Ist da Fleisch drin? = Is there meat in it? (spoken)"}
+    ],
+    "Biere": [
+      {"lemma": "Bier", "pos": "noun", "article": "das", "form": "plural", "gloss": ["beers, kinds of beer"], "note": "Two glasses: Zwei Bier, bitte."}
+    ],
+    "Schmeckt's": [
+      {"lemma": "schmecken", "pos": "phrase", "level": "A1", "gloss": ["Do you like it? (the food)"], "note": "Schmeckt's = Schmeckt es"}
+    ],
+    "ihn": [
+      {"lemma": "er", "pos": "pronoun", "form": "accusative", "level": "A1", "gloss": ["him; it (for a der-word)"], "note": "Der Kuchen? Ich nehme ihn."}
+    ],
+    "den": [
+      {"lemma": "der", "pos": "article", "form": "accusative, masculine", "level": "A1", "gloss": ["the (masculine, as the object)"], "note": "der Kaffee becomes den Kaffee: Ich nehme den Kaffee."},
+      {"lemma": "der", "pos": "article", "form": "dative plural", "level": "A1", "gloss": ["the (plural, after mit, in, aus)"], "note": "mit den Händen. Unit 6 explains it."}
+    ],
+    "keinen": [
+      {"lemma": "kein", "pos": "determiner", "form": "accusative, masculine", "level": "A1", "gloss": ["no, not a"], "note": "Ich habe keinen Stift."}
+    ],
+    "Prost": [
+      {"lemma": "prost", "pos": "interjection", "level": "B1", "gloss": ["Cheers!"], "note": "Look the other person in the eye."}
+    ],
+    "lieber": [
+      {"lemma": "gern", "pos": "adverb", "form": "comparative", "level": "A1", "gloss": ["rather, preferably"], "note": "Ich trinke lieber Tee. = I prefer tea."},
+      {"lemma": "lieb", "pos": "adjective", "level": "A1", "gloss": ["dear"], "note": "At the start of a letter: Lieber Hayk, ..."}
+    ],
+    "lecker": [
+      {"lemma": "lecker", "pos": "adjective", "level": "B1", "gloss": ["yummy, tasty"]}
+    ],
+    "Kellnerin": [
+      {"lemma": "Kellnerin", "pos": "noun", "article": "die", "plural": "Kellnerinnen", "level": "B1", "gloss": ["waitress"]}
+    ],
+    "Butter": [
+      {"lemma": "Butter", "pos": "noun", "article": "die", "level": "A1", "gloss": ["butter"]}
+    ],
+    "rufst": [
+      {"lemma": "anrufen", "pos": "verb", "form": "du form, present", "level": "A1", "gloss": ["to phone, to call"], "note": "Separable: Rufst du mich an? = Will you call me?"},
+      {"lemma": "rufen", "pos": "verb", "form": "du form, present", "level": "A1", "gloss": ["to call, to shout"]}
+    ],
+    "gerne": [
+      {"lemma": "gern", "pos": "adverb", "level": "A1", "gloss": ["gladly; (I) like to"], "note": "gerne = gern"}
+    ],
+    "macht": [
+      {"lemma": "machen", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["makes, does"], "note": "Das macht sechs Euro. = That comes to six euros."}
+    ],
+    "Reis": [
+      {"lemma": "Reis", "pos": "noun", "article": "der", "level": "A1", "gloss": ["rice"]}
+    ],
+    "Musik": [
+      {"lemma": "Musik", "pos": "noun", "article": "die", "level": "A2", "gloss": ["music"]}
+    ],
+    "Gramm": [
+      {"lemma": "Gramm", "pos": "noun", "article": "das", "level": "A1", "gloss": ["gram"], "note": "zweihundert Gramm (no plural ending)"}
     ]
   }
 }

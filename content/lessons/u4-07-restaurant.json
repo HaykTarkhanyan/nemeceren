@@ -1,0 +1,138 @@
+{
+  "id": "u4-07-restaurant",
+  "unit": 4,
+  "order": 7,
+  "level": "A1",
+  "title": "In a restaurant: order, ask, pay (Im Restaurant)",
+  "summary": "Find a seat, order for two, ask about a dish, and pay: zusammen oder getrennt?",
+  "goals": [
+    "Ask for a seat and the menu",
+    "Order for yourself and a friend",
+    "Ask about a dish",
+    "Ask for the bill, pay together or separately, and tip"
+  ],
+  "nicosWeg": [
+    { "title": "Nicos Weg A1, chapter 3: In company (Eine Pizza bitte!, Zahlen bitte!)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
+  ],
+  "words": ["restaurant", "speisekarte", "rechnung", "bestellen", "zahlen", "empfehlen", "zusammen-oder-getrennt", "stimmt-so", "guten-appetit", "prost", "platz", "scharf"],
+  "tests": ["u4-t3-restaurant"],
+  "sections": [
+    {
+      "id": "restaurant-phrases",
+      "type": "table",
+      "title": "From the door to the bill",
+      "columns": [{ "header": "Moment" }, { "header": "You say", "de": "words" }, { "header": "You hear", "de": "words" }],
+      "rows": [
+        ["a seat", "Ist der Platz frei?", "Ja, bitte."],
+        ["the menu", "Die Speisekarte, bitte.", "Hier, bitte."],
+        ["drinks", "Ein Bier und ein Wasser, bitte.", "Was möchten Sie trinken?"],
+        ["asking", "Was empfehlen Sie?", "Der Fisch ist sehr gut."],
+        ["ordering", "Ich nehme den Fisch.", "Und für Sie?"],
+        ["the food comes", "Danke!", "Guten Appetit!"],
+        ["the bill", "Zahlen, bitte!", "Zusammen oder getrennt?"],
+        ["paying", "Zusammen, bitte.", "Das macht achtzehn Euro."],
+        ["the tip", "Zwanzig, bitte. / Stimmt so.", "Vielen Dank!"]
+      ]
+    },
+    {
+      "id": "ordering-for-two",
+      "type": "explanation",
+      "title": "Ordering for two",
+      "text": "Order for a friend with [[für]] + the accusative from lesson 6:\n- [[Für mich den Salat und für ihn den Fisch.]]\n- [[Ich nehme die Suppe, und meine Freundin nimmt den Salat.]]\n- [[Wir nehmen zwei Bier.]]\n\nThe waiter ([[der Kellner]], [[die Kellnerin]]) often asks the second person [[Und für Sie?]] (And for you?)."
+    },
+    {
+      "id": "asking-about-dish",
+      "type": "explanation",
+      "title": "Asking about a dish",
+      "text": "- [[Was ist das?]] or [[Was ist ...?]] (Unit 2)\n- [[Ist das scharf?]] = Is it spicy?\n- [[Ist da Fleisch drin?]] = Is there meat in it? ([[drin]] = in it, a spoken chunk)\n- [[Ich esse kein Fleisch.]] = I don't eat meat.\n- [[Was empfehlen Sie?]] = What do you recommend? ([[empfehlen]] changes its vowel: [[du empfiehlst]], [[er empfiehlt]])"
+    },
+    {
+      "id": "paying",
+      "type": "explanation",
+      "title": "Paying and tipping",
+      "text": "For the bill: [[Zahlen, bitte!]] or [[Die Rechnung, bitte!]] The waiter usually comes to your table and asks [[Zusammen oder getrennt?]] (together or separately?). Splitting the bill is completely normal in Germany. Answer [[Zusammen, bitte.]] or [[Getrennt, bitte.]]\n\nThe waiter says the total: [[Das macht achtzehn Euro vierzig.]] Then you say the amount you want to pay, tip included: [[Zwanzig, bitte.]] Or you hand over the money and say [[Stimmt so.]] (keep the change). About 5-10% is normal; you know this from the Extras page."
+    },
+    {
+      "id": "munich-restaurant",
+      "type": "tip",
+      "title": "In a Munich beer garden",
+      "text": "Say [[Prost!]] when you clink glasses, and look the other person in the eye. In beer gardens and traditional places you often share a table with strangers: just ask [[Ist der Platz frei?]]"
+    },
+    {
+      "id": "restaurant-dialogue",
+      "type": "examples",
+      "title": "Dinner for two",
+      "items": [
+        { "de": "Guten Abend! Was möchten Sie trinken?", "en": "Good evening! What would you like to drink?", "note": "the waiter" },
+        { "de": "Ein Bier und ein Wasser, bitte.", "en": "A beer and a water, please.", "note": "Aram" },
+        { "de": "Und was möchten Sie essen?", "en": "And what would you like to eat?", "note": "the waiter" },
+        { "de": "Ist die Suppe scharf?", "en": "Is the soup spicy?", "note": "Eva" },
+        { "de": "Nein, sie ist nicht scharf.", "en": "No, it isn't spicy.", "note": "the waiter" },
+        { "de": "Gut. Für mich die Suppe und für ihn den Fisch.", "en": "Good. The soup for me and the fish for him.", "note": "Eva" },
+        { "de": "Zahlen, bitte!", "en": "The bill, please!", "note": "Aram, later" },
+        { "de": "Zusammen oder getrennt?", "en": "Together or separately?", "note": "the waiter" },
+        { "de": "Zusammen, bitte. Ich lade dich ein, Eva!", "en": "Together, please. It's my treat, Eva!", "note": "Aram" },
+        { "de": "Das macht vierunddreißig Euro sechzig.", "en": "That's 34.60 euros.", "note": "the waiter" },
+        { "de": "Achtunddreißig, bitte.", "en": "Make it thirty-eight, please.", "note": "Aram" }
+      ]
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat",
+      "items": [
+        { "de": "Ist der Platz frei?", "en": "Is this seat free?" },
+        { "de": "Die Speisekarte, bitte.", "en": "The menu, please." },
+        { "de": "Was empfehlen Sie?", "en": "What do you recommend?" },
+        { "de": "Für mich den Salat, bitte.", "en": "The salad for me, please." },
+        { "de": "Zahlen, bitte!", "en": "The bill, please!" },
+        { "de": "Zusammen oder getrennt?", "en": "Together or separately?" },
+        { "de": "Stimmt so.", "en": "Keep the change." }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "mc",
+          "question": "You want the bill. What do you say?",
+          "questionLang": "en",
+          "options": ["Zahlen, bitte!", "Guten Appetit!", "Prost!"],
+          "answer": "Zahlen, bitte!",
+          "explanation": "Zahlen, bitte! or Die Rechnung, bitte! Guten Appetit = enjoy your meal, Prost = cheers."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: What do you recommend? (polite)",
+          "text": "Was ___ Sie?",
+          "answers": [["empfehlen"]],
+          "explanation": "Sie empfehlen. The vowel changes only with du and er/sie/es: er empfiehlt."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: The salad for me and the fish for him.",
+          "text": "Für mich den Salat und für ___ den Fisch.",
+          "answers": [["ihn"]],
+          "explanation": "für takes the accusative: er becomes ihn."
+        },
+        {
+          "type": "mc",
+          "question": "The waiter asks 'Zusammen oder getrennt?'. You and your friend each pay for yourselves. What do you say?",
+          "questionLang": "en",
+          "options": ["Getrennt, bitte.", "Zusammen, bitte.", "Stimmt so."],
+          "answer": "Getrennt, bitte.",
+          "explanation": "getrennt = separately: each pays for their own food."
+        },
+        {
+          "type": "listen_mc",
+          "audio": "Das macht achtzehn Euro vierzig.",
+          "question": "How much is the bill?",
+          "questionLang": "en",
+          "options": ["18,40 €", "80,40 €", "18,14 €"],
+          "answer": "18,40 €",
+          "explanation": "achtzehn Euro vierzig = 18,40 €. Tip by saying a round number: Zwanzig, bitte."
+        }
+      ]
+    }
+  ]
+}

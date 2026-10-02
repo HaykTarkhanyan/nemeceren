@@ -1,0 +1,133 @@
+{
+  "id": "u4-06-pronomen",
+  "unit": 4,
+  "order": 6,
+  "level": "A1",
+  "title": "Him, her, me, you, and für, ohne (Pronomen im Akkusativ)",
+  "summary": "Replace a noun with ihn, sie or es, say 'me' and 'you' as objects (mich, dich), and use für and ohne. Now Unit 3's Ich rufe dich an makes sense.",
+  "goals": [
+    "Use ihn, sie and es instead of a noun",
+    "Use mich, dich, uns, euch as objects",
+    "Use für and ohne: für dich, ohne Milch",
+    "Talk about people: kennen, besuchen, einladen"
+  ],
+  "words": ["fuer", "ohne", "kennen", "besuchen", "einladen", "lieben"],
+  "sections": [
+    {
+      "id": "ihn-sie-es",
+      "type": "explanation",
+      "title": "ihn, sie, es",
+      "text": "Instead of repeating a noun, use a pronoun. Of [[er]], [[sie]] and [[es]], only [[er]] changes as the object, just like [[der]] becomes [[den]]:\n- [[Der Kuchen ist gut. Ich nehme ihn.]] ([[er]] becomes [[ihn]])\n- [[Die Suppe ist gut. Ich nehme sie.]] ([[sie]] stays)\n- [[Das Brot ist gut. Ich nehme es.]] ([[es]] stays)\n- [[Die Äpfel sind gut. Ich nehme sie.]] (plural: [[sie]])\n\n[[ihn]] is for every masculine noun, a person or a thing: [[der Kollege]] and [[der Salat]] both become [[ihn]]."
+    },
+    {
+      "id": "pronouns-akk",
+      "type": "table",
+      "title": "Pronouns: who does it, and who it's done to",
+      "columns": [{ "header": "Who does it", "de": "words" }, { "header": "Who it's done to", "de": "words" }, { "header": "English" }],
+      "rows": [
+        ["ich", "mich", "me"],
+        ["du", "dich", "you"],
+        ["er", "ihn", "him, it"],
+        ["sie", "sie", "her, it"],
+        ["es", "es", "it"],
+        ["wir", "uns", "us"],
+        ["ihr", "euch", "you (plural)"],
+        ["sie", "sie", "them"],
+        ["Sie", "Sie", "you (polite)"]
+      ]
+    },
+    {
+      "id": "unit3-chunks",
+      "type": "explanation",
+      "title": "Now Unit 3 makes sense",
+      "text": "[[Ich rufe dich an.]] = I'll call **you**. [[Ich hole dich ab.]] = I'll pick **you** up. [[Wir treffen uns.]] = We meet (**each other**).\n\nNow you can change the person: [[Ich rufe ihn an.]] [[Rufst du mich an?]] [[Ich hole Sie um zehn ab.]] [[Ich hole euch ab.]]"
+    },
+    {
+      "id": "fuer-ohne",
+      "type": "explanation",
+      "title": "für and ohne",
+      "text": "After [[für]] (for) and [[ohne]] (without) the accusative comes too:\n- [[Der Kaffee ist für dich.]]\n- [[Das ist für meinen Bruder.]] ([[mein]] becomes [[meinen]], like [[ein]] becomes [[einen]])\n- [[Einen Kaffee ohne Milch, bitte.]]\n- [[Ich gehe nicht ohne dich.]]\n\nIn a café or restaurant: [[Für mich einen Tee, bitte.]] = A tea for me, please."
+    },
+    {
+      "type": "comparison",
+      "text": "Russian changes pronouns too, even more of them: он becomes его, она becomes её (Я вижу его). German [[ihn]] is его, and [[sie]] is both её and их.\n\nRussian для and без work like [[für]] and [[ohne]], but Russian puts the genitive after them (для тебя, без молока). German puts the accusative: [[für dich]], [[ohne Milch]]."
+    },
+    {
+      "id": "people-verbs",
+      "type": "explanation",
+      "title": "Verbs for people",
+      "text": "- [[kennen]] = to know a person or a place: [[Kennst du ihn?]] [[Ich kenne München.]]\n- [[besuchen]] = to visit: [[Ich besuche dich am Samstag.]]\n- [[einladen]] = to invite (separable): [[Ich lade dich ein.]] In a café it also means 'it's my treat'.\n- [[lieben]] = to love: [[Ich liebe dich.]]"
+    },
+    {
+      "type": "warning",
+      "text": "[[einladen]] changes its vowel too: [[du lädst ... ein]], [[er lädt ... ein]]. With [[ich]], [[wir]] and [[Sie]] it's regular: [[Ich lade dich ein.]]"
+    },
+    {
+      "id": "pronoun-examples",
+      "type": "examples",
+      "title": "Examples",
+      "items": [
+        { "de": "Kennst du Eva? - Ja, ich kenne sie.", "en": "Do you know Eva? - Yes, I know her." },
+        { "de": "Wo ist der Schlüssel? - Ich suche ihn.", "en": "Where's the key? - I'm looking for it." },
+        { "de": "Rufst du mich morgen an?", "en": "Will you call me tomorrow?" },
+        { "de": "Wir besuchen euch am Wochenende.", "en": "We're visiting you at the weekend." },
+        { "de": "Der Kuchen ist für dich.", "en": "The cake is for you." },
+        { "de": "Ich lade dich ein!", "en": "It's my treat!" }
+      ]
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat",
+      "items": [
+        { "de": "Ich nehme ihn.", "en": "I'll take it. (der ...)" },
+        { "de": "Ich kenne sie.", "en": "I know her." },
+        { "de": "Rufst du mich an?", "en": "Will you call me?" },
+        { "de": "Das ist für dich.", "en": "That's for you." },
+        { "de": "Einen Kaffee ohne Milch, bitte.", "en": "A coffee without milk, please." },
+        { "de": "Ich lade dich ein!", "en": "It's my treat!" }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: The salad is good. I'll have it.",
+          "text": "Der Salat ist gut. Ich nehme ___.",
+          "answers": [["ihn"]],
+          "explanation": "der Salat is masculine: er becomes ihn as the object."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: Do you know Eva? - Yes, I know her.",
+          "text": "Kennst du Eva? - Ja, ich kenne ___.",
+          "answers": [["sie"]],
+          "explanation": "sie stays sie as the object."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: Will you call me?",
+          "text": "Rufst du ___ an?",
+          "answers": [["mich"]],
+          "explanation": "ich becomes mich as the object: Rufst du mich an?"
+        },
+        {
+          "type": "mc",
+          "question": "Which sentence means 'A coffee without sugar, please'?",
+          "questionLang": "en",
+          "options": ["Einen Kaffee ohne Zucker, bitte.", "Einen Kaffee für Zucker, bitte.", "Einen Kaffee mit Zucker, bitte."],
+          "answer": "Einen Kaffee ohne Zucker, bitte.",
+          "explanation": "ohne = without, für = for, mit = with."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: That's for you. (informal)",
+          "text": "Das ist für ___.",
+          "answers": [["dich"]],
+          "explanation": "für takes the accusative: du becomes dich."
+        }
+      ]
+    }
+  ]
+}

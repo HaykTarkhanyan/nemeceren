@@ -44,6 +44,8 @@
 
 **Unit 3 as written (2026-10-02, DECISIONS.md #68):** the case forms that plans need are chunks, each pointing to the unit that explains it: `am Montag`, `am dritten Oktober`, `im Mai`, `zu Hause`, `Tut mir leid` (Unit 6); `Ich rufe dich an`, `Ich hole dich ab`, `ins Kino` (Unit 4); `Wir treffen uns` (A2). Ordinal dates are two patterns, `der ...te` and `am ...ten`. The Munich times `viertel vier` and `dreiviertel vier` are for recognition only. The Units 0-3 checkpoint is the test `u3-t4-checkpoint-0-3`.
 
+**Unit 4 as written (2026-10-02, DECISIONS.md #69):** seven lessons, with shopping for food as its own lesson. The accusative includes the object pronouns and `für` / `ohne`. Chunks with a pointer: `zum Frühstück`, `Es schmeckt mir`, `mit Milch`, `mit Karte` (Unit 6), `Was darf es sein?` (Unit 5).
+
 **Total about 100 hours and about 650 words.** Goethe estimates 60-150 h for A1 (search snippet, not verified).
 - 20 min/day: about 10 months
 - 30 min/day: about 6-7 months
