@@ -208,11 +208,20 @@ export const AudioBlock = z.strictObject({
   items: z.array(z.strictObject({ de: Text, en: Text.optional(), note: Text.optional() })).min(1),
 })
 
-export const BLOCK_TYPES = ['explanation', 'comparison', 'examples', 'table', 'tip', 'warning', 'exercise', 'audio'] as const
+/** The whole text of a song (or other source) with a translation per line, folded away by default (DECISIONS.md #66). */
+export const LyricsBlock = z.strictObject({
+  type: z.literal('lyrics'),
+  ...blockCommon,
+  stanzas: z
+    .array(z.strictObject({ label: Text.optional(), lines: z.array(z.strictObject({ de: Text, en: Text })).min(1) }))
+    .min(1),
+})
+
+export const BLOCK_TYPES = ['explanation', 'comparison', 'examples', 'table', 'tip', 'warning', 'exercise', 'audio', 'lyrics'] as const
 
 export const LessonBlock = z.discriminatedUnion(
   'type',
-  [ExplanationBlock, ComparisonBlock, ExamplesBlock, TableBlock, TipBlock, WarningBlock, ExerciseBlock, AudioBlock],
+  [ExplanationBlock, ComparisonBlock, ExamplesBlock, TableBlock, TipBlock, WarningBlock, ExerciseBlock, AudioBlock, LyricsBlock],
   { error: () => `"type" must be one of: ${BLOCK_TYPES.join(', ')}` },
 )
 

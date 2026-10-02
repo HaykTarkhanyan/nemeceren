@@ -37,6 +37,116 @@
       "text": "**AnnenMayKantereit** are a band from Cologne. Three school friends started them in 2011 as street musicians, and the name is simply their three surnames: Annen, May, Kantereit. The singer, Henning May, is known for his rough, raspy voice.\n\n'Barfuß am Klavier' is on their first album, **Alles nix Konkretes** (March 2016), which went to number 1 in Germany.\n\nWhy it's good for you: the words are simple (du, ich, sitzen, träumen, lieben), the first chorus line comes back four times, and the song is full of real spoken German. The singer is sitting barefoot at the piano, singing about someone who is gone."
     },
     {
+      "id": "lyrics",
+      "type": "lyrics",
+      "title": "Full lyrics with translation",
+      "stanzas": [
+        {
+          "label": "Verse 1",
+          "lines": [
+            {
+              "de": "Und ich sitz schon wieder barfuß am Klavier",
+              "en": "And here I am again, sitting barefoot at the piano"
+            },
+            {
+              "de": "Ich träume Liebeslieder und sing dabei von dir",
+              "en": "I dream love songs and sing about you as I do"
+            },
+            {
+              "de": "Du und ich, wir waren wunderlich",
+              "en": "You and I, we were strange"
+            },
+            {
+              "de": "Nicht für mich",
+              "en": "Not to me"
+            },
+            {
+              "de": "Für die, die es störte, wenn man uns nachts hörte",
+              "en": "To those who were bothered when people heard us at night"
+            },
+            {
+              "de": "Ich hab mit dir gemeinsam einsam rumgesessen und geschwiegen",
+              "en": "Together with you, I sat around lonely and kept quiet"
+            },
+            {
+              "de": "Ich erinnere mich am besten ans gemeinsam einsam Liegen",
+              "en": "What I remember best is lying there together and lonely"
+            },
+            {
+              "de": "Jeden Morgen danach bei dir",
+              "en": "Every morning after, at your place"
+            },
+            {
+              "de": "Du nackt im Bett - und ich barfuß am Klavier",
+              "en": "You naked in bed, and me barefoot at the piano"
+            }
+          ]
+        },
+        {
+          "label": "Verse 2",
+          "lines": [
+            {
+              "de": "Und ich sitz schon wieder barfuß am Klavier",
+              "en": "And here I am again, sitting barefoot at the piano"
+            },
+            {
+              "de": "Ich träume Liebeslieder und sing dabei von dir",
+              "en": "I dream love songs and sing about you as I do"
+            },
+            {
+              "de": "Du und ich, wir war'n mal wir. Und sind jetzt nichts",
+              "en": "You and I, we used to be an 'us'. And now we're nothing"
+            },
+            {
+              "de": "Du da, ich hier",
+              "en": "You there, me here"
+            },
+            {
+              "de": "Du wolltest alles wissen und das hat mich vertrieben",
+              "en": "You wanted to know everything, and that drove me away"
+            },
+            {
+              "de": "Eigentlich dich, du bist nicht länger geblieben, bei mir",
+              "en": "Actually it drove you away: you didn't stay any longer, with me"
+            },
+            {
+              "de": "Also sitz ich, um zu lieben, lieber barfuß am Klavier",
+              "en": "So, to do my loving, I'd rather sit barefoot at the piano"
+            }
+          ]
+        },
+        {
+          "label": "Ending",
+          "lines": [
+            {
+              "de": "Und ich sitz schon wieder barfuß am Klavier",
+              "en": "And here I am again, sitting barefoot at the piano"
+            },
+            {
+              "de": "Ich träume Liebeslieder und sing dabei von dir",
+              "en": "I dream love songs and sing about you as I do"
+            },
+            {
+              "de": "Du und ich, das war zu wenig",
+              "en": "You and I, that was too little"
+            },
+            {
+              "de": "Und ich sitz schon wieder barfuß am Klavier",
+              "en": "And here I am again, sitting barefoot at the piano"
+            },
+            {
+              "de": "Und träum dabei von dir. Ich träum dabei von dir",
+              "en": "And dream of you as I do. I dream of you as I do"
+            },
+            {
+              "de": "Ich träum dabei von dir",
+              "en": "I dream of you as I do"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "id": "spoken",
       "type": "table",
       "title": "Spoken German: the endings disappear",

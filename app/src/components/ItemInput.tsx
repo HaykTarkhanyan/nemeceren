@@ -2,13 +2,14 @@
 import type { Item } from '../content/schema.ts'
 import { GAP_MARKER } from '../content/schema.ts'
 import type { AnswerValue } from '../lib/grading.ts'
+import { needsDigits } from '../lib/keys.ts'
 import { useIsGuest } from '../lib/session.ts'
 import { shuffle } from '../lib/shuffle.ts'
 import { useProgress, useSyncStatus } from '../lib/storage.ts'
 import { countWords } from '../lib/text.ts'
 import { De } from './GermanText.tsx'
 import { PlayButtons, Speaker } from './Speaker.tsx'
-import { UmlautBar } from './UmlautBar.tsx'
+import { UmlautBar, umlautKeys } from './UmlautBar.tsx'
 
 export function initialAnswer(item: Item): AnswerValue {
   if (item.type === 'gap') return item.answers.map(() => '')
@@ -71,17 +72,21 @@ export interface InputProps {
   answer: AnswerValue
   onChange: (a: AnswerValue) => void
   onPlay: () => void
+  /** Number the choices for the 1-9 keys (tests have the key handler; lesson exercises don't). */
+  numbered?: boolean
 }
 
 const TEXT_INPUT_PROPS = { autoCapitalize: 'off', autoCorrect: 'off', autoComplete: 'off', spellCheck: false, lang: 'de' } as const
 
-export function ItemInput({ item, layout, answer, onChange, onPlay }: InputProps) {
+export function ItemInput({ item, layout, answer, onChange, onPlay, numbered = false }: InputProps) {
+  // The digit keys type umlauts in answer boxes, unless the answer itself needs digits (lib/keys.ts).
+  const keys = needsDigits(expectedTexts(item)) ? null : ('answer' as const)
   switch (item.type) {
     case 'mc':
       return (
         <>
           <p className="question">{item.questionLang === 'en' ? item.question : <De text={item.question} />}</p>
-          <Choices options={layout ?? item.options} value={answer as string | null} onChange={onChange} />
+          <Choices options={layout ?? item.options} value={answer as string | null} onChange={onChange} numbered={numbered} />
         </>
       )
     case 'listen_mc':
@@ -91,7 +96,7 @@ export function ItemInput({ item, layout, answer, onChange, onPlay }: InputProps
           <p className="question" lang={item.questionLang ?? 'de'}>
             {item.question}
           </p>
-          <Choices options={layout ?? item.options} value={answer as string | null} onChange={onChange} />
+          <Choices options={layout ?? item.options} value={answer as string | null} onChange={onChange} numbered={numbered} />
         </>
       )
     case 'gap': {
@@ -111,12 +116,13 @@ export function ItemInput({ item, layout, answer, onChange, onPlay }: InputProps
                     value={fills[i]}
                     onChange={(e) => onChange(fills.map((f, k) => (k === i ? e.target.value : f)))}
                     {...TEXT_INPUT_PROPS}
+                    {...umlautKeys(keys)}
                   />
                 )}
               </span>
             ))}
           </p>
-          <UmlautBar />
+          <UmlautBar keys={keys} />
         </>
       )
     }
@@ -134,8 +140,9 @@ export function ItemInput({ item, layout, answer, onChange, onPlay }: InputProps
             onChange={(e) => onChange(e.target.value)}
             lang={item.direction === 'en-de' ? 'de' : 'en'}
             spellCheck={false}
+            {...umlautKeys(item.direction === 'en-de' ? keys : null)}
           />
-          {item.direction === 'en-de' && <UmlautBar />}
+          {item.direction === 'en-de' && <UmlautBar keys={keys} />}
         </>
       )
     case 'write': {
@@ -153,12 +160,13 @@ export function ItemInput({ item, layout, answer, onChange, onPlay }: InputProps
             onChange={(e) => onChange(e.target.value)}
             lang="de"
             spellCheck={false}
+            {...umlautKeys(keys)}
           />
           <p className={`small ${item.minWords && words < item.minWords ? 'warn-text' : 'muted'}`}>
             {words} word{words === 1 ? '' : 's'}
             {item.minWords ? ` (at least ${item.minWords})` : ''}
           </p>
-          <UmlautBar />
+          <UmlautBar keys={keys} />
         </>
       )
     }
@@ -173,18 +181,33 @@ export function ItemInput({ item, layout, answer, onChange, onPlay }: InputProps
             value={answer as string}
             onChange={(e) => onChange(e.target.value)}
             {...TEXT_INPUT_PROPS}
+            {...umlautKeys(keys)}
           />
-          <UmlautBar />
+          <UmlautBar keys={keys} />
         </>
       )
   }
 }
 
-function Choices({ options, value, onChange }: { options: string[]; value: string | null; onChange: (a: string) => void }) {
+/** The texts a typed answer is checked against: a digit among them means the answer needs digits. */
+function expectedTexts(item: Item): string[] {
+  if (item.type === 'gap') return item.answers.flat()
+  if (item.type === 'translate') return item.references ?? []
+  if (item.type === 'dictation') return [item.text]
+  return []
+}
+
+function Choices(props: { options: string[]; value: string | null; onChange: (a: string) => void; numbered: boolean }) {
+  const { options, value, onChange, numbered } = props
   return (
     <div className="choices" role="radiogroup">
-      {options.map((o) => (
+      {options.map((o, i) => (
         <div key={o} className="choice-row">
+          {numbered && (
+            <span className="choice-key" aria-hidden="true">
+              {i + 1}
+            </span>
+          )}
           <button
             type="button"
             role="radio"

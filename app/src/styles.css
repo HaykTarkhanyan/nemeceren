@@ -585,6 +585,58 @@ textarea.text {
   gap: 8px;
 }
 
+/* Test cards on Home: a coloured edge for the status (grading.ts testStatus). */
+.test-status {
+  border-left-width: 4px;
+}
+.test-status.tried {
+  border-left-color: var(--warn);
+}
+.test-status.passed {
+  border-left-color: var(--ok);
+}
+
+/* Full lyrics: folded away; one line of German, its translation below. */
+.lyrics > summary {
+  cursor: pointer;
+}
+.lyrics[open] > summary {
+  margin-bottom: 12px;
+}
+.lyrics-stanza {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.lyrics-line {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+/* Lessons: one fold-out per unit. */
+.unit > summary {
+  cursor: pointer;
+  padding: 4px 0;
+}
+.unit > summary h2 {
+  display: inline;
+  margin-right: 8px;
+}
+.unit[open] > summary {
+  margin-bottom: 12px;
+}
+
+/* The key that picks a choice in a test (1-9). */
+.choice-key {
+  width: 1.5em;
+  text-align: center;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
 .choice {
   flex: 1;
   text-align: left;

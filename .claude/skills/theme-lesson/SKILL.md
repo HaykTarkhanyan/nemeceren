@@ -41,8 +41,13 @@ Prerequisite: the Themes tab and the `theme` schema (DECISIONS.md, "theme lesson
    - one or two grammar showcases;
    - slang, dialect and cultural references that need explaining.
 
-   Quote them as short excerpts, at most 4 lines in a row. **Never copy the whole text**; link to
-   the source for the rest (`theme.url`).
+   These go in the teaching sections (examples with notes).
+3b. **Full text.** Hayk wants the whole song too (2026-10-02): add a `lyrics` block right after
+   "About this song", folded away by default, with every line and a natural English translation,
+   grouped into stanzas (labels like "Verse 1", "Chorus"). Keep repeats as they are sung. Write
+   standard spelling where a lyrics site has typos ("am besten", "wie lang") and say so in the
+   lesson. Leave out pure filler like "lalala". The app counts the unique words from this block
+   and shows the count on the lesson and the Themes card.
 4. **Write the lesson** (template below). Explanations are in English, with Russian/Armenian
    comparisons only where they really help (CLAUDE.md). For every excerpt:
    - a translation that is natural, not word-salad;
@@ -71,7 +76,7 @@ Prerequisite: the Themes tab and the `theme` schema (DECISIONS.md, "theme lesson
    - every translation has been checked line by line;
    - every dialect form is labelled;
    - every fact has a source;
-   - the excerpts stay within the limits in step 3;
+   - the full-text translation has been checked line by line, like the excerpts;
    - no exercise gives its answer away.
 9. **Commit and push** content only (`content/themes/<slug>.json`, `content/words.json`, the glossary
    files), then watch CI. Tell Hayk the title and that it's under Lessons → Themes. Offer a chat
@@ -97,6 +102,7 @@ Prerequisite: the Themes tab and the `theme` schema (DECISIONS.md, "theme lesson
   "words": ["<word ids>"],
   "sections": [
     { "id": "about", "type": "explanation", "title": "About this song", "text": "Who, when, why it's worth it, where you'd hear it." },
+    { "id": "lyrics", "type": "lyrics", "title": "Full lyrics with translation", "stanzas": [ { "label": "Verse 1", "lines": [ { "de": "<line>", "en": "<translation>" } ] } ] },
     { "id": "chorus", "type": "examples", "title": "The chorus", "items": [ { "de": "<line>", "en": "<translation>", "note": "<nuance>" } ] },
     { "id": "chorus-notes", "type": "explanation", "title": "What's going on in the chorus", "text": "Word-by-word, colloquial vs standard, grammar pointers." },
     { "id": "words", "type": "table", "title": "Words worth keeping", "columns": [{ "header": "German", "de": "words" }, { "header": "English" }], "rows": [["", ""]] },

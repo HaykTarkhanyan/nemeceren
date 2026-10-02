@@ -2,6 +2,52 @@
 
 Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
+## 66. Song lessons include the full lyrics with a translation per line (a folded `lyrics` block) and show how many unique words they hold; a picked unit, lesson or "my words" has no daily new-word limit (asked for by Hayk, 2026-10-02)
+
+- **Date:** 2026-10-02 - **Status:** active; revisits #61 (theme lessons quoted short excerpts only) and refines #50 (word source)
+- **Why:**
+  - **Full lyrics:** Hayk wants the whole song with translations to learn it by heart. A new block type, `lyrics`, holds stanzas of `{de, en}` lines. It is folded away by default, so the teaching sections stay first. Word popups and speaker buttons work inside, and its German is covered by the glossary check like any other lesson text.
+  - **Word count:** the block header shows lines, unique word forms (ignoring case) and unique dictionary words (forms merged by their glossary base form: trinken and trinkt count once; this needs the glossary, so it is loaded when the lesson opens). The Themes card shows the unique word count without opening anything (`lib/lyrics.ts`).
+  - The theme-lesson skill now requires the full text (step 3b). It writes standard spelling where the lyrics source had typos, says so in the lesson, and leaves out "lalala" filler.
+  - **No daily limit for a pick:** Hayk picked "Unit 0" expecting all its words and got 10 a day. A pick now brings all its new words at once. "All words" keeps the daily limit, so the 200+ words of opened lessons can't all arrive on one day. The cost, said to Hayk: every new word comes back for review over the next days.
+- **Alternatives rejected:** keeping excerpts only (Hayk asked for the full text); counting unique words on all the lesson's German, including explanations (the question was what learning the *song* is worth); removing the daily limit everywhere (a first visit to "All words" would introduce every word of every opened lesson in one go).
+- **What would change this:** the review pile after a big pick becoming too heavy (then a gentler default for picks, e.g. 20 a day), or song lessons where the count should exclude the chorus repeats (it already counts each form once).
+
+## 65. The Unit 0 survival test no longer asks Hayk to spell his name with German letter names; the spelling topic stays (asked for by Hayk, 2026-10-02)
+
+- **Date:** 2026-10-02 - **Status:** active
+- **Why:** Hayk skipped this question on purpose twice and said he doesn't care about it as a test question. He also said the spelling topic and lessons must stay. So only the test item was removed (the last item of `u0-t2`, so no other question moved). Lesson 0.4 keeps its alphabet table, its spelling section and its spelling exercise. The Unit 0 end task "spell your name and email" is optional for him (SYLLABUS.md). His earlier attempt that contained the question keeps it; its review marks it as skipped.
+- **Alternatives rejected:** removing the spelling exercise from lesson 0.4 as well (done briefly, then restored: Hayk wants the topic); keeping the question but not counting it (the app has no "not counted" grade, so it would still pull the score down).
+- **What would change this:** Hayk wanting to practise spelling on the phone for a real situation (offices, deliveries); then a short drill in the chat rather than a test question.
+
+## 64. Keyboard shortcuts in tests and typing, coloured test status on Home, and collapsible units on Lessons (asked for by Hayk, 2026-10-02)
+
+- **Date:** 2026-10-02 - **Status:** active
+- **Why:**
+  - **Umlaut keys:** while typing, the digit keys 1-4 type ä ö ü ß, and Shift+1-3 type Ä Ö Ü (Hayk asked for "3 types ü"). They work on the physical key (`KeyboardEvent.code`), so they work with Hayk's Armenian or Russian layouts too.
+    - The number pad always types digits.
+    - An answer box whose expected answer contains a digit keeps real digits automatically.
+    - A per-device setting decides where the keys work: in answer boxes only (the default), everywhere (also notes and own words, where numbers are normal), or off.
+  - **Test keys:**
+    - 1-9 pick a choice; the choices are numbered on screen.
+    - Space plays the audio, and Shift+Space does while typing.
+    - Enter goes to the next question, from a choice or a short answer box. In the long writing box Enter makes a new line, and Ctrl+Enter goes to the next question.
+    - On the last question Enter does nothing, so submitting always takes a click.
+    - Other buttons keep their own Enter. A line under the question lists only the keys that apply to it.
+    - The rules are a pure function (`lib/keys.ts` `testKeyAction`) with unit tests.
+  - **Test status on Home:**
+    - not taken (grey);
+    - tried, with the best score (amber);
+    - passed, best attempt at 80% or more (green). The 80% is SYLLABUS.md's bar for a unit's final test.
+    - Claude's review verdicts count, and answers still waiting for review count as not correct. A "waiting for Claude" badge shows while the latest attempt has such answers.
+  - **Lessons:** each unit is a fold-out showing "done/total". Units nobody toggled are open only if they are the current unit (the first with a lesson not done). What Hayk folds is remembered per device.
+- **Alternatives rejected:**
+  - Plain digits as umlauts everywhere: numbers in notes and in time or price answers would become impossible to type.
+  - Alt+letter: Alt opens browser menus on Windows, and it is two hands for one letter.
+  - Enter submitting on the last question: one stray Enter would submit a test.
+  - Passing on the latest attempt instead of the best: a worse retake would hide that Hayk once passed.
+- **What would change this:** Hayk wanting the keys in lesson exercises too (several items on one page, so the keys would need a focused item), or a different pass mark per test.
+
 ## 63. The header keeps one line from 900 px with the study timer: "Sync now" becomes an icon there, and the nav and header spacing get tighter (revisits #48 and #54)
 
 - **Date:** 2026-10-02 - **Status:** active

@@ -1,11 +1,14 @@
 // One lesson section, by block type. Explanations, examples, tables and audio are reading
 // material: word popups are on. Exercises are gated like tests (off until checked).
+import { useEffect } from 'react'
 import { exerciseTestId } from '../content/lessons.ts'
 import type { Lesson, LessonBlock } from '../content/schema.ts'
 import { De, GermanText, GlossScope } from './GermanText.tsx'
 import { InlineExercise } from './InlineExercise.tsx'
 import { RichText } from './RichText.tsx'
 import { PlayButtons, Speaker } from './Speaker.tsx'
+import { ensureGlossary, useGlossary } from '../glossary/load.ts'
+import { lyricsLines, wordCounts } from '../lib/lyrics.ts'
 
 const LABEL: Partial<Record<LessonBlock['type'], string>> = {
   comparison: 'Russian and Armenian',
@@ -111,6 +114,8 @@ function BlockBody(props: { lesson: Lesson; block: LessonBlock; section: number;
           ))}
         </ul>
       )
+    case 'lyrics':
+      return <LyricsView block={block} />
     case 'exercise': {
       if (exerciseNumber === null) throw new Error(`Exercise at section ${section} of "${lesson.id}" has no number`)
       return (
@@ -127,4 +132,41 @@ function BlockBody(props: { lesson: Lesson; block: LessonBlock; section: number;
       )
     }
   }
+}
+
+/** The full text with a translation per line, folded away; the header counts the words (lib/lyrics.ts). */
+function LyricsView({ block }: { block: Extract<LessonBlock, { type: 'lyrics' }> }) {
+  const glossary = useGlossary()
+  // The dictionary-word count needs the glossary; load it now so the count shows before opening.
+  useEffect(() => ensureGlossary(), [])
+  const counts = wordCounts(lyricsLines(block), glossary.status === 'ready' ? glossary.glossary : null)
+  return (
+    <details className="lyrics">
+      <summary>
+        <strong>{block.title ?? 'Full lyrics with translation'}</strong>{' '}
+        <span className="muted small">
+          {counts.lines} lines, {counts.forms} unique words
+          {counts.lemmas !== null ? ` (${counts.lemmas} dictionary words)` : ''}
+        </span>
+      </summary>
+      <div className="stack">
+        {block.stanzas.map((s, si) => (
+          <div key={si} className="lyrics-stanza">
+            {s.label && <div className="label">{s.label}</div>}
+            {s.lines.map((l, li) => (
+              <div key={li} className="lyrics-line">
+                <Speaker text={l.de} />
+                <div>
+                  <span lang="de">
+                    <GermanText text={l.de} />
+                  </span>
+                  <div className="muted">{l.en}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
+    </details>
+  )
 }

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import type { Item, Result } from '../content/schema.ts'
-import { diffWords, finalScore, gradeItem } from './grading.ts'
+import { diffWords, finalScore, gradeItem, testStatus } from './grading.ts'
 
 const gap: Item = { type: 'gap', text: 'Ich ___ Hayk und ich ___ aus Armenien.', answers: [['heiße'], ['komme']] }
 
@@ -134,5 +134,37 @@ describe('finalScore', () => {
       review: { gradedAt: '2026-09-28T11:00:00Z', summary: 's', items: [{ index: 0, correct: true }] },
     }
     expect(finalScore(result)).toEqual({ correct: 2, wrong: 0, pending: 1, total: 3 })
+  })
+})
+
+describe('testStatus', () => {
+  const item = { index: 0, type: 'mc' as const, question: 'q', answer: 'a', expected: 'a', nearMiss: null, timeMs: 1, hintUsed: false }
+  const attempt = (statuses: ('correct' | 'wrong' | 'pending')[], day: string): Result => ({
+    version: 1,
+    testId: 't',
+    testTitle: 'T',
+    level: 'A1',
+    mode: 'web',
+    startedAt: `${day}T10:00:00.000Z`,
+    localDay: day,
+    submittedAt: `${day}T10:05:00.000Z`,
+    score: { correct: 0, wrong: 0, pending: 0, total: statuses.length },
+    items: statuses.map((status, index) => ({ ...item, index, status })),
+  })
+
+  it('is new without attempts', () => {
+    expect(testStatus([])).toEqual({ kind: 'new' })
+  })
+
+  it('passes on the best attempt at 80% or more, and reports the newest attempt as last', () => {
+    const older = attempt(['correct', 'correct', 'correct', 'correct', 'wrong'], '2026-10-01') // 80%
+    const newer = attempt(['correct', 'wrong', 'wrong', 'wrong', 'wrong'], '2026-10-02') // 20%
+    const s = testStatus([newer, older])
+    expect(s).toMatchObject({ kind: 'passed', attempts: 2, bestPercent: 80, lastDay: '2026-10-02', waiting: 0 })
+  })
+
+  it('is tried below 80%, counts pending answers as not correct, and flags them as waiting', () => {
+    const s = testStatus([attempt(['correct', 'correct', 'correct', 'pending', 'wrong'], '2026-10-02')])
+    expect(s).toMatchObject({ kind: 'tried', bestPercent: 60, waiting: 1 })
   })
 })

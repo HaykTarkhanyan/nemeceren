@@ -243,3 +243,35 @@ export function finalScore(result: Result): Result['score'] {
   const count = (s: ItemStatus) => statuses.filter((x) => x === s).length
   return { correct: count('correct'), wrong: count('wrong'), pending: count('pending'), total: statuses.length }
 }
+
+/** The score a test counts as passed at (SYLLABUS.md: a unit's final test at 80% or more). */
+export const PASS_PERCENT = 80
+
+export type TestStatus =
+  | { kind: 'new' }
+  | {
+      kind: 'tried' | 'passed'
+      attempts: number
+      /** Best attempt by final score (Claude's review verdicts count; pending items count as not correct). */
+      bestPercent: number
+      last: Result['score']
+      lastDay: string
+      /** The latest attempt still has answers waiting for Claude's review. */
+      waiting: number
+    }
+
+/** Status of one test from its attempts, newest first (as useProgress().results lists them). */
+export function testStatus(attempts: Result[]): TestStatus {
+  if (attempts.length === 0) return { kind: 'new' }
+  const pct = (s: Result['score']) => (s.total === 0 ? 0 : Math.round((100 * s.correct) / s.total))
+  const bestPercent = Math.max(...attempts.map((r) => pct(finalScore(r))))
+  const last = finalScore(attempts[0])
+  return {
+    kind: bestPercent >= PASS_PERCENT ? 'passed' : 'tried',
+    attempts: attempts.length,
+    bestPercent,
+    last,
+    lastDay: attempts[0].localDay ?? attempts[0].submittedAt.slice(0, 10),
+    waiting: last.pending,
+  }
+}

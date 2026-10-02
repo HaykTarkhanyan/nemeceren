@@ -1,6 +1,39 @@
 {
   "ignore": ["Hayk", "Charlotte", "Eva", "Meier", "Müller", "Schmidt", "Thomas", "Weber", "Aram", "Tarkhanyan", "Goethestraße", "Siemens", "Berlin"],
   "entries": {
+    "rein": [
+      {"lemma": "rein", "pos": "adverb", "gloss": ["in (spoken for herein)"], "note": "Komm rein! = Come in! Also an adjective: pure (reines Wasser)"}
+    ],
+    "keiner": [
+      {"lemma": "keiner", "pos": "pronoun", "level": "A2", "gloss": ["nobody, no one"], "note": "Keiner weiß es. = Nobody knows."}
+    ],
+    "Liegen": [
+      {"lemma": "Liegen", "pos": "noun", "article": "das", "gloss": ["lying (down)"], "note": "das Liegen: the verb liegen used as a noun"}
+    ],
+    "bricht": [
+      {"lemma": "brechen", "pos": "verb", "form": "er/sie/es form, present", "level": "B1", "gloss": ["breaks"]}
+    ],
+    "eigentlich": [
+      {"lemma": "eigentlich", "pos": "adverb", "level": "A2", "gloss": ["actually"]}
+    ],
+    "müssen": [
+      {"lemma": "müssen", "pos": "verb", "level": "A1", "gloss": ["must, to have to"], "note": "Wir müssen streiken. = We have to strike."}
+    ],
+    "wollen": [
+      {"lemma": "wollen", "pos": "verb", "level": "A1", "gloss": ["to want"], "note": "Was wollen wir trinken? = What shall we drink?"}
+    ],
+    "lang": [
+      {"lemma": "lang", "pos": "adjective", "level": "A1", "gloss": ["long"], "note": "sieben Tage lang = for seven days"}
+    ],
+    "so": [
+      {"lemma": "so", "pos": "adverb", "level": "A1", "gloss": ["so, like this"], "note": "so ein Durst! = such a thirst!"}
+    ],
+    "roll": [
+      {"lemma": "rollen", "pos": "verb", "form": "du command, spoken (rolle)", "gloss": ["roll"], "note": "roll' das Fass mal rein = roll the barrel in"}
+    ],
+    "fass": [
+      {"lemma": "anfassen", "pos": "verb", "form": "du command, spoken (fasse an)", "gloss": ["grab hold; lend a hand"], "note": "Komm, fass an! = Come on, lend a hand!"}
+    ],
     "sitz": [
       {"lemma": "sitzen", "pos": "verb", "form": "ich form, spoken", "level": "A1", "gloss": ["to sit"], "note": "ich sitz = ich sitze (the -e is dropped in speech and songs). Also the du command: Sitz!"}
     ],

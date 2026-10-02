@@ -53,6 +53,13 @@ describe('queue', () => {
     expect(counts(words, s, new Date(2026, 8, 29, 9), 2).newLeft).toBe(1)
   })
 
+  it('a picked unit or lesson has no daily limit: every unseen word is available (WordsPage passes Infinity)', () => {
+    let s = emptyState(t0)
+    s = review(s, 'a', Rating.Easy, t0).state
+    expect(counts(words, s, t0, Number.POSITIVE_INFINITY).newLeft).toBe(words.length - 1)
+    expect(nextCard(words, s, t0, Number.POSITIVE_INFINITY).kind).not.toBe('done')
+  })
+
   it('shows due cards first, then new cards, then learning cards within the learn-ahead window', () => {
     let s = emptyState(t0)
     s = review(s, 'a', Rating.Again, t0).state // due in about 1 minute

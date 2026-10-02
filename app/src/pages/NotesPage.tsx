@@ -8,7 +8,7 @@ import { NOTE_MAX_CHARS } from '../content/schema.ts'
 import type { NoteEdit, NoteFeedback } from '../content/schema.ts'
 import { GlossScope } from '../components/GermanText.tsx'
 import { RichText } from '../components/RichText.tsx'
-import { UmlautBar } from '../components/UmlautBar.tsx'
+import { UmlautBar, umlautKeys } from '../components/UmlautBar.tsx'
 import { messageOf, reportError } from '../lib/errors.ts'
 import { EMPTY_DRAFT, feedbackParts, newFeedbackIds, noteTextProblem, readDraft, writeDraft } from '../lib/notes.ts'
 import type { NoteDraft } from '../lib/notes.ts'
@@ -146,9 +146,10 @@ function Notes() {
             aria-describedby="note-count"
             value={draft.text}
             onChange={(e) => setDraft({ ...draft, text: e.target.value })}
+            {...umlautKeys('free')}
           />
         </label>
-        <UmlautBar />
+        <UmlautBar keys="free" />
         <p id="note-count" className={`small ${chars > NOTE_MAX_CHARS ? 'warn-text' : 'muted'}`}>
           {chars} / {NOTE_MAX_CHARS} characters. Unsaved text is kept on this device.
         </p>

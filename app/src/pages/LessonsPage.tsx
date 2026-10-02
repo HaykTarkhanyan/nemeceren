@@ -11,6 +11,7 @@ import { messageOf, reportError } from '../lib/errors.ts'
 import { lessonStatus, markLessonDone, setLastSection, startLesson } from '../lib/plan.ts'
 import type { LessonStatus } from '../lib/plan.ts'
 import { link, tabLink, tabOf } from '../lib/router.ts'
+import { lessonLyrics, wordCounts } from '../lib/lyrics.ts'
 import { KNOWN_DAYS } from '../lib/stats.ts'
 import { progressStore, saveLessonProgress, useProgress } from '../lib/storage.ts'
 
@@ -43,19 +44,60 @@ export function LessonsPage({ tab }: { tab?: string }) {
   )
 }
 
+// Which units are folded open, per device (localStorage). A unit nobody toggled yet is open only if
+// it is the current one: the first unit with a lesson not done.
+const OPEN_UNITS_KEY = 'nemeceren.lessonUnitsOpen'
+
+function readOpenUnits(): Record<string, boolean> {
+  let raw: string | null
+  try {
+    raw = localStorage.getItem(OPEN_UNITS_KEY)
+  } catch (err) {
+    reportError(`Which units are folded open cannot be read on this device: ${messageOf(err)}`)
+    return {}
+  }
+  if (raw === null) return {}
+  try {
+    return JSON.parse(raw) as Record<string, boolean>
+  } catch (err) {
+    reportError(`Browser storage "${OPEN_UNITS_KEY}" is not valid JSON, so the units start folded: ${messageOf(err)}`)
+    return {}
+  }
+}
+
 function CourseList() {
   const progress = useProgress().lessonProgress
+  const [openUnits, setOpenUnits] = useState(readOpenUnits)
   if (content.lessons.length === 0) return <p className="muted">No lessons prepared yet. Ask Claude to write the next one.</p>
   const units = [...new Set(content.lessons.map((l) => l.unit))].sort((a, b) => a - b)
+  const lessonsOf = (unit: number) => content.lessons.filter((l) => l.unit === unit).sort(byCourseOrder)
+  const current = units.find((u) => lessonsOf(u).some((l) => lessonStatus(progress, l.id) !== 'done'))
+  const isOpen = (unit: number) => openUnits[unit] ?? unit === current
+  function toggled(unit: number, open: boolean) {
+    if (open === isOpen(unit)) return
+    const next = { ...openUnits, [unit]: open }
+    setOpenUnits(next)
+    try {
+      localStorage.setItem(OPEN_UNITS_KEY, JSON.stringify(next))
+    } catch (err) {
+      reportError(`Could not remember the folded units on this device: ${messageOf(err)}`)
+    }
+  }
   return (
     <>
-      {units.map((unit) => (
-        <section key={unit} className="stack">
-          <h2>Unit {unit}</h2>
-          {content.lessons
-            .filter((l) => l.unit === unit)
-            .sort(byCourseOrder)
-            .map((l) => (
+      {units.map((unit) => {
+        const lessons = lessonsOf(unit)
+        const done = lessons.filter((l) => lessonStatus(progress, l.id) === 'done').length
+        return (
+        <details key={unit} className="unit" open={isOpen(unit)} onToggle={(e) => toggled(unit, e.currentTarget.open)}>
+          <summary>
+            <h2>Unit {unit}</h2>
+            <span className={`badge ${done === lessons.length ? 'ok' : ''}`}>
+              {done}/{lessons.length} done
+            </span>
+          </summary>
+          <div className="stack">
+          {lessons.map((l) => (
               <a key={l.id} className="card test-card" href={link('lesson', l.id)}>
                 <div className="row between">
                   <strong>
@@ -69,8 +111,10 @@ function CourseList() {
                 </p>
               </a>
             ))}
-        </section>
-      ))}
+          </div>
+        </details>
+        )
+      })}
     </>
   )
 }
@@ -106,6 +150,7 @@ function ThemeList() {
 function ThemeCard({ lesson, status }: { lesson: ThemeLesson; status: LessonStatus }) {
   const t = lesson.theme
   const byline = themeByline(t)
+  const lyrics = lessonLyrics(lesson)
   return (
     <article className="card stack theme-card">
       <div className="row between">
@@ -122,6 +167,7 @@ function ThemeCard({ lesson, status }: { lesson: ThemeLesson; status: LessonStat
         {byline && <p className="muted small">{byline}</p>}
       </div>
       <p className="muted">{lesson.summary}</p>
+      {lyrics.length > 0 && <p className="small">Full lyrics inside: {wordCounts(lyrics, null).forms} unique words.</p>}
       <div className="row">
         <a className="btn small primary" href={link('lesson', lesson.id)}>
           Open lesson

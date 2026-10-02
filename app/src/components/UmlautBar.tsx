@@ -1,6 +1,10 @@
-// Buttons that insert German letters at the cursor of the last focused text box.
-// Hayk's keyboard is not German.
+// Buttons that insert German letters at the cursor of the last focused text box, and the digit
+// keys that do the same while typing (1 ä, 2 ö, 3 ü, 4 ß; lib/keys.ts). Hayk's keyboard is not German.
 import { useState } from 'react'
+import { messageOf, reportError } from '../lib/errors.ts'
+import { umlautFor, umlautKeysOn } from '../lib/keys.ts'
+import type { UmlautScope } from '../lib/keys.ts'
+import { getSettings, useSettings } from '../lib/settings.ts'
 
 const LETTERS = ['ä', 'ö', 'ü', 'ß', 'Ä', 'Ö', 'Ü']
 
@@ -12,6 +16,34 @@ if (typeof document !== 'undefined') {
     const t = e.target
     if (t instanceof HTMLTextAreaElement || (t instanceof HTMLInputElement && t.type === 'text')) lastBox = t
   })
+  // The digit keys type umlauts in boxes marked with umlautKeys(scope), if the device setting allows.
+  document.addEventListener(
+    'keydown',
+    (e) => {
+      const t = e.target
+      if (!(t instanceof HTMLTextAreaElement || (t instanceof HTMLInputElement && t.type === 'text'))) return
+      const scope = t.dataset.umlautKeys as UmlautScope | undefined
+      if (!scope || e.isComposing || t.readOnly || t.disabled) return
+      const letter = umlautFor(e.code, { shift: e.shiftKey, ctrl: e.ctrlKey, alt: e.altKey, meta: e.metaKey })
+      if (!letter) return
+      let setting
+      try {
+        setting = getSettings().umlautKeys
+      } catch (err) {
+        reportError(`The umlaut keys are off: the settings on this device cannot be read: ${messageOf(err)}`)
+        return
+      }
+      if (!umlautKeysOn(setting, scope)) return
+      e.preventDefault()
+      insertAtCursor(t, letter)
+    },
+    true,
+  )
+}
+
+/** Props that let the digit keys type umlauts in a text box (null: the box keeps real digits). */
+export function umlautKeys(scope: UmlautScope | null): { 'data-umlaut-keys'?: UmlautScope } {
+  return scope ? { 'data-umlaut-keys': scope } : {}
 }
 
 function insertAtCursor(el: TextBox, text: string): void {
@@ -26,8 +58,10 @@ function insertAtCursor(el: TextBox, text: string): void {
   el.setSelectionRange(start + text.length, start + text.length)
 }
 
-export function UmlautBar() {
+/** `keys`: the scope of the boxes this bar serves, to show the key reminder when the digit keys are on. */
+export function UmlautBar({ keys = null }: { keys?: UmlautScope | null }) {
   const [msg, setMsg] = useState<string | null>(null)
+  const settings = useSettings()
   const onClick = (letter: string) => {
     if (!lastBox || !lastBox.isConnected || lastBox.readOnly || lastBox.disabled) {
       setMsg('Tap into a text box first.')
@@ -52,6 +86,9 @@ export function UmlautBar() {
         </button>
       ))}
       {msg && <span className="muted small">{msg}</span>}
+      {keys && umlautKeysOn(settings.umlautKeys, keys) && (
+        <span className="muted small">Keys: 1 ä, 2 ö, 3 ü, 4 ß (with Shift: Ä Ö Ü). The number pad types digits.</span>
+      )}
     </div>
   )
 }

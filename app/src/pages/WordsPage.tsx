@@ -12,7 +12,7 @@ import { nearMissText } from '../components/ResultView.tsx'
 import { De, GlossScope } from '../components/GermanText.tsx'
 import { PlayButtons } from '../components/Speaker.tsx'
 import { Tabs } from '../components/Tabs.tsx'
-import { UmlautBar } from '../components/UmlautBar.tsx'
+import { UmlautBar, umlautKeys } from '../components/UmlautBar.tsx'
 import { WordForm } from '../components/WordForm.tsx'
 import { asSentence, checkText, practiceWord } from '../lib/customWords.ts'
 import type { StudyWord } from '../lib/customWords.ts'
@@ -78,6 +78,9 @@ function Words({ tab }: { tab: (typeof WORDS_TABS)[number] }) {
   const { source, note } = parseSourceKey(picked ?? settings.wordSource, content.allLessons)
   const custom = progress.customWords.map(practiceWord)
   const words = wordsForSource(source, content.words, custom, content.allLessons, progress.lessonProgress, state)
+  // A picked unit, lesson or "my words" brings all its new words at once; only "all" keeps the daily
+  // limit, so 200+ lesson words can't arrive in one day (Hayk, 2026-10-02; DECISIONS.md #66).
+  const newLimit = source.kind === 'all' ? settings.newPerDay : Number.POSITIVE_INFINITY
   function pick(key: string) {
     setPicked(key)
     try {
@@ -129,7 +132,7 @@ function Words({ tab }: { tab: (typeof WORDS_TABS)[number] }) {
           setMode(null)
           requestFlush()
         }}
-        newLimit={settings.newPerDay}
+        newLimit={newLimit}
         whatNext={whatNext}
       />
     )
@@ -141,7 +144,7 @@ function Words({ tab }: { tab: (typeof WORDS_TABS)[number] }) {
     window.scrollTo(0, 0)
   }
 
-  const c = counts(words, state, new Date(), settings.newPerDay)
+  const c = counts(words, state, new Date(), newLimit)
   return (
     <div className="stack">
       <h1>Words</h1>
@@ -185,7 +188,7 @@ function Words({ tab }: { tab: (typeof WORDS_TABS)[number] }) {
             </div>
             <div className="stat">
               <div className="stat-num">{c.newLeft}</div>
-              <div className="muted">new today (limit {settings.newPerDay})</div>
+              <div className="muted">{source.kind === 'all' ? `new today (limit ${settings.newPerDay})` : 'new in this pick (no daily limit)'}</div>
             </div>
             <div className="stat">
               <div className="stat-num">{words.length}</div>
@@ -627,10 +630,11 @@ function Card(props: {
             autoComplete="off"
             spellCheck={false}
             lang="de"
+            {...umlautKeys('answer')}
           />
           {check === null && (
             <>
-              <UmlautBar />
+              <UmlautBar keys="answer" />
               <button type="submit" className="btn primary" disabled={typed.trim() === ''}>
                 Check (Enter)
               </button>

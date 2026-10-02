@@ -215,5 +215,15 @@
   {"id": "zaehlen", "de": "zählen", "en": "to count", "example": {"de": "Kannst du bis zehn zählen?", "en": "Can you count to ten?"}, "level": "B1", "tags": ["theme", "sonne"], "added": "2026-09-30"},
   {"id": "laut", "de": "laut", "en": "loud; out loud", "example": {"de": "Die Musik ist zu laut.", "en": "The music is too loud."}, "level": "A1", "tags": ["theme", "sonne"], "added": "2026-09-30"},
   {"id": "stern", "de": "der Stern", "plural": "die Sterne", "en": "star", "example": {"de": "Heute sieht man viele Sterne.", "en": "You can see a lot of stars tonight."}, "level": "B1", "tags": ["theme", "sonne"], "added": "2026-09-30"},
-  {"id": "himmel", "de": "der Himmel", "plural": "die Himmel", "en": "sky; heaven", "example": {"de": "Der Himmel ist blau.", "en": "The sky is blue."}, "level": "A2", "tags": ["theme", "sonne"], "added": "2026-09-30"}
+  {"id": "himmel", "de": "der Himmel", "plural": "die Himmel", "en": "sky; heaven", "example": {"de": "Der Himmel ist blau.", "en": "The sky is blue."}, "level": "A2", "tags": ["theme", "sonne"], "added": "2026-09-30"},
+  {"id": "trinken", "de": "trinken", "en": "to drink", "example": {"de": "Was trinkst du?", "en": "What are you drinking?"}, "level": "A1", "tags": ["theme", "sieben-tage-lang"], "added": "2026-10-02"},
+  {"id": "tag", "de": "der Tag", "plural": "die Tage", "en": "day", "example": {"de": "Ich arbeite acht Stunden am Tag.", "en": "I work eight hours a day."}, "level": "A1", "tags": ["theme", "sieben-tage-lang"], "added": "2026-10-02"},
+  {"id": "genug", "de": "genug", "en": "enough", "example": {"de": "Ich habe genug Zeit.", "en": "I have enough time."}, "level": "A2", "tags": ["theme", "sieben-tage-lang"], "added": "2026-10-02"},
+  {"id": "zusammen", "de": "zusammen", "en": "together", "example": {"de": "Wir essen zusammen.", "en": "We eat together."}, "level": "A1", "tags": ["theme", "sieben-tage-lang"], "added": "2026-10-02"},
+  {"id": "allein", "de": "allein", "en": "alone", "example": {"de": "Ich wohne allein.", "en": "I live alone."}, "level": "A1", "tags": ["theme", "sieben-tage-lang"], "added": "2026-10-02"},
+  {"id": "fass", "de": "das Fass", "plural": "die Fässer", "en": "barrel, keg", "example": {"de": "Bier vom Fass", "en": "draught beer (beer from the keg)"}, "level": "B2", "tags": ["theme", "sieben-tage-lang"], "added": "2026-10-02"},
+  {"id": "schaffen", "de": "schaffen", "en": "to work (southern Germany); to manage", "example": {"de": "Das schaffe ich!", "en": "I can do it!"}, "level": "A2", "tags": ["theme", "sieben-tage-lang"], "added": "2026-10-02"},
+  {"id": "streiken", "de": "streiken", "en": "to strike, to go on strike", "example": {"de": "Die Bahn streikt heute.", "en": "The railway is on strike today."}, "level": "B1", "tags": ["theme", "sieben-tage-lang"], "added": "2026-10-02"},
+  {"id": "leben", "de": "das Leben", "en": "life", "example": {"de": "Das Leben in München ist teuer.", "en": "Life in Munich is expensive."}, "level": "A1", "tags": ["theme", "sieben-tage-lang"], "added": "2026-10-02"},
+  {"id": "kaempfen", "de": "kämpfen", "en": "to fight", "example": {"de": "Wir kämpfen zusammen.", "en": "We fight together."}, "level": "B1", "tags": ["theme", "sieben-tage-lang"], "added": "2026-10-02"}
 ]

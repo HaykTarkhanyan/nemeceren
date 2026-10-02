@@ -109,6 +109,8 @@ export function blockGermanFields(block: LessonBlock): { field: string; text: st
     case 'examples':
     case 'audio':
       return block.items.map((it, i) => ({ field: `items[${i}].de`, text: it.de }))
+    case 'lyrics':
+      return block.stanzas.flatMap((s, si) => s.lines.map((l, li) => ({ field: `stanzas[${si}].lines[${li}].de`, text: l.de })))
     case 'table':
       return block.rows.flatMap((row, r) =>
         block.columns.flatMap((col, c) => (col.de === 'words' ? [{ field: `rows[${r}][${c}]`, text: row[c] }] : [])),

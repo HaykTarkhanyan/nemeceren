@@ -1,5 +1,5 @@
 import { content } from '../content/load.ts'
-import { finalScore } from '../lib/grading.ts'
+import { PASS_PERCENT, testStatus } from '../lib/grading.ts'
 import { practiceWord } from '../lib/customWords.ts'
 import { courseTests, nextLesson, nextTest, wordsForSource } from '../lib/plan.ts'
 import { link } from '../lib/router.ts'
@@ -18,26 +18,25 @@ export function HomePage() {
       <h2>Tests</h2>
       {content.tests.length === 0 && <p className="muted">No tests yet. Claude adds them to content/tests/.</p>}
       {courseTests(content.tests, content.lessons).map((t) => {
-        const attempts = results.filter((r) => r.result.testId === t.id)
-        const last = attempts[0]?.result
-        const score = last ? finalScore(last) : null
-        let status = ''
-        if (score) {
-          status = ` - taken ${attempts.length}x, last: ${score.correct}/${score.total}`
-          if (score.pending) status += ` (${score.pending} waiting for review)`
-        } else {
-          status = ' - not taken yet'
-        }
+        const s = testStatus(results.filter((r) => r.result.testId === t.id).map((r) => r.result))
         return (
-          <a key={t.id} className="card test-card" href={link('test', t.id)}>
+          <a key={t.id} className={`card test-card test-status ${s.kind}`} href={link('test', t.id)}>
             <div className="row between">
               <strong>{t.title}</strong>
-              <span className="badge">{t.unit !== undefined ? `Unit ${t.unit}` : t.level}</span>
+              <span className="row">
+                {s.kind === 'new' && <span className="badge">not taken</span>}
+                {s.kind === 'tried' && <span className="badge warn">tried, best {s.bestPercent}%</span>}
+                {s.kind === 'passed' && <span className="badge ok">passed, best {s.bestPercent}%</span>}
+                {s.kind !== 'new' && s.waiting > 0 && <span className="badge pending">waiting for Claude</span>}
+                <span className="badge">{t.unit !== undefined ? `Unit ${t.unit}` : t.level}</span>
+              </span>
             </div>
             {t.description && <p className="muted">{t.description}</p>}
             <p className="muted small">
-              {t.items.length} items, added {t.created}
-              {status}
+              {t.items.length} items
+              {s.kind === 'new'
+                ? `, added ${t.created}`
+                : `. Taken ${s.attempts}x, last on ${s.lastDay}: ${s.last.correct}/${s.last.total}${s.waiting ? ` (${s.waiting} waiting for Claude's review)` : ''}.${s.kind === 'tried' ? ` Passed from ${PASS_PERCENT}%.` : ''}`}
             </p>
           </a>
         )

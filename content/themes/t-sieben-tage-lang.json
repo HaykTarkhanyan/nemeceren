@@ -1,0 +1,424 @@
+{
+  "id": "t-sieben-tage-lang",
+  "theme": {
+    "kind": "song",
+    "title": "Was wollen wir trinken (Sieben Tage lang)",
+    "by": "Bots (German version); video: DSC",
+    "year": 1980,
+    "url": "https://www.youtube.com/watch?v=MkWDKJjhbvw",
+    "variety": "standard German, sung, with a few spoken short forms"
+  },
+  "level": "A2",
+  "title": "What shall we drink, seven days long (Sieben Tage lang)",
+  "summary": "The pub and protest singalong: drink together, work together, strike together. Easy words, lots of repetition, and your first look at wollen and müssen.",
+  "goals": [
+    "Sing the chorus: Was wollen wir trinken, sieben Tage lang?",
+    "Understand wollen and müssen with a second verb at the end",
+    "Learn the solidarity words: zusammen, nicht allein, keiner kämpft allein",
+    "Hear spoken short forms: roll', fass' an"
+  ],
+  "words": [
+    "trinken",
+    "genug",
+    "zusammen",
+    "allein",
+    "fass",
+    "schaffen",
+    "streiken",
+    "leben",
+    "kaempfen",
+    "tag"
+  ],
+  "sections": [
+    {
+      "id": "about",
+      "type": "explanation",
+      "title": "About this song",
+      "text": "The melody is older than all the words: it is **Son ar chistr**, a Breton song written in 1929 by two teenagers from Morbihan. Alan Stivell made it famous in 1970. In 1976 the Dutch band **Bots** wrote new words for it, 'Zeven dagen lang', and in 1980 they recorded this German version, **Sieben Tage lang**, also known by its first line, 'Was wollen wir trinken'.\n\nThe words you sent are that version: first drinking, then working, then striking together. That's why it's sung in pubs and at folk sessions, and also at demonstrations. The video link is an upload by a channel called DSC.\n\nWhy it's good for you: almost every line comes twice, the words are short, and it shows **wollen** and **müssen**, which come in Unit 3."
+    },
+    {
+      "id": "lyrics",
+      "type": "lyrics",
+      "title": "Full lyrics with translation",
+      "stanzas": [
+        {
+          "label": "1",
+          "lines": [
+            {
+              "de": "Was wollen wir trinken, sieben Tage lang?",
+              "en": "What shall we drink, seven days long?"
+            },
+            {
+              "de": "Was wollen wir trinken, so ein Durst!",
+              "en": "What shall we drink, such a thirst!"
+            },
+            {
+              "de": "Was wollen wir trinken, sieben Tage lang?",
+              "en": "What shall we drink, seven days long?"
+            },
+            {
+              "de": "Was wollen wir trinken, so ein Durst!",
+              "en": "What shall we drink, such a thirst!"
+            }
+          ]
+        },
+        {
+          "label": "2",
+          "lines": [
+            {
+              "de": "Es wird genug für alle sein!",
+              "en": "There'll be enough for everyone!"
+            },
+            {
+              "de": "Wir trinken zusammen, roll' das Fass mal rein!",
+              "en": "We drink together, roll the barrel in!"
+            },
+            {
+              "de": "Wir trinken zusammen, nicht allein!",
+              "en": "We drink together, not alone!"
+            },
+            {
+              "de": "Es wird genug für alle sein!",
+              "en": "There'll be enough for everyone!"
+            },
+            {
+              "de": "Wir trinken zusammen, roll' das Fass mal rein!",
+              "en": "We drink together, roll the barrel in!"
+            },
+            {
+              "de": "Wir trinken zusammen, nicht allein!",
+              "en": "We drink together, not alone!"
+            }
+          ]
+        },
+        {
+          "label": "3",
+          "lines": [
+            {
+              "de": "Dann wollen wir schaffen, sieben Tage lang.",
+              "en": "Then let's work, seven days long."
+            },
+            {
+              "de": "Dann wollen wir schaffen, komm fass' an!",
+              "en": "Then let's work, come on, lend a hand!"
+            },
+            {
+              "de": "Dann wollen wir schaffen, sieben Tage lang.",
+              "en": "Then let's work, seven days long."
+            },
+            {
+              "de": "Dann wollen wir schaffen, komm fass' an!",
+              "en": "Then let's work, come on, lend a hand!"
+            }
+          ]
+        },
+        {
+          "label": "4",
+          "lines": [
+            {
+              "de": "Und das wird keine Plackerei!",
+              "en": "And that won't be drudgery!"
+            },
+            {
+              "de": "Wir schaffen zusammen, sieben Tage lang!",
+              "en": "We work together, seven days long!"
+            },
+            {
+              "de": "Wir schaffen zusammen, nicht allein!",
+              "en": "We work together, not alone!"
+            },
+            {
+              "de": "Und das wird keine Plackerei!",
+              "en": "And that won't be drudgery!"
+            },
+            {
+              "de": "Wir schaffen zusammen, sieben Tage lang!",
+              "en": "We work together, seven days long!"
+            },
+            {
+              "de": "Wir schaffen zusammen, nicht allein!",
+              "en": "We work together, not alone!"
+            }
+          ]
+        },
+        {
+          "label": "5",
+          "lines": [
+            {
+              "de": "Jetzt müssen wir streiken, keiner weiß, wie lang,",
+              "en": "Now we have to strike, nobody knows how long,"
+            },
+            {
+              "de": "ja, für ein Leben ohne Zwang",
+              "en": "yes, for a life without coercion"
+            },
+            {
+              "de": "Jetzt müssen wir streiken, keiner weiß, wie lang,",
+              "en": "Now we have to strike, nobody knows how long,"
+            },
+            {
+              "de": "ja, für ein Leben ohne Zwang",
+              "en": "yes, for a life without coercion"
+            }
+          ]
+        },
+        {
+          "label": "6",
+          "lines": [
+            {
+              "de": "Dann kriegt der Frust uns nicht mehr klein,",
+              "en": "Then frustration won't wear us down any more,"
+            },
+            {
+              "de": "wir halten zusammen, keiner kämpft allein,",
+              "en": "we stick together, nobody fights alone,"
+            },
+            {
+              "de": "wir gehen zusammen, nicht allein!",
+              "en": "we go together, not alone!"
+            },
+            {
+              "de": "Dann kriegt der Frust uns nicht mehr klein,",
+              "en": "Then frustration won't wear us down any more,"
+            },
+            {
+              "de": "wir halten zusammen, keiner kämpft allein,",
+              "en": "we stick together, nobody fights alone,"
+            },
+            {
+              "de": "wir gehen zusammen, nicht allein!",
+              "en": "we go together, not alone!"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "chorus",
+      "type": "examples",
+      "title": "The chorus",
+      "items": [
+        {
+          "de": "Was wollen wir trinken, sieben Tage lang?",
+          "en": "What shall we drink, seven days long?",
+          "note": "Tage lang = for days; sieben Tage lang = for seven days"
+        },
+        {
+          "de": "Was wollen wir trinken, so ein Durst!",
+          "en": "What shall we drink, such a thirst!",
+          "note": "so ein ... ! = such a ...! (Durst from Unit 2: Ich habe Durst)"
+        }
+      ]
+    },
+    {
+      "id": "wollen",
+      "type": "explanation",
+      "title": "wollen and müssen: the second verb goes to the end",
+      "text": "- [[Was wollen wir trinken?]] [[wollen]] = to want. [[Was wollen wir ...?]] is a friendly way to say 'What shall we ...?'. The second verb, [[trinken]], goes to the **end**.\n- [[Jetzt müssen wir streiken]]. [[müssen]] = to have to, must. Same pattern: [[müssen]] in second place, [[streiken]] at the end.\n- You'll learn this properly in Unit 3 (können, wollen, müssen + verb bracket). For now, sing it and notice the shape: verb 1 ... verb 2 at the end.\n\nArmenian puts the verb at the end too, so the 'bracket' will feel natural to you."
+    },
+    {
+      "id": "together",
+      "type": "examples",
+      "title": "Together, not alone",
+      "items": [
+        {
+          "de": "Es wird genug für alle sein!",
+          "en": "There'll be enough for everyone!",
+          "note": "genug = enough; für alle = for everyone"
+        },
+        {
+          "de": "Wir trinken zusammen, nicht allein!",
+          "en": "We drink together, not alone!",
+          "note": "zusammen = together; allein = alone"
+        },
+        {
+          "de": "Wir halten zusammen, keiner kämpft allein",
+          "en": "We stick together, nobody fights alone",
+          "note": "zusammenhalten = to stick together; keiner = nobody"
+        }
+      ]
+    },
+    {
+      "id": "work",
+      "type": "examples",
+      "title": "Work and strike",
+      "items": [
+        {
+          "de": "Dann wollen wir schaffen, komm fass' an!",
+          "en": "Then let's work, come on, lend a hand!",
+          "note": "schaffen = to work (southern Germany); fass' an = fass an, from anfassen: grab hold"
+        },
+        {
+          "de": "Und das wird keine Plackerei!",
+          "en": "And that won't be drudgery!",
+          "note": "die Plackerei = hard, tiring work (colloquial)"
+        },
+        {
+          "de": "Jetzt müssen wir streiken, keiner weiß, wie lang",
+          "en": "Now we have to strike, nobody knows how long",
+          "note": "wie lang = how long (often wie lange)"
+        },
+        {
+          "de": "Dann kriegt der Frust uns nicht mehr klein",
+          "en": "Then frustration won't wear us down any more",
+          "note": "jemanden kleinkriegen = to wear someone down (colloquial); kriegen = bekommen"
+        }
+      ]
+    },
+    {
+      "id": "notes",
+      "type": "explanation",
+      "title": "Words worth a second look",
+      "text": "- [[schaffen]]: in the south (Bavaria, Swabia) it means **to work**: [[Ich muss schaffen.]] = I have to work. Everywhere else it means **to manage, to get done**: [[Das schaffe ich!]] = I can do it! Both are useful in Munich.\n- [[roll' das Fass mal rein]] and [[komm fass' an]]: the apostrophe marks a dropped -e, like [[ich sitz]] in 'Barfuß am Klavier'. [[mal]] softens the order: 'just roll it in'.\n- [[streiken]]: strikes (Streiks) are a normal part of German life. You'll see [[Streik]] on train and airport boards when trains don't run.\n- [[kriegen]] is the everyday spoken word for [[bekommen]] (to get): [[Ich kriege einen Kaffee.]]"
+    },
+    {
+      "id": "words",
+      "type": "table",
+      "title": "Words worth keeping",
+      "columns": [
+        {
+          "header": "German",
+          "de": "words"
+        },
+        {
+          "header": "English"
+        }
+      ],
+      "rows": [
+        [
+          "trinken",
+          "to drink"
+        ],
+        [
+          "der Tag",
+          "day"
+        ],
+        [
+          "genug",
+          "enough"
+        ],
+        [
+          "zusammen",
+          "together"
+        ],
+        [
+          "allein",
+          "alone"
+        ],
+        [
+          "das Fass",
+          "barrel, keg"
+        ],
+        [
+          "schaffen",
+          "to work (south); to manage"
+        ],
+        [
+          "streiken",
+          "to strike (go on strike)"
+        ],
+        [
+          "das Leben",
+          "life"
+        ],
+        [
+          "kämpfen",
+          "to fight"
+        ]
+      ]
+    },
+    {
+      "type": "tip",
+      "title": "How to use it",
+      "text": "1. Listen once with the link above.\n2. Open the full lyrics and sing along: every line comes twice, so the second time you can join in.\n3. The best practice is a real pub: in Munich, folk and Irish pubs still sing this. Now you know the words."
+    },
+    {
+      "type": "audio",
+      "title": "Say the key lines slowly",
+      "items": [
+        {
+          "de": "Was wollen wir trinken, sieben Tage lang?",
+          "en": "What shall we drink, seven days long?"
+        },
+        {
+          "de": "Wir trinken zusammen, nicht allein!",
+          "en": "We drink together, not alone!"
+        },
+        {
+          "de": "Es wird genug für alle sein!",
+          "en": "There'll be enough for everyone!"
+        },
+        {
+          "de": "Jetzt müssen wir streiken",
+          "en": "Now we have to strike"
+        }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: We drink together, not alone!",
+          "text": "Wir trinken zusammen, nicht ___!",
+          "answers": [
+            [
+              "allein"
+            ]
+          ],
+          "explanation": "allein = alone; zusammen = together."
+        },
+        {
+          "type": "mc",
+          "question": "Which word means 'enough'?",
+          "questionLang": "en",
+          "options": [
+            "genug",
+            "zusammen",
+            "allein"
+          ],
+          "answer": "genug",
+          "explanation": "Es wird genug für alle sein = there'll be enough for everyone."
+        },
+        {
+          "type": "order",
+          "prompt": "What shall we drink?",
+          "tiles": [
+            "was",
+            "wollen",
+            "wir",
+            "trinken"
+          ],
+          "answers": [
+            "Was wollen wir trinken"
+          ],
+          "explanation": "wollen comes second, the second verb (trinken) goes to the end."
+        },
+        {
+          "type": "mc",
+          "question": "In Munich, a colleague says 'Ich muss heute lange schaffen.' What does schaffen mean here?",
+          "questionLang": "en",
+          "options": [
+            "arbeiten",
+            "trinken",
+            "streiken"
+          ],
+          "answer": "arbeiten",
+          "explanation": "In southern Germany schaffen means to work (arbeiten). Elsewhere it means to manage: Das schaffe ich!"
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: Now we have to strike.",
+          "text": "Jetzt ___ wir streiken",
+          "answers": [
+            [
+              "müssen"
+            ]
+          ],
+          "explanation": "müssen = to have to; wir müssen. The second verb (streiken) goes to the end."
+        }
+      ]
+    }
+  ]
+}

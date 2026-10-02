@@ -80,6 +80,21 @@ export function SettingsPage() {
         </label>
       </section>
 
+      <section className="card stack">
+        <h2>Typing</h2>
+        <label className="field">
+          <span className="label">Umlaut keys: 1 = ä, 2 = ö, 3 = ü, 4 = ß (Shift+1-3: Ä Ö Ü)</span>
+          <select value={settings.umlautKeys} onChange={(e) => save({ umlautKeys: e.target.value as typeof settings.umlautKeys })}>
+            <option value="answers">In answers (tests, exercises, word reviews)</option>
+            <option value="everywhere">Everywhere, also in notes and my words</option>
+            <option value="off">Off: digit keys type digits</option>
+          </select>
+        </label>
+        <p className="muted small">
+          Answers that need numbers keep real digits automatically, and the number pad always types digits.
+        </p>
+      </section>
+
       {session.phase === 'guest' ? (
         <section className="card stack">
           <h2>Account</h2>

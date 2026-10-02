@@ -12,7 +12,7 @@ import { link } from '../lib/router.ts'
 import { useIsGuest } from '../lib/session.ts'
 import { addContentCard, saveCustomWord, useProgress } from '../lib/storage.ts'
 import type { CustomWordView } from '../lib/storage.ts'
-import { UmlautBar } from './UmlautBar.tsx'
+import { UmlautBar, umlautKeys } from './UmlautBar.tsx'
 
 export function WordForm(props: { editing: CustomWordView | null; onDone: (message: string) => void; onCancel: () => void }) {
   const { editing, onDone, onCancel } = props
@@ -56,7 +56,7 @@ export function WordForm(props: { editing: CustomWordView | null; onDone: (messa
       <div className="word-form-grid">
         <label className="field">
           <span className="label">German</span>
-          <input type="text" lang="de" autoCapitalize="off" autoCorrect="off" spellCheck={false} value={draft.de} onChange={set('de')} />
+          <input type="text" lang="de" autoCapitalize="off" autoCorrect="off" spellCheck={false} value={draft.de} onChange={set('de')} {...umlautKeys('free')} />
           <span className="muted small">Nouns with der, die or das: der Termin.</span>
         </label>
         <label className="field">
@@ -104,7 +104,7 @@ export function WordForm(props: { editing: CustomWordView | null; onDone: (messa
       <div className="word-form-grid">
         <label className="field">
           <span className="label">Plural (optional)</span>
-          <input type="text" lang="de" autoCapitalize="off" autoCorrect="off" spellCheck={false} value={draft.plural} onChange={set('plural')} />
+          <input type="text" lang="de" autoCapitalize="off" autoCorrect="off" spellCheck={false} value={draft.plural} onChange={set('plural')} {...umlautKeys('free')} />
         </label>
         <label className="field">
           <span className="label">Note (optional)</span>
@@ -112,14 +112,14 @@ export function WordForm(props: { editing: CustomWordView | null; onDone: (messa
         </label>
         <label className="field">
           <span className="label">Example in German (optional)</span>
-          <input type="text" lang="de" autoCapitalize="off" autoCorrect="off" spellCheck={false} value={draft.exampleDe} onChange={set('exampleDe')} />
+          <input type="text" lang="de" autoCapitalize="off" autoCorrect="off" spellCheck={false} value={draft.exampleDe} onChange={set('exampleDe')} {...umlautKeys('free')} />
         </label>
         <label className="field">
           <span className="label">The example in English (optional)</span>
           <input type="text" value={draft.exampleEn} onChange={set('exampleEn')} />
         </label>
       </div>
-      <UmlautBar />
+      <UmlautBar keys="free" />
       {editing?.check && <p className="small warn-text">Claude checked this word. Saving a change clears the check, so Claude looks at it again.</p>}
       {error && (
         <div className="alert error" role="alert">

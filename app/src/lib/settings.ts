@@ -10,11 +10,13 @@ const Settings = z.object({
   newPerDay: z.number().int().min(0).max(100),
   /** Where word reviews take their words from, as plan.ts sourceKey: "all", "unit:2", "lesson:<id>". */
   wordSource: z.string(),
+  /** Digit keys type German letters while typing (1 ä, 2 ö, 3 ü, 4 ß): in answer boxes only, everywhere, or off. */
+  umlautKeys: z.enum(['answers', 'everywhere', 'off']),
 })
 export type Settings = z.infer<typeof Settings>
 
 const KEY = 'nemeceren.settings'
-const DEFAULTS: Settings = { voiceURI: null, rate: 0.85, newPerDay: 10, wordSource: 'all' }
+const DEFAULTS: Settings = { voiceURI: null, rate: 0.85, newPerDay: 10, wordSource: 'all', umlautKeys: 'answers' }
 
 let current: Settings | null = null
 const listeners = new Set<() => void>()
