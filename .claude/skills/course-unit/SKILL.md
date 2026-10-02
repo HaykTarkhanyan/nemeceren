@@ -54,7 +54,7 @@ A short plan in the scratchpad:
   - A word already listed by an earlier course lesson doesn't need listing again: just use it.
 - **Tests:** 3 per unit, `u<N>-t1..t3`, 10-12 items, attached to the lessons they check (`tests` on the lesson).
   - Every test starts with 2 review items from earlier units, about 20% (SYLLABUS.md).
-  - The last test ends with the unit's end task as a `write` item ("Unit N final task: ... Claude will check it", with `minWords`).
+  - The last test ends with the unit's end task as a `write` item ("Unit N final task: ... Claude will check it", with `minWords`). If the end task is spoken (a role-play or a chat, like Units 1, 4 and 5), the test gets its written version (write the dialogue or the message), and the live version happens in the chat when Hayk reaches it: Claude's turns 1-2 sentences, one question each, corrections batched at the end (CLAUDE.md).
   - Use a mix of item types, including listening (`listen_mc`, `dictation`).
 
 ## 2. Draft (scratchpad first)
@@ -141,7 +141,7 @@ Grade with `progress.py review` (hints first in the chat, then corrections). The
 ## Notes for Units 3-5 (from the syllabus, the research and Units 0-2)
 
 - **Unit 3, Making plans** (Nicos Weg ch. 7, 8):
-  - times (formal 14:30 and informal "halb drei"), days, months and ordinal dates from `goethe_wortgruppen.txt`;
+  - times (formal 14:30 and informal "halb drei"), days, months and ordinal dates from `goethe_wortgruppen.txt`. Dates like "am ersten Oktober" carry a dative ending, and the dative only comes in Unit 6: teach "am ersten / am zweiten / am dritten ..." as fixed phrases with a pointer to Unit 6, not the rule;
   - am / um / von ... bis;
   - separable verbs (anrufen, aufstehen);
   - time-first word order (Am Samstag gehe ich ...);
