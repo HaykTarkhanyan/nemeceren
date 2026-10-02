@@ -393,6 +393,63 @@
           "title": "sollen: someone wants it",
           "lesson": "u5-03-duerfen-sollen",
           "section": "sollen"
+        },
+        {
+          "title": "The dative: dem, der, dem, den",
+          "lesson": "u6-01-dativ",
+          "section": "dativ-table",
+          "star": true
+        },
+        {
+          "title": "Dative words: mit, zu, bei, aus, nach, von, seit",
+          "lesson": "u6-01-dativ",
+          "section": "dativ-prepositions",
+          "star": true
+        },
+        {
+          "title": "Short forms: zum, zur, beim, vom, im, am",
+          "lesson": "u6-01-dativ",
+          "section": "contractions",
+          "star": true
+        },
+        {
+          "title": "seit + present: Ich wohne seit einem Jahr hier",
+          "lesson": "u6-01-dativ",
+          "section": "seit"
+        },
+        {
+          "title": "The chunks from Units 3-5, explained",
+          "lesson": "u6-01-dativ",
+          "section": "chunks-explained"
+        },
+        {
+          "title": "Where? in, an, auf, neben ... + dative",
+          "lesson": "u6-02-wo",
+          "section": "wo-table",
+          "star": true
+        },
+        {
+          "title": "Wo? or Wohin?",
+          "lesson": "u6-02-wo",
+          "section": "wo-wohin",
+          "star": true
+        },
+        {
+          "title": "Pronouns in all three cases: mir, dir, ihm ...",
+          "lesson": "u6-05-mir-dir",
+          "section": "pronouns-dativ",
+          "star": true
+        },
+        {
+          "title": "Verbs with the dative: helfen, gefallen, gehören, passen",
+          "lesson": "u6-05-mir-dir",
+          "section": "dativ-verbs",
+          "star": true
+        },
+        {
+          "title": "gefallen and mögen",
+          "lesson": "u6-05-mir-dir",
+          "section": "gefallen-moegen"
         }
       ]
     },
@@ -679,6 +736,71 @@
           "title": "Your weekend in six sentences",
           "lesson": "u5-06-war-hatte",
           "section": "weekend-report"
+        },
+        {
+          "title": "In a building: Stock, Aufzug, Treppe",
+          "lesson": "u6-02-wo",
+          "section": "building"
+        },
+        {
+          "title": "How do you get there? mit dem Bus, zu Fuß",
+          "lesson": "u6-03-verkehr",
+          "section": "how-get"
+        },
+        {
+          "title": "Getting on, changing, getting off",
+          "lesson": "u6-03-verkehr",
+          "section": "travel-verbs",
+          "star": true
+        },
+        {
+          "title": "Announcements: Nächster Halt, Verspätung, Gleis",
+          "lesson": "u6-03-verkehr",
+          "section": "announcements"
+        },
+        {
+          "title": "Asking the way",
+          "lesson": "u6-04-weg",
+          "section": "asking-way",
+          "star": true
+        },
+        {
+          "title": "Understanding directions",
+          "lesson": "u6-04-weg",
+          "section": "directions",
+          "star": true
+        },
+        {
+          "title": "What hurts? Mir tut ... weh",
+          "lesson": "u6-06-gesundheit",
+          "section": "weh",
+          "star": true
+        },
+        {
+          "title": "At the doctor's",
+          "lesson": "u6-06-gesundheit",
+          "section": "doctor"
+        },
+        {
+          "title": "Emergency numbers: 112, 116 117",
+          "lesson": "u6-06-gesundheit",
+          "section": "emergency"
+        },
+        {
+          "title": "A short email: greeting, reason, closing",
+          "lesson": "u6-07-krankmeldung",
+          "section": "email-shape",
+          "star": true
+        },
+        {
+          "title": "Calling in sick by phone",
+          "lesson": "u6-07-krankmeldung",
+          "section": "phone"
+        },
+        {
+          "title": "Being ill at work in Germany: the rules",
+          "lesson": "u6-07-krankmeldung",
+          "section": "sick-rules"
         }
       ]
     },
@@ -766,6 +888,16 @@
           "title": "At work: Chef, Kunde, Büro, Aufgabe ...",
           "lesson": "u5-01-arbeitstag",
           "section": "work-words"
+        },
+        {
+          "title": "Transport: Bus, U-Bahn, S-Bahn, Fahrrad ...",
+          "lesson": "u6-03-verkehr",
+          "section": "transport"
+        },
+        {
+          "title": "The body",
+          "lesson": "u6-06-gesundheit",
+          "section": "body"
         }
       ]
     }

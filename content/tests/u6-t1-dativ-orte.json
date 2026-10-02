@@ -1,0 +1,83 @@
+{
+  "id": "u6-t1-dativ-orte",
+  "title": "The dative and places",
+  "level": "A1",
+  "created": "2026-10-02",
+  "description": "Unit 6 check after lessons 1 and 2.",
+  "unit": 6,
+  "lesson": "u6-02-wo",
+  "items": [
+    {"type": "gap", "instruction": "Fill in the gap: We went home on Saturday.", "text": "Wir ___ am Samstag nach Hause gefahren.", "answers": [["sind"]], "explanation": "Review (Unit 5): fahren takes sein in the Perfekt."},
+    {"type": "gap", "instruction": "Fill in the gap: I'll have the coffee.", "text": "Ich nehme ___ Kaffee.", "answers": [["den"]], "explanation": "Review (Unit 4): der Kaffee as the object: den Kaffee."},
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: I go by bike.",
+      "text": "Ich fahre mit ___ Fahrrad.",
+      "answers": [["dem"]],
+      "explanation": "das Fahrrad, after mit the dative: dem Fahrrad."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap with mein: At the weekend I'm at my girlfriend's place.",
+      "text": "Am Wochenende bin ich bei ___ Freundin.",
+      "answers": [["meiner"]],
+      "explanation": "die Freundin, after bei the dative: meiner Freundin."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: After the class I go home.",
+      "text": "Nach ___ Kurs gehe ich nach Hause.",
+      "answers": [["dem"]],
+      "explanation": "der Kurs, after nach the dative: dem Kurs."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: I've lived in Munich for two years.",
+      "text": "Ich wohne ___ zwei Jahren in München.",
+      "answers": [["seit"]],
+      "explanation": "seit + dative (Jahren), with the present tense."
+    },
+    {
+      "type": "mc",
+      "question": "Which short form means 'zu der'?",
+      "questionLang": "en",
+      "options": ["zur", "zum", "zu"],
+      "answer": "zur",
+      "explanation": "zu der = zur (zur Arbeit); zu dem = zum (zum Bahnhof)."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: The laptop is on the table.",
+      "text": "Der Laptop ist auf ___ Tisch.",
+      "answers": [["dem"]],
+      "explanation": "Wo? + dative: der Tisch becomes dem Tisch."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: The toilet is on the first floor.",
+      "text": "Die Toilette ist im ersten ___.",
+      "answers": [["Stock"]],
+      "explanation": "der Stock = the floor: im ersten Stock."
+    },
+    {
+      "type": "listen_mc",
+      "audio": "Das Büro ist im dritten Stock, neben dem Aufzug.",
+      "question": "Where is the office?",
+      "questionLang": "en",
+      "options": ["3. Stock, neben dem Aufzug", "2. Stock, neben dem Aufzug", "3. Stock, neben der Treppe"],
+      "answer": "3. Stock, neben dem Aufzug",
+      "explanation": "im dritten Stock = on the third floor; neben dem Aufzug = next to the lift."
+    },
+    {
+      "type": "dictation",
+      "text": "Wohin gehst du? - Zum Supermarkt.",
+      "explanation": "wohin = where to. zum = zu dem."
+    },
+    {
+      "type": "write",
+      "instruction": "Describe where things are in your flat or your office in 3-4 sentences (im Wohnzimmer, auf dem Tisch, neben dem Fenster ...). Claude will check it.",
+      "prompt": "Wo ist was in deiner Wohnung oder in deinem Büro?",
+      "minWords": 20
+    }
+  ]
+}

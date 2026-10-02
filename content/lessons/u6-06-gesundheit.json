@@ -1,0 +1,135 @@
+{
+  "id": "u6-06-gesundheit",
+  "unit": 6,
+  "order": 6,
+  "level": "A1",
+  "title": "Feeling ill: Mir tut der Kopf weh (Gesundheit)",
+  "summary": "Name the parts of the body, say what hurts and how you feel, and get through the doctor's and the pharmacy.",
+  "goals": [
+    "Name parts of the body",
+    "Say what hurts: Mir tut der Kopf weh. Ich habe Kopfschmerzen.",
+    "Say how you feel: Ich bin krank. Ich habe Fieber.",
+    "Make an appointment and understand simple instructions at the doctor's"
+  ],
+  "nicosWeg": [
+    { "title": "Nicos Weg A1, chapter 17: Health (Geht es dir gut?, Beim Arzt, Gute Besserung!, Nehmen Sie ...)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
+  ],
+  "words": ["krank", "gesund", "kopf", "bauch", "ruecken", "hals", "bein", "arm", "hand", "fuss", "ohr", "zahn", "mund", "auge", "wehtun", "schmerz", "fieber", "arzt", "aerztin", "praxis", "apotheke", "medikament", "tablette", "gute-besserung", "krankenhaus"],
+  "sections": [
+    {
+      "id": "body",
+      "type": "table",
+      "title": "The body",
+      "columns": [{ "header": "Body part", "de": "words" }, { "header": "English" }],
+      "rows": [
+        ["der Kopf", "head"],
+        ["das Auge, die Augen", "eye, eyes"],
+        ["das Ohr", "ear"],
+        ["der Mund", "mouth"],
+        ["der Zahn, die Zähne", "tooth, teeth"],
+        ["der Hals", "throat, neck"],
+        ["der Arm", "arm"],
+        ["die Hand", "hand"],
+        ["der Bauch", "stomach, belly"],
+        ["der Rücken", "back"],
+        ["das Bein", "leg"],
+        ["der Fuß, die Füße", "foot, feet"]
+      ]
+    },
+    {
+      "id": "weh",
+      "type": "explanation",
+      "title": "What hurts?",
+      "text": "Two ways to say it:\n- [[Mir tut der Kopf weh.]] = My head hurts. Literally: to me, the head does pain. More than one: [[Mir tun die Füße weh.]]\n- [[Ich habe Kopfschmerzen.]] = I have a headache. Also [[Bauchschmerzen]], [[Halsschmerzen]], [[Rückenschmerzen]], [[Zahnschmerzen]].\n\n[[wehtun]] is separable and the person is in the dative (lesson 5): [[Tut dir etwas weh?]] = Does something hurt? [[Wo tut es weh?]] = Where does it hurt?"
+    },
+    {
+      "type": "comparison",
+      "text": "Russian у меня болит голова has the same shape: the body part is the subject, and the person is not. German puts the person in the dative ([[mir]]), Russian uses у меня. Armenian says գլուխս ցավում է, 'my head hurts', like English."
+    },
+    {
+      "id": "how-feel",
+      "type": "explanation",
+      "title": "How do you feel?",
+      "text": "- [[Wie geht es Ihnen?]] - [[Nicht so gut. Ich bin krank.]]\n- [[Ich habe Fieber.]] = I have a temperature.\n- [[Ich bin müde.]] (Unit 5)\n- [[Mir ist schlecht.]] = I feel sick (I might throw up). Another dative chunk.\n\nTo someone who is ill: [[Gute Besserung!]] = Get well soon! And when they're better: [[Bist du wieder gesund?]] = Are you well again?"
+    },
+    {
+      "id": "doctor",
+      "type": "explanation",
+      "title": "At the doctor's",
+      "text": "In Germany you usually go first to a general doctor, [[der Hausarzt]] or [[die Hausärztin]], at a [[Praxis]] (practice). Make an appointment by phone or online: [[Ich möchte einen Termin, bitte. Ich habe Fieber.]] At the reception they ask for your health insurance card: [[Ihre Karte, bitte.]]\n\nWhat the doctor asks and says:\n- [[Was fehlt Ihnen?]] = What's the matter? (a dative chunk)\n- [[Seit wann haben Sie Fieber?]] - [[Seit zwei Tagen.]] ([[seit]], lesson 1)\n- [[Nehmen Sie die Tabletten dreimal am Tag nach dem Essen.]] = Take the tablets three times a day after meals.\n- [[Bleiben Sie zu Hause.]] = Stay at home.\n\nYou get the medicine ([[das Medikament]]) at [[die Apotheke]] (the pharmacy). A hospital is [[das Krankenhaus]]."
+    },
+    {
+      "id": "emergency",
+      "type": "tip",
+      "title": "Two numbers",
+      "text": "Emergency (ambulance, fire brigade): 112. A doctor at night or at the weekend, when it's not an emergency: 116 117."
+    },
+    {
+      "id": "health-examples",
+      "type": "examples",
+      "title": "Examples",
+      "items": [
+        { "de": "Mir tut der Bauch weh.", "en": "My stomach hurts." },
+        { "de": "Ich habe Kopfschmerzen und Fieber.", "en": "I have a headache and a temperature." },
+        { "de": "Seit wann sind Sie krank? - Seit gestern.", "en": "How long have you been ill? - Since yesterday." },
+        { "de": "Ich brauche einen Termin beim Arzt.", "en": "I need an appointment with the doctor." },
+        { "de": "Die Apotheke ist an der Ecke.", "en": "The pharmacy is on the corner." },
+        { "de": "Du bist krank? Gute Besserung!", "en": "You're ill? Get well soon!" }
+      ]
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat",
+      "items": [
+        { "de": "Mir tut der Kopf weh.", "en": "My head hurts." },
+        { "de": "Ich habe Halsschmerzen.", "en": "I have a sore throat." },
+        { "de": "Ich habe Fieber.", "en": "I have a temperature." },
+        { "de": "Wo tut es weh?", "en": "Where does it hurt?" },
+        { "de": "Ich möchte einen Termin, bitte.", "en": "I'd like an appointment, please." },
+        { "de": "Gute Besserung!", "en": "Get well soon!" }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: My head hurts.",
+          "text": "Mir tut der Kopf ___.",
+          "answers": [["weh"]],
+          "explanation": "wehtun is separable: tut ... weh."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: My back hurts.",
+          "text": "___ tut der Rücken weh.",
+          "answers": [["Mir"]],
+          "explanation": "The person is in the dative: mir."
+        },
+        {
+          "type": "mc",
+          "question": "Which one means 'I have a sore throat'?",
+          "questionLang": "en",
+          "options": ["Ich habe Halsschmerzen.", "Ich habe Kopfschmerzen.", "Ich habe Bauchschmerzen."],
+          "answer": "Ich habe Halsschmerzen.",
+          "explanation": "der Hals = throat: Halsschmerzen."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: I'm ill. I have a temperature.",
+          "text": "Ich bin ___. Ich habe Fieber.",
+          "answers": [["krank"]],
+          "explanation": "krank = ill."
+        },
+        {
+          "type": "translate",
+          "direction": "en-de",
+          "text": "Get well soon!",
+          "references": ["Gute Besserung!"],
+          "explanation": "Gute Besserung! Literally: good improvement."
+        }
+      ]
+    }
+  ]
+}

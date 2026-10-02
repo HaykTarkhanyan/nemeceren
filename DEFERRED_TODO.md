@@ -4,7 +4,7 @@ Topics cut from current work so they don't get lost.
 
 - **Phone sync for the learning platform** (Neon Postgres or GitHub API commits). Deferred 2026-09-28: phone use is occasional and Hayk is fine with phone results not being saved. See DECISIONS.md #4.
 - **der/die/das and verb conjugation drills** fed from `reference/goethe_wortliste.tsv` and `reference/german_nouns.csv`. Not picked for platform v1 (2026-09-28).
-- **Unit 6 (dative) popups:** the curated glossary entries for `den`, `dem`, `mir`, `zu`, `nach` and `am`/`im` describe only their Unit 3-4 uses (accusative `den`, `am = an dem` as a chunk). When Unit 6 teaches the dative, add the dative readings (`den` as dative plural: mit den Kindern; `mir`/`dir` as indirect objects).
+- (Done 2026-10-02 with Unit 6: the curated `den`, `dem`, `mir`, `dir`, `ihm`, `ihr`, `zum`, `im` ... popups now include their dative readings.)
 - **Unit 1 content:**
   - (Done 2026-10-02: Unit 3 re-added der Termin, morgen, leider and pünktlich with their old ids.)
   - The sample test `a1-01-vorstellen-termine` (Unit 1) mixes in Unit 3 material, and its gap hint gives the answer away. Rework or replace it when writing Unit 1.

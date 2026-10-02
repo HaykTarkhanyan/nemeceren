@@ -1,0 +1,130 @@
+{
+  "id": "u6-02-wo",
+  "unit": 6,
+  "order": 2,
+  "level": "A1",
+  "title": "Where is it? Places and buildings (Wo?)",
+  "summary": "Say where something is: im Büro, am Bahnhof, auf dem Tisch, neben der Tür. Ask Wo? and Wohin?, and find your way around a building.",
+  "goals": [
+    "Say where something is with in, an, auf, neben, hinter, vor, zwischen + dative",
+    "Tell Wo? (where) from Wohin? (where to)",
+    "Find your way in a building: im ersten Stock, der Aufzug, die Treppe"
+  ],
+  "nicosWeg": [
+    { "title": "Nicos Weg A1, chapter 9: Working life (Wo ist der Aufzug?)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" },
+    { "title": "Nicos Weg A1, chapter 10: Orientation (Im Büro)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
+  ],
+  "words": ["wohin", "dort", "oben", "unten", "neben", "hinter", "zwischen", "aufzug", "treppe", "stock", "erdgeschoss", "toilette", "eingang", "ausgang"],
+  "tests": ["u6-t1-dativ-orte"],
+  "sections": [
+    {
+      "id": "wo-dativ",
+      "type": "explanation",
+      "title": "Wo? + dative",
+      "text": "To say **where** something is, use [[in]], [[an]], [[auf]], [[neben]], [[hinter]], [[vor]] or [[zwischen]] + the dative:\n- [[Der Laptop ist auf dem Tisch.]] (on)\n- [[Die Lampe ist neben dem Fenster.]] (next to)\n- [[Ich bin im Büro.]] ([[im]] = [[in dem]])\n- [[Ich warte am Bahnhof.]] ([[am]] = [[an dem]]: at the station)\n- [[Die Toilette ist hinter der Tür.]]"
+    },
+    {
+      "id": "wo-table",
+      "type": "table",
+      "title": "Where?",
+      "columns": [{ "header": "Word", "de": "words" }, { "header": "English" }, { "header": "Example", "de": "words" }],
+      "rows": [
+        ["in", "in", "im Büro, in der Küche"],
+        ["an", "at, on (a side or edge)", "am Bahnhof, an der Tür"],
+        ["auf", "on (top of)", "auf dem Tisch"],
+        ["neben", "next to", "neben dem Fenster"],
+        ["hinter", "behind", "hinter dem Haus"],
+        ["vor", "in front of", "vor der Tür"],
+        ["zwischen", "between", "zwischen dem Bad und der Küche"],
+        ["bei", "at (someone's place)", "bei meiner Freundin"]
+      ]
+    },
+    {
+      "id": "wo-wohin",
+      "type": "explanation",
+      "title": "Wo? or Wohin?",
+      "text": "**Wo?** asks where something is. **Wohin?** asks where it's going:\n- [[Wo bist du?]] - [[Im Büro.]]\n- [[Wohin fährst du?]] - [[Nach Hause.]] / [[Zum Bahnhof.]] / [[Nach Salzburg.]]\n\nAnswers with [[zu]] and [[nach]] are dative too, so they work now. With [[in]] or [[an]], a movement takes the accusative: [[ins Kino]] (Unit 3; [[ins]] = [[in das]]), [[in die Stadt]]. That comes properly at A2."
+    },
+    {
+      "type": "comparison",
+      "text": "Russian makes the same split: где? (Wo?) and куда? (Wohin?), with a different case for each: в офисе (where), в офис (where to). German does it with [[in]] too: [[im Büro]] (Wo?), [[ins Büro]] (Wohin?, A2)."
+    },
+    {
+      "id": "building",
+      "type": "explanation",
+      "title": "In a building",
+      "text": "- [[im Erdgeschoss]] = on the ground floor\n- [[im ersten Stock]] = on the first floor (one floor up, as in British English; American 'second floor')\n- [[oben]] = upstairs, [[unten]] = downstairs\n- [[der Aufzug]] = the lift, [[die Treppe]] = the stairs\n- [[der Eingang]] and [[der Ausgang]] = the entrance and the exit\n- [[Wo ist die Toilette?]] - [[Im zweiten Stock, links.]]\n\n[[im ersten Stock]] works like [[am dritten Mai]]: the ordinal gets -en after [[dem]]."
+    },
+    {
+      "type": "tip",
+      "text": "[[hier]] = here, [[da]] = there (or here), [[dort]] = over there: [[Der Aufzug ist dort, neben der Treppe.]]"
+    },
+    {
+      "id": "where-examples",
+      "type": "examples",
+      "title": "Examples",
+      "items": [
+        { "de": "Wo ist der Aufzug? - Dort, neben der Treppe.", "en": "Where's the lift? - Over there, next to the stairs." },
+        { "de": "Das Büro ist im dritten Stock.", "en": "The office is on the third floor." },
+        { "de": "Mein Handy ist auf dem Tisch.", "en": "My phone is on the table." },
+        { "de": "Der Drucker ist zwischen dem Fenster und der Tür.", "en": "The printer is between the window and the door." },
+        { "de": "Ich warte vor dem Eingang.", "en": "I'm waiting in front of the entrance." },
+        { "de": "Wohin gehst du? - Zum Supermarkt.", "en": "Where are you going? - To the supermarket." }
+      ]
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat",
+      "items": [
+        { "de": "Wo ist die Toilette?", "en": "Where is the toilet?" },
+        { "de": "Im zweiten Stock, links.", "en": "On the second floor, on the left." },
+        { "de": "Der Schlüssel ist auf dem Tisch.", "en": "The key is on the table." },
+        { "de": "Ich warte vor dem Eingang.", "en": "I'm waiting in front of the entrance." },
+        { "de": "Wohin fährst du? - Nach Hause.", "en": "Where are you going? - Home." }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: The key is on the table.",
+          "text": "Der Schlüssel ist auf ___ Tisch.",
+          "answers": [["dem"]],
+          "explanation": "Wo? + dative: der Tisch becomes dem Tisch."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap with one word (a short form): I'm in the office.",
+          "text": "Ich bin ___ Büro.",
+          "answers": [["im"]],
+          "explanation": "in dem Büro = im Büro."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: The toilet is next to the kitchen.",
+          "text": "Die Toilette ist neben ___ Küche.",
+          "answers": [["der"]],
+          "explanation": "die Küche is feminine: in the dative, die becomes der."
+        },
+        {
+          "type": "mc",
+          "question": "Which question asks where someone is going?",
+          "questionLang": "en",
+          "options": ["Wohin gehst du?", "Wo bist du?", "Woher kommst du?"],
+          "answer": "Wohin gehst du?",
+          "explanation": "wohin = where to; wo = where; woher = where from."
+        },
+        {
+          "type": "mc",
+          "question": "Which one means 'on the first floor'?",
+          "questionLang": "en",
+          "options": ["im ersten Stock", "im erste Stock", "am ersten Stock"],
+          "answer": "im ersten Stock",
+          "explanation": "in dem ersten Stock: im, and the ordinal gets -en after dem."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "id": "u6-t3-gesundheit-krankmeldung",
+  "title": "To me, health and calling in sick (Unit 6 final)",
+  "level": "A1",
+  "created": "2026-10-02",
+  "description": "Unit 6 check after lessons 5, 6 and 7, with the unit's final task.",
+  "unit": 6,
+  "lesson": "u6-07-krankmeldung",
+  "items": [
+    {"type": "gap", "instruction": "Fill in the gap: Yesterday I didn't have time.", "text": "Gestern ___ ich keine Zeit.", "answers": [["hatte"]], "explanation": "Review (Unit 5): haben in the past: ich hatte."},
+    {"type": "gap", "instruction": "Fill in the gap with mögen: I don't like fish.", "text": "Ich ___ keinen Fisch.", "answers": [["mag"]], "explanation": "Review (Unit 4): mögen: ich mag."},
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: I'm happy to help you. (to one friend)",
+      "text": "Ich helfe ___ gern.",
+      "answers": [["dir"]],
+      "explanation": "helfen takes the dative: du becomes dir."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: Does the phone belong to you? (polite)",
+      "text": "Gehört das Handy ___?",
+      "answers": [["Ihnen"]],
+      "explanation": "gehören takes the dative: Sie becomes Ihnen."
+    },
+    {
+      "type": "mc",
+      "question": "Which sentence means 'I like the city'? (with gefallen)",
+      "questionLang": "en",
+      "options": ["Die Stadt gefällt mir.", "Ich gefalle die Stadt.", "Die Stadt gefällt mich."],
+      "answer": "Die Stadt gefällt mir.",
+      "explanation": "The city does the pleasing; the person is in the dative: mir."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: My feet hurt.",
+      "text": "Mir ___ die Füße weh.",
+      "answers": [["tun"]],
+      "explanation": "die Füße is plural, so tun: Mir tun die Füße weh."
+    },
+    {
+      "type": "mc",
+      "question": "Which one means 'I have a stomach ache'?",
+      "questionLang": "en",
+      "options": ["Ich habe Bauchschmerzen.", "Ich habe Halsschmerzen.", "Mir tut der Kopf weh."],
+      "answer": "Ich habe Bauchschmerzen.",
+      "explanation": "der Bauch = stomach: Bauchschmerzen."
+    },
+    {
+      "type": "listen_mc",
+      "audio": "Nehmen Sie die Tabletten dreimal am Tag nach dem Essen.",
+      "question": "When do you take the tablets?",
+      "questionLang": "en",
+      "options": ["nach dem Essen", "vor dem Essen", "in der Nacht"],
+      "answer": "nach dem Essen",
+      "explanation": "nach dem Essen = after meals, three times a day."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: How long have you had a temperature?",
+      "text": "Seit ___ haben Sie Fieber?",
+      "answers": [["wann"]],
+      "explanation": "Seit wann ...? = Since when ...? / How long ...?"
+    },
+    {
+      "type": "dictation",
+      "text": "Ich bin leider krank und kann heute nicht kommen.",
+      "explanation": "leider = unfortunately; kann ... kommen: the verb bracket."
+    },
+    {
+      "type": "mc",
+      "question": "You're writing to an office and don't know who will read it. How do you start?",
+      "questionLang": "en",
+      "options": ["Sehr geehrte Damen und Herren,", "Liebe Frau Weber,", "Hallo,"],
+      "answer": "Sehr geehrte Damen und Herren,",
+      "explanation": "Sehr geehrte Damen und Herren when you don't know the name."
+    },
+    {
+      "type": "write",
+      "instruction": "Unit 6 final task, in two parts. Part 1: you're ill. Write an email to your boss or your teacher in 5-6 sentences: a greeting, what's wrong (Mir tut ... weh / Ich habe ...), that you can't come today, that you're going to the doctor, and a closing. Part 2: a colleague visits you for the first time. In 3-4 sentences, explain the way from the U-Bahn to your door (aussteigen, geradeaus, links, rechts, an der Ampel ...). Claude will check it. Then ask Claude for the live role-play: calling in sick by phone, and giving the directions.",
+      "prompt": "Part 1: call in sick by email. Part 2: the way from the U-Bahn to your door.",
+      "promptLang": "en",
+      "digits": true,
+      "minWords": 60
+    }
+  ]
+}

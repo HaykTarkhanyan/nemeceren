@@ -2,6 +2,13 @@
 
 Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
+## 71. Unit 6 teaches the dative with prepositions, places (Wo?) and pronouns, keeps movement with in/an (Wohin? + accusative) for A2, and explains every earlier dative chunk (written with the course-unit skill at Hayk's request, 2026-10-02)
+
+- **Date:** 2026-10-02 - **Status:** active
+- **Why:** the syllabus row asks for the dative with mit/zu/bei/aus/nach/von, "Wo?" + dative, the dative pronouns, gefallen/gehören/passen and "mir tut ... weh". `seit` joins the dative prepositions because "Seit wann haben Sie Fieber?" is needed at the doctor's. Places use in/an/auf/neben/hinter/vor/zwischen + dative for **location only**: the research puts the two-way prepositions (Wohin? + accusative: ins Büro) at A2 (item 13), so `Wohin?` is answered with zu/nach (dative) and `ins Kino` stays a chunk. Seven lessons, because transport (Nicos ch. 10.3) and asking the way (10.2) are separate situations, and calling in sick needs its own lesson for the email form. One lesson section lists every chunk from Units 3-5 (am Montag, im Mai, am dritten, in der Nacht, zum Frühstück, mit Milch, zu Hause) with its long form, and lesson 5 explains Wie geht es dir?, Tut mir leid and Es schmeckt mir. Chunks still waiting: `Liebe`/`Lieber`, `Sehr geehrte`/`geehrter` (adjective endings, A2), `Was fehlt Ihnen?`, `Mir ist schlecht`. Several B1/A2 words got cards because Munich daily life needs them: die U-Bahn and der Hauptbahnhof (B1 in the Goethe list), die Richtung (announcements), die Ärztin. 83 new cards. The final task combines both end tasks from the syllabus row: a Krankmeldung email and directions from the U-Bahn.
+- **Alternatives rejected:** teaching the two-way prepositions fully now (Wo? dative vs Wohin? accusative in one go is the classic A2 hurdle; Unit 6 already brings a whole new case); skipping `seit` (doctors ask it first); one combined transport-and-directions lesson (too long).
+- **What would change this:** Hayk saying "ins Büro" vs "im Büro" confuses them in real use before A2 (then pull a short Wohin? lesson forward).
+
 ## 70. Unit 5 teaches the participles of separable, be-/er-/ver- and -ieren verbs briefly, as two rules for recognition, and keeps its dative forms as chunks (written with the course-unit skill, 2026-10-02)
 
 - **Date:** 2026-10-02 - **Status:** active

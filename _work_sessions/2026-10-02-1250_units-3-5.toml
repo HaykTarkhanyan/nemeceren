@@ -1,4 +1,4 @@
-title = "Units 3-5 with the course-unit skill"
+title = "Units 3-6 with the course-unit skill"
 date = "2026-10-02"
 time = "12:50"
 areas = ["content/lessons", "content/tests", "content/words.json", "content/glossary.json", "content/topics.json", "app/src/styles.css"]
@@ -6,12 +6,13 @@ done = [
   "Digit fix committed and deployed (f88e8bb): write items can say digits: true (DECISIONS #67).",
   "Unit 3 written, checked and reviewed: 6 lessons, 4 tests (incl. the Units 0-3 checkpoint), 98 new cards. Reviewer agent (~250k tokens): no wrong German or answer keys; all 13 RU/HY claims correct; fixed 4 wrong popups (Viertel article, achte, siebte, darf), English-only card meanings (no German giveaways in en-de review), dropped-verb note (Um drei kann ich nicht), in der Nacht note, extra word orders, chat example, Unit 6 pointers. Pushed 48da16c, deployed.",
   "Unit 4 written, checked and reviewed: 7 lessons, 3 tests, 99 new cards (DECISIONS #69). Reviewer agent (~245k tokens): no wrong German sentences; RU/HY claims correct; fixed 5 popups (Butter, den dative plural for t-sonne, rufst, gerne, plus kaufe/höre order), the false 'measures never take a plural' tip (zwei Flaschen), möchte 'no ending' wording, extra accepted answers, dictation sie/Sie ambiguity, mag before it was taught, card en clashes (zahlen/bezahlen, möchten/hätte gern). Extras p13 corrected. Skill updated with the Unit 3 lessons (en English only; one glossary entry per lemma+pos+form; generated-gloss traps). Pushed 187c40b, deployed.",
-  "Unit 5 written, checked and reviewed: 6 lessons, 3 tests, 73 new cards (DECISIONS #70). Reviewer agent (~235k tokens): no wrong German grammar; RU/HY claims correct; fixed 'morgen früh' translation, the du-imperative rule (Lies!, Iss!), 3 popups (zu as particle, Kundin, Nimm), langsamer marked as a chunk, the Bavarian 'keine Zeit gehabt' note, sein-verb wording, card en clashes, repeated exercise items in tests. Found and fixed vulgar Wiktionary glosses (gekocht, französisch); the skill now says to grep for them.",
+  "Unit 5 written, checked and reviewed: 6 lessons, 3 tests, 73 new cards (DECISIONS #70). Reviewer agent (~235k tokens): no wrong German grammar; RU/HY claims correct; fixed 'morgen früh' translation, the du-imperative rule (Lies!, Iss!), 3 popups (zu as particle, Kundin, Nimm), langsamer marked as a chunk, the Bavarian 'keine Zeit gehabt' note, sein-verb wording, card en clashes, repeated exercise items in tests. Found and fixed vulgar Wiktionary glosses (gekocht, französisch); the skill now says to grep for them. Pushed cdb7ec5 + learnings dc2b447 after Hayk's go (the first re-check was killed by low memory), deployed.",
+  "Unit 6 written, checked and reviewed at Hayk's request: 7 lessons, 3 tests, 83 new cards (DECISIONS #71). Reviewer agent (~220k tokens): fixed popups (am/vor for places, euch dative, bei, meinen, der feminine dative), no comma after 'Viele Grüße' (German letter form), giveaway instructions '(zu + dem)', MVG no longer says 'Nächster Halt' on U-Bahn/tram/bus (S-Bahn/trains only), am See and ins = in das explained, card en clashes (Karte/Fahrkarte, Arzt/Ärztin), SYLLABUS 'у меня' wording.",
 ]
 pending = [
-  "Unit 5: plan, draft, check, review agent, ship.",
+  "Hayk: finish Unit 0 (retake u0-t2), then Units 1-6. Before the Goethe A1 mock exam: a top-up of ~150-200 A1 words (forms, clothes, weather) that the syllabus left out.",
 ]
-next = "Unit 5 is committed locally, NOT pushed: the final re-check was stopped by Claude Code because the PC ran out of memory (check-content had already passed; check-taught 5 and the popup spot-check did not run). When Hayk says so: from app/, run `npx tsx scripts/non_essential/check-taught.ts 5` (expect 0 words), then `git push` and watch the Pages deploy. Then Hayk starts Unit 1 (Units 0-2 live, 3-5 written ahead). Lesson learned in Unit 3: card `en` must be English only (en-de review shows it), and curated glossary keys need one entry per lemma+pos+form (the lookup drops duplicates)."
+next = "All A1 units (0-6) are written. Next content work: the A1 word top-up and the mock-exam checkpoint, when Hayk is closer."
 files = ["content/lessons/u3-*.json", "content/tests/u3-*.json", "content/words.json", "content/glossary.json", "content/glossary.generated.json", "content/topics.json", "app/src/styles.css", "DECISIONS.md (#68)", "SYLLABUS.md", "DEFERRED_TODO.md"]
 commits = ["f88e8bb Add a per-item digits flag so write answers can type real digits"]
 notes = """
@@ -61,4 +62,17 @@ Lessons (6):
 5. u5-05-perfekt  Perfekt with haben and sein (ge-t, ge-en; sein for movement and bleiben); decide separable/inseparable/-ieren (DECISIONS).
 6. u5-06-war-hatte  war, hatte, and the weekend report (Wie war dein Wochenende?)
    -> u5-t3 (final: weekend report to a colleague + ask a teacher to repeat and explain; live role-play after)
+UNIT 6 PLAN (Getting around, feeling ill; Nicos Weg ch. 10, 17, 14.3, 18.2; BAMF 10.3.1 ask the way, 10.1.1 timetables/signs, 8.2.2 say what hurts, 2.1.3 call in sick in writing/by phone, 8.3.1)
+Lessons (7):
+1. u6-01-dativ  The dative after mit, zu, bei, aus, nach, von, seit; dem/der/dem/den(-n); zum, zur, beim, vom, im, am; resolves the Unit 3-5 chunks. RU: с мамой / к маме / у мамы = one German case.
+2. u6-02-wo  Wo? + dative (in, an, auf, neben, hinter, vor, zwischen); Wohin? with zu/nach (ins Kino = A2); building: Stock, Aufzug, Treppe. RU где/куда.
+   -> u6-t1
+3. u6-03-verkehr  MVV: mit dem Bus / der U-Bahn / zu Fuß; ein-, um-, aussteigen, ab-, ankommen; announcements (Verspätung, Gleis, Richtung).
+4. u6-04-weg  Asking the way: Wie komme ich zum ...?; geradeaus, links, rechts, an der Ampel; rechts vs richtig.
+   -> u6-t2
+5. u6-05-mir-dir  Dative pronouns; helfen, danken, gefallen, gehören, passen, schmecken; explains Wie geht es dir?, Tut mir leid, Es schmeckt mir.
+6. u6-06-gesundheit  Body, Mir tut ... weh, Kopfschmerzen, Fieber, Arzt/Praxis/Apotheke, 112 and 116 117.
+7. u6-07-krankmeldung  Email and phone: Liebe/Lieber vs Sehr geehrte/r, Viele Grüße / Mit freundlichen Grüßen; the rules (tell on day 1, note usually from day 4, sent electronically).
+   -> u6-t3 (final: Krankmeldung email + directions from the U-Bahn; live role-play after)
+Also: add dative readings to the curated den/dem/mir/zu/nach/am/im popups (DEFERRED_TODO).
 """

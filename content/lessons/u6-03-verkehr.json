@@ -1,0 +1,139 @@
+{
+  "id": "u6-03-verkehr",
+  "unit": 6,
+  "order": 3,
+  "level": "A1",
+  "title": "By bus and train: getting around Munich (Mit Bus und Bahn)",
+  "summary": "Take the U-Bahn, S-Bahn, tram and bus: say how you get somewhere, get on, change and get off, and understand announcements and delays.",
+  "goals": [
+    "Say how you get somewhere: mit dem Bus, mit der U-Bahn, zu Fuß",
+    "Use einsteigen, umsteigen, aussteigen, abfahren and ankommen",
+    "Understand announcements, platforms and delays"
+  ],
+  "nicosWeg": [
+    { "title": "Nicos Weg A1, chapter 10: Orientation (Mit Bus und Bahn)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
+  ],
+  "words": ["bus", "u-bahn", "s-bahn", "strassenbahn", "haltestelle", "bahnhof", "hauptbahnhof", "fahrkarte", "gleis", "abfahren", "ankommen", "umsteigen", "einsteigen", "aussteigen", "auto", "fahrrad", "zu-fuss", "verspaetung", "richtung"],
+  "sections": [
+    {
+      "id": "transport",
+      "type": "table",
+      "title": "How do you get there?",
+      "columns": [{ "header": "By", "de": "words" }, { "header": "English" }],
+      "rows": [
+        ["mit dem Bus", "by bus"],
+        ["mit der U-Bahn", "by underground"],
+        ["mit der S-Bahn", "by suburban train"],
+        ["mit der Straßenbahn", "by tram"],
+        ["mit dem Zug", "by train"],
+        ["mit dem Auto", "by car"],
+        ["mit dem Fahrrad", "by bike"],
+        ["zu Fuß", "on foot"]
+      ]
+    },
+    {
+      "id": "how-get",
+      "type": "explanation",
+      "title": "mit + dative",
+      "text": "[[Wie kommst du zur Arbeit?]] = How do you get to work? - [[Mit der U-Bahn.]] / [[Mit dem Fahrrad.]] / [[Zu Fuß.]]\n\nIt's [[mit]] + dative from lesson 1. The verb is [[fahren]] for anything with wheels and [[gehen]] on foot: [[Ich fahre mit dem Bus.]] [[Ich gehe zu Fuß.]]\n\nIn Munich, people often say [[die Tram]] instead of [[die Straßenbahn]]."
+    },
+    {
+      "id": "travel-verbs",
+      "type": "table",
+      "title": "Getting on, changing, getting off",
+      "columns": [{ "header": "Verb", "de": "words" }, { "header": "Example", "de": "words" }, { "header": "English" }],
+      "rows": [
+        ["einsteigen", "Ich steige am Marienplatz ein.", "I get on at Marienplatz."],
+        ["umsteigen", "Ich steige am Hauptbahnhof um.", "I change at the main station."],
+        ["aussteigen", "Ich steige an der Uni aus.", "I get off at the university."],
+        ["abfahren", "Der Bus fährt um halb neun ab.", "The bus leaves at half past eight."],
+        ["ankommen", "Der Zug kommt um acht an.", "The train arrives at eight."]
+      ]
+    },
+    {
+      "type": "tip",
+      "text": "All five are separable (Unit 3), and in the Perfekt they take [[sein]] (Unit 5): [[Ich bin am Hauptbahnhof umgestiegen.]] [[Der Zug ist pünktlich angekommen.]] [[abfahren]] changes its vowel: [[er fährt ... ab]]."
+    },
+    {
+      "id": "announcements",
+      "type": "explanation",
+      "title": "Announcements and signs",
+      "text": "- [[Nächster Halt: Marienplatz.]] = Next stop: Marienplatz. (S-Bahn and trains; the U-Bahn, tram and bus just say the name of the stop.)\n- [[Ausstieg in Fahrtrichtung links.]] = Exit on the left (in the direction of travel).\n- [[die U3 Richtung Moosach]] = the U3 towards Moosach (the last stop names the direction)\n- [[Der Zug fährt von Gleis drei ab.]] = The train leaves from platform 3.\n- [[Der Zug hat zehn Minuten Verspätung.]] = The train is ten minutes late.\n\nYou'll hear these more than you'll say them: listen for the place, the number and [[Verspätung]]."
+    },
+    {
+      "id": "mvv",
+      "type": "tip",
+      "title": "Tickets in Munich",
+      "text": "In Munich, buses, trams, the U-Bahn and the S-Bahn all belong to one network, the MVV, and one ticket works for all of them. Buy [[die Fahrkarte]] (people also say [[das Ticket]]) at a machine or in the MVV app."
+    },
+    {
+      "id": "commute",
+      "type": "examples",
+      "title": "Examples",
+      "items": [
+        { "de": "Wie kommst du zur Arbeit? - Mit der U-Bahn.", "en": "How do you get to work? - By underground." },
+        { "de": "Ich fahre mit der S-Bahn zum Hauptbahnhof.", "en": "I take the S-Bahn to the main station." },
+        { "de": "Dort steige ich um.", "en": "I change there." },
+        { "de": "Ich steige am Marienplatz aus.", "en": "I get off at Marienplatz." },
+        { "de": "Der Bus fährt um acht Uhr ab.", "en": "The bus leaves at eight." },
+        { "de": "Der Zug hat zwanzig Minuten Verspätung.", "en": "The train is twenty minutes late." },
+        { "de": "Ich gehe zu Fuß. Es ist nicht weit.", "en": "I walk. It isn't far." }
+      ]
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat",
+      "items": [
+        { "de": "Ich fahre mit der U-Bahn.", "en": "I take the underground." },
+        { "de": "Ich steige am Hauptbahnhof um.", "en": "I change at the main station." },
+        { "de": "Nächster Halt: Marienplatz.", "en": "Next stop: Marienplatz.", "note": "S-Bahn and trains" },
+        { "de": "Der Zug hat zehn Minuten Verspätung.", "en": "The train is ten minutes late." },
+        { "de": "Ich gehe zu Fuß.", "en": "I walk." }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: I go by underground.",
+          "text": "Ich fahre mit ___ U-Bahn.",
+          "answers": [["der"]],
+          "explanation": "die U-Bahn is feminine: after mit, der U-Bahn."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: I get off at Marienplatz.",
+          "text": "Ich steige am Marienplatz ___.",
+          "answers": [["aus"]],
+          "explanation": "aussteigen is separable: steige ... aus."
+        },
+        {
+          "type": "mc",
+          "question": "The display says 'Verspätung 10 Min.' What does that mean?",
+          "questionLang": "en",
+          "options": ["Der Zug kommt zehn Minuten später.", "Der Zug fährt zehn Minuten früher.", "Der Zug fährt heute nicht."],
+          "answer": "Der Zug kommt zehn Minuten später.",
+          "explanation": "die Verspätung = the delay."
+        },
+        {
+          "type": "listen_mc",
+          "audio": "Der Zug nach Salzburg fährt um vierzehn Uhr zehn von Gleis sieben ab.",
+          "question": "Which platform?",
+          "questionLang": "en",
+          "options": ["7", "17", "10"],
+          "answer": "7",
+          "explanation": "von Gleis sieben = from platform 7. vierzehn Uhr zehn is the time."
+        },
+        {
+          "type": "order",
+          "prompt": "I go to work by bike.",
+          "tiles": ["ich", "fahre", "mit", "dem", "Fahrrad", "zur", "Arbeit"],
+          "answers": ["Ich fahre mit dem Fahrrad zur Arbeit", "Mit dem Fahrrad fahre ich zur Arbeit", "Zur Arbeit fahre ich mit dem Fahrrad", "Ich fahre zur Arbeit mit dem Fahrrad"],
+          "explanation": "mit dem Fahrrad (how) usually comes before zur Arbeit (where to)."
+        }
+      ]
+    }
+  ]
+}

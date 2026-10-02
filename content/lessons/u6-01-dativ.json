@@ -1,0 +1,145 @@
+{
+  "id": "u6-01-dativ",
+  "unit": 6,
+  "order": 1,
+  "level": "A1",
+  "title": "The dative: dem, der, den (Der Dativ)",
+  "summary": "The third case. After mit, zu, bei, aus, nach, von and seit, der becomes dem and die becomes der. Now am Montag, zum Frühstück and mit Milch finally make sense.",
+  "goals": [
+    "Use the dative after mit, zu, bei, aus, nach, von and seit",
+    "Know the dative forms: dem, der, dem, den",
+    "Understand the short forms zum, zur, beim, vom, im, am"
+  ],
+  "nicosWeg": [
+    { "title": "Nicos Weg A1, chapter 10: Orientation (Wo ist der Bahnhof?, Mit Bus und Bahn)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
+  ],
+  "words": ["mit", "zu", "seit", "geschenk"],
+  "sections": [
+    {
+      "id": "dativ-intro",
+      "type": "explanation",
+      "title": "The third case",
+      "text": "You know two cases: the subject ([[der Mann]], the nominative) and the object ([[den Mann]], the accusative, Unit 4). The third is the **dative**. Most often it comes after a few small words: [[mit]], [[zu]], [[bei]], [[aus]], [[nach]], [[von]], [[seit]]. After these, always the dative:\n- [[mit dem Bus]] ([[der Bus]])\n- [[mit der U-Bahn]] ([[die U-Bahn]])\n- [[mit dem Fahrrad]] ([[das Fahrrad]])\n- [[mit den Kindern]] ([[die Kinder]])\n\nYou've used it since Unit 3 without knowing: [[am Montag]] is [[an dem Montag]], [[zum Frühstück]] is [[zu dem Frühstück]], and [[mit Milch]] is a dative too, just without an article to show it."
+    },
+    {
+      "id": "dativ-table",
+      "type": "table",
+      "title": "The three cases",
+      "columns": [{ "header": "Case" }, { "header": "masculine", "de": "words" }, { "header": "feminine", "de": "words" }, { "header": "neuter", "de": "words" }, { "header": "plural", "de": "words" }],
+      "rows": [
+        ["who does it", "der Bus", "die Bahn", "das Auto", "die Kinder"],
+        ["what it's done to", "den Bus", "die Bahn", "das Auto", "die Kinder"],
+        ["dative: the", "dem Bus", "der Bahn", "dem Auto", "den Kindern"],
+        ["dative: a", "einem Bus", "einer Bahn", "einem Auto", "Kindern"],
+        ["dative: my", "meinem Bruder", "meiner Mutter", "meinem Kind", "meinen Eltern"]
+      ]
+    },
+    {
+      "type": "tip",
+      "title": "Two things to notice",
+      "text": "- Masculine and neuter are the same: [[dem]], [[einem]], [[meinem]]. Feminine is [[der]], [[einer]], [[meiner]]: yes, the same [[der]] as masculine in the nominative.\n- In the plural the noun gets an extra -n: [[die Kinder]], [[mit den Kindern]]. Not when it already ends in -n or -s: [[mit den Eltern]], [[mit den Autos]]."
+    },
+    {
+      "id": "dativ-prepositions",
+      "type": "explanation",
+      "title": "The seven dative words",
+      "text": "- [[mit]] = with; by: [[mit meiner Freundin]], [[mit dem Bus]]\n- [[zu]] = to (a person, a place): [[zu meiner Mutter]], [[zum Arzt]]\n- [[bei]] = at someone's place, at a company: [[bei meinen Eltern]], [[bei Siemens]] (Unit 1), [[beim Arzt]]\n- [[aus]] = from, out of: [[aus der Schweiz]], [[aus dem Büro]]\n- [[nach]] = after; to (cities, countries): [[nach dem Kurs]], [[nach Salzburg]], [[nach Hause]]\n- [[von]] = from, of: [[von meinem Bruder]], [[vom Bahnhof]]\n- [[seit]] = since, for: [[seit Montag]], [[seit einem Jahr]]"
+    },
+    {
+      "id": "contractions",
+      "type": "table",
+      "title": "Short forms",
+      "columns": [{ "header": "Long", "de": "words" }, { "header": "Short", "de": "words" }, { "header": "Example", "de": "words" }],
+      "rows": [
+        ["zu dem", "zum", "zum Bahnhof"],
+        ["zu der", "zur", "zur Arbeit"],
+        ["bei dem", "beim", "beim Arzt"],
+        ["von dem", "vom", "vom Kurs"],
+        ["in dem", "im", "im Büro"],
+        ["an dem", "am", "am Montag"]
+      ]
+    },
+    {
+      "type": "comparison",
+      "text": "Russian needs three cases where German has one: с мамой (instrumental), к маме (dative), у мамы (genitive). German says [[mit meiner Mutter]], [[zu meiner Mutter]], [[bei meiner Mutter]]: always the dative. And German puts the ending mostly on the article; only the dative plural adds -n to the noun."
+    },
+    {
+      "id": "seit",
+      "type": "warning",
+      "title": "seit + the present",
+      "text": "[[Ich wohne seit einem Jahr in München.]] = I **have lived** in Munich for a year. English uses 'have lived'; German, like Russian (Я живу в Мюнхене уже год), uses the present tense, because it's still true."
+    },
+    {
+      "id": "chunks-explained",
+      "type": "explanation",
+      "title": "The chunks from Units 3-5, explained",
+      "text": "- [[am Montag]], [[am Abend]]: [[an dem]]\n- [[am dritten Mai]]: [[an dem]], and [[dritten]] gets -en after [[dem]]\n- [[im Mai]], [[im Sommer]]: [[in dem]]\n- [[in der Nacht]]: [[die Nacht]] becomes [[der Nacht]] in the dative\n- [[am See]] (Unit 5): [[an dem See]], a place: Wo? + dative, lesson 2\n- [[Alles Gute zum Geburtstag!]] (Unit 3): [[zu dem]]\n- [[zum Frühstück]]: [[zu dem]]\n- [[mit Milch]], [[mit Karte]]: dative, but no article to show it\n- [[zu Hause]], [[nach Hause]]: fixed phrases with an old dative -e\n\n[[Tut mir leid]], [[Es schmeckt mir]] and [[Können Sie mir helfen?]] come in lesson 5."
+    },
+    {
+      "id": "dativ-examples",
+      "type": "examples",
+      "title": "Examples",
+      "items": [
+        { "de": "Ich fahre mit dem Bus zur Arbeit.", "en": "I take the bus to work." },
+        { "de": "Am Wochenende bin ich bei meinen Eltern.", "en": "At the weekend I'm at my parents' place." },
+        { "de": "Das Geschenk ist von meiner Schwester.", "en": "The present is from my sister." },
+        { "de": "Nach dem Kurs gehe ich nach Hause.", "en": "After the class I go home." },
+        { "de": "Ich lerne seit einem Monat Deutsch.", "en": "I've been learning German for a month." },
+        { "de": "Heute gehe ich zum Arzt.", "en": "Today I'm going to the doctor." }
+      ]
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat",
+      "items": [
+        { "de": "mit dem Bus, mit der U-Bahn, mit dem Fahrrad", "en": "by bus, by underground, by bike" },
+        { "de": "zum Bahnhof, zur Arbeit", "en": "to the station, to work" },
+        { "de": "bei meinen Eltern", "en": "at my parents' place" },
+        { "de": "Ich wohne seit einem Jahr in München.", "en": "I've lived in Munich for a year." },
+        { "de": "Nach dem Kurs gehe ich nach Hause.", "en": "After the class I go home." }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: I go by bus.",
+          "text": "Ich fahre mit ___ Bus.",
+          "answers": [["dem"]],
+          "explanation": "der Bus, and after mit the dative: dem Bus."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap with mein: I live with my parents.",
+          "text": "Ich wohne bei ___ Eltern.",
+          "answers": [["meinen"]],
+          "explanation": "die Eltern (plural), after bei the dative: meinen Eltern."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap with one word (a short form): I'm going to the doctor.",
+          "text": "Ich gehe ___ Arzt.",
+          "answers": [["zum"]],
+          "explanation": "zu dem Arzt = zum Arzt."
+        },
+        {
+          "type": "mc",
+          "question": "Which one means 'with my mother'?",
+          "questionLang": "en",
+          "options": ["mit meiner Mutter", "mit meine Mutter", "mit meinem Mutter"],
+          "answer": "mit meiner Mutter",
+          "explanation": "die Mutter is feminine: in the dative, meine becomes meiner."
+        },
+        {
+          "type": "order",
+          "prompt": "I've been learning German for a month.",
+          "tiles": ["ich", "lerne", "seit", "einem", "Monat", "Deutsch"],
+          "answers": ["Ich lerne seit einem Monat Deutsch", "Seit einem Monat lerne ich Deutsch", "Ich lerne Deutsch seit einem Monat", "Deutsch lerne ich seit einem Monat"],
+          "explanation": "seit + dative (der Monat: einem Monat), with the present tense."
+        }
+      ]
+    }
+  ]
+}

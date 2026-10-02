@@ -1,5 +1,5 @@
 {
-  "ignore": ["Hayk", "Charlotte", "Eva", "Meier", "Müller", "Schmidt", "Thomas", "Weber", "Aram", "Tarkhanyan", "Goethestraße", "Siemens", "Berlin"],
+  "ignore": ["Hayk", "Charlotte", "Eva", "Meier", "Müller", "Schmidt", "Thomas", "Weber", "Aram", "Tarkhanyan", "Goethestraße", "Siemens", "Berlin", "Marienplatz", "Moosach"],
   "entries": {
     "rein": [
       {"lemma": "rein", "pos": "adverb", "gloss": ["in (spoken for herein)"], "note": "Komm rein! = Come in! Also an adjective: pure (reines Wasser)"}
@@ -44,8 +44,8 @@
       {"lemma": "singen", "pos": "verb", "form": "ich form, spoken", "level": "A1", "gloss": ["to sing"], "note": "ich sing = ich singe (the -e is dropped in speech and songs)."}
     ],
     "aus": [
-      {"lemma": "aus", "pos": "preposition", "level": "A1", "gloss": ["from"], "note": "Ich komme aus Armenien."},
-      {"lemma": "aus", "pos": "adverb", "level": "A1", "gloss": ["out, off, over"], "note": "Das Licht ist aus. = The light is off. At the end of a count: out!"}
+      {"lemma": "aus", "pos": "preposition", "level": "A1", "gloss": ["from, out of"], "note": "Ich komme aus Armenien."},
+      {"lemma": "aus", "pos": "particle", "gloss": ["separable part of a verb"], "note": "aussteigen: Ich steige am Marienplatz aus."}
     ],
     "alle": [
       {"lemma": "alle", "pos": "pronoun", "level": "A1", "gloss": ["everyone, all"], "note": "Alle warten. = Everyone is waiting."}
@@ -63,7 +63,7 @@
       {"lemma": "lassen", "pos": "verb", "form": "du and er/sie/es form, present", "level": "A2", "gloss": ["lets; makes (someone do something)"]}
     ],
     "euch": [
-      {"lemma": "ihr", "pos": "pronoun", "form": "accusative", "level": "A1", "gloss": ["you (plural, as the object)", "yourselves"], "note": "Ich hole euch ab."}
+      {"lemma": "ihr", "pos": "pronoun", "form": "accusative/dative", "level": "A1", "gloss": ["(to) you (plural)", "yourselves"], "note": "Ich hole euch ab. Ich danke euch."}
     ],
     "dabei": [
       {"lemma": "dabei", "pos": "adverb", "level": "A2", "gloss": ["while doing it, at the same time"], "note": "Ich singe dabei. = I sing while I'm at it."}
@@ -187,16 +187,17 @@
       {"lemma": "lieben", "pos": "verb", "form": "ich form, present", "level": "A1", "gloss": ["to love"]}
     ],
     "Liebe": [
-      {"lemma": "Liebe", "pos": "noun", "article": "die", "level": "B1", "gloss": ["love"]}
+      {"lemma": "lieb", "pos": "adjective", "level": "A1", "gloss": ["dear (to a woman, in a letter)"], "note": "Liebe Frau Weber, ..."},
+      {"lemma": "Liebe", "pos": "noun", "article": "die", "level": "A2", "gloss": ["love"]}
     ],
     "vielen": [
       {"lemma": "viel", "pos": "determiner", "form": "fixed phrase", "level": "A1", "gloss": ["many"], "note": "Vielen Dank! = Thank you very much!"}
     ],
     "ihnen": [
-      {"lemma": "sie", "pos": "pronoun", "form": "dative plural", "gloss": ["(to) them"]}
+      {"lemma": "sie", "pos": "pronoun", "form": "dative plural", "level": "A1", "gloss": ["(to) them"]}
     ],
     "Ihnen": [
-      {"lemma": "Sie", "pos": "pronoun", "form": "dative", "level": "A1", "gloss": ["(to) you (polite)"], "note": "Wie geht es Ihnen? = How are you?"}
+      {"lemma": "Sie", "pos": "pronoun", "form": "dative", "level": "A1", "gloss": ["(to) you (polite)"], "note": "Wie geht es Ihnen?"}
     ],
     "Freunde": [
       {"lemma": "Freund", "pos": "noun", "article": "der", "plural": "Freunde", "form": "plural", "level": "A1", "gloss": ["friends"]}
@@ -222,7 +223,8 @@
     ],
     "ihr": [
       {"lemma": "ihr", "pos": "determiner", "level": "A1", "gloss": ["her; their"], "note": "ihr Name = her name or their name"},
-      {"lemma": "ihr", "pos": "pronoun", "level": "A1", "gloss": ["you (plural, informal)"], "note": "Ihr seid nett."}
+      {"lemma": "ihr", "pos": "pronoun", "level": "A1", "gloss": ["you (plural, informal)"], "note": "Ihr seid nett."},
+      {"lemma": "sie", "pos": "pronoun", "form": "dative", "level": "A1", "gloss": ["(to) her"], "note": "Ich helfe ihr."}
     ],
     "ihre": [
       {"lemma": "ihr", "pos": "determiner", "level": "A1", "form": "feminine and plural", "gloss": ["her; their"], "note": "ihre Schwester, ihre Eltern"}
@@ -295,8 +297,9 @@
       { "lemma": "Studentin", "pos": "noun", "article": "die", "form": "plural", "level": "A1", "gloss": ["students (female)"] }
     ],
     "der": [
-      { "lemma": "der", "pos": "article", "level": "A1", "gloss": ["the (masculine)"], "note": "der Mann, die Frau, das Kind; plural always die. Also the feminine dative: mit der Frau." },
-      { "lemma": "der", "pos": "pronoun", "gloss": ["who, that, which", "this one, that one"] }
+      {"lemma": "der", "pos": "article", "level": "A1", "gloss": ["the (masculine)"], "note": "der Mann, die Frau, das Kind; plural always die."},
+      {"lemma": "die", "pos": "article", "form": "dative feminine", "level": "A1", "gloss": ["the (feminine, dative)"], "note": "mit der U-Bahn, in der Küche"},
+      {"lemma": "der", "pos": "pronoun", "gloss": ["who, that, which; this one, that one"]}
     ],
     "die": [
       { "lemma": "der", "pos": "article", "level": "A1", "gloss": ["the (feminine, and every plural)"], "note": "die Frau, die Kinder" },
@@ -313,7 +316,7 @@
       { "lemma": "gut", "pos": "adjective", "level": "A1", "gloss": ["good, well, fine"], "note": "Gut, danke. = Fine, thanks." }
     ],
     "dir": [
-      { "lemma": "du", "pos": "pronoun", "level": "A1", "form": "dative", "gloss": ["(to) you (informal)"], "note": "Und dir? = And you? (informal). Polite: Und Ihnen?" }
+      {"lemma": "du", "pos": "pronoun", "form": "dative", "level": "A1", "gloss": ["(to) you"], "note": "Wie geht es dir? Ich helfe dir."}
     ],
     "Wiedersehen": [
       { "lemma": "Wiedersehen", "pos": "phrase", "level": "A1", "gloss": ["Auf Wiedersehen = goodbye (polite)"], "note": "Literally 'until we see each other again'." }
@@ -392,7 +395,8 @@
     ],
     "kommt": [
       {"lemma": "kommen", "pos": "verb", "form": "er/sie/es and ihr form; ihr imperative", "level": "A1", "gloss": ["to come"], "note": "Kommt! = Come! (to a group)"},
-      {"lemma": "mitkommen", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["to come along"], "note": "Separable: Sie kommt mit."}
+      {"lemma": "mitkommen", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["to come along"], "note": "Separable: Sie kommt mit."},
+      {"lemma": "ankommen", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["to arrive"], "note": "Separable: Der Zug kommt um acht an."}
     ],
     "an": [
       {"lemma": "an", "pos": "preposition", "level": "A1", "gloss": ["at, on"], "note": "am = an dem: am Montag"},
@@ -459,10 +463,11 @@
       {"lemma": "siebte", "pos": "numeral", "form": "after am", "level": "A1", "gloss": ["seventh"], "note": "am siebten Juli = on the seventh of July"}
     ],
     "Tut": [
-      {"lemma": "tun", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["to do"], "note": "Tut mir leid. = I'm sorry."}
+      {"lemma": "tun", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["to do"], "note": "Tut mir leid. = I'm sorry."},
+      {"lemma": "wehtun", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["hurts"], "note": "Separable: Tut dir etwas weh?"}
     ],
     "mir": [
-      {"lemma": "ich", "pos": "pronoun", "form": "dative", "level": "A1", "gloss": ["(to) me"], "note": "Tut mir leid. = I'm sorry. Unit 6 explains mir."}
+      {"lemma": "ich", "pos": "pronoun", "form": "dative", "level": "A1", "gloss": ["(to) me"], "note": "Tut mir leid. Kannst du mir helfen? Das gefällt mir."}
     ],
     "dich": [
       {"lemma": "du", "pos": "pronoun", "form": "accusative", "level": "A1", "gloss": ["you"], "note": "Ich rufe dich an. = I'll call you. Unit 4 explains dich."}
@@ -484,23 +489,25 @@
       {"lemma": "alles", "pos": "pronoun", "level": "A1", "gloss": ["everything, all"], "note": "Alles Gute! = All the best!"}
     ],
     "um": [
-      {"lemma": "um", "pos": "preposition", "level": "A1", "gloss": ["at (a clock time)"], "note": "um drei Uhr = at three o'clock"}
+      {"lemma": "um", "pos": "preposition", "level": "A1", "gloss": ["at (a clock time)"], "note": "um drei Uhr = at three o'clock"},
+      {"lemma": "um", "pos": "particle", "gloss": ["separable part of a verb"], "note": "umsteigen: Ich steige am Hauptbahnhof um."}
     ],
     "am": [
-      {"lemma": "am", "pos": "contraction", "level": "A1", "gloss": ["on (days, dates); in (parts of the day)"], "note": "an + dem: am Montag, am Abend, am dritten Mai"}
+      {"lemma": "am", "pos": "contraction", "level": "A1", "gloss": ["on (days, dates); in (parts of the day)", "at the (a place)"], "note": "an + dem: am Montag, am Abend; am Bahnhof"}
     ],
     "Oktoberfest": [
       {"lemma": "Oktoberfest", "pos": "noun", "article": "das", "gloss": ["the Oktoberfest (Munich's beer festival)"], "note": "It starts in September."}
     ],
     "tut": [
-      {"lemma": "tun", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["to do"], "note": "Tut mir leid. = I'm sorry."}
+      {"lemma": "tun", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["to do"], "note": "Tut mir leid. = I'm sorry."},
+      {"lemma": "wehtun", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["hurts"], "note": "Separable: Mir tut der Kopf weh."}
     ],
     "gute": [
       {"lemma": "gut", "pos": "adjective", "level": "A1", "gloss": ["good"], "note": "Gute Nacht! Gute Idee!"}
     ],
     "ein": [
       {"lemma": "ein", "pos": "article", "level": "A1", "gloss": ["a, an"]},
-      {"lemma": "ein", "pos": "particle", "gloss": ["separable part of a verb"], "note": "einkaufen: Am Samstag kaufe ich ein."}
+      {"lemma": "ein", "pos": "particle", "gloss": ["separable part of a verb"], "note": "einkaufen: Ich kaufe ein. einsteigen: Ich steige ein."}
     ],
     "Viertel": [
       {"lemma": "Viertel", "pos": "noun", "article": "das", "plural": "Viertel", "level": "A1", "gloss": ["quarter (of an hour)"], "note": "Viertel nach drei = 3:15, Viertel vor drei = 2:45"}
@@ -518,7 +525,7 @@
       {"lemma": "wollen", "pos": "verb", "level": "A1", "gloss": ["to want"], "note": "Wollen wir ...? = Shall we ...?"}
     ],
     "dem": [
-      {"lemma": "der", "pos": "article", "form": "dative", "level": "A1", "gloss": ["the (dative of der and das)"], "note": "am = an dem, im = in dem. Unit 6 explains it."}
+      {"lemma": "der", "pos": "article", "form": "dative (masculine, neuter)", "level": "A1", "gloss": ["the (dative of der and das)"], "note": "mit dem Bus; am = an dem, im = in dem, zum = zu dem"}
     ],
     "nach": [
       {"lemma": "nach", "pos": "preposition", "level": "A1", "gloss": ["after; (in times) past", "to (a place)"], "note": "zehn nach drei = 3:10; nach Hause = home"}
@@ -538,7 +545,7 @@
       {"lemma": "halb", "pos": "adjective", "level": "A1", "gloss": ["half"], "note": "halb drei = 2:30 (half an hour before three)"}
     ],
     "vor": [
-      {"lemma": "vor", "pos": "preposition", "level": "A1", "gloss": ["before; (in times) to"], "note": "zehn vor drei = 2:50"}
+      {"lemma": "vor", "pos": "preposition", "level": "A1", "gloss": ["before; (in times) to", "in front of"], "note": "zehn vor drei = 2:50; vor der Tür = in front of the door"}
     ],
     "bis": [
       {"lemma": "bis", "pos": "preposition", "level": "A1", "gloss": ["until, to"], "note": "von neun bis fünf = from nine to five; Bis morgen! = See you tomorrow!"}
@@ -625,7 +632,7 @@
     ],
     "den": [
       {"lemma": "der", "pos": "article", "form": "accusative, masculine", "level": "A1", "gloss": ["the (masculine, as the object)"], "note": "der Kaffee becomes den Kaffee: Ich nehme den Kaffee."},
-      {"lemma": "der", "pos": "article", "form": "dative plural", "level": "A1", "gloss": ["the (plural, after mit, in, aus)"], "note": "mit den Händen. Unit 6 explains it."}
+      {"lemma": "der", "pos": "article", "form": "dative plural", "level": "A1", "gloss": ["the (plural, after mit, bei, zu ...)"], "note": "mit den Kindern, bei meinen Eltern"}
     ],
     "keinen": [
       {"lemma": "kein", "pos": "determiner", "form": "accusative, masculine", "level": "A1", "gloss": ["no, not a"], "note": "Ich habe keinen Stift."}
@@ -755,6 +762,103 @@
     ],
     "da": [
       {"lemma": "da", "pos": "adverb", "level": "A1", "gloss": ["there; here, in (present)"], "note": "Der Chef ist nicht da. = The boss isn't in."}
+    ],
+    "ihm": [
+      {"lemma": "er", "pos": "pronoun", "form": "dative", "level": "A1", "gloss": ["(to) him, (to) it"], "note": "Das gehört ihm."}
+    ],
+    "zum": [
+      {"lemma": "zu dem", "pos": "contraction", "level": "A1", "gloss": ["to the"], "note": "zum Bahnhof, zum Arzt"}
+    ],
+    "zur": [
+      {"lemma": "zu der", "pos": "contraction", "level": "A1", "gloss": ["to the"], "note": "zur Arbeit, zur U-Bahn"}
+    ],
+    "beim": [
+      {"lemma": "bei dem", "pos": "contraction", "level": "A1", "gloss": ["at the"], "note": "beim Arzt"}
+    ],
+    "vom": [
+      {"lemma": "von dem", "pos": "contraction", "level": "A1", "gloss": ["from the"], "note": "vom Bahnhof"}
+    ],
+    "im": [
+      {"lemma": "in dem", "pos": "contraction", "level": "A1", "gloss": ["in the"], "note": "im Büro, im Mai"}
+    ],
+    "steige": [
+      {"lemma": "einsteigen / umsteigen / aussteigen", "pos": "verb", "form": "ich form, present", "level": "A1", "gloss": ["to get on / to change / to get off"], "note": "Separable: Ich steige am Marienplatz aus. The small word at the end tells you which."}
+    ],
+    "steigt": [
+      {"lemma": "einsteigen / umsteigen / aussteigen", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["gets on / changes / gets off"], "note": "Separable: Er steigt am Hauptbahnhof um."}
+    ],
+    "fährt": [
+      {"lemma": "fahren", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["goes, drives"]},
+      {"lemma": "abfahren", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["leaves, departs"], "note": "Separable: Der Bus fährt um acht ab."}
+    ],
+    "tun": [
+      {"lemma": "wehtun", "pos": "verb", "form": "wir/sie/Sie form, present", "level": "A1", "gloss": ["hurt"], "note": "Separable: Mir tun die Füße weh."},
+      {"lemma": "tun", "pos": "verb", "level": "A1", "gloss": ["to do"]}
+    ],
+    "weh": [
+      {"lemma": "wehtun", "pos": "particle", "level": "A1", "gloss": ["separable part of wehtun (to hurt)"], "note": "Mir tut der Kopf weh. = My head hurts."}
+    ],
+    "gefällt": [
+      {"lemma": "gefallen", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["pleases"], "note": "Das gefällt mir. = I like it."}
+    ],
+    "gehört": [
+      {"lemma": "gehören", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["belongs"], "note": "Das gehört mir. = That's mine."},
+      {"lemma": "hören", "pos": "verb", "form": "past participle", "level": "A1", "gloss": ["heard"], "note": "Ich habe Musik gehört."}
+    ],
+    "passt": [
+      {"lemma": "passen", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["fits, suits"], "note": "Passt dir Montag? = Does Monday suit you?"}
+    ],
+    "fehlt": [
+      {"lemma": "fehlen", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["is missing"], "note": "Was fehlt Ihnen? = What's the matter? (at the doctor's)"}
+    ],
+    "Stock": [
+      {"lemma": "Stock", "pos": "noun", "article": "der", "level": "A1", "gloss": ["floor, storey"], "note": "im ersten Stock = on the first floor"}
+    ],
+    "Halt": [
+      {"lemma": "Halt", "pos": "noun", "article": "der", "level": "B1", "gloss": ["stop (bus, train)"], "note": "Nächster Halt: Marienplatz."}
+    ],
+    "Tram": [
+      {"lemma": "Tram", "pos": "noun", "article": "die", "gloss": ["tram (Munich)"], "note": "Elsewhere: die Straßenbahn"}
+    ],
+    "Lieber": [
+      {"lemma": "lieb", "pos": "adjective", "level": "A1", "gloss": ["dear (to a man, in a letter)"], "note": "Lieber Herr Müller, ..."},
+      {"lemma": "gern", "pos": "adverb", "form": "comparative", "level": "A1", "gloss": ["rather, preferably"], "note": "Lieber Tee? = Would you rather have tea?"}
+    ],
+    "geehrte": [
+      {"lemma": "geehrt", "pos": "adjective", "level": "B1", "gloss": ["dear (formal letter)"], "note": "Sehr geehrte Frau Weber, / Sehr geehrte Damen und Herren,"}
+    ],
+    "geehrter": [
+      {"lemma": "geehrt", "pos": "adjective", "level": "B1", "gloss": ["dear (formal letter, to a man)"], "note": "Sehr geehrter Herr Müller,"}
+    ],
+    "Kilometer": [
+      {"lemma": "Kilometer", "pos": "noun", "article": "der", "plural": "Kilometer", "level": "A1", "gloss": ["kilometre"]}
+    ],
+    "Krankschreibung": [
+      {"lemma": "Krankschreibung", "pos": "noun", "article": "die", "plural": "Krankschreibungen", "gloss": ["doctor's note (for work)"], "note": "From the doctor; it says you can't work."}
+    ],
+    "Nächster": [
+      {"lemma": "nächste", "pos": "adjective", "level": "A2", "gloss": ["next"], "note": "Nächster Halt: Marienplatz. = Next stop: Marienplatz."}
+    ],
+    "Ausstieg": [
+      {"lemma": "Ausstieg", "pos": "noun", "article": "der", "level": "B1", "gloss": ["exit (from a train or bus)"], "note": "Ausstieg links. = Exit on the left."}
+    ],
+    "freundlichen": [
+      {"lemma": "freundlich", "pos": "adjective", "level": "A2", "gloss": ["friendly"], "note": "Mit freundlichen Grüßen = Kind regards (formal letter)"}
+    ],
+    "ausstieg": [
+      {"lemma": "Ausstieg", "pos": "noun", "article": "der", "level": "B1", "gloss": ["exit (from a train or bus)"], "note": "Ausstieg links. = Exit on the left."}
+    ],
+    "bei": [
+      {"lemma": "bei", "pos": "preposition", "level": "A1", "gloss": ["at (someone's place)", "at (a company)", "near"], "note": "bei meinen Eltern, bei Siemens, beim Arzt"}
+    ],
+    "meinen": [
+      {"lemma": "mein", "pos": "determiner", "form": "accusative masculine; dative plural", "level": "A1", "gloss": ["my"], "note": "für meinen Bruder; bei meinen Eltern"}
+    ],
+    "Fahrtrichtung": [
+      {"lemma": "Fahrtrichtung", "pos": "noun", "article": "die", "gloss": ["direction of travel"], "note": "Ausstieg in Fahrtrichtung links. = Exit on the left."}
+    ],
+    "seit": [
+      {"lemma": "seit", "pos": "preposition", "level": "A1", "gloss": ["since; for (until now)"], "note": "seit Montag, seit einem Jahr"}
     ]
   }
 }

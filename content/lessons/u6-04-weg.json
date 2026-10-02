@@ -1,0 +1,120 @@
+{
+  "id": "u6-04-weg",
+  "unit": 6,
+  "order": 4,
+  "level": "A1",
+  "title": "Asking the way (Wie komme ich zum ...?)",
+  "summary": "Ask how to get somewhere and understand the answer: geradeaus, links, rechts, an der Ampel, an der Ecke.",
+  "goals": [
+    "Ask the way: Wie komme ich zum Bahnhof?",
+    "Understand directions: geradeaus, die zweite Straße links, an der Ampel rechts",
+    "Ask and say how far it is"
+  ],
+  "nicosWeg": [
+    { "title": "Nicos Weg A1, chapter 10: Orientation (Wo ist der Bahnhof?, An der Ampel links)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
+  ],
+  "words": ["links", "rechts", "geradeaus", "weit", "ecke", "ampel", "kreuzung", "in-der-naehe", "weg", "kilometer", "wie-komme-ich-zum", "entschuldigen"],
+  "tests": ["u6-t2-verkehr-weg"],
+  "sections": [
+    {
+      "id": "asking-way",
+      "type": "explanation",
+      "title": "Asking",
+      "text": "- [[Entschuldigung, wie komme ich zum Bahnhof?]] ([[zum]] = [[zu dem]]: [[der Bahnhof]])\n- [[Wie komme ich zur U-Bahn?]] ([[zur]] = [[zu der]]: [[die U-Bahn]])\n- [[Gibt es hier in der Nähe eine Apotheke?]] = Is there a pharmacy nearby?\n- [[Ist es weit?]] - [[Nein, nur fünf Minuten zu Fuß.]] Or: [[Bis zum Bahnhof sind es zwei Kilometer.]]\n- [[Ich kenne den Weg nicht.]] = I don't know the way.\n\nStart with [[Entschuldigung]] or [[Entschuldigen Sie]] (excuse me), and end with [[Vielen Dank!]]"
+    },
+    {
+      "id": "directions",
+      "type": "table",
+      "title": "Understanding directions",
+      "columns": [{ "header": "German", "de": "words" }, { "header": "English" }],
+      "rows": [
+        ["Gehen Sie geradeaus.", "Go straight on."],
+        ["links / rechts", "left / right"],
+        ["die erste Straße links", "the first street on the left"],
+        ["die zweite Straße rechts", "the second street on the right"],
+        ["an der Ampel links", "left at the traffic lights"],
+        ["an der Ecke rechts", "right at the corner"],
+        ["bis zur Kreuzung", "as far as the crossroads"],
+        ["Dann sehen Sie den Bahnhof.", "Then you'll see the station."]
+      ]
+    },
+    {
+      "type": "tip",
+      "text": "Directions use the imperative from Unit 5 ([[Gehen Sie ...]], [[Nehmen Sie die U-Bahn.]]), the ordinals from Unit 3 ([[die erste Straße]]) and the dative from lessons 1 and 2 ([[an der Ampel]], [[bis zur Kreuzung]]). To a friend: [[Geh geradeaus, dann links.]]"
+    },
+    {
+      "id": "rechts-richtig",
+      "type": "warning",
+      "title": "rechts or richtig?",
+      "text": "English 'right' has two German words: [[rechts]] (the direction) and [[richtig]] (correct, Unit 5). [[An der Ecke rechts.]] but [[Das ist richtig.]]"
+    },
+    {
+      "id": "way-dialogue",
+      "type": "examples",
+      "title": "Asking the way",
+      "items": [
+        { "de": "Entschuldigung, wie komme ich zum Marienplatz?", "en": "Excuse me, how do I get to Marienplatz?", "note": "Aram" },
+        { "de": "Gehen Sie hier geradeaus und dann an der Ampel links.", "en": "Go straight on here and then left at the traffic lights.", "note": "a passer-by" },
+        { "de": "Ist es weit?", "en": "Is it far?", "note": "Aram" },
+        { "de": "Nein, nur zehn Minuten zu Fuß.", "en": "No, only ten minutes on foot.", "note": "a passer-by" },
+        { "de": "Oder nehmen Sie den Bus. Die Haltestelle ist dort an der Ecke.", "en": "Or take the bus. The stop is over there on the corner.", "note": "a passer-by" },
+        { "de": "Vielen Dank! - Gern!", "en": "Thanks a lot! - You're welcome!" }
+      ]
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat",
+      "items": [
+        { "de": "Entschuldigung, wie komme ich zum Bahnhof?", "en": "Excuse me, how do I get to the station?" },
+        { "de": "Gehen Sie geradeaus.", "en": "Go straight on." },
+        { "de": "Die zweite Straße links.", "en": "The second street on the left." },
+        { "de": "An der Ampel rechts.", "en": "Right at the traffic lights." },
+        { "de": "Ist es weit?", "en": "Is it far?" }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap with one word (a short form): How do I get to the station?",
+          "text": "Wie komme ich ___ Bahnhof?",
+          "answers": [["zum"]],
+          "explanation": "der Bahnhof: zu dem Bahnhof = zum Bahnhof."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap with one word (a short form): How do I get to the stop?",
+          "text": "Wie komme ich ___ Haltestelle?",
+          "answers": [["zur"]],
+          "explanation": "die Haltestelle: zu der Haltestelle = zur Haltestelle."
+        },
+        {
+          "type": "mc",
+          "question": "Which one means 'Left at the traffic lights'?",
+          "questionLang": "en",
+          "options": ["An der Ampel links.", "An der Ampel rechts.", "An der Ecke links."],
+          "answer": "An der Ampel links.",
+          "explanation": "die Ampel = the traffic lights; links = left."
+        },
+        {
+          "type": "listen_mc",
+          "audio": "Gehen Sie geradeaus und dann die zweite Straße rechts.",
+          "question": "Where do you turn?",
+          "questionLang": "en",
+          "options": ["die zweite Straße rechts", "die erste Straße rechts", "die zweite Straße links"],
+          "answer": "die zweite Straße rechts",
+          "explanation": "die zweite Straße rechts = the second street on the right."
+        },
+        {
+          "type": "order",
+          "prompt": "Go straight on, then left. (polite)",
+          "tiles": ["gehen", "Sie", "geradeaus", "dann", "links"],
+          "answers": ["Gehen Sie geradeaus dann links"],
+          "explanation": "The Sie imperative: Gehen Sie ..."
+        }
+      ]
+    }
+  ]
+}

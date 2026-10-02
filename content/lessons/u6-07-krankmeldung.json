@@ -1,0 +1,121 @@
+{
+  "id": "u6-07-krankmeldung",
+  "unit": 6,
+  "order": 7,
+  "level": "A1",
+  "title": "Calling in sick (Krankmeldung)",
+  "summary": "Tell your boss or your teacher that you're ill, by email or by phone, in the right form.",
+  "goals": [
+    "Write a short email: greeting, reason, what happens next, closing",
+    "Choose Liebe/Lieber or Sehr geehrte/Sehr geehrter",
+    "Call in sick by phone",
+    "Know the basic rules for being ill at work in Germany"
+  ],
+  "nicosWeg": [
+    { "title": "Nicos Weg A1, chapter 17: Health (Gute Besserung!)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
+  ],
+  "words": ["viele-gruesse", "mit-freundlichen-gruessen", "sehr-geehrte-damen-und-herren", "gruss", "wieder"],
+  "tests": ["u6-t3-gesundheit-krankmeldung"],
+  "sections": [
+    {
+      "id": "email-shape",
+      "type": "explanation",
+      "title": "A short email in four parts",
+      "text": "1. **Greeting.** People you know: [[Liebe Frau Weber,]] (a woman), [[Lieber Herr Müller,]] (a man), or [[Hallo Eva,]] for friends. Formal: [[Sehr geehrte Frau Weber,]] / [[Sehr geehrter Herr Müller,]], and [[Sehr geehrte Damen und Herren,]] when you don't know the name.\n2. **After the comma**, the next line starts with a small letter: [[leider bin ich heute krank.]]\n3. **The reason and what happens next:** [[Ich habe Fieber und kann heute nicht kommen. Ich gehe heute zum Arzt.]]\n4. **Closing:** [[Viele Grüße]] (friendly) or [[Mit freundlichen Grüßen]] (formal), with no comma after it (unlike English), and your name on the next line.\n\n[[Liebe]] / [[Lieber]] and [[geehrte]] / [[geehrter]] change with the person's gender. Learn them as fixed openings; adjective endings come at A2."
+    },
+    {
+      "id": "email-boss",
+      "type": "examples",
+      "title": "An email to the boss",
+      "items": [
+        { "de": "Liebe Frau Weber,", "en": "Dear Ms Weber," },
+        { "de": "leider bin ich heute krank.", "en": "unfortunately I'm ill today." },
+        { "de": "Ich habe Fieber und Kopfschmerzen.", "en": "I have a temperature and a headache." },
+        { "de": "Ich kann heute und morgen nicht zur Arbeit kommen.", "en": "I can't come to work today or tomorrow." },
+        { "de": "Ich gehe heute zum Arzt.", "en": "I'm going to the doctor today." },
+        { "de": "Viele Grüße", "en": "Best wishes", "note": "no comma; your name on the next line: Aram" }
+      ]
+    },
+    {
+      "id": "email-teacher",
+      "type": "examples",
+      "title": "A message to the teacher",
+      "items": [
+        { "de": "Lieber Herr Müller,", "en": "Dear Mr Müller," },
+        { "de": "ich bin leider krank und kann heute nicht zum Kurs kommen.", "en": "unfortunately I'm ill and can't come to class today." },
+        { "de": "Könnten Sie mir bitte die Hausaufgaben schicken?", "en": "Could you send me the homework, please?" },
+        { "de": "Vielen Dank und viele Grüße", "en": "Thanks a lot and best wishes", "note": "then your name on the next line: Eva" }
+      ]
+    },
+    {
+      "id": "phone",
+      "type": "explanation",
+      "title": "By phone",
+      "text": "- [[Guten Morgen, hier ist Aram Tarkhanyan.]]\n- [[Ich bin leider krank und kann heute nicht kommen.]]\n- [[Ich gehe heute zum Arzt.]]\n- [[Vielleicht bin ich morgen wieder da.]] = Maybe I'll be back tomorrow.\n- [[Tut mir leid.]] = I'm sorry."
+    },
+    {
+      "id": "sick-rules",
+      "type": "tip",
+      "title": "The rules in Germany",
+      "text": "Tell your employer **on the first day**, before work starts. If you're ill for more than three days, you usually need a doctor's note ([[die Krankschreibung]]); some employers want it from the first day. With public health insurance, the doctor sends it electronically to your insurance, and your employer gets it from there."
+    },
+    {
+      "type": "comparison",
+      "text": "Russian Уважаемая ... and Armenian Հարգելի ... are like [[Sehr geehrte ...]]: formal. Russian Дорогая ... is like [[Liebe ...]], but German uses [[Liebe]] much more widely, also for a boss or a teacher you know."
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat",
+      "items": [
+        { "de": "Ich bin leider krank.", "en": "Unfortunately I'm ill." },
+        { "de": "Ich kann heute nicht kommen.", "en": "I can't come today." },
+        { "de": "Ich gehe heute zum Arzt.", "en": "I'm going to the doctor today." },
+        { "de": "Viele Grüße", "en": "Best wishes" },
+        { "de": "Mit freundlichen Grüßen", "en": "Kind regards" }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "mc",
+          "question": "You're writing to your boss, Ms Weber, whom you know well. How do you start?",
+          "questionLang": "en",
+          "options": ["Liebe Frau Weber,", "Hallo Weber,", "Sehr geehrte Damen und Herren,"],
+          "answer": "Liebe Frau Weber,",
+          "explanation": "Liebe for a woman you know; Sehr geehrte Damen und Herren only when you don't know the name."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: Unfortunately I'm ill today.",
+          "text": "Leider ___ ich heute krank.",
+          "answers": [["bin"]],
+          "explanation": "leider takes position 1, so the verb comes next: Leider bin ich ..."
+        },
+        {
+          "type": "mc",
+          "question": "Which closing is formal?",
+          "questionLang": "en",
+          "options": ["Mit freundlichen Grüßen", "Viele Grüße", "Tschüss"],
+          "answer": "Mit freundlichen Grüßen",
+          "explanation": "Mit freundlichen Grüßen is formal; Viele Grüße is friendly."
+        },
+        {
+          "type": "order",
+          "prompt": "I can't come to work today.",
+          "tiles": ["ich", "kann", "heute", "nicht", "zur", "Arbeit", "kommen"],
+          "answers": ["Ich kann heute nicht zur Arbeit kommen", "Heute kann ich nicht zur Arbeit kommen", "Zur Arbeit kann ich heute nicht kommen"],
+          "explanation": "kann in second place, kommen at the end; zur Arbeit = zu der Arbeit."
+        },
+        {
+          "type": "translate",
+          "direction": "en-de",
+          "text": "I'm going to the doctor today.",
+          "references": ["Ich gehe heute zum Arzt.", "Heute gehe ich zum Arzt."],
+          "explanation": "zu dem Arzt = zum Arzt."
+        }
+      ]
+    }
+  ]
+}

@@ -48,6 +48,8 @@
 
 **Unit 5 as written (2026-10-02, DECISIONS.md #70):** the participles of separable verbs (aufgestanden) and of be-/er-/ver-/-ieren verbs (besucht, telefoniert) come as two short rules for recognition; A2 practises them. Chunks: `Können Sie mir helfen?`, `am See` (Unit 6), `langsamer` (A2).
 
+**Unit 6 as written (2026-10-02, DECISIONS.md #71):** seven lessons. `seit` joins the dative prepositions. Places are Wo? + dative only; Wohin? is answered with zu/nach, and movement with in/an (ins Büro) waits for A2. Lesson 1 explains every dative chunk from Units 3-5. The final task combines both end tasks: the Krankmeldung email and directions from the U-Bahn.
+
 **Total about 100 hours and about 650 words.** Goethe estimates 60-150 h for A1 (search snippet, not verified).
 - 20 min/day: about 10 months
 - 30 min/day: about 6-7 months
@@ -75,7 +77,7 @@ Unit details are in the v1 draft in `_knowledge/2026-09-29_syllabus-research.md`
 
 ## Where Russian and Armenian help, and where they don't
 
-- **Russian:** the case idea (accusative, dative), "Вы" = "Sie", где/куда = wo/wohin, "у меня болит" = "mir tut ... weh", which is the same "to me it hurts" structure.
+- **Russian:** the case idea (accusative, dative), "Вы" = "Sie", где/куда = wo/wohin, "у меня болит" is close to "mir tut ... weh": in both, the body part is the subject (Russian у меня = "at me", German mir = "to me").
 - **Not from Russian:** articles, gender that often differs (das Mädchen, die Sonne vs солнце), and verb second. Prepositions after verbs don't carry over (warten **auf**).
 - **Armenian:** the verb at the end in the verb bracket (ich **kann** heute nicht **kommen**) feels natural from SOV word order. Armenian has no gender, so der/die/das is the main memory load. Learn every noun with its article from day one.
 - **Pronunciation:** German spelling is much more regular than English. Unit 0 is short but important: after it, you can read any German word aloud correctly.
