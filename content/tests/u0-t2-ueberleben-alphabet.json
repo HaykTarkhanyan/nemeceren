@@ -3,7 +3,7 @@
   "title": "Survival phrases and spelling",
   "level": "A1",
   "created": "2026-09-29",
-  "description": "Unit 0 check after lessons 3 and 4: keep a conversation going, spell names.",
+  "description": "Unit 0 check after lessons 3 and 4: keep a conversation going, ask someone to spell.",
   "unit": 0,
   "lesson": "u0-04-alphabet",
   "items": [
@@ -63,13 +63,6 @@
       "type": "dictation",
       "text": "Können Sie das bitte buchstabieren?",
       "explanation": "Können with ö; buchstabieren = to spell."
-    },
-    {
-      "type": "write",
-      "instruction": "Spell your first name and your city letter by letter, using the German letter names (for example, Aram: a, err, a, em). Claude will check it.",
-      "prompt": "Spell your first name and your city the German way.",
-      "promptLang": "en",
-      "minWords": 4
     }
   ]
 }
