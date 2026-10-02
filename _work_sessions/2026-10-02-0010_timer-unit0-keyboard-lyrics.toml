@@ -1,0 +1,35 @@
+title = "Study timer, Unit 0 grading, keyboard shortcuts, test status, folding units, full song lyrics, course-unit skill"
+date = "2026-10-02"
+time = "00:10"
+areas = ["app/", "backend/", "content/", ".claude/skills/", "_learnings/", "DECISIONS.md", "SYLLABUS.md"]
+
+done = [
+  "Study timer (header start/pause/stop, reload-safe, >3 h correction, <1 min discard, add by hand, Stats chart) built by an agent; I fixed 2 stale test fixtures, deployed the API, ran the smoke test, and checked it in a browser. Migration 004 applied.",
+  "Unit 0 grading: all 9 attempts reviewed with progress.py (hint-first in chat first). Tests: t1 80%, t3 90%, t2 5/9 (retake). Spelling question removed from u0-t2 at Hayk's request; spelling topic kept in lesson 0.4 (a removal there was reverted after Hayk objected).",
+  "Logged Hayk's Unit 0 session by hand: 2026-10-02 00:40-01:45 Munich, 65 min (first logged as 23:40, corrected).",
+  "Keyboard round (built inline): digit umlaut keys, test keys (1-9, Space, Shift+Space, Enter = Next, no submit on the last question), coloured test status on Home, folding units on Lessons, no daily new-word limit for a picked unit/lesson/my words.",
+  "Song lessons: new lyrics block (folded, per-line translation, unique word counts on lesson and Themes card); full lyrics for Barfuß am Klavier and Sonne; new song lesson 'Was wollen wir trinken (Sieben Tage lang)' (Bots 1980 German version; facts from Wikipedia) with 10 cards; 11 curated popups.",
+  "Skills: course-unit (new), theme-lesson now requires the full text. Learnings: lyrics sites block downloads, Playwright echoes secrets, mc options are German. DECISIONS #64-#66.",
+]
+
+pending = [
+  "Hayk: retake u0-t2 (8 questions, needs 7/8), introduce the remaining 44 Unit 0 words (Words from: Unit 0, now uncapped), then Unit 0 can be marked done in SYLLABUS.md with hours.",
+  "Phone sign-in and sync after 15+ minutes still untested on a real phone.",
+  "Prune the stopgap popup entries (DEFERRED_TODO).",
+  "Optional: turn the taught-before-tested scan into a kept script (course-unit skill step 3).",
+]
+
+next = [
+  "Grade the u0-t2 retake; mark Unit 0 done; start Unit 1 teaching in the chat.",
+  "Write Unit 3 with the course-unit skill once Hayk is into Unit 1.",
+]
+
+files = [
+  "app/src/lib/keys.ts", "app/src/lib/lyrics.ts", "app/src/components/StudyTimer.tsx", "app/src/lib/timer.ts",
+  "backend/db/migrations/004_study_sessions.sql", "content/themes/t-sieben-tage-lang.json",
+  ".claude/skills/course-unit/SKILL.md", ".claude/skills/theme-lesson/SKILL.md",
+]
+
+commits = ["dfa665a", "9aa6072", "cb4d590", "4e3de93"]
+
+notes = "Memory was the bottleneck all session: VS Code (~2.9 GB), Chrome (~2.9 GB), Edge and Slack. Ask Hayk to close Edge/Slack before builds and browser checks. Dialogs in Playwright run_code are held by the MCP; avoid window.confirm paths in scripted checks or answer them with browser_handle_dialog."
