@@ -859,6 +859,114 @@
     ],
     "seit": [
       {"lemma": "seit", "pos": "preposition", "level": "A1", "gloss": ["since; for (until now)"], "note": "seit Montag, seit einem Jahr"}
+    ],
+    "weiß": [
+      {"lemma": "wissen", "pos": "verb", "form": "ich and er/sie/es form, present", "level": "A1", "gloss": ["know(s)"], "note": "Ich weiß es nicht. = I don't know."},
+      {"lemma": "weiß", "pos": "adjective", "level": "A1", "gloss": ["white"], "note": "Das Hemd ist weiß."}
+    ],
+    "weißt": [
+      {"lemma": "wissen", "pos": "verb", "form": "du form, present", "level": "A1", "gloss": ["know"], "note": "Weißt du das?"}
+    ],
+    "wisst": [
+      {"lemma": "wissen", "pos": "verb", "form": "ihr form, present", "level": "A1", "gloss": ["know"]}
+    ],
+    "ziehe": [
+      {"lemma": "anziehen", "pos": "verb", "form": "ich form, present", "level": "A1", "gloss": ["to put on (clothes)"], "note": "Separable: Ich ziehe die Jacke an."},
+      {"lemma": "ausziehen", "pos": "verb", "form": "ich form, present", "level": "A1", "gloss": ["to take off (clothes)"], "note": "Separable: Ich ziehe die Schuhe aus."}
+    ],
+    "ziehen": [
+      {"lemma": "ausziehen", "pos": "verb", "form": "Sie imperative; wir/sie form", "level": "A1", "gloss": ["take off (clothes)"], "note": "Separable: Bitte ziehen Sie die Schuhe aus."},
+      {"lemma": "anziehen", "pos": "verb", "form": "Sie imperative; wir/sie form", "level": "A1", "gloss": ["put on (clothes)"], "note": "Separable: Ziehen Sie eine Jacke an."},
+      {"lemma": "ziehen", "pos": "verb", "level": "A2", "gloss": ["to pull"]}
+    ],
+    "fülle": [
+      {"lemma": "ausfüllen", "pos": "verb", "form": "ich form, present", "level": "A1", "gloss": ["to fill in"], "note": "Separable: Ich fülle das Formular aus."}
+    ],
+    "füllen": [
+      {"lemma": "ausfüllen", "pos": "verb", "form": "Sie imperative; wir/sie form", "level": "A1", "gloss": ["to fill in"], "note": "Separable: Bitte füllen Sie das Formular aus."}
+    ],
+    "siehst": [
+      {"lemma": "sehen", "pos": "verb", "form": "du form, present", "level": "A1", "gloss": ["see"]},
+      {"lemma": "aussehen", "pos": "verb", "form": "du form, present", "level": "A1", "gloss": ["look (like)"], "note": "Separable: Du siehst gut aus! = You look good!"}
+    ],
+    "trägt": [
+      {"lemma": "tragen", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["wears; carries"], "note": "Er trägt einen Mantel."}
+    ],
+    "trägst": [
+      {"lemma": "tragen", "pos": "verb", "form": "du form, present", "level": "A1", "gloss": ["wear; carry"], "note": "Was trägst du?"}
+    ],
+    "Wiederhören": [
+      {"lemma": "Wiederhören", "pos": "phrase", "level": "A1", "gloss": ["Auf Wiederhören = goodbye (on the phone)"], "note": "You hear each other again."}
+    ],
+    "Herzlichen": [
+      {"lemma": "herzlich", "pos": "adjective", "level": "A1", "gloss": ["warm, heartfelt"], "note": "Herzlichen Glückwunsch! = Congratulations!"}
+    ],
+    "Föhn": [
+      {"lemma": "Föhn", "pos": "noun", "article": "der", "gloss": ["föhn (a warm, dry Alpine wind)", "hair dryer"], "note": "In Munich: a warm wind from the Alps."}
+    ],
+    "Geschlecht": [
+      {"lemma": "Geschlecht", "pos": "noun", "article": "das", "level": "B1", "gloss": ["sex, gender (on a form)"], "note": "männlich, weiblich, divers"}
+    ],
+    "divers": [
+      {"lemma": "divers", "pos": "adjective", "gloss": ["diverse (the third gender option on German forms)"], "note": "männlich, weiblich oder divers"}
+    ],
+    "Geburtsorte": [
+      {"lemma": "Geburtsort", "pos": "noun", "article": "der", "form": "plural", "level": "A1", "gloss": ["places of birth"]}
+    ],
+    "Geburtsjahre": [
+      {"lemma": "Geburtsjahr", "pos": "noun", "article": "das", "form": "plural", "level": "A1", "gloss": ["years of birth"]}
+    ],
+    "Partnerinnen": [
+      {"lemma": "Partnerin", "pos": "noun", "article": "die", "form": "plural", "level": "A1", "gloss": ["partners (women)"]}
+    ],
+    "Ton": [
+      {"lemma": "Ton", "pos": "noun", "article": "der", "plural": "Töne", "level": "B1", "gloss": ["tone, sound", "clay"], "note": "Bitte sprechen Sie nach dem Ton. = Please speak after the tone."}
+    ],
+    "Reise": [
+      {"lemma": "Reise", "pos": "noun", "article": "die", "plural": "Reisen", "level": "A1", "gloss": ["journey, trip"], "note": "Gute Reise! = Have a good trip!"}
+    ],
+    "Taxi": [
+      {"lemma": "Taxi", "pos": "noun", "article": "das", "plural": "Taxis", "level": "A1", "gloss": ["taxi"]}
+    ],
+    "Taxis": [
+      {"lemma": "Taxi", "pos": "noun", "article": "das", "form": "plural", "level": "A1", "gloss": ["taxis"]}
+    ],
+    "Partnerin": [
+      {"lemma": "Partnerin", "pos": "noun", "article": "die", "plural": "Partnerinnen", "level": "A1", "gloss": ["partner (female)"]}
+    ],
+    "Ausländerin": [
+      {"lemma": "Ausländerin", "pos": "noun", "article": "die", "plural": "Ausländerinnen", "level": "B1", "gloss": ["foreigner (woman)"]}
+    ],
+    "Informationen": [
+      {"lemma": "Information", "pos": "noun", "article": "die", "form": "plural", "level": "A1", "gloss": ["information"]}
+    ],
+    "rufen": [
+      {"lemma": "anrufen", "pos": "verb", "form": "Sie imperative; wir/sie form", "level": "A1", "gloss": ["to phone, to call"], "note": "Separable: Bitte rufen Sie mich an."},
+      {"lemma": "rufen", "pos": "verb", "form": "infinitive; wir/sie form", "level": "A1", "gloss": ["to call, to shout"]}
+    ],
+    "Signalton": [
+      {"lemma": "Signalton", "pos": "noun", "article": "der", "gloss": ["tone (beep)"], "note": "Bitte sprechen Sie nach dem Signalton."}
+    ],
+    "Hochzeiten": [
+      {"lemma": "Hochzeit", "pos": "noun", "article": "die", "form": "plural", "level": "A1", "gloss": ["weddings"]}
+    ],
+    "herzlichen": [
+      {"lemma": "herzlich", "pos": "adjective", "level": "A1", "gloss": ["warm, heartfelt"], "note": "Herzlichen Glückwunsch! = Congratulations!"}
+    ],
+    "ganz": [
+      {"lemma": "ganz", "pos": "adverb", "level": "A1", "gloss": ["quite, really; whole"], "note": "Das ist ganz einfach. = That's really easy."}
+    ],
+    "Besserung": [
+      {"lemma": "Besserung", "pos": "noun", "article": "die", "level": "B1", "gloss": ["recovery, getting better"], "note": "Gute Besserung! = Get well soon!"}
+    ],
+    "Alter": [
+      {"lemma": "Alter", "pos": "noun", "article": "das", "level": "A1", "gloss": ["age"], "note": "On forms: Alter: dreißig"}
+    ],
+    "Abfahrt": [
+      {"lemma": "Abfahrt", "pos": "noun", "article": "die", "plural": "Abfahrten", "level": "A1", "gloss": ["departure (train, bus)"]}
+    ],
+    "Eintritt": [
+      {"lemma": "Eintritt", "pos": "noun", "article": "der", "level": "A1", "gloss": ["admission, entry (fee)"], "note": "Was kostet der Eintritt?"}
     ]
   }
 }

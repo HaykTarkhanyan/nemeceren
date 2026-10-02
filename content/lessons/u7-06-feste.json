@@ -1,0 +1,125 @@
+{
+  "id": "u7-06-feste",
+  "unit": 7,
+  "order": 6,
+  "level": "A1",
+  "title": "Family, people and celebrations (Feste und Familie)",
+  "summary": "Talk about your wider family and the people around you, congratulate someone, and accept an invitation.",
+  "goals": [
+    "Name more family members: Großeltern, Ehemann, Ehefrau, Partner",
+    "Talk about people: Leute, Mensch, Junge, Mädchen",
+    "Congratulate and wish someone well",
+    "Thank someone for an invitation"
+  ],
+  "nicosWeg": [
+    { "title": "Nicos Weg A1, chapter 15: Family (Meine Familie, Meine Eltern)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
+  ],
+  "words": ["grosseltern", "grossmutter", "grossvater", "oma", "opa", "ehefrau", "ehemann", "baby", "junge", "maedchen", "leute", "mensch", "partner", "partnerin", "hochzeit", "heiraten", "glueckwunsch", "gratulieren", "herzlich", "willkommen", "einladung", "gast", "fest", "glueck", "gluecklich", "lustig", "lachen", "hund", "lied"],
+  "tests": ["u7-t3-reisen-feste"],
+  "sections": [
+    {
+      "id": "family-2",
+      "type": "table",
+      "title": "More family",
+      "columns": [{ "header": "Family", "de": "words" }, { "header": "English" }],
+      "rows": [
+        ["die Großeltern", "grandparents"],
+        ["die Großmutter / die Oma", "grandmother / grandma"],
+        ["der Großvater / der Opa", "grandfather / grandpa"],
+        ["der Ehemann / die Ehefrau", "husband / wife"],
+        ["der Partner / die Partnerin", "partner"],
+        ["das Baby", "baby"],
+        ["der Junge / das Mädchen", "boy / girl"]
+      ]
+    },
+    {
+      "id": "people",
+      "type": "explanation",
+      "title": "People",
+      "text": "- [[die Leute]] = people, always plural: [[Die Leute hier sind nett.]]\n- [[der Mensch]] = a person, a human being: [[Hier wohnen viele Menschen.]]\n- [[das Mädchen]] is neuter because of -chen (Unit 2): [[Das Mädchen heißt Eva.]]\n- [[mein Mann]] and [[meine Frau]] (Unit 2) are the everyday words for husband and wife. [[Ehemann]] and [[Ehefrau]] are what forms say."
+    },
+    {
+      "id": "congratulations",
+      "type": "explanation",
+      "title": "Congratulations and good wishes",
+      "text": "- [[Herzlichen Glückwunsch!]] = Congratulations! For a birthday, a wedding, a new job. Learn it as one block; the -en ending comes at A2 (Unit 14).\n- [[Herzlichen Glückwunsch zum Geburtstag!]] or [[Alles Gute zum Geburtstag!]] (Unit 3)\n- [[Ich gratuliere dir!]] [[gratulieren]] takes the dative (Unit 6).\n- [[Viel Glück!]] = Good luck!\n- [[Herzlich willkommen!]] = A warm welcome!\n- [[Wir heiraten im Juni.]] [[Die Hochzeit ist am zwölften Juni.]]\n- [[Danke für die Einladung! Ich komme gern.]]"
+    },
+    {
+      "type": "comparison",
+      "text": "Russian поздравляю тебя takes the accusative (тебя). German [[gratulieren]] takes the dative: [[Ich gratuliere dir.]], not 'dich'."
+    },
+    {
+      "id": "guest-tip",
+      "type": "tip",
+      "title": "When you're invited",
+      "text": "Invited to someone's home? Bring something small, like flowers ([[Blumen]]) or a drink, and be on time ([[pünktlich]], Unit 3). For a party, a little late is fine."
+    },
+    {
+      "id": "feste-examples",
+      "type": "examples",
+      "title": "Examples",
+      "items": [
+        { "de": "Meine Großeltern wohnen in Armenien.", "en": "My grandparents live in Armenia." },
+        { "de": "Herzlichen Glückwunsch zur Hochzeit!", "en": "Congratulations on your wedding!" },
+        { "de": "Danke für die Einladung! Ich komme gern.", "en": "Thanks for the invitation! I'd love to come." },
+        { "de": "Wir haben heute Gäste.", "en": "We have guests today." },
+        { "de": "Das Fest war super. Wir haben viel gelacht.", "en": "The party was great. We laughed a lot." },
+        { "de": "Viel Glück!", "en": "Good luck!" }
+      ]
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat",
+      "items": [
+        { "de": "Herzlichen Glückwunsch!", "en": "Congratulations!" },
+        { "de": "Ich gratuliere dir!", "en": "Congratulations! (I congratulate you)" },
+        { "de": "Viel Glück!", "en": "Good luck!" },
+        { "de": "Herzlich willkommen!", "en": "A warm welcome!" },
+        { "de": "Danke für die Einladung!", "en": "Thanks for the invitation!" }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "mc",
+          "question": "Your colleague just got married. What do you say?",
+          "questionLang": "en",
+          "options": ["Herzlichen Glückwunsch!", "Gute Besserung!", "Guten Appetit!"],
+          "answer": "Herzlichen Glückwunsch!",
+          "explanation": "Herzlichen Glückwunsch! for good news. Gute Besserung! is for someone who's ill."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: Happy birthday! (I congratulate you)",
+          "text": "Ich ___ dir zum Geburtstag!",
+          "answers": [["gratuliere"]],
+          "explanation": "gratulieren + dative: Ich gratuliere dir."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: Thanks for the invitation!",
+          "text": "Danke für die ___!",
+          "answers": [["Einladung"]],
+          "explanation": "die Einladung = invitation (einladen, Unit 4)."
+        },
+        {
+          "type": "mc",
+          "question": "Which article goes with Mädchen?",
+          "questionLang": "en",
+          "options": ["das", "die", "der"],
+          "answer": "das",
+          "explanation": "-chen is always das, even for a girl: das Mädchen."
+        },
+        {
+          "type": "translate",
+          "direction": "en-de",
+          "text": "Good luck!",
+          "references": ["Viel Glück!"],
+          "explanation": "das Glück = luck: Viel Glück!"
+        }
+      ]
+    }
+  ]
+}

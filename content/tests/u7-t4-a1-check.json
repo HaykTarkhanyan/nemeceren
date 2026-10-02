@@ -1,0 +1,143 @@
+{
+  "id": "u7-t4-a1-check",
+  "title": "A1 final check (Units 0-7)",
+  "level": "A1",
+  "created": "2026-10-02",
+  "description": "Mixed review of all A1 units, after the last lesson of Unit 7. Then the Goethe A1 mock exam with Claude.",
+  "unit": 7,
+  "lesson": "u7-07-a1-abschluss",
+  "items": [
+    {
+      "type": "listen_mc",
+      "audio": "achtundvierzig",
+      "question": "Which number do you hear?",
+      "questionLang": "en",
+      "options": ["48", "84", "38"],
+      "answer": "48",
+      "explanation": "Unit 0: acht-und-vierzig = 8 and 40 = 48."
+    },
+    {
+      "type": "mc",
+      "question": "It's 8 a.m. and you meet a neighbour. What do you say?",
+      "questionLang": "en",
+      "options": ["Guten Morgen!", "Gute Nacht!", "Guten Abend!"],
+      "answer": "Guten Morgen!",
+      "explanation": "Unit 0: Guten Morgen in the morning."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: I come from Armenia.",
+      "text": "Ich ___ aus Armenien.",
+      "answers": [["komme"]],
+      "explanation": "Unit 1: ich komme."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: We are colleagues.",
+      "text": "Wir ___ Kollegen.",
+      "answers": [["sind"]],
+      "explanation": "Unit 1: wir sind."
+    },
+    {
+      "type": "mc",
+      "question": "Which article goes with Fenster?",
+      "questionLang": "en",
+      "options": ["das", "der", "die"],
+      "answer": "das",
+      "explanation": "Unit 2: das Fenster."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: This is my brother.",
+      "text": "Das ist ___ Bruder.",
+      "answers": [["mein"]],
+      "explanation": "Unit 2: der Bruder, so mein Bruder."
+    },
+    {
+      "type": "listen_mc",
+      "audio": "Der Termin ist am Mittwoch um halb vier.",
+      "question": "When is the appointment?",
+      "questionLang": "en",
+      "options": ["Mittwoch, 3:30", "Mittwoch, 4:30", "Montag, 3:30"],
+      "answer": "Mittwoch, 3:30",
+      "explanation": "Unit 3: halb vier = 3:30; Mittwoch = Wednesday."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: I can't come tomorrow.",
+      "text": "Ich ___ morgen nicht kommen.",
+      "answers": [["kann"]],
+      "explanation": "Unit 3: ich kann, and kommen at the end."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: I'd like a tea.",
+      "text": "Ich möchte ___ Tee.",
+      "answers": [["einen"]],
+      "explanation": "Unit 4: der Tee as the object: einen Tee."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap with nehmen: What are you having? (informal)",
+      "text": "Was ___ du?",
+      "answers": [["nimmst"]],
+      "explanation": "Unit 4: du nimmst."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: Please speak slowly! (polite)",
+      "text": "___ Sie bitte langsam!",
+      "answers": [["Sprechen"]],
+      "explanation": "Unit 5: the Sie imperative, verb first."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: I went to Salzburg at the weekend.",
+      "text": "Ich ___ am Wochenende nach Salzburg gefahren.",
+      "answers": [["bin"]],
+      "explanation": "Unit 5: fahren takes sein in the Perfekt."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap with mein: I'm living with my girlfriend.",
+      "text": "Ich wohne bei ___ Freundin.",
+      "answers": [["meiner"]],
+      "explanation": "Unit 6: bei + dative: meiner Freundin."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: Can you help me?",
+      "text": "Kannst du ___ helfen?",
+      "answers": [["mir"]],
+      "explanation": "Unit 6: helfen takes the dative: mir."
+    },
+    {
+      "type": "mc",
+      "question": "'Wo sind Sie geboren?' asks about your ...",
+      "questionLang": "en",
+      "options": ["Geburtsort", "Geburtsjahr", "Familienstand"],
+      "answer": "Geburtsort",
+      "explanation": "Unit 7: wo = where: der Geburtsort, the place of birth."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: I don't know.",
+      "text": "Ich ___ es nicht.",
+      "answers": [["weiß"]],
+      "explanation": "Unit 7: wissen, ich weiß."
+    },
+    {
+      "type": "dictation",
+      "text": "Am Samstag habe ich keine Zeit, ich muss arbeiten.",
+      "explanation": "Units 3 and 2: am Samstag, keine Zeit, ich muss ... arbeiten."
+    },
+    {
+      "type": "write",
+      "instruction": "A1 final writing, like the Goethe exam. Write an email to your teacher (about 30 words): you can't come to class on Monday, say why, and ask what the homework is. Claude will check it. Then ask Claude for the Goethe A1 mock exam.",
+      "prompt": "Write an email to your teacher: you can't come on Monday.",
+      "promptLang": "en",
+      "digits": true,
+      "minWords": 30
+    }
+  ]
+}

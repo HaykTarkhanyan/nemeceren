@@ -1,0 +1,138 @@
+{
+  "id": "u7-07-a1-abschluss",
+  "unit": 7,
+  "order": 7,
+  "level": "A1",
+  "title": "Small words that matter, and the A1 check (Kleine Wörter)",
+  "summary": "The last A1 words: wissen and kennen, warum, bald, gleich, kaputt, möglich and more. Then check your A1: the final test and the Goethe A1 mock exam.",
+  "goals": [
+    "Tell wissen (facts) from kennen (people, places)",
+    "Use everyday little words: warum, bald, gleich, sofort, mehr, nichts",
+    "Check your level: the A1 final test and the mock exam"
+  ],
+  "words": ["wissen", "warum", "bald", "gleich", "sofort", "mehr", "wenig", "nichts", "einfach", "schwer", "leicht", "kaputt", "reparieren", "ruhig", "moeglich", "fremd", "kennenlernen", "mitnehmen", "verkaufen", "geschaeft", "baeckerei", "polizei", "schule"],
+  "tests": ["u7-t4-a1-check"],
+  "sections": [
+    {
+      "id": "wissen-table",
+      "type": "table",
+      "title": "wissen (to know a fact)",
+      "columns": [{ "header": "Person", "de": "words" }, { "header": "wissen", "de": "words" }],
+      "rows": [
+        ["ich", "weiß"],
+        ["du", "weißt"],
+        ["er / sie / es", "weiß"],
+        ["wir", "wissen"],
+        ["ihr", "wisst"],
+        ["sie / Sie", "wissen"]
+      ]
+    },
+    {
+      "id": "wissen-kennen",
+      "type": "explanation",
+      "title": "wissen or kennen?",
+      "text": "- [[wissen]] = to know a fact: [[Ich weiß es nicht.]] = I don't know. [[Weißt du das?]]\n- [[kennen]] (Unit 4) = to know a person or a place: [[Ich kenne Eva.]] [[Ich kenne München.]]\n\n[[wissen]] works like the modal verbs: [[ich weiß]] = [[er weiß]], with no -t."
+    },
+    {
+      "type": "comparison",
+      "text": "Russian знать covers both. German splits them, and so does Armenian: գիտեմ is [[ich weiß]] (a fact), ճանաչում եմ is [[ich kenne]] (a person)."
+    },
+    {
+      "id": "little-words",
+      "type": "table",
+      "title": "Little words you'll use every day",
+      "columns": [{ "header": "Word", "de": "words" }, { "header": "Example", "de": "words" }, { "header": "English" }],
+      "rows": [
+        ["warum", "Warum lernst du Deutsch?", "Why are you learning German?"],
+        ["bald", "Bis bald!", "See you soon!"],
+        ["gleich", "Ich komme gleich.", "I'm coming right away."],
+        ["sofort", "Kommen Sie bitte sofort!", "Please come at once!"],
+        ["mehr / wenig", "Ich habe wenig Zeit.", "I don't have much time."],
+        ["nichts", "Ich verstehe nichts.", "I don't understand anything."],
+        ["einfach / schwer", "Deutsch ist nicht so schwer.", "German isn't that difficult."],
+        ["kaputt", "Mein Handy ist kaputt.", "My phone is broken."],
+        ["möglich", "Ist das möglich?", "Is that possible?"],
+        ["fremd", "Ich bin auch fremd hier.", "I'm not from around here either."],
+        ["verkaufen", "Ich verkaufe mein Fahrrad.", "I'm selling my bike."],
+        ["mitnehmen", "Nimm eine Jacke mit!", "Take a jacket!"],
+        ["ruhig / leicht", "Die Wohnung ist ruhig. Der Koffer ist leicht.", "The flat is quiet. The suitcase is light."]
+      ]
+    },
+    {
+      "type": "tip",
+      "text": "[[Warum?]] For now, answer with a separate sentence: [[Warum kommst du nicht? - Ich bin krank.]] A2 adds [[weil]] (because) in Unit 9.\n\n[[Ich bin auch fremd hier.]] is the polite answer when someone asks you the way and you don't know it.\n\nPlaces you'll need: [[das Geschäft]] (shop), [[die Bäckerei]], [[die Polizei]], [[die Schule]]: [[Die Kinder sind in der Schule.]]"
+    },
+    {
+      "id": "a1-check",
+      "type": "explanation",
+      "title": "Your A1 check",
+      "text": "You've reached the end of A1. Two ways to see where you stand:\n1. **The A1 final check** (the test at the end of this lesson) mixes all units.\n2. **The Goethe A1 mock exam** (Start Deutsch 1): listening, reading, writing and speaking, about 80 minutes. Ask Claude to start it on the PC: Claude opens the exam and the audio, and grades your writing and your speaking answers (typed in the chat).\n\nIt's a level check, not a goal. The point is to see what needs more practice before A2."
+    },
+    {
+      "id": "small-word-examples",
+      "type": "examples",
+      "title": "Examples",
+      "items": [
+        { "de": "Ich weiß es nicht.", "en": "I don't know." },
+        { "de": "Kennst du Eva? - Ja, ich kenne sie.", "en": "Do you know Eva? - Yes, I know her." },
+        { "de": "Mein Fahrrad ist kaputt. Kann man das reparieren?", "en": "My bike is broken. Can it be fixed?" },
+        { "de": "Ich möchte deine Familie kennenlernen.", "en": "I'd like to meet your family." },
+        { "de": "Die Bäckerei ist am Sonntag nur bis Mittag geöffnet.", "en": "On Sunday the bakery is only open until noon." },
+        { "de": "Bis bald!", "en": "See you soon!" }
+      ]
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat",
+      "items": [
+        { "de": "Ich weiß es nicht.", "en": "I don't know." },
+        { "de": "Warum?", "en": "Why?" },
+        { "de": "Ich komme gleich.", "en": "I'm coming right away." },
+        { "de": "Ist das möglich?", "en": "Is that possible?" },
+        { "de": "Ich bin auch fremd hier.", "en": "I'm not from around here either." }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: I don't know.",
+          "text": "Ich ___ es nicht.",
+          "answers": [["weiß"]],
+          "explanation": "wissen: ich weiß, with no ending."
+        },
+        {
+          "type": "mc",
+          "question": "Which sentence means 'Do you know Eva?'",
+          "questionLang": "en",
+          "options": ["Kennst du Eva?", "Weißt du Eva?", "Kannst du Eva?"],
+          "answer": "Kennst du Eva?",
+          "explanation": "A person: kennen. A fact: wissen."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: See you soon!",
+          "text": "Bis ___!",
+          "answers": [["bald"]],
+          "explanation": "bald = soon: Bis bald!"
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: My phone is broken.",
+          "text": "Mein Handy ist ___.",
+          "answers": [["kaputt"]],
+          "explanation": "kaputt = broken."
+        },
+        {
+          "type": "translate",
+          "direction": "en-de",
+          "text": "Is that possible?",
+          "references": ["Ist das möglich?", "Geht das?"],
+          "explanation": "möglich = possible. Geht das? (Unit 3) works too."
+        }
+      ]
+    }
+  ]
+}

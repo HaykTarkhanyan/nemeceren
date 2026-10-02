@@ -1,0 +1,121 @@
+{
+  "id": "u7-04-wetter",
+  "unit": 7,
+  "order": 4,
+  "level": "A1",
+  "title": "Weather and nature (Das Wetter)",
+  "summary": "Say what the weather is like, understand a forecast, and talk about the country around you: north and south, mountains, lakes and the sea.",
+  "goals": [
+    "Say what the weather is like: Es regnet. Es ist kalt.",
+    "Understand temperatures and a short forecast",
+    "Say where places are: im Norden, im Süden"
+  ],
+  "nicosWeg": [
+    { "title": "Nicos Weg A1, chapter 13: Weather and holiday (Wie wird das Wetter?)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
+  ],
+  "words": ["regnen", "schnee", "schneien", "wind", "grad", "kalt", "warm", "heiss", "meer", "berg", "baum", "blume", "garten", "dorf", "draussen", "norden", "sueden", "osten", "westen", "wetter", "sonne"],
+  "tests": ["u7-t2-kleidung-wetter"],
+  "sections": [
+    {
+      "id": "weather",
+      "type": "table",
+      "title": "What's the weather like?",
+      "columns": [{ "header": "German", "de": "words" }, { "header": "English" }],
+      "rows": [
+        ["Wie ist das Wetter?", "What's the weather like?"],
+        ["Die Sonne scheint.", "The sun is shining."],
+        ["Es regnet.", "It's raining."],
+        ["Es schneit.", "It's snowing."],
+        ["Es ist kalt / warm / heiß.", "It's cold / warm / hot."],
+        ["Der Wind ist kalt.", "The wind is cold."],
+        ["Es sind zwanzig Grad.", "It's twenty degrees."],
+        ["Es sind minus zwei Grad.", "It's minus two degrees."]
+      ]
+    },
+    {
+      "id": "es-weather",
+      "type": "comparison",
+      "text": "German weather sentences need [[es]]: [[Es regnet.]] [[Es ist kalt.]] Russian has no 'it' here (Идёт дождь, Холодно), and Armenian says 'rain is coming' (անձրև է գալիս). So don't drop the [[es]] the way Russian does: never just 'Regnet' or 'Ist kalt'. And for how you feel: [[Mir ist kalt.]] = мне холодно (not 'Ich bin kalt')."
+    },
+    {
+      "id": "where-country",
+      "type": "explanation",
+      "title": "North, south, east, west",
+      "text": "[[im Norden]], [[im Süden]], [[im Osten]], [[im Westen]] ([[im]] = [[in dem]], Unit 6):\n- [[München ist im Süden von Deutschland.]]\n- [[Hamburg ist im Norden.]]\n- [[Der Wind kommt aus Osten.]]\n\nAnd the country around you: [[das Meer]] (the sea), [[der See]] (the lake, Unit 5), [[der Berg]] (the mountain), [[das Dorf]] (the village), [[draußen]] (outside). From Munich, [[Die Berge sind nicht weit.]]"
+    },
+    {
+      "id": "foehn",
+      "type": "tip",
+      "title": "Föhn",
+      "text": "In Munich you'll hear about [[der Föhn]]: a warm, dry wind from the Alps. On a Föhn day the sky is clear and the mountains look very close. Some people blame it for their headaches."
+    },
+    {
+      "id": "weather-examples",
+      "type": "examples",
+      "title": "Examples",
+      "items": [
+        { "de": "Wie ist das Wetter heute? - Es regnet.", "en": "What's the weather like today? - It's raining." },
+        { "de": "Morgen sind es fünfundzwanzig Grad.", "en": "Tomorrow it'll be twenty-five degrees." },
+        { "de": "Im Winter schneit es oft in den Bergen.", "en": "In winter it often snows in the mountains." },
+        { "de": "Die Kinder spielen draußen im Garten.", "en": "The children are playing outside in the garden." },
+        { "de": "München ist im Süden von Deutschland.", "en": "Munich is in the south of Germany." },
+        { "de": "Nimm eine Jacke mit. Es ist kalt.", "en": "Take a jacket. It's cold." }
+      ]
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat",
+      "items": [
+        { "de": "Wie ist das Wetter?", "en": "What's the weather like?" },
+        { "de": "Die Sonne scheint.", "en": "The sun is shining." },
+        { "de": "Es regnet.", "en": "It's raining." },
+        { "de": "Es ist kalt.", "en": "It's cold." },
+        { "de": "Es sind zwanzig Grad.", "en": "It's twenty degrees." }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap with regnen: It's raining.",
+          "text": "Es ___.",
+          "answers": [["regnet"]],
+          "explanation": "Weather verbs go with es: es regnet, es schneit."
+        },
+        {
+          "type": "mc",
+          "question": "Which sentence means 'It's cold'?",
+          "questionLang": "en",
+          "options": ["Es ist kalt.", "Es ist warm.", "Es ist heiß."],
+          "answer": "Es ist kalt.",
+          "explanation": "kalt = cold, warm = warm, heiß = hot."
+        },
+        {
+          "type": "listen_mc",
+          "audio": "Morgen regnet es, und es sind nur zehn Grad.",
+          "question": "What will the weather be like tomorrow?",
+          "questionLang": "en",
+          "options": ["Regen, zehn Grad", "Sonne, zehn Grad", "Regen, zwanzig Grad"],
+          "answer": "Regen, zehn Grad",
+          "explanation": "es regnet = it rains (der Regen); zehn Grad = 10 degrees."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: Munich is in the south.",
+          "text": "München ist im ___.",
+          "answers": [["Süden"]],
+          "explanation": "der Süden: im Süden (in dem Süden)."
+        },
+        {
+          "type": "translate",
+          "direction": "en-de",
+          "text": "The sun is shining.",
+          "references": ["Die Sonne scheint."],
+          "explanation": "die Sonne scheint (scheinen = to shine)."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "id": "u7-t1-formulare-post",
+  "title": "Forms, post and phone",
+  "level": "A1",
+  "created": "2026-10-02",
+  "description": "Unit 7 check after lessons 1 and 2.",
+  "unit": 7,
+  "lesson": "u7-02-post-telefon",
+  "items": [
+    {"type": "gap", "instruction": "Fill in the gap: I go by underground.", "text": "Ich fahre mit ___ U-Bahn.", "answers": [["der"]], "explanation": "Review (Unit 6): die U-Bahn, after mit the dative: der U-Bahn."},
+    {"type": "gap", "instruction": "Fill in the gap: How was your weekend?", "text": "Wie ___ dein Wochenende?", "answers": [["war"]], "explanation": "Review (Unit 5): sein in the past: war."},
+    {
+      "type": "mc",
+      "question": "A form asks for your 'Familienname'. What do you write?",
+      "questionLang": "en",
+      "options": ["Tarkhanyan", "Hayk", "München"],
+      "answer": "Tarkhanyan",
+      "explanation": "der Familienname = surname. Hayk would go in 'Vorname'."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: Please fill in the form.",
+      "text": "Bitte füllen Sie das Formular ___.",
+      "answers": [["aus"]],
+      "explanation": "ausfüllen is separable: füllen ... aus."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: Where were you born? (polite)",
+      "text": "Wo sind Sie ___?",
+      "answers": [["geboren"]],
+      "explanation": "Wo sind Sie geboren? = Where were you born?"
+    },
+    {
+      "type": "mc",
+      "question": "What does the field 'Geschlecht' on a form ask about?",
+      "questionLang": "en",
+      "options": ["männlich, weiblich oder divers", "ledig oder verheiratet", "Geburtsort und Geburtsjahr"],
+      "answer": "männlich, weiblich oder divers",
+      "explanation": "das Geschlecht = sex, gender: männlich, weiblich or divers."
+    },
+    {
+      "type": "listen_mc",
+      "audio": "Guten Tag, hier ist Eva Weber. Bitte rufen Sie mich an. Meine Nummer ist null acht neun, drei vier fünf, sechs sieben.",
+      "question": "What is Eva's number?",
+      "questionLang": "en",
+      "options": ["089 345 67", "089 543 76", "098 345 67"],
+      "answer": "089 345 67",
+      "explanation": "null acht neun = 089, then drei vier fünf, sechs sieben."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: I'd like to send a parcel to Armenia.",
+      "text": "Ich möchte ein Paket nach Armenien ___.",
+      "answers": [["schicken"]],
+      "explanation": "möchte in second place, schicken at the end."
+    },
+    {
+      "type": "dictation",
+      "text": "Eine Briefmarke für einen Brief nach Armenien, bitte.",
+      "explanation": "die Briefmarke = stamp; der Brief = letter, so einen Brief after für."
+    },
+    {
+      "type": "translate",
+      "direction": "en-de",
+      "text": "My home country is Armenia.",
+      "references": ["Meine Heimat ist Armenien."],
+      "explanation": "die Heimat = home country: meine Heimat."
+    },
+    {
+      "type": "write",
+      "instruction": "Give your personal details in 4-5 full sentences, as if answering an official: your name, when and where you were born, your nationality, your marital status and your address. Claude will check it.",
+      "prompt": "Give your personal details in full sentences.",
+      "promptLang": "en",
+      "digits": true,
+      "minWords": 25
+    }
+  ]
+}

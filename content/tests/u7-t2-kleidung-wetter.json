@@ -1,0 +1,78 @@
+{
+  "id": "u7-t2-kleidung-wetter",
+  "title": "Clothes and weather",
+  "level": "A1",
+  "created": "2026-10-02",
+  "description": "Unit 7 check after lessons 3 and 4.",
+  "unit": 7,
+  "lesson": "u7-04-wetter",
+  "items": [
+    {"type": "gap", "instruction": "Fill in the gap: I'll have the cake.", "text": "Ich nehme ___ Kuchen.", "answers": [["den"]], "explanation": "Review (Unit 4): der Kuchen as the object: den Kuchen."},
+    {"type": "gap", "instruction": "Fill in the gap: My head hurts.", "text": "Mir tut der Kopf ___.", "answers": [["weh"]], "explanation": "Review (Unit 6): wehtun is separable: tut ... weh."},
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: I put on the coat.",
+      "text": "Ich ziehe den Mantel ___.",
+      "answers": [["an"]],
+      "explanation": "anziehen is separable: ziehe ... an."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap with gefallen: I like the dress.",
+      "text": "Das Kleid ___ mir.",
+      "answers": [["gefällt"]],
+      "explanation": "das Kleid is the subject: das Kleid gefällt mir."
+    },
+    {
+      "type": "mc",
+      "question": "Which word means 'grey'?",
+      "questionLang": "en",
+      "options": ["grau", "gelb", "braun"],
+      "answer": "grau",
+      "explanation": "grau = grey; gelb = yellow; braun = brown."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: What size are you? (polite)",
+      "text": "Welche ___ haben Sie?",
+      "answers": [["Größe"]],
+      "explanation": "die Größe = size."
+    },
+    {
+      "type": "listen_mc",
+      "audio": "Heute scheint die Sonne, und es sind fünfundzwanzig Grad.",
+      "question": "What's the weather like today?",
+      "questionLang": "en",
+      "options": ["Sonne, 25 Grad", "Regen, 25 Grad", "Sonne, 15 Grad"],
+      "answer": "Sonne, 25 Grad",
+      "explanation": "die Sonne scheint = the sun is shining; fünfundzwanzig = 25."
+    },
+    {
+      "type": "mc",
+      "question": "Which sentence means 'It's snowing'?",
+      "questionLang": "en",
+      "options": ["Es schneit.", "Es regnet.", "Es ist kalt."],
+      "answer": "Es schneit.",
+      "explanation": "schneien = to snow: es schneit. regnen = to rain."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: Hamburg is in the north.",
+      "text": "Hamburg ist im ___.",
+      "answers": [["Norden"]],
+      "explanation": "der Norden: im Norden."
+    },
+    {
+      "type": "dictation",
+      "text": "Im Winter ist es kalt, und es gibt viel Schnee.",
+      "explanation": "es ist kalt; es gibt Schnee = there's snow."
+    },
+    {
+      "type": "write",
+      "instruction": "Write 3-4 sentences: what the weather is like today, and what you're wearing. Claude will check it.",
+      "prompt": "Wie ist das Wetter heute? Was trägst du?",
+      "digits": true,
+      "minWords": 20
+    }
+  ]
+}

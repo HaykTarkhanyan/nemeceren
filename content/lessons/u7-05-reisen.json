@@ -1,0 +1,125 @@
+{
+  "id": "u7-05-reisen",
+  "unit": 7,
+  "order": 5,
+  "level": "A1",
+  "title": "Travel and hotels (Reisen)",
+  "summary": "Book a hotel room, find your way through the airport and the station, and visit the sights: everything for a trip, with grammar you know.",
+  "goals": [
+    "Ask for a hotel room and the price",
+    "Understand departures and arrivals at the airport and the station",
+    "Ask about sights, tours and admission"
+  ],
+  "nicosWeg": [
+    { "title": "Nicos Weg A1, chapter 13: Weather and holiday (Wie war dein Urlaub?)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
+  ],
+  "words": ["reise", "reisebuero", "hotel", "einzelzimmer", "doppelzimmer", "rezeption", "uebernachten", "gepaeck", "koffer", "flughafen", "flugzeug", "abflug", "ankunft", "abfahrt", "bahnsteig", "durchsage", "taxi", "sehenswuerdigkeit", "besichtigen", "fuehrung", "eintritt", "schwimmbad"],
+  "sections": [
+    {
+      "id": "hotel",
+      "type": "explanation",
+      "title": "At the hotel",
+      "text": "- [[Ich hätte gern ein Doppelzimmer für zwei Nächte.]] ([[hätte gern]], Unit 4)\n- [[Was kostet ein Einzelzimmer?]]\n- [[Mit Frühstück?]] [[Halbpension]] = breakfast and dinner.\n- [[Der Schlüssel ist an der Rezeption.]] (dative, Unit 6)\n- [[Wir übernachten im Hotel.]] = We're staying at a hotel."
+    },
+    {
+      "id": "airport-station",
+      "type": "table",
+      "title": "Airport and station",
+      "columns": [{ "header": "On the screen", "de": "words" }, { "header": "English" }],
+      "rows": [
+        ["der Abflug", "departure (flight)"],
+        ["die Ankunft", "arrival"],
+        ["die Abfahrt", "departure (train, bus)"],
+        ["der Bahnsteig / das Gleis", "platform"],
+        ["die Durchsage", "announcement"],
+        ["das Gepäck, der Koffer", "luggage, suitcase"]
+      ]
+    },
+    {
+      "id": "travel-talk",
+      "type": "explanation",
+      "title": "Travelling, with grammar you know",
+      "text": "- [[Der Abflug ist um zehn Uhr.]] [[Die Ankunft in Jerewan ist um sechzehn Uhr.]] (times, Unit 3)\n- [[Ich fahre mit der S-Bahn zum Flughafen.]] (dative, Unit 6)\n- [[Ich bin nach Armenien geflogen.]] (Perfekt with sein, Unit 5)\n- [[Ich verstehe die Durchsage nicht. Können Sie mir helfen?]]\n- [[Wir nehmen ein Taxi.]]"
+    },
+    {
+      "id": "sights",
+      "type": "explanation",
+      "title": "Sightseeing",
+      "text": "- [[Was kann man hier besichtigen?]] = What can you see here?\n- [[Gibt es eine Führung?]] = Is there a guided tour?\n- [[Was kostet der Eintritt?]] = How much is admission?\n- [[Die Sehenswürdigkeiten]] = the sights\n- [[Gute Reise!]] = Have a good trip! (a fixed phrase; the -e on [[Gute]] is an adjective ending, A2)"
+    },
+    {
+      "id": "airport-munich",
+      "type": "tip",
+      "title": "Munich airport",
+      "text": "Munich airport ([[der Flughafen]]) is outside the city. The S-Bahn (S1 or S8) takes about 40-45 minutes from the main station."
+    },
+    {
+      "id": "travel-examples",
+      "type": "examples",
+      "title": "Examples",
+      "items": [
+        { "de": "Ich hätte gern ein Einzelzimmer für eine Nacht.", "en": "I'd like a single room for one night." },
+        { "de": "Was kostet das Doppelzimmer mit Frühstück?", "en": "How much is the double room with breakfast?" },
+        { "de": "Wo ist mein Koffer?", "en": "Where's my suitcase?" },
+        { "de": "Der Zug nach Salzburg fährt von Bahnsteig vier ab.", "en": "The train to Salzburg leaves from platform 4." },
+        { "de": "Was kostet der Eintritt?", "en": "How much is admission?" },
+        { "de": "Gute Reise!", "en": "Have a good trip!" }
+      ]
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat",
+      "items": [
+        { "de": "Ich hätte gern ein Doppelzimmer.", "en": "I'd like a double room." },
+        { "de": "Der Abflug ist um zehn Uhr.", "en": "The flight leaves at ten." },
+        { "de": "Was kostet der Eintritt?", "en": "How much is admission?" },
+        { "de": "Gibt es eine Führung?", "en": "Is there a guided tour?" },
+        { "de": "Gute Reise!", "en": "Have a good trip!" }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: I'd like a double room for two nights.",
+          "text": "Ich hätte gern ein ___ für zwei Nächte.",
+          "answers": [["Doppelzimmer"]],
+          "explanation": "das Doppelzimmer = double room; das Einzelzimmer = single room."
+        },
+        {
+          "type": "mc",
+          "question": "Where do you get your key at a hotel?",
+          "questionLang": "en",
+          "options": ["an der Rezeption", "am Bahnsteig", "an der Kasse"],
+          "answer": "an der Rezeption",
+          "explanation": "die Rezeption = hotel reception; an der Rezeption (dative)."
+        },
+        {
+          "type": "listen_mc",
+          "audio": "Der Abflug nach Jerewan ist um zehn Uhr fünfzehn.",
+          "question": "When does the plane leave?",
+          "questionLang": "en",
+          "options": ["10:15", "10:50", "9:45"],
+          "answer": "10:15",
+          "explanation": "zehn Uhr fünfzehn = 10:15. der Abflug = departure (flight)."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: How much is admission?",
+          "text": "Was kostet der ___?",
+          "answers": [["Eintritt"]],
+          "explanation": "der Eintritt = admission, entry fee."
+        },
+        {
+          "type": "order",
+          "prompt": "We're staying at a hotel.",
+          "tiles": ["wir", "übernachten", "im", "Hotel"],
+          "answers": ["Wir übernachten im Hotel", "Im Hotel übernachten wir"],
+          "explanation": "übernachten = to stay the night; im Hotel (Wo? + dative)."
+        }
+      ]
+    }
+  ]
+}

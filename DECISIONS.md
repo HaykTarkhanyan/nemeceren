@@ -2,6 +2,13 @@
 
 Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
+## 73. Unit 7 as written: 149 cards in seven topic lessons with no new grammar, some A2 words with their A1 neighbours, two adjective-ending chunks, and the mock exam in the chat (2026-10-02)
+
+- **Date:** 2026-10-02 - **Status:** active; details #72
+- **Why:** the wrap-up fills the A1 word gaps by topic (forms, post and phone, clothes and colours, weather, travel, family and celebrations, little words). Some words that belong with A1 ones are A2 in the Goethe list (die Hose, das Hemd, kalt, warm, der Schnee, tragen, das Paket); splitting them off would leave lessons that can't talk about clothes or weather, so they come here with level A2. `Herzlichen Glückwunsch!` and `Gute Reise!` carry adjective endings (A2); they are marked as fixed phrases. The Goethe A1 mock exam stays in the chat rather than in the app: the PDF and the audio are in `reference/` (the audio isn't in git), and Claude grades writing and the typed speaking answers. wissen vs kennen is the one piece of grammar-like content, because the Goethe A1 list has wissen and the course hadn't taught it.
+- **Alternatives rejected:** an app version of the mock exam (copying the Goethe exam into the app, and its audio can't be served from the public repo); leaving the A2 clothes and weather words for A2 Unit 13 (Unit 7 couldn't then describe clothes or weather at all).
+- **What would change this:** the mock exam showing gaps in listening or reading that the wrap-up didn't cover (then add a short practice lesson before A2).
+
 ## 72. A1 ends with a wrap-up Unit 7 and the Goethe A1 mock exam; A2 is ten A1-sized units (8-17), written one ahead of Hayk (decided with Hayk, 2026-10-02; revisits #13)
 
 - **Date:** 2026-10-02 - **Status:** active; revisits #13 (the v3 syllabus had A2 as five units of 20-25 h, numbered 7-11)

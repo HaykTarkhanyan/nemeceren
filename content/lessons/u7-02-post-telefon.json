@@ -1,0 +1,103 @@
+{
+  "id": "u7-02-post-telefon",
+  "unit": 7,
+  "order": 2,
+  "level": "A1",
+  "title": "Post, phone and internet (Post und Telefon)",
+  "summary": "Send a letter or a parcel, make and answer phone calls, and leave a message.",
+  "goals": [
+    "Send a letter or a parcel at the post office",
+    "Make and answer a phone call",
+    "Understand voicemail and a busy line"
+  ],
+  "words": ["post", "brief", "briefmarke", "paket", "absender", "empfaenger", "telefon", "anruf", "anrufbeantworter", "vorwahl", "besetzt", "internet", "foto"],
+  "tests": ["u7-t1-formulare-post"],
+  "sections": [
+    {
+      "id": "post-office",
+      "type": "explanation",
+      "title": "At the post office",
+      "text": "- [[Ich gehe zur Post.]] = I'm going to the post office ([[zur]] = [[zu der]], Unit 6).\n- [[Ich möchte ein Paket nach Armenien schicken.]]\n- [[Eine Briefmarke für einen Brief nach Armenien, bitte.]]\n- [[Was kostet das?]]\n\nOn an envelope, the sender ([[der Absender]]) goes at the top left, and the recipient ([[der Empfänger]]) at the bottom right."
+    },
+    {
+      "id": "phone-calls",
+      "type": "explanation",
+      "title": "On the phone",
+      "text": "- Many Germans answer the phone with their name: [[Weber.]] or [[Eva Weber.]] The caller says who they are: [[Hier ist Aram Tarkhanyan.]]\n- [[Ist Herr Müller da?]] - [[Nein, leider nicht.]]\n- [[Kann ich später noch einmal anrufen?]]\n- [[Es ist besetzt.]] or [[Die Nummer ist besetzt.]] = The line is busy.\n- Voicemail: [[Bitte sprechen Sie nach dem Signalton.]] = Please speak after the tone.\n- The goodbye on the phone: [[Auf Wiederhören!]] (you hear each other again), rather than [[Auf Wiedersehen]]."
+    },
+    {
+      "id": "area-code",
+      "type": "tip",
+      "title": "Numbers",
+      "text": "Munich's area code ([[die Vorwahl]]) is 089, said [[null acht neun]]. From abroad: +49 89. Armenia's country code is +374. Say phone numbers in pairs or single digits, as in Unit 0."
+    },
+    {
+      "id": "post-examples",
+      "type": "examples",
+      "title": "Examples",
+      "items": [
+        { "de": "Ich möchte ein Paket nach Armenien schicken.", "en": "I'd like to send a parcel to Armenia." },
+        { "de": "Hier ist Eva Weber. Ist Herr Müller da?", "en": "This is Eva Weber. Is Mr Müller there?" },
+        { "de": "Die Nummer ist besetzt.", "en": "The line is busy." },
+        { "de": "Danke für den Anruf! Auf Wiederhören!", "en": "Thanks for the call! Goodbye!" },
+        { "de": "Ich suche das im Internet.", "en": "I'll look it up on the internet." },
+        { "de": "Darf ich ein Foto machen?", "en": "May I take a photo?" }
+      ]
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat",
+      "items": [
+        { "de": "Eine Briefmarke, bitte.", "en": "A stamp, please." },
+        { "de": "Hier ist Eva Weber.", "en": "This is Eva Weber." },
+        { "de": "Die Nummer ist besetzt.", "en": "The line is busy." },
+        { "de": "Bitte sprechen Sie nach dem Signalton.", "en": "Please speak after the tone." },
+        { "de": "Auf Wiederhören!", "en": "Goodbye! (on the phone)" }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "mc",
+          "question": "Which goodbye is only for the phone?",
+          "questionLang": "en",
+          "options": ["Auf Wiederhören!", "Auf Wiedersehen!", "Gute Nacht!"],
+          "answer": "Auf Wiederhören!",
+          "explanation": "hören = to hear: on the phone you hear each other again."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: The line is busy.",
+          "text": "Die Nummer ist ___.",
+          "answers": [["besetzt"]],
+          "explanation": "besetzt = busy (a phone line), taken (a seat)."
+        },
+        {
+          "type": "listen_mc",
+          "audio": "Die Vorwahl von München ist null acht neun.",
+          "question": "What's the area code of Munich?",
+          "questionLang": "en",
+          "options": ["089", "098", "0890"],
+          "answer": "089",
+          "explanation": "null acht neun = 089."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: I'd like to send a parcel to Armenia.",
+          "text": "Ich möchte ein ___ nach Armenien schicken.",
+          "answers": [["Paket"]],
+          "explanation": "das Paket = the parcel: ein Paket."
+        },
+        {
+          "type": "order",
+          "prompt": "May I take a photo?",
+          "tiles": ["darf", "ich", "ein", "Foto", "machen"],
+          "answers": ["Darf ich ein Foto machen"],
+          "explanation": "darf first in a yes/no question, machen at the end."
+        }
+      ]
+    }
+  ]
+}

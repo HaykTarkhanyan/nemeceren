@@ -1,0 +1,123 @@
+{
+  "id": "u7-01-formulare",
+  "unit": 7,
+  "order": 1,
+  "level": "A1",
+  "title": "Forms and personal details (Formulare)",
+  "summary": "Fill in a form with your personal details, and answer the same questions when someone asks them: name, date and place of birth, nationality, marital status.",
+  "goals": [
+    "Understand the fields of a German form",
+    "Fill in a form and sign it",
+    "Answer questions about your personal details",
+    "Know what Anmeldung means in Germany"
+  ],
+  "nicosWeg": [
+    { "title": "Nicos Weg A1, chapter 2: Contact details", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
+  ],
+  "words": ["formular", "ausfuellen", "unterschreiben", "unterschrift", "familienname", "familienstand", "geburtsort", "geburtsjahr", "alter", "maennlich", "weiblich", "ausweis", "pass", "anmeldung", "anmelden", "auslaender", "ausland", "heimat", "information", "auskunft", "beispiel", "ort"],
+  "sections": [
+    {
+      "id": "form-fields",
+      "type": "table",
+      "title": "A typical form",
+      "columns": [{ "header": "Field", "de": "words" }, { "header": "English" }, { "header": "Example" }],
+      "rows": [
+        ["Familienname / Nachname", "surname", "Tarkhanyan"],
+        ["Vorname", "first name", "Hayk"],
+        ["Geburtsdatum", "date of birth", "12.03.1999"],
+        ["Geburtsort", "place of birth", "Jerewan"],
+        ["Staatsangehörigkeit", "nationality", "armenisch"],
+        ["Geschlecht: männlich / weiblich / divers", "sex: male / female / diverse", "x"],
+        ["Familienstand: ledig / verheiratet", "marital status: single / married", "ledig"],
+        ["Adresse", "address", "Goethestraße 5, 80336 München"],
+        ["Ort, Datum", "place, date", "München, 3.10."],
+        ["Unterschrift", "signature", "(you sign here)"]
+      ]
+    },
+    {
+      "id": "filling-in",
+      "type": "explanation",
+      "title": "Filling it in",
+      "text": "- [[Bitte füllen Sie das Formular aus.]] [[ausfüllen]] is separable (Unit 3).\n- [[Bitte unterschreiben Sie hier.]] = Please sign here (the imperative, Unit 5).\n- [[Hier fehlt noch die Unterschrift.]] = The signature is still missing here.\n\nThe same questions come up in conversation (Units 1-3):\n- [[Wie ist Ihr Familienname?]]\n- [[Wo sind Sie geboren?]] - [[In Jerewan.]]\n- [[Wann sind Sie geboren?]] - [[Am zwölften März neunzehnhundertneunundneunzig.]]\n- [[Sind Sie verheiratet?]] - [[Nein, ich bin ledig.]]\n- [[Wie alt sind Sie?]] On forms this is [[Alter]] (age)."
+    },
+    {
+      "id": "anmeldung",
+      "type": "tip",
+      "title": "Anmeldung",
+      "text": "After you move into a flat in Germany, you have two weeks to register your address: [[die Anmeldung]]. In Munich you do it at a Bürgerbüro. Take your passport ([[der Pass]]; EU citizens can use their ID card, [[der Ausweis]]) and the confirmation from your landlord: [[Ich möchte meine Adresse anmelden.]] [[Anmeldung]] also means the reception desk, at a doctor's for example."
+    },
+    {
+      "id": "abroad",
+      "type": "explanation",
+      "title": "Home and abroad",
+      "text": "- [[der Ausländer]], [[die Ausländerin]] = foreigner\n- [[im Ausland]] = abroad: [[Meine Schwester arbeitet im Ausland.]]\n- [[die Heimat]] = home country, the place you come from: [[Meine Heimat ist Armenien.]]\n- [[Ich brauche eine Information.]] Ask at [[die Auskunft]] (the information desk).\n- [[zum Beispiel]] = for example"
+    },
+    {
+      "id": "form-examples",
+      "type": "examples",
+      "title": "Examples",
+      "items": [
+        { "de": "Bitte füllen Sie das Formular aus.", "en": "Please fill in the form." },
+        { "de": "Wie ist Ihr Familienname?", "en": "What's your surname?" },
+        { "de": "Wo sind Sie geboren? - In Jerewan.", "en": "Where were you born? - In Yerevan." },
+        { "de": "Haben Sie Ihren Pass?", "en": "Do you have your passport?" },
+        { "de": "Bitte unterschreiben Sie hier.", "en": "Please sign here." },
+        { "de": "Meine Heimat ist Armenien.", "en": "My home country is Armenia." }
+      ]
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat",
+      "items": [
+        { "de": "Familienname, Vorname, Geburtsdatum", "en": "surname, first name, date of birth" },
+        { "de": "Wo sind Sie geboren?", "en": "Where were you born?" },
+        { "de": "Bitte füllen Sie das Formular aus.", "en": "Please fill in the form." },
+        { "de": "Bitte unterschreiben Sie hier.", "en": "Please sign here." },
+        { "de": "Ich bin ledig.", "en": "I'm single." }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "mc",
+          "question": "A form asks for your 'Geburtsort'. What do you write?",
+          "questionLang": "en",
+          "options": ["Jerewan", "12.03.1999", "ledig"],
+          "answer": "Jerewan",
+          "explanation": "der Geburtsort = place of birth (der Ort = the place)."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: Please fill in the form.",
+          "text": "Bitte ___ Sie das Formular aus.",
+          "answers": [["füllen"]],
+          "explanation": "ausfüllen is separable: füllen ... aus."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: Please sign here.",
+          "text": "Bitte ___ Sie hier.",
+          "answers": [["unterschreiben"]],
+          "explanation": "unterschreiben = to sign. It's not separable: Unterschreiben Sie!"
+        },
+        {
+          "type": "mc",
+          "question": "What does the field 'Familienstand' ask about?",
+          "questionLang": "en",
+          "options": ["ledig oder verheiratet", "männlich oder weiblich", "Name und Vorname"],
+          "answer": "ledig oder verheiratet",
+          "explanation": "der Familienstand = marital status: ledig (single), verheiratet (married)."
+        },
+        {
+          "type": "translate",
+          "direction": "en-de",
+          "text": "Where were you born? (polite)",
+          "references": ["Wo sind Sie geboren?"],
+          "explanation": "geboren with sein: Wo sind Sie geboren?"
+        }
+      ]
+    }
+  ]
+}

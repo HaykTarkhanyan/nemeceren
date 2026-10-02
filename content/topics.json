@@ -450,6 +450,22 @@
           "title": "gefallen and mögen",
           "lesson": "u6-05-mir-dir",
           "section": "gefallen-moegen"
+        },
+        {
+          "title": "Colours after ist: Die Jacke ist blau",
+          "lesson": "u7-03-kleidung",
+          "section": "colour-position"
+        },
+        {
+          "title": "wissen: weiß, weißt ...",
+          "lesson": "u7-07-a1-abschluss",
+          "section": "wissen-table"
+        },
+        {
+          "title": "wissen or kennen?",
+          "lesson": "u7-07-a1-abschluss",
+          "section": "wissen-kennen",
+          "star": true
         }
       ]
     },
@@ -801,6 +817,66 @@
           "title": "Being ill at work in Germany: the rules",
           "lesson": "u6-07-krankmeldung",
           "section": "sick-rules"
+        },
+        {
+          "title": "Filling in a form",
+          "lesson": "u7-01-formulare",
+          "section": "form-fields",
+          "star": true
+        },
+        {
+          "title": "Answering questions about yourself (Wo sind Sie geboren?)",
+          "lesson": "u7-01-formulare",
+          "section": "filling-in"
+        },
+        {
+          "title": "Anmeldung: registering your address",
+          "lesson": "u7-01-formulare",
+          "section": "anmeldung"
+        },
+        {
+          "title": "At the post office",
+          "lesson": "u7-02-post-telefon",
+          "section": "post-office"
+        },
+        {
+          "title": "On the phone: Auf Wiederhören",
+          "lesson": "u7-02-post-telefon",
+          "section": "phone-calls",
+          "star": true
+        },
+        {
+          "title": "Talking about clothes and sizes",
+          "lesson": "u7-03-kleidung",
+          "section": "clothes-talk"
+        },
+        {
+          "title": "What's the weather like?",
+          "lesson": "u7-04-wetter",
+          "section": "weather",
+          "star": true
+        },
+        {
+          "title": "At the hotel",
+          "lesson": "u7-05-reisen",
+          "section": "hotel",
+          "star": true
+        },
+        {
+          "title": "Sightseeing: Führung, Eintritt",
+          "lesson": "u7-05-reisen",
+          "section": "sights"
+        },
+        {
+          "title": "Congratulations and good wishes",
+          "lesson": "u7-06-feste",
+          "section": "congratulations",
+          "star": true
+        },
+        {
+          "title": "Little words: warum, bald, gleich, kaputt ...",
+          "lesson": "u7-07-a1-abschluss",
+          "section": "little-words"
         }
       ]
     },
@@ -898,6 +974,31 @@
           "title": "The body",
           "lesson": "u6-06-gesundheit",
           "section": "body"
+        },
+        {
+          "title": "Clothes",
+          "lesson": "u7-03-kleidung",
+          "section": "clothes"
+        },
+        {
+          "title": "Colours",
+          "lesson": "u7-03-kleidung",
+          "section": "colours"
+        },
+        {
+          "title": "North, south, east, west and nature",
+          "lesson": "u7-04-wetter",
+          "section": "where-country"
+        },
+        {
+          "title": "Airport and station",
+          "lesson": "u7-05-reisen",
+          "section": "airport-station"
+        },
+        {
+          "title": "More family",
+          "lesson": "u7-06-feste",
+          "section": "family-2"
         }
       ]
     }

@@ -51,6 +51,8 @@
 
 **Unit 6 as written (2026-10-02, DECISIONS.md #71):** seven lessons. `seit` joins the dative prepositions. Places are Wo? + dative only; Wohin? is answered with zu/nach, and movement with in/an (ins Büro) waits for A2. Lesson 1 explains every dative chunk from Units 3-5. The final task combines both end tasks: the Krankmeldung email and directions from the U-Bahn.
 
+**Unit 7 as written (2026-10-02, DECISIONS.md #72):** seven lessons and 149 cards that fill the A1 word gaps: forms, post and phone, clothes and colours, weather, travel and hotels, family and celebrations, and everyday little words (wissen vs kennen). Some clothes and weather words are A2 in the Goethe list (Hose, kalt, Schnee) but are needed together with their A1 neighbours, so they come here with level A2. Four tests: three unit tests and the A1 final check over Units 0-7. The Goethe A1 mock exam runs in the chat: Claude opens the PDF and the audio from `reference/` and grades the writing and speaking.
+
 **Total about 110 hours and about 700 words with Unit 7.** Goethe estimates 60-150 h for A1 (search snippet, not verified).
 - 20 min/day: about 10 months
 - 30 min/day: about 6-7 months

@@ -1,0 +1,135 @@
+{
+  "id": "u7-03-kleidung",
+  "unit": 7,
+  "order": 3,
+  "level": "A1",
+  "title": "Clothes and colours (Kleidung)",
+  "summary": "Name clothes and colours, say what you're wearing, and buy something in your size, using grammar you already know.",
+  "goals": [
+    "Name clothes and colours",
+    "Say what someone is wearing and how it fits",
+    "Ask for a size in a shop"
+  ],
+  "nicosWeg": [
+    { "title": "Nicos Weg A1, chapter 14: Clothing (Mein Lieblingspulli, Das passt gut!)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
+  ],
+  "words": ["kleidung", "jacke", "hose", "hemd", "kleid", "pullover", "t-shirt", "schuh", "mantel", "anziehen", "ausziehen", "tragen", "groesse", "farbe", "gelb", "grau", "braun", "haar", "aussehen", "kurz", "lang"],
+  "sections": [
+    {
+      "id": "clothes",
+      "type": "table",
+      "title": "Clothes",
+      "columns": [{ "header": "Clothes", "de": "words" }, { "header": "English" }],
+      "rows": [
+        ["die Jacke", "jacket"],
+        ["der Mantel", "coat"],
+        ["der Pullover", "jumper, sweater"],
+        ["das Hemd", "shirt"],
+        ["das T-Shirt", "T-shirt"],
+        ["die Hose", "trousers"],
+        ["das Kleid", "dress"],
+        ["der Schuh, die Schuhe", "shoe, shoes"]
+      ]
+    },
+    {
+      "id": "colours",
+      "type": "table",
+      "title": "Colours",
+      "columns": [{ "header": "Colour", "de": "words" }, { "header": "English" }],
+      "rows": [
+        ["rot", "red"],
+        ["blau", "blue"],
+        ["grün", "green"],
+        ["gelb", "yellow"],
+        ["schwarz", "black"],
+        ["weiß", "white"],
+        ["grau", "grey"],
+        ["braun", "brown"]
+      ]
+    },
+    {
+      "id": "clothes-talk",
+      "type": "explanation",
+      "title": "Talking about clothes, with grammar you know",
+      "text": "- **Accusative (Unit 4):** [[Ich suche einen Pullover.]] [[Ich nehme die Jacke.]]\n- **Separable verbs (Unit 3):** [[Ich ziehe die Jacke an.]] (put on) [[Bitte ziehen Sie die Schuhe aus.]] (take off)\n- **Dative verbs (Unit 6):** [[Die Hose passt mir nicht.]] [[Das Kleid gefällt mir.]]\n- **tragen** (to wear) changes its vowel like [[fahren]]: [[du trägst]], [[er trägt]]: [[Er trägt einen Mantel.]]\n- **aussehen** (to look) is separable: [[Du siehst gut aus!]]\n\nIn a shop: [[Welche Größe haben Sie?]] - [[Größe M.]] or [[Achtunddreißig.]] [[Die Hose ist zu kurz.]] [[Der Mantel ist zu lang.]]\n\nWatch out: [[die Hose]] is singular, while English 'trousers' and Russian брюки are plural: [[Die Hose ist zu kurz.]] And [[die Haare]] is usually plural: [[Ihre Haare sind lang.]] [[Welche Farbe magst du?]]"
+    },
+    {
+      "id": "colour-position",
+      "type": "warning",
+      "title": "Colours after ist",
+      "text": "After [[sein]], a colour never changes: [[Die Jacke ist blau.]] [[Meine Schuhe sind braun.]] (Unit 2). Before the noun it takes an ending ([[eine blaue Jacke]]); that comes at A2. For now, put the colour after [[ist]] or [[sind]]."
+    },
+    {
+      "id": "shoes-off",
+      "type": "tip",
+      "title": "Shoes off?",
+      "text": "In many German homes, guests take off their shoes at the door. If you're not sure, ask: [[Soll ich die Schuhe ausziehen?]] (sollen, Unit 5)."
+    },
+    {
+      "id": "clothes-examples",
+      "type": "examples",
+      "title": "Examples",
+      "items": [
+        { "de": "Ich suche einen Pullover. - Welche Größe haben Sie?", "en": "I'm looking for a jumper. - What size are you?" },
+        { "de": "Die Hose passt mir nicht. Sie ist zu kurz.", "en": "The trousers don't fit me. They're too short." },
+        { "de": "Das Kleid gefällt mir. Was kostet es?", "en": "I like the dress. How much is it?" },
+        { "de": "Heute trage ich ein T-Shirt und eine Jacke.", "en": "Today I'm wearing a T-shirt and a jacket." },
+        { "de": "Meine Schuhe sind braun.", "en": "My shoes are brown." },
+        { "de": "Du siehst gut aus!", "en": "You look good!" }
+      ]
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat",
+      "items": [
+        { "de": "die Jacke, der Mantel, die Hose, das Hemd", "en": "jacket, coat, trousers, shirt" },
+        { "de": "gelb, grau, braun", "en": "yellow, grey, brown" },
+        { "de": "Welche Größe haben Sie?", "en": "What size are you?" },
+        { "de": "Die Hose passt mir nicht.", "en": "The trousers don't fit me." },
+        { "de": "Ich ziehe die Jacke an.", "en": "I put on the jacket." }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: I put on the jacket.",
+          "text": "Ich ___ die Jacke an.",
+          "answers": [["ziehe"]],
+          "explanation": "anziehen is separable: ziehe ... an."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap with passen: The trousers don't fit me.",
+          "text": "Die Hose ___ mir nicht.",
+          "answers": [["passt"]],
+          "explanation": "die Hose is the subject: die Hose passt. passen takes the dative: mir."
+        },
+        {
+          "type": "mc",
+          "question": "Which colour is a banana?",
+          "questionLang": "en",
+          "options": ["gelb", "grau", "braun"],
+          "answer": "gelb",
+          "explanation": "gelb = yellow; grau = grey; braun = brown."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap with tragen: He's wearing a coat.",
+          "text": "Er ___ einen Mantel.",
+          "answers": [["trägt"]],
+          "explanation": "tragen changes a to ä: er trägt."
+        },
+        {
+          "type": "translate",
+          "direction": "en-de",
+          "text": "What size are you? (polite)",
+          "references": ["Welche Größe haben Sie?", "Welche Größe tragen Sie?"],
+          "explanation": "die Größe = size: Welche Größe haben Sie?"
+        }
+      ]
+    }
+  ]
+}
