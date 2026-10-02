@@ -100,6 +100,8 @@ Rules that came from real mistakes:
 
 ## 4. Independent review (one reviewer subagent per unit; one agent is allowed without asking)
 
+When writing several units in one go, tell Hayk up front how many reviewer agents that means (one per unit, run one at a time). Global CLAUDE.md asks for that count before going past 1-2 agents.
+
 Give the reviewer:
 - the draft paths;
 - the syllabus row;
@@ -142,7 +144,7 @@ Grade with `progress.py review` (hints first in the chat, then corrections). The
   - am / um / von ... bis;
   - separable verbs (anrufen, aufstehen);
   - time-first word order (Am Samstag gehe ich ...);
-  - können / wollen / müssen + the verb bracket. Unit 1 and the songs already used "Was wollen wir trinken?" as a chunk, so link to it.
+  - können / wollen / müssen + the verb bracket. The song lesson `t-sieben-tage-lang` already used "Was wollen wir trinken?" and "Jetzt müssen wir streiken" as chunks, so link to it.
 
   Russian comparison: "halb drei" = 2:30, the same logic as половина третьего. Check it before writing.
 
@@ -154,7 +156,7 @@ Grade with `progress.py review` (hints first in the chat, then corrections). The
   - möchte and "Ich hätte gern" (the Extras phrase p13 already used it);
   - mögen;
   - gern / lieber / am liebsten;
-  - vowel-change verbs (essen, nehmen; sprechen e→i was already taught in Unit 1 as a deviation).
+  - vowel-change verbs (essen, nehmen). sprechen e→i and gern were already taught early in Unit 1 (SYLLABUS deviation note): build on them, don't re-introduce them.
 
   The paying phrases "Zusammen oder getrennt?" and "Stimmt so." are in Extras. Teach them properly and reuse the wording.
 
