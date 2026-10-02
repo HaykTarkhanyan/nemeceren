@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { needsDigits, testKeyAction, umlautFor, umlautKeysOn } from './keys.ts'
+import type { Item } from '../content/schema.ts'
+import { itemUmlautScope, needsDigits, testKeyAction, umlautFor, umlautKeysOn } from './keys.ts'
 import type { TestKeyInput } from './keys.ts'
 
 const none = { shift: false, ctrl: false, alt: false, meta: false }
@@ -28,6 +29,14 @@ describe('umlaut keys', () => {
   it('keeps real digits when an answer needs them', () => {
     expect(needsDigits(['vierzig'])).toBe(false)
     expect(needsDigits(['Um 8 Uhr.'])).toBe(true)
+  })
+
+  it('decides per item: digits: true or a digit in the expected answer turns the umlaut keys off', () => {
+    const write: Item = { type: 'write', prompt: 'Plan Saturday.', promptLang: 'en' }
+    expect(itemUmlautScope(write)).toBe('answer')
+    expect(itemUmlautScope({ ...write, digits: true })).toBeNull()
+    expect(itemUmlautScope({ type: 'gap', text: 'Um ___ Uhr.', answers: [['8', 'acht']] })).toBeNull()
+    expect(itemUmlautScope({ type: 'dictation', text: 'Grüß Gott' })).toBe('answer')
   })
 })
 

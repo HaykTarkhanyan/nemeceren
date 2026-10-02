@@ -2,7 +2,7 @@
 import type { Item } from '../content/schema.ts'
 import { GAP_MARKER } from '../content/schema.ts'
 import type { AnswerValue } from '../lib/grading.ts'
-import { needsDigits } from '../lib/keys.ts'
+import { itemUmlautScope } from '../lib/keys.ts'
 import { useIsGuest } from '../lib/session.ts'
 import { shuffle } from '../lib/shuffle.ts'
 import { useProgress, useSyncStatus } from '../lib/storage.ts'
@@ -79,8 +79,8 @@ export interface InputProps {
 const TEXT_INPUT_PROPS = { autoCapitalize: 'off', autoCorrect: 'off', autoComplete: 'off', spellCheck: false, lang: 'de' } as const
 
 export function ItemInput({ item, layout, answer, onChange, onPlay, numbered = false }: InputProps) {
-  // The digit keys type umlauts in answer boxes, unless the answer itself needs digits (lib/keys.ts).
-  const keys = needsDigits(expectedTexts(item)) ? null : ('answer' as const)
+  // The digit keys type umlauts in answer boxes, unless the answer needs digits (lib/keys.ts).
+  const keys = itemUmlautScope(item)
   switch (item.type) {
     case 'mc':
       return (
@@ -122,7 +122,7 @@ export function ItemInput({ item, layout, answer, onChange, onPlay, numbered = f
               </span>
             ))}
           </p>
-          <UmlautBar keys={keys} />
+          <UmlautBar keys={keys} digitsHere={keys === null} />
         </>
       )
     }
@@ -142,7 +142,7 @@ export function ItemInput({ item, layout, answer, onChange, onPlay, numbered = f
             spellCheck={false}
             {...umlautKeys(item.direction === 'en-de' ? keys : null)}
           />
-          {item.direction === 'en-de' && <UmlautBar keys={keys} />}
+          {item.direction === 'en-de' && <UmlautBar keys={keys} digitsHere={keys === null} />}
         </>
       )
     case 'write': {
@@ -166,7 +166,7 @@ export function ItemInput({ item, layout, answer, onChange, onPlay, numbered = f
             {words} word{words === 1 ? '' : 's'}
             {item.minWords ? ` (at least ${item.minWords})` : ''}
           </p>
-          <UmlautBar keys={keys} />
+          <UmlautBar keys={keys} digitsHere={keys === null} />
         </>
       )
     }
@@ -183,18 +183,10 @@ export function ItemInput({ item, layout, answer, onChange, onPlay, numbered = f
             {...TEXT_INPUT_PROPS}
             {...umlautKeys(keys)}
           />
-          <UmlautBar keys={keys} />
+          <UmlautBar keys={keys} digitsHere={keys === null} />
         </>
       )
   }
-}
-
-/** The texts a typed answer is checked against: a digit among them means the answer needs digits. */
-function expectedTexts(item: Item): string[] {
-  if (item.type === 'gap') return item.answers.flat()
-  if (item.type === 'translate') return item.references ?? []
-  if (item.type === 'dictation') return [item.text]
-  return []
 }
 
 function Choices(props: { options: string[]; value: string | null; onChange: (a: string) => void; numbered: boolean }) {

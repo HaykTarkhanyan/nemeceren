@@ -5,6 +5,7 @@
 //   - In a test: 1-9 pick a multiple-choice option, Space plays the audio (Shift+Space while
 //     typing), Enter goes to the next question (Ctrl+Enter in the long writing box).
 
+import type { Item } from '../content/schema.ts'
 import type { Settings } from './settings.ts'
 
 /** Where a text box is: an answer box (tests, exercises, word reviews) or free writing (notes, own words). */
@@ -28,6 +29,20 @@ export function umlautKeysOn(setting: Settings['umlautKeys'], scope: UmlautScope
 /** An answer that needs real digits (a number, a time) keeps the digit keys as digits. */
 export function needsDigits(expected: string[]): boolean {
   return expected.some((s) => /\d/.test(s))
+}
+
+/** The texts a typed answer is checked against: a digit among them means the answer needs digits. */
+function expectedTexts(item: Item): string[] {
+  if (item.type === 'gap') return item.answers.flat()
+  if (item.type === 'translate') return item.references ?? []
+  if (item.type === 'dictation') return [item.text]
+  return []
+}
+
+/** Whether an item's answer box gets the digit umlaut keys: not if the item says `digits: true`
+ * (a write task about times or prices) or its expected answer contains a digit. */
+export function itemUmlautScope(item: Item): UmlautScope | null {
+  return item.digits || needsDigits(expectedTexts(item)) ? null : 'answer'
 }
 
 export type TestKeyAction = { kind: 'next' } | { kind: 'play' } | { kind: 'choose'; option: number } | null

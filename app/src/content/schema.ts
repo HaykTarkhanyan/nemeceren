@@ -39,6 +39,10 @@ const common = {
   instruction: Text.optional(),
   hint: Text.optional(),
   explanation: Text.optional(),
+  /** The answer needs real digits (a time, a price): the digit keys type digits in this item's box
+   * instead of ä ö ü ß (DECISIONS.md #67). Needed for `write` items, which have no expected answer
+   * to detect digits from; gap, translate and dictation already detect them. */
+  digits: z.literal(true).optional(),
 }
 
 function checkChoice(item: { options: string[]; answer: string }, ctx: z.RefinementCtx): void {

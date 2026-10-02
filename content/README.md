@@ -50,6 +50,7 @@ Every item may also have these optional keys:
 | `instruction` | English instruction shown above the item. Leave it out to get the default for the type. |
 | `hint` | behind a "Show hint" button. The result records whether it was used. |
 | `explanation` | shown after the test is submitted. Explain the rule, not only the answer. |
+| `digits` | `true` when the answer needs real digits (a time, a price): the digit keys then type digits in this item's box instead of ä ö ü ß, and the box says so. Needed on `write` items about times or numbers; `gap`, `translate` and `dictation` switch automatically when an expected answer contains a digit. |
 
 Items are graded after the whole test is submitted. Hayk sees per-item feedback, and the attempt is saved to Hayk's progress (Neon, see `progress/README.md`), where Claude reviews it with `uv run backend/scripts/progress.py`.
 

@@ -2,6 +2,13 @@
 
 Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
+## 67. A test or exercise item can say `digits: true`, so its answer box types real digits instead of umlauts (found by the course-unit skill review, 2026-10-02; built at Hayk's request)
+
+- **Date:** 2026-10-02 - **Status:** active; refines #64
+- **Why:** #64 turns the digit keys off automatically only where an expected answer contains a digit (gap, translate, dictation). A `write` item has no expected answer, so its box always typed umlauts: "14:30" came out as "äß:ü0". Unit 3's end task (planning a Saturday by text message) and later tasks with times and prices need digits. The flag is set by Claude in the content; the box then says "This answer needs numbers, so the digit keys type digits here", so the missing umlaut keys don't look like a bug, and the ä ö ü ß buttons still work. The rule is `itemUmlautScope` in `lib/keys.ts`, with unit tests.
+- **Alternatives rejected:** asking for numbers in words only (unnatural for times and prices in a message); telling Hayk to use the number pad (many laptops have none) or to switch the keys off in Settings (a global change for one question); detecting digits as Hayk types (a "3" can be meant as ü or as 3; guessing would be wrong half the time).
+- **What would change this:** free-writing boxes needing both often in one answer (then a per-box toggle button).
+
 ## 66. Song lessons include the full lyrics with a translation per line (a folded `lyrics` block) and show how many unique words they hold; a picked unit, lesson or "my words" has no daily new-word limit (asked for by Hayk, 2026-10-02)
 
 - **Date:** 2026-10-02 - **Status:** active; revisits #61 (theme lessons quoted short excerpts only) and refines #50 (word source)

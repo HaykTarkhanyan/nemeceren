@@ -58,8 +58,9 @@ function insertAtCursor(el: TextBox, text: string): void {
   el.setSelectionRange(start + text.length, start + text.length)
 }
 
-/** `keys`: the scope of the boxes this bar serves, to show the key reminder when the digit keys are on. */
-export function UmlautBar({ keys = null }: { keys?: UmlautScope | null }) {
+/** `keys`: the scope of the boxes this bar serves, to show the key reminder when the digit keys are on.
+ * `digitsHere`: this answer needs digits, so the digit keys type digits (say so, or it looks like a bug). */
+export function UmlautBar({ keys = null, digitsHere = false }: { keys?: UmlautScope | null; digitsHere?: boolean }) {
   const [msg, setMsg] = useState<string | null>(null)
   const settings = useSettings()
   const onClick = (letter: string) => {
@@ -88,6 +89,9 @@ export function UmlautBar({ keys = null }: { keys?: UmlautScope | null }) {
       {msg && <span className="muted small">{msg}</span>}
       {keys && umlautKeysOn(settings.umlautKeys, keys) && (
         <span className="muted small">Keys: 1 ä, 2 ö, 3 ü, 4 ß (with Shift: Ä Ö Ü). The number pad types digits.</span>
+      )}
+      {digitsHere && settings.umlautKeys !== 'off' && (
+        <span className="muted small">This answer needs numbers, so the digit keys type digits here. Use the buttons for ä ö ü ß.</span>
       )}
     </div>
   )
