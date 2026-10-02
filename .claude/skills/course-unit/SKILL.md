@@ -11,7 +11,7 @@ description: >-
 
 # Course unit
 
-The course follows `SYLLABUS.md` (units 0-6 to A1). Units 0-2 were built this way; this skill keeps
+The course follows `SYLLABUS.md`: Units 0-7 to A1 (7 is a wrap-up with no new grammar), then the A2 table, Units 8-17 (DECISIONS.md #72). Units 0-6 were built this way; this skill keeps
 later units consistent and lets a fresh session do it without the history of how 0-2 were made.
 Work **one unit at a time, completely** (write, check, review, commit) before starting the next: a
 later unit must build on the earlier unit's real word ids, lessons and wording.
@@ -179,6 +179,13 @@ The finish rules are in `SYLLABUS.md`:
 - every word of the unit introduced. "Words from: Unit N" brings all of them, with no daily cap.
 
 Grade with `progress.py review` (hints first in the chat, then corrections). Then mark the unit done in the syllabus progress table, with dates and hours from `progress.py sessions --days <since the unit started>` (the default is 7 days).
+
+## Notes for A2 (Units 8-17)
+
+- **Plan:** the A2 table in `SYLLABUS.md`. Each unit has A1 size (about 6 lessons, 90-100 cards, 3 tests). Write one unit ahead of Hayk, not all of A2 at once (DECISIONS #72).
+- **Words:** the Goethe A2 list (`reference/goethe_wortliste.tsv` level A2, `dwds_goethe_A2.csv`), plus any A1 word still missing (check: an A1 lemma from `dwds_goethe_A1.csv` that's on no card and in no glossary lemma).
+- **Chunks from A1 that A2 must now explain, by name:** `ins Kino`, `in die Stadt` (two-way prepositions, Unit 10); `Wir treffen uns` (reflexive verbs, Unit 12); `langsamer`, `lieber`, `am liebsten` (comparison, Unit 13); `Liebe`/`Lieber`, `Sehr geehrte`/`geehrter`, `Schönen Feierabend`, `im ersten Stock` (adjective endings, Units 13-14); `Könnten Sie ...?`, `Ich hätte gern` (Konjunktiv II, Unit 11); the participles of separable and be-/er-/ver-/-ieren verbs, taught only for recognition in Unit 5 (Unit 8).
+- **Glossary:** A2 brings subordinate clauses (verb at the end), so popups of separable verbs need their joined forms too (`weil ich um sieben aufstehe`). Curate them like Unit 3's split forms.
 
 ## Notes for Units 3-5 (from the syllabus, the research, Units 0-2 and an independent review)
 

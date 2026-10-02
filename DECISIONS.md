@@ -2,6 +2,13 @@
 
 Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
+## 72. A1 ends with a wrap-up Unit 7 and the Goethe A1 mock exam; A2 is ten A1-sized units (8-17), written one ahead of Hayk (decided with Hayk, 2026-10-02; revisits #13)
+
+- **Date:** 2026-10-02 - **Status:** active; revisits #13 (the v3 syllabus had A2 as five units of 20-25 h, numbered 7-11)
+- **Why:** after Units 0-6, the course covers practically all A1 grammar, but only 51% of the Goethe A1 word list on cards (60% counting lesson text): 327 A1 words appear nowhere (forms, clothes and colours, travel and hotel, celebrations). Those are what the Goethe A1 mock exam asks about, so a wrap-up unit fills them before the mock exam, with no new grammar. A2 has twice the material of an A1 unit (621 new words, nine grammar topics in the research order, items 11-19). Hayk chose ten units of A1 size over five big ones: the same rhythm (a test every two lessons, about 6 lessons and 90-100 words per unit), more finished-unit milestones, and the course-unit skill works unchanged. Order: the past and reasons first (research order), then work, class and friends (Hayk's priorities), offices last and light (as in #13).
+- **Alternatives rejected:** five A2 units of about 22 h (fewer milestones, 10-12 lessons per unit); folding the missing A1 words into the A2 units (the A1 mock exam would come before them); writing all of A2 now (about 250k review tokens per unit, and Hayk's mistakes in Units 1-6 should shape what A2 repeats).
+- **What would change this:** Hayk finding the A1-sized rhythm too slow at A2 (then merge pairs: 8+9, 10+11 ...); a real admin need (a move, a new contract) pulling Units 16-17 forward.
+
 ## 71. Unit 6 teaches the dative with prepositions, places (Wo?) and pronouns, keeps movement with in/an (Wohin? + accusative) for A2, and explains every earlier dative chunk (written with the course-unit skill at Hayk's request, 2026-10-02)
 
 - **Date:** 2026-10-02 - **Status:** active
