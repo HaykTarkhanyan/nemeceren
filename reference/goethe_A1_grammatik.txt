@@ -1,0 +1,58 @@
+A1 grammar checklist, after the grammar inventory of the Goethe-Zertifikat A1: Start Deutsch 1
+(Prüfungsziele / Testbeschreibung, pp. 100-106: https://www.goethe.de/pro/relaunch/prf/de/Pruefungsziele_Testbeschreibung_A1_SD1.pdf).
+Written 2026-10-03 as a checklist in our own words, with our own examples; see the PDF for the original.
+Goethe's note (p. 100): the inventory mainly limits what may appear in reading and listening texts; for speaking
+and writing it matters less. Polite Konjunktiv II forms belong to A1, but as fixed phrases only.
+
+VERB
+  - present tense of every verb in the A1 word list
+  - Perfekt of a short list of common verbs (arbeiten, bleiben, essen, fahren, fragen, glauben, haben, lesen,
+    lernen, machen, schlafen, sehen, passieren, trinken, verstehen)
+  - participles as signs: geöffnet, geschlossen
+  - Präteritum: war and hatte, 1st and 3rd person only
+  - Konjunktiv II as fixed phrases: möchte, würde gern (Ich würde gern essen gehen.)
+  - imperative for du, ihr and Sie (Komm! Kommt! Kommen Sie!)
+  - modal verbs in the present: können, wollen, müssen, dürfen, sollen, möchten
+  - separable verbs, including in questions and the imperative (Rufst du an? Ruf mich an!)
+
+NOUN
+  - gender: der, die, das
+  - singular and plural
+  - cases: nominative, accusative, dative
+  - genitive -s with names (Annas Handy, no apostrophe); other genitives for recognition only
+
+ARTICLES AND PRONOUNS
+  - definite der/die/das/die; demonstrative dieser/diese/dieses/diese; indefinite ein/eine/ein
+  - no article (Ich trinke gern Tee.)
+  - possessives mein, dein, sein, ihr, Ihr, unser, euer
+  - kein, including kein ... mehr (Ich habe keine Zeit mehr.)
+  - indefinite pronouns: man, etwas, nichts, mehr, alles, welche (Hast du welche?)
+  - personal pronouns: nominative; accusative mich, dich, ihn, sie, es; dative with danken, gehören, helfen and
+    es geht (mir, dir, euch, Ihnen)
+  - reciprocal uns/sich as a chunk (Wir sehen uns morgen.)
+  - question words wer, was, wen, wem
+
+ADJECTIVE
+  - after sein (Die Wohnung ist klein.) and as an adverb (Ich koche gern.)
+  - numbers; the inventory's contents page also lists attributive use and comparison
+
+PREPOSITIONS
+  - time: am (am Montag), ab (ab Montag), für (für zwei Wochen), im (im Mai), nach (nach dem Kurs),
+    über (über eine Stunde), um (um acht), von ... bis, vor (vor dem Termin)
+  - place: an (am Bahnhof; an + accusative for direction), auf (auf dem Tisch), aus (aus Armenien), bei (bei
+    Siemens), in (im Büro; in + accusative for direction), nach (nach Berlin), von ... nach, unter (unter der
+    Nummer ...), zu (zum Arzt)
+  - manner: aus (a material: aus Holz), für, mit, ohne
+
+SENTENCES
+  - verb in second place, also after a time phrase (Heute arbeite ich.)
+  - complements: nominative, accusative, dative with danken/gehören/geben/helfen, place, quality (Es ist kalt.)
+  - verb bracket: separable verbs, modal verbs, Perfekt
+  - negation with nicht and kein
+  - yes/no questions and W-questions
+  - joining sentences: und, oder, aber, denn, dann; wenn for recognition
+
+WORD FORMATION
+  - nouns: -er for people (Lehrer), -ung (die Wohnung), feminine -in (Kollegin), compounds (Zahnarzt,
+    Postkarte), a participle as a noun (recognition)
+  - adjectives: un- (unbekannt), -los (arbeitslos), -bar (erreichbar), compounds (hellblau, dunkelblau)
