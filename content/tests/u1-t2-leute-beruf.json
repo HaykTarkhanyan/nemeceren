@@ -7,6 +7,8 @@
   "unit": 1,
   "lesson": "u1-04-beruf",
   "items": [
+    {"type": "mc", "question": "In a Munich shop, the woman at the till says 'Grüß Gott!'. What can you answer?", "questionLang": "en", "options": ["Guten Tag!", "Gute Nacht!", "Tschüss!"], "answer": "Guten Tag!", "explanation": "Review (Unit 0): Grüß Gott is a polite hello in Bavaria. Answer with Grüß Gott! or Guten Tag!. Tschüss is goodbye."},
+    {"type": "gap", "instruction": "Fill in the gap: you meet a neighbour at 7 pm.", "text": "Guten ___!", "answers": [["Abend"]], "explanation": "Review (Unit 0): Guten Abend from about 6 pm. Gute Nacht only when someone goes to bed."},
     {
       "type": "gap",
       "text": "Ich ___ Hayk. Das ___ mein Kollege Aram.",
@@ -15,9 +17,10 @@
     },
     {
       "type": "gap",
-      "text": "Wir ___ Kollegen.",
-      "answers": [["sind"]],
-      "explanation": "wir sind."
+      "instruction": "Fill in the gap: They are from Armenia.",
+      "text": "Sie ___ aus Armenien.",
+      "answers": [["sind", "kommen"]],
+      "explanation": "sie sind = they are. The verb shows which sie it is: sie ist = she is."
     },
     {
       "type": "gap",
@@ -27,11 +30,11 @@
     },
     {
       "type": "mc",
-      "question": "A colleague introduces you to Anna. What do you say?",
+      "question": "Your new colleague is Anna Weber, and you say Sie to each other. How do you greet her?",
       "questionLang": "en",
-      "options": ["Freut mich!", "Wie bitte?", "Tschüss!"],
-      "answer": "Freut mich!",
-      "explanation": "Freut mich! = Nice to meet you!"
+      "options": ["Guten Tag, Frau Weber!", "Guten Tag, Frau Anna!", "Guten Tag, Weber!"],
+      "answer": "Guten Tag, Frau Weber!",
+      "explanation": "With Sie: Frau or Herr plus the surname. Frau + first name sounds wrong at work; first names usually go with du."
     },
     {
       "type": "mc",
@@ -59,17 +62,17 @@
     },
     {
       "type": "order",
-      "prompt": "What do you do for a living? (polite)",
-      "tiles": ["was", "sind", "Sie", "von", "Beruf"],
-      "answers": ["Was sind Sie von Beruf"],
-      "explanation": "Was sind Sie von Beruf? is a fixed question."
+      "prompt": "What do you do for work? (informal)",
+      "tiles": ["was", "machst", "du", "beruflich"],
+      "answers": ["Was machst du beruflich"],
+      "explanation": "W-question: was first, then the verb. Polite: Was sind Sie von Beruf?"
     },
     {
       "type": "translate",
       "direction": "en-de",
-      "text": "She is new here.",
-      "references": ["Sie ist neu hier.", "Sie ist hier neu."],
-      "explanation": "sie ist = she is."
+      "text": "He is a teacher.",
+      "references": ["Er ist Lehrer."],
+      "explanation": "No article with jobs: Er ist Lehrer."
     },
     {
       "type": "write",

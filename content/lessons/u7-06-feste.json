@@ -14,6 +14,10 @@
   "nicosWeg": [
     { "title": "Nicos Weg A1, chapter 15: Family (Meine Familie, Meine Eltern)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
   ],
+  "videos": [
+    {"id": "5alTxRuLvdM", "title": "Writing an invitation", "minutes": 10},
+    {"id": "k2vis1VsxXM", "title": "Christmas", "minutes": 13}
+  ],
   "words": ["grosseltern", "grossmutter", "grossvater", "oma", "opa", "ehefrau", "ehemann", "baby", "junge", "maedchen", "leute", "mensch", "partner", "partnerin", "hochzeit", "heiraten", "glueckwunsch", "gratulieren", "herzlich", "willkommen", "einladung", "gast", "fest", "glueck", "gluecklich", "lustig", "lachen", "hund", "lied"],
   "tests": ["u7-t3-reisen-feste"],
   "sections": [

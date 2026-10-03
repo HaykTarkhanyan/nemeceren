@@ -273,6 +273,10 @@ export const Lesson = z.strictObject({
   /** Can-do statements, in English. */
   goals: z.array(Text).min(1),
   nicosWeg: z.array(z.strictObject({ title: Text, url: z.url() })).optional(),
+  /** YouTube videos to watch with this lesson (DECISIONS.md #74): the 11-character video id, a short title, the length. */
+  videos: z
+    .array(z.strictObject({ id: z.string().regex(/^[A-Za-z0-9_-]{11}$/, { message: 'must be a YouTube video id (11 characters)' }), title: Text, minutes: z.number().int().positive() }))
+    .optional(),
   /** Word ids from content/words.json that this lesson introduces. */
   words: z.array(Slug).optional(),
   /** Test ids that belong to this lesson. */

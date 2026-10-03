@@ -13,6 +13,10 @@
   "nicosWeg": [
     { "title": "Nicos Weg A1, chapter 10: Orientation (Wo ist der Bahnhof?, An der Ampel links)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
   ],
+  "videos": [
+    {"id": "JsH6DAh0Pqw", "title": "Asking the way", "minutes": 9},
+    {"id": "IIxYnEntMP0", "title": "zu, zum or zur?", "minutes": 10}
+  ],
   "words": ["links", "rechts", "geradeaus", "weit", "ecke", "ampel", "kreuzung", "in-der-naehe", "weg", "kilometer", "wie-komme-ich-zum", "entschuldigen"],
   "tests": ["u6-t2-verkehr-weg"],
   "sections": [

@@ -14,6 +14,11 @@
   "nicosWeg": [
     { "title": "Nicos Weg A1, chapter 17: Health (Geht es dir gut?, Beim Arzt, Gute Besserung!, Nehmen Sie ...)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
   ],
+  "videos": [
+    {"id": "NIrQgPq6C8I", "title": "Feeling ill", "minutes": 13},
+    {"id": "Ete-ii0Flkw", "title": "Body parts", "minutes": 14},
+    {"id": "JybuldB6q5M", "title": "At the doctor's", "minutes": 12}
+  ],
   "words": ["krank", "gesund", "kopf", "bauch", "ruecken", "hals", "bein", "arm", "hand", "fuss", "ohr", "zahn", "mund", "auge", "wehtun", "schmerz", "fieber", "arzt", "aerztin", "praxis", "apotheke", "medikament", "tablette", "gute-besserung", "krankenhaus"],
   "sections": [
     {

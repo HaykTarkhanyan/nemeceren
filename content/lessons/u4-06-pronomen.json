@@ -11,6 +11,10 @@
     "Use für and ohne: für dich, ohne Milch",
     "Talk about people: kennen, besuchen, einladen"
   ],
+  "videos": [
+    {"id": "_pQICJjSB-c", "title": "Pronouns in the accusative", "minutes": 11},
+    {"id": "HLBQveKnADU", "title": "Prepositions with the accusative", "minutes": 11}
+  ],
   "words": ["fuer", "ohne", "kennen", "besuchen", "einladen", "lieben"],
   "sections": [
     {

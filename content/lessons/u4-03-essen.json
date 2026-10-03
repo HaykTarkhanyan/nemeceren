@@ -14,6 +14,13 @@
     { "title": "Nicos Weg A1, chapter 11: Eating and leisure (Lebensmittel)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" },
     { "title": "Nicos Weg A1, chapter 3: In company (Eine Pizza bitte!)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
   ],
+  "videos": [
+    {"id": "15hmmpt15ag", "title": "Irregular verbs (vowel change)", "minutes": 13},
+    {"id": "nef5kSqmpes", "title": "25 everyday foods", "minutes": 10},
+    {"id": "WMf4M4BBJlQ", "title": "Breakfast", "minutes": 11},
+    {"id": "XSAt7PWzLIo", "title": "Fruit", "minutes": 11},
+    {"id": "J6nUgKkTnIY", "title": "Vegetables", "minutes": 11}
+  ],
   "words": ["essen", "essen-2", "fruehstueck", "brot", "broetchen", "semmel", "butter", "ei", "kaese", "wurst", "fleisch", "fisch", "gemuese", "obst", "apfel", "banane", "tomate", "kartoffel", "reis", "salat", "suppe", "lesen", "sehen", "fahren"],
   "sections": [
     {

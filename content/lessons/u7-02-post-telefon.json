@@ -10,6 +10,11 @@
     "Make and answer a phone call",
     "Understand voicemail and a busy line"
   ],
+  "videos": [
+    {"id": "8vLRrKgOkD0", "title": "At the post office", "minutes": 10},
+    {"id": "YhURm1cnQww", "title": "On the phone", "minutes": 10},
+    {"id": "PuuhDb7UHFc", "title": "telefonieren or anrufen?", "minutes": 4}
+  ],
   "words": ["post", "brief", "briefmarke", "paket", "absender", "empfaenger", "telefon", "anruf", "anrufbeantworter", "vorwahl", "besetzt", "internet", "foto"],
   "tests": ["u7-t1-formulare-post"],
   "sections": [

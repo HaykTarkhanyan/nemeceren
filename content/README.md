@@ -180,6 +180,7 @@ Items are graded after the whole test is submitted. Hayk sees per-item feedback,
 | `title`, `summary` | yes | shown in the list and at the top |
 | `goals` | yes | 1 or more can-do statements in English |
 | `nicosWeg` | no | links: `{ "title", "url" }` |
+| `videos` | no | YouTube videos to watch with the lesson (DECISIONS.md #74): `{ "id", "title", "minutes" }`, where `id` is the 11-character video id (`watch?v=<id>`). Shown as click-to-play thumbnails in the lesson's top card. The source playlists and the local captions are in `reference/README.md`. |
 | `words` | no | ids from `words.json` that this lesson introduces (see below) |
 | `tests` | no | ids of tests that belong to the lesson (linked at the end of the lesson) |
 | `sections` | yes | the blocks, in order |

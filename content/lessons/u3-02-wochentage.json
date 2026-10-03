@@ -15,6 +15,11 @@
   "nicosWeg": [
     { "title": "Nicos Weg A1, chapter 7: Days and times (Tageszeiten, Am Sonntag koche ich)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
   ],
+  "videos": [
+    {"id": "JvltfZXGH1E", "title": "Days of the week", "minutes": 5},
+    {"id": "Qxy6h-lz0xk", "title": "Times of day", "minutes": 5},
+    {"id": "8MzsPJgpR7w", "title": "um, im or am?", "minutes": 10}
+  ],
   "words": ["montag", "dienstag", "mittwoch", "donnerstag", "freitag", "samstag", "sonntag", "wochenende", "woche", "tag", "heute", "morgen", "morgen-2", "vormittag", "mittag", "nachmittag", "abend", "nacht", "am", "von", "bis", "geoeffnet", "geschlossen"],
   "tests": ["u3-t1-uhrzeit-tage"],
   "sections": [

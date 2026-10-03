@@ -11,6 +11,10 @@
     "Use the patterns that almost always work (-ung, -e, -chen, -in)"
   ],
   "nicosWeg": [{ "title": "Nicos Weg A1, chapter 5: Things (Was ist das?, Wem gehört das?)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }],
+  "videos": [
+    {"id": "b2feLAJX9gI", "title": "der, die, das", "minutes": 8},
+    {"id": "y-aMTFMffDA", "title": "The nominative", "minutes": 6}
+  ],
   "words": ["tisch", "stuhl", "computer", "laptop", "handy", "buch", "stift", "heft", "tasche", "lampe", "fenster", "tuer", "schluessel", "uhr"],
   "sections": [
     {

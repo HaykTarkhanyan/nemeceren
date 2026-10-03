@@ -14,6 +14,10 @@
   "nicosWeg": [
     { "title": "Nicos Weg A1, chapter 17: Health (Gute Besserung!)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
   ],
+  "videos": [
+    {"id": "DWkaLIghET8", "title": "und, aber, oder, denn, sondern", "minutes": 14},
+    {"id": "QG8GszxI9l4", "title": "den, denn or dann?", "minutes": 10}
+  ],
   "words": ["viele-gruesse", "mit-freundlichen-gruessen", "sehr-geehrte-damen-und-herren", "gruss", "wieder"],
   "tests": ["u6-t3-gesundheit-krankmeldung"],
   "sections": [

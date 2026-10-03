@@ -14,6 +14,12 @@
   "nicosWeg": [
     { "title": "Nicos Weg A1, chapter 13: Weather and holiday (Wie war dein Urlaub?, Der Ausflug)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
   ],
+  "videos": [
+    {"id": "qX4aVgbD6YY", "title": "Perfekt, part 1", "minutes": 11},
+    {"id": "4XXtiNfuwhY", "title": "Perfekt, part 2", "minutes": 13},
+    {"id": "PqboPq6pSUU", "title": "Perfekt, part 3", "minutes": 12},
+    {"id": "SYUbBeAB2CU", "title": "25 verbs with sein in the Perfekt", "minutes": 10}
+  ],
   "words": ["gestern", "schon", "noch-nicht", "lange", "erzaehlen", "feiern", "grillen", "mitbringen", "fliegen", "zug", "muede"],
   "sections": [
     {

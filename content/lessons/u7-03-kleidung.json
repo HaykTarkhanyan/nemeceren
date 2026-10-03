@@ -13,6 +13,12 @@
   "nicosWeg": [
     { "title": "Nicos Weg A1, chapter 14: Clothing (Mein Lieblingspulli, Das passt gut!)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
   ],
+  "videos": [
+    {"id": "WCiRvSS8BHw", "title": "Clothes", "minutes": 10},
+    {"id": "trzgP5-zy84", "title": "Buying clothes", "minutes": 10},
+    {"id": "VI3VNRWKHiw", "title": "welch-", "minutes": 11},
+    {"id": "w_LJT0FZTYE", "title": "dies-", "minutes": 10}
+  ],
   "words": ["kleidung", "jacke", "hose", "hemd", "kleid", "pullover", "t-shirt", "schuh", "mantel", "anziehen", "ausziehen", "tragen", "groesse", "farbe", "gelb", "grau", "braun", "haar", "aussehen", "kurz", "lang"],
   "sections": [
     {

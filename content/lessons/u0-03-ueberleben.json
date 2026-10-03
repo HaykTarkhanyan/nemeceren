@@ -12,6 +12,10 @@
     "Say please, thank you and sorry"
   ],
   "nicosWeg": [{ "title": "Nicos Weg A1 (course overview)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }],
+  "videos": [
+    {"id": "S8ukFF6SdGk", "title": "Common phrases", "minutes": 11},
+    {"id": "GADqvorP45M", "title": "25 words for beginners", "minutes": 10}
+  ],
   "words": ["danke", "bitte", "ja", "nein", "entschuldigung", "wie-bitte", "noch-einmal-bitte", "langsam-bitte", "ich-verstehe-nicht", "ich-verstehe", "was-heisst-das", "sprechen-sie-englisch", "ich-spreche-ein-bisschen-deutsch"],
   "sections": [
     {

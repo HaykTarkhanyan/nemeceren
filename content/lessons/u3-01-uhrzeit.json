@@ -15,6 +15,10 @@
     { "title": "Nicos Weg A1, chapter 7: Days and times (Emmas Tag)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" },
     { "title": "Nicos Weg A1, chapter 8: Appointments (Wie spät ist es?)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
   ],
+  "videos": [
+    {"id": "MQhR0AMNr_U", "title": "Official time", "minutes": 10},
+    {"id": "svbe7Q0FJlI", "title": "Everyday time", "minutes": 10}
+  ],
   "words": ["wie-spaet-ist-es", "halb", "viertel", "vor", "nach", "um", "wann", "minute", "stunde", "jetzt", "spaet"],
   "sections": [
     {

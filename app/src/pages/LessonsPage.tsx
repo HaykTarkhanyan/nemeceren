@@ -7,6 +7,7 @@ import { byCourseOrder, exerciseSections, isThemeLesson, openAt, sectionIndex, T
 import type { Lesson, Theme, ThemeLesson } from '../content/schema.ts'
 import { BlockView } from '../components/LessonBlocks.tsx'
 import { Tabs } from '../components/Tabs.tsx'
+import { VideoList } from '../components/VideoList.tsx'
 import { messageOf, reportError } from '../lib/errors.ts'
 import { lessonStatus, markLessonDone, setLastSection, startLesson } from '../lib/plan.ts'
 import type { LessonStatus } from '../lib/plan.ts'
@@ -342,6 +343,14 @@ function LessonView({ lesson, linked }: { lesson: Lesson; linked: number | null 
               </span>
             ))}
           </p>
+        )}
+        {lesson.videos && lesson.videos.length > 0 && (
+          <div className="stack">
+            <p className="small">
+              <strong>Videos</strong> to watch with this lesson (Learn German on YouTube):
+            </p>
+            <VideoList videos={lesson.videos} />
+          </div>
         )}
         {words.length > 0 && (
           <div className="small">

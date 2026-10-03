@@ -13,6 +13,11 @@
   "nicosWeg": [
     { "title": "Nicos Weg A1, chapter 11: Eating and leisure (Ich mag (nicht)!, Was macht dir Spaß?)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
   ],
+  "videos": [
+    {"id": "Tu3DLeS5kAE", "title": "mögen", "minutes": 5},
+    {"id": "dVb_VwVYehs", "title": "Hobbies", "minutes": 6},
+    {"id": "YYG-JyberyU", "title": "Sports", "minutes": 6}
+  ],
   "words": ["moegen", "lieber", "am-liebsten", "schmecken", "hobby", "freizeit", "sport", "fussball", "schwimmen", "tanzen", "reisen", "wandern", "musik", "hoeren", "oft", "immer", "nie", "manchmal"],
   "tests": ["u4-t2-essen-freizeit"],
   "sections": [

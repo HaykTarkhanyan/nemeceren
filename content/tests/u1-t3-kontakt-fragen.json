@@ -7,11 +7,13 @@
   "unit": 1,
   "lesson": "u1-06-fragen-smalltalk",
   "items": [
+    {"type": "mc", "question": "8 am, you come into the office. What do you say to your colleagues?", "questionLang": "en", "options": ["Guten Morgen!", "Guten Abend!", "Gute Nacht!"], "answer": "Guten Morgen!", "explanation": "Review (Unit 0): Guten Morgen until about 11. Hallo! is fine at work too."},
+    {"type": "translate", "direction": "en-de", "text": "I don't understand.", "references": ["Ich verstehe nicht.", "Ich verstehe das nicht."], "explanation": "Review (Unit 0): Ich verstehe nicht. With das: Ich verstehe das nicht."},
     {
       "type": "gap",
-      "text": "Wie ist Ihre ___? - Hauptstraße zwölf, München.",
-      "answers": [["Adresse"]],
-      "explanation": "die Adresse."
+      "text": "___ ist Ihre E-Mail-Adresse?",
+      "answers": [["Wie"]],
+      "explanation": "German asks with wie (how), not was: Wie ist Ihre E-Mail-Adresse?"
     },
     {
       "type": "listen_mc",
@@ -38,9 +40,9 @@
     },
     {
       "type": "gap",
-      "text": "___ du eine Frage?",
-      "answers": [["Hast"]],
-      "explanation": "Hast du ...? The verb first, and du hast loses the b."
+      "text": "___ ihr eine Frage?",
+      "answers": [["Habt"]],
+      "explanation": "ihr habt. Yes/no question: the verb comes first."
     },
     {
       "type": "gap",
@@ -50,11 +52,11 @@
     },
     {
       "type": "mc",
-      "question": "In class you didn't catch what the teacher said. What do you say?",
+      "question": "In class, the teacher uses a word you don't know. What do you ask?",
       "questionLang": "en",
-      "options": ["Können Sie das bitte wiederholen?", "Freut mich!", "Ich bin Entwickler."],
-      "answer": "Können Sie das bitte wiederholen?",
-      "explanation": "wiederholen = to repeat."
+      "options": ["Was bedeutet das?", "Wie ist Ihre Adresse?", "Freut mich!"],
+      "answer": "Was bedeutet das?",
+      "explanation": "Was bedeutet das? = What does that mean?"
     },
     {
       "type": "translate",
@@ -71,10 +73,10 @@
     },
     {
       "type": "write",
-      "instruction": "Unit 1 final task. Introduce yourself to a new German class in 6-8 sentences: name, country, city, languages, job or studies, how long you have been learning German (use one of these: 'Ich lerne seit einer Woche Deutsch', 'seit zwei Wochen', 'seit einem Monat'), and end with one question to the class. Claude will check it.",
-      "prompt": "Introduce yourself to a new German class and ask the class one question.",
+      "instruction": "Unit 1 final task, in two parts. Part 1: you meet a new colleague at work (use Sie). Say hello, your name, where you come from, where you live and what you do, then ask them one question. Part 2: you meet a classmate in your German course (use du). Say which languages you speak and how long you have been learning German (use one of these: 'Ich lerne seit einer Woche Deutsch', 'seit zwei Wochen', 'seit einem Monat'), then ask them two questions. Claude will check it. Then ask Claude for the live chat: Claude plays the colleague, then the classmate.",
+      "prompt": "Introduce yourself to a new colleague (Sie) and to a classmate (du).",
       "promptLang": "en",
-      "minWords": 30
+      "minWords": 40
     }
   ]
 }

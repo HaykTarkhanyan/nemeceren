@@ -13,7 +13,7 @@ description: >-
 A theme lesson is a normal lesson (content/README.md, "Lessons") with a `theme` header instead of a
 place in the course (`unit`/`order`). It lives in `content/themes/<slug>.json` and appears in the app
 under Lessons → Themes. Its `words` unlock when Hayk opens it, like any lesson. It is **not tied to
-his level**: the point is real German he cares about, explained so he can follow it.
+their level**: the point is real German they care about, explained so they can follow it.
 
 Prerequisite: the Themes tab and the `theme` schema (DECISIONS.md, "theme lessons"). If
 `content/themes/` isn't supported yet (check-content rejects the file), stop and tell Hayk.

@@ -14,6 +14,13 @@
   "nicosWeg": [
     { "title": "Nicos Weg A1, chapter 8: Appointments (Wann spielen wir?)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
   ],
+  "videos": [
+    {"id": "M6K-1PKNtHE", "title": "können", "minutes": 7},
+    {"id": "NzXpp6zwInk", "title": "müssen", "minutes": 7},
+    {"id": "Xqia6Ac_Tug", "title": "wollen", "minutes": 6},
+    {"id": "cx7tUfhhs44", "title": "können or müssen?", "minutes": 10},
+    {"id": "SkEBKVWh94Y", "title": "Verbs that don't split", "minutes": 12}
+  ],
   "words": ["koennen", "wollen", "muessen", "vielleicht", "noch", "bleiben", "zu-hause", "zusammen"],
   "sections": [
     {

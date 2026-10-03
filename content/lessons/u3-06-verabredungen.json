@@ -15,6 +15,9 @@
   "nicosWeg": [
     { "title": "Nicos Weg A1, chapter 8: Appointments (Hast du morgen Zeit?, Zu spät!?)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
   ],
+  "videos": [
+    {"id": "bIUOSQZGVZ8", "title": "Making plans", "minutes": 10}
+  ],
   "words": ["termin", "leider", "puenktlich", "lust", "kino", "party", "film", "treffen", "tut-mir-leid", "schade", "frei", "problem", "spaeter", "bis-dann", "das-geht"],
   "tests": ["u3-t3-verabredungen", "u3-t4-checkpoint-0-3"],
   "sections": [

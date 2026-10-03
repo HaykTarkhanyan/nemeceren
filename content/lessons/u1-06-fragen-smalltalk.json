@@ -12,6 +12,10 @@
     "Keep a short small talk going"
   ],
   "nicosWeg": [{ "title": "Nicos Weg A1, chapter 1: Meeting people (Woher kommst du?)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }],
+  "videos": [
+    {"id": "n6db5VSUm2o", "title": "Sentence structure, part 1", "minutes": 10},
+    {"id": "ZNc0y2Dy5N8", "title": "Sentence structure, part 2", "minutes": 7}
+  ],
   "words": ["haben", "frage", "fragen", "antworten", "wiederholen", "verstehen", "kurs", "gern"],
   "tests": ["u1-t3-kontakt-fragen"],
   "sections": [

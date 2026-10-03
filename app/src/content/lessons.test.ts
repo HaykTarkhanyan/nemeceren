@@ -52,6 +52,14 @@ describe('lesson validation', () => {
     expect(p[2]).toMatch(/^content\/lessons\/u1-01-x\.json: sections\[2\]\.type: "type" must be one of: explanation/)
   })
 
+  it('accepts YouTube videos and rejects a malformed video id', () => {
+    const sections = [{ type: 'tip', text: 't' }]
+    const ok = parseLesson('content/lessons/u1-01-x.json', { ...base, videos: [{ id: 'RElBVZ1Wke0', title: 'Introducing yourself', minutes: 10 }], sections })
+    expect(ok.videos).toEqual([{ id: 'RElBVZ1Wke0', title: 'Introducing yourself', minutes: 10 }])
+    const p = problemsOf(() => parseLesson('content/lessons/u1-01-x.json', { ...base, videos: [{ id: 'https://youtu.be/RElBVZ1Wke0', title: 'T', minutes: 10 }], sections }))
+    expect(p).toEqual(['content/lessons/u1-01-x.json: videos[0].id: must be a YouTube video id (11 characters)'])
+  })
+
   it('requires the id to match the file name', () => {
     expect(problemsOf(() => parseLesson('content/lessons/other.json', { ...base, sections: [{ type: 'tip', text: 't' }] }))).toEqual([
       'content/lessons/other.json: id: "u1-01-x" must match the file name ("other")',

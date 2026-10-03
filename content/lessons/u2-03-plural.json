@@ -10,6 +10,9 @@
     "Use die for every plural",
     "Count things: zwei Stühle, drei Bücher"
   ],
+  "videos": [
+    {"id": "vrtiiKzFakI", "title": "Building plurals", "minutes": 7}
+  ],
   "words": ["ding", "viele"],
   "sections": [
     {

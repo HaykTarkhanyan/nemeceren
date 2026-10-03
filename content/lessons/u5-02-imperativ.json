@@ -13,6 +13,9 @@
   "nicosWeg": [
     { "title": "Nicos Weg A1, chapter 16: Sports and exercise (Ist das gesund?)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
   ],
+  "videos": [
+    {"id": "2b44fRJYg5Y", "title": "The imperative", "minutes": 12}
+  ],
   "words": ["hausaufgabe", "pruefung", "raum", "seite", "wort", "satz", "text", "antwort", "richtig", "falsch", "fehler", "papier", "oeffnen", "schliessen", "ankreuzen", "erklaeren", "sagen", "bringen", "zuhoeren", "unterricht", "mal"],
   "tests": ["u5-t1-arbeit-imperativ"],
   "sections": [

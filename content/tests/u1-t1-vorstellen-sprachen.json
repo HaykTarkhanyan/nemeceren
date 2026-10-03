@@ -7,6 +7,8 @@
   "unit": 1,
   "lesson": "u1-02-laender-sprachen",
   "items": [
+    {"type": "mc", "question": "You leave the doctor's office. What do you say?", "questionLang": "en", "options": ["Auf Wiedersehen!", "Gute Nacht!", "Guten Morgen!"], "answer": "Auf Wiedersehen!", "explanation": "Review (Unit 0): Auf Wiedersehen = goodbye (polite); Tschüss with friends. Guten Morgen is a hello, and Gute Nacht is only for bedtime."},
+    {"type": "listen_mc", "audio": "siebenundsechzig", "question": "Which number did you hear?", "questionLang": "en", "options": ["67", "76", "57"], "answer": "67", "explanation": "Review (Unit 0): German says the ones first: sieben-und-sechzig = 67."},
     {
       "type": "mc",
       "question": "How do you ask a new classmate where they come from? (informal)",
@@ -61,9 +63,9 @@
     {
       "type": "translate",
       "direction": "en-de",
-      "text": "I'm learning German.",
-      "references": ["Ich lerne Deutsch."],
-      "explanation": "One present tense: Ich lerne = I learn and I'm learning."
+      "text": "She lives in Munich.",
+      "references": ["Sie wohnt in München."],
+      "explanation": "sie wohnt: with er/sie/es the verb ends in -t."
     },
     {
       "type": "dictation",

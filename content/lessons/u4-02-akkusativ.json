@@ -13,6 +13,12 @@
   "nicosWeg": [
     { "title": "Nicos Weg A1, chapter 11: Eating and leisure (Lebensmittel)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
   ],
+  "videos": [
+    {"id": "p4whuXE_f94", "title": "The accusative", "minutes": 13},
+    {"id": "0V8IyLsLrNk", "title": "The accusative (grammar)", "minutes": 11},
+    {"id": "6w-HrxZcIBU", "title": "Possessives in the accusative", "minutes": 9},
+    {"id": "fowbbnb3MjQ", "title": "25 verbs with an accusative object", "minutes": 11}
+  ],
   "words": ["nehmen", "kaufen", "suchen", "finden", "es-gibt", "bekommen"],
   "tests": ["u4-t1-cafe-akkusativ"],
   "sections": [

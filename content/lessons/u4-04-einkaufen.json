@@ -13,6 +13,12 @@
   "nicosWeg": [
     { "title": "Nicos Weg A1, chapter 12: Food (Mengen und Preise, Was darf es sein?, Sonst noch etwas?)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
   ],
+  "videos": [
+    {"id": "B_muZm2XT8M", "title": "In the supermarket", "minutes": 14},
+    {"id": "qW4hWCRdvu0", "title": "Packaging at the supermarket", "minutes": 11},
+    {"id": "T1sXepKN5eQ", "title": "Getting by in a supermarket", "minutes": 7},
+    {"id": "BISRFfjDKfY", "title": "Numbers above 100", "minutes": 12}
+  ],
   "words": ["kilo", "gramm", "liter", "stueck", "euro", "cent", "kosten", "preis", "wie-viel-kostet-das", "supermarkt", "markt", "kasse", "viel", "bezahlen", "bar", "karte", "sonst-noch-etwas", "das-ist-alles", "was-darf-es-sein"],
   "sections": [
     {

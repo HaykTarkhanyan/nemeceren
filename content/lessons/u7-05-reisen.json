@@ -13,6 +13,10 @@
   "nicosWeg": [
     { "title": "Nicos Weg A1, chapter 13: Weather and holiday (Wie war dein Urlaub?)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
   ],
+  "videos": [
+    {"id": "ATLnq06AfrA", "title": "Booking a hotel by letter", "minutes": 11},
+    {"id": "CUjRSS7R8Yc", "title": "What did you do on holiday?", "minutes": 11}
+  ],
   "words": ["reise", "reisebuero", "hotel", "einzelzimmer", "doppelzimmer", "rezeption", "uebernachten", "gepaeck", "koffer", "flughafen", "flugzeug", "abflug", "ankunft", "abfahrt", "bahnsteig", "durchsage", "taxi", "sehenswuerdigkeit", "besichtigen", "fuehrung", "eintritt", "schwimmbad"],
   "sections": [
     {

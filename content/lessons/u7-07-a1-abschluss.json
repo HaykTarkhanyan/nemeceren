@@ -10,6 +10,14 @@
     "Use everyday little words: warum, bald, gleich, sofort, mehr, nichts",
     "Check your level: the A1 final test and the mock exam"
   ],
+  "videos": [
+    {"id": "-3TFXzLlJ38", "title": "Test your German (A1)", "minutes": 12},
+    {"id": "nFBOwzDCzrg", "title": "Time adverbs", "minutes": 10},
+    {"id": "e4ZAWf-ogWA", "title": "The question word warum", "minutes": 4},
+    {"id": "e3yKQWhYSio", "title": "sehr or viel?", "minutes": 10},
+    {"id": "S1rzbEyQa0E", "title": "viel or viele?", "minutes": 4},
+    {"id": "qyW_bZZINqI", "title": "wen, wenn or wann?", "minutes": 10}
+  ],
   "words": ["wissen", "warum", "bald", "gleich", "sofort", "mehr", "wenig", "nichts", "einfach", "schwer", "leicht", "kaputt", "reparieren", "ruhig", "moeglich", "fremd", "kennenlernen", "mitnehmen", "verkaufen", "geschaeft", "baeckerei", "polizei", "schule"],
   "tests": ["u7-t4-a1-check"],
   "sections": [

@@ -14,6 +14,9 @@
   "nicosWeg": [
     { "title": "Nicos Weg A1, chapter 3: In company (Eine Pizza bitte!, Zahlen bitte!)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
   ],
+  "videos": [
+    {"id": "jJiE4Rfcl9w", "title": "Ordering in a café or restaurant", "minutes": 9}
+  ],
   "words": ["restaurant", "speisekarte", "rechnung", "bestellen", "zahlen", "empfehlen", "zusammen-oder-getrennt", "stimmt-so", "guten-appetit", "prost", "platz", "scharf"],
   "tests": ["u4-t3-restaurant"],
   "sections": [

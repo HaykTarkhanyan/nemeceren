@@ -15,6 +15,11 @@
     { "title": "Nicos Weg A1, chapter 15: Family (for the family words)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" },
     { "title": "Nicos Weg A1, chapter 6: Living (Unser Haus: possessives)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
   ],
+  "videos": [
+    {"id": "VuCqbaBXiQs", "title": "The family", "minutes": 7},
+    {"id": "sBUR0Q9ZTN4", "title": "Possessives: mein, dein ...", "minutes": 14},
+    {"id": "3d1CabCbVNM", "title": "ihr or Ihr?", "minutes": 10}
+  ],
   "words": ["familie", "eltern", "vater", "mutter", "bruder", "schwester", "sohn", "tochter", "kind", "geschwister", "mann", "verheiratet", "ledig", "mein", "dein", "unser"],
   "tests": ["u2-t2-plural-familie"],
   "sections": [

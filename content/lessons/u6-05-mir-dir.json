@@ -14,6 +14,12 @@
     { "title": "Nicos Weg A1, chapter 18: Home (Leben in Deutschland)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" },
     { "title": "Nicos Weg A1, chapter 14: Clothing (Das passt gut!)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
   ],
+  "videos": [
+    {"id": "_EvcUxsmE6k", "title": "mir, dir, Ihnen ...", "minutes": 11},
+    {"id": "uHtdBT1WMyw", "title": "Verbs with the dative", "minutes": 11},
+    {"id": "TKXLeTAe_xk", "title": "ihn or ihm?", "minutes": 11},
+    {"id": "ClJUVsjoDM8", "title": "Saying what you like", "minutes": 4}
+  ],
   "words": ["gefallen", "gehoeren", "passen", "egal", "danken"],
   "sections": [
     {

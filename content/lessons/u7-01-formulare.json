@@ -14,6 +14,9 @@
   "nicosWeg": [
     { "title": "Nicos Weg A1, chapter 2: Contact details", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
   ],
+  "videos": [
+    {"id": "ZdBp66rzA0o", "title": "Filling in a form", "minutes": 11}
+  ],
   "words": ["formular", "ausfuellen", "unterschreiben", "unterschrift", "familienname", "familienstand", "geburtsort", "geburtsjahr", "alter", "maennlich", "weiblich", "ausweis", "pass", "anmeldung", "anmelden", "auslaender", "ausland", "heimat", "information", "auskunft", "beispiel", "ort"],
   "sections": [
     {

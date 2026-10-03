@@ -11,6 +11,10 @@
     "Ask what a word means",
     "Ask for help and say thank you"
   ],
+  "videos": [
+    {"id": "iUu4iVadqn0", "title": "25 phrases for beginners", "minutes": 11},
+    {"id": "WKf-mZ3TDks", "title": "25 questions for beginners", "minutes": 11}
+  ],
   "words": ["koennten-sie", "helfen", "hilfe", "moment", "langsam", "vielen-dank", "bedeuten", "schnell"],
   "tests": ["u5-t2-regeln-bitten"],
   "sections": [

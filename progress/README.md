@@ -1,6 +1,6 @@
 # Progress (moved to Neon)
 
-Hayk's progress is no longer stored in this folder. Since 2026-09-29 it lives in a private Neon Postgres database behind the API in `backend/` (DECISIONS.md #21): word reviews, FSRS cards, test and lesson-exercise attempts, Claude's reviews, lesson progress, extra new words, (since 2026-09-30) Hayk's notes with Claude's feedback and his own words with Claude's check, and (since 2026-10-02) the study timer's sessions. The app signs in with Neon Auth and syncs through `GET /v1/state` and `POST /v1/sync`; each device keeps unsynced changes in a local outbox until they are sent.
+Hayk's progress is no longer stored in this folder. Since 2026-09-29 it lives in a private Neon Postgres database behind the API in `backend/` (DECISIONS.md #21): word reviews, FSRS cards, test and lesson-exercise attempts, Claude's reviews, lesson progress, extra new words, (since 2026-09-30) Hayk's notes with Claude's feedback and their own words with Claude's check, and (since 2026-10-02) the study timer's sessions. The app signs in with Neon Auth and syncs through `GET /v1/state` and `POST /v1/sync`; each device keeps unsynced changes in a local outbox until they are sent.
 
 Claude reads and grades progress from the repo root:
 
@@ -41,7 +41,7 @@ The API contract, the tables and the other formats are in `backend/README.md`. T
 
 Hayk writes notes on the app's Notes page: free writing, mostly in German, or a question. A note is `{ id, text, localDay, createdAt, updatedAt }` (text 1-5000 characters, not only whitespace). Hayk can edit or delete it until it has feedback; after that it is locked, so the feedback always matches the text. Feedback reaches the app at its next start, or when Hayk presses "Check for feedback".
 
-The feedback (the file given to `progress.py note-feedback`) follows the teaching rules in CLAUDE.md: hints first, so Hayk can fix the note himself, then the corrections, with real errors kept apart from style:
+The feedback (the file given to `progress.py note-feedback`) follows the teaching rules in CLAUDE.md: hints first, so Hayk can fix the note themselves, then the corrections, with real errors kept apart from style:
 
 ```json
 {
@@ -64,7 +64,7 @@ The feedback (the file given to `progress.py note-feedback`) follows the teachin
 
 ## Hayk's own words and Claude's check
 
-Hayk adds words he hears in daily life on the app's Words page ("Add a word"). A custom word is `{ id: "u-<uuid>", de, en, plural?, example?: { de, en? }, note?, createdAt, updatedAt, deletedAt? }`; the `u-` prefix keeps it apart from the ids in `content/words.json`, and its FSRS card and reviews are stored under the same id like any other word. It is practised right away, on top of the daily new-word limit, then it is a normal FSRS card. Hayk can edit or delete it; a delete is soft (the word leaves practice, its reviews stay in the statistics).
+Hayk adds words they hear in daily life on the app's Words page ("Add a word"). A custom word is `{ id: "u-<uuid>", de, en, plural?, example?: { de, en? }, note?, createdAt, updatedAt, deletedAt? }`; the `u-` prefix keeps it apart from the ids in `content/words.json`, and its FSRS card and reviews are stored under the same id like any other word. It is practised right away, on top of the daily new-word limit, then it is a normal FSRS card. Hayk can edit or delete it; a delete is soft (the word leaves practice, its reviews stay in the statistics).
 
 Claude checks new words with `progress.py`: `my-words --unchecked` lists them (German, plural, English, example, Hayk's note, reviews so far), then for each one either
 

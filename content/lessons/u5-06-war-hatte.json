@@ -14,6 +14,9 @@
     { "title": "Nicos Weg A1, chapter 13: Weather and holiday (Wie war dein Urlaub?)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" },
     { "title": "Nicos Weg A1, chapter 8: Appointments (Zu spät!?)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
   ],
+  "videos": [
+    {"id": "nmyEEsPEv-k", "title": "war and hatte", "minutes": 8}
+  ],
   "words": ["wie-war-dein-wochenende", "wetter", "regen", "toll", "super", "langweilig", "interessant", "see", "ausflug", "urlaub", "schlecht"],
   "tests": ["u5-t3-wochenende"],
   "sections": [

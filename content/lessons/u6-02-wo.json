@@ -14,6 +14,10 @@
     { "title": "Nicos Weg A1, chapter 9: Working life (Wo ist der Aufzug?)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" },
     { "title": "Nicos Weg A1, chapter 10: Orientation (Im Büro)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
   ],
+  "videos": [
+    {"id": "agSVcYQw4_U", "title": "Places in a city", "minutes": 10},
+    {"id": "jKTtQb6qJgY", "title": "W-questions", "minutes": 5}
+  ],
   "words": ["wohin", "dort", "oben", "unten", "neben", "hinter", "zwischen", "aufzug", "treppe", "stock", "erdgeschoss", "toilette", "eingang", "ausgang"],
   "tests": ["u6-t1-dativ-orte"],
   "sections": [

@@ -12,6 +12,11 @@
     "Work out the article of compound nouns"
   ],
   "nicosWeg": [{ "title": "Nicos Weg A1, chapter 6: Living (So wohne ich, Meine Wohnung)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }],
+  "videos": [
+    {"id": "qSWIYTpxzIs", "title": "My house", "minutes": 8},
+    {"id": "a1DA6ezLbgs", "title": "Furniture", "minutes": 11},
+    {"id": "JphfVvja3Bs", "title": "Flat hunting", "minutes": 10}
+  ],
   "words": ["wohnung", "zimmer", "kueche", "bad", "schlafzimmer", "wohnzimmer", "balkon", "haus", "miete", "hoch", "hell", "dunkel"],
   "sections": [
     {

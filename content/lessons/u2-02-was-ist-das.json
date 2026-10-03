@@ -12,6 +12,13 @@
     "Describe things: groß, klein, teuer, colours"
   ],
   "nicosWeg": [{ "title": "Nicos Weg A1, chapter 5: Things (Ich habe kein ..., Das Auto ist rot)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }],
+  "videos": [
+    {"id": "4M6PN4yfwgI", "title": "ein, eine", "minutes": 7},
+    {"id": "LULFzldtkyk", "title": "kein, keine", "minutes": 6},
+    {"id": "HySduWqqPcU", "title": "kein or nicht?", "minutes": 12},
+    {"id": "PARun113NuA", "title": "Adjectives and opposites", "minutes": 10},
+    {"id": "SHGzSotC70g", "title": "Colours", "minutes": 9}
+  ],
   "words": ["was-ist-das", "kein", "nicht", "gross", "klein", "teuer", "billig", "schoen", "praktisch", "rot", "blau", "gruen", "schwarz", "weiss"],
   "tests": ["u2-t1-artikel"],
   "sections": [

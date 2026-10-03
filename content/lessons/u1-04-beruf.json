@@ -12,6 +12,11 @@
     "Use male and female job names (-in)"
   ],
   "nicosWeg": [{ "title": "Nicos Weg A1, chapter 9: Working life (Ich bin Lehrerin, Mein Beruf)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }],
+  "videos": [
+    {"id": "UE-n8Mu1PpU", "title": "Jobs", "minutes": 7},
+    {"id": "GTkX7tpnvj4", "title": "Subjects: Was studierst du?", "minutes": 10},
+    {"id": "mEwpDTTyfEY", "title": "No article", "minutes": 8}
+  ],
   "words": ["beruf", "arbeiten", "als", "bei", "firma", "job", "arbeit", "entwickler", "entwicklerin", "student", "studentin", "studieren", "informatik", "lehrer", "lehrerin", "machen", "was", "was-sind-sie-von-beruf"],
   "tests": ["u1-t2-leute-beruf"],
   "sections": [

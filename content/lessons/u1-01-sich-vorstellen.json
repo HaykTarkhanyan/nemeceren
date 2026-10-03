@@ -11,13 +11,18 @@
     "Use heißen, kommen and wohnen in the present tense"
   ],
   "nicosWeg": [{ "title": "Nicos Weg A1 (course overview)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }],
+  "videos": [
+    {"id": "RElBVZ1Wke0", "title": "Introducing yourself", "minutes": 10},
+    {"id": "07WCBZRchY0", "title": "What a verb is: stem and ending", "minutes": 10},
+    {"id": "IowuDehrLFk", "title": "Regular verbs", "minutes": 15}
+  ],
   "words": ["heissen", "kommen", "wohnen", "vorname", "nachname", "wie", "woher", "wo", "aus", "in"],
   "sections": [
     {
       "id": "intro-verbs",
       "type": "explanation",
       "title": "Three verbs to start with",
-      "text": "To introduce yourself you need three verbs: [[heißen]] (to be called), [[kommen]] (to come) and [[wohnen]] (to live). With **ich** the verb ends in **-e**: [[ich heiße]], [[ich komme]], [[ich wohne]].\n\nThree questions and their answers:\n- [[Wie heißen Sie?]] - [[Ich heiße Hayk.]]\n- [[Woher kommen Sie?]] - [[Ich komme aus Armenien.]]\n- [[Wo wohnen Sie?]] - [[Ich wohne in München.]]\n\nIn every sentence the verb is the *second* part."
+      "text": "To introduce yourself you need three verbs: [[heißen]] (to be called), [[kommen]] (to come) and [[wohnen]] (to live).\n\nOne rule builds the present tense of almost every verb: drop **-en** from the infinitive to get the stem ([[wohnen]] minus -en = wohn-), then add the ending for the person: **ich -e, du -st, er/sie/es -t, wir -en, ihr -t, sie/Sie -en**. So [[ich wohne]], [[du wohnst]], [[er wohnt]]. The wir and sie/Sie forms look just like the infinitive. The few exceptions, like [[sein]] (lesson 3), get their own tables.\n\nThree questions and their answers:\n- [[Wie heißen Sie?]] - [[Ich heiße Hayk.]]\n- [[Woher kommen Sie?]] - [[Ich komme aus Armenien.]]\n- [[Wo wohnen Sie?]] - [[Ich wohne in München.]]\n\nIn every sentence the verb is the *second* part.\n\nOne trap: the stem of [[heißen]] already ends in ß, so the du form adds only **-t**: [[du heißt]], not 'heißst'."
     },
     {
       "type": "examples",
@@ -38,17 +43,18 @@
       "title": "heißen, kommen, wohnen in the present tense",
       "columns": [
         { "header": "Person", "de": "words" },
+        { "header": "Ending" },
         { "header": "heißen", "de": "words" },
         { "header": "kommen", "de": "words" },
         { "header": "wohnen", "de": "words" }
       ],
       "rows": [
-        ["ich", "heiße", "komme", "wohne"],
-        ["du", "heißt", "kommst", "wohnst"],
-        ["er / sie / es", "heißt", "kommt", "wohnt"],
-        ["wir", "heißen", "kommen", "wohnen"],
-        ["ihr", "heißt", "kommt", "wohnt"],
-        ["sie / Sie", "heißen", "kommen", "wohnen"]
+        ["ich", "-e", "heiße", "komme", "wohne"],
+        ["du", "-st", "heißt", "kommst", "wohnst"],
+        ["er / sie / es", "-t", "heißt", "kommt", "wohnt"],
+        ["wir", "-en", "heißen", "kommen", "wohnen"],
+        ["ihr", "-t", "heißt", "kommt", "wohnt"],
+        ["sie / Sie", "-en", "heißen", "kommen", "wohnen"]
       ]
     },
     {
@@ -68,7 +74,7 @@
     },
     {
       "type": "tip",
-      "text": "Answer with the same verb as the question: [[Woher kommen Sie?]] - [[Ich komme aus Armenien.]]"
+      "text": "Answer with the same verb as the question, then ask back: [[Woher kommen Sie?]] - [[Ich komme aus Armenien. Und Sie?]] With a friend: [[Und du?]] ([[Und dir?]] and [[Und Ihnen?]] from Unit 0 are only for [[Wie geht's?]].)"
     },
     {
       "type": "warning",
@@ -102,6 +108,13 @@
           "text": "Ich ___ aus Armenien und ich ___ in München.",
           "answers": [["komme", "bin"], ["wohne", "bin", "arbeite", "lerne"]],
           "explanation": "With ich the verb ends in -e: ich komme, ich wohne."
+        },
+        {
+          "type": "gap",
+          "instruction": "A new verb, same rule. Fill in the gap with lernen: He is learning German.",
+          "text": "Er ___ Deutsch.",
+          "answers": [["lernt"]],
+          "explanation": "lernen minus -en = lern-, and er takes -t: er lernt. The same as er wohnt."
         },
         {
           "type": "order",

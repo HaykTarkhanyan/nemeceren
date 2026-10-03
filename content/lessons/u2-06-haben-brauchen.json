@@ -11,6 +11,9 @@
     "Say Ich habe keine Zeit and Ich habe Hunger"
   ],
   "nicosWeg": [{ "title": "Nicos Weg A1, chapter 5: Things (Ich habe kein ...)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }],
+  "videos": [
+    {"id": "KYmkPHijIb4", "title": "Classroom things", "minutes": 13}
+  ],
   "words": ["brauchen", "ladegeraet", "wasser", "kaffee", "zeit", "geld", "hunger", "durst"],
   "tests": ["u2-t3-familie-wohnung"],
   "sections": [

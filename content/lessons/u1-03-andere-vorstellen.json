@@ -12,6 +12,13 @@
     "Say and ask how old someone is"
   ],
   "nicosWeg": [{ "title": "Nicos Weg A1, chapter 1: Meeting people (Das ist Nico, Nico hat ein Problem)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }],
+  "videos": [
+    {"id": "zNh1CmEP-B0", "title": "Introducing someone", "minutes": 8},
+    {"id": "KDkQOXcEr4o", "title": "Getting to know someone", "minutes": 10},
+    {"id": "hY4lHC6YZuQ", "title": "Personal pronouns", "minutes": 10},
+    {"id": "xy4a1c7W7k0", "title": "haben and sein", "minutes": 10},
+    {"id": "siLfPrsfRJw", "title": "Sie or sie?", "minutes": 11}
+  ],
   "words": ["sein", "das-ist", "freut-mich", "freund", "freundin", "kollege", "kollegin", "herr", "frau", "wer", "nett", "neu", "hier", "alt", "jahr"],
   "sections": [
     {

@@ -13,6 +13,13 @@
   "nicosWeg": [
     { "title": "Nicos Weg A1, chapter 10: Orientation (Wo ist der Bahnhof?, Mit Bus und Bahn)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
   ],
+  "videos": [
+    {"id": "ywhdo-UQjBM", "title": "Articles in the dative", "minutes": 10},
+    {"id": "jjsrDcw6kfU", "title": "The dative (grammar)", "minutes": 11},
+    {"id": "X6db08GLuHw", "title": "Prepositions with the dative", "minutes": 14},
+    {"id": "-rU7DBOPGXg", "title": "Possessives in the dative", "minutes": 10},
+    {"id": "agOqDL2JYZ0", "title": "aus or von?", "minutes": 10}
+  ],
   "words": ["mit", "zu", "seit", "geschenk"],
   "sections": [
     {

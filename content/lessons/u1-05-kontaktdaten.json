@@ -11,6 +11,9 @@
     "Say an email address aloud"
   ],
   "nicosWeg": [{ "title": "Nicos Weg A1, chapter 2: Contact details (Adressen, Auf dem Amt)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }],
+  "videos": [
+    {"id": "ZdBp66rzA0o", "title": "Filling in a form", "minutes": 11}
+  ],
   "words": ["adresse", "nummer", "telefonnummer", "handynummer", "e-mail-adresse", "strasse", "postleitzahl", "stadt", "punkt", "schreiben"],
   "sections": [
     {
@@ -27,7 +30,7 @@
       "id": "addresses",
       "type": "explanation",
       "title": "German addresses",
-      "text": "Street first, then the house number, then the postcode and the city:\n\n[[Hauptstraße 12]]\n[[80331 München]]\n\nThe street is read as written: [[Hauptstraße zwölf]]. Postcodes are usually read digit by digit: [[acht, null, drei, drei, eins]]."
+      "text": "Street first, then the house number, then the postcode and the city:\n\n[[Hauptstraße 12]]\n[[80331 München]]\n\nThe street is read as written: [[Hauptstraße zwölf]]. Postcodes are usually read digit by digit: [[acht, null, drei, drei, eins]].\n\nPhone numbers are often read in pairs, and on the phone many people say [[zwo]] for [[zwei]], so it doesn't sound like [[drei]]: [[null, eins, sieben, zwo, vierunddreißig, dreiundzwanzig]]. Too fast? [[Langsam, bitte.]] or [[Noch einmal, bitte.]] (Unit 0)"
     },
     {
       "id": "email-aloud",
@@ -63,6 +66,7 @@
         { "de": "Wie ist Ihre Telefonnummer?", "en": "What is your phone number?" },
         { "de": "Wie ist Ihre E-Mail-Adresse?", "en": "What is your email address?" },
         { "de": "Meine Postleitzahl ist acht, null, drei, drei, eins.", "en": "My postcode is 80331." },
+        { "de": "Meine Nummer ist null, eins, sieben, zwo, vierunddreißig, dreiundzwanzig.", "en": "My number is 0172 34 23." },
         { "de": "Können Sie das bitte schreiben?", "en": "Can you write that down, please?" }
       ]
     },

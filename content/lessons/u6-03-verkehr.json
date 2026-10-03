@@ -13,6 +13,11 @@
   "nicosWeg": [
     { "title": "Nicos Weg A1, chapter 10: Orientation (Mit Bus und Bahn)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
   ],
+  "videos": [
+    {"id": "zMAaMpmLqs0", "title": "Means of transport", "minutes": 10},
+    {"id": "1_WSkHySOqs", "title": "Buying a train ticket", "minutes": 10},
+    {"id": "L9fzpvT3Ops", "title": "Taking a taxi", "minutes": 10}
+  ],
   "words": ["bus", "u-bahn", "s-bahn", "strassenbahn", "haltestelle", "bahnhof", "hauptbahnhof", "fahrkarte", "gleis", "abfahren", "ankommen", "umsteigen", "einsteigen", "aussteigen", "auto", "fahrrad", "zu-fuss", "verspaetung", "richtung"],
   "sections": [
     {

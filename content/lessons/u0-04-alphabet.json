@@ -11,6 +11,9 @@
     "Ask someone to spell a word"
   ],
   "nicosWeg": [{ "title": "Nicos Weg A1: Welcome to A1 (Von A bis Z)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }],
+  "videos": [
+    {"id": "HCytWm3RC9g", "title": "The alphabet", "minutes": 11}
+  ],
   "words": ["buchstabieren", "name", "buchstabe"],
   "tests": ["u0-t2-ueberleben-alphabet"],
   "sections": [

@@ -11,6 +11,10 @@
     "Ask how someone is and answer"
   ],
   "nicosWeg": [{ "title": "Nicos Weg A1: Welcome to A1 (Hallo! and Tschüss!)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }],
+  "videos": [
+    {"id": "RuGmc662HDg", "title": "Greetings", "minutes": 10},
+    {"id": "iWyOKwIf_94", "title": "Wie geht's?", "minutes": 6}
+  ],
   "words": ["hallo", "guten-morgen", "guten-tag", "guten-abend", "gute-nacht", "tschuess", "auf-wiedersehen", "servus", "gruess-gott", "wie-gehts", "wie-geht-es-ihnen", "gut"],
   "tests": ["u0-t1-laute-gruesse"],
   "sections": [

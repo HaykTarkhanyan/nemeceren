@@ -15,6 +15,11 @@
     { "title": "Nicos Weg A1, chapter 17: Health (Beim Arzt)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" },
     { "title": "Nicos Weg A1, chapter 15: Family (Mein Bruder)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
   ],
+  "videos": [
+    {"id": "YqDCHriUgdA", "title": "dürfen", "minutes": 6},
+    {"id": "Uxu4FkeCyBw", "title": "sollen", "minutes": 5},
+    {"id": "d94yydrhCLQ", "title": "können or dürfen?", "minutes": 10}
+  ],
   "words": ["duerfen", "sollen", "man", "rauchen", "verboten", "leise"],
   "sections": [
     {

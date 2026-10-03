@@ -1,6 +1,6 @@
 # Backend: Neon Auth + Functions API + Postgres
 
-Stores Hayk's progress (word reviews, FSRS cards, test attempts, Claude's grading, lesson progress, extra new words per day, since 2026-09-30 notes with Claude's feedback and his own words with Claude's check, and since 2026-10-02 the study timer's sessions) in one private Neon Postgres database, so the PC and the phone share it. That is everything `app/src/lib/storage.ts` persists as of 2026-09-29 02:00; the per-device settings in `app/src/lib/settings.ts` (voice, rate, new words per day) stay in each browser. **Neon stays on the Free plan. Never upgrade, add billing, or enable paid features.**
+Stores Hayk's progress (word reviews, FSRS cards, test attempts, Claude's grading, lesson progress, extra new words per day, since 2026-09-30 notes with Claude's feedback and their own words with Claude's check, and since 2026-10-02 the study timer's sessions) in one private Neon Postgres database, so the PC and the phone share it. That is everything `app/src/lib/storage.ts` persists as of 2026-09-29 02:00; the per-device settings in `app/src/lib/settings.ts` (voice, rate, new words per day) stay in each browser. **Neon stays on the Free plan. Never upgrade, add billing, or enable paid features.**
 
 ```
 GitHub Pages SPA (app/)  --sign in-->  Neon Auth (Managed Better Auth, email + password)
@@ -252,7 +252,7 @@ Idempotency, so a retry after a timeout is always safe:
 - Cards: per word, the card with the later `last_review` wins (the rule of `mergeStates` in `app/src/lib/srs.ts`).
 - Lessons: per lesson, the record with the later `updatedAt` wins (every change in `app/src/lib/plan.ts` sets `updatedAt`, including un-marking "done").
 - Extras: per day, the larger `extra` wins (it only grows during a day; `mergeStates` takes the max too).
-- Notes: per note, the record with the later `updatedAt` wins; a delete is a record with `deletedAt` set (soft delete). **A note with Claude's feedback is locked:** it is never changed or deleted, and whenever the upload differs from it the server's version, with its `feedback`, comes back in `stale`. The app adopts it and tells Hayk that his change was not saved, with the changed text.
+- Notes: per note, the record with the later `updatedAt` wins; a delete is a record with `deletedAt` set (soft delete). **A note with Claude's feedback is locked:** it is never changed or deleted, and whenever the upload differs from it the server's version, with its `feedback`, comes back in `stale`. The app adopts it and tells Hayk that their change was not saved, with the changed text.
 - Custom words: per word, the record with the later `updatedAt` wins; a delete is a record with `deletedAt` set (soft delete, so the word leaves practice while its reviews stay for the statistics). **A newer version whose fields (`de`, `en`, `plural`, `example`, `note`) differ from the stored ones clears Claude's check**, so Claude looks again; the same fields with a later time (a delete) keep it. A stale word comes back with its `check`.
 - Study sessions: per session, the record with the later `updatedAt` wins (Hayk can edit the minutes and the label); a delete is a record with `deletedAt` set (soft delete).
 - For those six, an older or equal value is not written, and when the server has a newer one it comes back in `stale`: adopt it locally.

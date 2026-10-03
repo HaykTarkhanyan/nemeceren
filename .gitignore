@@ -9,6 +9,8 @@ logs/
 *.mp3
 *.mp4
 *.zip
+# YouTube auto-captions of the Learn German playlists (re-downloadable with yt-dlp, see reference/README.md)
+reference/youtube/
 
 # kaikki.org download cache of app/scripts/build-glossary.ts
 .cache/

@@ -13,6 +13,11 @@
   "nicosWeg": [
     { "title": "Nicos Weg A1, chapter 7: Days and times (Tageszeiten, Emmas Wochenende)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
   ],
+  "videos": [
+    {"id": "le-mSvX_Ekk", "title": "Separable verbs", "minutes": 11},
+    {"id": "L7-SK1cA1kQ", "title": "Daily routine", "minutes": 12},
+    {"id": "2NVX508SlkY", "title": "25 separable verbs", "minutes": 12}
+  ],
   "words": ["aufstehen", "anrufen", "einkaufen", "anfangen", "aufhoeren", "mitkommen", "fernsehen", "abholen", "fruehstuecken", "kochen", "schlafen", "spielen", "pause", "feierabend", "frueh", "zuerst", "dann", "gehen", "nach-hause"],
   "sections": [
     {

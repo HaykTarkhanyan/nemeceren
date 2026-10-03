@@ -11,6 +11,10 @@
     "Add information with auch and aber"
   ],
   "nicosWeg": [{ "title": "Nicos Weg A1, chapter 4: Around the world (In Europa, Andere Länder)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }],
+  "videos": [
+    {"id": "oEqJ3eZB2m0", "title": "Countries and languages", "minutes": 16},
+    {"id": "aHJOUXrzsmg", "title": "Woher kommst du?", "minutes": 6}
+  ],
   "words": ["land", "sprache", "sprechen", "lernen", "deutschland", "armenien", "russland", "oesterreich", "schweiz", "deutsch", "englisch", "russisch", "armenisch", "auch", "und", "aber"],
   "tests": ["u1-t1-vorstellen-sprachen"],
   "sections": [
