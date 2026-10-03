@@ -6,7 +6,7 @@
       "summary": "Revisit whenever reading aloud feels shaky.",
       "items": [
         {
-          "title": "Letters that sound different from English (w, v, z, j, s, ß, sch, sp/st, ei, ie, eu, h)",
+          "title": "Letters that sound different from English (w, v, z, j, s, ß, sch, chs, sp/st, ei, ie, eu, h, -ig)",
           "lesson": "u0-01-laute",
           "section": "letters"
         },
@@ -71,10 +71,15 @@
           "section": "number-trick"
         },
         {
-          "title": "Verb endings: heißen, kommen, wohnen",
+          "title": "Verb endings: stem + -e, -st, -t, -en, -t, -en (heißen, kommen, wohnen)",
           "lesson": "u1-01-sich-vorstellen",
           "section": "verb-endings",
           "star": true
+        },
+        {
+          "title": "Grammar words you'll hear in the videos (Infinitiv, trennbar, Partizip ...)",
+          "lesson": "u1-01-sich-vorstellen",
+          "section": "grammar-terms"
         },
         {
           "title": "lernen (regular) and sprechen (e to i: du sprichst)",

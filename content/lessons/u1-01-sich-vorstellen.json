@@ -22,7 +22,7 @@
       "id": "intro-verbs",
       "type": "explanation",
       "title": "Three verbs to start with",
-      "text": "To introduce yourself you need three verbs: [[heißen]] (to be called), [[kommen]] (to come) and [[wohnen]] (to live).\n\nOne rule builds the present tense of almost every verb: drop **-en** from the infinitive to get the stem ([[wohnen]] minus -en = wohn-), then add the ending for the person: **ich -e, du -st, er/sie/es -t, wir -en, ihr -t, sie/Sie -en**. So [[ich wohne]], [[du wohnst]], [[er wohnt]]. The wir and sie/Sie forms look just like the infinitive. The few exceptions, like [[sein]] (lesson 3), get their own tables.\n\nThree questions and their answers:\n- [[Wie heißen Sie?]] - [[Ich heiße Hayk.]]\n- [[Woher kommen Sie?]] - [[Ich komme aus Armenien.]]\n- [[Wo wohnen Sie?]] - [[Ich wohne in München.]]\n\nIn every sentence the verb is the *second* part.\n\nOne trap: the stem of [[heißen]] already ends in ß, so the du form adds only **-t**: [[du heißt]], not 'heißst'."
+      "text": "To introduce yourself you need three verbs: [[heißen]] (to be called), [[kommen]] (to come) and [[wohnen]] (to live).\n\nOne rule builds the present tense of almost every verb: drop **-en** from the infinitive (the dictionary form, as on your word cards) to get the stem ([[wohnen]] minus -en = wohn-), then add the ending for the person: **ich -e, du -st, er/sie/es -t, wir -en, ihr -t, sie/Sie -en**. So [[ich wohne]], [[du wohnst]], [[er wohnt]]. The wir and sie/Sie forms look just like the infinitive. The few exceptions, like [[sein]] (lesson 3), get their own tables.\n\nThree questions and their answers:\n- [[Wie heißen Sie?]] - [[Ich heiße Hayk.]]\n- [[Woher kommen Sie?]] - [[Ich komme aus Armenien.]]\n- [[Wo wohnen Sie?]] - [[Ich wohne in München.]]\n\nIn every sentence the verb is the *second* part.\n\nOne trap: the stem of [[heißen]] already ends in ß, so the du form adds only **-t**: [[du heißt]], not 'heißst'."
     },
     {
       "type": "examples",
@@ -134,6 +134,34 @@
           "text": "Ich wohne in München.",
           "explanation": "München has an ü."
         }
+      ]
+    },
+    {
+      "id": "grammar-terms",
+      "type": "table",
+      "title": "Grammar words you'll hear in the videos",
+      "columns": [{ "header": "German", "de": "words" }, { "header": "English" }, { "header": "In this course" }],
+      "rows": [
+        ["das Verb", "verb", "Unit 1"],
+        ["der Infinitiv", "infinitive: the dictionary form (wohnen)", "Unit 1"],
+        ["der Stamm", "stem: the infinitive without -en (wohn-)", "Unit 1"],
+        ["die Endung", "ending (-e, -st, -t ...)", "Unit 1"],
+        ["das Pronomen", "pronoun (ich, du, er ...)", "Unit 1"],
+        ["das Nomen", "noun", "Units 1-2"],
+        ["der Artikel", "article (der, die, das; ein, eine)", "Unit 2"],
+        ["der Singular, der Plural", "singular, plural", "Unit 2"],
+        ["das Adjektiv", "adjective (neu, groß)", "Unit 2"],
+        ["der Nominativ", "nominative: the subject of the sentence", "Unit 2"],
+        ["regelmäßig, unregelmäßig", "regular, irregular. The videos also call verbs like sprechen (du sprichst) irregular; this course says they change their vowel.", "Units 1, 4, 5"],
+        ["trennbar, untrennbar", "separable, inseparable (anrufen: ich rufe an; besuchen: ich besuche)", "Unit 3"],
+        ["das Modalverb", "modal verb (können, müssen, wollen ...)", "Unit 3"],
+        ["der Akkusativ", "accusative: the object (den, einen)", "Unit 4"],
+        ["die Präposition", "preposition (in, mit, für ...)", "Units 4, 6"],
+        ["der Imperativ", "imperative (Komm!)", "Unit 5"],
+        ["das Perfekt", "the spoken past (ich habe gemacht)", "Unit 5"],
+        ["das Partizip", "past participle (gemacht, gegangen); the videos say Partizip II", "Unit 5"],
+        ["das Hilfsverb", "helping verb: haben or sein in the Perfekt", "Unit 5"],
+        ["der Dativ", "dative: after mit, zu, bei ..., and 'to whom' (dem, mir)", "Unit 6"]
       ]
     }
   ]

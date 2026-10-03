@@ -14,7 +14,7 @@
   "videos": [
     {"id": "KYmkPHijIb4", "title": "Classroom things", "minutes": 13}
   ],
-  "words": ["brauchen", "ladegeraet", "wasser", "kaffee", "zeit", "geld", "hunger", "durst"],
+  "words": ["brauchen", "ladegeraet", "wasser", "kaffee", "zeit", "geld", "hunger", "durst", "kugelschreiber", "bleistift"],
   "tests": ["u2-t3-familie-wohnung"],
   "sections": [
     {
@@ -46,7 +46,8 @@
         { "de": "Hast du ein Ladegerät?", "en": "Do you have a charger?" },
         { "de": "Ich habe keine Zeit.", "en": "I don't have time." },
         { "de": "Ich habe Hunger. Hast du Durst?", "en": "I'm hungry. Are you thirsty?" },
-        { "de": "Ich habe kein Geld.", "en": "I have no money." }
+        { "de": "Ich habe kein Geld.", "en": "I have no money." },
+        { "de": "Hast du einen Kugelschreiber? - Nein, aber einen Bleistift.", "en": "Do you have a pen? - No, but a pencil." }
       ]
     },
     {

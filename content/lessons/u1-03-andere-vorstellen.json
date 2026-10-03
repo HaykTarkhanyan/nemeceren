@@ -25,7 +25,7 @@
       "id": "introducing",
       "type": "explanation",
       "title": "Introducing someone",
-      "text": "Point and say [[Das ist ...]]: [[Das ist Anna.]] [[Das ist mein Kollege Aram.]] The usual answer is [[Freut mich!]] (nice to meet you) or simply [[Hallo!]].\n\nWith people you call [[Sie]], use [[Herr]] or [[Frau]] plus the surname: [[Herr Weber]], [[Frau Schmidt]]. First names usually go with [[du]]."
+      "text": "Point and say [[Das ist ...]]: [[Das ist Anna.]] [[Das ist mein Kollege Aram.]] The usual answer is [[Freut mich!]] (nice to meet you) or simply [[Hallo!]].\n\nWith people you call [[Sie]], use [[Herr]] or [[Frau]] plus the surname: [[Herr Weber]], [[Frau Schmidt]]. First names usually go with [[du]].\n\nFor a woman it is [[meine]]: [[Das ist meine Kollegin.]] (the -e comes with die words; Unit 2, lesson 4 explains). Careful with [[Freund]] and [[Freundin]]: [[mein Freund]] and [[meine Freundin]] often mean boyfriend and girlfriend. For just a friend, say [[ein Freund von mir]] or [[eine Freundin von mir]] (a fixed phrase for now; [[mir]] comes in Unit 6)."
     },
     {
       "id": "sein",
@@ -53,9 +53,9 @@
       "rows": [
         ["ich", "I", "Ich bin Hayk."],
         ["du", "you (informal)", "Du bist nett."],
-        ["er", "he", "Er ist neu hier."],
-        ["sie", "she", "Sie ist aus Russland."],
-        ["es", "it", "Es ist gut."],
+        ["er", "he; it for der words (Unit 2)", "Er ist neu hier."],
+        ["sie", "she; it for die words (Unit 2)", "Sie ist aus Russland."],
+        ["es", "it (for das words, Unit 2)", "Es ist gut."],
         ["wir", "we", "Wir sind Kollegen."],
         ["ihr", "you (plural, informal)", "Ihr seid nett."],
         ["sie", "they", "Sie sind aus Armenien."],

@@ -17,7 +17,7 @@
     {"id": "a1DA6ezLbgs", "title": "Furniture", "minutes": 11},
     {"id": "JphfVvja3Bs", "title": "Flat hunting", "minutes": 10}
   ],
-  "words": ["wohnung", "zimmer", "kueche", "bad", "schlafzimmer", "wohnzimmer", "balkon", "haus", "miete", "hoch", "hell", "dunkel"],
+  "words": ["wohnung", "zimmer", "kueche", "bad", "schlafzimmer", "wohnzimmer", "balkon", "haus", "miete", "hoch", "hell", "dunkel", "moebel", "schrank", "sofa", "kuehlschrank", "herd", "dusche", "bild", "vermieter", "quadratmeter"],
   "sections": [
     {
       "id": "flat",
@@ -33,6 +33,13 @@
         ["das Wohnzimmer", "die Wohnzimmer", "living room"],
         ["der Balkon", "die Balkone", "balcony"],
         ["das Haus", "die Häuser", "house; building"],
+        ["die Möbel", "", "furniture (plural only)"],
+        ["der Schrank", "die Schränke", "cupboard, wardrobe"],
+        ["das Sofa", "die Sofas", "sofa"],
+        ["der Kühlschrank", "die Kühlschränke", "fridge"],
+        ["der Herd", "die Herde", "cooker, stove"],
+        ["die Dusche", "die Duschen", "shower"],
+        ["das Bild", "die Bilder", "picture"],
         ["die Miete", "die Mieten", "rent"]
       ]
     },
@@ -50,7 +57,7 @@
       "id": "describing-flat",
       "type": "explanation",
       "title": "Describing your flat",
-      "text": "- [[Meine Wohnung ist klein, aber hell.]]\n- [[Die Wohnung hat zwei Zimmer, eine Küche und ein Bad.]]\n- [[Die Miete ist sehr hoch.]] (a sentence you will say often in Munich; people also say [[sehr teuer]])\n\nGermans count rooms without the kitchen and the bathroom: a 'Zwei-Zimmer-Wohnung' has two rooms plus a kitchen and a bathroom. The living room counts as a room, like Russian двухкомнатная квартира (unlike English '2-bedroom')."
+      "text": "- [[Meine Wohnung ist klein, aber hell.]]\n- [[Die Wohnung hat zwei Zimmer, eine Küche und ein Bad.]]\n- [[Die Miete ist sehr hoch.]] (a sentence you will say often in Munich; people also say [[sehr teuer]])\n\nGermans count rooms without the kitchen and the bathroom: a 'Zwei-Zimmer-Wohnung' has two rooms plus a kitchen and a bathroom. The living room counts as a room, like Russian двухкомнатная квартира (unlike English '2-bedroom').\n\nFlat ads give the size in square metres: [[Die Wohnung hat fünfzig Quadratmeter.]] The landlord is [[der Vermieter]], and the first question is usually [[Ist die Wohnung noch frei?]] (Is the flat still available?)"
     },
     {
       "type": "examples",
@@ -60,7 +67,8 @@
         { "de": "Meine Wohnung ist klein, aber hell.", "en": "My flat is small, but bright." },
         { "de": "Die Wohnung hat einen Balkon.", "en": "The flat has a balcony.", "note": "einen Balkon: see lesson 6." },
         { "de": "Die Miete ist sehr hoch.", "en": "The rent is very high." },
-        { "de": "Das Bad ist dunkel.", "en": "The bathroom is dark." }
+        { "de": "Das Bad ist dunkel.", "en": "The bathroom is dark." },
+        { "de": "Der Kühlschrank ist klein, aber das Sofa ist neu.", "en": "The fridge is small, but the sofa is new." }
       ]
     },
     {

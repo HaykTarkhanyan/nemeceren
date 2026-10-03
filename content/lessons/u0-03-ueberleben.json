@@ -32,7 +32,8 @@
         { "de": "Noch einmal, bitte.", "en": "Once more, please." },
         { "de": "Langsam, bitte.", "en": "Slowly, please." },
         { "de": "Ich verstehe nicht.", "en": "I don't understand." },
-        { "de": "Ah, ich verstehe!", "en": "Ah, I understand!" }
+        { "de": "Ah, ich verstehe!", "en": "Ah, I understand!" },
+        { "de": "Ich weiß es nicht.", "en": "I don't know." }
       ]
     },
     {

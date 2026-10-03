@@ -30,13 +30,15 @@
         ["s", "like English z in 'zoo' before a vowel (Russian з, Armenian զ); in Bavaria often a plain s", "sagen", "to say"],
         ["ß", "always a sharp s", "Straße", "street"],
         ["sch", "sh, like Russian ш, Armenian շ", "Schule", "school"],
+        ["chs", "ks, not a ch sound", "sechs", "six"],
         ["sp", "shp at the start of a word", "Sport", "sport"],
         ["st", "sht at the start of a word", "Stadt", "city, town"],
         ["ei", "like English 'eye'", "mein", "my"],
         ["ie", "a long ee", "Liebe", "love"],
         ["eu", "oy, as in 'boy'", "neu", "new"],
         ["äu", "also oy, as in 'boy'", "Häuser", "houses"],
-        ["h", "silent after a vowel (the vowel gets long)", "sehr", "very"]
+        ["h", "silent after a vowel (the vowel gets long)", "sehr", "very"],
+        ["ig", "at the end of a word, like ich; in Bavaria often ik", "zwanzig", "twenty"]
       ]
     },
     {

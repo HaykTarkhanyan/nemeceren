@@ -20,7 +20,7 @@
     {
       "type": "explanation",
       "title": "Three genders",
-      "text": "Every German noun has a gender: masculine (**der**), feminine (**die**) or neuter (**das**). It is grammar, not meaning: [[der Tisch]], [[die Lampe]], [[das Fenster]].\n\n'A / an' follows the gender too: [[ein Tisch]], [[eine Lampe]], [[ein Fenster]].\n\nThe one rule that matters most: **always learn a noun together with its article.** Not 'Tisch = table' but 'der Tisch'. Your word cards already do this."
+      "text": "Every German noun has a gender: masculine (**der**), feminine (**die**) or neuter (**das**). It is grammar, not meaning: [[der Tisch]], [[die Lampe]], [[das Fenster]].\n\n'A / an' follows the gender too: [[ein Tisch]], [[eine Lampe]], [[ein Fenster]].\n\nThe one rule that matters most: **always learn a noun together with its article.** Not 'Tisch = table' but 'der Tisch'. Your word cards already do this.\n\nThe gender also decides the pronoun, for things as well as people: [[der Schlüssel]] is [[er]], [[die Lampe]] is [[sie]], [[das Fenster]] is [[es]]: [[Wo ist der Schlüssel? - Er ist hier.]] Russian does the same (стол - он, лампа - она, окно - оно), but the German gender decides: [[das Handy]] is [[es]], although телефон is он.\n\nOne exception: in [[Das ist ...]] the [[das]] means 'this' or 'that', so it never changes: [[Das ist ein Tisch.]] [[Das ist eine Lampe.]] [[Das sind Bücher.]]"
     },
     {
       "id": "articles",
@@ -67,7 +67,7 @@
         { "de": "Das ist eine Lampe.", "en": "That's a lamp." },
         { "de": "Das ist ein Handy.", "en": "That's a mobile phone." },
         { "de": "Der Laptop ist neu.", "en": "The laptop is new." },
-        { "de": "Wo ist der Schlüssel?", "en": "Where is the key?" }
+        { "de": "Wo ist der Schlüssel? - Er ist hier.", "en": "Where is the key? - It's here." }
       ]
     },
     {

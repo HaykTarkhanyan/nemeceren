@@ -65,7 +65,7 @@
       "prompt": "What do you do for work? (informal)",
       "tiles": ["was", "machst", "du", "beruflich"],
       "answers": ["Was machst du beruflich"],
-      "explanation": "W-question: was first, then the verb. Polite: Was sind Sie von Beruf?"
+      "explanation": "The question word (was) first, then the verb. Polite: Was sind Sie von Beruf?"
     },
     {
       "type": "translate",

@@ -20,7 +20,7 @@
     {"id": "sBUR0Q9ZTN4", "title": "Possessives: mein, dein ...", "minutes": 14},
     {"id": "3d1CabCbVNM", "title": "ihr or Ihr?", "minutes": 10}
   ],
-  "words": ["familie", "eltern", "vater", "mutter", "bruder", "schwester", "sohn", "tochter", "kind", "geschwister", "mann", "verheiratet", "ledig", "mein", "dein", "unser"],
+  "words": ["familie", "eltern", "vater", "mutter", "bruder", "schwester", "sohn", "tochter", "kind", "geschwister", "mann", "verheiratet", "ledig", "mein", "dein", "unser", "onkel", "tante", "cousin", "cousine"],
   "tests": ["u2-t2-plural-familie"],
   "sections": [
     {
@@ -37,6 +37,10 @@
         ["die Geschwister", "", "brothers and sisters (plural only)"],
         ["der Sohn", "die Söhne", "son"],
         ["die Tochter", "die Töchter", "daughter"],
+        ["der Onkel", "die Onkel", "uncle"],
+        ["die Tante", "die Tanten", "aunt"],
+        ["der Cousin", "die Cousins", "cousin (male)"],
+        ["die Cousine", "die Cousinen", "cousin (female)"],
         ["das Kind", "die Kinder", "child"],
         ["der Mann", "die Männer", "man; husband"],
         ["die Frau", "die Frauen", "woman; wife"]
@@ -46,7 +50,7 @@
       "id": "mein-meine",
       "type": "explanation",
       "title": "mein and meine",
-      "text": "[[mein]] (my) works like [[ein]]: [[mein Bruder]], [[mein Kind]], but **meine** with feminine nouns and with every plural: [[meine Schwester]], [[meine Eltern]].\n\nThe same goes for [[dein]] (your, informal) and [[Ihr]] (your, polite): [[dein Bruder]], [[deine Schwester]], [[Ihre Familie]]."
+      "text": "[[mein]] (my) works like [[ein]]: [[mein Bruder]], [[mein Kind]], but **meine** with feminine nouns and with every plural: [[meine Schwester]], [[meine Eltern]].\n\nThe same goes for [[dein]] (your, informal) and [[Ihr]] (your, polite): [[dein Bruder]], [[deine Schwester]], [[Ihre Familie]].\n\n[[euer]] (your, to several friends) drops an e when it gets the ending: [[euer Sohn]], but [[eure Eltern]]."
     },
     {
       "id": "possessives",
@@ -58,7 +62,9 @@
         ["du", "dein", "deine", "your (informal)"],
         ["er", "sein", "seine", "his"],
         ["sie", "ihr", "ihre", "her"],
+        ["es", "sein", "seine", "its"],
         ["wir", "unser", "unsere", "our"],
+        ["ihr", "euer", "eure", "your (plural, informal)"],
         ["sie", "ihr", "ihre", "their"],
         ["Sie", "Ihr", "Ihre", "your (polite)"]
       ]
@@ -83,7 +89,8 @@
         { "de": "Das sind meine Eltern.", "en": "These are my parents.", "note": "das + sind for more than one person or thing" },
         { "de": "Bist du verheiratet? - Nein, ich bin ledig.", "en": "Are you married? - No, I'm single." },
         { "de": "Das ist meine Schwester. Ihr Name ist Anna.", "en": "This is my sister. Her name is Anna." },
-        { "de": "Unsere Familie ist groß.", "en": "Our family is big." }
+        { "de": "Unsere Familie ist groß.", "en": "Our family is big." },
+        { "de": "Wie viele Geschwister hast du? - Zwei.", "en": "How many brothers and sisters do you have? - Two.", "note": "wie viele = how many" }
       ]
     },
     {

@@ -967,6 +967,21 @@
     ],
     "Eintritt": [
       {"lemma": "Eintritt", "pos": "noun", "article": "der", "level": "A1", "gloss": ["admission, entry (fee)"], "note": "Was kostet der Eintritt?"}
+    ],
+    "Quadratmeter": [
+      {"lemma": "Quadratmeter", "pos": "noun", "article": "der", "plural": "Quadratmeter", "level": "A1", "gloss": ["square metre"], "note": "Die Wohnung hat fünfzig Quadratmeter. Written m² or qm."}
+    ],
+    "Infinitiv": [
+      {"lemma": "Infinitiv", "pos": "noun", "article": "der", "gloss": ["infinitive: the dictionary form of a verb"], "note": "wohnen, kommen, sprechen"}
+    ],
+    "Stamm": [
+      {"lemma": "Stamm", "pos": "noun", "article": "der", "gloss": ["stem (of a word); tree trunk"], "note": "wohnen minus -en = wohn-"}
+    ],
+    "Nomen": [
+      {"lemma": "Nomen", "pos": "noun", "article": "das", "gloss": ["noun"]}
+    ],
+    "Perfekt": [
+      {"lemma": "Perfekt", "pos": "noun", "article": "das", "gloss": ["the Perfekt: the spoken past tense"], "note": "Ich habe gearbeitet. (Unit 5)"}
     ]
   }
 }
