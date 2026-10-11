@@ -2,6 +2,13 @@
 
 Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
+## 75. A third learner (Armen, Hayk's friend) gets an account the same way as Anahit; no username plugin yet (asked for by Hayk, 2026-10-11; applies #57 and #60)
+
+- **Date:** 2026-10-11 - **Status:** active
+- **Why:** Hayk asked for an account with the login "Armen". Same steps as #57: sign-up opened with `neon neon-auth config email-password update --disable-sign-up=false`, the account `armen@nemeceren.example` created through the auth API's `sign-up/email`, sign-up closed again (open 17:25:41-17:25:49 local, closing set as an exit trap so a failed step couldn't leave it open), then allowlisted with `progress.py allow-user`. Checks: the config says sign-up disabled, a probe sign-up answers HTTP 400 `EMAIL_PASSWORD_SIGN_UP_DISABLED`, Armen's sign-in answers 200, and `progress.py users` lists exactly Hayk, the test account, Anahit and Armen. Typing "Armen" at sign-in works through #60. The password is not stored in any file.
+- **Alternatives rejected:** the username plugin or real emails that #57 named for "more learners": both need Neon Auth changes and recreated accounts, and nothing yet needs them.
+- **What would change this:** a friend forgetting their password (with `.example` logins there is no reset email; `neon neon-auth user create` can't set a password, so it would mean deleting and recreating the account, which loses its progress), or more friends joining (then real emails and password reset).
+
 ## 74. Lessons embed videos from three Learn German YouTube playlists, as click-to-play thumbnails from youtube-nocookie.com; the captions stay local (Hayk's request, 2026-10-03)
 
 - **Date:** 2026-10-03 - **Status:** active

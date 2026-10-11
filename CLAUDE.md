@@ -43,6 +43,7 @@ Evidence and sources are in `_knowledge/2026-09-28_llm-tutoring-and-materials.md
 - The other Neon project `infocom` belongs to something else. Don't touch it.
 - Sign-up is closed (DECISIONS.md #52). For browser checks behind the sign-in, use the test account `claude-test@example.com`, never Hayk's. Its password is in `.env.local` (`NEMECEREN_TEST_PASSWORD`). Playwright echoes the scripts it runs, so a password typed into a script shows up in the transcript. `progress.py` defaults to Hayk (`NEMECEREN_DEFAULT_USER` in `.env.local`). Pass `--user` for anyone else.
 - A second learner, Anahit (Hayk's friend), has her own account and progress (DECISIONS.md #57). Look at her work only when Hayk asks, and never touch her data or Hayk's in tests.
+- A third learner, Armen (Hayk's friend, login `armen@nemeceren.example`, DECISIONS.md #75), has their own account and progress. The same rules apply: look at their work only when Hayk asks, and never touch their data in tests.
 
 ## Practical
 
