@@ -2,6 +2,14 @@
 
 Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
+## 76. The PC runs Node 26 LTS (Hayk, 2026-11-05; supersedes #22)
+
+- **Date:** 2026-11-05 - **Status:** active
+- **Why:** Node 20 reached end-of-life on 30 Apr 2026, and kachayt's deploy tool (wrangler 4.157.0) refuses anything below Node 22. Hayk chose to upgrade the whole machine to the current LTS (kachayt DECISIONS.md #29): `winget uninstall --id OpenJS.NodeJS` (20.20.0), then `winget install --id OpenJS.NodeJS.LTS`, now v26.13.0 with npm 11.20.0. Checked here on 5 Nov: the app's 318 tests (26 files) pass, and `app` and `backend` typecheck clean.
+- **Consequences:** `neon skills` (needed Node 22.20+, #22) can run now. The Neon CLI and the app toolchain (#11) keep working. Neon Functions still run on Node 24 on Neon's side.
+- **Alternatives rejected:** staying on Node 20 (#22; end-of-life and blocks wrangler); Node 24 (maintenance-only LTS by now).
+- **What would change this:** a dependency here that breaks on Node 26 (then pin it with `npx -y node@24 ...` for that one tool, not the machine).
+
 ## 75. A third learner (Armen, Hayk's friend) gets an account the same way as Anahit; no username plugin yet (asked for by Hayk, 2026-10-11; applies #57 and #60)
 
 - **Date:** 2026-10-11 - **Status:** active
@@ -530,7 +538,7 @@ Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
 ## 22. The PC stays on Node 20.20.0 (decided by Hayk, 2026-09-29)
 
-- **Date:** 2026-09-29 - **Status:** active
+- **Date:** 2026-09-29 - **Status:** superseded by #76 (2026-11-05: the PC moved to Node 26 LTS)
 - **Why:** Hayk: "lets stay 20" when asked about a machine-wide upgrade to Node 22 LTS. It also corrects #11, which wrongly said upgrading Node was "ruled out by Hayk". That constraint came from Claude's brief to the build agent, not from Hayk.
 - **Consequences:**
   - `neon skills` (needs Node 22.20+) can't run, so Neon skills are downloaded from Neon's registry and checked by sha256.
