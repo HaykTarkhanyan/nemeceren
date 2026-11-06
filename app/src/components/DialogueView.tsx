@@ -1,7 +1,7 @@
 // A scene as a dialogue (the stories at the end of each unit, DECISIONS.md #80): the text is
 // always shown, each line has a play button and a translation on tap, and "Play the scene" reads
 // all lines one after another, each speaker in their own voice where the device has two.
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { LessonBlock } from '../content/schema.ts'
 import { speakLines, stopSpeaking } from '../lib/speech.ts'
 import { GermanText } from './GermanText.tsx'
@@ -14,6 +14,8 @@ export function DialogueView({ block }: { block: Dialogue }) {
   const who = (name: string) => speakers.indexOf(name)
   const [shown, setShown] = useState<ReadonlySet<number>>(() => new Set())
   const [allShown, setAllShown] = useState(false)
+  // A scene read with "Play the scene" stops when the lesson is left.
+  useEffect(() => stopSpeaking, [])
   function toggle(i: number) {
     setShown((prev) => {
       const next = new Set(prev)

@@ -122,6 +122,13 @@ describe('mixNewWords', () => {
     expect(out.words.map((x) => x.id)).toEqual(['c', 'd'])
   })
 
+  it('falls back to the next lessons when the active set is done, and says so', () => {
+    const set: WordSet = { id: 's', title: 'Set', description: 'd', words: ['e'] }
+    const out = mixNewWords({ words, lessons, progress: emptyLessonProgress(), state: learned(['e']), set })
+    expect(out.words.map((x) => x.id)).toEqual(['a', 'b'])
+    expect(out.from).toBe('the word set "Set" is done, so lesson 1.1 l1')
+  })
+
   it('uses the active set instead, in set order, without words already learned', () => {
     const set: WordSet = { id: 's', title: 'Set', description: 'd', words: ['e', 'a', 'c'] }
     const out = mixNewWords({ words, lessons, progress: emptyLessonProgress(), state: learned(['a']), set })
@@ -142,5 +149,6 @@ describe('dueNow and mixSteps', () => {
     expect(mixSteps({ introduced: 0, due: 0, newAvailable: 0 })).toEqual([])
     expect(mixSteps({ introduced: 2, due: 0, newAvailable: 5 })).toEqual(['new', 'listen'])
     expect(mixSteps({ introduced: 10, due: 3, newAvailable: 0 })).toEqual(['warmup', 'reviews', 'listen'])
+    expect(mixSteps({ introduced: 10, due: 3, newAvailable: 0, canListen: false, mistakes: 2 })).toEqual(['warmup', 'reviews', 'mistakes'])
   })
 })

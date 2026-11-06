@@ -52,6 +52,9 @@ function Words({ tab }: { tab: (typeof WORDS_TABS)[number] }) {
   const [practice, setPractice] = useState<StudyWord[] | null>(null)
   // Each practice start gets a fresh session, even from the "practice done" screen.
   const [practiceRun, setPracticeRun] = useState(0)
+  // Practice started from the words list (All words, Word sets) goes back to the list when stopped,
+  // not into a scheduled review that would move the schedule and use up new words.
+  const [practiceFromList, setPracticeFromList] = useState(false)
   // The pick applies at once, even if this device cannot save it (that error is shown).
   const [picked, setPicked] = useState<string | null>(null)
   // The add/edit form for Hayk's own words, and what it last did.
@@ -86,6 +89,7 @@ function Words({ tab }: { tab: (typeof WORDS_TABS)[number] }) {
       }}
       onPractice={(list) => {
         setPractice(list)
+        setPracticeFromList(false)
         setPracticeRun((r) => r + 1)
         // Practice from the start page uses English to German: recalling the German word.
         setMode((m) => m ?? 'production')
@@ -103,6 +107,7 @@ function Words({ tab }: { tab: (typeof WORDS_TABS)[number] }) {
     })
     if (how === 'type') {
       setPractice(list)
+      setPracticeFromList(true)
       setPracticeRun((r) => r + 1)
       setMode('production')
     } else setGame({ how, words: list, run: (game?.run ?? 0) + 1 })
@@ -136,6 +141,7 @@ function Words({ tab }: { tab: (typeof WORDS_TABS)[number] }) {
         state={state}
         onExit={() => {
           setPractice(null)
+          if (practiceFromList) setMode(null)
           requestFlush()
         }}
         whatNext={whatNext}

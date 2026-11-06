@@ -2,7 +2,7 @@
 // "#/daily" runs the daily mix (a match-pairs warm-up, due word reviews, a few new words, listen
 // and pick), "#/daily/match" and "#/daily/listen" run one game on its own. The games are practice
 // and never change the review schedule; the reviews and new words inside the mix are normal reviews.
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { content } from '../content/load.ts'
 import type { ReviewState, WordSet } from '../content/schema.ts'
 import { ListenPick } from '../components/ListenPick.tsx'
@@ -23,6 +23,8 @@ import { nextLesson, wordsForSource } from '../lib/plan.ts'
 import type { ProgressView } from '../lib/storage.ts'
 import { link } from '../lib/router.ts'
 import { useSettings } from '../lib/settings.ts'
+import { NO_VOICE_HELP, useSpeech } from '../lib/speech.ts'
+import type { SpeechInfo } from '../lib/speech.ts'
 import type { Settings } from '../lib/settings.ts'
 import { counts } from '../lib/srs.ts'
 import { requestFlush, useProgress } from '../lib/storage.ts'
@@ -60,8 +62,13 @@ export interface MixPlan {
   setProblem: string | null
 }
 
-/** What the daily mix would do now. */
-export function mixPlan(progress: ProgressView, settings: Settings, now: Date): MixPlan {
+/** True unless the browser has no speech or has listed its voices and none is German. */
+export function canListen(speech: SpeechInfo): boolean {
+  return speech.supported && !(speech.loaded && speech.voices.length === 0)
+}
+
+/** What the daily mix would do now. `listen` false: no German voice, so no listen and pick. */
+export function mixPlan(progress: ProgressView, settings: Settings, now: Date, listen = true): MixPlan {
   const state = progress.reviewState
   const pool = studyPool(progress)
   const { set, problem } = activeSet(settings)
@@ -78,7 +85,7 @@ export function mixPlan(progress: ProgressView, settings: Settings, now: Date): 
   )
   const mistakes = currentMistakes(progress, now).due.slice(0, MIX.maxMistakes)
   return {
-    steps: mixSteps({ introduced: introduced(pool, state).length, due, newAvailable: newCount, mistakes: mistakes.length }),
+    steps: mixSteps({ introduced: introduced(pool, state).length, due, newAvailable: newCount, mistakes: mistakes.length, canListen: listen }),
     due,
     mistakes,
     newWords: fresh.words,
@@ -128,8 +135,9 @@ interface Done {
 function Mix() {
   const progress = useProgress()
   const settings = useSettings()
+  const speech = useSpeech()
   const state = progress.reviewState
-  const [plan] = useState(() => mixPlan(progress, settings, new Date()))
+  const [plan] = useState(() => mixPlan(progress, settings, new Date(), canListen(speech)))
   const [startedAt] = useState(() => Date.now())
   const [step, setStep] = useState(0)
   const [done, setDone] = useState<Done>({})
@@ -193,9 +201,12 @@ function Mix() {
 
 function Warmup({ pool, state, onDone }: { pool: StudyWord[]; state: ReviewState; onDone: (s: MatchStats) => void }) {
   const [rounds] = useState(() => matchRounds(pool, state, MIX.warmupRounds, MIX.pairsPerRound))
+  // Skips the warm-up once when there are too few words (also when StrictMode runs effects twice).
+  const skipped = useRef(false)
   useEffect(() => {
-    if (rounds.length === 0) onDone({ pairs: 0, firstTry: 0, ms: 0 })
-    // Skips the warm-up once when there are too few words.
+    if (rounds.length > 0 || skipped.current) return
+    skipped.current = true
+    onDone({ pairs: 0, firstTry: 0, ms: 0 })
   }, [])
   if (rounds.length === 0) return null
   return <MatchPairs rounds={rounds} state={state} onDone={onDone} />
@@ -203,11 +214,16 @@ function Warmup({ pool, state, onDone }: { pool: StudyWord[]; state: ReviewState
 
 function Listen({ pool, state, n, onDone }: { pool: StudyWord[]; state: ReviewState; n: number; onDone: (s: PickStats) => void }) {
   const [items] = useState(() => pickItems(pool, state, n))
+  const listen = canListen(useSpeech())
+  // Skips listen and pick once when there are too few words or no German voice (also when StrictMode runs effects twice).
+  const skipped = useRef(false)
+  const skip = items.length === 0 || !listen
   useEffect(() => {
-    if (items.length === 0) onDone({ right: 0, total: 0 })
-    // Skips listen and pick once when there are too few words.
-  }, [])
-  if (items.length === 0) return null
+    if (!skip || skipped.current) return
+    skipped.current = true
+    onDone({ right: 0, total: 0 })
+  }, [skip])
+  if (skip) return null
   return <ListenPick items={items} state={state} onDone={onDone} />
 }
 
@@ -304,9 +320,11 @@ function ListenOnly() {
 export function ListenGame({ pool, state, onAgain, n = 10 }: { pool: StudyWord[]; state: ReviewState; onAgain: () => void; n?: number }) {
   const [items] = useState(() => pickItems(pool, state, n))
   const [stats, setStats] = useState<PickStats | null>(null)
+  const listen = canListen(useSpeech())
   useEffect(() => {
     if (stats) requestFlush()
   }, [stats])
+  if (!listen) return <div className="alert warn">Listen and pick needs a German voice. {NO_VOICE_HELP}</div>
   if (items.length === 0) return <TooFew need={MIN_PICK_WORDS} />
   if (stats) {
     return (

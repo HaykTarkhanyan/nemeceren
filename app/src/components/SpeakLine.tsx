@@ -3,7 +3,7 @@
 // heard word by word against the line. The recording stays in this page's memory: it is never
 // uploaded or saved, and nothing is logged. A mismatch is never a mistake (recognition mishears).
 import { useEffect, useRef, useState } from 'react'
-import { messageOf } from '../lib/errors.ts'
+import { messageOf, reportError } from '../lib/errors.ts'
 import { bestAlternative, compareSpoken } from '../lib/speaking.ts'
 import { speak } from '../lib/speech.ts'
 
@@ -52,16 +52,33 @@ export function SpeakLine({ text }: { text: string }) {
   const recorder = useRef<MediaRecorder | null>(null)
   const recognition = useRef<Recognition | null>(null)
   const stream = useRef<MediaStream | null>(null)
+  // Each press of "Say it" is a new session; a stopped or replaced session must not start the mic
+  // later (the permission prompt can still be open) or show its recording.
+  const session = useRef(0)
+  const unmounted = useRef(false)
   const canRecognize = typeof window !== 'undefined' && recognitionCtor() !== null
 
-  // Free the recording and the microphone when the line goes away.
-  useEffect(
-    () => () => {
+  function releaseStream() {
+    stream.current?.getTracks().forEach((t) => t.stop())
+    stream.current = null
+  }
+
+  function stopRecorder() {
+    if (recorder.current && recorder.current.state !== 'inactive') recorder.current.stop()
+    recorder.current = null
+  }
+
+  // Free the microphone when the line goes away; a recording that ends afterwards is dropped.
+  useEffect(() => {
+    unmounted.current = false
+    return () => {
+      unmounted.current = true
+      session.current += 1
       recognition.current?.abort()
-      stream.current?.getTracks().forEach((t) => t.stop())
-    },
-    [],
-  )
+      stopRecorder()
+      releaseStream()
+    }
+  }, [])
   useEffect(
     () => () => {
       if (audioUrl) URL.revokeObjectURL(audioUrl)
@@ -69,35 +86,45 @@ export function SpeakLine({ text }: { text: string }) {
     [audioUrl],
   )
 
-  function stopRecorder() {
-    if (recorder.current && recorder.current.state !== 'inactive') recorder.current.stop()
-  }
-
-  async function startRecording(): Promise<string | null> {
+  /** Starts recording for session `my`; returns a problem text, or null. 'cancelled': the session ended while asking for the mic. */
+  async function startRecording(my: number): Promise<string | null> {
     if (!navigator.mediaDevices?.getUserMedia || typeof MediaRecorder === 'undefined') return 'this browser cannot record audio'
+    let s: MediaStream
     try {
-      const s = await navigator.mediaDevices.getUserMedia({ audio: true })
-      stream.current = s
-      const chunks: Blob[] = []
-      const r = new MediaRecorder(s)
-      r.ondataavailable = (e) => chunks.push(e.data)
-      r.onstop = () => {
-        s.getTracks().forEach((t) => t.stop())
-        stream.current = null
-        if (chunks.length > 0) setAudioUrl(URL.createObjectURL(new Blob(chunks, { type: r.mimeType })))
-      }
-      r.start()
-      recorder.current = r
-      return null
+      s = await navigator.mediaDevices.getUserMedia({ audio: true })
     } catch (err) {
       return messageOf(err)
     }
+    if (my !== session.current || unmounted.current) {
+      s.getTracks().forEach((t) => t.stop())
+      return 'cancelled'
+    }
+    stream.current = s
+    const chunks: Blob[] = []
+    const r = new MediaRecorder(s)
+    r.ondataavailable = (e) => chunks.push(e.data)
+    r.onstop = () => {
+      s.getTracks().forEach((t) => t.stop())
+      if (stream.current === s) stream.current = null
+      if (my !== session.current || unmounted.current || chunks.length === 0) return
+      setAudioUrl(URL.createObjectURL(new Blob(chunks, { type: r.mimeType })))
+    }
+    r.start()
+    recorder.current = r
+    return null
   }
 
   async function start() {
+    // A new press ends whatever the last one left running.
+    recognition.current?.abort()
+    recognition.current = null
+    stopRecorder()
+    releaseStream()
+    const my = ++session.current
     setPhase({ kind: 'listening' })
     setAudioUrl(null)
-    const recordProblem = await startRecording()
+    const recordProblem = await startRecording(my)
+    if (recordProblem === 'cancelled' || my !== session.current) return
     const Ctor = recognitionCtor()
     if (!Ctor) {
       if (recordProblem) setPhase({ kind: 'error', message: `Could not record: ${recordProblem}` })
@@ -123,7 +150,8 @@ export function SpeakLine({ text }: { text: string }) {
           : (RECOGNITION_ERRORS[e.error] ?? `Speech recognition failed (${e.error}).`)
     }
     rec.onend = () => {
-      recognition.current = null
+      if (recognition.current === rec) recognition.current = null
+      if (my !== session.current) return
       stopRecorder()
       if (problem && heard === null) setPhase({ kind: 'error', message: problem })
       else setPhase({ kind: 'done', heard, note: recordProblem ? `Your voice could not be recorded for playback: ${recordProblem}` : null })
@@ -132,6 +160,7 @@ export function SpeakLine({ text }: { text: string }) {
     try {
       rec.start()
     } catch (err) {
+      recognition.current = null
       stopRecorder()
       setPhase({ kind: 'error', message: `Speech recognition did not start: ${messageOf(err)}` })
     }
@@ -139,9 +168,13 @@ export function SpeakLine({ text }: { text: string }) {
 
   function stop() {
     if (recognition.current) recognition.current.stop()
-    else {
+    else if (recorder.current) {
       stopRecorder()
       setPhase({ kind: 'done', heard: null, note: null })
+    } else {
+      // Still waiting for the microphone permission: cancel, so the mic does not start later.
+      session.current += 1
+      setPhase({ kind: 'idle' })
     }
   }
 
@@ -162,7 +195,11 @@ export function SpeakLine({ text }: { text: string }) {
           <button type="button" className="btn small" onClick={() => speak(text)}>
             German
           </button>
-          <button type="button" className="btn small" onClick={() => void new Audio(audioUrl).play()}>
+          <button
+            type="button"
+            className="btn small"
+            onClick={() => new Audio(audioUrl).play().catch((err: unknown) => reportError(`Could not play your recording: ${messageOf(err)}`))}
+          >
             Mine
           </button>
         </>

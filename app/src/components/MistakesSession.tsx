@@ -76,7 +76,8 @@ function One({ mistake, label, onNext }: { mistake: Mistake; label: string; onNe
     const r: Result = {
       version: 1,
       testId: redoTestId(mistake.sourceId, mistake.index),
-      testTitle: `Mistakes: ${source.title}, item ${mistake.index + 1}`,
+      // The API takes titles up to 300 characters (backend/src/schema.ts AttemptUpload).
+      testTitle: `Mistakes: ${source.title}, item ${mistake.index + 1}`.slice(0, 300),
       level: source.level,
       mode: 'web',
       startedAt,

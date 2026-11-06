@@ -2,7 +2,7 @@
 // Every error names the file and the field path, e.g.
 //   content/tests/a1-01.json: items[3].answers[0]: "..." does not use exactly the tiles [...]
 import type { z } from 'zod'
-import { exerciseSections, exerciseTestId, isCourseLesson, isThemeLesson, MISTAKE_PREFIX, sectionIndex } from './lessons.ts'
+import { exerciseSections, exerciseTestId, isCourseLesson, isThemeLesson, MISTAKE_PREFIX, REDO_ID_MAX, redoTestId, sectionIndex } from './lessons.ts'
 import { CuratedGlossary, Extras, GeneratedGlossary, Lesson, LessonProgress, Result, ReviewLogEntry, ReviewState, Test, Topics, WordList, WordSets } from './schema.ts'
 import type {
   CourseLesson,
@@ -247,6 +247,15 @@ function crossReferences(tests: TestT[], words: WordT[], lessons: CourseLesson[]
   // Mistakes replay saves its redos under "m-<source id>-i<n>" (DECISIONS.md #81).
   for (const t of tests) if (t.id.startsWith(MISTAKE_PREFIX)) problems.push(`content/tests/${t.id}.json: id: "${MISTAKE_PREFIX}" is kept for Mistakes replay; a test id may not start with it`)
   for (const l of all) if (l.id.startsWith(MISTAKE_PREFIX)) problems.push(`${l.id}: id: "${MISTAKE_PREFIX}" is kept for Mistakes replay; a lesson id may not start with it`)
+  // A redo's testId must fit the API's 100-character id (backend/src/schema.ts Slug), or its sync is refused.
+  const tooLong = (source: string, items: number) => redoTestId(source, Math.max(0, items - 1)).length > REDO_ID_MAX
+  for (const t of tests) if (tooLong(t.id, t.items.length)) problems.push(`content/tests/${t.id}.json: id: too long for Mistakes replay ("${redoTestId(t.id, t.items.length - 1)}" is over ${REDO_ID_MAX} characters)`)
+  for (const l of all) {
+    for (const ex of exerciseSections(l)) {
+      const id = exerciseTestId(l.id, ex.number)
+      if (tooLong(id, ex.block.items.length)) problems.push(`${l.id}: id: too long for Mistakes replay ("${redoTestId(id, ex.block.items.length - 1)}" is over ${REDO_ID_MAX} characters)`)
+    }
+  }
   const position = new Map<string, string>()
   for (const l of lessons) {
     const key = `${l.unit}/${l.order}`

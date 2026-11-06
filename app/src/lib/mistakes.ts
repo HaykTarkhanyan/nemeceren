@@ -37,7 +37,8 @@ export interface Mistake {
 interface Event {
   at: number
   day: string
-  ok: boolean
+  /** pending: a rewritten write item waiting for Claude. It moves the next showing to tomorrow, but neither fixes nor reopens the mistake. */
+  status: 'correct' | 'wrong' | 'pending'
   question: string
   correction?: string
 }
@@ -58,10 +59,11 @@ function answerEvents(results: Result[]): Map<string, Event[]> {
     const redo = parseRedoTestId(r.testId)
     r.items.forEach((ri, i) => {
       const status = finalStatus(r, i)
-      if (status === 'pending') return
+      // A first attempt still waiting for Claude is not a mistake yet; a pending redo still counts as shown today.
+      if (status === 'pending' && !redo) return
       const correction = r.review?.items.find((x) => x.index === i)?.correction
       const key = redo ? `${redo.sourceId}#${redo.index}` : `${r.testId}#${i}`
-      push(key, { at, day: r.localDay as string, ok: status === 'correct', question: ri.question, ...(correction ? { correction } : {}) })
+      push(key, { at, day: r.localDay as string, status, question: ri.question, ...(correction ? { correction } : {}) })
     })
   }
   return out
@@ -80,8 +82,10 @@ export function deriveMistakes(
   for (const [key, events] of answerEvents(results)) {
     let open: { last: Event; wrong: Event; days: Set<string> } | null = null
     for (const e of [...events].sort((a, b) => a.at - b.at)) {
-      if (!e.ok) open = { last: e, wrong: e, days: new Set() }
-      else if (open) {
+      if (e.status === 'wrong') open = { last: e, wrong: e, days: new Set() }
+      else if (e.status === 'pending') {
+        if (open) open.last = e
+      } else if (open) {
         open.days.add(e.day)
         open.last = e
         if (open.days.size >= FIX_DAYS) {

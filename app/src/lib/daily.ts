@@ -160,14 +160,19 @@ export function mixNewWords<W extends { id: string }>(input: {
   const { words, lessons, progress, state, set } = input
   const byId = new Map(words.map((w) => [w.id, w]))
   const fresh = (ids: string[]) => ids.filter((id) => !state.cards[id] && byId.has(id)).map((id) => byId.get(id) as W)
-  if (set) return { words: fresh(set.words), from: `the word set "${set.title}"` }
+  if (set) {
+    const left = fresh(set.words)
+    if (left.length > 0) return { words: left, from: `the word set "${set.title}"` }
+  }
+  // A finished set gives way to the next lessons, and the text says so.
+  const setDone = set ? `the word set "${set.title}" is done, so ` : ''
   const done = (l: CourseLesson) => progress.lessons[l.id]?.doneAt
   for (const l of [...lessons].sort(byCourseOrder)) {
     if (done(l)) continue
     const left = fresh(l.words ?? [])
-    if (left.length > 0) return { words: left, from: `lesson ${l.unit}.${l.order} ${l.title}` }
+    if (left.length > 0) return { words: left, from: `${setDone}lesson ${l.unit}.${l.order} ${l.title}` }
   }
-  return { words: [], from: 'the course' }
+  return { words: [], from: `${setDone}the course` }
 }
 
 /** Cards due now (or within the learn-ahead window) among the words that have a card. */
@@ -193,12 +198,13 @@ export const MIX_STEP_LABEL: Record<MixStep, string> = {
  * The steps of the mix that have something to do, in order. Listen and pick also runs when only the
  * new words of this mix will make it possible, so it is decided by the count after the new step.
  */
-export function mixSteps(input: { introduced: number; due: number; newAvailable: number; mistakes?: number }): MixStep[] {
+export function mixSteps(input: { introduced: number; due: number; newAvailable: number; mistakes?: number; canListen?: boolean }): MixStep[] {
   const steps: MixStep[] = []
   if (input.introduced >= MIN_PAIRS) steps.push('warmup')
   if (input.due > 0) steps.push('reviews')
   if (input.newAvailable > 0) steps.push('new')
-  if (input.introduced + Math.min(input.newAvailable, MIX.maxNew) >= MIN_PICK_WORDS) steps.push('listen')
+  // Listen and pick needs a German voice on the device (canListen false: none was found).
+  if (input.canListen !== false && input.introduced + Math.min(input.newAvailable, MIX.maxNew) >= MIN_PICK_WORDS) steps.push('listen')
   if ((input.mistakes ?? 0) > 0) steps.push('mistakes')
   return steps
 }

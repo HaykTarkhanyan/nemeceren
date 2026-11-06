@@ -111,5 +111,9 @@ describe('deriveMistakes', () => {
     const graded = { ...pending, review: { gradedAt: new Date().toISOString(), summary: 's', items: [{ index: 0, correct: false, correction: 'Ich heiße Eva.' }] } }
     const out = deriveMistakes([graded], [wtest], [lesson], at('2026-11-08'))
     expect(out.due[0].correction).toBe('Ich heiße Eva.')
+    // A rewritten answer waiting for Claude: not due again the same day, back the next day, not fixed.
+    const rewrite = redo('u1-t3-w', 0, '2026-11-08', 'pending', write)
+    expect(deriveMistakes([graded, rewrite], [wtest], [lesson], at('2026-11-08')).due).toEqual([])
+    expect(deriveMistakes([graded, rewrite], [wtest], [lesson], at('2026-11-09')).due[0].rightDays).toBe(0)
   })
 })

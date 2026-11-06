@@ -65,6 +65,9 @@ export function lessonLabel(l: Lesson): string {
  */
 export const MISTAKE_PREFIX = 'm-'
 
+/** The API's longest test id (backend/src/schema.ts Slug); check-content keeps every redo id within it. */
+export const REDO_ID_MAX = 100
+
 export function redoTestId(sourceId: string, index: number): string {
   return `${MISTAKE_PREFIX}${sourceId}-i${index}`
 }

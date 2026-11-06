@@ -5,13 +5,14 @@ import { messageOf, reportError } from '../lib/errors.ts'
 import { link } from '../lib/router.ts'
 import { updateSettings, useSettings } from '../lib/settings.ts'
 import { useProgress } from '../lib/storage.ts'
-import { currentMistakes, mixPlan, mixSummary } from './DailyPage.tsx'
+import { useSpeech } from '../lib/speech.ts'
+import { canListen, currentMistakes, mixPlan, mixSummary } from './DailyPage.tsx'
 
 export function DailyPanel() {
   const progress = useProgress()
   const settings = useSettings()
   const now = new Date()
-  const plan = mixPlan(progress, settings, now)
+  const plan = mixPlan(progress, settings, now, canListen(useSpeech()))
   const mistakesDue = currentMistakes(progress, now).due.length
   function set(patch: Parameters<typeof updateSettings>[0]) {
     try {

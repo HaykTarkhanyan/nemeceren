@@ -1,7 +1,7 @@
 // A short run of scheduled word reviews inside the daily mix: due cards first, then new words up
 // to a cap. Unlike the Words page session it stops after maxCards, so the mix stays light.
 // Every grade moves the FSRS schedule like any word review (lib/reviewEntries.ts scheduledEntry).
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { ReviewLogEntry, ReviewMode, ReviewState, StoredCard } from '../content/schema.ts'
 import type { StudyWord } from '../lib/customWords.ts'
 import { messageOf } from '../lib/errors.ts'
@@ -37,9 +37,12 @@ export function ReviewRun(props: {
   const next = nextCard(words, state, now, newLimit)
   const over = failed === null && (stats.cards >= maxCards || next.kind !== 'card' || (next.isNew && stats.fresh >= maxNew))
 
+  // Reported once, also when React runs effects twice (StrictMode in development).
+  const reported = useRef(false)
   useEffect(() => {
-    if (over) onDone(stats)
-    // Called once, when the run is over.
+    if (!over || reported.current) return
+    reported.current = true
+    onDone(stats)
   }, [over])
 
   function persist(entry: ReviewLogEntry, card: StoredCard) {
