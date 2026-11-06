@@ -13,14 +13,34 @@ done = [
   "Checks after each step: typecheck clean, vitest 338 -> 358 tests passing, check-content OK, vite build OK. Guest-mode Playwright runs at 390 px for the mix, both games, word sets, the mic (fake microphone), Ask Claude (clipboard text checked), the story and Mistakes replay (clock moved one day on). 0 console errors.",
 ]
 pending = [
-  "NOTHING IS PUSHED. Pushing to main deploys the new app for Hayk, Anahit and Armen; it needs no backend change. Waiting for Hayk's OK.",
-  "Real-device checks only Hayk can do: speech recognition on Android Chrome and PC Chrome/Edge (risk: some phones cannot record and recognize at once; the line then says so), two German voices for stories.",
+    "Real-device checks only Hayk can do: speech recognition on Android Chrome and PC Chrome/Edge (risk: some phones cannot record and recognize at once; the line then says so), two German voices for stories.",
   "Exact reread sections for test items in Mistakes replay (Hayk's Q10): add a 'teaches' field and tag all 311 test items (DEFERRED_TODO).",
   "Stories for Units 2-7 (one per unit, course-unit skill step).",
   "From the earlier part of this session: gap-audit step 2 (Units 3-7 rule fixes, section-4 grammar, section-5 words) in _knowledge/2026-10-03_a1-gap-audit.md is still open.",
   "Hayk is still on Unit 0 (retake u0-t2, needs 7/8).",
 ]
-next = "Ask Hayk to try the daily mix on the phone after the push; then either the Unit 2 story or the gap-audit fixes for Unit 3, whichever Hayk reaches first."
+next = """
+PUSHED and live on 2026-11-06 23:30 (99f8da1, after a review: 8 fixes). Hayk's two issues for the next session (2026-11-07):
+
+1. Android Chrome says the app "can't be installed", while kachayt installs fine.
+   Found so far:
+   - neither app has a web app manifest or a service worker;
+   - kachayt is at the root of its own domain (kachayt.pages.dev);
+   - nemeceren is under the subpath /nemeceren/ of hayktarkhanyan.github.io;
+   - nemeceren's only icon is a 3x3 SVG data URI.
+   The cause isn't confirmed (needs Hayk's phone). The planned fix makes it properly installable:
+   - a manifest.webmanifest with name, short_name, start_url and scope /nemeceren/, display standalone, theme and background colours;
+   - our own PNG icons at 192 and 512 px;
+   - a small service worker;
+   - then re-test the install on Hayk's phone.
+
+2. Hayk wants the Home screen "A Lot more like Duolingo": sections, units and lessons as a roadmap / path you move along, something you open "in an addicted manner for many days". The daily-mode features alone are not enough.
+   Next session:
+   - interview Hayk first (they like AskUserQuestion);
+   - design a path Home: nodes for lessons, word practice, stories, tests and mistakes; locked/current/done states; progress per unit;
+   - revisit the motivation features declined on 2026-11-06 (F1 daily goal and streak freeze, XP, milestones, maybe F8 with Anahit and Armen), since "addictive" is now the goal;
+   - use our own look and art, not Duolingo's.
+"""
 files = [
   "_knowledge/2026-11-06_duolingo-research.md", "_knowledge/2026-11-06_light-daily-mode-design.md",
   "app/src/lib/daily.ts", "app/src/lib/wordSets.ts", "app/src/lib/reviewEntries.ts", "app/src/lib/askClaude.ts", "app/src/lib/speaking.ts", "app/src/lib/mistakes.ts (+ tests for each)",
