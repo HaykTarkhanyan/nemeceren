@@ -2,6 +2,21 @@
 
 Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
+## 78. Every answered item gets an "Ask Claude about this" button that copies the item as plain text for the chat; Claude then explains right away (asked for by Hayk, 2026-11-06)
+
+- **Date:** 2026-11-06 - **Status:** active
+- **Why:** Hayk picked F10 from the Duolingo research. It is a free version of Duolingo's "Explain My Answer". Interview answers:
+  - **Q8:** the button goes on every answered item, right or wrong.
+  - **Q11:** when Hayk pastes one, Claude explains right away instead of starting the hint ladder.
+- **What it does:**
+  - **The block** (`app/src/lib/askClaude.ts`) starts with "Question about a nemeceren item". It names the test, or the lesson and exercise, plus the item number, and carries the question, the answer, the correct answer, the result, any review and the explanation shown.
+  - **The rule:** CLAUDE.md "How to teach" has the matching exception to hint-first.
+  - **If copying fails,** the app shows an error and leaves the text on screen to copy by hand.
+- **Alternatives rejected:**
+  - an AI call from the app: it costs money, needs a key on the backend, and the chat with Claude already exists;
+  - showing the button only on wrong items (Hayk chose every item, because a right guess also needs explaining).
+- **What would change this:** Hayk wanting answers inside the app without the chat (then a backend AI call, with a cost estimate first).
+
 ## 77. A light daily mode: a daily mix on Home (match pairs, word reviews, new words, listen and pick), topic word sets, and practice lists on the Words page; the games are practice (asked for by Hayk, 2026-11-06; revisits #26)
 
 - **Date:** 2026-11-06 - **Status:** active

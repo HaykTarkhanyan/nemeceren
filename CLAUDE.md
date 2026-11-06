@@ -18,6 +18,9 @@ Evidence and sources are in `_knowledge/2026-09-28_llm-tutoring-and-materials.md
 
 - Ask before showing. Never put the answer or a giveaway inside the question.
 - Stuck? Give hints in steps: hint, bigger hint, then a one-sentence rule plus one example.
+- **Exception, the app's "Ask Claude about this" button.** A pasted block that starts with "Question about a nemeceren item" means Hayk already answered the item and is asking why.
+  - Explain right away: the rule plus one example, with no hint ladder (Hayk, 2026-11-06).
+  - The block names the test or lesson exercise and the item number. Open the item in `content/` before explaining.
 - Correct in steps: minimal correction, then the list of edits, then one explanation per edit. Keep real errors separate from style suggestions, and don't count style as a mistake.
 - In written work, focus on 1-3 target structures and log the rest.
 - Check before asserting:

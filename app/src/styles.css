@@ -1896,3 +1896,16 @@ details > summary {
 .match-tile.matched:disabled {
   opacity: 0.6;
 }
+
+/* "Ask Claude about this" under an answered item (DECISIONS.md #78). */
+.ask-claude {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.ask-claude-text {
+  width: 100%;
+  font: 13px/1.4 ui-monospace, Consolas, monospace;
+}

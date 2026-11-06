@@ -1,7 +1,9 @@
 // Per-item feedback for a finished test, including Claude's review when the result has one.
 import type { Item, NearMissKind, Result, ResultItem, Review } from '../content/schema.ts'
 import { GAP_MARKER } from '../content/schema.ts'
+import { askClaudeText, itemSource } from '../lib/askClaude.ts'
 import { finalScore, finalStatus } from '../lib/grading.ts'
+import { AskClaude } from './AskClaude.tsx'
 import { De, GermanText, GlossScope } from './GermanText.tsx'
 
 const NEAR_MISS_LABEL: Record<NearMissKind, string> = {
@@ -117,12 +119,13 @@ function YourAnswer({ ri }: { ri: ResultItem }) {
 }
 
 function ItemFeedback(props: {
+  source: string
   ri: ResultItem
   status: ResultItem['status']
   item: Item | null
   review: Review['items'][number] | undefined
 }) {
-  const { ri, status, item, review } = props
+  const { source, ri, status, item, review } = props
   const near = nearMissText(ri.nearMiss)
   const germanExpected = ri.expected !== null && !(item?.type === 'translate' && item.direction === 'de-en')
   return (
@@ -167,6 +170,7 @@ function ItemFeedback(props: {
         {Math.round(ri.timeMs / 1000)} s{ri.hintUsed ? ', hint used' : ''}
         {ri.plays !== undefined ? `, played ${ri.plays}x` : ''}
       </p>
+      <AskClaude text={askClaudeText({ source, ri, status, review, explanation: item?.explanation })} />
     </article>
   )
 }
@@ -208,6 +212,7 @@ export function ResultView({ result, items }: { result: Result; items: Item[] | 
         return (
           <ItemFeedback
             key={ri.index}
+            source={itemSource(result)}
             ri={ri}
             status={finalStatus(result, ri.index)}
             item={item}
