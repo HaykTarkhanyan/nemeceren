@@ -2,49 +2,34 @@
 // word) and the "All words" list, each a tab in the URL ("#/words", "#/words/all"). Hayk adds his
 // own words here too (DECISIONS.md #58). When nothing is left to review, the "What next" menu
 // offers more work instead of a dead end.
-import { useEffect, useRef, useState } from 'react'
-import type { FormEvent, ReactNode } from 'react'
+import { useEffect, useState } from 'react'
+import type { ReactNode } from 'react'
 import { content } from '../content/load.ts'
 import type { Lesson, ReviewLogEntry, ReviewMode, ReviewState, StoredCard } from '../content/schema.ts'
 import { AllWords } from '../components/AllWords.tsx'
+import { Card, MODES } from '../components/ReviewCard.tsx'
 import { WhatNext } from '../components/WhatNext.tsx'
-import { nearMissText } from '../components/ResultView.tsx'
-import { De, GlossScope } from '../components/GermanText.tsx'
-import { PlayButtons } from '../components/Speaker.tsx'
 import { Tabs } from '../components/Tabs.tsx'
-import { UmlautBar, umlautKeys } from '../components/UmlautBar.tsx'
 import { WordForm } from '../components/WordForm.tsx'
-import { asSentence, checkText, practiceWord } from '../lib/customWords.ts'
+import { WordSetsTab } from '../components/WordSetsTab.tsx'
+import type { PracticeHow } from '../components/WordSetsTab.tsx'
+import { ListenGame, MatchGame } from './DailyPage.tsx'
+import { practiceWord } from '../lib/customWords.ts'
 import type { StudyWord } from '../lib/customWords.ts'
-import { localDay } from '../lib/dates.ts'
 import { messageOf, reportError } from '../lib/errors.ts'
 import { lessonStatus, parseSourceKey, sourceKey, sourceLabel, sourceLessons, sourceThemes, wordsForSource } from '../lib/plan.ts'
 import type { WordSource } from '../lib/plan.ts'
+import { practiceEntry, scheduledEntry } from '../lib/reviewEntries.ts'
+import type { Typed } from '../lib/reviewEntries.ts'
 import { link, tabOf } from '../lib/router.ts'
 import { updateSettings, useSettings } from '../lib/settings.ts'
-import { speak } from '../lib/speech.ts'
-import { counts, GRADES, LEARN_AHEAD_MS, nextCard, previewIntervals, Rating, review } from '../lib/srs.ts'
+import { counts, LEARN_AHEAD_MS, nextCard, previewIntervals, Rating } from '../lib/srs.ts'
 import type { Grade } from '../lib/srs.ts'
 import { recordPractice, recordReview, requestFlush, useProgress } from '../lib/storage.ts'
 import type { CustomWordView } from '../lib/storage.ts'
-import { checkWord } from '../lib/text.ts'
-import type { Comparison } from '../lib/text.ts'
 
-const MODES: { mode: ReviewMode; title: string; desc: string }[] = [
-  { mode: 'recognition', title: 'German to English', desc: 'See the German word, recall the meaning, grade yourself.' },
-  { mode: 'production', title: 'English to German', desc: 'See the meaning, type the German word (nouns with der/die/das).' },
-  { mode: 'listening', title: 'Listen and type', desc: 'Hear the German word, type it.' },
-]
-
-const GRADE_LABEL: Record<Grade, string> = {
-  [Rating.Again]: 'Again',
-  [Rating.Hard]: 'Hard',
-  [Rating.Good]: 'Good',
-  [Rating.Easy]: 'Easy',
-}
-
-export const WORDS_TABS = ['review', 'all'] as const
-const TAB_LABEL = { review: 'Review', all: 'All words' } as const
+export const WORDS_TABS = ['review', 'all', 'sets'] as const
+const TAB_LABEL = { review: 'Review', all: 'All words', sets: 'Word sets' } as const
 
 /** `tab` is the part after "#/words/": none for Review, "all" for All words. */
 export function WordsPage({ tab }: { tab?: string }) {
@@ -72,6 +57,8 @@ function Words({ tab }: { tab: (typeof WORDS_TABS)[number] }) {
   // The add/edit form for Hayk's own words, and what it last did.
   const [form, setForm] = useState<{ editing: CustomWordView | null } | null>(null)
   const [notice, setNotice] = useState<string | null>(null)
+  // A game on a picked list of words (All words, Word sets); each start is a fresh run.
+  const [game, setGame] = useState<{ how: 'match' | 'listen'; words: StudyWord[]; run: number } | null>(null)
 
   // Where the words come from (all, my words, a unit, a lesson). With "all", words of lessons
   // (course or theme) that are not open yet wait until their lesson is opened.
@@ -105,6 +92,40 @@ function Words({ tab }: { tab: (typeof WORDS_TABS)[number] }) {
       }}
     />
   )
+
+  /** Practice a picked list (All words, Word sets): a game, or typing the German as practice. */
+  function startPractice(ids: string[], how: PracticeHow) {
+    const byId = new Map<string, StudyWord>([...content.words, ...custom].map((w) => [w.id, w]))
+    const list = ids.map((id) => {
+      const w = byId.get(id)
+      if (!w) throw new Error(`No word "${id}" to practise`)
+      return w
+    })
+    if (how === 'type') {
+      setPractice(list)
+      setPracticeRun((r) => r + 1)
+      setMode('production')
+    } else setGame({ how, words: list, run: (game?.run ?? 0) + 1 })
+    window.scrollTo(0, 0)
+  }
+
+  if (game) {
+    const again = () => setGame({ ...game, run: game.run + 1 })
+    return (
+      <div className="stack">
+        <div>
+          <button type="button" className="btn small" onClick={() => setGame(null)}>
+            Back to the words
+          </button>
+        </div>
+        {game.how === 'match' ? (
+          <MatchGame key={game.run} pool={game.words} state={state} onAgain={again} rounds={Math.max(1, Math.ceil(game.words.length / 5))} />
+        ) : (
+          <ListenGame key={game.run} pool={game.words} state={state} onAgain={again} n={Math.min(10, game.words.length)} />
+        )}
+      </div>
+    )
+  }
 
   if (mode && practice) {
     return (
@@ -174,8 +195,10 @@ function Words({ tab }: { tab: (typeof WORDS_TABS)[number] }) {
           </button>
         </div>
       )}
-      {tab === 'all' ? (
-        <AllWords onEdit={openForm} onNotice={setNotice} />
+      {tab === 'sets' ? (
+        <WordSetsTab onPractice={startPractice} />
+      ) : tab === 'all' ? (
+        <AllWords onEdit={openForm} onNotice={setNotice} onPractice={startPractice} />
       ) : (
         // The Review tab: where the words come from, today's counts, the modes, and What next.
         <>
@@ -328,26 +351,9 @@ function Session(props: {
     }
   }
 
-  function grade(word: StudyWord, isNew: boolean, rating: Grade, typed: { answer: string; check: Comparison } | null, timeMs: number) {
-    const at = new Date()
-    const out = review(state, word.id, rating, at)
-    const entry: ReviewLogEntry = {
-      ts: at.toISOString(),
-      localDay: localDay(at),
-      timeMs,
-      wordId: word.id,
-      de: word.de,
-      mode,
-      rating,
-      answer: typed ? typed.answer : null,
-      correct: typed ? typed.check.correct : null,
-      nearMiss: typed ? typed.check.nearMiss : null,
-      isNew,
-      stateBefore: out.before ? out.before.state : 0,
-      stateAfter: out.after.state,
-      due: out.after.due,
-    }
-    persist(entry, out.after)
+  function grade(word: StudyWord, isNew: boolean, rating: Grade, typed: Typed | null, timeMs: number) {
+    const { entry, card } = scheduledEntry({ state, word, isNew, mode, rating, typed, timeMs, at: new Date() })
+    persist(entry, card)
   }
 
   const header = (
@@ -444,27 +450,9 @@ function PracticeSession(props: { mode: ReviewMode; words: StudyWord[]; state: R
     }
   }
 
-  function grade(word: StudyWord, rating: Grade, typed: { answer: string; check: Comparison } | null, timeMs: number) {
-    const card = state.cards[word.id]
-    if (!card) throw new Error(`Practice word "${word.id}" has never been reviewed`)
-    const at = new Date()
-    persist({
-      ts: at.toISOString(),
-      localDay: localDay(at),
-      timeMs,
-      wordId: word.id,
-      de: word.de,
-      mode,
-      rating,
-      answer: typed ? typed.answer : null,
-      correct: typed ? typed.check.correct : null,
-      nearMiss: typed ? typed.check.nearMiss : null,
-      isNew: false,
-      stateBefore: card.state,
-      stateAfter: card.state,
-      due: card.due,
-      practice: true,
-    })
+  function grade(word: StudyWord, rating: Grade, typed: Typed | null, timeMs: number) {
+    const answer = typed ? { text: typed.answer, correct: typed.check.correct, nearMiss: typed.check.nearMiss } : null
+    persist(practiceEntry({ state, word, mode, rating, answer, timeMs, at: new Date() }))
   }
 
   const header = (
@@ -521,187 +509,5 @@ function PracticeSession(props: { mode: ReviewMode; words: StudyWord[]; state: R
         onGrade={(r, typed, ms) => grade(word, r, typed, ms)}
       />
     </div>
-  )
-}
-
-function isTyping(target: EventTarget | null): boolean {
-  return (
-    (target instanceof HTMLInputElement && !target.readOnly) ||
-    (target instanceof HTMLTextAreaElement && !target.readOnly)
-  )
-}
-
-function Card(props: {
-  word: StudyWord
-  isNew: boolean
-  mode: ReviewMode
-  /** Next interval per grade; null in practice, where grades do not reschedule. */
-  intervals: Record<Grade, string> | null
-  disabled: boolean
-  onGrade: (rating: Grade, typed: { answer: string; check: Comparison } | null, timeMs: number) => void
-}) {
-  const { word, isNew, mode, intervals, disabled, onGrade } = props
-  const [revealed, setRevealed] = useState(false)
-  const [typed, setTyped] = useState('')
-  const [check, setCheck] = useState<Comparison | null>(null)
-  const inputRef = useRef<HTMLInputElement>(null)
-  // Time from showing the card to grading it, for the minutes statistics.
-  const [shownAt] = useState(() => performance.now())
-  const typingMode = mode !== 'recognition'
-  const done = typingMode ? check !== null : revealed
-
-  // Listening mode: play the word as soon as the card appears.
-  useEffect(() => {
-    if (mode === 'listening') speak(word.de)
-  }, [mode, word.de])
-
-  useEffect(() => {
-    if (typingMode) inputRef.current?.focus()
-  }, [typingMode])
-
-  const submitGrade = (g: Grade) => {
-    if (disabled) return
-    onGrade(g, typingMode && check ? { answer: typed.trim(), check } : null, Math.round(performance.now() - shownAt))
-  }
-
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (isTyping(e.target) || e.ctrlKey || e.metaKey || e.altKey) return
-      if (e.key === ' ' && !typingMode && !revealed) {
-        e.preventDefault()
-        setRevealed(true)
-      } else if (done && ['1', '2', '3', '4'].includes(e.key)) {
-        e.preventDefault()
-        submitGrade(Number(e.key) as Grade)
-      }
-    }
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
-  })
-
-  function onCheck(e: FormEvent) {
-    e.preventDefault()
-    if (typed.trim() === '') return
-    setCheck(checkWord(typed, word.de))
-    inputRef.current?.blur()
-  }
-
-  const suggested: Grade | null = check ? (check.correct ? Rating.Good : Rating.Again) : null
-  const near = nearMissText(check?.nearMiss)
-
-  const claude = checkText(word.custom?.check)
-  const typedByHayk = word.custom?.typed
-  return (
-    // Word popups only once the answer is shown (Hayk, 2026-09-29); never on his own words (glossary/gate.ts).
-    <GlossScope surface={word.custom ? { kind: 'custom-word' } : { kind: 'review-card', revealed: done }}>
-    <section className="card word-card">
-      {(isNew || word.custom) && (
-        <span className="row">
-          {isNew && <span className="badge pending">new word</span>}
-          {word.custom && <span className="badge">my word</span>}
-        </span>
-      )}
-
-      {mode === 'recognition' && (
-        <p className="word-big">
-          <De text={word.de} />
-        </p>
-      )}
-      {mode === 'production' && (
-        <>
-          <p className="word-big">{word.en}</p>
-          <p className="muted small">Type the German word. Nouns: include der/die/das.</p>
-        </>
-      )}
-      {mode === 'listening' && <PlayButtons text={word.de} />}
-
-      {typingMode && (
-        <form onSubmit={onCheck} className="stack">
-          <input
-            ref={inputRef}
-            type="text"
-            className="text"
-            aria-label="German word"
-            value={typed}
-            readOnly={check !== null}
-            onChange={(e) => setTyped(e.target.value)}
-            autoCapitalize="off"
-            autoCorrect="off"
-            autoComplete="off"
-            spellCheck={false}
-            lang="de"
-            {...umlautKeys('answer')}
-          />
-          {check === null && (
-            <>
-              <UmlautBar keys="answer" />
-              <button type="submit" className="btn primary" disabled={typed.trim() === ''}>
-                Check (Enter)
-              </button>
-            </>
-          )}
-        </form>
-      )}
-
-      {check && (
-        <div className={`alert ${check.correct ? 'ok' : 'error'}`}>
-          {check.correct ? 'Correct!' : `Not quite${near ? ` (${near})` : ''}.`}
-        </div>
-      )}
-
-      {!typingMode && !revealed && (
-        <button type="button" className="btn primary" onClick={() => setRevealed(true)}>
-          Show answer (Space)
-        </button>
-      )}
-
-      {done && (
-        <div className="answer-block">
-          {mode === 'recognition' ? <p className="word-meaning">{word.en}</p> : <p className="word-big"><De text={word.de} /></p>}
-          {mode === 'listening' && <p className="word-meaning">{word.en}</p>}
-          {word.plural && (
-            <p>
-              <span className="label">Plural</span> <span lang="de">{word.plural}</span>
-            </p>
-          )}
-          {word.example && (
-            <div className="example">
-              <De text={word.example.de} />
-              {word.example.en && <div className="muted">{word.example.en}</div>}
-            </div>
-          )}
-          {word.custom?.note && <p className="small muted">Your note: {word.custom.note}</p>}
-          {claude && (
-            <p className={`small ${word.custom?.check?.ok ? 'muted' : 'warn-text'}`}>
-              {asSentence(claude)}
-              {!word.custom?.check?.ok && typedByHayk && (
-                <>
-                  {' '}
-                  You wrote: <span lang="de">{typedByHayk.de}</span>
-                  {typedByHayk.plural ? `, plural ${typedByHayk.plural}` : ''} = {typedByHayk.en}
-                </>
-              )}
-            </p>
-          )}
-          <div className="grades">
-            {GRADES.map((g) => (
-              <button
-                key={g}
-                type="button"
-                className={`btn grade g${g} ${suggested === g ? 'suggested' : ''}`}
-                disabled={disabled}
-                onClick={() => submitGrade(g)}
-              >
-                <span>
-                  {g} {GRADE_LABEL[g]}
-                </span>
-                {intervals && <span className="small muted">{intervals[g]}</span>}
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
-    </section>
-    </GlossScope>
   )
 }

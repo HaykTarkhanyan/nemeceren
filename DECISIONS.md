@@ -2,6 +2,35 @@
 
 Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
+## 77. A light daily mode: a daily mix on Home (match pairs, word reviews, new words, listen and pick), topic word sets, and practice lists on the Words page; the games are practice (asked for by Hayk, 2026-11-06; revisits #26)
+
+- **Date:** 2026-11-06 - **Status:** active
+- **Why:** Hayk: "What i like the most is easy entry point i can open daily and do some stuff in a quicker lighter way compared to concentrated stuff ... i wanna more stuff that will help build vocabulary." Interview answers (Q24-Q30): phone, one 10-15 minute session; a Start button for a ready-made mix plus the single activities; match pairs, listen and pick, topic word sets, and a Duolingo-like words list to practise any set (by topic, learned recently, ticked, weakest). New words come from the next lesson by default and from a topic set when Hayk picks one. Research and design: `_knowledge/2026-11-06_duolingo-research.md`, `_knowledge/2026-11-06_light-daily-mode-design.md`.
+- **What it does:**
+  - **The mix (`#/daily`), about 12 minutes, in order:**
+    1. a match-pairs warm-up (2 rounds of 5);
+    2. up to 15 due reviews (flip or typing, a per-device setting);
+    3. up to 5 new words;
+    4. 6 listen-and-pick items.
+    A step with nothing to do is skipped.
+  - **Single games:** `#/daily/match` and `#/daily/listen`.
+  - **Words page:**
+    - a "Word sets" tab (`content/sets.json`, 4 sets built from existing cards);
+    - on "All words", a practice panel (the shown words, ticked words, learned in the last 7 days, weakest) and a word-set filter.
+- **Rules:**
+  - **Practice only:** match pairs, listen and pick and the practice lists never change the FSRS schedule. They are logged with `practice: true` (#25), as `recognition` or `listening` events, Good when right on the first try and Again otherwise. That keeps easy recognition games from inflating "known" words.
+  - **Reviews and new words inside the mix** are normal scheduled reviews, and the new words share the daily limit (`newPerDay`).
+  - **Pre-learning:** the mix introduces the next lesson's words (or the active set's) before that lesson is opened. This is the change to #26, which introduced a lesson's words only when it was opened. Picking the mix or a set is the explicit choice, like picking a unit in #50.
+- **Alternatives rejected:**
+  - letting the games move the schedule (inflates "known");
+  - a separate daily new-word limit for the mix (Hayk would get more new words per day than set);
+  - Duolingo's hearts or energy, XP and leagues (not picked; DEFERRED_TODO.md);
+  - writing new cards for the sets now (the existing Units 1-7 cards cover the four topics).
+- **What would change this:**
+  - Hayk finding the mix too long or too short (change `MIX` in `app/src/lib/daily.ts`);
+  - pre-learned words making lessons feel repetitive;
+  - a wish for sets beyond the course's words (then new cards).
+
 ## 76. The PC runs Node 26 LTS (Hayk, 2026-11-05; supersedes #22)
 
 - **Date:** 2026-11-05 - **Status:** active

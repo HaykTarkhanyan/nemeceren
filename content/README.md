@@ -8,6 +8,7 @@ Everything in this folder is written by Claude and read by the app in `app/`. Yo
 - `words.json` - the word bank for spaced repetition.
 - `topics.json` - the Topics page: lesson sections worth revisiting, see [Topics](#topics-topicsjson).
 - `extras.json` - the Extras page: jokes, fun facts and everyday phrases to browse, see [Extras](#extras-page-extrasjson).
+- `sets.json` - topic word sets for the daily mode (Words page, Word sets tab), see [Word sets](#word-sets-setsjson).
 - `glossary.json` (written by Claude) and `glossary.generated.json` (written by a script) - the word popups, see [Glossary](#glossary-word-popups).
 - After every edit run, in `app/`: `npm run glossary` (only if German text changed), then `npm run check-content`. check-content prints every problem as `file: field.path: message` and exits 1. The app refuses to start on invalid files (it shows the same list), and the GitHub Pages deploy fails while any problem is left, including a German word with no glossary entry.
 
@@ -342,6 +343,18 @@ The Topics page lists lesson sections worth coming back to, in groups, with the 
 - Every item has a `title`, 1 or more `lines` (`de` + `en`), 1 or more `breakdown` entries (`de`, `en`, optional `note`) and an `explain` in the lesson text format.
 - Jokes need 2 or more lines: every line but the last is the setup, the last is the punchline. The list shows a joke by its first line, never by its title, and the title, the punchline, the breakdown and `explain` appear only after "Show punchline", so the title may give the joke away. Facts and phrases are listed by their title.
 - Every German line gets a speaker button. There are no word popups on this page and extras.json is not checked against the glossary: the breakdown is the gloss, and jokes may use made-up words.
+
+## Word sets: `sets.json`
+
+Topic word lists outside the course order (DECISIONS.md #77). Hayk can pick one as the source of the daily mix's new words (up to 5 a day, within the daily limit), and practise a set's learned words with match pairs, listen and pick, or typing.
+
+```json
+{ "sets": [ { "id": "essen-einkaufen", "title": "Food and shopping", "description": "One sentence on what it covers.", "words": ["wasser", "kaffee", "..."] } ] }
+```
+
+- `id` is kebab-case and unique; `title` is English; `description` is one English sentence.
+- `words` are ids from `words.json`, 10 or more, each once, in the order they are learned: concrete and frequent words first, phrases later. check-content reports an unknown id.
+- A set may take words from any unit, including units Hayk has not reached: picking the set is the choice to learn them early. A word may be in several sets. New words a set needs go into `words.json` first, like any card.
 
 ## Content runway
 

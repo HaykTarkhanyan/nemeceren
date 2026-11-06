@@ -333,6 +333,30 @@ export const Topics = z
     })
   })
 
+// ---------- Word sets (content/sets.json): topic word lists for the daily mode ----------
+
+export const WordSet = z.strictObject({
+  id: Slug,
+  title: Text,
+  /** One sentence on what the set covers. */
+  description: Text,
+  /** Ids of words in content/words.json, in the order they are learned. */
+  words: z.array(Slug).min(10),
+})
+
+export const WordSets = z.strictObject({ sets: z.array(WordSet).min(1) }).superRefine((x, ctx) => {
+  const ids = new Set<string>()
+  x.sets.forEach((s, si) => {
+    if (ids.has(s.id)) ctx.addIssue({ code: 'custom', path: ['sets', si, 'id'], message: `duplicate set id "${s.id}"` })
+    ids.add(s.id)
+    const seen = new Set<string>()
+    s.words.forEach((w, wi) => {
+      if (seen.has(w)) ctx.addIssue({ code: 'custom', path: ['sets', si, 'words', wi], message: `"${w}" is already in this set` })
+      seen.add(w)
+    })
+  })
+})
+
 // ---------- Extras (content/extras.json): jokes, fun facts and everyday phrases to browse ----------
 
 export const EXTRA_TYPES = ['joke', 'fact', 'phrase'] as const
@@ -754,6 +778,8 @@ export type ThemeLesson = Lesson & { theme: Theme; unit?: undefined; order?: und
 export type LessonBlock = z.infer<typeof LessonBlock>
 export type Topics = z.infer<typeof Topics>
 export type TopicItem = z.infer<typeof TopicItem>
+export type WordSet = z.infer<typeof WordSet>
+export type WordSets = z.infer<typeof WordSets>
 export type ExtraItem = z.infer<typeof ExtraItem>
 export type ExtraType = ExtraItem['type']
 export type Extras = z.infer<typeof Extras>

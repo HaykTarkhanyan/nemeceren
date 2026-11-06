@@ -12,11 +12,15 @@ const Settings = z.object({
   wordSource: z.string(),
   /** Digit keys type German letters while typing (1 ä, 2 ö, 3 ü, 4 ß): in answer boxes only, everywhere, or off. */
   umlautKeys: z.enum(['answers', 'everywhere', 'off']),
+  /** How the daily mix shows its word reviews: flip cards (German to English) or typing the German. */
+  dailyMode: z.enum(['recognition', 'production']),
+  /** The word set (content/sets.json id) the daily mix takes its new words from; null = the next lessons. */
+  activeSet: z.string().nullable(),
 })
 export type Settings = z.infer<typeof Settings>
 
 const KEY = 'nemeceren.settings'
-const DEFAULTS: Settings = { voiceURI: null, rate: 0.85, newPerDay: 10, wordSource: 'all', umlautKeys: 'answers' }
+const DEFAULTS: Settings = { voiceURI: null, rate: 0.85, newPerDay: 10, wordSource: 'all', umlautKeys: 'answers', dailyMode: 'recognition', activeSet: null }
 
 let current: Settings | null = null
 const listeners = new Set<() => void>()

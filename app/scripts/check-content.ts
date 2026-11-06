@@ -43,7 +43,7 @@ const glossKeys = Object.keys(generated?.entries ?? {}).length + Object.keys(cur
 const inLessons = new Set([...content.lessons, ...content.themes].flatMap((l) => l.lesson.words ?? []))
 console.log(
   `check-content: OK - ${content.tests.length} test(s) with ${items} items, ${content.lessons.length} lesson(s), ${content.themes.length} theme lesson(s), ` +
-    `${content.topics.groups.reduce((n, g) => n + g.items.length, 0)} topics, ` +
+    `${content.topics.groups.reduce((n, g) => n + g.items.length, 0)} topics, ${content.sets.length} word sets, ` +
     `${content.words.words.length} words (${inLessons.size} of them in lessons), glossary ${glossKeys} entries + ` +
     `${curated?.ignore.length ?? 0} ignored (every German word covered) (took ${secs} s)`,
 )

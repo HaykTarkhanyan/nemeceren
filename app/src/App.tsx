@@ -2,6 +2,7 @@ import { content } from './content/load.ts'
 import { AuthGate } from './components/AuthGate.tsx'
 import { ErrorBanner, ErrorBoundary, GuestBanner, Header, VoiceWarning } from './components/Chrome.tsx'
 import { useRoute } from './lib/router.ts'
+import { DailyPage } from './pages/DailyPage.tsx'
 import { ExtrasPage } from './pages/ExtrasPage.tsx'
 import { HomePage } from './pages/HomePage.tsx'
 import { LessonPage, LessonsPage } from './pages/LessonsPage.tsx'
@@ -29,6 +30,8 @@ function Page({ route }: { route: string[] }) {
   switch (section ?? '') {
     case '':
       return <HomePage />
+    case 'daily':
+      return <DailyPage sub={arg} />
     case 'test':
       return <TestPage id={arg ?? ''} />
     case 'lessons':

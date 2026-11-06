@@ -6,6 +6,7 @@ import { link } from '../lib/router.ts'
 import { useSettings } from '../lib/settings.ts'
 import { counts } from '../lib/srs.ts'
 import { useProgress } from '../lib/storage.ts'
+import { DailyPanel } from './DailyPanel.tsx'
 import { StreakLine } from './StatsPage.tsx'
 
 export function HomePage() {
@@ -13,6 +14,7 @@ export function HomePage() {
 
   return (
     <div className="stack">
+      <DailyPanel />
       <TodayPanel />
 
       <h2>Tests</h2>
@@ -66,7 +68,7 @@ function TodayPanel() {
   )
   return (
     <section className="card stack today">
-      <h2>Today</h2>
+      <h2>Course</h2>
       <StreakLine />
       <div className="today-row">
         <span>

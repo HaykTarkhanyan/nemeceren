@@ -1778,3 +1778,121 @@ details > summary {
     border-radius: 0 0 var(--radius) var(--radius);
   }
 }
+
+/* ---------- The light daily mode (DECISIONS.md #77) ---------- */
+
+.daily-panel {
+  border-color: var(--accent);
+}
+
+.daily-start {
+  display: block;
+  width: 100%;
+  padding: 14px 16px;
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+.daily-activities {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.daily-activities .btn {
+  text-align: center;
+}
+
+.daily-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 8px 16px;
+}
+
+.match-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.match-col {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.match-tile {
+  min-height: 52px;
+  padding: 8px 10px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  text-align: center;
+  overflow-wrap: anywhere;
+  cursor: pointer;
+}
+
+.match-tile.picked {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, var(--surface));
+}
+
+.match-tile.matched {
+  border-color: var(--ok);
+  background: var(--ok-bg);
+  color: var(--ok);
+  cursor: default;
+  opacity: 0.6;
+}
+
+.match-tile.wrong {
+  border-color: var(--bad);
+  background: var(--bad-bg);
+  color: var(--bad);
+}
+
+.pick-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 8px;
+}
+
+.pick-option {
+  min-height: 48px;
+  text-align: left;
+  overflow-wrap: anywhere;
+}
+
+.pick-option.right {
+  border-color: var(--ok);
+  background: var(--ok-bg);
+  color: var(--ok);
+}
+
+.pick-option.wrong {
+  border-color: var(--bad);
+  background: var(--bad-bg);
+  color: var(--bad);
+}
+
+.word-set.active {
+  border-color: var(--ok);
+}
+
+.word-tick {
+  width: 18px;
+  height: 18px;
+  vertical-align: middle;
+}
+
+/* After answering, the options are disabled but keep their colours readable. */
+.pick-option:disabled,
+.match-tile:disabled {
+  opacity: 1;
+}
+
+.match-tile.matched:disabled {
+  opacity: 0.6;
+}

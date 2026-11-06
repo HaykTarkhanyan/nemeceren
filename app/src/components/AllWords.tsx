@@ -13,18 +13,37 @@ import { link } from '../lib/router.ts'
 import { deleteCustomWord, STATE_DAYS, useProgress } from '../lib/storage.ts'
 import type { CustomWordView } from '../lib/storage.ts'
 import { Speaker } from './Speaker.tsx'
+import { PracticeButtons } from './WordSetsTab.tsx'
+import type { PracticeHow } from './WordSetsTab.tsx'
+import { practiceIds, PRACTICE_MAX, recentlyLearned, RECENT_DAYS } from '../lib/wordSets.ts'
 
 const GRADE_NAME: Record<number, string> = { 1: 'Again', 2: 'Hard', 3: 'Good', 4: 'Easy' }
 const MODE_NAME: Record<string, string> = { recognition: 'German to English', production: 'English to German', listening: 'listening' }
 const SORTS: SortKey[] = ['due', 'alpha', 'hardest', 'recent']
 
-export function AllWords({ onEdit, onNotice }: { onEdit: (w: CustomWordView) => void; onNotice: (message: string) => void }) {
+type PracticePick = 'shown' | 'ticked' | 'recent' | 'weakest'
+
+const PICK_LABEL: Record<PracticePick, string> = {
+  shown: 'The words shown below',
+  ticked: 'The words I ticked',
+  recent: `Learned in the last ${RECENT_DAYS} days`,
+  weakest: 'My weakest words',
+}
+
+export function AllWords(props: {
+  onEdit: (w: CustomWordView) => void
+  onNotice: (message: string) => void
+  onPractice: (ids: string[], how: PracticeHow) => void
+}) {
+  const { onEdit, onNotice, onPractice } = props
   const view = useProgress()
   const [query, setQuery] = useState('')
   const [status, setStatus] = useState<StatusFilter>('all')
   const [source, setSource] = useState<SourceFilter>('all')
   const [sort, setSort] = useState<SortKey>('due')
   const [open, setOpen] = useState<ReadonlySet<string>>(() => new Set())
+  const [ticked, setTicked] = useState<ReadonlySet<string>>(() => new Set())
+  const [pick, setPick] = useState<PracticePick>('shown')
   const rows = useMemo(
     () =>
       buildRows({
@@ -39,8 +58,38 @@ export function AllWords({ onEdit, onNotice }: { onEdit: (w: CustomWordView) => 
     [view],
   )
   const now = new Date()
-  const counts = statusCounts(rows, { query, source })
-  const shown = sortRows(filterRows(rows, { query, source, status }), sort)
+  // A word set narrows the rows first; the other filters then work as usual.
+  const set = source.startsWith('set:') ? content.sets.find((x) => `set:${x.id}` === source) : undefined
+  if (source.startsWith('set:') && !set) throw new Error(`Unknown word set filter "${source}"`)
+  const inSet = set ? new Set(set.words) : null
+  const base = inSet ? rows.filter((r) => inSet.has(r.id)) : rows
+  const plainSource = set ? 'all' : source
+  const counts = statusCounts(base, { query, source: plainSource })
+  const shown = sortRows(filterRows(base, { query, source: plainSource, status }), sort)
+  const state = view.reviewState
+  const pickIds: Record<PracticePick, string[]> = {
+    shown: practiceIds(
+      shown.map((r) => r.id),
+      state,
+    ),
+    ticked: practiceIds([...ticked], state),
+    recent: practiceIds(recentlyLearned(view.reviewLog, state, now), state),
+    weakest: practiceIds(
+      sortRows(rows, 'hardest')
+        .filter((r) => r.lapses > 0 || r.again > 0)
+        .map((r) => r.id),
+      state,
+    ),
+  }
+
+  function tick(id: string) {
+    setTicked((prev) => {
+      const next = new Set(prev)
+      if (next.has(id)) next.delete(id)
+      else next.add(id)
+      return next
+    })
+  }
   const hasBank = rows.some((r) => r.source.kind === 'bank')
 
   function toggle(id: string) {
@@ -64,6 +113,21 @@ export function AllWords({ onEdit, onNotice }: { onEdit: (w: CustomWordView) => 
 
   return (
     <section className="stack">
+      <div className="card stack practice-panel">
+        <label className="field">
+          <span className="label">Practise</span>
+          <select value={pick} onChange={(e) => setPick(e.target.value as PracticePick)}>
+            {(Object.keys(PICK_LABEL) as PracticePick[]).map((k) => (
+              <option key={k} value={k}>{`${PICK_LABEL[k]} (${pickIds[k].length})`}</option>
+            ))}
+          </select>
+        </label>
+        <PracticeButtons ids={pickIds[pick]} onPractice={onPractice} />
+        <p className="muted small">
+          Only words you have learned can be practised, at most {PRACTICE_MAX} at a time. Tick words in the list to practise exactly those. Practice does
+          not change your review schedule.
+        </p>
+      </div>
       <div className="chips" role="group" aria-label="Status">
         {(['all', ...WORD_STATUSES] as StatusFilter[]).map((s) => (
           <button key={s} type="button" className={`chip ${status === s ? 'active' : ''}`} aria-pressed={status === s} onClick={() => setStatus(s)}>
@@ -82,6 +146,13 @@ export function AllWords({ onEdit, onNotice }: { onEdit: (w: CustomWordView) => 
             <option value="all">All sources</option>
             <option value="custom">My words</option>
             {hasBank && <option value="bank">Word bank (no lesson)</option>}
+            <optgroup label="Word sets">
+              {content.sets.map((x) => (
+                <option key={x.id} value={`set:${x.id}`}>
+                  {x.title}
+                </option>
+              ))}
+            </optgroup>
             <optgroup label="Course">
               {sourceLessons(content.lessons).map((l) => (
                 <option key={l.id} value={`lesson:${l.id}`}>{`${lessonLabel(l)} ${l.title}`}</option>
@@ -148,6 +219,14 @@ export function AllWords({ onEdit, onNotice }: { onEdit: (w: CustomWordView) => 
                   <Fragment key={r.id}>
                     <tr className={`word-row status-${r.status}${isOpen ? ' open' : ''}`} onClick={() => toggle(r.id)}>
                       <td className="cell-de">
+                        <input
+                          type="checkbox"
+                          className="word-tick"
+                          aria-label={`Tick ${r.de} for practice`}
+                          checked={ticked.has(r.id)}
+                          onClick={(e) => e.stopPropagation()}
+                          onChange={() => tick(r.id)}
+                        />{' '}
                         <button
                           type="button"
                           className="word-toggle"

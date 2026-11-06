@@ -3,7 +3,7 @@
 //   content/tests/a1-01.json: items[3].answers[0]: "..." does not use exactly the tiles [...]
 import type { z } from 'zod'
 import { exerciseSections, exerciseTestId, isCourseLesson, isThemeLesson, sectionIndex } from './lessons.ts'
-import { CuratedGlossary, Extras, GeneratedGlossary, Lesson, LessonProgress, Result, ReviewLogEntry, ReviewState, Test, Topics, WordList } from './schema.ts'
+import { CuratedGlossary, Extras, GeneratedGlossary, Lesson, LessonProgress, Result, ReviewLogEntry, ReviewState, Test, Topics, WordList, WordSets } from './schema.ts'
 import type {
   CourseLesson,
   CuratedGlossary as CuratedGlossaryT,
@@ -18,6 +18,7 @@ import type {
   ThemeLesson,
   Topics as TopicsT,
   Word as WordT,
+  WordSet as WordSetT,
 } from './schema.ts'
 
 export class ContentError extends Error {
@@ -90,6 +91,10 @@ export function parseExtras(file: string, data: unknown): ExtrasT {
   return parseWith(Extras, file, data)
 }
 
+export function parseWordSets(file: string, data: unknown): WordSetT[] {
+  return parseWith(WordSets, file, data).sets
+}
+
 export function parseLessonProgress(file: string, data: unknown): LessonProgressT {
   return parseWith(LessonProgress, file, data)
 }
@@ -137,13 +142,23 @@ export interface RawFile {
  * Validate all content at once and collect every problem instead of stopping at the first,
  * so one run shows everything that needs fixing.
  */
-export function checkAllContent(input: { tests: RawFile[]; words: RawFile; lessons: RawFile[]; themes: RawFile[]; topics: RawFile; extras: RawFile }): {
+export function checkAllContent(input: {
+  tests: RawFile[]
+  words: RawFile
+  lessons: RawFile[]
+  themes: RawFile[]
+  topics: RawFile
+  extras: RawFile
+  /** content/sets.json; tests that are not about word sets leave it out. */
+  sets?: RawFile
+}): {
   tests: TestT[]
   words: WordT[]
   lessons: CourseLesson[]
   themes: ThemeLesson[]
   topics: TopicsT
   extras: ExtrasT
+  sets: WordSetT[]
   problems: string[]
 } {
   const problems: string[] = []
@@ -182,9 +197,29 @@ export function checkAllContent(input: { tests: RawFile[]; words: RawFile; lesso
   collect(() => {
     extras = parseExtras(input.extras.file, parseJsonText(input.extras.file, input.extras.text))
   })
+  let sets: WordSetT[] = []
+  const setsFile = input.sets
+  if (setsFile) {
+    collect(() => {
+      sets = parseWordSets(setsFile.file, parseJsonText(setsFile.file, setsFile.text))
+    })
+    problems.push(...setReferences(setsFile.file, sets, words))
+  }
   problems.push(...crossReferences(tests, words, lessons, themes))
   problems.push(...topicReferences(input.topics.file, topics, [...lessons, ...themes]))
-  return { tests, words, lessons, themes, topics, extras, problems }
+  return { tests, words, lessons, themes, topics, extras, sets, problems }
+}
+
+/** Every word of a word set exists in content/words.json. */
+function setReferences(file: string, sets: WordSetT[], words: WordT[]): string[] {
+  const ids = new Set(words.map((w) => w.id))
+  const problems: string[] = []
+  sets.forEach((s, si) =>
+    s.words.forEach((w, wi) => {
+      if (!ids.has(w)) problems.push(`${file}: sets[${si}].words[${wi}]: no word with id "${w}" in content/words.json`)
+    }),
+  )
+  return problems
 }
 
 /** Every topic points to an existing lesson and to a section id in it. */

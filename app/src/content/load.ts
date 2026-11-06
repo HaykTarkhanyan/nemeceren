@@ -3,6 +3,7 @@
 // syntax error is reported like any other problem. Problems are collected and the app shows
 // them instead of rendering, so a bad file can never silently disappear.
 import extrasText from '../../../content/extras.json?raw'
+import setsText from '../../../content/sets.json?raw'
 import topicsText from '../../../content/topics.json?raw'
 import wordsText from '../../../content/words.json?raw'
 import { byCourseOrder } from './lessons.ts'
@@ -39,6 +40,7 @@ const checked = checkAllContent({
   themes: Object.entries(themeFiles).map(([key, text]) => ({ file: repoPath(key), text })),
   topics: { file: 'content/topics.json', text: topicsText },
   extras: { file: 'content/extras.json', text: extrasText },
+  sets: { file: 'content/sets.json', text: setsText },
 })
 
 const newestFirst = (a: Test, b: Test) => b.created.localeCompare(a.created) || b.id.localeCompare(a.id)
@@ -58,5 +60,7 @@ export const content = {
   allLessons: [...lessons, ...themes] as Lesson[],
   topics: checked.topics,
   extras: checked.extras,
+  /** Topic word sets for the daily mode (content/sets.json). */
+  sets: checked.sets,
   problems: checked.problems,
 }
