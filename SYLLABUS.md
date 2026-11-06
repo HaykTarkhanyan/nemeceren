@@ -24,9 +24,10 @@
    - the unit's *Nicos Weg* lessons (watch, then repeat the lines aloud).
 5. **Mid-unit and end-of-unit app tests.** From unit 2 on, every test mixes in about 20% of items from earlier units.
 6. **End task:** a real-life task that Claude grades.
+   - **Story:** from Unit 1 on, the unit's last lesson is a 5-10 minute story to read and hear, with questions between its parts, using only that unit's and earlier German (DECISIONS.md #80).
 7. **The unit is done when** the end task is done and reviewed, the end-of-unit test is at 80% or more after Claude's grading, and all the unit's words have been introduced. Words don't need to be mastered before moving on; spaced repetition carries them.
 
-**Pronunciation:** Claude can't hear Hayk. It comes from the browser voice (speaker buttons in the app), *Nicos Weg*, and repeating aloud. Checking recordings is a later option (DEFERRED_TODO.md).
+**Pronunciation:** Claude can't hear Hayk. It comes from the browser voice (speaker buttons in the app), *Nicos Weg*, and repeating aloud. The lessons' "listen and repeat" lines have a mic button: the browser's speech recognition shows which words it understood, and Hayk can play their own recording next to the German voice (DECISIONS.md #79). Checking recordings with a phoneme model is a later option (DEFERRED_TODO.md).
 
 ## Units to A1
 

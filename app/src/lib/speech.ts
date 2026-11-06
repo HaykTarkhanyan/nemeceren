@@ -59,6 +59,55 @@ export function pickVoice(voices: SpeechSynthesisVoice[], voiceURI: string | nul
 export const NO_VOICE_HELP =
   'No German voice found in this browser, so listening exercises cannot play. On Windows: Settings > Time & language > Speech > Add voices > Deutsch, then restart the browser. On a phone, install German text-to-speech data.'
 
+/**
+ * The voice for speaker number `speaker` in a dialogue (0 = the first speaker): the saved voice for
+ * the first, another German voice for the next ones if the device has one. With only one German
+ * voice, the others get the same voice at a different pitch.
+ */
+export function dialogueVoice(voices: SpeechSynthesisVoice[], voiceURI: string | null, speaker: number): { voice: SpeechSynthesisVoice | null; pitch: number } {
+  const main = pickVoice(voices, voiceURI)
+  if (speaker === 0 || !main) return { voice: main, pitch: 1 }
+  const others = voices.filter((v) => v.voiceURI !== main.voiceURI)
+  if (others.length > 0) return { voice: others[(speaker - 1) % others.length], pitch: 1 }
+  return { voice: main, pitch: speaker % 2 === 1 ? 1.35 : 0.75 }
+}
+
+/**
+ * Read dialogue lines one after another, each speaker with their own voice. Problems are reported
+ * visibly; returns false if nothing could be played.
+ */
+export function speakLines(lines: { text: string; speaker: number }[]): boolean {
+  if (!supported) {
+    reportError('This browser does not support speech synthesis (Web Speech API), so German audio cannot play.')
+    return false
+  }
+  if (!pickVoice(info.voices, getSettings().voiceURI)) {
+    reportError(NO_VOICE_HELP)
+    return false
+  }
+  speechSynthesis.cancel()
+  for (const line of lines) {
+    const { voice, pitch } = dialogueVoice(info.voices, getSettings().voiceURI, line.speaker)
+    if (!voice) throw new Error('A German voice disappeared while reading the dialogue')
+    const u = new SpeechSynthesisUtterance(line.text)
+    u.voice = voice
+    u.lang = voice.lang
+    u.pitch = pitch
+    u.rate = getSettings().rate
+    u.onerror = (e) => {
+      if (e.error === 'interrupted' || e.error === 'canceled') return
+      reportError(`Speech failed (${e.error}) while reading: "${line.text}"`)
+    }
+    speechSynthesis.speak(u)
+  }
+  return true
+}
+
+/** Stop anything being read aloud. */
+export function stopSpeaking(): void {
+  if (supported) speechSynthesis.cancel()
+}
+
 /** Speak German text. Problems are reported visibly; returns false if nothing could be played. */
 export function speak(text: string, rate?: number): boolean {
   if (!supported) {

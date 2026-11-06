@@ -6,6 +6,7 @@
 // What counts as "needed": the question text, the correct mc option, the first accepted gap answer,
 // the first order answer, the first translate reference, dictation and listening audio.
 // Wrong options and alternative accepted answers are not needed, so they are skipped.
+// A story's dialogue lines (DECISIONS.md #80) are needed too: a story uses only German taught before it.
 // "Shown" means: in a lesson's text, examples, tables or audio, or on a word card of that lesson,
 // in course order (unit, then lesson order). A lesson's own exercises may use its own lesson; a test
 // of unit N may use everything up to the end of unit N. A word counts as shown if its spelling or
@@ -65,7 +66,7 @@ for (const lesson of lessons) {
   if (lesson.unit > unit) break
   // The lesson's reading material and its word cards come before its own exercises.
   for (const block of lesson.sections) {
-    if (block.type === 'exercise') continue
+    if (block.type === 'exercise' || block.type === 'dialogue') continue
     for (const f of blockGermanFields(block)) for (const t of tokensOf(f.text)) t.keys.forEach((k) => shown.add(k))
   }
   for (const id of lesson.words ?? []) {
@@ -74,6 +75,14 @@ for (const lesson of lessons) {
     for (const f of wordGermanFields(w)) for (const t of tokensOf(f.text)) t.keys.forEach((k) => shown.add(k))
   }
   lesson.sections.forEach((block, si) => {
+    if (block.type === 'dialogue') {
+      for (const f of blockGermanFields(block)) {
+        for (const t of tokensOf(f.text)) {
+          if (lesson.unit === unit && t.keys.length > 0 && !t.keys.some((k) => shown.has(k))) report.push(`content/lessons/${lesson.id}.json sections[${si}].${f.field}: "${t.word}"  (${f.text})`)
+        }
+      }
+      return
+    }
     if (block.type !== 'exercise') return
     if (lesson.unit === unit) check(`content/lessons/${lesson.id}.json sections[${si}]`, block.items)
     for (const item of block.items) for (const f of neededFields(item)) for (const t of tokensOf(f.text)) t.keys.forEach((k) => shown.add(k))

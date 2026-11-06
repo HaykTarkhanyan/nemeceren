@@ -8,6 +8,7 @@ import { InlineExercise } from './InlineExercise.tsx'
 import { RichText } from './RichText.tsx'
 import { PlayButtons, Speaker } from './Speaker.tsx'
 import { SpeakLine } from './SpeakLine.tsx'
+import { DialogueView } from './DialogueView.tsx'
 import { ensureGlossary, useGlossary } from '../glossary/load.ts'
 import { lyricsLines, wordCounts } from '../lib/lyrics.ts'
 
@@ -118,6 +119,8 @@ function BlockBody(props: { lesson: Lesson; block: LessonBlock; section: number;
       )
     case 'lyrics':
       return <LyricsView block={block} />
+    case 'dialogue':
+      return <DialogueView block={block} />
     case 'exercise': {
       if (exerciseNumber === null) throw new Error(`Exercise at section ${section} of "${lesson.id}" has no number`)
       return (

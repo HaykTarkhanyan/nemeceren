@@ -221,11 +221,22 @@ export const LyricsBlock = z.strictObject({
     .min(1),
 })
 
-export const BLOCK_TYPES = ['explanation', 'comparison', 'examples', 'table', 'tip', 'warning', 'exercise', 'audio', 'lyrics'] as const
+/**
+ * A scene as a dialogue (the stories at the end of each unit, DECISIONS.md #80): who says what, with
+ * a translation per line. The first speaker gets the main voice, the others another German voice
+ * where the device has one. Questions go in exercise blocks between dialogue blocks.
+ */
+export const DialogueBlock = z.strictObject({
+  type: z.literal('dialogue'),
+  ...blockCommon,
+  lines: z.array(z.strictObject({ speaker: Text, de: Text, en: Text })).min(1),
+})
+
+export const BLOCK_TYPES = ['explanation', 'comparison', 'examples', 'table', 'tip', 'warning', 'exercise', 'audio', 'lyrics', 'dialogue'] as const
 
 export const LessonBlock = z.discriminatedUnion(
   'type',
-  [ExplanationBlock, ComparisonBlock, ExamplesBlock, TableBlock, TipBlock, WarningBlock, ExerciseBlock, AudioBlock, LyricsBlock],
+  [ExplanationBlock, ComparisonBlock, ExamplesBlock, TableBlock, TipBlock, WarningBlock, ExerciseBlock, AudioBlock, LyricsBlock, DialogueBlock],
   { error: () => `"type" must be one of: ${BLOCK_TYPES.join(', ')}` },
 )
 

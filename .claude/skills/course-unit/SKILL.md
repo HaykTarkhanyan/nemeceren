@@ -78,6 +78,10 @@ Keep it in the session log (step 5.5) so a fresh session can resume.
   - Search `content/words.json` for every candidate. Ids must be unique, an existing word never gets a second card, and a second word with the same id-spelling gets `-2` (e.g. `der Morgen` next to `morgen`: `morgen-2`).
   - **A card may be listed in several lessons; it unlocks when any of them is opened** (`lockedWordIds` in `app/src/lib/plan.ts`). Song lessons own some core A1 cards (tag `theme`: trinken, der Tag, genug, zusammen, allein, das Leben, die Sonne, das Licht, warten, das Auge, die Welt ...). When the unit teaches such a word, list the existing id in the course lesson's `words` too, so Hayk gets it even without opening the song.
   - A word already listed by an earlier course lesson doesn't need listing again: just use it.
+- **Story (from Unit 1 on):** the unit's last lesson is a 5-10 minute standalone scene, written as `dialogue` blocks with 2-3 questions after each part (format and rules: `content/README.md`, "Stories"; DECISIONS.md #80).
+  - Only German taught up to this unit; check-taught (step 3) checks every dialogue line.
+  - 3-5 key new words as cards, listed in the story's `words`.
+  - Write it after the other lessons, so it can reuse their wording.
 - **Tests:** 3 per unit, `u<N>-t1..t3`, 10-12 items.
   - **Each test sets `unit`, `lesson` (the lesson it follows), `level`, `created` (today) and `description`** ("Unit N check after lessons X and Y."). The app orders tests by these fields (`courseTests` in plan.ts). That lesson also lists the test in its `tests`. The usual pattern is t1, t2, t3 after lessons 2, 4 and 6.
   - **Every test starts with 2 review items from earlier units**, about 20% (SYLLABUS.md). Their `explanation` starts "Review (Unit N): ".

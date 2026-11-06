@@ -60,6 +60,14 @@ describe('lesson validation', () => {
     expect(p).toEqual(['content/lessons/u1-01-x.json: videos[0].id: must be a YouTube video id (11 characters)'])
   })
 
+  it('accepts a dialogue block and rejects a line without its translation', () => {
+    const line = { speaker: 'Eva', de: 'Ich heiße Eva.', en: 'My name is Eva.' }
+    const ok = parseLesson('content/lessons/u1-01-x.json', { ...base, sections: [{ type: 'dialogue', id: 'part-1', lines: [line] }] })
+    expect(ok.sections[0]).toEqual({ type: 'dialogue', id: 'part-1', lines: [line] })
+    const p = problemsOf(() => parseLesson('content/lessons/u1-01-x.json', { ...base, sections: [{ type: 'dialogue', lines: [{ speaker: 'Eva', de: 'Hallo' }] }] }))
+    expect(p).toEqual(['content/lessons/u1-01-x.json: sections[0].lines[0].en: Invalid input: expected string, received undefined'])
+  })
+
   it('requires the id to match the file name', () => {
     expect(problemsOf(() => parseLesson('content/lessons/other.json', { ...base, sections: [{ type: 'tip', text: 't' }] }))).toEqual([
       'content/lessons/other.json: id: "u1-01-x" must match the file name ("other")',

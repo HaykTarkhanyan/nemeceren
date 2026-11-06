@@ -2,6 +2,31 @@
 
 Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
+## 80. Every unit from Unit 1 ends with a story lesson: a standalone scene in `dialogue` blocks, with questions in exercise blocks between the parts (asked for by Hayk, 2026-11-06)
+
+- **Date:** 2026-11-06 - **Status:** active
+- **Why:** Hayk picked F7. Interview answers:
+  - **Q19:** standalone scenes, not a continuing plot.
+  - **Q20:** longer stories, 5-10 minutes, with the questions inside.
+  - **Q21:** the text always shown, with audio.
+  - **Q22:** one story per unit as its last lesson, starting from Unit 1, because Unit 0 has too little German for 5-10 minutes.
+  - **Q23:** 3-5 key new words become cards.
+- **What it does:**
+  - **The block:** a new lesson block `dialogue` holds `{speaker, de, en}` lines. Each line has a play button and a translation on tap, and "Play the scene" reads a part line after line. The first speaker gets the saved voice, the others another German voice where the device has one (otherwise a different pitch).
+  - **The questions** are ordinary `exercise` blocks between the dialogue parts. They are graded and saved like any lesson exercise, so the Ask-Claude button (#78) and Mistakes replay work on them with no extra code.
+  - **The check:** check-taught treats dialogue lines as needed, so a story is checked against everything taught before it.
+- **First story:** `u1-07-geschichte-im-kurs` (37 lines, 9 questions): a first day in a German course in Munich. It lists the cards willkommen, der Partner, die Partnerin and zusammen.
+  - **check-taught 1 flags only** achtundfünfzig (built from known parts) and the spelled letters M, E, I, R (Unit 0 spelling).
+  - **Stories for Units 2-7** are still to be written: the course-unit skill now has the step.
+- **Alternatives rejected:**
+  - one `story` block with lines and questions mixed: it would need its own grading and saving code;
+  - a continuing plot with the same characters (Hayk chose standalone scenes);
+  - stories about Hayk's own life (not chosen, and the repo is public).
+- **What would change this:**
+  - Hayk finding 5-10 minutes too long at A1;
+  - wanting a listen-first mode (Q21 option, not picked);
+  - a story wanting a speaker with a fixed voice (male, female).
+
 ## 79. Speaking practice: a mic button on every "listen and repeat" line, with the browser's speech recognition and a local recording to compare; never a mistake, nothing saved (asked for by Hayk, 2026-11-06)
 
 - **Date:** 2026-11-06 - **Status:** active

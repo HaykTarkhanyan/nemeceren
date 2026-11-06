@@ -240,6 +240,11 @@ Every block may have an optional `title`, and an optional `id` (kebab-case like 
 { "type": "audio", "title": "Say these aloud", "items": [{ "de": "Wie heißen Sie?", "en": "What is your name? (polite)", "note": "optional" }] }
 ```
 
+`dialogue` - a scene as a dialogue, for the story at the end of each unit (see [Stories](#stories-the-last-lesson-of-each-unit)). Every line has a speaker, the German and an English translation (shown on tap). The first speaker gets the main voice, the others another German voice where the device has one; "Play the scene" reads all lines:
+```json
+{ "type": "dialogue", "id": "part-1", "title": "Part 1: The first lesson", "lines": [{ "speaker": "Frau Weber", "de": "Wie heißen Sie?", "en": "What is your name?" }] }
+```
+
 `exercise` - items with exactly the same schema and grading as test items (all 7 types above), shown together with one "Check answers" button:
 ```json
 {
@@ -253,7 +258,17 @@ Every block may have an optional `title`, and an optional `id` (kebab-case like 
 ```
 Each check is saved like a test attempt (see `progress/README.md`) with the test id `<lesson id>-ex<n>` (`n` counts the lesson's exercise blocks from 1), so no test may have that id. Claude reviews them like tests.
 
-The glossary covers all German in lessons: `[[...]]` in the text blocks, `examples` and `audio` sentences, table cells in `"words"` columns, and the German fields of exercise items.
+The glossary covers all German in lessons: `[[...]]` in the text blocks, `examples`, `audio` and `dialogue` sentences, table cells in `"words"` columns, and the German fields of exercise items.
+
+### Stories: the last lesson of each unit
+
+From Unit 1 on, every unit ends with a story lesson (DECISIONS.md #80): a standalone scene of 5-10 minutes, read with audio, with questions between its parts.
+
+- Id `u<N>-<NN>-geschichte-<slug>`, the unit's highest `order`, title `"Story: ... (German)"`.
+- Sections: an `explanation` on how to read it (and the story's new words); then `dialogue` blocks of about 10-15 lines, each followed by an `exercise` block of 2-3 questions; at the end an `examples` block with the most useful lines.
+- Only German taught up to that unit: `npx tsx scripts/non_essential/check-taught.ts <N>` checks every dialogue line. Names come from the glossary `ignore` list or get added to it.
+- 3-5 key new words become cards, listed in the lesson's `words` (existing cards from later units may be listed; they unlock with the story).
+- The questions follow the item rules (English questions with `questionLang`, German options, an `explanation` each). Wrong answers are saved like any lesson exercise.
 
 ## Theme lessons: `themes/<id>.json`
 

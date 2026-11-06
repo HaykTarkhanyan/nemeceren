@@ -982,6 +982,21 @@
     ],
     "Perfekt": [
       {"lemma": "Perfekt", "pos": "noun", "article": "das", "gloss": ["the Perfekt: the spoken past tense"], "note": "Ich habe gearbeitet. (Unit 5)"}
+    ],
+    "achtundfünfzig": [
+      {"lemma": "achtundfünfzig", "pos": "numeral", "gloss": ["fifty-eight"], "note": "acht + und + fünfzig: the ones come first."}
+    ],
+    "buchstabiere": [
+      {"lemma": "buchstabieren", "pos": "verb", "form": "ich form, present", "gloss": ["(I) spell"], "note": "Ich buchstabiere: M, E, I, E, R. = I'll spell it."}
+    ],
+    "E": [
+      {"lemma": "E", "pos": "noun", "article": "das", "gloss": ["the letter E"], "note": "Said like 'ay'."}
+    ],
+    "I": [
+      {"lemma": "I", "pos": "noun", "article": "das", "gloss": ["the letter I"], "note": "Said like 'ee'."}
+    ],
+    "R": [
+      {"lemma": "R", "pos": "noun", "article": "das", "gloss": ["the letter R"], "note": "Said like 'air'."}
     ]
   }
 }

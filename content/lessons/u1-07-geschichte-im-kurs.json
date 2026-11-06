@@ -1,0 +1,384 @@
+{
+  "id": "u1-07-geschichte-im-kurs",
+  "unit": 1,
+  "order": 7,
+  "level": "A1",
+  "title": "Story: the first day of a German course (Im Deutschkurs)",
+  "summary": "A scene to read and hear: three people meet in a German course in Munich. It uses only German from Units 0 and 1, with questions between the parts.",
+  "goals": [
+    "Follow a longer conversation made only of Unit 0 and 1 German.",
+    "Notice how people introduce themselves, switch from Sie to du and swap phone numbers."
+  ],
+  "words": [
+    "willkommen",
+    "partner",
+    "partnerin",
+    "zusammen"
+  ],
+  "sections": [
+    {
+      "type": "explanation",
+      "id": "how-to-read",
+      "title": "How to read the story",
+      "text": "A scene in three parts. Read each line first and try to understand it; tap **translation** only when you need it. The speaker button reads a line, and **Play the scene** reads a whole part, each person in their own voice. After each part come a few questions.\n\nNew words in the story: [[willkommen]] (welcome), [[zusammen]] (together), [[der Partner]] / [[die Partnerin]] (partner)."
+    },
+    {
+      "type": "dialogue",
+      "id": "part-1",
+      "title": "Part 1: The first lesson",
+      "lines": [
+        {
+          "speaker": "Frau Weber",
+          "de": "Guten Morgen und willkommen!",
+          "en": "Good morning and welcome!"
+        },
+        {
+          "speaker": "Frau Weber",
+          "de": "Ich bin Frau Weber. Ich bin hier die Lehrerin.",
+          "en": "I'm Ms Weber. I'm the teacher here."
+        },
+        {
+          "speaker": "Frau Weber",
+          "de": "Wie heißen Sie?",
+          "en": "What is your name?"
+        },
+        {
+          "speaker": "Eva",
+          "de": "Ich heiße Eva. Ich komme aus Österreich.",
+          "en": "My name is Eva. I come from Austria."
+        },
+        {
+          "speaker": "Frau Weber",
+          "de": "Wo wohnen Sie, Eva?",
+          "en": "Where do you live, Eva?"
+        },
+        {
+          "speaker": "Eva",
+          "de": "Ich wohne in München.",
+          "en": "I live in Munich."
+        },
+        {
+          "speaker": "Frau Weber",
+          "de": "Danke. Und wie heißen Sie?",
+          "en": "Thank you. And what is your name?"
+        },
+        {
+          "speaker": "Aram",
+          "de": "Mein Name ist Aram. Ich komme aus Armenien.",
+          "en": "My name is Aram. I come from Armenia."
+        },
+        {
+          "speaker": "Frau Weber",
+          "de": "Aus Armenien! Was sprechen Sie?",
+          "en": "From Armenia! Which languages do you speak?"
+        },
+        {
+          "speaker": "Aram",
+          "de": "Armenisch, Russisch und ein bisschen Englisch.",
+          "en": "Armenian, Russian and a little English."
+        },
+        {
+          "speaker": "Aram",
+          "de": "Deutsch lerne ich hier.",
+          "en": "German is what I'm learning here."
+        }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Questions on part 1",
+      "items": [
+        {
+          "type": "mc",
+          "question": "Where does Eva come from?",
+          "questionLang": "en",
+          "options": [
+            "aus Österreich",
+            "aus Armenien",
+            "aus Deutschland"
+          ],
+          "answer": "aus Österreich",
+          "explanation": "Eva says: Ich komme aus Österreich. aus + a country = from."
+        },
+        {
+          "type": "mc",
+          "question": "Which languages does Aram speak?",
+          "questionLang": "en",
+          "options": [
+            "Armenisch, Russisch und ein bisschen Englisch",
+            "Deutsch und Englisch",
+            "Armenisch und Deutsch"
+          ],
+          "answer": "Armenisch, Russisch und ein bisschen Englisch",
+          "explanation": "Aram: Armenisch, Russisch und ein bisschen Englisch. Deutsch lerne ich hier. ein bisschen = a little."
+        },
+        {
+          "type": "gap",
+          "instruction": "The teacher asks Eva where she lives (polite Sie).",
+          "text": "Wo ___ Sie, Eva?",
+          "answers": [
+            [
+              "wohnen"
+            ]
+          ],
+          "explanation": "Sie wohnen: with polite Sie the verb ends in -en, just like the infinitive."
+        }
+      ]
+    },
+    {
+      "type": "dialogue",
+      "id": "part-2",
+      "title": "Part 2: Working in pairs",
+      "lines": [
+        {
+          "speaker": "Frau Weber",
+          "de": "Eva und Aram, Sie arbeiten zusammen. Sie sind Partner.",
+          "en": "Eva and Aram, you work together. You are partners."
+        },
+        {
+          "speaker": "Eva",
+          "de": "Hallo, Aram! Du oder Sie?",
+          "en": "Hi, Aram! Du or Sie?"
+        },
+        {
+          "speaker": "Aram",
+          "de": "Du, gern!",
+          "en": "Du, gladly!"
+        },
+        {
+          "speaker": "Eva",
+          "de": "Was machst du, Aram? Bist du Student?",
+          "en": "What do you do, Aram? Are you a student?"
+        },
+        {
+          "speaker": "Aram",
+          "de": "Nein, ich bin Entwickler. Ich arbeite bei Siemens.",
+          "en": "No, I'm a developer. I work at Siemens."
+        },
+        {
+          "speaker": "Aram",
+          "de": "Und du? Was machst du?",
+          "en": "And you? What do you do?"
+        },
+        {
+          "speaker": "Eva",
+          "de": "Ich bin Studentin. Ich studiere Informatik.",
+          "en": "I'm a student. I study computer science."
+        },
+        {
+          "speaker": "Aram",
+          "de": "Informatik? Gut!",
+          "en": "Computer science? Nice!"
+        },
+        {
+          "speaker": "Eva",
+          "de": "Wie alt bist du, Aram?",
+          "en": "How old are you, Aram?"
+        },
+        {
+          "speaker": "Aram",
+          "de": "Ich bin dreißig. Und du?",
+          "en": "I'm thirty. And you?"
+        },
+        {
+          "speaker": "Eva",
+          "de": "Ich bin einundzwanzig Jahre alt.",
+          "en": "I'm twenty-one years old."
+        },
+        {
+          "speaker": "Aram",
+          "de": "Wo wohnst du in München?",
+          "en": "Where in Munich do you live?"
+        },
+        {
+          "speaker": "Eva",
+          "de": "In Moosach. Und du?",
+          "en": "In Moosach. And you?"
+        },
+        {
+          "speaker": "Aram",
+          "de": "Ich wohne auch in Moosach!",
+          "en": "I live in Moosach too!"
+        },
+        {
+          "speaker": "Eva",
+          "de": "Auch in Moosach? Das ist nett!",
+          "en": "In Moosach too? That's nice!"
+        }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Questions on part 2",
+      "items": [
+        {
+          "type": "mc",
+          "question": "Is Aram a student?",
+          "questionLang": "en",
+          "options": [
+            "Nein, er ist Entwickler.",
+            "Ja, er studiert Informatik.",
+            "Nein, er ist Lehrer."
+          ],
+          "answer": "Nein, er ist Entwickler.",
+          "explanation": "Aram: Nein, ich bin Entwickler. Eva is the student: Ich bin Studentin. Ich studiere Informatik."
+        },
+        {
+          "type": "listen_mc",
+          "audio": "Ich bin einundzwanzig Jahre alt.",
+          "question": "How old is Eva?",
+          "questionLang": "en",
+          "options": [
+            "einundzwanzig",
+            "dreißig",
+            "zwölf"
+          ],
+          "answer": "einundzwanzig",
+          "explanation": "einundzwanzig = 21: German says the ones first, 'one and twenty'. Aram is dreißig (30)."
+        },
+        {
+          "type": "order",
+          "prompt": "Where do you live in Munich? (Aram asks Eva, du)",
+          "tiles": [
+            "wo",
+            "wohnst",
+            "du",
+            "in",
+            "München"
+          ],
+          "answers": [
+            "Wo wohnst du in München"
+          ],
+          "explanation": "A W-question: the question word first, then the verb (du wohnst), then the rest."
+        }
+      ]
+    },
+    {
+      "type": "dialogue",
+      "id": "part-3",
+      "title": "Part 3: Swapping numbers",
+      "lines": [
+        {
+          "speaker": "Aram",
+          "de": "Eva, wie ist deine Handynummer?",
+          "en": "Eva, what's your mobile number?"
+        },
+        {
+          "speaker": "Eva",
+          "de": "Null eins sieben sechs, dreiundzwanzig, achtundfünfzig, neunzehn.",
+          "en": "0176, 23, 58, 19."
+        },
+        {
+          "speaker": "Aram",
+          "de": "Wie bitte? Noch einmal, bitte. Langsam, bitte!",
+          "en": "Pardon? Once more, please. Slowly, please!"
+        },
+        {
+          "speaker": "Eva",
+          "de": "Null eins sieben sechs ... dreiundzwanzig ... achtundfünfzig ... neunzehn.",
+          "en": "0176 ... 23 ... 58 ... 19."
+        },
+        {
+          "speaker": "Aram",
+          "de": "Danke! Und wie ist dein Nachname?",
+          "en": "Thanks! And what's your surname?"
+        },
+        {
+          "speaker": "Eva",
+          "de": "Meier. Ich buchstabiere: M, E, I, E, R.",
+          "en": "Meier. I'll spell it: M, E, I, E, R."
+        },
+        {
+          "speaker": "Aram",
+          "de": "Freut mich, Eva!",
+          "en": "Nice to meet you, Eva!"
+        },
+        {
+          "speaker": "Eva",
+          "de": "Freut mich auch, Aram!",
+          "en": "Nice to meet you too, Aram!"
+        },
+        {
+          "speaker": "Frau Weber",
+          "de": "Danke! Auf Wiedersehen!",
+          "en": "Thank you! Goodbye!"
+        },
+        {
+          "speaker": "Eva",
+          "de": "Auf Wiedersehen, Frau Weber! Tschüss, Aram!",
+          "en": "Goodbye, Ms Weber! Bye, Aram!"
+        },
+        {
+          "speaker": "Aram",
+          "de": "Tschüss, Eva!",
+          "en": "Bye, Eva!"
+        }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Questions on part 3",
+      "items": [
+        {
+          "type": "mc",
+          "question": "Aram did not catch the number. What does he say?",
+          "questionLang": "en",
+          "options": [
+            "Noch einmal, bitte. Langsam, bitte!",
+            "Freut mich auch!",
+            "Auf Wiedersehen!"
+          ],
+          "answer": "Noch einmal, bitte. Langsam, bitte!",
+          "explanation": "Noch einmal, bitte = once more, please. Langsam, bitte = slowly, please. Both are from Unit 0."
+        },
+        {
+          "type": "gap",
+          "instruction": "Aram asks Eva (du) for her mobile number.",
+          "text": "Wie ist ___ Handynummer?",
+          "answers": [
+            [
+              "deine"
+            ]
+          ],
+          "explanation": "du -> dein (your). die Handynummer is feminine, so it gets -e: deine Handynummer."
+        },
+        {
+          "type": "mc",
+          "question": "What is Eva's surname?",
+          "questionLang": "en",
+          "options": [
+            "Meier",
+            "Weber",
+            "Müller"
+          ],
+          "answer": "Meier",
+          "explanation": "She spells it: M, E, I, E, R. Weber is the teacher's name."
+        }
+      ]
+    },
+    {
+      "type": "examples",
+      "id": "story-lines",
+      "title": "Useful lines from the story",
+      "items": [
+        {
+          "de": "Du oder Sie?",
+          "en": "Du or Sie? (asking which form to use)"
+        },
+        {
+          "de": "Du, gern!",
+          "en": "Du, gladly! (the usual answer among students)"
+        },
+        {
+          "de": "Deutsch lerne ich hier.",
+          "en": "German is what I'm learning here.",
+          "note": "The verb stays second, even when the sentence starts with something else."
+        },
+        {
+          "de": "Freut mich auch!",
+          "en": "Nice to meet you too!"
+        }
+      ]
+    }
+  ]
+}
