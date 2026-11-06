@@ -19,3 +19,10 @@ Topics cut from current work so they don't get lost.
 - **Prune the popup stopgap entries.** 38 common words got hand-written glossary entries on 2026-09-29 as a stopgap for two popup bugs, which are now fixed in code (DECISIONS.md #46). Some may now be redundant; others fix misleading generated glosses and must stay. Review them one by one.
 - **Node 20 is past end of life (April 2026):** move the PC and CI to Node 22/24, then Vitest 5 (DECISIONS.md #11). Hayk chose to stay on 20 for now (2026-09-29). This also blocks `neon skills install/update` (needs Node 22.20+); the workaround is a manual download from Neon's skill registry.
 - **Goethe A2/B1 Modellsaetze**: download when Hayk works at those levels (URLs in `_knowledge/2026-09-28_llm-tutoring-and-materials.md`).
+- **Duolingo-style features not picked (2026-11-06)**, research in `_knowledge/2026-11-06_duolingo-research.md` section 6:
+  - F1: a daily goal, an earned streak freeze and milestones;
+  - F3: session polish (progress bar, sounds, end screen) outside the daily mix;
+  - F5: tiles first, typing later;
+  - F8: XP and a league or shared streaks with Anahit and Armen (needs their consent and an API scope change);
+  - F9: push reminders.
+- **Duolingo HLR learning traces** (Harvard Dataverse doi 10.7910/DVN/N8XJME, 361 MB): "not now" (Hayk, 2026-11-06). The idea is to find which German words English speakers forget fastest, and give those cards extra examples. Ask before downloading.
