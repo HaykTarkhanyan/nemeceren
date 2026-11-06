@@ -1,0 +1,53 @@
+title = "Duolingo research, the light daily mode, Ask Claude, speaking, stories, Mistakes replay"
+date = "2026-11-06"
+time = "20:50"
+areas = ["_knowledge", "app/src", "app/scripts", "content/sets.json", "content/lessons/u1-07-geschichte-im-kurs.json", "content/glossary.json", "content/README.md", "progress/README.md", ".claude/skills/course-unit", "CLAUDE.md", "DECISIONS.md", "DEFERRED_TODO.md", "SYLLABUS.md"]
+done = [
+  "Duolingo research: 18 web searches plus 10 official pages read by one web-fetch agent (~100k tokens). Written to _knowledge/2026-11-06_duolingo-research.md (features, measured results vs claims, criticism, public datasets, mapping to nemeceren).",
+  "Interview with Hayk (AskUserQuestion, Q1-Q30). Main finding: what Hayk likes is an easy daily entry point for 10-15 light minutes on the phone, plus vocabulary building. Design in _knowledge/2026-11-06_light-daily-mode-design.md. Hayk then said: no more questions, rebuilding is fine, commit regularly.",
+  "Light daily mode (DECISIONS #77, 1d94dcf): Daily panel on Home with a Start button. The mix: match-pairs warm-up, up to 15 due reviews, up to 5 new words (next lesson's or the active word set's, within newPerDay), listen and pick, then mistakes. Single games at #/daily/match and #/daily/listen; a Word sets tab (content/sets.json, 4 sets from existing cards: food 50, work 30, health 25, city 35); practice picks on All words (shown, ticked, last 7 days, weakest) and a word-set filter. Games are practice (practice: true), never move FSRS.",
+  "Ask Claude about this (DECISIONS #78, 9665b1b): every answered item copies a plain-text block (source id, item number, question, answers, result, review). CLAUDE.md How to teach: explain such a block right away.",
+  "Speaking (DECISIONS #79, 6b4affa): a Say-it mic on every listen-and-repeat line. Browser SpeechRecognition (de-DE, best of 3 alternatives, LCS word match, digits = number words) plus a local MediaRecorder recording to compare; never a mistake, nothing saved. Audio lines now stack the same way at phone width.",
+  "Stories (DECISIONS #80, 7f6da6b): new lesson block 'dialogue' (speakers, second voice or pitch, translation on tap, play the scene). The Unit 1 story u1-07-geschichte-im-kurs (37 lines, 9 questions in 3 exercise blocks; cards willkommen, Partner, Partnerin, zusammen). check-taught now checks dialogue lines; course-unit skill has the story step; content/README documents it.",
+  "Mistakes replay (DECISIONS #81, 41573f7): wrong items from tests and lesson exercises since 2026-11-06 come back the next day until right on two different days (a later right answer in the whole test counts). Redos are one-item attempts with testId m-<source>-i<n>, so no backend change; check-content reserves the m- prefix. 'Your mistakes (N)' on Home, #/daily/mistakes (10), the mix's last step (5).",
+  "Checks after each step: typecheck clean, vitest 338 -> 358 tests passing, check-content OK, vite build OK. Guest-mode Playwright runs at 390 px for the mix, both games, word sets, the mic (fake microphone), Ask Claude (clipboard text checked), the story and Mistakes replay (clock moved one day on). 0 console errors.",
+]
+pending = [
+  "NOTHING IS PUSHED. Pushing to main deploys the new app for Hayk, Anahit and Armen; it needs no backend change. Waiting for Hayk's OK.",
+  "Real-device checks only Hayk can do: speech recognition on Android Chrome and PC Chrome/Edge (risk: some phones cannot record and recognize at once; the line then says so), two German voices for stories.",
+  "Exact reread sections for test items in Mistakes replay (Hayk's Q10): add a 'teaches' field and tag all 311 test items (DEFERRED_TODO).",
+  "Stories for Units 2-7 (one per unit, course-unit skill step).",
+  "From the earlier part of this session: gap-audit step 2 (Units 3-7 rule fixes, section-4 grammar, section-5 words) in _knowledge/2026-10-03_a1-gap-audit.md is still open.",
+  "Hayk is still on Unit 0 (retake u0-t2, needs 7/8).",
+]
+next = "Ask Hayk to try the daily mix on the phone after the push; then either the Unit 2 story or the gap-audit fixes for Unit 3, whichever Hayk reaches first."
+files = [
+  "_knowledge/2026-11-06_duolingo-research.md", "_knowledge/2026-11-06_light-daily-mode-design.md",
+  "app/src/lib/daily.ts", "app/src/lib/wordSets.ts", "app/src/lib/reviewEntries.ts", "app/src/lib/askClaude.ts", "app/src/lib/speaking.ts", "app/src/lib/mistakes.ts (+ tests for each)",
+  "app/src/components/MatchPairs.tsx", "app/src/components/ListenPick.tsx", "app/src/components/ReviewCard.tsx", "app/src/components/ReviewRun.tsx", "app/src/components/WordSetsTab.tsx", "app/src/components/AskClaude.tsx", "app/src/components/SpeakLine.tsx", "app/src/components/DialogueView.tsx", "app/src/components/MistakesSession.tsx",
+  "app/src/pages/DailyPage.tsx", "app/src/pages/DailyPanel.tsx", "app/src/pages/WordsPage.tsx", "app/src/pages/HomePage.tsx", "app/src/components/AllWords.tsx", "app/src/components/ResultView.tsx", "app/src/components/LessonBlocks.tsx", "app/src/lib/speech.ts", "app/src/lib/settings.ts", "app/src/styles.css",
+  "app/src/content/schema.ts", "app/src/content/validate.ts", "app/src/content/load.ts", "app/src/content/lessons.ts", "app/src/content/german.ts", "app/scripts/content-files.ts", "app/scripts/check-content.ts", "app/scripts/non_essential/check-taught.ts",
+  "content/sets.json", "content/lessons/u1-07-geschichte-im-kurs.json", "content/glossary.json (+5 entries)", "content/README.md", "progress/README.md", ".claude/skills/course-unit/SKILL.md", "CLAUDE.md (Ask-Claude exception only)", "DECISIONS.md (#77-#81)", "DEFERRED_TODO.md", "SYLLABUS.md",
+]
+commits = [
+  "8a3506b Duolingo research and the light daily mode design",
+  "1d94dcf Light daily mode: daily mix, match pairs, listen and pick, word sets",
+  "9665b1b Ask Claude about this: copy an answered item for the chat",
+  "6b4affa Speaking practice on listen-and-repeat lines",
+  "7f6da6b Stories: a dialogue block and the Unit 1 story",
+  "41573f7 Mistakes replay: wrong items come back until right on two days",
+]
+notes = """
+This conversation started on 2026-10-03 and was compacted once. The earlier part (no session log was written then):
+the Unit 1 improvements and video embedding (97d6987), the A1 gap audit (43bb5e5), the Units 0-2 gap fixes (3242a46),
+and Armen's account (eb7b2b5, DECISIONS #75). The audit's step 2 is still open (see pending).
+
+Choices made without Hayk after "no more questions" are marked "Claude's call" in the design doc and DECISIONS #77-#81.
+The biggest one: Mistakes replay stores redos as ordinary attempts instead of a new table, so nothing on the backend
+(migration, function deploy) needed Hayk's OK.
+
+The uncommitted CLAUDE.md "Tasks (kachayt)" section is from another session; only the Ask-Claude hunk was committed
+(staged with git apply --cached). The untracked .vscode/ is not Claude's.
+
+Cost: one web-fetch agent (~100k tokens). No paid APIs.
+"""

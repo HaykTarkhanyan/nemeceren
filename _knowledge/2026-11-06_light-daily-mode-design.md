@@ -1,5 +1,7 @@
 # Light daily mode and four Duolingo-style features: design
 
+**As built (2026-11-06):** see DECISIONS.md #77-#81. The main change from this design: Mistakes replay saves redos as ordinary one-item attempts (`m-<source>-i<n>`) instead of a new table (#81).
+
 Date: 2026-11-06.
 - **Inputs:**
   - Hayk's interview answers (Q1-Q30 in the 2026-11-06 chat);
