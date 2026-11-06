@@ -2,6 +2,44 @@
 
 Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
+## 81. Mistakes replay: wrong items from tests and lesson exercises come back the next day until right on two different days; a redo is saved as an ordinary one-item attempt "m-<source>-i<n>", so no backend change (asked for by Hayk, 2026-11-06)
+
+- **Date:** 2026-11-06 - **Status:** active
+- **Why:** Hayk picked F2. Interview answers:
+  - **Q5:** after a mistake, Hayk rereads the lesson.
+  - **Q6:** any mistake comes back.
+  - **Q7:** a mistake is fixed after right answers on 2 different days; a wrong answer restarts the count.
+  - **Q10:** a link to the section that teaches the item.
+  - **Q12:** only mistakes from now on.
+- **What it does:**
+  - **The rules** (`app/src/lib/mistakes.ts`, pure, tested):
+    - A mistake is every item with final status wrong (Claude's verdict counts) in an attempt from 2026-11-06 on.
+    - It comes back from the next local day.
+    - A right answer in a redo or in a later attempt of the whole test counts toward fixing it.
+    - An item that was rewritten or removed since is left out, with a visible count.
+    - Listening practice (generated items) is not replayed.
+  - **The screens:**
+    - "Your mistakes (N)" on Home, and `#/daily/mistakes` with up to 10 items;
+    - the daily mix's last step, with up to 5.
+  - **One redo:** each item appears in its original form. Its check is saved at once as an attempt with testId `m-<test or exercise id>-i<index>` and one item. The result shows the explanation, the Ask-Claude button (which names the original item) and a link to reread the lesson.
+  - **Write items:** a rewritten answer waits for Claude's review, like any writing.
+- **Changed from the design** (`_knowledge/2026-11-06_light-daily-mode-design.md` 4.6):
+  - **Storage:** the design planned a new synced table, which means a migration and an API deploy, both critical changes that wait for Hayk. Saving redos as attempts uses the existing `POST /v1/sync` unchanged. It works on every device at once, and Claude sees the redos with `progress.py`. check-content keeps the `m-` prefix free.
+  - **Write redos:** Claude grades them instead of Hayk marking themselves, because that keeps "fixed" honest.
+  - **Exact reread sections for test items (Q10)** are not done yet: the link goes to the lesson the test comes after. Tagging all 311 items is parked in DEFERRED_TODO.md.
+- **Checked:** in the browser as a guest, with the clock moved one day on:
+  - the same day, "No mistakes due today. 3 come back on a later day";
+  - the next day, "Your mistakes (3)" on Home;
+  - a redo is saved as "Mistakes: ..., item 1" on Results.
+- **Alternatives rejected:**
+  - a new `item_practice` table (needs a backend deploy, no advantage for three learners);
+  - device-only storage (phone and PC would disagree);
+  - counting redos as real test attempts (would change test scores).
+- **What would change this:**
+  - redo attempts crowding the Results page (then group or hide them there);
+  - Hayk wanting old mistakes too (move MISTAKES_SINCE);
+  - the exact-section tagging getting done (then use `teaches` for the link).
+
 ## 80. Every unit from Unit 1 ends with a story lesson: a standalone scene in `dialogue` blocks, with questions in exercise blocks between the parts (asked for by Hayk, 2026-11-06)
 
 - **Date:** 2026-11-06 - **Status:** active

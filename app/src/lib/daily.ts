@@ -23,6 +23,8 @@ export const MIX = {
   /** New words come back while they are being learned; the new-word step stops after this many cards. */
   maxNewCards: 12,
   listenItems: 6,
+  /** Due mistakes in the mix (Mistakes replay, DECISIONS.md #81). */
+  maxMistakes: 5,
 } as const
 
 /** A game needs at least this many introduced words: 3 pairs, or a pick from 4 options. */
@@ -177,24 +179,26 @@ export function dueNow<W extends { id: string }>(words: W[], state: ReviewState,
   }).length
 }
 
-export type MixStep = 'warmup' | 'reviews' | 'new' | 'listen'
+export type MixStep = 'warmup' | 'reviews' | 'new' | 'listen' | 'mistakes'
 
 export const MIX_STEP_LABEL: Record<MixStep, string> = {
   warmup: 'Warm-up: match pairs',
   reviews: 'Word reviews',
   new: 'New words',
   listen: 'Listen and pick',
+  mistakes: 'Your mistakes',
 }
 
 /**
  * The steps of the mix that have something to do, in order. Listen and pick also runs when only the
  * new words of this mix will make it possible, so it is decided by the count after the new step.
  */
-export function mixSteps(input: { introduced: number; due: number; newAvailable: number }): MixStep[] {
+export function mixSteps(input: { introduced: number; due: number; newAvailable: number; mistakes?: number }): MixStep[] {
   const steps: MixStep[] = []
   if (input.introduced >= MIN_PAIRS) steps.push('warmup')
   if (input.due > 0) steps.push('reviews')
   if (input.newAvailable > 0) steps.push('new')
   if (input.introduced + Math.min(input.newAvailable, MIX.maxNew) >= MIN_PICK_WORDS) steps.push('listen')
+  if ((input.mistakes ?? 0) > 0) steps.push('mistakes')
   return steps
 }

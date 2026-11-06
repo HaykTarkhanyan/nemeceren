@@ -2,6 +2,7 @@
 // into the chat. It names the test or lesson exercise and the item number, so Claude can open the
 // item in content/, and it carries the question, the answer, the right answer and the result.
 // Claude answers it by explaining right away (CLAUDE.md "How to teach").
+import { parseRedoTestId } from '../content/lessons.ts'
 import type { Result, ResultItem, Review } from '../content/schema.ts'
 
 /** The first line of every block; CLAUDE.md names it, so Claude recognizes a pasted item. */
@@ -12,6 +13,16 @@ export function itemSource(result: Pick<Result, 'testId' | 'lessonId'>): string 
   return result.lessonId ? `lesson ${result.lessonId}, exercise ${result.testId}` : `test ${result.testId}`
 }
 
+/**
+ * The source and the item number (from 1) as Claude finds them in content/: a Mistakes replay redo
+ * (DECISIONS.md #81) names the test or exercise it repeats and the item's number there.
+ */
+export function askSource(result: Pick<Result, 'testId' | 'lessonId'>, ri: ResultItem): { source: string; number: number } {
+  const redo = parseRedoTestId(result.testId)
+  if (redo) return { source: `mistakes replay of ${redo.sourceId}`, number: redo.index + 1 }
+  return { source: itemSource(result), number: ri.index + 1 }
+}
+
 function answerText(ri: ResultItem): string {
   if (ri.answer === null) return '(no answer)'
   if (ri.type === 'gap' && ri.gaps) return ri.gaps.map((g) => g.answer || '(empty)').join(' / ')
@@ -20,13 +31,15 @@ function answerText(ri: ResultItem): string {
 
 export function askClaudeText(input: {
   source: string
+  /** The item's number in its test or exercise, from 1. */
+  number: number
   ri: ResultItem
   status: ResultItem['status']
   review: Review['items'][number] | undefined
   explanation: string | undefined
 }): string {
-  const { source, ri, status, review, explanation } = input
-  const lines = [`${ASK_HEADER}: ${source}, item ${ri.index + 1} (${ri.type})`, `Question: ${ri.question}`, `My answer: ${answerText(ri)}`]
+  const { source, number, ri, status, review, explanation } = input
+  const lines = [`${ASK_HEADER}: ${source}, item ${number} (${ri.type})`, `Question: ${ri.question}`, `My answer: ${answerText(ri)}`]
   if (ri.expected !== null) lines.push(`Correct answer: ${ri.expected}`)
   const near = ri.nearMiss && ri.nearMiss.length > 0 ? ` (close: ${ri.nearMiss.join(', ')})` : ''
   lines.push(`Result: ${status === 'pending' ? 'waiting for your review' : status}${near}`)

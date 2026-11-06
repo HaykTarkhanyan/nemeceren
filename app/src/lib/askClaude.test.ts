@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import type { ResultItem } from '../content/schema.ts'
-import { ASK_HEADER, askClaudeText, itemSource } from './askClaude.ts'
+import { ASK_HEADER, askClaudeText, askSource, itemSource } from './askClaude.ts'
 
 const ri = (extra: Partial<ResultItem> = {}): ResultItem => ({
   index: 2,
@@ -17,7 +17,7 @@ const ri = (extra: Partial<ResultItem> = {}): ResultItem => ({
 
 describe('askClaudeText', () => {
   it('names the source and item and carries question, answers and result', () => {
-    const text = askClaudeText({ source: itemSource({ testId: 'u1-t1-x' }), ri: ri(), status: 'wrong', review: undefined, explanation: 'ich heiße' })
+    const text = askClaudeText({ source: itemSource({ testId: 'u1-t1-x' }), number: 3, ri: ri(), status: 'wrong', review: undefined, explanation: 'ich heiße' })
     expect(text.split('\n')).toEqual([
       `${ASK_HEADER}: test u1-t1-x, item 3 (mc)`,
       'Question: Ich ___ Hayk.',
@@ -42,6 +42,7 @@ describe('askClaudeText', () => {
     })
     const text = askClaudeText({
       source: itemSource({ testId: 'u1-01-x-ex2', lessonId: 'u1-01-x' }),
+      number: 3,
       ri: gap,
       status: 'wrong',
       review: { index: 2, correct: false, correction: 'Ich bin Hayk.' },
@@ -54,8 +55,15 @@ describe('askClaudeText', () => {
   })
 
   it('says when an item is still waiting for review', () => {
-    const text = askClaudeText({ source: 'test t', ri: ri({ type: 'write', expected: null, status: 'pending' }), status: 'pending', review: undefined, explanation: undefined })
+    const text = askClaudeText({ source: 'test t', number: 3, ri: ri({ type: 'write', expected: null, status: 'pending' }), status: 'pending', review: undefined, explanation: undefined })
     expect(text).toContain('Result: waiting for your review')
     expect(text).not.toContain('Correct answer')
+  })
+})
+
+describe('askSource', () => {
+  it('names the repeated test and the item number there for a Mistakes replay redo', () => {
+    expect(askSource({ testId: 'm-u1-t1-x-i6' }, ri({ index: 0 }))).toEqual({ source: 'mistakes replay of u1-t1-x', number: 7 })
+    expect(askSource({ testId: 'u1-t1-x' }, ri({ index: 2 }))).toEqual({ source: 'test u1-t1-x', number: 3 })
   })
 })

@@ -5,12 +5,14 @@ import { messageOf, reportError } from '../lib/errors.ts'
 import { link } from '../lib/router.ts'
 import { updateSettings, useSettings } from '../lib/settings.ts'
 import { useProgress } from '../lib/storage.ts'
-import { mixPlan, mixSummary } from './DailyPage.tsx'
+import { currentMistakes, mixPlan, mixSummary } from './DailyPage.tsx'
 
 export function DailyPanel() {
   const progress = useProgress()
   const settings = useSettings()
-  const plan = mixPlan(progress, settings, new Date())
+  const now = new Date()
+  const plan = mixPlan(progress, settings, now)
+  const mistakesDue = currentMistakes(progress, now).due.length
   function set(patch: Parameters<typeof updateSettings>[0]) {
     try {
       updateSettings(patch)
@@ -43,6 +45,9 @@ export function DailyPanel() {
         </a>
         <a className="btn" href={link('words', 'all')}>
           My words list
+        </a>
+        <a className="btn" href={link('daily', 'mistakes')}>
+          {mistakesDue > 0 ? `Your mistakes (${mistakesDue})` : 'Your mistakes'}
         </a>
       </div>
       <div className="daily-options">

@@ -56,8 +56,59 @@ export function lessonLabel(l: Lesson): string {
   return `Lesson ${l.unit}.${l.order}`
 }
 
+// ---------- Mistakes replay (DECISIONS.md #81) ----------
+
+/**
+ * A redo in Mistakes replay is saved as an ordinary one-item attempt whose testId is this prefix,
+ * the id of the test or lesson exercise the item comes from, and "-i" plus the item's index:
+ * "m-u1-t1-vorstellen-sprachen-i7". No test or lesson id may start with it (check-content).
+ */
+export const MISTAKE_PREFIX = 'm-'
+
+export function redoTestId(sourceId: string, index: number): string {
+  return `${MISTAKE_PREFIX}${sourceId}-i${index}`
+}
+
+/** The source id and item index of a redo attempt's testId; null for any other testId. */
+export function parseRedoTestId(testId: string): { sourceId: string; index: number } | null {
+  const m = /^m-(.+)-i(\d+)$/.exec(testId)
+  return m ? { sourceId: m[1], index: Number(m[2]) } : null
+}
+
+/** Where a mistake comes from: a test or a lesson exercise, its items, and the lesson to reread. */
+export interface MistakeSource {
+  id: string
+  title: string
+  level: Test['level']
+  items: Item[]
+  /** The lesson to reread: the exercise's own lesson, or the lesson a test comes after; null if none. */
+  reread: Lesson | null
+  kind: 'test' | 'exercise'
+}
+
+export function findSource(sourceId: string, tests: Test[], lessons: Lesson[]): MistakeSource | null {
+  const test = tests.find((t) => t.id === sourceId)
+  if (test) {
+    const reread = test.lesson ? (lessons.find((l) => l.id === test.lesson) ?? null) : null
+    return { id: test.id, title: test.title, level: test.level, items: test.items, reread, kind: 'test' }
+  }
+  for (const lesson of lessons) {
+    for (const ex of exerciseSections(lesson)) {
+      if (exerciseTestId(lesson.id, ex.number) !== sourceId) continue
+      const where = isThemeLesson(lesson) ? lesson.theme.title : `${lesson.unit}.${lesson.order} ${lesson.title}`
+      return { id: sourceId, title: `${where}: ${ex.block.title ?? `exercise ${ex.number}`}`, level: lesson.level, items: ex.block.items, reread: lesson, kind: 'exercise' }
+    }
+  }
+  return null
+}
+
 /** The items a saved result was made from (a test, or an exercise in a lesson), if they still exist. */
 export function itemsForResult(result: Result, tests: Test[], lessons: Lesson[]): Item[] | undefined {
+  const redo = parseRedoTestId(result.testId)
+  if (redo) {
+    const item = findSource(redo.sourceId, tests, lessons)?.items[redo.index]
+    return item ? [item] : undefined
+  }
   if (result.lessonId !== undefined) {
     const block = lessons.find((l) => l.id === result.lessonId)?.sections[result.section ?? -1]
     return block?.type === 'exercise' ? block.items : undefined

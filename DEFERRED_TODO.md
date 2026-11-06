@@ -26,3 +26,9 @@ Topics cut from current work so they don't get lost.
   - F8: XP and a league or shared streaks with Anahit and Armen (needs their consent and an API scope change);
   - F9: push reminders.
 - **Duolingo HLR learning traces** (Harvard Dataverse doi 10.7910/DVN/N8XJME, 361 MB): "not now" (Hayk, 2026-11-06). The idea is to find which German words English speakers forget fastest, and give those cards extra examples. Ask before downloading.
+- **Mistakes replay: exact reread sections for test items** (Hayk's Q10 answer, 2026-11-06). Today a returning test item links to the lesson the test comes after, and an exercise item to its own lesson. The plan:
+  - add an optional `teaches` field (`<lesson id>#<section id>`) to test items;
+  - tag all 311 test items, adding section ids where the teaching section has none;
+  - then make check-content require it on course tests.
+  - Not done yet: careful content work, best as its own session or one agent with a review.
+

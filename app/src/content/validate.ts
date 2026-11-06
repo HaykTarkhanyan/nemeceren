@@ -2,7 +2,7 @@
 // Every error names the file and the field path, e.g.
 //   content/tests/a1-01.json: items[3].answers[0]: "..." does not use exactly the tiles [...]
 import type { z } from 'zod'
-import { exerciseSections, exerciseTestId, isCourseLesson, isThemeLesson, sectionIndex } from './lessons.ts'
+import { exerciseSections, exerciseTestId, isCourseLesson, isThemeLesson, MISTAKE_PREFIX, sectionIndex } from './lessons.ts'
 import { CuratedGlossary, Extras, GeneratedGlossary, Lesson, LessonProgress, Result, ReviewLogEntry, ReviewState, Test, Topics, WordList, WordSets } from './schema.ts'
 import type {
   CourseLesson,
@@ -244,6 +244,9 @@ function crossReferences(tests: TestT[], words: WordT[], lessons: CourseLesson[]
   const testIds = new Set(tests.map((t) => t.id))
   const all: LessonT[] = [...lessons, ...themes]
   const lessonById = new Map(all.map((l) => [l.id, l]))
+  // Mistakes replay saves its redos under "m-<source id>-i<n>" (DECISIONS.md #81).
+  for (const t of tests) if (t.id.startsWith(MISTAKE_PREFIX)) problems.push(`content/tests/${t.id}.json: id: "${MISTAKE_PREFIX}" is kept for Mistakes replay; a test id may not start with it`)
+  for (const l of all) if (l.id.startsWith(MISTAKE_PREFIX)) problems.push(`${l.id}: id: "${MISTAKE_PREFIX}" is kept for Mistakes replay; a lesson id may not start with it`)
   const position = new Map<string, string>()
   for (const l of lessons) {
     const key = `${l.unit}/${l.order}`

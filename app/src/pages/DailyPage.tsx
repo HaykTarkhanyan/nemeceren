@@ -9,12 +9,16 @@ import { ListenPick } from '../components/ListenPick.tsx'
 import type { PickStats } from '../components/ListenPick.tsx'
 import { MatchPairs } from '../components/MatchPairs.tsx'
 import type { MatchStats } from '../components/MatchPairs.tsx'
+import { MistakesSession } from '../components/MistakesSession.tsx'
+import type { MistakeStats } from '../components/MistakesSession.tsx'
 import { ReviewRun } from '../components/ReviewRun.tsx'
 import type { RunStats } from '../components/ReviewRun.tsx'
 import { practiceWord } from '../lib/customWords.ts'
 import type { StudyWord } from '../lib/customWords.ts'
 import { dueNow, introduced, matchRounds, MIN_PAIRS, MIN_PICK_WORDS, MIX, MIX_STEP_LABEL, mixNewWords, mixSteps, pickItems } from '../lib/daily.ts'
 import type { MixStep } from '../lib/daily.ts'
+import { deriveMistakes, MISTAKE_SESSION_MAX } from '../lib/mistakes.ts'
+import type { Mistake } from '../lib/mistakes.ts'
 import { nextLesson, wordsForSource } from '../lib/plan.ts'
 import type { ProgressView } from '../lib/storage.ts'
 import { link } from '../lib/router.ts'
@@ -35,9 +39,21 @@ export function studyPool(progress: ProgressView): StudyWord[] {
   return wordsForSource({ kind: 'all' }, content.words, progress.customWords.map(practiceWord), content.allLessons, progress.lessonProgress, progress.reviewState)
 }
 
+/** Mistakes from tests and lesson exercises (DECISIONS.md #81): the due ones, and how many changed since. */
+export function currentMistakes(progress: ProgressView, now: Date): { due: Mistake[]; active: number; changed: number } {
+  const m = deriveMistakes(
+    progress.results.map((r) => r.result),
+    content.tests,
+    content.allLessons,
+    now,
+  )
+  return { due: m.due, active: m.active.length, changed: m.changed }
+}
+
 export interface MixPlan {
   steps: MixStep[]
   due: number
+  mistakes: Mistake[]
   newWords: StudyWord[]
   newCount: number
   newFrom: string
@@ -60,9 +76,11 @@ export function mixPlan(progress: ProgressView, settings: Settings, now: Date): 
     ),
     MIX.maxReviews,
   )
+  const mistakes = currentMistakes(progress, now).due.slice(0, MIX.maxMistakes)
   return {
-    steps: mixSteps({ introduced: introduced(pool, state).length, due, newAvailable: newCount }),
+    steps: mixSteps({ introduced: introduced(pool, state).length, due, newAvailable: newCount, mistakes: mistakes.length }),
     due,
+    mistakes,
     newWords: fresh.words,
     newCount,
     newFrom: fresh.from,
@@ -73,9 +91,17 @@ export function mixPlan(progress: ProgressView, settings: Settings, now: Date): 
 /** "about 12 minutes: a warm-up, 8 reviews, 5 new words, listen and pick". */
 export function mixSummary(plan: MixPlan): string {
   const parts = plan.steps.map((s) =>
-    s === 'warmup' ? 'a match-pairs warm-up' : s === 'reviews' ? `${plan.due} review${plan.due === 1 ? '' : 's'}` : s === 'new' ? `${plan.newCount} new word${plan.newCount === 1 ? '' : 's'}` : 'listen and pick',
+    s === 'warmup'
+      ? 'a match-pairs warm-up'
+      : s === 'reviews'
+        ? `${plan.due} review${plan.due === 1 ? '' : 's'}`
+        : s === 'new'
+          ? `${plan.newCount} new word${plan.newCount === 1 ? '' : 's'}`
+          : s === 'listen'
+            ? 'listen and pick'
+            : `${plan.mistakes.length} of your mistake${plan.mistakes.length === 1 ? '' : 's'}`,
   )
-  const minutes = 2 * (plan.steps.includes('warmup') ? 1 : 0) + Math.ceil(plan.due * 0.3) + plan.newCount + (plan.steps.includes('listen') ? 2 : 0)
+  const minutes = 2 * (plan.steps.includes('warmup') ? 1 : 0) + Math.ceil(plan.due * 0.3) + plan.newCount + (plan.steps.includes('listen') ? 2 : 0) + plan.mistakes.length
   return `About ${Math.max(2, minutes)} minutes: ${parts.join(', ')}.`
 }
 
@@ -83,6 +109,7 @@ export function DailyPage({ sub }: { sub?: string }) {
   if (sub === undefined) return <Mix />
   if (sub === 'match') return <MatchOnly />
   if (sub === 'listen') return <ListenOnly />
+  if (sub === 'mistakes') return <MistakesOnly />
   return (
     <div className="alert error">
       The daily page has no part "{sub}". <a href={link('daily')}>Daily mix</a>
@@ -95,6 +122,7 @@ interface Done {
   reviews?: RunStats
   fresh?: RunStats
   listen?: PickStats
+  mistakes?: MistakeStats
 }
 
 function Mix() {
@@ -158,6 +186,7 @@ function Mix() {
         </>
       )}
       {current === 'listen' && <Listen pool={pool} state={state} n={MIX.listenItems} onDone={(s) => finish({ listen: s })} />}
+      {current === 'mistakes' && <MistakesSession mistakes={plan.mistakes} onDone={(s) => finish({ mistakes: s })} />}
     </div>
   )
 }
@@ -191,6 +220,7 @@ function MixEnd({ done, startedAt, nothing }: { done: Done; startedAt: number; n
   if (done.reviews && done.reviews.cards > 0) lines.push(`Reviewed ${done.reviews.cards} word${done.reviews.cards === 1 ? '' : 's'} (${done.reviews.again} marked Again).`)
   if (done.fresh && done.fresh.fresh > 0) lines.push(`Learned ${done.fresh.fresh} new word${done.fresh.fresh === 1 ? '' : 's'}.`)
   if (done.listen && done.listen.total > 0) lines.push(`Listen and pick: ${done.listen.right} of ${done.listen.total} right.`)
+  if (done.mistakes) lines.push(mistakesLine(done.mistakes))
   return (
     <div className="stack">
       <h1>Daily mix</h1>
@@ -322,6 +352,60 @@ function GameEndButtons({ onAgain }: { onAgain: () => void }) {
       <a className="btn" href={link()}>
         Home
       </a>
+    </div>
+  )
+}
+
+function mistakesLine(s: MistakeStats): string {
+  const total = s.right + s.wrong + s.pending
+  return `Your mistakes: ${s.right} of ${total} right${s.pending ? `, ${s.pending} waiting for Claude` : ''}. Each one comes back until you get it right on two different days.`
+}
+
+function MistakesOnly() {
+  const progress = useProgress()
+  const [now] = useState(() => new Date())
+  const [mistakes] = useState(() => currentMistakes(progress, now))
+  const [stats, setStats] = useState<MistakeStats | null>(null)
+  const due = mistakes.due.slice(0, MISTAKE_SESSION_MAX)
+  return (
+    <div className="stack">
+      <h1>Your mistakes</h1>
+      {mistakes.changed > 0 && (
+        <div className="alert warn">
+          {mistakes.changed} earlier mistake{mistakes.changed === 1 ? ' is' : 's are'} left out: the item was changed or removed since, so it cannot come back as it was
+          asked.
+        </div>
+      )}
+      {stats ? (
+        <>
+          <div className="card">
+            <p>{mistakesLine(stats)}</p>
+          </div>
+          <div className="row">
+            <a className="btn" href={link('daily')}>
+              Daily mix
+            </a>
+            <a className="btn" href={link()}>
+              Home
+            </a>
+          </div>
+        </>
+      ) : due.length > 0 ? (
+        <>
+          <p className="muted small">
+            Items you got wrong in tests and lesson exercises come back the next day, until you get each one right on two different days.{' '}
+            {mistakes.due.length > due.length ? `${mistakes.due.length - due.length} more are due after these.` : ''}
+          </p>
+          <MistakesSession mistakes={due} onDone={setStats} />
+        </>
+      ) : (
+        <div className="card">
+          <p>
+            No mistakes due today.{' '}
+            {mistakes.active > 0 ? `${mistakes.active} come back on a later day.` : 'Items you get wrong in tests and lesson exercises will show up here the next day.'}
+          </p>
+        </div>
+      )}
     </div>
   )
 }

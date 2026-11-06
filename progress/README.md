@@ -21,6 +21,8 @@ uv run backend/scripts/progress.py self-check            # offline check of the 
 
 Data commands take `--user <email>`. Without it they use `NEMECEREN_DEFAULT_USER` from the gitignored `.env.local` (Hayk), or else the only allowed user apart from Claude's test account, and stop with an error when there are several.
 
+**Mistakes replay attempts (since 2026-11-06, DECISIONS.md #81):** an attempt whose test id starts with `m-` is one item Hayk redid in the app's Mistakes replay: `m-<test or lesson exercise id>-i<item index>`, with a single item at index 0. Grade a write item there like any attempt (`progress.py review`); the verdict decides whether the mistake counts as fixed.
+
 A review (the file given to `progress.py review`) is Claude's grading of one attempt; the app shows it next to Hayk's answers, and each verdict overrides the auto-grade in the score:
 
 ```json
