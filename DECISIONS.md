@@ -2,6 +2,33 @@
 
 Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
+## 79. Speaking practice: a mic button on every "listen and repeat" line, with the browser's speech recognition and a local recording to compare; never a mistake, nothing saved (asked for by Hayk, 2026-11-06)
+
+- **Date:** 2026-11-06 - **Status:** active
+- **Why:** Hayk picked F6. Interview answers:
+  - **Q14:** Android Chrome and PC Chrome or Edge.
+  - **Q15:** both kinds of feedback (what was recognized, and the recording).
+  - **Q16:** fine with the audio going to Google or Microsoft for recognition.
+  - **Q17:** only on the lessons' audio blocks.
+  - **Q18:** never a mistake.
+- **What it does** (`app/src/components/SpeakLine.tsx`, `app/src/lib/speaking.ts`):
+  - **"Say it"** starts a `MediaRecorder` and the browser's `SpeechRecognition` (de-DE, 3 alternatives) together.
+  - **Which alternative wins:** the one closest to the line.
+  - **The comparison:** the line's words are marked heard or not by a longest-common-subsequence match, ignoring case and punctuation, with numbers 0-100 equal to digits.
+  - **Playback:** "German" and "Mine" play the model and the recording one after the other.
+  - **Firefox** (no recognition) gets record-and-compare only.
+  - **Recordings** stay in page memory as blob URLs and are freed when the lesson closes. Nothing is uploaded to our backend and nothing is logged.
+- **Checked:** in headless Chromium with a fake microphone, recording, playback buttons and the "nothing recognized" note work. Real recognition can only be checked on Hayk's phone and PC.
+- **Risk:** some Android phones cannot record and recognize at the same time. Recognition then fails with `audio-capture`, and the line says so and offers the recording.
+- **Alternatives rejected:**
+  - a local phoneme model (DEFERRED_TODO "Pronunciation feedback"): heavy on this laptop, and not something a phone can run;
+  - counting mismatches as mistakes (Hayk: never);
+  - storing recordings (not needed; privacy).
+- **What would change this:**
+  - recognition being useless for Hayk's accent (then recordings only);
+  - the `audio-capture` conflict on Hayk's phone (then recognize first, record second);
+  - wanting speaking items in tests (not picked).
+
 ## 78. Every answered item gets an "Ask Claude about this" button that copies the item as plain text for the chat; Claude then explains right away (asked for by Hayk, 2026-11-06)
 
 - **Date:** 2026-11-06 - **Status:** active

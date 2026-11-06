@@ -7,6 +7,7 @@ import { De, GermanText, GlossScope } from './GermanText.tsx'
 import { InlineExercise } from './InlineExercise.tsx'
 import { RichText } from './RichText.tsx'
 import { PlayButtons, Speaker } from './Speaker.tsx'
+import { SpeakLine } from './SpeakLine.tsx'
 import { ensureGlossary, useGlossary } from '../glossary/load.ts'
 import { lyricsLines, wordCounts } from '../lib/lyrics.ts'
 
@@ -109,6 +110,7 @@ function BlockBody(props: { lesson: Lesson; block: LessonBlock; section: number;
                 </span>
                 {it.en && <div className="muted">{it.en}</div>}
                 {it.note && <div className="small">{it.note}</div>}
+                <SpeakLine text={it.de} />
               </div>
             </li>
           ))}

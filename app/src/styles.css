@@ -1316,6 +1316,12 @@ details > summary {
   gap: 10px;
 }
 
+/* The text takes the rest of the row; on a phone it always goes below the play buttons, so the lines line up. */
+.audio-list li > div {
+  flex: 1 1 220px;
+  min-width: 0;
+}
+
 .table-wrap {
   overflow-x: auto;
 }
@@ -1908,4 +1914,34 @@ details > summary {
 .ask-claude-text {
   width: 100%;
   font: 13px/1.4 ui-monospace, Consolas, monospace;
+}
+
+/* Speaking practice on "listen and repeat" lines (DECISIONS.md #79). */
+.speak-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.speak-on {
+  border-color: var(--bad);
+  color: var(--bad);
+}
+
+.speak-result {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 100%;
+}
+
+.speak-result .heard {
+  color: var(--ok);
+}
+
+.speak-result .missed {
+  color: var(--bad);
+  text-decoration: underline wavy;
 }
