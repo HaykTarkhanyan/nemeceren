@@ -119,6 +119,12 @@ export function doneRangesByLesson(events: PathEventLike[]): Map<string, [number
   return out
 }
 
+/** The lesson's station ranges that its station events do not cover yet. */
+export function missingRanges(lesson: Lesson, events: PathEventLike[]): [number, number][] {
+  const done = doneRangesByLesson(events).get(lesson.id) ?? []
+  return stationRanges(lesson).filter((r) => !isCovered(r, done))
+}
+
 export interface PathProgress {
   /** Ids of done stations, Endstations included. */
   done: Set<string>

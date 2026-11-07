@@ -26,10 +26,13 @@ function ContentProblems({ problems }: { problems: string[] }) {
 }
 
 function Page({ route }: { route: string[] }) {
-  const [section, arg, sub] = route
+  const [section, arg, sub, subArg] = route
   switch (section ?? '') {
     case '':
       return <HomePage />
+    case 'line':
+      // "Back to the line" after a station: Home, scrolled to the current station.
+      return <HomePage scrollToCurrent />
     case 'daily':
       return <DailyPage sub={arg} />
     case 'test':
@@ -37,7 +40,7 @@ function Page({ route }: { route: string[] }) {
     case 'lessons':
       return <LessonsPage tab={arg} />
     case 'lesson':
-      return <LessonPage id={arg ?? ''} sectionId={sub} />
+      return sub === 'station' ? <LessonPage id={arg ?? ''} station={subArg ?? ''} /> : <LessonPage id={arg ?? ''} sectionId={sub} />
     case 'topics':
       return <TopicsPage />
     case 'extras':

@@ -9,7 +9,7 @@ import { useProgress } from '../lib/storage.ts'
 import { DailyPanel } from './DailyPanel.tsx'
 import { StreakLine } from './StatsPage.tsx'
 
-export function HomePage() {
+export function HomePage(_props: { scrollToCurrent?: boolean }) {
   const { results } = useProgress()
 
   return (

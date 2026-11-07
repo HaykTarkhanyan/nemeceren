@@ -9,11 +9,13 @@ import { BlockView } from '../components/LessonBlocks.tsx'
 import { Tabs } from '../components/Tabs.tsx'
 import { VideoList } from '../components/VideoList.tsx'
 import { messageOf, reportError } from '../lib/errors.ts'
+import { courseStations, doneRangesByLesson, isCovered, stationRanges } from '../lib/path.ts'
 import { lessonStatus, markLessonDone, setLastSection, startLesson } from '../lib/plan.ts'
 import type { LessonStatus } from '../lib/plan.ts'
 import { link, tabLink, tabOf } from '../lib/router.ts'
 import { lessonLyrics, wordCounts } from '../lib/lyrics.ts'
 import { KNOWN_DAYS } from '../lib/stats.ts'
+import { finishStation, markLessonDoneWithEvents } from '../lib/stationActions.ts'
 import { progressStore, saveLessonProgress, useProgress } from '../lib/storage.ts'
 
 const STATUS_LABEL: Record<LessonStatus, string> = { 'not-started': 'not started', 'in-progress': 'in progress', done: 'done' }
@@ -180,7 +182,8 @@ function ThemeCard({ lesson, status }: { lesson: ThemeLesson; status: LessonStat
 }
 
 /** `sectionId` (from "#/lesson/<id>/<section id>", e.g. a Topics link) opens the lesson at that section. */
-export function LessonPage({ id, sectionId }: { id: string; sectionId?: string }) {
+/** One lesson; with `station` (from #/lesson/<id>/station/<k>, 0-based) only that station's sections. */
+export function LessonPage({ id, sectionId, station }: { id: string; sectionId?: string; station?: string }) {
   const lesson = content.allLessons.find((l) => l.id === id)
   if (!lesson) {
     return (
@@ -197,16 +200,29 @@ export function LessonPage({ id, sectionId }: { id: string; sectionId?: string }
       </div>
     )
   }
-  return <LessonView key={lesson.id} lesson={lesson} linked={linked} />
+  let k: number | null = null
+  if (station !== undefined) {
+    const n = stationRanges(lesson).length
+    k = /^\d+$/.test(station) ? Number(station) : NaN
+    if (!Number.isInteger(k) || k < 0 || k >= n) {
+      return (
+        <div className="alert error">
+          Lesson "{lesson.title}" has no station "{station}" (it has {n}). <a href={link('lesson', lesson.id)}>Open the whole lesson</a>
+        </div>
+      )
+    }
+  }
+  return <LessonView key={`${lesson.id}:${k ?? 'all'}`} lesson={lesson} linked={linked} station={k} />
 }
 
 const SAVE_POSITION_MS = 1500
 
-function LessonView({ lesson, linked }: { lesson: Lesson; linked: number | null }) {
+function LessonView({ lesson, linked, station }: { lesson: Lesson; linked: number | null; station: number | null }) {
   const view = useProgress()
   const progress = view.lessonProgress
   const state = view.reviewState
   const [error, setError] = useState<string | null>(null)
+  const [finished, setFinished] = useState(false)
   const restored = useRef(false)
   const started = progress.lessons[lesson.id] !== undefined
 
@@ -226,10 +242,15 @@ function LessonView({ lesson, linked }: { lesson: Lesson; linked: number | null 
   useEffect(() => {
     if (!started || restored.current) return
     restored.current = true
+    // A station opens at its top: its sections are all there is on the page.
+    if (station !== null) {
+      window.scrollTo(0, 0)
+      return
+    }
     const last = progressStore().getView().lessonProgress.lessons[lesson.id]?.lastSection ?? 0
     const at = openAt(linked, last)
     if (at !== null) document.getElementById(`section-${at}`)?.scrollIntoView({ block: 'start' })
-  }, [started, lesson.id, linked])
+  }, [started, lesson.id, linked, station])
 
   // Remember the section at the top of the screen (saved a moment after scrolling stops; it goes
   // into the outbox and is sent with the next sync, never one request per scroll).
@@ -268,9 +289,20 @@ function LessonView({ lesson, linked }: { lesson: Lesson; linked: number | null 
 
   function toggleDone(done: boolean) {
     try {
-      saveLessonProgress(markLessonDone(progressStore().getView().lessonProgress, lesson.id, done, new Date()))
+      // Marking done records the stations not finished yet, so it counts for the daily goal (DECISIONS.md #83).
+      if (done) markLessonDoneWithEvents(progressStore(), lesson, new Date())
+      else saveLessonProgress(markLessonDone(progressStore().getView().lessonProgress, lesson.id, false, new Date()))
     } catch (err) {
       reportError(`Could not save the lesson status: ${messageOf(err)}`)
+    }
+  }
+
+  function stationDone(k: number) {
+    try {
+      finishStation(progressStore(), lesson, k, new Date())
+      if (k === station) setFinished(true)
+    } catch (err) {
+      reportError(`Could not save the station: ${messageOf(err)}`)
     }
   }
 
@@ -284,6 +316,16 @@ function LessonView({ lesson, linked }: { lesson: Lesson; linked: number | null 
   // The course's next lesson; a theme lesson is not part of the course, so it has none.
   const ordered = [...content.lessons].sort(byCourseOrder)
   const following = isThemeLesson(lesson) ? undefined : ordered[ordered.findIndex((l) => l.id === lesson.id) + 1]
+  // Stations (DECISIONS.md #82): only course lessons are on the path.
+  const ranges = stationRanges(lesson)
+  const onPath = !isThemeLesson(lesson)
+  const doneRanges = doneRangesByLesson(view.pathEvents).get(lesson.id) ?? []
+  const isStationDone = (k: number) => status === 'done' || isCovered(ranges[k], doneRanges)
+  const shown = station === null ? lesson.sections.map((block, i) => ({ block, i })) : lesson.sections.map((block, i) => ({ block, i })).filter(({ i }) => i >= ranges[station][0] && i < ranges[station][1])
+  const pathStations = courseStations(content.lessons, content.tests)
+  const at = station === null ? -1 : pathStations.findIndex((s) => s.id === `${lesson.id}#${station}`)
+  const nextStation = at >= 0 ? pathStations.slice(at + 1).find((s) => s.kind !== 'end') : undefined
+  const nextHref = nextStation === undefined ? null : nextStation.kind === 'test' ? link('test', nextStation.testId!) : link('lesson', nextStation.lessonId!, 'station', String(nextStation.step))
   const wordStatus = (wid: string) => {
     const card = state.cards[wid]
     if (!card) return 'new'
@@ -316,7 +358,8 @@ function LessonView({ lesson, linked }: { lesson: Lesson; linked: number | null 
           </p>
         ) : (
           <p className="muted small">
-            Unit {lesson.unit}, lesson {lesson.order} <StatusBadge status={status} />
+            Unit {lesson.unit}, lesson {lesson.order}
+            {station !== null && ranges.length > 1 ? `, station ${station + 1} of ${ranges.length}` : ''} <StatusBadge status={status} />
           </p>
         )}
         <h1>{lesson.title}</h1>
@@ -324,6 +367,13 @@ function LessonView({ lesson, linked }: { lesson: Lesson; linked: number | null 
         {isThemeLesson(lesson) && <SourceLink theme={lesson.theme} className="small" />}
       </div>
 
+      {station !== null && (
+        <p className="small">
+          <a href={link('lesson', lesson.id)}>Show the whole lesson</a>
+        </p>
+      )}
+
+      {(station === null || station === 0) && (
       <section className="card stack">
         <h2>After this lesson you can</h2>
         <ul className="goals">
@@ -368,13 +418,60 @@ function LessonView({ lesson, linked }: { lesson: Lesson; linked: number | null 
           </div>
         )}
       </section>
+      )}
 
-      {lesson.sections.map((block, i) => (
-        <section key={i} id={`section-${i}`} data-section={i} className={`card${i === linked ? ' linked-section' : ''}`}>
-          <BlockView lesson={lesson} block={block} section={i} exerciseNumber={exercises.find((e) => e.section === i)?.number ?? null} />
+      {shown.map(({ block, i }) => {
+        // In the whole lesson, a divider after each station but the last, with its own "done" button.
+        const k = ranges.findIndex(([, to]) => to === i + 1)
+        const divider = station === null && onPath && ranges.length > 1 && k >= 0 && k < ranges.length - 1
+        return (
+          <div key={i} className="stack">
+            <section id={`section-${i}`} data-section={i} className={`card${i === linked ? ' linked-section' : ''}`}>
+              <BlockView lesson={lesson} block={block} section={i} exerciseNumber={exercises.find((e) => e.section === i)?.number ?? null} />
+            </section>
+            {divider && (
+              <div className="station-divider row between">
+                <span className="small muted">
+                  End of station {k + 1} of {ranges.length}
+                </span>
+                {isStationDone(k) ? (
+                  <span className="badge ok">done</span>
+                ) : (
+                  <button type="button" className="btn small" onClick={() => stationDone(k)}>
+                    Station {k + 1} done
+                  </button>
+                )}
+              </div>
+            )}
+          </div>
+        )
+      })}
+
+      {station !== null ? (
+        <section className="card stack station-end">
+          {!finished ? (
+            <button type="button" className="btn primary station-done" onClick={() => stationDone(station)}>
+              Station done
+            </button>
+          ) : (
+            <>
+              <p>
+                <strong>Station done.</strong>
+              </p>
+              <div className="row">
+                {nextHref && (
+                  <a className="btn primary" href={nextHref}>
+                    Next station
+                  </a>
+                )}
+                <a className="btn" href={link('line')}>
+                  Back to the line
+                </a>
+              </div>
+            </>
+          )}
         </section>
-      ))}
-
+      ) : (
       <section className="card stack">
         {tests.length > 0 && (
           <p>
@@ -396,6 +493,7 @@ function LessonView({ lesson, linked }: { lesson: Lesson; linked: number | null 
           )}
         </div>
       </section>
+      )}
     </div>
   )
 }

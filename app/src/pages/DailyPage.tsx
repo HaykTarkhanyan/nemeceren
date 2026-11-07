@@ -15,7 +15,7 @@ import { ReviewRun } from '../components/ReviewRun.tsx'
 import type { RunStats } from '../components/ReviewRun.tsx'
 import { practiceWord } from '../lib/customWords.ts'
 import type { StudyWord } from '../lib/customWords.ts'
-import { dueNow, introduced, matchRounds, MIN_PAIRS, MIN_PICK_WORDS, MIX, MIX_STEP_LABEL, mixNewWords, mixSteps, pickItems } from '../lib/daily.ts'
+import { dueNow, introduced, matchRounds, MIN_PAIRS, MIN_PICK_WORDS, MIX, MIX_STEP_LABEL, mixFinished, mixNewWords, mixSteps, pickItems } from '../lib/daily.ts'
 import type { MixStep } from '../lib/daily.ts'
 import { deriveMistakes, MISTAKE_SESSION_MAX } from '../lib/mistakes.ts'
 import type { Mistake } from '../lib/mistakes.ts'
@@ -27,7 +27,8 @@ import { NO_VOICE_HELP, useSpeech } from '../lib/speech.ts'
 import type { SpeechInfo } from '../lib/speech.ts'
 import type { Settings } from '../lib/settings.ts'
 import { counts } from '../lib/srs.ts'
-import { requestFlush, useProgress } from '../lib/storage.ts'
+import { messageOf, reportError } from '../lib/errors.ts'
+import { recordDailyMixDone, requestFlush, useProgress } from '../lib/storage.ts'
 
 /** The word set the mix takes new words from, or null (the next lessons). An unknown saved id is an error to show. */
 export function activeSet(settings: Settings): { set: WordSet | null; problem: string | null } {
@@ -144,10 +145,21 @@ function Mix() {
   const [stopped, setStopped] = useState(false)
   const current = stopped ? undefined : plan.steps[step]
   const pool = studyPool(progress)
+  const recorded = useRef(false)
 
   useEffect(() => {
-    if (current === undefined) requestFlush()
-  }, [current])
+    if (current !== undefined) return
+    // A mix run to its end counts for the daily goal; Stop does not (DECISIONS.md #83).
+    if (mixFinished(stopped, step, plan.steps.length) && !recorded.current) {
+      recorded.current = true
+      try {
+        recordDailyMixDone()
+      } catch (err) {
+        reportError(`Could not save the finished daily mix for your daily goal: ${messageOf(err)}`)
+      }
+    }
+    requestFlush()
+  }, [current, stopped, step, plan.steps.length])
 
   function finish(patch: Done) {
     setDone((d) => ({ ...d, ...patch }))

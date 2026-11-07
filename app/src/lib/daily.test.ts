@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import type { CourseLesson, ReviewState, WordSet } from '../content/schema.ts'
-import { dueNow, introduced, matchRounds, MIN_PICK_WORDS, mixNewWords, mixSteps, pickGameWords, pickItems, wordKind } from './daily.ts'
+import { dueNow, introduced, matchRounds, MIN_PICK_WORDS, mixFinished, mixNewWords, mixSteps, pickGameWords, pickItems, wordKind } from './daily.ts'
 import { emptyLessonProgress, markLessonDone, startLesson } from './plan.ts'
 import { introducedCard, Rating, review } from './srs.ts'
 
@@ -150,5 +150,17 @@ describe('dueNow and mixSteps', () => {
     expect(mixSteps({ introduced: 2, due: 0, newAvailable: 5 })).toEqual(['new', 'listen'])
     expect(mixSteps({ introduced: 10, due: 3, newAvailable: 0 })).toEqual(['warmup', 'reviews', 'listen'])
     expect(mixSteps({ introduced: 10, due: 3, newAvailable: 0, canListen: false, mistakes: 2 })).toEqual(['warmup', 'reviews', 'mistakes'])
+  })
+})
+
+describe('mixFinished (the daily goal counts a mix only when it ran to its end)', () => {
+  it('is true when every planned step is finished', () => {
+    expect(mixFinished(false, 3, 3)).toBe(true)
+  })
+  it('is false after Stop, and for a mix with nothing to do', () => {
+    expect(mixFinished(true, 3, 3)).toBe(false)
+    expect(mixFinished(true, 1, 3)).toBe(false)
+    expect(mixFinished(false, 0, 0)).toBe(false)
+    expect(mixFinished(false, 2, 3)).toBe(false)
   })
 })

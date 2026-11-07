@@ -208,3 +208,11 @@ export function mixSteps(input: { introduced: number; due: number; newAvailable:
   if ((input.mistakes ?? 0) > 0) steps.push('mistakes')
   return steps
 }
+
+/**
+ * The mix ran to its end: every planned step finished, no Stop. Only then does it count for the
+ * daily goal (DECISIONS.md #83); a mix with no steps never counts.
+ */
+export function mixFinished(stopped: boolean, step: number, steps: number): boolean {
+  return !stopped && steps > 0 && step >= steps
+}
