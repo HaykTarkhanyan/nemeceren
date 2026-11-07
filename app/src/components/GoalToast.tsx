@@ -1,27 +1,25 @@
-// A short toast when the daily goal is met, or a unit's Endstation is reached, by something done on
-// this device (a change still waiting in the outbox). Loading progress from the server never toasts.
+// A short toast when the daily goal is met, or a unit's Endstation is reached, while the app is open.
+// AuthGate renders the app only once progress is loaded, so the first render is the baseline and
+// loading never toasts; a sync that brings a station done on another device may (and that is true).
 import { useEffect, useRef, useState } from 'react'
 import { useGoal } from '../lib/goalView.ts'
-import { useProgress } from '../lib/storage.ts'
 
 const SHOW_MS = 3500
 
 export function GoalToast() {
-  const { goal, path, today } = useGoal()
-  const progress = useProgress()
+  const { goal, path } = useGoal()
   const before = useRef<{ met: boolean; ends: Set<string> } | null>(null)
   const [message, setMessage] = useState<string | null>(null)
-  const localChange = progress.pathEvents.some((e) => e.pending && e.localDay === today) || progress.pendingAttemptIds.length > 0
 
   useEffect(() => {
     const ends = new Set([...path.done].filter((id) => id.startsWith('end-')))
     const prev = before.current
     before.current = { met: goal.todayMet, ends }
-    if (prev === null || !localChange) return
+    if (prev === null) return
     const reached = [...ends].find((id) => !prev.ends.has(id))
     if (reached) setMessage(`Endstation: Unit ${reached.slice('end-'.length)} done.`)
     else if (goal.todayMet && !prev.met) setMessage(`Goal done for today. Streak: ${goal.current} day${goal.current === 1 ? '' : 's'}.`)
-  }, [goal.todayMet, goal.current, path.done, localChange])
+  }, [goal.todayMet, goal.current, path.done])
 
   useEffect(() => {
     if (message === null) return
