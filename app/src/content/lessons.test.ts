@@ -36,6 +36,15 @@ describe('lesson validation', () => {
     expect(parseLesson('content/lessons/u1-01-x.json', { ...base, sections: blocks }).sections).toHaveLength(8)
   })
 
+  it('checks the stations override', () => {
+    const ten = Array.from({ length: 10 }, () => ({ type: 'tip', text: 't' }))
+    expect(parseLesson('content/lessons/u1-01-x.json', { ...base, stations: [4, 8], sections: ten }).stations).toEqual([4, 8])
+    for (const bad of [[8, 4], [0], [10], [2, 4, 6]]) {
+      const p = problemsOf(() => parseLesson('content/lessons/u1-01-x.json', { ...base, stations: bad, sections: ten }))
+      expect(p.some((x) => x.includes('stations')), JSON.stringify(bad)).toBe(true)
+    }
+  })
+
   it('names the file and field of broken blocks', () => {
     const p = problemsOf(() =>
       parseLesson('content/lessons/u1-01-x.json', {

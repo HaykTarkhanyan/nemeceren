@@ -292,8 +292,17 @@ export const Lesson = z.strictObject({
   words: z.array(Slug).optional(),
   /** Test ids that belong to this lesson. */
   tests: z.array(Slug).optional(),
+  /**
+   * Where the lesson's stations on the Home path start, after the first (the section index of each
+   * start): at most 2, so at most 3 stations. Leave out to split by the rule in app/src/lib/path.ts.
+   */
+  stations: z.array(z.number().int().positive()).max(2).optional(),
   sections: z.array(LessonBlock).min(1),
 }).superRefine((l, ctx) => {
+  l.stations?.forEach((start, i, all) => {
+    if (i > 0 && start <= all[i - 1]) ctx.addIssue({ code: 'custom', path: ['stations', i], message: `must be larger than the one before (${all[i - 1]})` })
+    if (start >= l.sections.length) ctx.addIssue({ code: 'custom', path: ['stations', i], message: `must be below the number of sections (${l.sections.length})` })
+  })
   if (l.theme !== undefined) {
     for (const key of ['unit', 'order'] as const) {
       if (l[key] !== undefined) ctx.addIssue({ code: 'custom', path: [key], message: `a theme lesson has "theme" and no ${key} (a course lesson has unit and order and no theme)` })
