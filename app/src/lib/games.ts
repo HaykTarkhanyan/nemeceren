@@ -281,22 +281,14 @@ export function sentenceWords(sentence: string): string[] {
 
 /**
  * Words always written with a capital (nouns, names, Sie): seen with a capital in the middle of a
- * sentence, or only ever at the start of one and never in lower case (Köln). A tile at the start of
- * a sentence keeps its capital only if it is one of these.
+ * sentence. A tile at the start of a sentence keeps its capital only if it is one of these. A word
+ * only ever seen at the start ("Vielen Dank", but also a city that never comes mid-sentence) is
+ * lowercased: a lowercase name is a smaller harm than a capital that gives the first word away.
  */
 export function capitalizedWords(sentences: string[]): Set<string> {
-  const mid = new Set<string>()
-  const atStart = new Set<string>()
-  const lower = new Set<string>()
-  for (const s of sentences) {
-    for (const t of tokensOf(s)) {
-      if (!isCapital(t.text)) lower.add(t.text)
-      else if (t.start) atStart.add(t.text)
-      else mid.add(t.text)
-    }
-  }
-  for (const w of atStart) if (!lower.has(w.toLowerCase())) mid.add(w)
-  return mid
+  const out = new Set<string>()
+  for (const s of sentences) for (const t of tokensOf(s)) if (!t.start && isCapital(t.text)) out.add(t.text)
+  return out
 }
 
 // Forms that are easy to confuse: the persons of the most common verbs (present and simple past).

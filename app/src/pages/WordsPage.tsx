@@ -1,5 +1,6 @@
 // The Words page: word review with spaced repetition (FSRS; three modes share one schedule per
-// word) and the "All words" list, each a tab in the URL ("#/words", "#/words/all"). Hayk adds his
+// word), the "All words" list, the word sets and the map of lessons, each a tab in the URL
+// ("#/words", "#/words/all", "#/words/sets", "#/words/map"). Hayk adds his
 // own words here too (DECISIONS.md #58). When nothing is left to review, the "What next" menu
 // offers more work instead of a dead end.
 import { useEffect, useMemo, useRef, useState } from 'react'
@@ -12,6 +13,7 @@ import { GlossScope } from '../components/GermanText.tsx'
 import { Card, MODES, WordDe } from '../components/ReviewCard.tsx'
 import { WhatNext } from '../components/WhatNext.tsx'
 import { Tabs } from '../components/Tabs.tsx'
+import { VocabMap } from '../components/VocabMap.tsx'
 import { WordForm } from '../components/WordForm.tsx'
 import { WordSetsTab } from '../components/WordSetsTab.tsx'
 import type { PracticeHow } from '../components/WordSetsTab.tsx'
@@ -35,8 +37,8 @@ import { useSpeech } from '../lib/speech.ts'
 import { recordPractice, recordReview, recordReviewRoundDone, requestFlush, useProgress } from '../lib/storage.ts'
 import type { CustomWordView } from '../lib/storage.ts'
 
-export const WORDS_TABS = ['review', 'all', 'sets'] as const
-const TAB_LABEL = { review: 'Review', all: 'All words', sets: 'Word sets' } as const
+export const WORDS_TABS = ['review', 'all', 'sets', 'map'] as const
+const TAB_LABEL = { review: 'Review', all: 'All words', sets: 'Word sets', map: 'Map' } as const
 
 /** `tab` is the part after "#/words/": none for Review, "all" for All words. */
 export function WordsPage({ tab }: { tab?: string }) {
@@ -214,7 +216,9 @@ function Words({ tab }: { tab: (typeof WORDS_TABS)[number] }) {
           </button>
         </div>
       )}
-      {tab === 'sets' ? (
+      {tab === 'map' ? (
+        <VocabMap />
+      ) : tab === 'sets' ? (
         <WordSetsTab onPractice={startPractice} />
       ) : tab === 'all' ? (
         <AllWords onEdit={openForm} onNotice={setNotice} onPractice={startPractice} />

@@ -22,7 +22,7 @@ import { nearMissText } from './ResultView.tsx'
 import { PlayButtons } from './Speaker.tsx'
 
 // From the whole course (content does not change while the app runs): which words keep their capital
-// at the start of a sentence (the cards' own words count as lower-case evidence), and the verbs.
+// at the start of a sentence (seen with one mid-sentence, in the examples or the cards' own words), and the verbs.
 const CAPITALIZED = capitalizedWords([...content.words.flatMap((w) => (w.example ? [w.example.de] : [])), ...content.words.map((w) => w.de)])
 const VERBS = content.words.filter((w) => isVerbCard(w) && w.de.endsWith('en')).map((w) => w.de)
 
