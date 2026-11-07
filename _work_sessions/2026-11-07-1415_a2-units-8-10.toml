@@ -10,10 +10,12 @@ done = [
   "Install fix (a72c373, DECISIONS #89): manifest, own SVG icon (googly-eye umlaut Ä), network-only service worker with an offline page. Chromium 157: 0 installability errors locally and on the live site. Hayk: 'Install worked'.",
   "Pushed a72c373 (Units 8, 9 + install fix) with Hayk's OK (Q28).",
   "Unit 10 'At work: the office' (b40207c, pushed): Wo/Wohin with ins Kino/in die Stadt explained, stehen/liegen/hängen/sitzen, stellen/legen/hängen, phone message, task handover, story (lost phone note). 90 cards. DECISIONS #90. Review: räume popup and a giveaway (must), 15 smaller fixes.",
-  "Design for path-ordered words, practice games and vocabulary tiles (a971764, Hayk's Q29-Q33); a builder agent works on it in a git worktree.",
+  "Design for path-ordered words, practice games and vocabulary tiles (a971764, Hayk's Q29-Q33).",
+  "Built by one agent in a git worktree (1a9dc6f, 551caff, 2ecfeca), merged (e4d3a9a); DECISIONS #91-#93 (98fcdde). Opus code review: 0 critical; important: new words stopped after a failed test (0 new words after 6 lessons, no test) and the Map's Review these could open the old source; fixed test-first with 3 minors (drill logs one entry per noun per round, speech cancelled on Skip/Type, no logging after the answer was shown): e4c4bdf, merged 31c5c83. 486 tests. Guest browser check at 390 px: new words in course order on a fresh start, all five games and the Map, 0 console errors. Pushed 4db30ef.",
 ]
 pending = [
-  "Merge the practice-games builder's worktree branch, add its decisions to DECISIONS.md (#91+), review, browser check at 390 px, push.",
+  "Hayk's phone: real speech recognition in Say the words / Say the sentence (headless checks only).",
+  "Deferred game minors in DEFERRED_TODO.md (first-tile capitals, Back to the map, history with practice, long More practice).",
   "Next units: 11 'At work: polite requests' (würde, könnte, hätte, wäre; Sie sollten; wenn).",
 ]
 next = """
