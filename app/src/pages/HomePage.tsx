@@ -1,7 +1,7 @@
 // The path Home (DECISIONS.md #82, #83; design: _knowledge/2026-11-07_path-home-design.md): a small
 // level bar, the daily card (goal, streak, daily mix), a one-time notice about the new goal, the
 // milestone card, then the course as U-Bahn lines. Tapping a station opens its sheet.
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { PathLines } from '../components/PathLines.tsx'
 import { StationSheet } from '../components/StationSheet.tsx'
 import { content } from '../content/load.ts'
@@ -22,6 +22,10 @@ export function HomePage({ scrollToCurrent = false }: { scrollToCurrent?: boolea
   const level = levelProgress(stations, path.done, content.lessons, content.tests)
   const otherTests = content.tests.filter((t) => t.lesson === undefined)
   const pct = level && level.total > 0 ? Math.round((100 * level.done) / level.total) : 0
+  // Home opens at the top (Hayk's Q11); "Back to the line" (#/line) scrolls to the station instead.
+  useEffect(() => {
+    if (!scrollToCurrent) window.scrollTo(0, 0)
+  }, [scrollToCurrent])
   const milestone = goal.milestoneToday !== null && !milestoneHidden && !milestoneSeen(goal.milestoneToday, today) ? goal.milestoneToday : null
 
   return (

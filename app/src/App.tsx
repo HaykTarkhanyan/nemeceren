@@ -73,7 +73,9 @@ export function App() {
         <Header route={route} />
         <GuestBanner />
         <VoiceWarning />
-        <GoalToast />
+        <ErrorBoundary>
+          <GoalToast />
+        </ErrorBoundary>
         <main className="container">
           <ErrorBoundary key={route.join('/')}>
             <Page route={route} />

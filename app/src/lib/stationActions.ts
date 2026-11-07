@@ -36,6 +36,11 @@ export function markLessonDoneWithEvents(store: ProgressStore, lesson: Lesson, n
   markDone(store, lesson, now)
 }
 
+/** "Mark as not done" on the Lessons page: undoes every station event of the lesson, and its doneAt. */
+export function markLessonNotDone(store: ProgressStore, lesson: Lesson, now: Date): void {
+  undoStation(store, lesson, [0, lesson.sections.length], now)
+}
+
 /** "Mark as not done" on a station: undoes every event of the lesson that overlaps the range, and the lesson's doneAt. */
 export function undoStation(store: ProgressStore, lesson: Lesson, range: [number, number], now: Date): void {
   for (const e of store.getView().pathEvents) {

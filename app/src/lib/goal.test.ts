@@ -135,4 +135,28 @@ describe('the goal streak', () => {
     const g = goalStreak({ studyDays: study, goalDays: set(), launchDay: L, today: L })
     expect(g).toMatchObject({ current: 1, longest: 10 })
   })
+
+  it('a station done before launch day keeps the streak alive across it (deploy day)', () => {
+    // Deploy day L-1: a station, no review or test item, so no study day. The ring said "Goal done".
+    const before = goalStreak({ studyDays: set(), goalDays: set(addDays(L, -1)), launchDay: L, today: addDays(L, -1) })
+    expect(before).toMatchObject({ current: 1, todayMet: true })
+    const after = goalStreak({ studyDays: set(), goalDays: set(addDays(L, -1), L), launchDay: L, today: L })
+    expect(after.current).toBe(2)
+  })
+
+  it('a freeze is not spent while there is no streak to keep', () => {
+    // Nothing on launch day or the day after: the starter freeze is still there.
+    const g = goalStreak({ studyDays: set(), goalDays: set(addDays(L, 2)), launchDay: L, today: addDays(L, 2) })
+    expect(g).toMatchObject({ current: 1, freezes: 1 })
+    expect(g.frozenDays.size).toBe(0)
+  })
+
+  it('two freezes used in a row keep a streak', () => {
+    // 7 goal days (freezes 1 -> 2), then two missed days, then a goal day.
+    const goal = set(...run(L, 7), addDays(L, 9))
+    const g = goalStreak({ studyDays: set(), goalDays: goal, launchDay: L, today: addDays(L, 9) })
+    expect(g.current).toBe(8)
+    expect(g.freezes).toBe(0)
+    expect([...g.frozenDays]).toEqual([addDays(L, 7), addDays(L, 8)])
+  })
 })

@@ -32,12 +32,12 @@ Newest at the top. Never delete a superseded entry - mark it and add a new one.
 - **What it does** (`app/src/lib/goal.ts`, pure, 15 tests):
   - **A goal day** is a local day with a station done (a lesson step, or "mark lesson as done" on a course or theme lesson), a submitted course-test attempt (pass or fail), or a daily mix run to its end (Stop does not count).
   - **The streak:**
-    - before `PATH_LAUNCH_DAY` = 2026-11-08 (the day after the deploy) it is the old rule, any study day;
+    - before `PATH_LAUNCH_DAY` = 2026-11-08 (the day after the deploy) it is the old rule, any study day, where a goal day also counts as a study day (so a station read on deploy day carries the streak across the launch; from the final review);
     - from then on it counts goal days;
     - so the streak each learner had on launch day carries on.
   - **Freezes:**
     - everyone starts with 1, holds at most 2, and earns one for every 7 goal days in a row;
-    - a missed day uses a freeze automatically;
+    - a missed day uses a freeze automatically, but only when there is a streak to keep (a 0-day streak keeps its freeze; from the final review);
     - a frozen day keeps the streak but does not add to it.
   - **Milestones:** 7, 30 and 100 days get a card on Home. A toast says "Goal done for today".
   - **Where it shows:** the goal ring follows today's goal even before the launch day. Study-day counts on the Stats page stay activity-based.

@@ -10,12 +10,12 @@ import { Tabs } from '../components/Tabs.tsx'
 import { VideoList } from '../components/VideoList.tsx'
 import { messageOf, reportError } from '../lib/errors.ts'
 import { courseStations, doneRangesByLesson, isCovered, stationRanges } from '../lib/path.ts'
-import { lessonStatus, markLessonDone, setLastSection, startLesson } from '../lib/plan.ts'
+import { lessonStatus, setLastSection, startLesson } from '../lib/plan.ts'
 import type { LessonStatus } from '../lib/plan.ts'
 import { link, tabLink, tabOf } from '../lib/router.ts'
 import { lessonLyrics, wordCounts } from '../lib/lyrics.ts'
 import { KNOWN_DAYS } from '../lib/stats.ts'
-import { finishStation, markLessonDoneWithEvents } from '../lib/stationActions.ts'
+import { finishStation, markLessonDoneWithEvents, markLessonNotDone } from '../lib/stationActions.ts'
 import { progressStore, saveLessonProgress, useProgress } from '../lib/storage.ts'
 
 const STATUS_LABEL: Record<LessonStatus, string> = { 'not-started': 'not started', 'in-progress': 'in progress', done: 'done' }
@@ -291,7 +291,8 @@ function LessonView({ lesson, linked, station }: { lesson: Lesson; linked: numbe
     try {
       // Marking done records the stations not finished yet, so it counts for the daily goal (DECISIONS.md #83).
       if (done) markLessonDoneWithEvents(progressStore(), lesson, new Date())
-      else saveLessonProgress(markLessonDone(progressStore().getView().lessonProgress, lesson.id, false, new Date()))
+      // Not done undoes the stations too, so the path and the daily goal follow (review finding, 2026-11-07).
+      else markLessonNotDone(progressStore(), lesson, new Date())
     } catch (err) {
       reportError(`Could not save the lesson status: ${messageOf(err)}`)
     }

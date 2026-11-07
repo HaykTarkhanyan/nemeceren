@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import type { CourseLesson, LessonBlock, ThemeLesson } from '../content/schema.ts'
-import { finishStation, markLessonDoneWithEvents, undoStation } from './stationActions.ts'
+import { finishStation, markLessonDoneWithEvents, markLessonNotDone, undoStation } from './stationActions.ts'
 import { missingRanges } from './path.ts'
 import { createProgressStore } from './storage.ts'
 
@@ -72,6 +72,15 @@ describe('station actions', () => {
     finishStation(store, course, 1, now)
     undoStation(store, course, [0, 5], now)
     expect(ranges(store)).toEqual([['u1-01-x', 5, 10]])
+    expect(store.getView().lessonProgress.lessons[course.id].doneAt).toBeNull()
+  })
+
+  it('markLessonNotDone undoes every station of the lesson and its doneAt', () => {
+    const { store } = guest()
+    markLessonDoneWithEvents(store, course, now)
+    markLessonDoneWithEvents(store, theme, now)
+    markLessonNotDone(store, course, now)
+    expect(ranges(store)).toEqual([['th-song', 0, 14]])
     expect(store.getView().lessonProgress.lessons[course.id].doneAt).toBeNull()
   })
 })

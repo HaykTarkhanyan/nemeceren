@@ -4,7 +4,8 @@
 //                of a course test (pass or fail), or a daily mix run to its end
 //   streak       before the launch day: consecutive study days (the old rule, stats.ts); from the
 //                launch day on: consecutive goal days, where a missed day is covered by a freeze
-//                if one is held (a frozen day keeps the streak but does not add to it)
+//                if one is held and there is a streak to keep (a frozen day keeps the streak but does not
+//                add to it); before the launch day a goal day counts as a study day too
 //   freezes      every learner starts with STARTER_FREEZES on the launch day, holds at most
 //                MAX_FREEZES, and earns one for every FREEZE_EVERY goal days in a row
 // Design: _knowledge/2026-11-07_path-home-design.md, section 5.4.
@@ -45,13 +46,16 @@ export interface GoalStreak {
 
 export function goalStreak(input: { studyDays: Set<string>; goalDays: Set<string>; launchDay: string; today: string }): GoalStreak {
   const { studyDays, goalDays: goal, launchDay, today } = input
+  // Before the launch day a goal day (e.g. a station read without an exercise) is a study day too, so the
+  // ring and the streak agree on deploy day and that day still carries the streak across the launch.
+  const withGoal = new Set([...studyDays, ...[...goal].filter((d) => d < launchDay)])
   if (today < launchDay) {
-    const old = streaks(studyDays, today)
+    const old = streaks(withGoal, today)
     // The streak still follows the old rule, but the goal ring already shows today's goal.
     return { current: old.current, longest: old.longest, freezes: STARTER_FREEZES, frozenDays: new Set(), todayMet: goal.has(today), milestoneToday: null, freezeEarnedToday: false }
   }
   const beforeLaunch = addDays(launchDay, -1)
-  const oldDays = new Set([...studyDays].filter((d) => d < launchDay))
+  const oldDays = new Set([...withGoal].filter((d) => d < launchDay))
   const old = streaks(oldDays, beforeLaunch)
   // The old streak carries on only if it reached the day before the launch.
   let current = oldDays.has(beforeLaunch) ? old.current : 0
@@ -70,7 +74,8 @@ export function goalStreak(input: { studyDays: Set<string>; goalDays: Set<string
       }
     } else if (day === today) {
       // Today is still open: not met yet is not a miss.
-    } else if (held > 0) {
+    } else if (held > 0 && current > 0) {
+      // A freeze keeps a streak; with no streak there is nothing to keep, so it stays.
       held -= 1
       frozenDays.add(day)
     } else {
