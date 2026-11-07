@@ -2,10 +2,11 @@
 // "Say the words" (#/daily/speak) and "Say the sentence" (#/daily/sentences). Each answer is said
 // into the mic (the browser's recognition, lib/recognition.ts) or typed. A recognition miss is never
 // the learner's error: it is not logged, and offers another try or typing. Answers are practice.
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { ReviewState } from '../content/schema.ts'
 import type { StudyWord } from '../lib/customWords.ts'
-import { checkSentence, GAMES, gameWords, spokenSentence, spokenWordRight } from '../lib/games.ts'
+import { checkSentence, GAMES, gameWords, SENTENCE_START, sentenceTry, spokenSentence, spokenWordRight } from '../lib/games.ts'
+import type { SentenceState } from '../lib/games.ts'
 import { useRecognition } from '../lib/recognition.ts'
 import type { Heard } from '../lib/recognition.ts'
 import { bestAlternative } from '../lib/speaking.ts'
@@ -133,6 +134,15 @@ function SpeakWordCard(props: {
     if (sound) speak(word.de)
   }, [word.de])
   useEnterKey(answered, () => onDone(result))
+  // A recognition still running when this card goes is dropped, so it never lands on the next word.
+  const cancel = rec.cancel
+  useEffect(() => () => cancel(), [cancel])
+
+  /** Skip or Type instead: stop listening first, so a late result is not taken for this word. */
+  function leaveMic(then: () => void) {
+    cancel()
+    then()
+  }
 
   function listen() {
     setMissNote(null)
@@ -186,10 +196,10 @@ function SpeakWordCard(props: {
             )}
             {missNote && <p className="small warn-text">{missNote}</p>}
             <div className="row">
-              <button type="button" className="btn small" onClick={() => onTyping(true, null)}>
+              <button type="button" className="btn small" onClick={() => leaveMic(() => onTyping(true, null))}>
                 Type instead
               </button>
-              <button type="button" className="btn small" onClick={() => onDone('skipped')}>
+              <button type="button" className="btn small" onClick={() => leaveMic(() => onDone('skipped'))}>
                 Skip
               </button>
             </div>
@@ -299,16 +309,38 @@ function SentenceCard(props: {
   const [spoken, setSpoken] = useState<(ReturnType<typeof spokenSentence> & { text: string }) | null>(null)
   const [missNote, setMissNote] = useState<string | null>(null)
   const [typed, setTyped] = useState<{ text: string; check: Comparison } | null>(null)
-  const [gaveUp, setGaveUp] = useState(false)
-  const done = spoken?.right === true || typed !== null || gaveUp
-  const result = spoken?.right ? 'said' : typed?.check.correct ? 'typed' : 'missed'
+  // Whether the sentence was shown and how the item ended (lib/games.ts sentenceTry). A ref too, so
+  // a recognition result that arrives later reads the current state.
+  const [item, setItem] = useState<SentenceState>(SENTENCE_START)
+  const itemRef = useRef(item)
+  const done = item.done !== null
   // The expected sentence shows (and is read with the sound on) after any answer, so the learner hears it.
-  const showAnswer = done || spoken !== null
+  const showAnswer = item.answerShown
 
   useEffect(() => {
     if (showAnswer && sound) speak(expected)
   }, [showAnswer])
-  useEnterKey(done, () => onDone(result))
+  useEnterKey(done, () => onDone(item.done!))
+  // A recognition still running when this card goes is dropped, so it never lands on the next sentence.
+  const cancel = rec.cancel
+  useEffect(() => () => cancel(), [cancel])
+
+  function update(next: SentenceState) {
+    itemRef.current = next
+    setItem(next)
+  }
+
+  /** Applies a try; true when it is logged (only before the sentence was shown). */
+  function apply(t: { how: 'said' | 'typed'; right: boolean }): boolean {
+    const out = sentenceTry(itemRef.current, t)
+    update(out.state)
+    return out.log
+  }
+
+  function leaveMic(then: () => void) {
+    cancel()
+    then()
+  }
 
   function listen() {
     setMissNote(null)
@@ -321,15 +353,18 @@ function SentenceCard(props: {
       const best = bestAlternative(expected, h.alternatives)
       const s = spokenSentence(expected, best)
       setSpoken({ ...s, text: best })
-      if (s.right) savePractice({ state, word, mode: 'production', right: true, text: best, timeMs: Math.round(performance.now() - shownAt) })
+      if (apply({ how: 'said', right: s.right })) savePractice({ state, word, mode: 'production', right: true, text: best, timeMs: Math.round(performance.now() - shownAt) })
     })
   }
 
   function check(text: string) {
     const c = checkSentence(text, expected)
     setTyped({ text, check: c })
-    savePractice({ state, word, mode: 'production', right: c.correct, text, nearMiss: c.nearMiss, timeMs: Math.round(performance.now() - shownAt) })
+    if (apply({ how: 'typed', right: c.correct }))
+      savePractice({ state, word, mode: 'production', right: c.correct, text, nearMiss: c.nearMiss, timeMs: Math.round(performance.now() - shownAt) })
   }
+
+  const giveUp = () => leaveMic(() => update({ answerShown: true, done: 'missed' }))
 
   const near = nearMissText(typed?.check.nearMiss)
   return (
@@ -343,11 +378,11 @@ function SentenceCard(props: {
             <MicButton listening={rec.listening} onStart={listen} onStop={rec.stop} label={spoken ? 'Say it again' : 'Say it'} />
             {missNote && <p className="small warn-text">{missNote}</p>}
             <div className="row">
-              <button type="button" className="btn small" onClick={() => onTyping(true, null)}>
+              <button type="button" className="btn small" onClick={() => leaveMic(() => onTyping(true, null))}>
                 Type instead
               </button>
-              <button type="button" className="btn small" onClick={() => setGaveUp(true)}>
-                {spoken ? 'Next' : 'Show the answer'}
+              <button type="button" className="btn small" onClick={giveUp}>
+                {showAnswer ? 'Next' : 'Show the answer'}
               </button>
             </div>
           </div>
@@ -361,12 +396,13 @@ function SentenceCard(props: {
                   Use the mic
                 </button>
               )}
-              <button type="button" className="btn small" onClick={() => setGaveUp(true)}>
-                Show the answer
+              <button type="button" className="btn small" onClick={giveUp}>
+                {showAnswer ? 'Next' : 'Show the answer'}
               </button>
             </div>
           </>
         )}
+        {!done && showAnswer && <p className="small muted">The sentence is shown now, so another try is practice only: it is not counted.</p>}
 
         {spoken && (
           <div className={`alert ${spoken.right ? 'ok' : 'warn'} speak-result`}>
@@ -395,7 +431,7 @@ function SentenceCard(props: {
           </div>
         )}
         {done && (
-          <button type="button" className="btn primary" onClick={() => onDone(result)}>
+          <button type="button" className="btn primary" onClick={() => onDone(item.done!)}>
             Next (Enter)
           </button>
         )}

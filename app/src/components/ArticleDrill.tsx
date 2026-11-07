@@ -1,13 +1,14 @@
 // The der/die/das speed drill (#/daily/articles; design: _knowledge/2026-11-07_practice-games-design.md,
 // part 3): a learned noun without its article, three big buttons in the article colours, a
 // 60-second round with a streak and the best streak on this device. A wrong noun comes back later
-// in the round. Each tap is logged as practice (recognition); the schedule stays as it is.
+// in the round. A noun's first answer in a round is logged as practice (recognition), later taps
+// on it are not; the schedule stays as it is.
 import { useEffect, useRef, useState } from 'react'
 import type { ReviewState } from '../content/schema.ts'
 import type { StudyWord } from '../lib/customWords.ts'
 import { introduced } from '../lib/daily.ts'
-import { articleNouns, GAMES, requeue } from '../lib/games.ts'
-import type { ArticleNoun } from '../lib/games.ts'
+import { articleNouns, articleTap, emptyArticleRound, GAMES, requeue } from '../lib/games.ts'
+import type { ArticleNoun, ArticleRound } from '../lib/games.ts'
 import { readBestStreak, writeBestStreak } from '../lib/homeView.ts'
 import type { Article } from '../lib/review.ts'
 import { shuffle } from '../lib/shuffle.ts'
@@ -22,15 +23,6 @@ const ARTICLES: Article[] = ['der', 'die', 'das']
 /** The right article stays on screen this long after a wrong tap. */
 const FLASH_MS = 1300
 export const MIN_NOUNS = 3
-
-interface Round {
-  right: number
-  wrong: number
-  streak: number
-  bestThisRound: number
-  /** Nouns tapped wrong at least once, in order. */
-  missed: ArticleNoun<StudyWord>[]
-}
 
 export function ArticleDrill({ words, state, back, onAgain }: { words: StudyWord[]; state: ReviewState; back: GameBack; onAgain: () => void }) {
   const [sound, toggleSound] = useReviewSound()
@@ -78,7 +70,7 @@ function Drill(props: {
   const [queue, setQueue] = useState(() => shuffle(nouns))
   const [index, setIndex] = useState(0)
   const [flash, setFlash] = useState<ArticleNoun<StudyWord> | null>(null)
-  const [round, setRound] = useState<Round>({ right: 0, wrong: 0, streak: 0, bestThisRound: 0, missed: [] })
+  const [round, setRound] = useState<ArticleRound<StudyWord>>(emptyArticleRound)
   const [best, setBest] = useState(readBestStreak)
   const shownAt = useRef(0)
   const elapsed = started === null ? 0 : Math.min(GAMES.articleSeconds, Math.floor((now - started) / 1000))
@@ -114,17 +106,17 @@ function Drill(props: {
   function tap(article: Article) {
     if (over || flash || !noun) return
     const right = article === noun.article
-    savePractice({ state, word: noun.word, mode: 'recognition', right, text: article, timeMs: Math.round(performance.now() - shownAt.current) })
+    const out = articleTap(round, noun, article)
+    // Only a noun's first answer in the round is logged (lib/games.ts articleTap).
+    if (out.log) savePractice({ state, word: noun.word, mode: 'recognition', right, text: article, timeMs: Math.round(performance.now() - shownAt.current) })
+    setRound(out.round)
     if (right) {
-      const streak = round.streak + 1
-      setRound((r) => ({ ...r, right: r.right + 1, streak, bestThisRound: Math.max(r.bestThisRound, streak) }))
-      if (streak > best) {
-        setBest(streak)
-        writeBestStreak(streak)
+      if (out.round.streak > best) {
+        setBest(out.round.streak)
+        writeBestStreak(out.round.streak)
       }
       setIndex((i) => i + 1)
     } else {
-      setRound((r) => ({ ...r, wrong: r.wrong + 1, streak: 0, missed: r.missed.some((m) => m.noun === noun.noun) ? r.missed : [...r.missed, noun] }))
       setQueue((q) => requeue(q, index, noun))
       setFlash(noun)
     }

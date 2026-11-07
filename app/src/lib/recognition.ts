@@ -1,7 +1,7 @@
 // The browser's speech recognition (Web Speech API, de-DE, 3 alternatives), for the "listen and
 // repeat" lines (components/SpeakLine.tsx, DECISIONS.md #79) and the speaking games. It is in
 // Chrome and Edge, not in Firefox; the audio goes to the browser's recognition service.
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { messageOf, reportError } from './errors.ts'
 
 // The recognition part of the Web Speech API, which TypeScript's DOM types leave out.
@@ -50,27 +50,36 @@ export type Heard =
   /** Nothing usable: `blocked` means the mic or the service does not work, so typing is the way on. */
   | { kind: 'none'; message: string; blocked: boolean }
 
+export interface Recognizer {
+  /** Starts listening (ending any earlier listen) and calls back once with what was heard. */
+  listen: (onDone: (h: Heard) => void) => void
+  /** Ends listening early: what was said so far is still recognised. */
+  stop: () => void
+  /** Ends listening and drops whatever comes back (Skip, Type instead, the next card, leaving the game). */
+  cancel: () => void
+}
+
 /**
- * One recognition at a time for a game: listen() starts it and calls back once with what was heard.
- * A miss ("no-speech") is a note, never an error; a blocked mic or a failed start is reported
- * (reportError) and comes back as blocked, so the game offers typing.
+ * One recognition at a time for a game. Every listen is a session; a result that arrives for an
+ * ended session (cancelled, or replaced by a newer listen) is dropped, so it can never land on the
+ * next word. A miss ("no-speech") is a note, never an error; a blocked mic or a failed start is
+ * reported and comes back as blocked, so the game offers typing.
  */
-export function useRecognition(): { supported: boolean; listening: boolean; listen: (onDone: (h: Heard) => void) => void; stop: () => void } {
-  const [listening, setListening] = useState(false)
-  const current = useRef<Recognition | null>(null)
-  const session = useRef(0)
-  useEffect(
-    () => () => {
-      session.current += 1
-      current.current?.abort()
-    },
-    [],
-  )
+export function makeRecognizer(getCtor: () => RecognitionCtor | null, onListening: (on: boolean) => void, report: (message: string) => void): Recognizer {
+  let current: Recognition | null = null
+  let session = 0
+
+  function end() {
+    session += 1
+    const rec = current
+    current = null
+    rec?.abort()
+  }
 
   function listen(onDone: (h: Heard) => void) {
-    current.current?.abort()
-    const my = ++session.current
-    const Ctor = recognitionCtor()
+    end()
+    const my = session
+    const Ctor = getCtor()
     if (!Ctor) {
       onDone({ kind: 'none', message: 'This browser has no speech recognition, so type your answers.', blocked: true })
       return
@@ -89,30 +98,46 @@ export function useRecognition(): { supported: boolean; listening: boolean; list
       code = e.error
     }
     rec.onend = () => {
-      if (current.current === rec) current.current = null
-      if (my !== session.current) return
-      setListening(false)
+      if (my !== session) return
+      current = null
+      onListening(false)
       if (alternatives.length > 0) {
         onDone({ kind: 'heard', alternatives })
         return
       }
       const blocked = code !== null && BLOCKING.has(code)
       const message = code === null ? 'Nothing was recognised. Try again, or type it.' : (RECOGNITION_ERRORS[code] ?? `Speech recognition failed (${code}).`)
-      if (blocked) reportError(`Speech recognition: ${message}`)
+      if (blocked) report(`Speech recognition: ${message}`)
       onDone({ kind: 'none', message, blocked })
     }
-    current.current = rec
-    setListening(true)
+    current = rec
+    onListening(true)
     try {
       rec.start()
     } catch (err) {
-      current.current = null
-      setListening(false)
+      current = null
+      onListening(false)
       const message = `Speech recognition did not start: ${messageOf(err)}`
-      reportError(message)
+      report(message)
       onDone({ kind: 'none', message, blocked: true })
     }
   }
 
-  return { supported: recognitionCtor() !== null, listening, listen, stop: () => current.current?.stop() }
+  return {
+    listen,
+    stop: () => current?.stop(),
+    cancel: () => {
+      const wasListening = current !== null
+      end()
+      if (wasListening) onListening(false)
+    },
+  }
+}
+
+/** makeRecognizer for a component: one recognizer for its lifetime, cancelled when it unmounts. */
+export function useRecognition(): Recognizer & { supported: boolean; listening: boolean } {
+  const [listening, setListening] = useState(false)
+  const [recognizer] = useState(() => makeRecognizer(recognitionCtor, setListening, reportError))
+  useEffect(() => () => recognizer.cancel(), [recognizer])
+  return { ...recognizer, supported: recognitionCtor() !== null, listening }
 }

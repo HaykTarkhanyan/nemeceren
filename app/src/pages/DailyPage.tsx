@@ -26,7 +26,7 @@ import { dueNow, introduced, matchRounds, MIN_PAIRS, MIN_PICK_WORDS, MIX, MIX_ST
 import type { MixStep } from '../lib/daily.ts'
 import { deriveMistakes, MISTAKE_SESSION_MAX } from '../lib/mistakes.ts'
 import type { Mistake } from '../lib/mistakes.ts'
-import { nextLesson, wordsForSource } from '../lib/plan.ts'
+import { nextLesson, reachedUnit, wordsForSource } from '../lib/plan.ts'
 import type { ProgressView } from '../lib/storage.ts'
 import { link } from '../lib/router.ts'
 import { useSettings } from '../lib/settings.ts'
@@ -166,14 +166,13 @@ interface GameScope {
 
 /**
  * What a game plays with: all words, or one lesson's words (from a tile on the Words map). "Say the
- * words" keeps to the unit the path is at and earlier (design part 2); Hayk's own words and theme
- * words have no unit and always count.
+ * words" keeps to the highest unit the path reaches and earlier (design part 2); Hayk's own words
+ * and theme words have no unit and always count.
  */
 export function gameScope(progress: ProgressView, game: string, lessonId: string | undefined): GameScope | { problem: string } {
   const pool = studyPool(progress)
   if (lessonId === undefined) {
-    const at = reachOf(progress).at
-    const unit = at === null ? Number.POSITIVE_INFINITY : (content.lessons.find((l) => l.id === at)?.unit ?? Number.POSITIVE_INFINITY)
+    const unit = reachedUnit(content.lessons, reachOf(progress))
     const words = game === 'speak' ? pool.filter((w) => (unitOfWord(w.id) ?? Number.NEGATIVE_INFINITY) <= unit) : pool
     return { words, pool, back: { href: link(), lesson: false } }
   }

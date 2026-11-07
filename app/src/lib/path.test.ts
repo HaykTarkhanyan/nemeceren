@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest'
 import { byCourseOrder } from '../content/lessons.ts'
 import type { CourseLesson, LessonBlock, Result, ResultItem, Test } from '../content/schema.ts'
 import { checkAllContent } from '../content/validate.ts'
-import { emptyLessonProgress, markLessonDone, startLesson } from './plan.ts'
+import { emptyLessonProgress, markLessonDone, reachableLessons, startLesson } from './plan.ts'
 import {
   courseStations,
   englishName,
@@ -281,6 +281,17 @@ describe('where the path is, for the new words (pathReach)', () => {
     const r = pathReach(st, p)
     expect(r.at).toBe('a')
     expect([...r.started]).toEqual(['c'])
+  })
+
+  it('on the real course: 6 lessons done, no test taken -> the 7th lesson is reached for new words', () => {
+    const real = courseStations(content.lessons, content.tests)
+    const first6 = content.lessons.slice(0, 6).map((l) => l.id)
+    let lp = emptyLessonProgress()
+    for (const id of first6) lp = markLessonDone(startLesson(lp, id, t0), id, true, t0)
+    const reach = pathReach(real, pathProgress(real, { ...noProgress, lessonProgress: lp }))
+    // "Du bist hier" is the first test (not taken), so the path is at the lesson before it.
+    expect(reach.at).not.toBe(first6[5])
+    expect(reachableLessons(content.lessons, reach).has(content.lessons[6].id)).toBe(true)
   })
 
   it('is null when every station is done', () => {
