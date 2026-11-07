@@ -2,6 +2,23 @@
 
 Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
+## 89. The app is installable: a web app manifest, our own icon, and a service worker that caches nothing (asked for by Hayk, 2026-11-06 and 2026-11-07)
+
+- **Date:** 2026-11-07 - **Status:** active
+- **Why:** On Android Chrome the app said it "can't be installed", while kachayt installed fine. The app had no manifest, no service worker, and only a 3x3 SVG favicon, and it lives under the subpath `/nemeceren/`.
+- **What it is:**
+  - **Manifest:** `app/public/manifest.webmanifest`, with relative `id`, `start_url` and `scope` ("./") so it works under `/nemeceren/`, `display: standalone`, theme `#1f5fbf`, and icons at 192, 512 and 512 maskable.
+  - **Icon:** our own SVG (`app/public/icons/icon.svg`), a blue speech bubble whose "Ä" has googly-eye umlaut dots, with pink cheeks, a sparkle and a dotted path, on an orange gradient. Hayk asked for something fun instead of the first flag-and-N version. It is drawn with shapes, no fonts, so it looks the same everywhere. The PNGs were rendered from it with Chromium; the maskable and iOS versions are full-bleed (`icon-maskable.svg`). The SVG is also the favicon.
+  - **Service worker:** `app/public/sw.js`, registered only in the built app (`main.tsx`). It caches nothing: every request goes to the network, so a new deploy is always what loads. Only a failed page load (no internet) gets a short offline page. A registration failure goes through `reportError`.
+- **Checked:** `vite preview` under `/nemeceren/`, in Chromium 157 via DevTools `Page.getInstallabilityErrors` and `Page.getAppManifest`: 0 installability errors, 0 manifest errors, the worker active with scope `/nemeceren/`, every file served 200 with the right type. The offline page showed with the network off, and the app loaded again once back online. The real check is Hayk installing it on the phone.
+- **Alternatives rejected:**
+  - **vite-plugin-pwa / Workbox:** a new dependency, and precaching means old app versions after a deploy, which matters with three learners on a live app.
+  - **No service worker:** current sources disagree on whether Chrome still needs one with a fetch handler. A network-only worker costs nothing and satisfies both readings.
+  - **Keeping the flag icon:** Hayk found it boring.
+- **What would change this:**
+  - **Install still failing on Hayk's phone:** look at the phone's `chrome://inspect`, or the "Install app" menu text.
+  - **Hayk wanting the app offline:** then a precache with a version check.
+
 ## 88. Unit 9 as written: weil, denn, deshalb, trotzdem and dass in five lessons, the weil part in position 1, das or dass, and dafür, dagegen and meiner Meinung nach as chunks (written with the course-unit skill, 2026-11-07; Hayk away, so Claude's calls)
 
 - **Date:** 2026-11-07 - **Status:** active; builds on #87
