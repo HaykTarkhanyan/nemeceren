@@ -29,7 +29,7 @@ Newest at the top. Never delete a superseded entry - mark it and add a new one.
   - **"Addictive":** Hayk wants Home to be something they open "in an addicted manner for many days". In the interview (design `_knowledge/2026-11-07_path-home-design.md`), Hayk picked the daily goal plus a streak freeze (Q4).
   - **The rules Hayk chose:** the goal is 1 station or the daily mix (Q6), and the streak counts goal days (Q7).
   - **The friends:** a one-time notice plus 1 starter freeze for every learner, for Anahit and Armen (Q14).
-- **What it does** (`app/src/lib/goal.ts`, pure, 15 tests):
+- **What it does** (`app/src/lib/goal.ts`, pure, 18 tests):
   - **A goal day** is a local day with a station done (a lesson step, or "mark lesson as done" on a course or theme lesson), a submitted course-test attempt (pass or fail), or a daily mix run to its end (Stop does not count).
   - **The streak:**
     - before `PATH_LAUNCH_DAY` = 2026-11-08 (the day after the deploy) it is the old rule, any study day, where a goal day also counts as a study day (so a station read on deploy day carries the streak across the launch; from the final review);

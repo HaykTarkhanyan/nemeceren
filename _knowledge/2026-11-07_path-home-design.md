@@ -1,5 +1,12 @@
 # The path Home (U-Bahn line), daily goal and streak freeze: design
 
+**As built (2026-11-07):** see DECISIONS.md #82-#84. Changes from this design:
+- **Freezes:** a missed day uses a freeze only when there is a streak to keep (5.4 spent it on any missed day).
+- **Deploy day:** before the launch day, a goal day also counts as a study day, so a station read on deploy day carries the streak across the launch.
+- **Goal ring:** it follows today's goal before the launch day too.
+- **"Back to the line"** goes to `#/line` (Home, scrolled to the station); a plain Home still opens at the top.
+- **"Mark as not done"** on the Lessons page undoes the lesson's stations too.
+
 Date: 2026-11-07.
 - **Inputs:**
   - Hayk's wish at the end of the 2026-11-06 session (in `_work_sessions/2026-11-06-2050_duolingo-daily-mode.toml`);
