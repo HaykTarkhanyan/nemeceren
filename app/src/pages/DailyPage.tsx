@@ -28,6 +28,7 @@ import type { SpeechInfo } from '../lib/speech.ts'
 import type { Settings } from '../lib/settings.ts'
 import { counts } from '../lib/srs.ts'
 import { messageOf, reportError } from '../lib/errors.ts'
+import { reachOf } from '../lib/goalView.ts'
 import { recordDailyMixDone, requestFlush, useProgress } from '../lib/storage.ts'
 
 /** The word set the mix takes new words from, or null (the next lessons). An unknown saved id is an error to show. */
@@ -37,9 +38,17 @@ export function activeSet(settings: Settings): { set: WordSet | null; problem: s
   return set ? { set, problem: null } : { set: null, problem: `The word set "${settings.activeSet}" no longer exists, so new words come from the next lessons.` }
 }
 
-/** All words the reviews may use (lessons unlock their words when opened), plus Hayk's own words. */
+/** All words the reviews may use (new words follow the path), plus Hayk's own words. */
 export function studyPool(progress: ProgressView): StudyWord[] {
-  return wordsForSource({ kind: 'all' }, content.words, progress.customWords.map(practiceWord), content.allLessons, progress.lessonProgress, progress.reviewState)
+  return wordsForSource(
+    { kind: 'all' },
+    content.words,
+    progress.customWords.map(practiceWord),
+    content.allLessons,
+    progress.lessonProgress,
+    progress.reviewState,
+    reachOf(progress),
+  )
 }
 
 /** Mistakes from tests and lesson exercises (DECISIONS.md #81): the due ones, and how many changed since. */
@@ -73,7 +82,7 @@ export function mixPlan(progress: ProgressView, settings: Settings, now: Date, l
   const state = progress.reviewState
   const pool = studyPool(progress)
   const { set, problem } = activeSet(settings)
-  const fresh = mixNewWords({ words: content.words, lessons: content.lessons, progress: progress.lessonProgress, state, set })
+  const fresh = mixNewWords({ words: content.words, lessons: content.allLessons, progress: progress.lessonProgress, state, set, reach: reachOf(progress) })
   const newLeft = counts(fresh.words, state, now, settings.newPerDay).newLeft
   const newCount = Math.min(newLeft, fresh.words.length, MIX.maxNew)
   const due = Math.min(

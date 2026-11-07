@@ -50,8 +50,11 @@ const word = (id: string, de: string, en: string, added = '2026-09-28'): Word =>
 const lessonBase = { level: 'A1' as const, summary: 's', goals: ['g'], sections: [{ type: 'tip' as const, text: 'x' }] }
 const lessons: CourseLesson[] = [
   { ...lessonBase, id: 'u1-01-a', unit: 1, order: 1, title: 'A', words: ['termin', 'uhr'] },
-  { ...lessonBase, id: 'u1-02-b', unit: 1, order: 2, title: 'B', words: ['bruecke'] },
+  // The path is at lesson A, so A and the next lesson (this one, without words) are reached; B is not.
+  { ...lessonBase, id: 'u1-02-x', unit: 1, order: 2, title: 'X', words: [] },
+  { ...lessonBase, id: 'u1-03-b', unit: 1, order: 3, title: 'B', words: ['bruecke'] },
 ]
+const reach = { at: 'u1-01-a', started: new Set<string>() }
 const themes: ThemeLesson[] = [{ ...lessonBase, id: 't-arzt', theme: { kind: 'topic', title: 'Beim Arzt' }, title: 'Arzt', words: ['arzt', 'termin'] }]
 const words = [
   word('termin', 'der Termin', 'appointment'),
@@ -99,6 +102,7 @@ function rows(): WordRow[] {
     lessons,
     themes,
     progress: startLesson(emptyLessonProgress(), 'u1-01-a', t0),
+    reach,
     state,
     log: [
       log('termin', '2026-09-20T10:00:00.000Z', 3),
@@ -134,6 +138,16 @@ describe('rows', () => {
     // Claude's correction is what is shown and practised.
     expect(r[own.id].de).toBe('der Stau')
     expect(r[own.id].due).toBe(own.createdAt)
+  })
+
+  it('"locked" follows the path: a reached lesson waits among the new words, opened or not', () => {
+    const status = (at: string, started: string[] = []) =>
+      buildRows({ words, custom: [], lessons, themes, progress: emptyLessonProgress(), reach: { at, started: new Set(started) }, state: emptyState(t0), log: [] }).find(
+        (x) => x.id === 'bruecke',
+      )?.status
+    expect(status('u1-01-a')).toBe('locked')
+    expect(status('u1-02-x')).toBe('not-started')
+    expect(status('u1-01-a', ['u1-03-b'])).toBe('not-started')
   })
 })
 

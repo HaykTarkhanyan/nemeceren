@@ -6,8 +6,8 @@ import { PATH_LAUNCH_DAY } from './config.ts'
 import { localDay } from './dates.ts'
 import { goalDays, goalStreak } from './goal.ts'
 import type { GoalStreak } from './goal.ts'
-import { courseStations, pathProgress } from './path.ts'
-import type { PathProgress, Station } from './path.ts'
+import { courseStations, pathProgress, pathReach } from './path.ts'
+import type { PathProgress, PathReach, Station } from './path.ts'
 import { dailyStats, studyDays } from './stats.ts'
 import { activityOf, useProgress } from './storage.ts'
 import type { ProgressView } from './storage.ts'
@@ -38,16 +38,23 @@ export function computeGoal(progress: ProgressView, today: string): GoalView {
   return { goal, path, stations: STATIONS, today }
 }
 
-// Home, the goal toast and the Stats page all read the same progress object: compute once per state.
+// Home, the goal toast, the Stats page and the new words all read the same progress object: compute once per state.
 let last: { progress: ProgressView; today: string; view: GoalView } | null = null
+
+export function goalOf(progress: ProgressView, today: string = localDay(new Date())): GoalView {
+  if (last && last.progress === progress && last.today === today) return last.view
+  const view = computeGoal(progress, today)
+  last = { progress, today, view }
+  return view
+}
 
 export function useGoal(): GoalView {
   const progress = useProgress()
   const today = localDay(new Date())
-  return useMemo(() => {
-    if (last && last.progress === progress && last.today === today) return last.view
-    const view = computeGoal(progress, today)
-    last = { progress, today, view }
-    return view
-  }, [progress, today])
+  return useMemo(() => goalOf(progress, today), [progress, today])
+}
+
+/** Where the path is, for the new words (words follow the path): the Words page and the daily mix both use this. */
+export function reachOf(progress: ProgressView): PathReach {
+  return pathReach(STATIONS, goalOf(progress).path)
 }

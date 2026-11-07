@@ -8,9 +8,11 @@ import { messageOf, reportError } from '../lib/errors.ts'
 import { PASS_PERCENT } from '../lib/grading.ts'
 import { englishName, germanName, testStationName, unitColor, unitTextColor, unitTitle } from '../lib/path.ts'
 import type { PathProgress, Station } from '../lib/path.ts'
+import { sourceKey, unitWordsLeft } from '../lib/plan.ts'
 import { link } from '../lib/router.ts'
 import { undoStation } from '../lib/stationActions.ts'
-import { progressStore } from '../lib/storage.ts'
+import { progressStore, useProgress } from '../lib/storage.ts'
+import { openWordReview } from '../lib/wordReview.ts'
 
 const BLOCK_LABEL: Record<LessonBlock['type'], string> = {
   explanation: 'Explanation',
@@ -26,6 +28,7 @@ const BLOCK_LABEL: Record<LessonBlock['type'], string> = {
 }
 
 export function StationSheet({ station, path, onClose }: { station: Station | null; path: PathProgress; onClose: () => void }) {
+  const state = useProgress().reviewState
   useEffect(() => {
     if (!station) return
     const onKey = (e: KeyboardEvent) => {
@@ -55,6 +58,7 @@ export function StationSheet({ station, path, onClose }: { station: Station | nu
   } else if (s.kind === 'test') {
     const t = content.tests.find((x) => x.id === s.testId)!
     const best = path.best.get(s.id)
+    const words = unitWordsLeft(s.unit, content.lessons, state)
     body = (
       <>
         <h3>{testStationName(t.id, t.title)}</h3>
@@ -62,6 +66,18 @@ export function StationSheet({ station, path, onClose }: { station: Station | nu
         <p>
           {t.items.length} items, passed from {PASS_PERCENT}%.{best !== undefined ? ` Your best so far: ${best}%.` : ''}
         </p>
+        {words.total > 0 && (
+          <div className="sheet-words">
+            <p className="small">
+              {words.left > 0
+                ? `${words.left} of the ${words.total} Unit ${s.unit} words are not learned yet.`
+                : `You have learned all ${words.total} Unit ${s.unit} words.`}
+            </p>
+            <button type="button" className="btn small" onClick={() => openWordReview(sourceKey({ kind: 'unit', unit: s.unit }), `Unit ${s.unit}`)}>
+              Review Unit {s.unit} words
+            </button>
+          </div>
+        )}
       </>
     )
     action = { href: link('test', t.id), label: done ? 'Take it again' : best !== undefined ? 'Retake' : 'Take the test' }

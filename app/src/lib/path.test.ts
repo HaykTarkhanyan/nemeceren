@@ -12,6 +12,7 @@ import {
   isStoryLesson,
   levelProgress,
   pathProgress,
+  pathReach,
   stationRanges,
   unitColor,
   unitTextColor,
@@ -253,5 +254,39 @@ describe('which stations are done', () => {
     const real = courseStations(content.lessons, content.tests)
     expect(levelProgress(real, new Set(), content.lessons, content.tests)).toEqual({ level: 'A1', done: 0, total: 108 })
     expect(levelProgress([], new Set(), [], [])).toBeNull()
+  })
+})
+
+describe('where the path is, for the new words (pathReach)', () => {
+  const a = lesson('a', 0, 1, 10)
+  const b = lesson('b', 0, 2, 6)
+  const c = lesson('c', 1, 1, 6)
+  const st = courseStations([a, b, c], [test('t1', 'a')])
+
+  it('is the lesson of "Du bist hier", nothing done yet', () => {
+    const r = pathReach(st, pathProgress(st, noProgress))
+    expect(r.at).toBe('a')
+    expect([...r.started]).toEqual([])
+  })
+
+  it('a test station belongs to the lesson it follows', () => {
+    const lp = markLessonDone(startLesson(emptyLessonProgress(), 'a', t0), 'a', true, t0)
+    const p = pathProgress(st, { ...noProgress, lessonProgress: lp })
+    expect(p.current?.id).toBe('t1')
+    expect(pathReach(st, p).at).toBe('a')
+  })
+
+  it('lists lessons with at least one done station (done ahead of "Du bist hier")', () => {
+    const p = pathProgress(st, { ...noProgress, events: [done('c', 0, 6)] })
+    const r = pathReach(st, p)
+    expect(r.at).toBe('a')
+    expect([...r.started]).toEqual(['c'])
+  })
+
+  it('is null when every station is done', () => {
+    let lp = emptyLessonProgress()
+    for (const id of ['a', 'b', 'c']) lp = markLessonDone(startLesson(lp, id, t0), id, true, t0)
+    const p = pathProgress(st, { ...noProgress, lessonProgress: lp, results: [result('t1', 'cccccccccc')] })
+    expect(pathReach(st, p).at).toBeNull()
   })
 })

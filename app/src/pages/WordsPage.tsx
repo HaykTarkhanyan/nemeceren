@@ -19,6 +19,7 @@ import { practiceWord } from '../lib/customWords.ts'
 import type { StudyWord } from '../lib/customWords.ts'
 import { addDays, localDay } from '../lib/dates.ts'
 import { messageOf, reportError } from '../lib/errors.ts'
+import { reachOf } from '../lib/goalView.ts'
 import { readReviewSound, writeReviewSound } from '../lib/homeView.ts'
 import { lessonStatus, parseSourceKey, sourceKey, sourceLabel, sourceLessons, sourceThemes, wordsForSource } from '../lib/plan.ts'
 import type { WordSource } from '../lib/plan.ts'
@@ -73,7 +74,8 @@ function Words({ tab }: { tab: (typeof WORDS_TABS)[number] }) {
   // (course or theme) that are not open yet wait until their lesson is opened.
   const { source, note } = parseSourceKey(picked ?? settings.wordSource, content.allLessons)
   const custom = progress.customWords.map(practiceWord)
-  const words = wordsForSource(source, content.words, custom, content.allLessons, progress.lessonProgress, state)
+  // With "all", new words follow the path (lib/plan.ts pathNewWords), the same rule as the daily mix.
+  const words = wordsForSource(source, content.words, custom, content.allLessons, progress.lessonProgress, state, reachOf(progress))
   // A picked unit, lesson or "my words" brings all its new words at once; only "all" keeps the daily
   // limit, so 200+ lesson words can't arrive in one day (Hayk, 2026-10-02; DECISIONS.md #66).
   const newLimit = source.kind === 'all' ? settings.newPerDay : Number.POSITIVE_INFINITY
@@ -280,7 +282,7 @@ function SourcePicker({ source, onPick }: { source: WordSource; onPick: (key: st
     <label className="field">
       <span className="label">Words from</span>
       <select value={sourceKey(source)} onChange={(e) => onPick(e.target.value)}>
-        <option value="all">All words (lessons unlock their words when opened)</option>
+        <option value="all">All words (new words follow the path)</option>
         <option value="mine">{`My words (${view.customWords.length})`}</option>
         {units.map((u) => (
           <optgroup key={u} label={`Unit ${u}`}>

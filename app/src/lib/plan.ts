@@ -1,9 +1,12 @@
 // What to study next, as pure functions: lesson status, which new words are available,
 // the next lesson and test, weak words for practice, and how much prepared content is left.
 // Used by the Home "Today" panel, the "What next" menu, the Stats page and check-content.
-import { byCourseOrder, isThemeLesson } from '../content/lessons.ts'
+import { byCourseOrder, isCourseLesson, isThemeLesson } from '../content/lessons.ts'
 import type { CourseLesson, Lesson, LessonProgress, Result, ReviewLogEntry, ReviewState, Test, ThemeLesson, Word } from '../content/schema.ts'
 import type { StudyWord } from './customWords.ts'
+import type { PathReach } from './path.ts'
+
+export type { PathReach }
 
 // ---------- lessons ----------
 
@@ -65,13 +68,51 @@ export function lockedWordIds(lessons: Lesson[], p: LessonProgress): Set<string>
 }
 
 /**
- * Words the review queue may use, in words.json order: every word already introduced, plus new
- * words that belong to no lesson or to a started lesson. A lesson's words are introduced once
- * the lesson is opened, so Hayk meets them right after the explanation.
+ * The course lessons whose words can come as new words (words follow the path, design
+ * _knowledge/2026-11-07_practice-games-design.md): every lesson up to the one the path is at, the
+ * next one (pre-learning), and lessons with a station done ahead of the path. All of them when the
+ * path is done. A lesson only opened far ahead is not reached: its words wait.
  */
-export function studyWords<W extends { id: string }>(words: W[], lessons: Lesson[], p: LessonProgress, state: ReviewState): W[] {
-  const locked = lockedWordIds(lessons, p)
-  return words.filter((w) => state.cards[w.id] || !locked.has(w.id))
+export function reachableLessons(lessons: CourseLesson[], reach: PathReach): Set<string> {
+  const sorted = [...lessons].sort(byCourseOrder)
+  if (reach.at === null) return new Set(sorted.map((l) => l.id))
+  const at = sorted.findIndex((l) => l.id === reach.at)
+  if (at < 0) throw new Error(`The path is at lesson "${reach.at}", which is not in the course`)
+  return new Set(sorted.filter((l, i) => i <= at + 1 || reach.started.has(l.id)).map((l) => l.id))
+}
+
+/**
+ * The one rule for new words, used by the Words page ("all") and the daily mix: content words with
+ * no card yet, in course order (unit, lesson, then the word's place in the lesson's `words`) from
+ * the reachable lessons; then the words of opened theme lessons; then words in no lesson. A word in
+ * two lessons comes at its first place. `lessons` are all lessons, course and theme.
+ */
+export function pathNewWords<W extends { id: string }>(words: W[], lessons: Lesson[], p: LessonProgress, state: ReviewState, reach: PathReach): W[] {
+  const byId = new Map(words.map((w) => [w.id, w]))
+  const course = lessons.filter(isCourseLesson).sort(byCourseOrder)
+  const reached = reachableLessons(course, reach)
+  const order: string[] = []
+  for (const l of course) if (reached.has(l.id)) order.push(...(l.words ?? []))
+  for (const l of lessons) if (isThemeLesson(l) && lessonStatus(p, l.id) !== 'not-started') order.push(...(l.words ?? []))
+  const inLessons = new Set(lessons.flatMap((l) => l.words ?? []))
+  order.push(...words.filter((w) => !inLessons.has(w.id)).map((w) => w.id))
+  const seen = new Set<string>()
+  const out: W[] = []
+  for (const id of order) {
+    const w = byId.get(id)
+    if (!w || seen.has(id) || state.cards[id]) continue
+    seen.add(id)
+    out.push(w)
+  }
+  return out
+}
+
+/**
+ * Words the review queue may use: every word already introduced (words.json order), then the new
+ * words in path order (pathNewWords). The review takes new words from the front of the list.
+ */
+export function studyWords<W extends { id: string }>(words: W[], lessons: Lesson[], p: LessonProgress, state: ReviewState, reach: PathReach): W[] {
+  return [...words.filter((w) => state.cards[w.id]), ...pathNewWords(words, lessons, p, state, reach)]
 }
 
 // ---------- where a word review takes its words from ----------
@@ -90,11 +131,11 @@ export function sourceThemes(themes: ThemeLesson[]): ThemeLesson[] {
 }
 
 /**
- * The words a review session uses. "all" is studyWords plus Hayk's own words: a lesson's words
- * wait until the lesson (course or theme) is opened. "mine" is his own words only. A unit or
- * lesson takes every word its lessons list, opened or not, because picking it is the explicit
- * choice to learn them (DECISIONS.md #50). Content words keep words.json order, as always; own
- * words come after them, oldest first. `lessons` are all lessons, course and theme.
+ * The words a review session uses. "all" is studyWords plus Hayk's own words: new words follow
+ * the path (`reach`), and a theme lesson's words wait until it is opened. "mine" is his own words
+ * only. A unit or lesson takes every word its lessons list, opened or not, because picking it is
+ * the explicit choice to learn them (DECISIONS.md #50); those keep words.json order. Own words
+ * come after the content words, oldest first. `lessons` are all lessons, course and theme.
  */
 export function wordsForSource(
   source: WordSource,
@@ -103,12 +144,20 @@ export function wordsForSource(
   lessons: Lesson[],
   p: LessonProgress,
   state: ReviewState,
+  reach: PathReach,
 ): StudyWord[] {
-  if (source.kind === 'all') return [...studyWords(words, lessons, p, state), ...custom]
+  if (source.kind === 'all') return [...studyWords(words, lessons, p, state, reach), ...custom]
   if (source.kind === 'mine') return custom
   const picked = lessons.filter((l) => (source.kind === 'unit' ? l.unit === source.unit : l.id === source.lessonId))
   const ids = new Set(picked.flatMap((l) => l.words ?? []))
   return words.filter((w) => ids.has(w.id))
+}
+
+/** A unit's words (each once) and how many are not learned yet (never reviewed), for the test station's sheet. */
+export function unitWordsLeft(unit: number, lessons: CourseLesson[], state: ReviewState): { total: number; left: number } {
+  const ids = new Set(lessons.filter((l) => l.unit === unit).flatMap((l) => l.words ?? []))
+  const left = [...ids].filter((id) => (state.cards[id]?.reps ?? 0) === 0).length
+  return { total: ids.size, left }
 }
 
 /** How a source is saved per device: "all", "mine", "unit:2" or "lesson:u2-03-plural". */

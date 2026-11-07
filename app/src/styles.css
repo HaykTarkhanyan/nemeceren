@@ -2601,3 +2601,11 @@ ol.line {
 .strength i.on {
   background: var(--ok);
 }
+
+/* A test station's sheet: the unit's words before the test. */
+.sheet-words {
+  margin: 8px 0 12px;
+  padding: 10px 12px;
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--c) 10%, var(--surface));
+}
