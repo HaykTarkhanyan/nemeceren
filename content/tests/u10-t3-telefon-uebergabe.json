@@ -1,0 +1,85 @@
+{
+  "id": "u10-t3-telefon-uebergabe",
+  "title": "A phone message and a handover (Unit 10 final)",
+  "level": "A2",
+  "created": "2026-11-07",
+  "description": "Unit 10 check after lessons 5 and 6, with the unit's final task.",
+  "unit": 10,
+  "lesson": "u10-06-geschichte-zettel",
+  "items": [
+    {"type": "gap", "instruction": "Fill in the gap: Sorry, I couldn't come yesterday.", "text": "Entschuldigung, gestern ___ ich leider nicht kommen.", "answers": [["konnte"]], "explanation": "Review (Unit 8): the past of können is konnte (ich konnte, no -t). The infinitive kommen goes to the end."},
+    {"type": "gap", "instruction": "Fill in the gap: Can you call me tomorrow? (du)", "text": "Kannst du ___ morgen anrufen?", "answers": [["mich"]], "explanation": "Review (Unit 4): anrufen takes the accusative: mich (me). Ich rufe dich an, kannst du mich anrufen?"},
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap with erledigen in the Perfekt: Have you already dealt with the emails?",
+      "text": "Hast du die E-Mails schon ___?",
+      "answers": [["erledigt"]],
+      "explanation": "erledigen: er- at the front, so no ge- (Unit 8): erledigt. The participle goes to the end."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: Please put the invoices on my desk.",
+      "text": "Bitte leg die Rechnungen auf ___ Schreibtisch.",
+      "answers": [["meinen"]],
+      "explanation": "legen + Wohin? + accusative. der Schreibtisch is masculine, so mein becomes meinen in the accusative."
+    },
+    {
+      "type": "mc",
+      "question": "Your colleague asks where the scissors are. They're in the cupboard. What do you say?",
+      "questionLang": "en",
+      "options": ["Sie liegt im Schrank.", "Sie legt im Schrank.", "Sie liegt in den Schrank."],
+      "answer": "Sie liegt im Schrank.",
+      "explanation": "die Schere is singular in German, so sie liegt. The scissors are just there (no object): liegen + Wo? + dative, im Schrank. legen and in den Schrank are for putting them there."
+    },
+    {
+      "type": "order",
+      "prompt": "Can you lock the office in the evening?",
+      "tiles": ["kannst", "du", "abends", "das", "Büro", "abschließen"],
+      "answers": ["Kannst du abends das Büro abschließen", "Kannst du das Büro abends abschließen"],
+      "explanation": "kannst first in a yes/no question, and the separable verb stays joined at the end after a modal verb: abschließen."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: Please let me know by Friday.",
+      "text": "Bitte sag mir bis Freitag ___.",
+      "answers": [["Bescheid"]],
+      "explanation": "Bescheid sagen = to let someone know. The person is in the dative: mir."
+    },
+    {
+      "type": "mc",
+      "question": "A caller asks for you by name. How do you say 'Speaking'?",
+      "questionLang": "en",
+      "options": ["Am Apparat.", "Auf Wiederhören.", "Einen Moment."],
+      "answer": "Am Apparat.",
+      "explanation": "Am Apparat = speaking (it's me). Auf Wiederhören = goodbye on the phone; Einen Moment = one moment."
+    },
+    {
+      "type": "listen_mc",
+      "audio": "Hallo Aram, hier ist Eva. Ich bin ab morgen im Urlaub. Das Angebot für die Firma Lindner liegt auf meinem Schreibtisch. Bitte schick es am Montag an die Firma.",
+      "question": "Where is the quote?",
+      "questionLang": "en",
+      "options": ["auf dem Schreibtisch von Eva", "im Ordner von Eva", "in der Schublade von Eva"],
+      "answer": "auf dem Schreibtisch von Eva",
+      "explanation": "Das Angebot liegt auf meinem Schreibtisch = the quote is on my desk. Aram should send it on Monday."
+    },
+    {
+      "type": "dictation",
+      "text": "Die Ordner stehen im Regal hinter der Tür.",
+      "explanation": "Folders stand upright: stehen. Wo? + dative: im Regal (in dem Regal), hinter der Tür (die Tür)."
+    },
+    {
+      "type": "translate",
+      "direction": "en-de",
+      "text": "Mr Hoffmann is in a meeting. Can I give him a message?",
+      "references": ["Herr Hoffmann ist in einer Besprechung. Kann ich ihm etwas ausrichten?", "Herr Hoffmann ist gerade in einer Besprechung. Kann ich ihm etwas ausrichten?"],
+      "explanation": "in einer Besprechung: in + dative (Wo?). ihm = to him (dative), and ausrichten stays joined at the end after kann."
+    },
+    {
+      "type": "write",
+      "instruction": "Unit 10 final task, in two parts (80 words or more). Part 1, the phone message: a caller left the message below for Frau Weber. Write the phone note (for whom, from whom, when, what about, the number, call back or not). Part 2, the handover: you're on holiday from Monday. Write a short email to your colleague Thomas: what's already done, what still needs doing, where things are (stehen, liegen or hängen) and where things go (stellen, legen or hängen). Claude will check it. Then ask Claude for the live role-play: Claude calls, and you take the message.",
+      "prompt": "Guten Tag, hier ist Peter Krause von der Firma Lindner. Frau Weber ist nicht da? Schade. Es geht um den Vertrag. Ich kann am Mittwoch leider nicht kommen. Können wir den Termin auf Freitag verschieben? Bitte rufen Sie mich zurück: null acht neun, vierundfünfzig, zweiunddreißig, zehn.",
+      "minWords": 80,
+      "digits": true
+    }
+  ]
+}

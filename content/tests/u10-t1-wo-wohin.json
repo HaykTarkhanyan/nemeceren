@@ -1,0 +1,84 @@
+{
+  "id": "u10-t1-wo-wohin",
+  "title": "Where or where to? (Wo? Wohin? stehen, liegen, hängen)",
+  "level": "A2",
+  "created": "2026-11-07",
+  "description": "Unit 10 check after lessons 1 and 2.",
+  "unit": 10,
+  "lesson": "u10-02-wo-steht-das",
+  "items": [
+    {"type": "gap", "instruction": "Fill in the gap: Thomas is absent today because his child is ill.", "text": "Thomas fehlt heute, weil sein Kind krank ___.", "answers": [["ist"]], "explanation": "Review (Unit 9): after weil the verb goes to the very end: weil sein Kind krank ist."},
+    {"type": "gap", "instruction": "Fill in the gap with aufstehen: Yesterday I got up at six.", "text": "Gestern bin ich um sechs ___.", "answers": [["aufgestanden"]], "explanation": "Review (Unit 8): in a separable verb, ge- goes in the middle: auf + ge + standen = aufgestanden. aufstehen takes sein."},
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: Where's Thomas? - He's gone to the library.",
+      "text": "Wo ist Thomas? - Er ist in ___ Bibliothek gegangen.",
+      "answers": [["die"]],
+      "explanation": "He went there: Wohin? + accusative. die Bibliothek stays die. Wo? would be in der Bibliothek."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: Eva is having lunch in the canteen.",
+      "text": "Eva isst in ___ Kantine.",
+      "answers": [["der"]],
+      "explanation": "Eating happens in a place: Wo? + dative. die Kantine becomes der Kantine in the dative."
+    },
+    {
+      "type": "mc",
+      "question": "In summer we're going to the seaside. Which sentence says it?",
+      "questionLang": "en",
+      "options": ["Im Sommer fahren wir ans Meer.", "Im Sommer fahren wir am Meer.", "Im Sommer fahren wir an dem Meer."],
+      "answer": "Im Sommer fahren wir ans Meer.",
+      "explanation": "You go there: Wohin? + accusative. an das Meer = ans Meer. am Meer (dative) is for being there: Wir sind am Meer."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap with one word (a short form): Shall we go to the shopping centre after work?",
+      "text": "Gehen wir nach der Arbeit noch ___ Einkaufszentrum?",
+      "answers": [["ins"]],
+      "explanation": "das Einkaufszentrum, and you go there: in das = ins."
+    },
+    {
+      "type": "order",
+      "prompt": "My phone is under the newspaper.",
+      "tiles": ["mein", "Handy", "liegt", "unter", "der", "Zeitung"],
+      "answers": ["Mein Handy liegt unter der Zeitung", "Unter der Zeitung liegt mein Handy"],
+      "explanation": "A phone lies flat: liegen. Wo? + dative: die Zeitung becomes der Zeitung. The verb stays in second place."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap with stehen, liegen or hängen: The cups are in the cupboard.",
+      "text": "Die Tassen ___ im Schrank.",
+      "answers": [["stehen"]],
+      "explanation": "Cups are upright things, so they stand: die Tassen stehen (plural: -en)."
+    },
+    {
+      "type": "mc",
+      "question": "The clock is above the door. Which sentence says it?",
+      "questionLang": "en",
+      "options": ["Die Uhr hängt über der Tür.", "Die Uhr liegt über der Tür.", "Die Uhr hängt über die Tür."],
+      "answer": "Die Uhr hängt über der Tür.",
+      "explanation": "A clock on the wall hangs: hängen. It's just there (no object), so Wo? + dative: über der Tür (die Tür). über die Tür would be for hanging it up (lesson 3)."
+    },
+    {
+      "type": "listen_mc",
+      "audio": "Der Drucker steht nicht mehr hier im Büro. Er steht jetzt im Keller, neben der Tür.",
+      "question": "Where is the printer now?",
+      "questionLang": "en",
+      "options": ["im Keller", "im Büro", "in der Kantine"],
+      "answer": "im Keller",
+      "explanation": "Er steht jetzt im Keller = it's in the basement now. nicht mehr hier im Büro = not here in the office any more."
+    },
+    {
+      "type": "dictation",
+      "text": "Die Pflanze steht vorne, zwischen dem Fenster und der Tür.",
+      "explanation": "Wo? + dative after zwischen: dem Fenster (das Fenster), der Tür (die Tür). vorne = at the front."
+    },
+    {
+      "type": "write",
+      "instruction": "Describe your desk or your room in 5-6 sentences: what is where? Use stehen, liegen and hängen, and at least four different words from auf, unter, neben, über, vor, hinter, zwischen, in, an. Add one sentence about where you're going after work or class today (Wohin?). Claude will check it.",
+      "prompt": "Was steht, liegt und hängt auf Ihrem Schreibtisch und in Ihrem Zimmer? Und wohin gehen Sie heute nach der Arbeit?",
+      "minWords": 40
+    }
+  ]
+}

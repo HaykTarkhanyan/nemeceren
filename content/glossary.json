@@ -1,5 +1,5 @@
 {
-  "ignore": ["Hayk", "Charlotte", "Eva", "Meier", "Müller", "Schmidt", "Thomas", "Weber", "Aram", "Tarkhanyan", "Goethestraße", "Siemens", "Berlin", "Marienplatz", "Moosach"],
+  "ignore": ["Hayk", "Charlotte", "Eva", "Meier", "Müller", "Schmidt", "Thomas", "Weber", "Aram", "Tarkhanyan", "Goethestraße", "Siemens", "Berlin", "Marienplatz", "Moosach", "Berger", "Hoffmann", "Lindner", "Krause", "Sabine", "Peter"],
   "entries": {
     "Verkehr": [
       {"lemma": "Verkehr", "pos": "noun", "article": "der", "level": "A2", "gloss": ["traffic"]}
@@ -262,13 +262,13 @@
       {"lemma": "von", "pos": "preposition", "level": "A1", "gloss": ["from; of"]}
     ],
     "in": [
-      {"lemma": "in", "pos": "preposition", "level": "A1", "gloss": ["in"]}
+      {"lemma": "in", "pos": "preposition", "level": "A1", "gloss": ["in, inside", "into, to (Wohin?)"], "note": "Wo? + dative: im Büro. Wohin? + accusative: ins Büro, in die Stadt."}
     ],
     "und": [
       {"lemma": "und", "pos": "conjunction", "level": "A1", "gloss": ["and"]}
     ],
     "auf": [
-      {"lemma": "auf", "pos": "preposition", "level": "A1", "gloss": ["on"], "note": "Auf Wiedersehen! = Goodbye! (polite)"},
+      {"lemma": "auf", "pos": "preposition", "level": "A1", "gloss": ["on (top of)", "onto, to (Wohin?)"], "note": "Wo?: auf dem Tisch. Wohin? + accusative: auf den Tisch. auf Deutsch = in German. Auf Wiedersehen! = Goodbye!"},
       {"lemma": "auf", "pos": "particle", "gloss": ["separable part of a verb"], "note": "aufstehen: Ich stehe um sieben auf. aufhören: Ich höre um fünf auf."}
     ],
     "lange": [
@@ -440,14 +440,16 @@
     ],
     "steht": [
       {"lemma": "aufstehen", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["to get up"], "note": "Separable: Eva steht um sieben Uhr auf."},
-      {"lemma": "stehen", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["to stand"]}
+      {"lemma": "stehen", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["to stand, to be (upright)", "to be written"], "note": "Die Flasche steht auf dem Tisch. Was steht in der Zeitung?"}
     ],
     "rufe": [
       {"lemma": "anrufen", "pos": "verb", "form": "ich form, present", "level": "A1", "gloss": ["to phone, to call"], "note": "Separable: Ich rufe dich an. = I'll call you."},
+      {"lemma": "zurückrufen", "pos": "verb", "form": "ich form, present", "level": "A2", "gloss": ["to call back"], "note": "Separable: Ich rufe Sie morgen zurück."},
       {"lemma": "rufen", "pos": "verb", "form": "ich form, present", "level": "A1", "gloss": ["to call, to shout"]}
     ],
     "ruft": [
       {"lemma": "anrufen", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["to phone, to call"], "note": "Separable: Er ruft morgen an."},
+      {"lemma": "zurückrufen", "pos": "verb", "form": "er/sie/es form, present", "level": "A2", "gloss": ["to call back"], "note": "Separable: Sie ruft Sie heute zurück."},
       {"lemma": "rufen", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["to call, to shout"]}
     ],
     "kaufe": [
@@ -502,7 +504,7 @@
       {"lemma": "ankommen", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["to arrive"], "note": "Separable: Der Zug kommt um acht an."}
     ],
     "an": [
-      {"lemma": "an", "pos": "preposition", "level": "A1", "gloss": ["at, on"], "note": "am = an dem: am Montag"},
+      {"lemma": "an", "pos": "preposition", "level": "A1", "gloss": ["at, on (a side)", "to (Wohin?)"], "note": "am Montag; Wo?: am See. Wohin? + accusative: an den See, ans Meer."},
       {"lemma": "an", "pos": "particle", "gloss": ["separable part of a verb"], "note": "anrufen: Ich rufe dich an. anfangen: Der Kurs fängt um neun an."}
     ],
     "mit": [
@@ -896,7 +898,7 @@
     ],
     "tun": [
       {"lemma": "wehtun", "pos": "verb", "form": "wir/sie/Sie form, present", "level": "A1", "gloss": ["hurt"], "note": "Separable: Mir tun die Füße weh."},
-      {"lemma": "tun", "pos": "verb", "level": "A1", "gloss": ["to do"]}
+      {"lemma": "tun", "pos": "verb", "level": "A1", "gloss": ["to do", "(in speech) to put"], "note": "Tu das bitte in den Karton. = Put that in the box, please."}
     ],
     "weh": [
       {"lemma": "wehtun", "pos": "particle", "level": "A1", "gloss": ["separable part of wehtun (to hurt)"], "note": "Mir tut der Kopf weh. = My head hurts."}
@@ -981,7 +983,7 @@
     "ziehen": [
       {"lemma": "ausziehen", "pos": "verb", "form": "Sie imperative; wir/sie form", "level": "A1", "gloss": ["take off (clothes)"], "note": "Separable: Bitte ziehen Sie die Schuhe aus."},
       {"lemma": "anziehen", "pos": "verb", "form": "Sie imperative; wir/sie form", "level": "A1", "gloss": ["put on (clothes)"], "note": "Separable: Ziehen Sie eine Jacke an."},
-      {"lemma": "ziehen", "pos": "verb", "level": "A2", "gloss": ["to pull"]}
+      {"lemma": "ziehen", "pos": "verb", "level": "A2", "gloss": ["to pull", "(with ein, um) to move"], "note": "einziehen: Wir ziehen in den dritten Stock ein. umziehen: Wir ziehen um."}
     ],
     "fülle": [
       {"lemma": "ausfüllen", "pos": "verb", "form": "ich form, present", "level": "A1", "gloss": ["to fill in"], "note": "Separable: Ich fülle das Formular aus."}
@@ -1046,6 +1048,7 @@
     ],
     "rufen": [
       {"lemma": "anrufen", "pos": "verb", "form": "Sie imperative; wir/sie form", "level": "A1", "gloss": ["to phone, to call"], "note": "Separable: Bitte rufen Sie mich an."},
+      {"lemma": "zurückrufen", "pos": "verb", "form": "Sie imperative; wir/sie form", "level": "A2", "gloss": ["to call back"], "note": "Separable: Bitte rufen Sie mich zurück."},
       {"lemma": "rufen", "pos": "verb", "form": "infinitive; wir/sie form", "level": "A1", "gloss": ["to call, to shout"]}
     ],
     "Signalton": [
@@ -1101,6 +1104,106 @@
     ],
     "R": [
       {"lemma": "R", "pos": "noun", "article": "das", "gloss": ["the letter R"], "note": "Said like 'air'."}
+    ],
+    "ins": [
+      {"lemma": "in das", "pos": "contraction", "level": "A1", "gloss": ["into the, to the"], "note": "Wohin? + accusative: ins Büro, ins Kino."}
+    ],
+    "ans": [
+      {"lemma": "an das", "pos": "contraction", "level": "A1", "gloss": ["to the, onto the"], "note": "Wohin? + accusative: ans Meer, ans Fenster."}
+    ],
+    "aufs": [
+      {"lemma": "auf das", "pos": "contraction", "gloss": ["onto the"], "note": "Spoken: aufs Dach = auf das Dach."}
+    ],
+    "Unter": [
+      {"lemma": "unter", "pos": "preposition", "level": "A1", "gloss": ["under, below"]}
+    ],
+    "hin": [
+      {"lemma": "hin", "pos": "adverb", "level": "A2", "gloss": ["there, to a place (away from the speaker)"], "note": "Wo gehst du hin? = Wohin gehst du?"}
+    ],
+    "ruf": [
+      {"lemma": "zurückrufen", "pos": "verb", "form": "du form, imperative", "level": "A2", "gloss": ["to call back"], "note": "Separable: Ruf mich bitte zurück."},
+      {"lemma": "anrufen", "pos": "verb", "form": "du form, imperative", "level": "A1", "gloss": ["to phone, to call"], "note": "Separable: Ruf mich an!"},
+      {"lemma": "rufen", "pos": "verb", "form": "du form, imperative", "level": "A1", "gloss": ["to call, to shout"]}
+    ],
+    "zurück": [
+      {"lemma": "zurück", "pos": "adverb", "level": "A1", "gloss": ["back (to where you started)"]},
+      {"lemma": "zurück", "pos": "particle", "gloss": ["separable part of a verb"], "note": "zurückrufen: Sie ruft Sie zurück. = She'll call you back."}
+    ],
+    "richte": [
+      {"lemma": "ausrichten", "pos": "verb", "form": "ich form, present", "level": "B1", "gloss": ["to pass on (a message)"], "note": "Separable: Gut, ich richte es aus. = OK, I'll pass it on."},
+      {"lemma": "richten", "pos": "verb", "form": "ich form, present", "gloss": ["to direct, to point"]}
+    ],
+    "packe": [
+      {"lemma": "einpacken", "pos": "verb", "form": "ich form, present", "level": "A2", "gloss": ["to pack"], "note": "Separable: Ich packe meine Sachen ein."},
+      {"lemma": "auspacken", "pos": "verb", "form": "ich form, present", "level": "A2", "gloss": ["to unpack"], "note": "Separable: Ich packe den Karton aus."},
+      {"lemma": "packen", "pos": "verb", "form": "ich form, present", "level": "A2", "gloss": ["to pack; to grab"]}
+    ],
+    "packen": [
+      {"lemma": "auspacken", "pos": "verb", "form": "wir/sie form", "level": "A2", "gloss": ["to unpack"], "note": "Separable: Wir packen die Kartons aus."},
+      {"lemma": "einpacken", "pos": "verb", "form": "wir/sie form", "level": "A2", "gloss": ["to pack"], "note": "Separable: Wir packen alles ein."},
+      {"lemma": "packen", "pos": "verb", "form": "infinitive; wir/sie form", "level": "A2", "gloss": ["to pack; to grab"]}
+    ],
+    "verbinde": [
+      {"lemma": "verbinden", "pos": "verb", "form": "ich form, present", "level": "B1", "gloss": ["to put through (on the phone)", "to connect"], "note": "Ich verbinde Sie. = I'll put you through."}
+    ],
+    "verbinden": [
+      {"lemma": "verbinden", "pos": "verb", "level": "B1", "gloss": ["to connect", "to put through (on the phone)"]}
+    ],
+    "Setzen": [
+      {"lemma": "setzen", "pos": "verb", "form": "Sie imperative", "level": "A2", "gloss": ["to put, to seat"], "note": "Setzen Sie sich bitte! = Please sit down. (sich setzen: reflexive, Unit 12)"}
+    ],
+    "setzen": [
+      {"lemma": "setzen", "pos": "verb", "level": "A2", "gloss": ["to put, to seat; (sich setzen) to sit down"]}
+    ],
+    "prüf": [
+      {"lemma": "prüfen", "pos": "verb", "form": "du form, imperative", "level": "A2", "gloss": ["to check"], "note": "Bitte prüf den Vertrag."}
+    ],
+    "Benutz": [
+      {"lemma": "benutzen", "pos": "verb", "form": "du form, imperative", "level": "A1", "gloss": ["to use"], "note": "Benutz bitte den Drucker."}
+    ],
+    "Apparat": [
+      {"lemma": "Apparat", "pos": "noun", "article": "der", "plural": "Apparate", "level": "A2", "gloss": ["device; the phone"], "note": "Am Apparat. = Speaking. (on the phone)"}
+    ],
+    "Bescheid": [
+      {"lemma": "Bescheid", "pos": "noun", "article": "der", "level": "A2", "gloss": ["word, notice"], "note": "Bescheid sagen = to let someone know: Ich sage dir Bescheid."}
+    ],
+    "Rückruf": [
+      {"lemma": "Rückruf", "pos": "noun", "article": "der", "plural": "Rückrufe", "gloss": ["call back (on the phone)"], "note": "Ich bitte um Rückruf. = Please call me back."}
+    ],
+    "Mailboxen": [
+      {"lemma": "Mailbox", "pos": "noun", "form": "plural", "article": "die", "level": "A2", "gloss": ["voicemail (on a mobile phone)"]}
+    ],
+    "Teller": [
+      {"lemma": "Teller", "pos": "noun", "article": "der", "plural": "Teller", "level": "A2", "gloss": ["plate"]}
+    ],
+    "Bayern": [
+      {"lemma": "Bayern", "pos": "name", "gloss": ["Bavaria"], "note": "München liegt in Bayern."}
+    ],
+    "Niemand": [
+      {"lemma": "niemand", "pos": "pronoun", "level": "A2", "gloss": ["nobody, no one"]}
+    ],
+    "los": [
+      {"lemma": "los", "pos": "adverb", "gloss": ["going on (Was ist los?)", "off, away"], "note": "Was ist los? = What's up? What's wrong?"}
+    ],
+    "schließ": [
+      {"lemma": "abschließen", "pos": "verb", "form": "du form, imperative", "level": "A2", "gloss": ["to lock"], "note": "Separable: Bitte schließ abends das Büro ab."},
+      {"lemma": "schließen", "pos": "verb", "form": "du form, imperative", "level": "A1", "gloss": ["to close"]}
+    ],
+    "zweiten": [
+      {"lemma": "zweite", "pos": "adjective", "form": "with -en (after dem, den, der ...)", "level": "A1", "gloss": ["second"], "note": "am zweiten Mai; im zweiten Stock (Wo?), in den zweiten Stock (Wohin?)"}
+    ],
+    "dritten": [
+      {"lemma": "dritte", "pos": "adjective", "form": "with -en (after dem, den, der ...)", "level": "A1", "gloss": ["third"], "note": "am dritten Oktober; im dritten Stock (Wo?), in den dritten Stock (Wohin?)"}
+    ],
+    "räume": [
+      {"lemma": "aufräumen", "pos": "verb", "form": "ich form, present", "level": "A2", "gloss": ["to tidy up"], "note": "Separable: Ich räume nie wieder auf."},
+      {"lemma": "räumen", "pos": "verb", "form": "ich form, present", "gloss": ["to clear"]}
+    ],
+    "sitzt": [
+      {"lemma": "sitzen", "pos": "verb", "form": "er/sie/es, du, ihr form, present", "level": "A1", "gloss": ["to sit, to be sitting"], "note": "Eva sitzt am Schreibtisch."}
+    ],
+    "unter": [
+      {"lemma": "unter", "pos": "preposition", "level": "A1", "gloss": ["under, below"], "note": "unter dem Tisch. On the phone: unter 089 ... = at 089 ..."}
     ]
   }
 }

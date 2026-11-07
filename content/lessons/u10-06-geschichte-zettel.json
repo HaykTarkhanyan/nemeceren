@@ -1,0 +1,182 @@
+{
+  "id": "u10-06-geschichte-zettel",
+  "unit": 10,
+  "order": 6,
+  "level": "A2",
+  "title": "Story: the lost note (Der Zettel)",
+  "summary": "A scene to read and hear: Aram takes an urgent phone message for his boss, puts the note on her desk, and then it's gone. It uses only German from Units 0-10, with questions between the parts.",
+  "goals": [
+    "Follow a phone call at work: Kann ich ihr etwas ausrichten? Bitte zurückrufen.",
+    "Follow a search: where something is (Wo? + dative) and where someone put it (Wohin? + accusative)"
+  ],
+  "words": ["jemand", "niemand", "ueberall", "nirgends", "muell"],
+  "tests": ["u10-t3-telefon-uebergabe"],
+  "sections": [
+    {
+      "type": "explanation",
+      "id": "how-to-read",
+      "title": "How to read the story",
+      "text": "A Monday at the Firma Berger in Munich, in three parts. Read each line first and try to understand it; tap **translation** only when you need it. **Play the scene** reads a whole part, each person in their own voice. After each part come a few questions.\n\nNew words in the story: [[jemand]] (someone), [[niemand]] (nobody), [[überall]] (everywhere), [[nirgends]] (nowhere), [[der Müll]] (rubbish).\n\nWatch the cases: Aram puts the note **somewhere** ([[unter die Tasse]], accusative), and later it **is** somewhere ([[unter der Tasse]], dative). [[Endlich!]] = At last! [[Was ist los?]] = What's up?"
+    },
+    {
+      "type": "dialogue",
+      "id": "part-1",
+      "title": "Part 1: Ten o'clock, the call",
+      "lines": [
+        { "speaker": "Aram", "de": "Firma Berger, Aram Tarkhanyan, guten Tag.", "en": "Berger company, Aram Tarkhanyan speaking, hello." },
+        { "speaker": "Herr Hoffmann", "de": "Guten Tag, hier ist Hoffmann von der Firma Lindner. Kann ich bitte Frau Weber sprechen?", "en": "Hello, this is Hoffmann from Lindner. Could I speak to Ms Weber, please?" },
+        { "speaker": "Aram", "de": "Frau Weber ist gerade in einer Besprechung. Kann ich ihr etwas ausrichten?", "en": "Ms Weber is in a meeting right now. Can I give her a message?" },
+        { "speaker": "Herr Hoffmann", "de": "Ja, bitte. Es geht um den Termin am Donnerstag. Ich möchte ihn verschieben.", "en": "Yes, please. It's about the appointment on Thursday. I'd like to move it." },
+        { "speaker": "Aram", "de": "Moment, ich notiere das. Den Termin am Donnerstag verschieben ...", "en": "One moment, I'll write that down. Move the appointment on Thursday ..." },
+        { "speaker": "Herr Hoffmann", "de": "Genau. Frau Weber soll mich bitte heute noch zurückrufen. Es ist dringend.", "en": "Exactly. Ms Weber should call me back today, please. It's urgent." },
+        { "speaker": "Aram", "de": "Natürlich. Wie ist Ihre Nummer?", "en": "Of course. What's your number?" },
+        { "speaker": "Herr Hoffmann", "de": "Null eins sieben eins, dreiundzwanzig, fünfundvierzig, siebenundsechzig.", "en": "Zero one seven one, twenty-three, forty-five, sixty-seven." },
+        { "speaker": "Aram", "de": "Können Sie das bitte wiederholen?", "en": "Could you repeat that, please?" },
+        { "speaker": "Herr Hoffmann", "de": "Null eins sieben eins, dreiundzwanzig, fünfundvierzig, siebenundsechzig.", "en": "Zero one seven one, twenty-three, forty-five, sixty-seven." },
+        { "speaker": "Aram", "de": "Danke. Ich sage Frau Weber Bescheid. Auf Wiederhören!", "en": "Thank you. I'll let Ms Weber know. Goodbye!" },
+        { "speaker": "Aram", "de": "So. Ich lege den Zettel auf ihren Schreibtisch, unter die Tasse. Da sieht sie ihn sofort.", "en": "Right. I'll put the note on her desk, under her cup. She'll see it straight away there." },
+        { "speaker": "Thomas", "de": "Aram, kommst du mit in die Kantine?", "en": "Aram, are you coming to the canteen?" },
+        { "speaker": "Aram", "de": "Ja, gern! Ich habe Hunger.", "en": "Yes, sure! I'm hungry." }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Questions on part 1",
+      "items": [
+        {
+          "type": "mc",
+          "question": "When should Frau Weber call Herr Hoffmann back?",
+          "questionLang": "en",
+          "options": ["heute noch", "morgen", "am Donnerstag"],
+          "answer": "heute noch",
+          "explanation": "Herr Hoffmann: Frau Weber soll mich bitte heute noch zurückrufen. Es ist dringend. heute noch = still today, later today. The appointment itself is on Thursday."
+        },
+        {
+          "type": "mc",
+          "question": "Where does Aram put the note?",
+          "questionLang": "en",
+          "options": ["unter die Tasse", "in die Schublade", "neben den Computer"],
+          "answer": "unter die Tasse",
+          "explanation": "Aram: Ich lege den Zettel auf ihren Schreibtisch, unter die Tasse. He puts it there, so Wohin? + accusative: unter die Tasse."
+        },
+        {
+          "type": "gap",
+          "instruction": "Aram offers to take a message.",
+          "text": "Kann ich ihr etwas ___?",
+          "answers": [["ausrichten"]],
+          "explanation": "ausrichten = to pass on a message. With the modal verb kann, the separable verb stays joined at the end."
+        }
+      ]
+    },
+    {
+      "type": "dialogue",
+      "id": "part-2",
+      "title": "Part 2: Three o'clock, where is the note?",
+      "lines": [
+        { "speaker": "Frau Weber", "de": "Aram, hat jemand für mich angerufen?", "en": "Aram, did anyone call for me?" },
+        { "speaker": "Aram", "de": "Ja, Herr Hoffmann! Der Zettel liegt auf Ihrem Schreibtisch, unter der Tasse.", "en": "Yes, Mr Hoffmann! The note is on your desk, under the cup." },
+        { "speaker": "Frau Weber", "de": "Unter der Tasse? Auf meinem Schreibtisch steht keine Tasse.", "en": "Under the cup? There's no cup on my desk." },
+        { "speaker": "Aram", "de": "Was? Aber ich habe den Zettel unter die Tasse gelegt!", "en": "What? But I put the note under the cup!" },
+        { "speaker": "Charlotte", "de": "Vielleicht liegt er unter dem Schreibtisch?", "en": "Maybe it's under the desk?" },
+        { "speaker": "Aram", "de": "Nein, da liegt nichts. Und in der Schublade ist er auch nicht.", "en": "No, there's nothing there. And it isn't in the drawer either." },
+        { "speaker": "Frau Weber", "de": "Und im Müll?", "en": "And in the bin?" },
+        { "speaker": "Aram", "de": "Nein. Ich habe überall gesucht. Ich finde den Zettel nirgends!", "en": "No. I've looked everywhere. I can't find the note anywhere!" },
+        { "speaker": "Charlotte", "de": "Thomas hat heute Mittag aufgeräumt. Thomas!", "en": "Thomas tidied up at lunchtime. Thomas!" },
+        { "speaker": "Thomas", "de": "Ja? Was ist los?", "en": "Yes? What's up?" },
+        { "speaker": "Aram", "de": "Auf dem Schreibtisch von Frau Weber hat eine Tasse gestanden. Wo ist sie?", "en": "There was a cup on Ms Weber's desk. Where is it?" },
+        { "speaker": "Thomas", "de": "Die Tasse? Die habe ich in die Küche gebracht und in den Schrank gestellt.", "en": "The cup? I took it to the kitchen and put it in the cupboard." },
+        { "speaker": "Thomas", "de": "Ich habe keinen Zettel gesehen. Niemand hat etwas gesagt!", "en": "I didn't see a note. Nobody said anything!" }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Questions on part 2",
+      "items": [
+        {
+          "type": "mc",
+          "question": "What did Thomas do with the cup?",
+          "questionLang": "en",
+          "options": ["Er hat sie in den Schrank gestellt.", "Er hat sie in den Müll getan.", "Er hat sie auf den Schreibtisch gestellt."],
+          "answer": "Er hat sie in den Schrank gestellt.",
+          "explanation": "Thomas: Die habe ich in die Küche gebracht und in den Schrank gestellt. stellen + Wohin? + accusative: in den Schrank."
+        },
+        {
+          "type": "mc",
+          "question": "Where did they look for the note?",
+          "questionLang": "en",
+          "options": ["unter dem Schreibtisch und in der Schublade", "im Regal und an der Wand", "in der Kantine und im Keller"],
+          "answer": "unter dem Schreibtisch und in der Schublade",
+          "explanation": "Charlotte: Vielleicht liegt er unter dem Schreibtisch? Aram: Und in der Schublade ist er auch nicht. Wo? + dative: unter dem Schreibtisch, in der Schublade."
+        },
+        {
+          "type": "gap",
+          "instruction": "Aram has looked everywhere.",
+          "text": "Ich habe ___ gesucht.",
+          "answers": [["überall"]],
+          "explanation": "überall = everywhere. Its opposite is nirgends = nowhere: Ich finde den Zettel nirgends."
+        }
+      ]
+    },
+    {
+      "type": "dialogue",
+      "id": "part-3",
+      "title": "Part 3: In the kitchen",
+      "lines": [
+        { "speaker": "Frau Weber", "de": "Also, in die Küche!", "en": "Right, to the kitchen!" },
+        { "speaker": "Thomas", "de": "Hier, im Schrank, ganz oben. Da steht die Tasse.", "en": "Here, in the cupboard, right at the top. There's the cup." },
+        { "speaker": "Charlotte", "de": "Und da ist der Zettel! Die Tasse war nass, und jetzt hängt er unten an der Tasse.", "en": "And there's the note! The cup was wet, and now it's stuck to the bottom of the cup." },
+        { "speaker": "Aram", "de": "Endlich! Frau Weber, hier ist die Nachricht.", "en": "At last! Ms Weber, here's the message." },
+        { "speaker": "Frau Weber", "de": "Was steht auf dem Zettel? Termin verschieben, bitte heute zurückrufen, dringend. Oh nein, es ist schon drei Uhr!", "en": "What does the note say? Move the appointment, please call back today, urgent. Oh no, it's already three o'clock!" },
+        { "speaker": "Frau Weber", "de": "Guten Tag, Herr Hoffmann, hier ist Weber. Entschuldigung, ich rufe erst jetzt zurück.", "en": "Hello, Mr Hoffmann, this is Weber. Sorry, I'm only calling back now." },
+        { "speaker": "Herr Hoffmann", "de": "Endlich! Ich habe Ihnen schon zweimal auf die Mailbox gesprochen.", "en": "At last! I've already left you two voicemails." },
+        { "speaker": "Frau Weber", "de": "Der Termin am Donnerstag? Kein Problem. Wir verschieben ihn auf Freitag.", "en": "The appointment on Thursday? No problem. We'll move it to Friday." },
+        { "speaker": "Herr Hoffmann", "de": "Sehr gut. Dann bis Freitag. Auf Wiederhören!", "en": "Very good. Until Friday, then. Goodbye!" },
+        { "speaker": "Frau Weber", "de": "Aram, bitte schicken Sie mir immer auch eine E-Mail.", "en": "Aram, please always send me an email as well." },
+        { "speaker": "Aram", "de": "Gern. Oder ich hänge den Zettel an Ihre Tür!", "en": "Sure. Or I'll hang the note on your door!" },
+        { "speaker": "Thomas", "de": "Und ich räume nie wieder auf.", "en": "And I'm never tidying up again." }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Questions on part 3",
+      "items": [
+        {
+          "type": "mc",
+          "question": "Where do they find the note?",
+          "questionLang": "en",
+          "options": ["an der Tasse im Schrank", "im Müll in der Küche", "auf dem Boden im Büro"],
+          "answer": "an der Tasse im Schrank",
+          "explanation": "Charlotte: Die Tasse war nass, und jetzt hängt er unten an der Tasse. The wet cup took the note with it into the cupboard: an der Tasse, im Schrank, Wo? + dative."
+        },
+        {
+          "type": "mc",
+          "question": "What happens to the appointment?",
+          "questionLang": "en",
+          "options": ["Frau Weber verschiebt ihn auf Freitag.", "Frau Weber bestätigt ihn für Donnerstag.", "Frau Weber verschiebt ihn auf Montag."],
+          "answer": "Frau Weber verschiebt ihn auf Freitag.",
+          "explanation": "Frau Weber: Wir verschieben ihn auf Freitag. ihn = den Termin. verschieben auf + a day = to move to."
+        },
+        {
+          "type": "order",
+          "prompt": "I'll hang the note on your door. (Aram, to Frau Weber)",
+          "tiles": ["ich", "hänge", "den", "Zettel", "an", "Ihre", "Tür"],
+          "answers": ["Ich hänge den Zettel an Ihre Tür", "Den Zettel hänge ich an Ihre Tür", "An Ihre Tür hänge ich den Zettel"],
+          "explanation": "hängen with an object (den Zettel), so Wohin? + accusative: an Ihre Tür. The verb is in second place."
+        }
+      ]
+    },
+    {
+      "type": "examples",
+      "id": "story-lines",
+      "title": "Useful lines from the story",
+      "items": [
+        { "de": "Frau Weber ist gerade in einer Besprechung. Kann ich ihr etwas ausrichten?", "en": "Ms Weber is in a meeting right now. Can I give her a message?" },
+        { "de": "Hat jemand für mich angerufen?", "en": "Did anyone call for me?" },
+        { "de": "Ich habe den Zettel unter die Tasse gelegt.", "en": "I put the note under the cup." },
+        { "de": "Ich habe überall gesucht. Ich finde den Zettel nirgends!", "en": "I've looked everywhere. I can't find the note anywhere!" },
+        { "de": "Entschuldigung, ich rufe erst jetzt zurück.", "en": "Sorry, I'm only calling back now." },
+        { "de": "Wir verschieben den Termin auf Freitag.", "en": "We'll move the appointment to Friday." }
+      ]
+    }
+  ]
+}

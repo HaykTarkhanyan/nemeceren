@@ -1,0 +1,145 @@
+{
+  "id": "u10-01-ins-buero",
+  "unit": 10,
+  "order": 1,
+  "level": "A2",
+  "title": "Where to? (Wohin? Ins Büro!)",
+  "summary": "Two questions, two cases: Wo? takes the dative (im Büro), Wohin? the accusative (ins Büro). The old chunks ins Kino and in die Stadt, explained at last. Going places at work and after work.",
+  "goals": [
+    "Tell Wo? (where) from Wohin? (where to) with in, an and auf",
+    "Say where you're going with the accusative: ins Büro, in die Kantine, in den Keller",
+    "Understand the chunks ins Kino, in die Stadt and ins Museum",
+    "Use the short forms ins and ans"
+  ],
+  "nicosWeg": [
+    { "title": "Nicos Weg A2, chapter 10: How do you live? (Der Umzug): two-case prepositions", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519797" }
+  ],
+  "videos": [
+    { "id": "_Q5JPibdqOs", "title": "The question word wohin", "minutes": 4 }
+  ],
+  "words": ["kantine", "keller", "theater", "bibliothek", "rathaus", "kaufhaus", "einkaufszentrum", "fitnessstudio", "disco", "zoo", "wald", "kindergarten", "garage", "werkstatt", "messe", "ausstellung", "naehe", "bett"],
+  "sections": [
+    {
+      "id": "wo-wohin-cases",
+      "type": "explanation",
+      "title": "Wo? or Wohin?",
+      "text": "Unit 6 answered **Wo?** (where) with the dative: [[Ich bin im Büro.]] Now **Wohin?** (where to). After [[in]], [[an]] and [[auf]], going **to** a place takes the **accusative**:\n- [[Wo bist du?]] - [[Im Büro.]] (dative: [[im]] = [[in dem]])\n- [[Wohin gehst du?]] - [[Ins Büro.]] (accusative: [[ins]] = [[in das]])\n\nYou've used this since Unit 3 as a fixed phrase: [[Wollen wir ins Kino gehen?]] [[ins Kino]] is [[in das Kino]] in the accusative, because you go **to** the cinema. The same goes for [[in die Stadt]] and Unit 9's [[ins Museum]]. They aren't chunks any more: they follow this rule."
+    },
+    {
+      "id": "wo-wohin-table",
+      "type": "table",
+      "title": "Wo? + dative, Wohin? + accusative",
+      "columns": [{ "header": "Question" }, { "header": "der", "de": "words" }, { "header": "die", "de": "words" }, { "header": "das", "de": "words" }, { "header": "plural", "de": "words" }],
+      "rows": [
+        ["Wo? (dative)", "im Park", "in der Küche", "im Büro", "in den Bergen"],
+        ["Wohin? (accusative)", "in den Park", "in die Küche", "ins Büro", "in die Berge"],
+        ["Wo? (dative)", "am See", "an der Tür", "am Meer", ""],
+        ["Wohin? (accusative)", "an den See", "an die Tür", "ans Meer", ""]
+      ]
+    },
+    {
+      "id": "question-decides",
+      "type": "explanation",
+      "title": "The question decides, not the verb",
+      "text": "Ask: does it happen **in** a place (Wo?), or does someone or something go **to** a new place (Wohin?)?\n- [[Ich laufe im Park.]] = I'm running in the park. I stay inside it: Wo?\n- [[Ich laufe in den Park.]] = I'm running into the park. I go there: Wohin?\n- [[Ich arbeite im Büro.]] but [[Ich gehe ins Büro.]]\n\nTwo things stay as you know them:\n- [[zu]] and [[nach]] always take the dative, also for Wohin? (Unit 6): [[zum Arzt]], [[nach Hause]].\n- [[ankommen]] answers Wo?, because you're already there when you arrive: [[Ich komme um neun im Büro an.]]"
+    },
+    {
+      "type": "comparison",
+      "text": "Russian does the same with в, на, под and за: где? в офисе, на столе, под столом; куда? в офис, на стол, под стол. After these words, куда? = [[Wohin?]] = accusative. Like [[zu]], Russian к takes the dative: к врачу = [[zum Arzt]]. German does it with all nine words of this unit (lessons 2 and 3 bring the rest), while Russian над, перед and между never switch."
+    },
+    {
+      "id": "at-work",
+      "type": "explanation",
+      "title": "Going places at work",
+      "text": "- [[Ich gehe in die Kantine.]] ([[die Kantine]] = canteen) - [[Ich esse in der Kantine.]]\n- [[Ich gehe kurz in den Keller.]] ([[der Keller]] = basement, cellar) - [[Das Papier ist im Keller.]]\n- [[Ich gehe in den zweiten Stock.]] Like [[im zweiten Stock]] (Unit 6), the ordinal ends in -en after [[den]].\n- [[Ich gehe kurz auf die Toilette.]]\n- [[Im Mai fahren wir auf die Messe.]] ([[die Messe]] = trade fair; Munich has several big ones) - [[Ich war drei Tage auf der Messe.]]\n- [[Mein Auto ist kaputt. Ich bringe es in die Werkstatt.]] ([[die Werkstatt]] = garage for repairs, workshop) - at home it stands [[in der Garage]] ([[die Garage]])."
+    },
+    {
+      "id": "after-work",
+      "type": "explanation",
+      "title": "After work and at the weekend",
+      "text": "- [[ins Theater]], [[ins Rathaus]] (town hall), [[ins Kaufhaus]] (department store), [[ins Einkaufszentrum]] (shopping centre), [[ins Fitnessstudio]] (gym)\n- [[in die Bibliothek]] (library), [[in die Disco]] (club), [[in eine Ausstellung]] ([[die Ausstellung]] = exhibition)\n- [[in den Zoo]], [[in den Wald]] (forest), [[in den Kindergarten]] (nursery school): [[Ich bringe die Kinder in den Kindergarten.]]\n- with [[an]]: [[an den See]], [[ans Meer]]; with [[auf]]: [[auf den Markt]], [[auf eine Party]]\n- a trip: [[ins Ausland]], [[in die Berge]], and countries with an article: [[in die Schweiz]], [[in die Türkei]]. Countries without one take [[nach]]: [[nach Österreich]].\n- and at night: [[Ich gehe ins Bett.]] - [[Ich liege im Bett.]]\n\n[[in der Nähe]] (nearby) is Wo?: [[Gibt es hier in der Nähe eine Bibliothek?]]"
+    },
+    {
+      "id": "ins-ans",
+      "type": "tip",
+      "title": "Short forms",
+      "text": "[[ins]] = [[in das]] and [[ans]] = [[an das]], like [[im]] and [[am]] in the dative. In speech you'll also hear [[aufs]] = [[auf das]]. Feminine and plural never shorten: [[in die Stadt]], [[in die Berge]]."
+    },
+    {
+      "id": "wo-hin",
+      "type": "warning",
+      "title": "Wo ... hin?",
+      "text": "In speech, [[wohin]] often splits in two: [[Wo gehst du hin?]] = [[Wohin gehst du?]] It starts with [[wo]], but it asks **where to**, so the answer takes the accusative: [[In die Kantine.]] Listen for the [[hin]] at the end."
+    },
+    {
+      "id": "wohin-examples",
+      "type": "examples",
+      "title": "Examples",
+      "items": [
+        { "de": "Wohin gehst du? - In die Kantine.", "en": "Where are you going? - To the canteen." },
+        { "de": "Wo ist Eva? - Sie ist in der Kantine.", "en": "Where's Eva? - She's in the canteen." },
+        { "de": "Am Wochenende fahren wir an den See.", "en": "At the weekend we're going to the lake." },
+        { "de": "Ich bringe die Kinder um acht in den Kindergarten.", "en": "I take the children to nursery school at eight." },
+        { "de": "Wir gehen heute Abend ins Theater.", "en": "We're going to the theatre tonight." },
+        { "de": "Ich war gestern in der Bibliothek.", "en": "I was at the library yesterday." },
+        { "de": "Wo gehst du hin? - Ins Fitnessstudio.", "en": "Where are you off to? - To the gym." },
+        { "de": "Ich komme um neun im Büro an.", "en": "I get to the office at nine." }
+      ]
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat",
+      "items": [
+        { "de": "Wohin gehst du?", "en": "Where are you going?" },
+        { "de": "Ins Büro.", "en": "To the office." },
+        { "de": "Wo bist du? - Im Büro.", "en": "Where are you? - In the office." },
+        { "de": "Wir fahren ans Meer.", "en": "We're going to the seaside." },
+        { "de": "Ich gehe kurz in den Keller.", "en": "I'm just popping down to the basement." }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: I'm going to the canteen now.",
+          "text": "Ich gehe jetzt in ___ Kantine.",
+          "answers": [["die"]],
+          "explanation": "Wohin? + accusative: die Kantine stays die. For Wo? it would be the dative: in der Kantine."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap with one word (a short form): We're going to the theatre tonight.",
+          "text": "Wir gehen heute Abend ___ Theater.",
+          "answers": [["ins"]],
+          "explanation": "das Theater, and you go there (Wohin?): in das Theater = ins Theater."
+        },
+        {
+          "type": "mc",
+          "question": "Which sentence is correct?",
+          "questionLang": "en",
+          "options": ["Ich arbeite heute im Büro.", "Ich arbeite heute ins Büro.", "Ich arbeite heute in das Büro."],
+          "answer": "Ich arbeite heute im Büro.",
+          "explanation": "You work in the office: that happens in a place, so Wo? + dative: im Büro. ins Büro is for going there: Ich gehe ins Büro."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: At the weekend we're going to the forest.",
+          "text": "Am Wochenende gehen wir in ___ Wald.",
+          "answers": [["den"]],
+          "explanation": "der Wald, and you go there (Wohin?): accusative, in den Wald. Wo? would be im Wald."
+        },
+        {
+          "type": "listen_mc",
+          "audio": "Ich bin heute nicht im Büro. Ich bin auf der Messe.",
+          "question": "Where is the person today?",
+          "questionLang": "en",
+          "options": ["auf der Messe", "im Büro", "in der Kantine"],
+          "answer": "auf der Messe",
+          "explanation": "Ich bin auf der Messe = I'm at the trade fair. Wo? + dative: auf der Messe. Going there would be auf die Messe."
+        }
+      ]
+    }
+  ]
+}

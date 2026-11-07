@@ -603,6 +603,50 @@
           "lesson": "u9-05-einverstanden",
           "section": "doch",
           "star": true
+        },
+        {
+          "title": "Wo? + dative, Wohin? + accusative: im Büro, ins Büro",
+          "lesson": "u10-01-ins-buero",
+          "section": "wo-wohin-table",
+          "star": true
+        },
+        {
+          "title": "The question decides: im Park laufen, in den Park laufen",
+          "lesson": "u10-01-ins-buero",
+          "section": "question-decides"
+        },
+        {
+          "title": "Short forms: ins, ans (aufs)",
+          "lesson": "u10-01-ins-buero",
+          "section": "ins-ans"
+        },
+        {
+          "title": "Nine two-way words: in, an, auf, über, unter, vor, hinter, neben, zwischen",
+          "lesson": "u10-02-wo-steht-das",
+          "section": "nine-table",
+          "star": true
+        },
+        {
+          "title": "stehen, liegen, hängen, sitzen: where things are",
+          "lesson": "u10-02-wo-steht-das",
+          "section": "stehen-liegen-haengen",
+          "star": true
+        },
+        {
+          "title": "stellen, legen, hängen + accusative: putting things somewhere",
+          "lesson": "u10-03-stellen-legen",
+          "section": "pairs-table",
+          "star": true
+        },
+        {
+          "title": "The object test: stellen or stehen?",
+          "lesson": "u10-03-stellen-legen",
+          "section": "object-test"
+        },
+        {
+          "title": "gestellt, gelegt, gehängt next to gestanden, gelegen, gehangen",
+          "lesson": "u10-03-stellen-legen",
+          "section": "perfekt-pairs"
         }
       ]
     },
@@ -1121,6 +1165,67 @@
           "lesson": "u9-05-einverstanden",
           "section": "group-chat",
           "star": true
+        },
+        {
+          "title": "Going places at work: in die Kantine, auf die Messe",
+          "lesson": "u10-01-ins-buero",
+          "section": "at-work"
+        },
+        {
+          "title": "After work: ins Theater, in den Zoo, ans Meer",
+          "lesson": "u10-01-ins-buero",
+          "section": "after-work"
+        },
+        {
+          "title": "Front, back, middle: vorne, hinten, daneben, nebenan",
+          "lesson": "u10-02-wo-steht-das",
+          "section": "front-back"
+        },
+        {
+          "title": "Moving into a new office: einziehen, auspacken",
+          "lesson": "u10-03-stellen-legen",
+          "section": "office-move"
+        },
+        {
+          "title": "Answering the phone at work: Am Apparat",
+          "lesson": "u10-04-telefonnotiz",
+          "section": "answering",
+          "star": true
+        },
+        {
+          "title": "Not here right now: Kann ich ihr etwas ausrichten?",
+          "lesson": "u10-04-telefonnotiz",
+          "section": "not-there",
+          "star": true
+        },
+        {
+          "title": "Taking a message: Es geht um ..., zurückrufen",
+          "lesson": "u10-04-telefonnotiz",
+          "section": "the-message",
+          "star": true
+        },
+        {
+          "title": "A phone note (Telefonnotiz)",
+          "lesson": "u10-04-telefonnotiz",
+          "section": "phone-note",
+          "star": true
+        },
+        {
+          "title": "Handing over before a holiday: Das ist schon erledigt",
+          "lesson": "u10-05-vor-dem-urlaub",
+          "section": "handover",
+          "star": true
+        },
+        {
+          "title": "Where everything is, and where it goes",
+          "lesson": "u10-05-vor-dem-urlaub",
+          "section": "where-things-are"
+        },
+        {
+          "title": "A handover email",
+          "lesson": "u10-05-vor-dem-urlaub",
+          "section": "handover-email",
+          "star": true
         }
       ]
     },
@@ -1253,6 +1358,21 @@
           "title": "Feelings: froh, traurig, nervös, sauer, zufrieden",
           "lesson": "u9-03-deshalb-trotzdem",
           "section": "feelings"
+        },
+        {
+          "title": "The office: Schreibtisch, Regal, Schublade, Fach",
+          "lesson": "u10-02-wo-steht-das",
+          "section": "my-desk"
+        },
+        {
+          "title": "In the office kitchen: Geschirr, Teller, Löffel",
+          "lesson": "u10-03-stellen-legen",
+          "section": "office-kitchen"
+        },
+        {
+          "title": "On the computer: Datei, Ordner, speichern, Passwort",
+          "lesson": "u10-05-vor-dem-urlaub",
+          "section": "computer"
         }
       ]
     }

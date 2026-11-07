@@ -1,0 +1,150 @@
+{
+  "id": "u10-03-stellen-legen",
+  "unit": 10,
+  "order": 3,
+  "level": "A2",
+  "title": "Put it there! (stellen, legen, hängen)",
+  "summary": "Moving things: stellen, legen and hängen take Wohin? + accusative. Ich stelle die Flasche auf den Tisch. Then it steht auf dem Tisch. Unpack after an office move and tidy the office kitchen.",
+  "goals": [
+    "Put things somewhere with stellen, legen and hängen + accusative",
+    "Tell the pairs apart: stellen/stehen, legen/liegen, hängen/hängen",
+    "Use the Perfekt: gestellt, gelegt, gehängt next to gestanden, gelegen, gehangen",
+    "Unpack and set up an office after a move"
+  ],
+  "nicosWeg": [
+    { "title": "Nicos Weg A2, chapter 10: How do you live? (Der Umzug): two-case prepositions", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519797" },
+    { "title": "Nicos Weg A1, chapter 10: Orientation (Im Büro): objects in the office, two-case prepositions", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
+  ],
+  "words": ["stellen", "legen", "tun", "umzug", "einziehen", "einpacken", "auspacken", "sache", "karton", "poster", "heizung", "schere", "blatt", "geschirr", "teller", "loeffel"],
+  "sections": [
+    {
+      "id": "putting",
+      "type": "explanation",
+      "title": "Moving things: Wohin? + accusative",
+      "text": "Lesson 2's verbs say where something **is**. Their partners say where you **put** it, so they answer Wohin? and take the accusative:\n- [[stellen]] = put (upright): [[Ich stelle die Flasche auf den Tisch.]]\n- [[legen]] = put (flat), lay: [[Ich lege das Handy auf den Tisch.]]\n- [[hängen]] = hang (up): [[Ich hänge das Bild an die Wand.]]\n\nAfterwards it **is** there, and you're back to Wo? + dative: [[Jetzt steht die Flasche auf dem Tisch.]] [[Das Handy liegt auf dem Tisch.]] [[Das Bild hängt an der Wand.]]"
+    },
+    {
+      "id": "pairs-table",
+      "type": "table",
+      "title": "Put it there, and there it is",
+      "columns": [{ "header": "Wohin? + accusative", "de": "words" }, { "header": "Wo? + dative", "de": "words" }, { "header": "English" }],
+      "rows": [
+        ["Ich stelle den Computer auf den Schreibtisch.", "Der Computer steht auf dem Schreibtisch.", "put upright / be standing"],
+        ["Ich lege den Schlüssel in die Schublade.", "Der Schlüssel liegt in der Schublade.", "put flat / be lying"],
+        ["Ich hänge die Jacke in den Schrank.", "Die Jacke hängt im Schrank.", "hang up / be hanging"]
+      ]
+    },
+    {
+      "id": "object-test",
+      "type": "explanation",
+      "title": "The object test",
+      "text": "Which verb? Look for an object, something that you move:\n- **With an object**, you move something: [[stellen]], [[legen]], [[hängen]] + Wohin? + accusative. [[Ich lege das Buch auf den Tisch.]] (What do I put? [[das Buch]].)\n- **Without an object**, the thing is just there: [[stehen]], [[liegen]], [[hängen]] + Wo? + dative. [[Das Buch liegt auf dem Tisch.]]\n\n[[hängen]] is both: [[Ich hänge das Poster an die Wand.]] (an object, so accusative) - [[Das Poster hängt an der Wand.]] (no object, so dative). ([[das Poster]])"
+    },
+    {
+      "id": "perfekt-pairs",
+      "type": "table",
+      "title": "The Perfekt: regular for putting, irregular for being there",
+      "columns": [{ "header": "Putting (regular)", "de": "words" }, { "header": "Being there (irregular)", "de": "words" }],
+      "rows": [
+        ["Ich habe die Flasche auf den Tisch gestellt.", "Die Flasche hat auf dem Tisch gestanden."],
+        ["Ich habe das Handy auf den Tisch gelegt.", "Das Handy hat auf dem Tisch gelegen."],
+        ["Ich habe das Bild an die Wand gehängt.", "Das Bild hat an der Wand gehangen."]
+      ]
+    },
+    {
+      "id": "gelegt-gelegen",
+      "type": "warning",
+      "title": "gelegt or gelegen?",
+      "text": "The putting verbs are regular: [[gestellt]], [[gelegt]], [[gehängt]]. The being-there verbs are irregular (Unit 8): [[gestanden]], [[gelegen]], [[gehangen]]. So: [[Ich habe den Schlüssel auf den Tisch gelegt.]] (I put it there), never 'gelegen'. In the south you'll also hear [[ist gestanden]] and [[ist gelegen]] (Unit 8), but the putting verbs always take [[haben]]."
+    },
+    {
+      "type": "comparison",
+      "text": "Russian has the same pairs: ставить (поставить) / стоять = [[stellen]] / [[stehen]], класть (положить) / лежать = [[legen]] / [[liegen]], вешать (повесить) / висеть = [[hängen]] / [[hängen]]. The cases match too: поставь бутылку на стол (accusative), бутылка стоит на столе (prepositional). One difference: German has one verb, [[hängen]], for both вешать and висеть. Armenian mostly uses one verb, դնել (to put), where German picks [[stellen]] or [[legen]]."
+    },
+    {
+      "id": "office-move",
+      "type": "explanation",
+      "title": "Moving into a new office",
+      "text": "Your team is moving: [[der Umzug]] (the move). [[Am Montag ziehen wir in den dritten Stock ein.]] ([[einziehen]] = to move in, separable, Wohin?)\n- [[Ich packe meine Sachen ein.]] ([[einpacken]] = to pack; [[die Sachen]] = things, stuff)\n- [[Ich lege die Bücher in den Karton.]] ([[der Karton]] = cardboard box)\n- In the new office you unpack ([[auspacken]]): [[Wohin stellen wir den Schreibtisch? - Ans Fenster.]] [[Wohin hängen wir den Kalender? - An die Wand, neben die Tür.]] [[Und die Pflanze? - Stell sie in die Ecke.]]\n- [[Stell die Pflanze nicht auf die Heizung!]] ([[die Heizung]] = heating, radiator)\n- [[Leg die Schere bitte in die Schublade.]] ([[die Schere]] = scissors) [[Leg ein Blatt Papier in den Drucker.]] ([[das Blatt]] = sheet, leaf)"
+    },
+    {
+      "id": "office-kitchen",
+      "type": "explanation",
+      "title": "In the office kitchen",
+      "text": "[[das Geschirr]] (the dishes), [[der Teller]] (plate), [[der Löffel]] (spoon):\n- [[Stell die Tassen bitte in den Schrank.]]\n- [[Leg die Löffel in die Schublade.]]\n- [[Wohin gehört das Geschirr? - In den Schrank, links.]]\n\n[[gehören]] + Wohin? means 'belongs, goes': [[Die Teller gehören in den Schrank.]] = The plates go in the cupboard. It takes the accusative, like [[stellen]]. ([[gehören]] + a person is Unit 6's 'belongs to': [[Das gehört mir.]])"
+    },
+    {
+      "id": "tun-setzen",
+      "type": "tip",
+      "title": "In speech: tun. And sitting down",
+      "text": "- In everyday speech, [[tun]] (to do) also means 'to put', when the exact verb doesn't matter: [[Tu die Milch bitte in den Kühlschrank.]] It works like [[stellen]] and [[legen]]: Wohin? + accusative.\n- [[sitzen]] has a partner too: [[Setzen Sie sich bitte!]] = Please sit down. It needs [[sich]] (a reflexive verb), so it's a fixed phrase until Unit 12."
+    },
+    {
+      "id": "put-examples",
+      "type": "examples",
+      "title": "Examples",
+      "items": [
+        { "de": "Wohin stellen wir den Schreibtisch? - Ans Fenster.", "en": "Where shall we put the desk? - By the window." },
+        { "de": "Ich lege die Schlüssel in die Schublade.", "en": "I'm putting the keys in the drawer." },
+        { "de": "Kannst du das Poster an die Wand hängen?", "en": "Can you hang the poster on the wall?" },
+        { "de": "Ich habe die Bücher ins Regal gestellt.", "en": "I've put the books on the shelf." },
+        { "de": "Stell die Pflanze bitte nicht auf die Heizung.", "en": "Please don't put the plant on the radiator." },
+        { "de": "Tu das bitte in den Karton.", "en": "Put that in the box, please." },
+        { "de": "Die Teller gehören in den Schrank.", "en": "The plates go in the cupboard." }
+      ]
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat",
+      "items": [
+        { "de": "Wohin stellen wir den Schreibtisch?", "en": "Where shall we put the desk?" },
+        { "de": "Ans Fenster.", "en": "By the window." },
+        { "de": "Ich lege das Handy auf den Tisch.", "en": "I'm putting the phone on the table." },
+        { "de": "Jetzt liegt es auf dem Tisch.", "en": "Now it's on the table." },
+        { "de": "Ich habe das Bild an die Wand gehängt.", "en": "I've hung the picture on the wall." }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: I'm putting the bottle on the table.",
+          "text": "Ich stelle die Flasche auf ___ Tisch.",
+          "answers": [["den"]],
+          "explanation": "stellen moves something, so Wohin? + accusative: der Tisch becomes den Tisch."
+        },
+        {
+          "type": "mc",
+          "question": "Which sentence is correct?",
+          "questionLang": "en",
+          "options": ["Ich lege das Buch auf den Tisch.", "Ich liege das Buch auf den Tisch.", "Ich lege das Buch auf dem Tisch."],
+          "answer": "Ich lege das Buch auf den Tisch.",
+          "explanation": "You move the book (an object), so legen, and the place is Wohin? + accusative: auf den Tisch. liegen never has an object."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap with stehen, liegen, stellen or legen: The keys are in the drawer.",
+          "text": "Die Schlüssel ___ in der Schublade.",
+          "answers": [["liegen"]],
+          "explanation": "No object: the keys are just there. Wo? (in der Schublade, dative), and keys lie flat: liegen."
+        },
+        {
+          "type": "order",
+          "prompt": "I've hung the calendar on the wall.",
+          "tiles": ["ich", "habe", "den", "Kalender", "an", "die", "Wand", "gehängt"],
+          "answers": ["Ich habe den Kalender an die Wand gehängt", "Den Kalender habe ich an die Wand gehängt", "An die Wand habe ich den Kalender gehängt"],
+          "explanation": "habe in second place, gehängt at the end, and the Wohin? part (an die Wand, accusative) right before the participle."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap with legen in the Perfekt: I've put the phone on the desk.",
+          "text": "Ich habe das Handy auf den Schreibtisch ___.",
+          "answers": [["gelegt"]],
+          "explanation": "legen is regular: gelegt. gelegen is the participle of liegen (to be lying), which never has an object."
+        }
+      ]
+    }
+  ]
+}

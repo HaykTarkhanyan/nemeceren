@@ -1,0 +1,86 @@
+{
+  "id": "u10-t2-stellen-telefon",
+  "title": "Put it there, and the phone (stellen, legen, hängen; a phone message)",
+  "level": "A2",
+  "created": "2026-11-07",
+  "description": "Unit 10 check after lessons 3 and 4.",
+  "unit": 10,
+  "lesson": "u10-04-telefonnotiz",
+  "items": [
+    {"type": "mc", "question": "Which sentence is correct?", "questionLang": "en", "options": ["Ich glaube, dass der Kurs am Montag anfängt.", "Ich glaube, dass der Kurs fängt am Montag an.", "Ich glaube, dass fängt der Kurs am Montag an."], "answer": "Ich glaube, dass der Kurs am Montag anfängt.", "explanation": "Review (Unit 9): after dass the verb goes to the very end, and a separable verb joins up again: dass der Kurs am Montag anfängt."},
+    {"type": "gap", "instruction": "Fill in the gap: I'm going to work by bike.", "text": "Ich fahre mit ___ Fahrrad zur Arbeit.", "answers": [["dem"]], "explanation": "Review (Unit 6): mit always takes the dative. das Fahrrad becomes dem Fahrrad."},
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: Eva puts the newspaper on the chair.",
+      "text": "Eva legt die Zeitung auf ___ Stuhl.",
+      "answers": [["den"]],
+      "explanation": "legen moves something, so Wohin? + accusative: der Stuhl becomes den Stuhl."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap with stellen or stehen: Shall I put the plant by the window?",
+      "text": "Soll ich die Pflanze ans Fenster ___?",
+      "answers": [["stellen"]],
+      "explanation": "There's an object (die Pflanze) that you move, and ans Fenster answers Wohin?: stellen. The infinitive goes to the end after soll."
+    },
+    {
+      "type": "mc",
+      "question": "Which sentence is correct?",
+      "questionLang": "en",
+      "options": ["Ich habe die Tasse in den Schrank gestellt.", "Ich habe die Tasse in den Schrank gestanden.", "Ich habe die Tasse in dem Schrank gestellt."],
+      "answer": "Ich habe die Tasse in den Schrank gestellt.",
+      "explanation": "You moved the cup: stellen, which is regular (gestellt), and Wohin? + accusative: in den Schrank. gestanden belongs to stehen, which never has an object."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap with hängen in the Perfekt: The poster hung on the wall for a long time.",
+      "text": "Das Poster hat lange an der Wand ___.",
+      "answers": [["gehangen"]],
+      "hint": "Does someone hang something up here, or is the poster just there?",
+      "explanation": "No object: the poster was just there (an der Wand, dative). That's the irregular hängen: gehangen. Hanging something up is regular: Ich habe das Poster an die Wand gehängt."
+    },
+    {
+      "type": "order",
+      "prompt": "We've put the desk by the window.",
+      "tiles": ["wir", "haben", "den", "Schreibtisch", "ans", "Fenster", "gestellt"],
+      "answers": ["Wir haben den Schreibtisch ans Fenster gestellt", "Den Schreibtisch haben wir ans Fenster gestellt", "Ans Fenster haben wir den Schreibtisch gestellt"],
+      "explanation": "haben in second place, gestellt at the end, and the Wohin? part (ans Fenster = an das Fenster) right before the participle."
+    },
+    {
+      "type": "mc",
+      "question": "A caller asks for Frau Weber. She's out of the office all day. What do you say?",
+      "questionLang": "en",
+      "options": ["Sie ist heute unterwegs.", "Sie ist heute am Apparat.", "Sie ist heute besetzt."],
+      "answer": "Sie ist heute unterwegs.",
+      "explanation": "unterwegs = out, on the way. Am Apparat means 'speaking' (on the phone), and besetzt is for a busy line or a taken seat."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: Ms Weber will call you back tomorrow.",
+      "text": "Frau Weber ruft Sie morgen ___.",
+      "answers": [["zurück"]],
+      "explanation": "zurückrufen is separable: in a normal sentence, ruft takes second place and zurück goes to the very end."
+    },
+    {
+      "type": "listen_mc",
+      "audio": "Guten Tag, hier ist Hoffmann von der Firma Lindner. Sagen Sie Frau Weber bitte, dass ich den Termin am Donnerstag um zehn bestätige. Vielen Dank!",
+      "question": "What is Herr Hoffmann's message for Frau Weber?",
+      "questionLang": "en",
+      "options": ["Er bestätigt den Termin.", "Er verschiebt den Termin.", "Er bittet um Rückruf."],
+      "answer": "Er bestätigt den Termin.",
+      "explanation": "dass ich den Termin am Donnerstag um zehn bestätige = that I confirm the appointment on Thursday at ten. No change, and no call back needed."
+    },
+    {
+      "type": "dictation",
+      "text": "Ein Kunde hat angerufen und bittet um Rückruf.",
+      "explanation": "angerufen: ge- in the middle of a separable verb (Unit 8). bitten um = to ask for: um Rückruf bitten = to ask for a call back."
+    },
+    {
+      "type": "write",
+      "instruction": "Your colleague Eva is in a meeting, and a caller leaves the message below. Write the phone note for Eva in 4-5 short sentences: who called and when, what it's about, the number, and whether Eva should call back. Then add one sentence saying where you put the note (Ich lege ...). Claude will check it.",
+      "prompt": "Guten Tag, hier ist Sabine Krause von der Firma Lindner. Ich möchte mit Eva über den Termin am Mittwoch sprechen. Morgen bin ich nicht im Büro. Eva kann mich heute bis fünf Uhr anrufen: null eins fünf eins, zwölf, vierunddreißig, sechsundfünfzig.",
+      "minWords": 30,
+      "digits": true
+    }
+  ]
+}

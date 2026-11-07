@@ -1,0 +1,143 @@
+{
+  "id": "u10-04-telefonnotiz",
+  "unit": 10,
+  "order": 4,
+  "level": "A2",
+  "title": "Taking a message (Kann ich etwas ausrichten?)",
+  "summary": "Answer the phone at work, say your colleague isn't there, take a message and write a phone note: Frau Weber ist gerade nicht am Platz. Kann ich ihr etwas ausrichten?",
+  "goals": [
+    "Answer the phone at work and say who you are",
+    "Say a colleague isn't there, and why",
+    "Take a message: who, what about, the number, call back or not",
+    "Write a short phone note for a colleague"
+  ],
+  "nicosWeg": [
+    { "title": "Nicos Weg A2, chapter 12: Working world (Ist die Stelle noch frei?)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519797" }
+  ],
+  "videos": [
+    { "id": "YhURm1cnQww", "title": "On the phone", "minutes": 10 }
+  ],
+  "words": ["am-apparat", "auf-wiederhoeren", "zurzeit", "unterwegs", "ausrichten", "zurueckrufen", "bescheid-sagen", "notieren", "notiz", "zettel", "mailbox", "bitten", "sonst", "verschieben", "vereinbaren", "bestaetigen"],
+  "tests": ["u10-t2-stellen-telefon"],
+  "stations": [6],
+  "sections": [
+    {
+      "id": "answering",
+      "type": "explanation",
+      "title": "Answering the phone at work",
+      "text": "At work you answer with the company and your name: [[Firma Berger, Aram Tarkhanyan, guten Tag.]] When a caller asks for you, say [[Am Apparat.]] = Speaking. ([[der Apparat]] = the device, the phone)\n\nThe caller says who they are and whom they want (Unit 7: [[Hier ist ...]]):\n- [[Guten Tag, hier ist Hoffmann von der Firma Lindner.]]\n- [[Kann ich bitte Frau Weber sprechen?]] ([[sprechen]] + a person = to speak to)\n- [[Einen Moment, bitte. Ich verbinde Sie.]] = One moment, please. I'll put you through. ([[verbinden]] = to connect)\n\nAnd at the end, as in Unit 7: [[Auf Wiederhören!]]"
+    },
+    {
+      "id": "not-there",
+      "type": "explanation",
+      "title": "Not here right now",
+      "text": "- [[Frau Weber ist gerade nicht am Platz.]] = She isn't at her desk right now.\n- [[Sie ist in einer Besprechung.]]\n- [[Sie ist heute unterwegs.]] ([[unterwegs]] = out, on the way)\n- [[Sie ist zurzeit im Urlaub.]] ([[zurzeit]] = at the moment)\n- [[Sie ist in der Mittagspause.]] ([[die Mittagspause]] = [[der Mittag]] + [[die Pause]])\n\nThen offer to help:\n- [[Kann ich ihr etwas ausrichten?]] = Can I give her a message? ([[ausrichten]] = to pass on, separable; [[ihr]] = to her, Unit 6. A fixed phrase for now: sentences with two objects come in Unit 14.)\n- [[Soll sie Sie zurückrufen?]] = Should she call you back? ([[zurückrufen]], separable)\n- [[Wie ist Ihre Nummer?]] - [[Können Sie das bitte wiederholen?]] (Unit 1)\n- [[Ich sage ihr Bescheid.]] = I'll let her know. ([[Bescheid sagen]])"
+    },
+    {
+      "id": "the-message",
+      "type": "explanation",
+      "title": "Taking the message",
+      "text": "The caller says what it's about: [[Es geht um den Termin am Donnerstag.]] = It's about the appointment on Thursday. ([[Es geht um]] + accusative is a fixed phrase.)\n\nCommon messages:\n- [[Ich möchte den Termin verschieben.]] ([[verschieben]] = to postpone, to move)\n- [[Ich möchte einen Termin vereinbaren.]] ([[vereinbaren]] = to arrange)\n- [[Können Sie den Termin bitte bestätigen?]] ([[bestätigen]] = to confirm)\n- [[Bitte rufen Sie mich zurück.]] Or, more formal: [[Ich bitte um Rückruf.]] ([[bitten]] = to ask for; [[der Rückruf]] = the call back. [[bitten]] always takes [[um]] for the thing you ask for, like [[warten auf]]: verbs with a fixed preposition come in Unit 12.)\n- [[Sie erreichen mich unter null eins sieben eins, zwei drei vier ...]] = You can reach me on ... ([[erreichen]], Unit 8; [[unter]] + a number)\n- [[Ich habe Ihnen schon auf die Mailbox gesprochen.]] ([[die Mailbox]] = voicemail; [[auf]] + accusative, as in lesson 3)\n\nWrite it down: [[Moment, ich notiere das.]] ([[notieren]] = to note down) And before you say goodbye: [[Sonst noch etwas?]] = Anything else? ([[sonst]] = else, otherwise)"
+    },
+    {
+      "type": "comparison",
+      "text": "Russian says it the same way: Ей что-нибудь передать? = [[Kann ich ihr etwas ausrichten?]] And она вам перезвонит = [[Sie ruft Sie zurück.]]"
+    },
+    {
+      "id": "phone-note",
+      "type": "table",
+      "title": "A phone note (Telefonnotiz)",
+      "columns": [{ "header": "Field", "de": "words" }, { "header": "Note", "de": "words" }],
+      "rows": [
+        ["Für", "Frau Weber"],
+        ["Von", "Herr Hoffmann, Firma Lindner"],
+        ["Wann", "Montag, 10:15 Uhr"],
+        ["Nachricht", "Herr Hoffmann hat angerufen. Er möchte den Termin am Donnerstag verschieben. Es ist dringend."],
+        ["Telefon", "0171 2345678"],
+        ["Rückruf", "Ja, bitte heute zurückrufen."]
+      ]
+    },
+    {
+      "id": "writing-the-note",
+      "type": "explanation",
+      "title": "Writing the note",
+      "text": "Write the message on a slip of paper ([[der Zettel]]) or as a note ([[die Notiz]]): short, and about the caller in the third person ([[er]], [[sie]]). The Perfekt tells what happened ([[Herr Hoffmann hat angerufen.]]), the present what he wants. A short [[Bitte zurückrufen.]] with the infinitive is normal in notes.\n\nThen put it where your colleague will see it, with lesson 3's grammar: [[Ich lege den Zettel auf ihren Schreibtisch.]] Later, to Frau Weber: [[Der Zettel liegt auf Ihrem Schreibtisch.]]"
+    },
+    {
+      "id": "sie-or-sie",
+      "type": "warning",
+      "title": "sie or Sie? And separable verbs",
+      "text": "On the phone you often talk **about** a colleague ([[sie]] = she) **to** a caller ([[Sie]] = you): [[Soll sie Sie zurückrufen?]] = Should she call you back? In writing, the capital S shows which is which.\n\n[[zurückrufen]] and [[ausrichten]] are separable (Unit 3): [[Sie ruft Sie heute zurück.]] [[Gut, ich richte es aus.]] With a modal verb they stay joined at the end: [[Sie kann Sie heute zurückrufen.]]"
+    },
+    {
+      "id": "phone-examples",
+      "type": "examples",
+      "title": "Examples",
+      "items": [
+        { "de": "Firma Berger, Aram Tarkhanyan, guten Tag.", "en": "Berger company, Aram Tarkhanyan speaking, hello." },
+        { "de": "Frau Weber ist gerade nicht am Platz. Kann ich ihr etwas ausrichten?", "en": "Ms Weber isn't at her desk right now. Can I give her a message?" },
+        { "de": "Es geht um den Termin am Donnerstag.", "en": "It's about the appointment on Thursday." },
+        { "de": "Herr Hoffmann möchte den Termin verschieben.", "en": "Mr Hoffmann would like to move the appointment." },
+        { "de": "Einen Moment, ich notiere Ihre Nummer.", "en": "One moment, I'll write down your number." },
+        { "de": "Sie ist heute unterwegs. Soll sie Sie morgen zurückrufen?", "en": "She's out today. Should she call you back tomorrow?" },
+        { "de": "Ich sage ihr Bescheid.", "en": "I'll let her know." },
+        { "de": "Vielen Dank für den Anruf. Auf Wiederhören!", "en": "Thank you for calling. Goodbye!" }
+      ]
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat",
+      "items": [
+        { "de": "Kann ich ihr etwas ausrichten?", "en": "Can I give her a message?" },
+        { "de": "Soll sie Sie zurückrufen?", "en": "Should she call you back?" },
+        { "de": "Es geht um den Termin am Donnerstag.", "en": "It's about the appointment on Thursday." },
+        { "de": "Ich sage ihr Bescheid.", "en": "I'll let her know." },
+        { "de": "Auf Wiederhören!", "en": "Goodbye! (on the phone)" }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "mc",
+          "question": "Frau Weber isn't at her desk. How do you offer to take a message for her?",
+          "questionLang": "en",
+          "options": ["Kann ich ihr etwas ausrichten?", "Kann ich ihr etwas bestätigen?", "Kann ich ihr etwas verbinden?"],
+          "answer": "Kann ich ihr etwas ausrichten?",
+          "explanation": "ausrichten = to pass on (a message). Kann ich ihr etwas ausrichten? is the standard phrase on the phone."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: Should she call you back?",
+          "text": "Soll sie Sie ___?",
+          "answers": [["zurückrufen"]],
+          "explanation": "With the modal verb soll, the separable verb stays joined at the end: zurückrufen. First sie (she), then Sie (you)."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: I'll let her know.",
+          "text": "Ich sage ihr ___.",
+          "answers": [["Bescheid"]],
+          "explanation": "Bescheid sagen = to let someone know. Bescheid is a noun, so it has a capital letter."
+        },
+        {
+          "type": "listen_mc",
+          "audio": "Guten Tag, hier ist Hoffmann von der Firma Lindner. Ich möchte den Termin am Donnerstag verschieben. Bitte rufen Sie mich zurück.",
+          "question": "What does Herr Hoffmann want?",
+          "questionLang": "en",
+          "options": ["den Termin verschieben", "den Termin bestätigen", "einen Termin vereinbaren"],
+          "answer": "den Termin verschieben",
+          "explanation": "Ich möchte den Termin verschieben = I'd like to move the appointment. bestätigen = to confirm, vereinbaren = to arrange."
+        },
+        {
+          "type": "order",
+          "prompt": "Can you confirm the appointment, please?",
+          "tiles": ["können", "Sie", "den", "Termin", "bitte", "bestätigen"],
+          "answers": ["Können Sie den Termin bitte bestätigen", "Können Sie bitte den Termin bestätigen"],
+          "explanation": "A yes/no question starts with the verb (können), and the infinitive bestätigen goes to the end. bitte can come before or after den Termin."
+        }
+      ]
+    }
+  ]
+}

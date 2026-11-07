@@ -21,7 +21,7 @@ Topics cut from current work so they don't get lost.
 - **Goethe A2/B1 Modellsaetze**: download when Hayk works at those levels (URLs in `_knowledge/2026-09-28_llm-tutoring-and-materials.md`).
 - (Done 2026-11-07 with Unit 8: the participles of separable and be-/er-/ver-/-ieren verbs, which Unit 5 left for recognition (#70), are now taught by name.)
 - **Notes from Unit 8 for later A2 units** (2026-11-07):
-  - Unit 10 (stehen/stellen, liegen/legen): `stehen`, `liegen` and `sitzen` already have cards (Unit 8, lesson 1). List them; don't add new ones.
+  - (Done 2026-11-07 with Unit 10: `stehen`, `liegen` and `sitzen` are listed in u10-02, with no new cards.)
   - Units 13-14 (adjective endings): explain the Unit 8 chunks `letzte Woche`, `letztes Jahr`, `letzten Monat` and `eine lange Geschichte`.
   - No video in the three Learn German playlists covers musste/konnte/wollte, so lesson u8-04 has none. Add one if a good one turns up.
 - (Done 2026-11-07 with Unit 9: u7-07's line "A2 adds weil in Unit 9" is kept, and denn, the topic of u6-07's video on und, aber, oder, denn, sondern, is now taught in u9-02.)
@@ -30,6 +30,12 @@ Topics cut from current work so they don't get lost.
   - Unit 12 (reflexive verbs, verbs with prepositions, da- words): explain the Unit 9 chunks `dafür`, `dagegen` and `Dann sehen wir uns`. The grammar of Nicos Weg A2 ch. 5 (reflexive verbs, verbs with prepositions) was left for Unit 12, and so was `Angst haben vor`.
   - Units 13-14 (adjective endings): explain `eine gute Idee` and `keine gute Idee` from Unit 9.
   - No video in the three playlists covers weil, deshalb or trotzdem; u9-02 reuses the conjunctions video. The "das or dass?" video (wKdqpdvjQNI) was left out of u9-04: its captions say das has a longer a than dass and cover the relative das (Unit 15). Add one if a good one turns up.
+- (Done 2026-11-07 with Unit 10: the A1 chunks `ins Kino` and `in die Stadt`, Unit 9's `ins Museum` and `in den Bergen` are explained in u10-01 as Wohin? + accusative and Wo? + dative.)
+- **Notes from Unit 10 for later A2 units** (2026-11-07):
+  - Unit 12 (reflexive verbs, verbs with prepositions): explain the Unit 10 chunks `Setzen Sie sich bitte` (the partner of sitzen, as sich setzen + Wohin? + accusative) and `bitten um` (Ich bitte um Rückruf).
+  - Unit 14 (two objects): explain `Kann ich ihr etwas ausrichten?`; Unit 10 also uses `Ich zeige dir das Büro`, `Ich zeige dir alles`, the story line `bitte schicken Sie mir immer auch eine E-Mail` (u10-06) and the `blatt` card example `Kannst du mir ein Blatt Papier geben?` (a dative pronoun and an object).
+  - Unit 17 (two-way prepositions revisited): add `stecken` (B1: den Schlüssel in die Tasche stecken) and `setzen` without sich, and the spoken `hinstellen`, `hinlegen`. Build on u10-01 to u10-03 (the object test, gelegt / gelegen).
+  - No video in the three playlists covers stellen/legen or stehen/liegen, so u10-02 and u10-03 have none. Add one if a good one turns up.
 - **Duolingo-style features not picked (2026-11-06)**, research in `_knowledge/2026-11-06_duolingo-research.md` section 6:
   - F1: a daily goal, an earned streak freeze and milestones;
   - F3: session polish (progress bar, sounds, end screen) outside the daily mix;

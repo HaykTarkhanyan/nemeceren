@@ -1,0 +1,117 @@
+{
+  "id": "u10-05-vor-dem-urlaub",
+  "unit": 10,
+  "order": 5,
+  "level": "A2",
+  "title": "Before your holiday: the handover (Vor dem Urlaub)",
+  "summary": "Hand over your work before a holiday: what's done, what still needs doing, and where everything is. Die Verträge liegen im Ordner. Bitte leg die Post in mein Fach.",
+  "goals": [
+    "Hand over your tasks to a colleague, in speech and in a short email",
+    "Say what's done and what still needs doing: Das ist schon erledigt.",
+    "Say where things are and where they go",
+    "Talk about files and folders: die Datei, der Ordner, speichern"
+  ],
+  "nicosWeg": [
+    { "title": "Nicos Weg A1, chapter 10: Orientation (Im Büro): objects in the office", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
+  ],
+  "videos": [
+    { "id": "GG5HjY1Fe2M", "title": "Computer and internet", "minutes": 10 }
+  ],
+  "words": ["ab", "erledigen", "zeigen", "angebot", "vertrag", "pruefen", "beantworten", "unbedingt", "mitarbeiter", "mitarbeiterin", "ordner", "holen", "abschliessen", "datei", "speichern", "passwort", "aendern", "benutzen"],
+  "sections": [
+    {
+      "id": "handover",
+      "type": "explanation",
+      "title": "Who does what while I'm away?",
+      "text": "Before a holiday you hand your work over to a colleague:\n- [[Ich bin ab Montag zwei Wochen im Urlaub.]] ([[ab]] = from ... on)\n- [[Kannst du in der Zeit meine Aufgaben machen?]]\n- [[Ich zeige dir alles.]] ([[zeigen]] = to show)\n\nWhat's done, and what isn't:\n- [[Das ist schon erledigt.]] ([[erledigen]] = to get done, to deal with)\n- [[Das Angebot für die Firma Lindner ist fertig.]] ([[das Angebot]] = offer, quote)\n- [[Bitte prüf den Vertrag noch einmal.]] ([[prüfen]] = to check; [[der Vertrag]] = contract)\n- [[Die E-Mails von Kunden habe ich noch nicht beantwortet.]] ([[beantworten]] = to answer an email, a question)\n- [[Bitte ruf Frau Weber unbedingt zurück.]] ([[unbedingt]] = definitely, without fail)\n\nIn a company, everyone who works there is [[ein Mitarbeiter]] or [[eine Mitarbeiterin]] (employee, member of staff): [[Die Firma hat zwanzig Mitarbeiter.]]"
+    },
+    {
+      "id": "where-things-are",
+      "type": "explanation",
+      "title": "Where everything is, and where it goes",
+      "text": "Here lessons 1-3 come together. Where things **are** (Wo? + dative):\n- [[Die Verträge liegen im Ordner, im Regal hinter meinem Schreibtisch.]] ([[der Ordner]] = folder, file)\n- [[Der Schlüssel für den Schrank liegt in der Schublade.]]\n\nWhere things **go** (Wohin? + accusative):\n- [[Bitte leg die Rechnungen in den Ordner.]]\n- [[Die Post kommt um zehn. Kannst du sie holen und in mein Fach legen?]] ([[holen]] = to fetch, to get)\n\nAnd at the end of the day: [[Bitte schließ abends das Büro ab.]] ([[abschließen]] = to lock, separable)"
+    },
+    {
+      "id": "computer",
+      "type": "explanation",
+      "title": "On the computer",
+      "text": "[[der Ordner]] is also a folder on the computer, and [[die Datei]] is a file:\n- [[Die Datei liegt im Ordner Kunden.]] Files [[liegen]] too.\n- [[Ich habe alles gespeichert.]] ([[speichern]] = to save)\n- [[Das Passwort steht auf dem Zettel in der Schublade.]] ([[das Passwort]]) [[Bitte ändere es dann.]] ([[ändern]] = to change)\n- [[Benutz bitte den Drucker im zweiten Stock.]] ([[benutzen]] = to use)"
+    },
+    {
+      "id": "polite-tasks",
+      "type": "tip",
+      "title": "Asking a colleague",
+      "text": "Between colleagues, the [[du]] imperative from Unit 5 with [[bitte]] is normal and polite: [[Bitte leg die Post in mein Fach.]] With [[Sie]]: [[Bitte legen Sie die Post in mein Fach.]] Softer still: [[Kannst du ...?]] or [[Könnten Sie ...?]] (Unit 5)."
+    },
+    {
+      "id": "handover-email",
+      "type": "examples",
+      "title": "A handover email",
+      "items": [
+        { "de": "Hallo Thomas,", "en": "Hi Thomas," },
+        { "de": "ich bin ab Montag zwei Wochen im Urlaub. Danke, dass du meine Aufgaben machst!", "en": "I'm on holiday for two weeks from Monday. Thanks for doing my tasks!" },
+        { "de": "Das Angebot für die Firma Lindner ist schon erledigt.", "en": "The quote for Lindner is already done." },
+        { "de": "Der Vertrag ist noch nicht fertig. Er liegt im Ordner, im Regal hinter der Tür. Kannst du ihn bitte bis Mittwoch prüfen?", "en": "The contract isn't finished yet. It's in the folder, on the shelf behind the door. Can you check it by Wednesday, please?" },
+        { "de": "Die Post kommt jeden Tag um zehn. Bitte leg sie in mein Fach.", "en": "The post comes every day at ten. Please put it in my pigeonhole." },
+        { "de": "Frau Weber ruft vielleicht an. Bitte sag ihr, dass ich in zwei Wochen zurück bin.", "en": "Ms Weber may call. Please tell her that I'll be back in two weeks." },
+        { "de": "Und bitte schließ abends das Büro ab.", "en": "And please lock the office in the evening." },
+        { "de": "Viele Grüße, Aram", "en": "Best wishes, Aram" }
+      ]
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat",
+      "items": [
+        { "de": "Ich bin ab Montag im Urlaub.", "en": "I'm on holiday from Monday." },
+        { "de": "Das ist schon erledigt.", "en": "That's already done." },
+        { "de": "Der Vertrag liegt im Ordner.", "en": "The contract is in the folder." },
+        { "de": "Bitte leg die Post in mein Fach.", "en": "Please put the post in my pigeonhole." },
+        { "de": "Bitte schließ abends das Büro ab.", "en": "Please lock the office in the evening." }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap with erledigen: That's already done.",
+          "text": "Das ist schon ___.",
+          "answers": [["erledigt"]],
+          "explanation": "erledigen is regular, and er- means no ge- (Unit 8): erledigt. Das ist erledigt = that's done."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: Please put the post in my pigeonhole.",
+          "text": "Bitte leg die Post in ___ Fach.",
+          "answers": [["mein"]],
+          "explanation": "legen moves something, so Wohin? + accusative. das Fach is neuter, and mein stays mein in the accusative."
+        },
+        {
+          "type": "mc",
+          "question": "Which sentence is correct?",
+          "questionLang": "en",
+          "options": ["Die Verträge liegen im Ordner.", "Die Verträge legen im Ordner.", "Die Verträge liegen in den Ordner."],
+          "answer": "Die Verträge liegen im Ordner.",
+          "explanation": "No object: the contracts are just there. So liegen + Wo? + dative: im Ordner (in dem Ordner)."
+        },
+        {
+          "type": "listen_mc",
+          "audio": "Ich bin ab Montag im Urlaub. Bitte beantworte meine E-Mails und schließ abends das Büro ab.",
+          "question": "What should the colleague do in the evening?",
+          "questionLang": "en",
+          "options": ["das Büro abschließen", "die E-Mails beantworten", "die Post holen"],
+          "answer": "das Büro abschließen",
+          "explanation": "schließ abends das Büro ab = lock the office in the evening. abschließen is separable: the ab goes to the end."
+        },
+        {
+          "type": "order",
+          "prompt": "Have you saved the file?",
+          "tiles": ["hast", "du", "die", "Datei", "gespeichert"],
+          "answers": ["Hast du die Datei gespeichert"],
+          "explanation": "A yes/no question starts with the verb: hast. The participle gespeichert goes to the end."
+        }
+      ]
+    }
+  ]
+}

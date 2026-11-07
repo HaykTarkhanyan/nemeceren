@@ -1,0 +1,154 @@
+{
+  "id": "u10-02-wo-steht-das",
+  "unit": 10,
+  "order": 2,
+  "level": "A2",
+  "title": "Where is it? (stehen, liegen, hängen)",
+  "summary": "In German, things don't just 'be' somewhere: they stand, lie or hang. Die Bücher stehen im Regal, das Handy liegt auf dem Tisch, das Bild hängt an der Wand. All nine two-way words with the dative, and your desk at work.",
+  "goals": [
+    "Say where things are with stehen, liegen and hängen",
+    "Use all nine two-way words with the dative: in, an, auf, über, unter, vor, hinter, neben, zwischen",
+    "Describe a desk and an office: hinten, vorne, in der Mitte, daneben"
+  ],
+  "nicosWeg": [
+    { "title": "Nicos Weg A1, chapter 10: Orientation (Im Büro): objects in the office, two-case prepositions", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" },
+    { "title": "Nicos Weg A2, chapter 16: Film and TV (Im Filmstudio): positioning", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519797" }
+  ],
+  "words": ["ueber", "unter", "stehen", "liegen", "sitzen", "haengen", "schreibtisch", "regal", "wand", "boden", "schublade", "fach", "pflanze", "zeitung", "zeitschrift", "mitte", "hinten", "vorne", "daneben", "drueben", "nebenan"],
+  "tests": ["u10-t1-wo-wohin"],
+  "sections": [
+    {
+      "id": "nine-words",
+      "type": "explanation",
+      "title": "Nine words with two cases",
+      "text": "Nine prepositions can take the dative or the accusative. You know most of them from Unit 6:\n- [[in]], [[an]], [[auf]]\n- [[vor]], [[hinter]], [[neben]], [[zwischen]]\n- new: [[über]] (over, above) and [[unter]] (under, below)\n\nFor **Wo?** all nine take the dative, as in Unit 6: [[Die Lampe hängt über dem Tisch.]] [[Die Tasche steht unter dem Tisch.]] Lesson 3 does **Wohin?** with all nine."
+    },
+    {
+      "id": "nine-table",
+      "type": "table",
+      "title": "Where is it? (Wo? + dative)",
+      "columns": [{ "header": "Word", "de": "words" }, { "header": "English" }, { "header": "Example", "de": "words" }],
+      "rows": [
+        ["in", "in, inside", "im Schrank"],
+        ["an", "at, on (a side)", "an der Wand"],
+        ["auf", "on (top of)", "auf dem Schreibtisch"],
+        ["über", "over, above", "über dem Tisch"],
+        ["unter", "under, below", "unter dem Tisch"],
+        ["vor", "in front of", "vor dem Fenster"],
+        ["hinter", "behind", "hinter der Tür"],
+        ["neben", "next to", "neben dem Drucker"],
+        ["zwischen", "between", "zwischen dem Regal und der Tür"]
+      ]
+    },
+    {
+      "id": "stehen-liegen-haengen",
+      "type": "explanation",
+      "title": "Standing, lying, hanging",
+      "text": "Where English says 'is', German usually says **how** a thing is there:\n- [[stehen]] for things upright: bottles, cups, a computer, books on a shelf. [[Die Flasche steht auf dem Tisch.]] [[Die Bücher stehen im Regal.]]\n- [[liegen]] for things lying flat: paper, keys, a phone, a book on a table. [[Das Handy liegt auf dem Schreibtisch.]] [[Die Schlüssel liegen in der Schublade.]]\n- [[hängen]] for things hanging: pictures, clocks, coats. [[Das Bild hängt an der Wand.]] [[Die Jacke hängt im Schrank.]]\n- and [[sitzen]] for people: [[Eva sitzt am Schreibtisch.]]\n\nAll four say where something **is**, so they answer Wo? and take the dative. [[sein]] is fine too ([[Wo ist mein Handy?]]), but the answer usually picks one of the four: [[Es liegt auf dem Tisch.]]"
+    },
+    {
+      "type": "comparison",
+      "text": "Russian makes the same choice, mostly in the same way: книги стоят на полке ([[Die Bücher stehen im Regal.]]), телефон лежит на столе ([[Das Handy liegt auf dem Tisch.]]), картина висит на стене ([[Das Bild hängt an der Wand.]]), and сидеть = [[sitzen]]. Armenian, like English, mostly just says 'is': գիրքը սեղանին է = the book is on the table."
+    },
+    {
+      "id": "position-table",
+      "type": "table",
+      "title": "Four verbs for Wo?",
+      "columns": [{ "header": "Verb", "de": "words" }, { "header": "Perfekt", "de": "words" }, { "header": "Example", "de": "words" }, { "header": "English" }],
+      "rows": [
+        ["stehen", "hat gestanden", "Der Computer steht auf dem Schreibtisch.", "The computer is on the desk."],
+        ["liegen", "hat gelegen", "Der Brief liegt in meinem Fach.", "The letter is in my pigeonhole."],
+        ["hängen", "hat gehangen", "Der Kalender hängt über dem Drucker.", "The calendar is hanging above the printer."],
+        ["sitzen", "hat gesessen", "Thomas sitzt neben dem Fenster.", "Thomas is sitting next to the window."]
+      ]
+    },
+    {
+      "id": "two-more-uses",
+      "type": "tip",
+      "title": "Two more uses",
+      "text": "- [[stehen]] also means 'to be written': [[Was steht in der Zeitung?]] ([[die Zeitung]] = newspaper) [[Die Nummer steht in der E-Mail.]]\n- Towns and countries [[liegen]]: [[München liegt in Bayern.]] [[Salzburg liegt in Österreich.]]"
+    },
+    {
+      "id": "my-desk",
+      "type": "explanation",
+      "title": "My desk",
+      "text": "[[der Schreibtisch]] (desk), [[das Regal]] (shelf, shelves), [[die Wand]] (wall), [[der Boden]] (floor), [[die Schublade]] (drawer), [[das Fach]] (compartment; at work also your pigeonhole for post), [[die Pflanze]] (plant):\n- [[Das Telefon steht auf dem Schreibtisch.]]\n- [[Meine Tasche steht auf dem Boden, neben dem Schreibtisch.]]\n- [[Die Briefe liegen in meinem Fach.]]\n- [[Die Pflanze steht vor dem Fenster.]]\n- [[Die Zeitschriften liegen im Regal, im zweiten Fach.]] ([[die Zeitschrift]] = magazine)"
+    },
+    {
+      "id": "front-back",
+      "type": "explanation",
+      "title": "Front, back, middle",
+      "text": "- [[vorne]] (at the front) and [[hinten]] (at the back): [[Der Drucker steht hinten im Büro.]]\n- [[in der Mitte]] (in the middle): [[In der Mitte steht ein Tisch.]]\n- [[daneben]] (next to it): [[Das ist mein Schreibtisch, und daneben steht das Regal.]]\n- [[da drüben]] (over there): [[Die Toilette ist da drüben, neben dem Aufzug.]]\n- [[nebenan]] (next door): [[Thomas sitzt im Büro nebenan.]]\n- [[oben]], [[unten]] and [[in der Ecke]] you know from Unit 6."
+    },
+    {
+      "id": "where-examples",
+      "type": "examples",
+      "title": "Examples",
+      "items": [
+        { "de": "Wo ist mein Handy? - Es liegt auf dem Schreibtisch.", "en": "Where's my phone? - It's on the desk." },
+        { "de": "Die Bücher stehen im Regal.", "en": "The books are on the shelf." },
+        { "de": "Der Kalender hängt an der Wand.", "en": "The calendar is on the wall." },
+        { "de": "Die Tasche steht unter dem Tisch.", "en": "The bag is under the table." },
+        { "de": "Eva sitzt vorne, neben der Tür.", "en": "Eva sits at the front, next to the door." },
+        { "de": "Die Post liegt in Ihrem Fach.", "en": "The post is in your pigeonhole." },
+        { "de": "Was steht in der Zeitung?", "en": "What does the newspaper say?" },
+        { "de": "Der Drucker steht hinten, zwischen dem Regal und dem Fenster.", "en": "The printer is at the back, between the shelf and the window." }
+      ]
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat",
+      "items": [
+        { "de": "Wo liegt mein Handy?", "en": "Where's my phone?" },
+        { "de": "Auf dem Schreibtisch.", "en": "On the desk." },
+        { "de": "Die Bücher stehen im Regal.", "en": "The books are on the shelf." },
+        { "de": "Das Bild hängt an der Wand.", "en": "The picture is on the wall." },
+        { "de": "Thomas sitzt im Büro nebenan.", "en": "Thomas sits in the office next door." }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "mc",
+          "question": "Your keys are on the table. Which sentence fits?",
+          "questionLang": "en",
+          "options": ["Die Schlüssel liegen auf dem Tisch.", "Die Schlüssel stehen auf dem Tisch.", "Die Schlüssel hängen auf dem Tisch."],
+          "answer": "Die Schlüssel liegen auf dem Tisch.",
+          "explanation": "Flat things lie: liegen. stehen is for upright things (a bottle), hängen for hanging things (a picture)."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: The picture is hanging on the wall.",
+          "text": "Das Bild hängt an ___ Wand.",
+          "answers": [["der"]],
+          "explanation": "Wo? + dative. die Wand is feminine, and in the dative die becomes der: an der Wand."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap with stehen: The printer is next to the window.",
+          "text": "Der Drucker ___ neben dem Fenster.",
+          "answers": [["steht"]],
+          "explanation": "A printer is upright, so it stands: der Drucker steht (er form)."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: The bag is under the desk.",
+          "text": "Die Tasche steht unter ___ Schreibtisch.",
+          "answers": [["dem"]],
+          "explanation": "Wo? + dative: der Schreibtisch becomes dem Schreibtisch. unter works like the other eight."
+        },
+        {
+          "type": "listen_mc",
+          "audio": "Die Briefe liegen nicht auf dem Schreibtisch. Sie liegen in der Schublade.",
+          "question": "Where are the letters?",
+          "questionLang": "en",
+          "options": ["in der Schublade", "auf dem Schreibtisch", "im Regal"],
+          "answer": "in der Schublade",
+          "explanation": "Sie liegen in der Schublade = they're in the drawer. nicht auf dem Schreibtisch = not on the desk."
+        }
+      ]
+    }
+  ]
+}

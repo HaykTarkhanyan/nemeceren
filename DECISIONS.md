@@ -2,6 +2,29 @@
 
 Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
+## 90. Unit 10 as written: Wo? and Wohin? with all nine two-way prepositions, the position and placement verbs with an object test, a phone note and a handover email; setzen and stecken left out (written with the course-unit skill, 2026-11-07; Hayk away, so Claude's calls)
+
+- **Date:** 2026-11-07 - **Status:** active; builds on #71 (Unit 6 taught Wo? + dative only) and #88
+- **Why:**
+  - **Six lessons, as the A2 table says:** Wohin? + accusative with in, an, auf (1); where things are: all nine prepositions with the dative, and stehen, liegen, hängen, sitzen (2); putting things somewhere: stellen, legen, hängen + accusative (3); taking a phone message (4); handing over tasks before a holiday (5); the story, a lost phone note (6). Tests after lessons 2, 4 and 6.
+  - **Rules stated with their real condition:** the question decides, not the verb (Ich laufe im Park / in den Park; ankommen answers Wo?; zu and nach stay dative). For the verbs, an object test: with an object you move something (stellen, legen, hängen + Wohin? + accusative), without one the thing is just there (stehen, liegen, hängen + Wo? + dative). hängen is both, and only the Perfekt shows it (gehängt / gehangen).
+  - **The old chunks explained by name:** ins Kino and in die Stadt (Unit 3, course-unit skill's A2 notes), ins Museum (Unit 9), and Unit 9's in den Bergen as the dative plural next to in die Berge. The Unit 8 cards stehen, liegen and sitzen are listed in lesson 2 (DEFERRED_TODO), with no new cards.
+  - **Also taught:** the spoken split Wo gehst du hin?; spoken tun = put; gehören + Wohin? (Die Teller gehören in den Schrank); stehen = is written (Was steht in der Zeitung?).
+  - **Chunks with a pointer:** Setzen Sie sich bitte (reflexive: Unit 12); bitten um (verbs with a fixed preposition: Unit 12); Es geht um (a fixed phrase); Kann ich ihr etwas ausrichten? (a dative pronoun from Unit 6 plus an object; Unit 14 teaches two objects).
+  - **Not here:** setzen as a verb (mostly reflexive, Unit 12) and stecken (B1); time phrases (am Montag, vor zwei Tagen stay as Units 6 and 8 taught them); Konjunktiv II requests (Unit 11; Könnten Sie from Unit 5 is reused).
+  - **Nicos Weg:** the row's chapter (A2 ch. 12, Working world) has jobs and applications but no two-way prepositions, so only the phone lesson links it (Ist die Stelle noch frei?). Lessons 1-3 link A2 ch. 10 (Der Umzug: two-case prepositions), A1 ch. 10 (Im Büro) and A2 ch. 16 (Im Filmstudio: positioning); lesson 5 links A1 ch. 9 (Mein Beruf). Videos: the wohin video (lesson 1), On the phone (lesson 4, also in u7-02) and Computer and internet (lesson 5); no video in the three playlists covers stellen or legen.
+  - **Words:** 90 new cards, 15-18 per teaching lesson and 5 in the story; the song card das Bett is listed in lesson 1. A1 gaps filled: über, unter, stellen, legen, tun, hinten, daneben, die Mitte, die Zeitung, zurzeit, bitten, holen, benutzen, ab, das Angebot, die Disco, der Kindergarten, Auf Wiederhören. Office words are often B1 in the Goethe list but are what an office is made of, so they come with level B1: die Kantine, das Regal, die Wand, der Boden, der Ordner, erledigen, ausrichten, die Mitarbeiterin (B1 in both lists, though der Mitarbeiter is A2). Five are in no Goethe list, so their level is Claude's estimate (A2): der Schreibtisch, die Schublade, der Karton, das Fitnessstudio, zurückrufen. B1 words left out: stecken, werfen, kleben, die Abteilung, die Verbindung, die Kopie, der Bildschirm, die Liste, gießen.
+  - **End task:** a written phone note from a caller's message (in the prompt) plus a handover email, then the live role-play (Claude calls, Hayk takes the message). `digits` is on, because the note needs the phone number and times.
+- **Alternatives rejected:**
+  - one lesson for both verb groups (position and placement at once is the classic confusion; the object test needs the position verbs known first);
+  - teaching setzen and stecken with the others (setzen is mostly reflexive, stecken is B1);
+  - a story about the office move (lesson 3 already has it; a lost phone note brings both end-task halves into one scene);
+  - only A1/A2 office words (no desk, shelf or wall: the unit couldn't describe an office).
+- **What would change this:**
+  - Hayk mixing up Wo? and Wohin? in u10-t1 or u10-t2: then a contrast drill before Unit 11, and Unit 17 (two-way prepositions revisited) starts with it;
+  - gelegt / gelegen or gestellt / gestanden still mixed up after the unit;
+  - Hayk finding the B1 office words a burden: then drop them from the daily new words (they're in lessons 2, 3 and 5 only).
+
 ## 89. The app is installable: a web app manifest, our own icon, and a service worker that caches nothing (asked for by Hayk, 2026-11-06 and 2026-11-07)
 
 - **Date:** 2026-11-07 - **Status:** active
