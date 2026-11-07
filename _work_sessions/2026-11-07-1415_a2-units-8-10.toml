@@ -1,0 +1,20 @@
+title = "A2 Units 8-10 written while Hayk is away (course-unit skill)"
+date = "2026-11-07"
+time = "14:15"
+areas = ["content/lessons", "content/tests", "content/words.json", "content/glossary*.json", "content/topics.json", "app/src/lib/path.ts", "DECISIONS.md", "SYLLABUS.md", "DEFERRED_TODO.md"]
+done = [
+  "Hayk asked for the next modules (path to A2), then for Units 9 and 10 too ('plenty usage limits'). Units run strictly one after another (each builds on the previous unit's real cards and wording). Commit only, no push (a push changes the live app for all three learners; Hayk did not ask to push).",
+  "Path: A2 unit titles 8-17 in path.ts UNIT_TITLES (9730a1a); path.test now holds A1 at 108 stations and accepts any units after it (8525a19).",
+  "Unit 8 'Telling what happened' (38b036e): u8-01 vor zwei Tagen + Perfekt review + mixed verbs; u8-02 separable verbs in the Perfekt; u8-03 no ge- after be-/er-/ver-/-ieren; u8-04 musste/konnte/wollte (+durfte, sollte); u8-05 a trip (21 cards); u8-06 story (Aram's Salzburg trip, 9 cards). Tests u8-t1 (after 2), u8-t2 (after 4), u8-t3 (after the story, trip email). 91 new cards. DECISIONS #87. Writer agent ~415k tokens, reviewer ~182k: no must-fix, 12 should/minor fixes applied.",
+]
+pending = [
+  "Unit 9 'Reasons and opinions' (weil, denn, deshalb, dass, trotzdem; Nicos Weg A2 ch. 5; end task: explain and argue in a group chat).",
+  "Unit 10 'At work: the office' (two-way prepositions im/ins Büro, stellen/stehen, legen/liegen, hängen; ch. 12; end task: a phone message and a task handover). Build on the liegen/sitzen/stehen cards Unit 8 already added (DEFERRED_TODO).",
+  "Push: not done. Hayk decides when back.",
+]
+next = """
+Per unit: writer agent (course-unit skill steps 0-3, 5.1-5.3, no commit) -> my checks (check-content, check-taught N, npm test) -> independent reviewer agent (read-only) -> writer applies fixes -> my checks -> commit exactly the unit's files.
+"""
+notes = """
+Lessons learned from the Unit 8 review, to pass to the next writers: list every correct word order in order items; test items must not copy lesson items; the correct mc option must not be the only long one; nicosWeg links should be the row's chapter or the closest fitting lesson; topic tags must fit the card.
+"""
