@@ -114,13 +114,15 @@ describe('stations from the course', () => {
 
   it('courseStations orders steps, then the lesson tests, then the Endstation', () => {
     const st = courseStations(content.lessons, content.tests)
-    expect(st.filter((s) => s.kind !== 'end')).toHaveLength(108)
-    expect(st.filter((s) => s.kind === 'end')).toHaveLength(8)
+    // A1 (Units 0-7) has 108 stations; A2 units add more lines after it.
+    expect(st.filter((s) => s.kind !== 'end' && s.unit <= 7)).toHaveLength(108)
+    const units = [...new Set(content.lessons.map((l) => l.unit))].sort((a, b) => a - b)
+    expect(st.filter((s) => s.kind === 'end').map((s) => s.unit)).toEqual(units)
+    expect(units.slice(0, 8)).toEqual([0, 1, 2, 3, 4, 5, 6, 7])
     expect(st.slice(0, 3).map((s) => s.id)).toEqual(['u0-01-laute#0', 'u0-01-laute#1', 'u0-02-begruessen#0'])
     const t1 = st.findIndex((s) => s.id === 'u0-t1-laute-gruesse')
     expect(st[t1 - 1].lessonId).toBe('u0-02-begruessen')
-    expect(st.at(-1)?.id).toBe('end-7')
-    expect(st.filter((s) => s.kind === 'end').map((s) => s.unit)).toEqual([0, 1, 2, 3, 4, 5, 6, 7])
+    expect(st.at(-1)?.id).toBe(`end-${units.at(-1)}`)
   })
 
   it('story lessons become story stations', () => {
