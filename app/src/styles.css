@@ -2582,3 +2582,22 @@ ol.line {
     min-height: 56px;
   }
 }
+
+/* Strength bar on each row of All words (DECISIONS.md #85). */
+.strength {
+  display: inline-flex;
+  gap: 2px;
+  vertical-align: middle;
+}
+
+.strength i {
+  display: block;
+  width: 7px;
+  height: 10px;
+  border-radius: 2px;
+  background: var(--border);
+}
+
+.strength i.on {
+  background: var(--ok);
+}

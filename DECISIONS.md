@@ -2,6 +2,50 @@
 
 Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
+## 86. A word review round that ends with 10+ cards counts for the daily goal, as a third path event kind 'review-round' (asked for by Hayk, 2026-11-07, Q23; backend OK'd, Q26)
+
+- **Date:** 2026-11-07 - **Status:** active (extends #83 and #84)
+- **Why:** Hayk wants word review to be one of the main things they do. A review-only day should keep the streak (Q23: "a round of 10+ cards").
+- **What it does:**
+  - **The event:** a scheduled review round on the Words page that ends with at least `GOAL_ROUND_MIN` = 10 cards graded records a `review-round` path event. `goalDays` counts it like a daily mix.
+  - **When a round ends:** after `ROUND_SIZE` = 20 cards, or when nothing is due now.
+  - **Practice does not count** *(Claude's call)*: practice rounds leave the schedule unchanged and could repeat easy words.
+  - **Backend:**
+    - migration `006_path_events_review_round.sql` widens the two CHECKs that name the kinds, with no row changes;
+    - the app and API schemas take the third kind;
+    - the function was redeployed after `neon config plan` (only `function api` changed);
+    - the smoke test passed with a review-round round trip.
+- **Alternatives rejected:**
+  - **Saving rounds as `daily-mix` events:** no backend change, but `progress.py path` would call them "daily mix" (Hayk chose the clean kind, Q26).
+  - **Counting days with 10+ reviews from `review_events`:** the state only returns the last 35 days of reviews, so the streak would change once a day left that window.
+- **What would change this:**
+  - **10 being too many or too few** on busy days: change `GOAL_ROUND_MIN`.
+  - **Hayk wanting practice rounds to count.**
+
+## 85. Word review: a full-screen focus view in rounds, a Mixed direction chosen per round, a richer answer side, an end screen, and strength bars in All words (asked for by Hayk, 2026-11-07)
+
+- **Date:** 2026-11-07 - **Status:** active
+- **Why:** Hayk: "Reviewing the words would be one of the main things that I'd like to do." In Q21 Hayk picked all four parts: phone focus mode, a richer answer side, an end screen with stats, a word list to browse. In Q22 Hayk asked for a mix of directions, and in Q24 to choose the direction per round.
+- **What it does** (`app/src/lib/review.ts`, pure, 8 tests; `WordsPage` `Session`, `PracticeSession`, `RoundEnd`; `ReviewCard`):
+  - **The focus view:** reviews and practice run full screen. A bar holds Close (or Stop), "N of M" with a progress bar, and a Sound switch, kept per device in `nemeceren.reviewSound`. You can tap the card to flip it, and on a phone the grades are a 2x2 grid.
+  - **Rounds:** up to 20 cards, then the end screen, with "Next round" when more cards are waiting.
+  - **Mixed:** a fourth choice next to the three directions. Each card gets a random direction, but a new word is always a flip card first *(Claude's call, found in the browser check: a never-seen word can't be typed)*, and listening only appears when a German voice exists. Each word keeps one schedule.
+  - **The answer side:**
+    - der/die/das in colour (blue, red, green; lighter in dark mode);
+    - with Sound on, the word read aloud as the answer shows;
+    - a play button for the example;
+    - the level badge and "From 1.2 ..." linking to the lesson that teaches the word.
+  - **End screen:** the cards, % Good or Easy, minutes, new words, the hard ones (Again or Hard) with "Practise these" (schedule unchanged), and how many words are due tomorrow.
+  - **All words:** a 4-step strength bar on each row (`strengthOf`: struggling 1, learning 2, review 3, known 4), the coloured article, and "Practise now" in the detail that opens when you tap a word. The detail row already had the history, the example and the lesson link, so there is no second sheet *(Claude's call)*.
+- **Alternatives rejected:**
+  - **A direction set by how well you know the word:** Hayk preferred to choose per round (Q24).
+  - **A separate word detail sheet:** it would duplicate the existing expandable row.
+  - **A Settings field for sound:** a switch in the focus bar is closer at hand, and per device is enough.
+- **What would change this:**
+  - **Hayk wanting longer or shorter rounds:** `ROUND_SIZE`.
+  - **Mixed feeling too random:** move it to the strength rule (Q24, option 1).
+  - **Article colours clashing** with the unit colours on the path.
+
 ## 84. Path events are stored in a new Neon table `path_events` and synced like study sessions; GET /v1/state returns all of them, all time (OK'd by Hayk, 2026-11-07, Q16)
 
 - **Date:** 2026-11-07 - **Status:** active

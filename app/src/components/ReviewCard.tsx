@@ -49,16 +49,16 @@ function lessonName(l: Lesson): string {
   return isThemeLesson(l) ? l.theme.title : `${l.unit}.${l.order} ${germanName(l.title)}`
 }
 
-/** The German word with der/die/das in its colour (blue, red, green), the rest with word popups. */
-export function WordDe({ de }: { de: string }) {
+/** The German word with der/die/das in its colour (blue, red, green), the rest with word popups (plain: no popups). */
+export function WordDe({ de, plain = false }: { de: string; plain?: boolean }) {
   const { article, rest } = splitArticle(de)
-  if (!article) return <De text={de} />
+  if (!article) return plain ? <>{de}</> : <De text={de} />
   return (
     <>
       <span className={`art art-${article}`} lang="de">
         {article}
       </span>{' '}
-      <De text={rest} />
+      {plain ? rest : <De text={rest} />}
     </>
   )
 }

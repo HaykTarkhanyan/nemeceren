@@ -14,6 +14,11 @@ import { foldBare, foldSpelled } from './text.ts'
 export const WORD_STATUSES = ['not-started', 'new', 'learning', 'review', 'known', 'struggling', 'locked'] as const
 export type WordStatus = (typeof WORD_STATUSES)[number]
 
+/** How strong a word is, 0-4, for the bar on its row (DECISIONS.md #85): none until it is in review. */
+export function strengthOf(status: WordStatus): number {
+  return { locked: 0, 'not-started': 0, new: 0, struggling: 1, learning: 2, review: 3, known: 4 }[status]
+}
+
 export const STATUS_LABEL: Record<WordStatus, string> = {
   'not-started': 'not started',
   new: 'new',

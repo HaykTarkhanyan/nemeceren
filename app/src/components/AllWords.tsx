@@ -4,7 +4,8 @@
 import { Fragment, useMemo, useState } from 'react'
 import { content } from '../content/load.ts'
 import { lessonLabel } from '../content/lessons.ts'
-import { buildRows, correctPct, filterRows, relativeDue, relativePast, SORT_LABEL, sortRows, sourceText, STATUS_LABEL, statusCounts, WORD_STATUSES } from '../lib/allWords.ts'
+import { buildRows, correctPct, filterRows, relativeDue, relativePast, SORT_LABEL, sortRows, sourceText, STATUS_LABEL, statusCounts, strengthOf, WORD_STATUSES } from '../lib/allWords.ts'
+import { WordDe } from './ReviewCard.tsx'
 import type { SortKey, SourceFilter, StatusFilter, WordRow } from '../lib/allWords.ts'
 import { asSentence, checkText } from '../lib/customWords.ts'
 import { messageOf, reportError } from '../lib/errors.ts'
@@ -237,7 +238,7 @@ export function AllWords(props: {
                             toggle(r.id)
                           }}
                         >
-                          {r.de}
+                          <WordDe de={r.de} plain />
                         </button>{' '}
                         <span onClick={(e) => e.stopPropagation()}>
                           <Speaker text={r.de} />
@@ -255,7 +256,12 @@ export function AllWords(props: {
                         )}
                       </td>
                       <td data-label="Status">
-                        <span className={`badge word-status-${r.status}`}>{STATUS_LABEL[r.status]}</span>
+                        <span className={`badge word-status-${r.status}`}>{STATUS_LABEL[r.status]}</span>{' '}
+                        <span className="strength" title={`Strength ${strengthOf(r.status)} of 4`} aria-label={`Strength ${strengthOf(r.status)} of 4`}>
+                          {[1, 2, 3, 4].map((i) => (
+                            <i key={i} className={i <= strengthOf(r.status) ? 'on' : ''} />
+                          ))}
+                        </span>
                       </td>
                       <td data-label="Next review">{r.status === 'locked' || r.status === 'not-started' ? '-' : relativeDue(r.due, now)}</td>
                       <td data-label="Reviews" className="num">
@@ -269,7 +275,7 @@ export function AllWords(props: {
                     {isOpen && (
                       <tr className="word-detail">
                         <td colSpan={8}>
-                          <WordDetail row={r} onEdit={onEdit} onDelete={remove} />
+                          <WordDetail row={r} onEdit={onEdit} onDelete={remove} onPractice={() => onPractice([r.id], 'type')} />
                         </td>
                       </tr>
                     )}
@@ -303,12 +309,17 @@ export function AllWords(props: {
   )
 }
 
-function WordDetail({ row, onEdit, onDelete }: { row: WordRow; onEdit: (w: CustomWordView) => void; onDelete: (w: CustomWordView) => void }) {
+function WordDetail({ row, onEdit, onDelete, onPractice }: { row: WordRow; onEdit: (w: CustomWordView) => void; onDelete: (w: CustomWordView) => void; onPractice: () => void }) {
   const view = useProgress()
   const own = row.custom ? view.customWords.find((w) => w.id === row.id) : undefined
   const claude = checkText(row.custom?.check)
   return (
     <div className="stack word-detail-body">
+      <div>
+        <button type="button" className="btn small" onClick={onPractice}>
+          Practise now (type the German, schedule unchanged)
+        </button>
+      </div>
       {row.plural && (
         <p>
           <span className="label">Plural</span> <span lang="de">{row.plural}</span>

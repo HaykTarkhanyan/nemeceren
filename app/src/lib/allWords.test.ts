@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import type { CourseLesson, CustomWord, ReviewLogEntry, StoredCard, ThemeLesson, Word } from '../content/schema.ts'
-import { buildRows, correctPct, filterRows, matchesSearch, relativeDue, relativePast, sortRows, sourceText, statusCounts, wordStatus } from './allWords.ts'
-import type { WordRow } from './allWords.ts'
+import { buildRows, correctPct, filterRows, matchesSearch, relativeDue, relativePast, sortRows, sourceText, statusCounts, strengthOf, wordStatus } from './allWords.ts'
+import type { WordRow, WordStatus } from './allWords.ts'
 import { emptyLessonProgress, startLesson } from './plan.ts'
 import { emptyState, introducedCard } from './srs.ts'
 
@@ -205,5 +205,11 @@ describe('relative dates', () => {
     expect(relativePast('2026-09-30T08:00:00', t0)).toBe('today')
     expect(relativePast('2026-09-29T08:00:00', t0)).toBe('yesterday')
     expect(relativePast('2026-09-25T08:00:00', t0)).toBe('5 days ago')
+  })
+})
+
+describe('strengthOf (the bar on each row)', () => {
+  it('rises from struggling to known; words not in review have none', () => {
+    expect(['locked', 'not-started', 'new', 'struggling', 'learning', 'review', 'known'].map((s) => strengthOf(s as WordStatus))).toEqual([0, 0, 0, 1, 2, 3, 4])
   })
 })
