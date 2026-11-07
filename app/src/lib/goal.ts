@@ -47,7 +47,8 @@ export function goalStreak(input: { studyDays: Set<string>; goalDays: Set<string
   const { studyDays, goalDays: goal, launchDay, today } = input
   if (today < launchDay) {
     const old = streaks(studyDays, today)
-    return { current: old.current, longest: old.longest, freezes: STARTER_FREEZES, frozenDays: new Set(), todayMet: false, milestoneToday: null, freezeEarnedToday: false }
+    // The streak still follows the old rule, but the goal ring already shows today's goal.
+    return { current: old.current, longest: old.longest, freezes: STARTER_FREEZES, frozenDays: new Set(), todayMet: goal.has(today), milestoneToday: null, freezeEarnedToday: false }
   }
   const beforeLaunch = addDays(launchDay, -1)
   const oldDays = new Set([...studyDays].filter((d) => d < launchDay))

@@ -8,6 +8,9 @@ import { BarChart } from '../components/BarChart.tsx'
 import type { BarDatum } from '../components/BarChart.tsx'
 import { localDay } from '../lib/dates.ts'
 import { messageOf, reportError } from '../lib/errors.ts'
+import { MAX_FREEZES } from '../lib/goal.ts'
+import { useGoal } from '../lib/goalView.ts'
+import { PATH_LAUNCH_DAY } from '../lib/config.ts'
 import { link } from '../lib/router.ts'
 import {
   dailyStats,
@@ -17,7 +20,6 @@ import {
   lastTimerDays,
   REVIEW_CAP_MS,
   SESSION_GAP_MS,
-  streaks,
   studyDays,
   TEST_ITEM_CAP_MS,
   timerByDay,
@@ -92,7 +94,8 @@ export function StatsPage() {
   const today = localDay(now)
   const days = dailyStats(activity.reviews, activity.testItems)
   const study = allStudyDays(progress, days)
-  const streak = streaks(study, today)
+  const { goal } = useGoal()
+  const afterLaunch = today >= PATH_LAUNCH_DAY
   const cal = daysThisWeekAndMonth(study, today)
   const last30 = lastDays(days, today, 30)
   const words = wordProgress(content.words, state, now)
@@ -158,8 +161,11 @@ export function StatsPage() {
       <section className="card stack">
         <h2>Study days</h2>
         <div className="stats stats-4">
-          <Tile value={streak.current} label={`day streak${streak.current > 0 && !study.has(today) ? ' (study today to keep it)' : ''}`} />
-          <Tile value={streak.longest} label="longest streak" />
+          <Tile
+            value={goal.current}
+            label={`day streak${goal.current > 0 && !(afterLaunch ? goal.todayMet : study.has(today)) ? (afterLaunch ? " (do today's goal to keep it)" : ' (study today to keep it)') : ''}`}
+          />
+          <Tile value={goal.longest} label={`longest streak, ${goal.freezes}/${MAX_FREEZES} freezes`} />
           <Tile value={`${cal.week}/7`} label="days this week" />
           <Tile value={cal.month} label="days this month" />
         </div>
@@ -251,7 +257,11 @@ export function StatsPage() {
             A study day is a day with at least one word review (practice included), one answered test item (lesson exercises and listening practice
             included), or one timer session (also one added by hand), in your local time when you did it.
           </li>
-          <li>The streak counts study days in a row up to today; before you study today it still counts up to yesterday.</li>
+          <li>
+            The streak counts days in a row up to today; before you do today's part it still counts up to yesterday. Until {PATH_LAUNCH_DAY} every study
+            day counted. From then on a day counts when you met the daily goal: 1 station on the Home path, or the daily mix run to its end. A streak
+            freeze covers one missed day; you start with 1, earn one for every 7 goal days in a row, and hold at most {MAX_FREEZES}.
+          </li>
           <li>
             Timer minutes are the time the study timer ran, without pauses, on the day the session started. A stop under {SHORT_SESSION_MS / 60_000}{' '}
             minute is not saved, and a session over {LONG_SESSION_MS / 3_600_000} hours asks you to confirm its minutes.
@@ -299,7 +309,7 @@ function AddTimeForm({ today }: { today: string }) {
     <details>
       <summary>Add time by hand</summary>
       <form className="stack add-time" onSubmit={add}>
-        <p className="muted small">For study without the timer. It counts like a timer session, also for the streak.</p>
+        <p className="muted small">For study without the timer. It counts like a timer session: a study day for these numbers (the streak follows the daily goal).</p>
         <div className="row">
           <label className="field">
             <span className="label">Day</span>
@@ -465,23 +475,5 @@ function SessionEditor({ session: x, onDone }: { session: StudySessionView; onDo
         </div>
       </form>
     </li>
-  )
-}
-
-/** One line for Home: the current streak, with a link to the Stats page. */
-export function StreakLine() {
-  const progress = useProgress()
-  const activity = activityOf(progress)
-  const today = localDay(new Date())
-  const study = allStudyDays(progress, dailyStats(activity.reviews, activity.testItems))
-  const s = streaks(study, today)
-  const cal = daysThisWeekAndMonth(study, today)
-  return (
-    <p className="streak-line">
-      <strong>
-        {s.current} day{s.current === 1 ? '' : 's'}
-      </strong>{' '}
-      streak (longest {s.longest}), {cal.week} study day{cal.week === 1 ? '' : 's'} this week. <a href={link('stats')}>See your stats</a>
-    </p>
   )
 }

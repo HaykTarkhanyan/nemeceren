@@ -1,110 +1,99 @@
+// The path Home (DECISIONS.md #82, #83; design: _knowledge/2026-11-07_path-home-design.md): a small
+// level bar, the daily card (goal, streak, daily mix), a one-time notice about the new goal, the
+// milestone card, then the course as U-Bahn lines. Tapping a station opens its sheet.
+import { useState } from 'react'
+import { PathLines } from '../components/PathLines.tsx'
+import { StationSheet } from '../components/StationSheet.tsx'
 import { content } from '../content/load.ts'
-import { PASS_PERCENT, testStatus } from '../lib/grading.ts'
-import { practiceWord } from '../lib/customWords.ts'
-import { courseTests, nextLesson, nextTest, wordsForSource } from '../lib/plan.ts'
+import { PATH_LAUNCH_DAY } from '../lib/config.ts'
+import { MAX_FREEZES } from '../lib/goal.ts'
+import { useGoal } from '../lib/goalView.ts'
+import { markMilestoneSeen, markNoticeSeen, milestoneSeen, noticeSeen } from '../lib/homeView.ts'
+import { levelProgress } from '../lib/path.ts'
+import type { Station } from '../lib/path.ts'
 import { link } from '../lib/router.ts'
-import { useSettings } from '../lib/settings.ts'
-import { counts } from '../lib/srs.ts'
-import { useProgress } from '../lib/storage.ts'
-import { DailyPanel } from './DailyPanel.tsx'
-import { StreakLine } from './StatsPage.tsx'
+import { DailyCard } from './DailyCard.tsx'
 
-export function HomePage(_props: { scrollToCurrent?: boolean }) {
-  const { results } = useProgress()
+export function HomePage({ scrollToCurrent = false }: { scrollToCurrent?: boolean }) {
+  const { goal, path, stations, today } = useGoal()
+  const [open, setOpen] = useState<Station | null>(null)
+  const [noticeHidden, setNoticeHidden] = useState(noticeSeen)
+  const [milestoneHidden, setMilestoneHidden] = useState(false)
+  const level = levelProgress(stations, path.done, content.lessons, content.tests)
+  const otherTests = content.tests.filter((t) => t.lesson === undefined)
+  const pct = level && level.total > 0 ? Math.round((100 * level.done) / level.total) : 0
+  const milestone = goal.milestoneToday !== null && !milestoneHidden && !milestoneSeen(goal.milestoneToday, today) ? goal.milestoneToday : null
 
   return (
-    <div className="stack">
-      <DailyPanel />
-      <TodayPanel />
+    <div className="stack path-home">
+      {level && (
+        <p className="level-bar small muted" title={`Stations done in ${level.level}: ${level.done} of ${level.total}`}>
+          <span>{level.level}</span>
+          <span className="bar">
+            <i style={{ width: `${pct}%` }} />
+          </span>
+          <span>{pct}%</span>
+        </p>
+      )}
 
-      <h2>Tests</h2>
-      {content.tests.length === 0 && <p className="muted">No tests yet. Claude adds them to content/tests/.</p>}
-      {courseTests(content.tests, content.lessons).map((t) => {
-        const s = testStatus(results.filter((r) => r.result.testId === t.id).map((r) => r.result))
-        return (
-          <a key={t.id} className={`card test-card test-status ${s.kind}`} href={link('test', t.id)}>
-            <div className="row between">
-              <strong>{t.title}</strong>
-              <span className="row">
-                {s.kind === 'new' && <span className="badge">not taken</span>}
-                {s.kind === 'tried' && <span className="badge warn">tried, best {s.bestPercent}%</span>}
-                {s.kind === 'passed' && <span className="badge ok">passed, best {s.bestPercent}%</span>}
-                {s.kind !== 'new' && s.waiting > 0 && <span className="badge pending">waiting for Claude</span>}
-                <span className="badge">{t.unit !== undefined ? `Unit ${t.unit}` : t.level}</span>
-              </span>
-            </div>
-            {t.description && <p className="muted">{t.description}</p>}
-            <p className="muted small">
-              {t.items.length} items
-              {s.kind === 'new'
-                ? `, added ${t.created}`
-                : `. Taken ${s.attempts}x, last on ${s.lastDay}: ${s.last.correct}/${s.last.total}${s.waiting ? ` (${s.waiting} waiting for Claude's review)` : ''}.${s.kind === 'tried' ? ` Passed from ${PASS_PERCENT}%.` : ''}`}
-            </p>
-          </a>
-        )
-      })}
-    </div>
-  )
-}
+      <DailyCard goal={goal} />
 
-/** Today at a glance: reviews due, new words, the lesson and test to do next, the streak. */
-function TodayPanel() {
-  const settings = useSettings()
-  const progress = useProgress()
-  const words = wordsForSource(
-    { kind: 'all' },
-    content.words,
-    progress.customWords.map(practiceWord),
-    content.allLessons,
-    progress.lessonProgress,
-    progress.reviewState,
-  )
-  const c = counts(words, progress.reviewState, new Date(), settings.newPerDay)
-  const lesson = nextLesson(content.lessons, progress.lessonProgress)
-  const test = nextTest(
-    content.tests,
-    content.lessons,
-    progress.results.map((r) => r.result),
-  )
-  return (
-    <section className="card stack today">
-      <h2>Course</h2>
-      <StreakLine />
-      <div className="today-row">
-        <span>
-          {c.due + c.newLeft > 0 ? (
-            <>
-              <strong>{c.due}</strong> review{c.due === 1 ? '' : 's'} due, <strong>{c.newLeft}</strong> new word{c.newLeft === 1 ? '' : 's'}
-            </>
-          ) : (
-            'Word reviews done for today. The Words page has more to do.'
-          )}
-        </span>
-        <a className="btn primary" href={link('words')}>
-          {c.due + c.newLeft > 0 ? 'Review words' : 'What next'}
-        </a>
-      </div>
-      <div className="today-row">
-        {lesson ? (
-          <span>
-            {lesson.status === 'in-progress' ? 'Continue lesson' : 'Next lesson'}:{' '}
-            <a href={link('lesson', lesson.lesson.id)}>
-              {lesson.lesson.unit}.{lesson.lesson.order} {lesson.lesson.title}
+      {today >= PATH_LAUNCH_DAY && !noticeHidden && (
+        <section className="card stack notice-card">
+          <p>
+            <strong>New: a daily goal.</strong> Finish 1 station or the daily mix each day to keep your streak. From today the streak counts goal days. Everyone starts with 1
+            freeze, which saves one missed day.
+          </p>
+          <div className="row">
+            <button
+              type="button"
+              className="btn small"
+              onClick={() => {
+                markNoticeSeen()
+                setNoticeHidden(true)
+              }}
+            >
+              Got it
+            </button>
+          </div>
+        </section>
+      )}
+
+      {milestone !== null && (
+        <section className="card stack milestone-card">
+          <p>
+            <strong>{milestone} days in a row.</strong>
+            {goal.freezeEarnedToday ? ` You earned a streak freeze (${goal.freezes}/${MAX_FREEZES}).` : ''}
+          </p>
+          <div className="row">
+            <button
+              type="button"
+              className="btn small"
+              onClick={() => {
+                markMilestoneSeen(milestone, today)
+                setMilestoneHidden(true)
+              }}
+            >
+              Close
+            </button>
+          </div>
+        </section>
+      )}
+
+      <PathLines stations={stations} path={path} onOpen={setOpen} scrollToCurrent={scrollToCurrent} />
+
+      {otherTests.length > 0 && (
+        <section className="card stack">
+          <h2>Other tests</h2>
+          {otherTests.map((t) => (
+            <a key={t.id} href={link('test', t.id)}>
+              {t.title}
             </a>
-          </span>
-        ) : (
-          <span className="muted">{content.lessons.length === 0 ? 'No lessons prepared yet.' : 'All lessons done.'} Ask Claude for more.</span>
-        )}
-      </div>
-      <div className="today-row">
-        {test ? (
-          <span>
-            Next test: <a href={link('test', test.id)}>{test.title}</a>
-          </span>
-        ) : (
-          <span className="muted">No untaken tests. Ask Claude for a new one.</span>
-        )}
-      </div>
-    </section>
+          ))}
+        </section>
+      )}
+
+      <StationSheet station={open} path={path} onClose={() => setOpen(null)} />
+    </div>
   )
 }

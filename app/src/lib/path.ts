@@ -13,6 +13,28 @@ export function unitColor(unit: number): string {
   return UNIT_COLORS[((unit % UNIT_COLORS.length) + UNIT_COLORS.length) % UNIT_COLORS.length]
 }
 
+/** Unit titles from SYLLABUS.md ("Units to A1"); a unit without one is shown as "Unit N". */
+export const UNIT_TITLES: Record<number, string> = {
+  0: 'Sounds and first words',
+  1: 'Meeting people',
+  2: 'People and things',
+  3: 'Making plans',
+  4: 'Eating out and free time',
+  5: 'Work and class day',
+  6: 'Getting around, feeling ill',
+  7: 'A1 wrap-up',
+}
+
+export function unitTitle(unit: number): string {
+  return UNIT_TITLES[unit] ?? `Unit ${unit}`
+}
+
+/** "Test 1-T2" from the test id "u1-t2-..."; the test's own title when the id has no such part. */
+export function testStationName(testId: string, title: string): string {
+  const m = testId.match(/^u(\d+)-t(\d+)/)
+  return m ? `Test ${m[1]}-T${m[2]}` : title
+}
+
 /** About this many sections make one station (Hayk chose 1-3 stations per lesson, 2026-11-07). */
 export const SECTIONS_PER_STATION = 5.5
 export const MAX_STATIONS_PER_LESSON = 3

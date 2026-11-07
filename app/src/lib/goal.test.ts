@@ -72,6 +72,11 @@ describe('the goal streak', () => {
     expect(g).toMatchObject({ current: 3, longest: 3, freezes: STARTER_FREEZES, todayMet: false })
   })
 
+  it("before launch day the ring still shows today's goal", () => {
+    const g = goalStreak({ studyDays: set(addDays(L, -1)), goalDays: set(addDays(L, -1)), launchDay: L, today: addDays(L, -1) })
+    expect(g).toMatchObject({ current: 1, todayMet: true, milestoneToday: null })
+  })
+
   it('carries the old streak across launch day', () => {
     const g = goalStreak({ studyDays: set(...run(addDays(L, -3), 3)), goalDays: set(L), launchDay: L, today: L })
     expect(g).toMatchObject({ current: 4, todayMet: true })

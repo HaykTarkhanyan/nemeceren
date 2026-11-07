@@ -1,5 +1,6 @@
 import { content } from './content/load.ts'
 import { AuthGate } from './components/AuthGate.tsx'
+import { GoalToast } from './components/GoalToast.tsx'
 import { ErrorBanner, ErrorBoundary, GuestBanner, Header, VoiceWarning } from './components/Chrome.tsx'
 import { useRoute } from './lib/router.ts'
 import { DailyPage } from './pages/DailyPage.tsx'
@@ -72,6 +73,7 @@ export function App() {
         <Header route={route} />
         <GuestBanner />
         <VoiceWarning />
+        <GoalToast />
         <main className="container">
           <ErrorBoundary key={route.join('/')}>
             <Page route={route} />
