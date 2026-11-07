@@ -53,7 +53,7 @@ Newest at the top. Never delete a superseded entry - mark it and add a new one.
 - **Why:** Hayk wants "a more logical progression of words, more Duo style" (Q29: "words follow the path").
 - **What it does:**
   - **The function:** `pathNewWords` (`lib/plan.ts`) takes words with no card in course order (unit, lesson, position in the lesson's `words`), first course words, then opened theme lessons, then words in no lesson.
-  - **Reach** (`pathReach` in `lib/path.ts`, used through `goalView.reachOf`): the lesson at "Du bist hier", the next lesson, and lessons with a done station ahead. That last part keeps one failed test from stopping new words.
+  - **Reach** (`pathReach` in `lib/path.ts`, used through `goalView.reachOf`): the lesson at "Du bist hier", the next lesson, lessons with a done station ahead, and the lesson after each of those. That last part keeps one failed test from stopping new words: the review found 0 new words after 6 lessons with no test taken, now fixed with a test on the real course. "Say the words" uses the highest reached unit.
   - **Who uses it:** `wordsForSource({kind:'all'})` puts introduced words first, then `pathNewWords`; the daily mix's `mixNewWords` uses it when no word set is active.
   - **Same rule elsewhere:** All words' "locked" and What next follow it.
   - **On a test station:** the sheet shows how many of the unit's words aren't learned, with "Review Unit N words".

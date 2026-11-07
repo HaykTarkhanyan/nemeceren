@@ -50,3 +50,8 @@ Topics cut from current work so they don't get lost.
   - Not done yet: careful content work, best as its own session or one agent with a review.
 
 - (Done 2026-11-07: the five path Home minors from the final review.)
+- **Practice games follow-ups (minors from the code review, 2026-11-07, DECISIONS #92-#93):**
+  - 8 of 813 Build-the-sentence items still give the first word away by its capital (formal "Sie", the noun "Morgen", "Gute", "München").
+  - Match and Listen started from a Map tile end with Daily mix and Home buttons, not "Back to the map". `PracticeGame` is keyed by `run` only, so going from one `#/daily/<game>/<lesson>` to another directly keeps the old items.
+  - The word detail's "last 10" history includes practice entries, so a drill round can push out real reviews.
+  - "More practice" on the Daily card has 12 buttons; consider grouping them.
