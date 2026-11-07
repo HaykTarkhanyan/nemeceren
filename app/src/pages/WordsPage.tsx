@@ -1,5 +1,6 @@
 // The Words page: word review with spaced repetition (FSRS; three modes share one schedule per
-// word) and the "All words" list, each a tab in the URL ("#/words", "#/words/all"). Hayk adds his
+// word), the "All words" list, the word sets and the map of lessons, each a tab in the URL
+// ("#/words", "#/words/all", "#/words/sets", "#/words/map"). Hayk adds his
 // own words here too (DECISIONS.md #58). When nothing is left to review, the "What next" menu
 // offers more work instead of a dead end.
 import { useEffect, useMemo, useRef, useState } from 'react'
@@ -7,10 +8,12 @@ import type { ReactNode } from 'react'
 import { content } from '../content/load.ts'
 import type { Lesson, ReviewLogEntry, ReviewState, StoredCard } from '../content/schema.ts'
 import { AllWords } from '../components/AllWords.tsx'
+import { FocusBar, useReviewSound } from '../components/FocusBar.tsx'
 import { GlossScope } from '../components/GermanText.tsx'
 import { Card, MODES, WordDe } from '../components/ReviewCard.tsx'
 import { WhatNext } from '../components/WhatNext.tsx'
 import { Tabs } from '../components/Tabs.tsx'
+import { VocabMap } from '../components/VocabMap.tsx'
 import { WordForm } from '../components/WordForm.tsx'
 import { WordSetsTab } from '../components/WordSetsTab.tsx'
 import type { PracticeHow } from '../components/WordSetsTab.tsx'
@@ -19,7 +22,7 @@ import { practiceWord } from '../lib/customWords.ts'
 import type { StudyWord } from '../lib/customWords.ts'
 import { addDays, localDay } from '../lib/dates.ts'
 import { messageOf, reportError } from '../lib/errors.ts'
-import { readReviewSound, writeReviewSound } from '../lib/homeView.ts'
+import { reachOf } from '../lib/goalView.ts'
 import { lessonStatus, parseSourceKey, sourceKey, sourceLabel, sourceLessons, sourceThemes, wordsForSource } from '../lib/plan.ts'
 import type { WordSource } from '../lib/plan.ts'
 import { dueOnDay, GOAL_ROUND_MIN, pickMode, ROUND_SIZE, roundSummary } from '../lib/review.ts'
@@ -34,8 +37,8 @@ import { useSpeech } from '../lib/speech.ts'
 import { recordPractice, recordReview, recordReviewRoundDone, requestFlush, useProgress } from '../lib/storage.ts'
 import type { CustomWordView } from '../lib/storage.ts'
 
-export const WORDS_TABS = ['review', 'all', 'sets'] as const
-const TAB_LABEL = { review: 'Review', all: 'All words', sets: 'Word sets' } as const
+export const WORDS_TABS = ['review', 'all', 'sets', 'map'] as const
+const TAB_LABEL = { review: 'Review', all: 'All words', sets: 'Word sets', map: 'Map' } as const
 
 /** `tab` is the part after "#/words/": none for Review, "all" for All words. */
 export function WordsPage({ tab }: { tab?: string }) {
@@ -73,7 +76,8 @@ function Words({ tab }: { tab: (typeof WORDS_TABS)[number] }) {
   // (course or theme) that are not open yet wait until their lesson is opened.
   const { source, note } = parseSourceKey(picked ?? settings.wordSource, content.allLessons)
   const custom = progress.customWords.map(practiceWord)
-  const words = wordsForSource(source, content.words, custom, content.allLessons, progress.lessonProgress, state)
+  // With "all", new words follow the path (lib/plan.ts pathNewWords), the same rule as the daily mix.
+  const words = wordsForSource(source, content.words, custom, content.allLessons, progress.lessonProgress, state, reachOf(progress))
   // A picked unit, lesson or "my words" brings all its new words at once; only "all" keeps the daily
   // limit, so 200+ lesson words can't arrive in one day (Hayk, 2026-10-02; DECISIONS.md #66).
   const newLimit = source.kind === 'all' ? settings.newPerDay : Number.POSITIVE_INFINITY
@@ -212,7 +216,9 @@ function Words({ tab }: { tab: (typeof WORDS_TABS)[number] }) {
           </button>
         </div>
       )}
-      {tab === 'sets' ? (
+      {tab === 'map' ? (
+        <VocabMap />
+      ) : tab === 'sets' ? (
         <WordSetsTab onPractice={startPractice} />
       ) : tab === 'all' ? (
         <AllWords onEdit={openForm} onNotice={setNotice} onPractice={startPractice} />
@@ -280,7 +286,7 @@ function SourcePicker({ source, onPick }: { source: WordSource; onPick: (key: st
     <label className="field">
       <span className="label">Words from</span>
       <select value={sourceKey(source)} onChange={(e) => onPick(e.target.value)}>
-        <option value="all">All words (lessons unlock their words when opened)</option>
+        <option value="all">All words (new words follow the path)</option>
         <option value="mine">{`My words (${view.customWords.length})`}</option>
         {units.map((u) => (
           <optgroup key={u} label={`Unit ${u}`}>
@@ -325,40 +331,6 @@ const MIXED_MODE = { mode: 'mixed' as const, title: 'Mixed', desc: 'Each card pi
 
 function modeTitle(mode: SessionMode): string {
   return mode === 'mixed' ? MIXED_MODE.title : (MODES.find((m) => m.mode === mode)?.title ?? mode)
-}
-
-/** The top bar of the focus review: close, how far the round is, and the sound switch. */
-function FocusBar(props: { onClose: () => void; closeLabel: string; done: number; target: number; label: string; sound: boolean; onSound: () => void }) {
-  const { onClose, closeLabel, done, target, label, sound, onSound } = props
-  return (
-    <div className="focus-bar">
-      <button type="button" className="btn small" onClick={onClose}>
-        {closeLabel}
-      </button>
-      <div className="focus-progress" aria-label={`${done} of ${target}`}>
-        <span>
-          {label}: {done} of {target}
-        </span>
-        <span className="bar">
-          <i style={{ width: `${target ? Math.min(100, (100 * done) / target) : 0}%` }} />
-        </span>
-      </div>
-      <button type="button" className="btn small" aria-pressed={sound} onClick={onSound}>
-        {sound ? 'Sound on' : 'Sound off'}
-      </button>
-    </div>
-  )
-}
-
-function useReviewSound(): [boolean, () => void] {
-  const [sound, setSound] = useState(readReviewSound)
-  return [
-    sound,
-    () => {
-      writeReviewSound(!sound)
-      setSound(!sound)
-    },
-  ]
 }
 
 /** After a round: how it went, the hard words to practise, and what is due tomorrow (DECISIONS.md #85). */

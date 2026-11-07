@@ -211,6 +211,31 @@ export function pathProgress(
   return { done, fromEvents, best, current, units }
 }
 
+/** Where the path is, for the new words (lib/plan.ts pathNewWords): see pathReach. */
+export interface PathReach {
+  /** The lesson of "Du bist hier"; null when every station is done (the whole course is reached). */
+  at: string | null
+  /** Lessons with at least one done station, also ahead of "Du bist hier". */
+  started: ReadonlySet<string>
+}
+
+/**
+ * The lesson the path is at and the lessons with a done station. A test station belongs to the
+ * lesson before it (courseStations puts a lesson's tests right after its steps).
+ */
+export function pathReach(stations: Station[], path: Pick<PathProgress, 'done' | 'current'>): PathReach {
+  const started = new Set<string>()
+  for (const s of stations) if (s.lessonId !== undefined && path.done.has(s.id)) started.add(s.lessonId)
+  if (path.current === null) return { at: null, started }
+  const i = stations.findIndex((s) => s.id === path.current!.id)
+  if (i < 0) throw new Error(`The current station ${path.current.id} is not on the path`)
+  for (let k = i; k >= 0; k--) {
+    const lessonId = stations[k].lessonId
+    if (lessonId !== undefined) return { at: lessonId, started }
+  }
+  throw new Error(`The current station ${path.current.id} has no lesson before it`)
+}
+
 /** Progress in the lowest level that still has stations to do (A1 now); the highest level when all are done. */
 export function levelProgress(stations: Station[], done: Set<string>, lessons: CourseLesson[], tests: Test[]): { level: string; done: number; total: number } | null {
   const lessonLevel = new Map(lessons.map((l) => [l.id, l.level as string]))

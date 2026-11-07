@@ -3,18 +3,16 @@
 // activities and where the mix takes its new words from.
 import { content } from '../content/load.ts'
 import { memo } from 'react'
-import { practiceWord } from '../lib/customWords.ts'
 import { MIX } from '../lib/daily.ts'
 import { messageOf, reportError } from '../lib/errors.ts'
 import { MAX_FREEZES, MILESTONES } from '../lib/goal.ts'
 import type { GoalStreak } from '../lib/goal.ts'
-import { wordsForSource } from '../lib/plan.ts'
 import { link } from '../lib/router.ts'
 import { updateSettings, useSettings } from '../lib/settings.ts'
 import { useSpeech } from '../lib/speech.ts'
 import { counts } from '../lib/srs.ts'
 import { useProgress } from '../lib/storage.ts'
-import { canListen, currentMistakes, mixPlan, mixSummary } from './DailyPage.tsx'
+import { canListen, currentMistakes, GAME_LABEL, mixPlan, mixSummary, PRACTICE_GAMES, studyPool } from './DailyPage.tsx'
 
 const RING_R = 18
 const RING_C = 2 * Math.PI * RING_R
@@ -47,8 +45,7 @@ export const DailyCard = memo(function DailyCard({ goal }: { goal: GoalStreak })
   const now = new Date()
   const plan = mixPlan(progress, settings, now, canListen(useSpeech()))
   const mistakesDue = currentMistakes(progress, now).due.length
-  const words = wordsForSource({ kind: 'all' }, content.words, progress.customWords.map(practiceWord), content.allLessons, progress.lessonProgress, progress.reviewState)
-  const due = counts(words, progress.reviewState, now, settings.newPerDay).due
+  const due = counts(studyPool(progress), progress.reviewState, now, settings.newPerDay).due
   const nextMilestone = MILESTONES.find((m) => m > goal.current)
   function set(patch: Parameters<typeof updateSettings>[0]) {
     try {
@@ -109,6 +106,14 @@ export const DailyCard = memo(function DailyCard({ goal }: { goal: GoalStreak })
             <a className="btn" href={link('daily', 'listen')}>
               Listen and pick
             </a>
+            {PRACTICE_GAMES.map((g) => (
+              <a key={g} className="btn" href={link('daily', g)}>
+                {GAME_LABEL[g]}
+              </a>
+            ))}
+            <a className="btn" href={link('words', 'map')}>
+              Words map
+            </a>
             <a className="btn" href={link('words', 'sets')}>
               Word sets
             </a>
@@ -123,7 +128,7 @@ export const DailyCard = memo(function DailyCard({ goal }: { goal: GoalStreak })
             <label className="field">
               <span className="label">New words from</span>
               <select value={settings.activeSet ?? ''} onChange={(e) => set({ activeSet: e.target.value === '' ? null : e.target.value })}>
-                <option value="">The next lessons (learn their words before the lesson)</option>
+                <option value="">The path (the lesson you are at, then the next one)</option>
                 {content.sets.map((s) => (
                   <option key={s.id} value={s.id}>
                     Word set: {s.title}

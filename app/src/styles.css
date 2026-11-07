@@ -2601,3 +2601,231 @@ ol.line {
 .strength i.on {
   background: var(--ok);
 }
+
+/* ---------- Practice games (design: _knowledge/2026-11-07_practice-games-design.md) ---------- */
+
+.focus-review.game .game-card {
+  min-height: 0;
+  justify-content: flex-start;
+}
+
+.mic-big {
+  min-height: 56px;
+  font-size: 1.05rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.game-list {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.game-list li {
+  margin: 4px 0;
+}
+
+.badge.game-said,
+.badge.game-typed {
+  background: var(--ok-bg);
+  color: var(--ok);
+}
+
+.badge.game-missed {
+  background: var(--warn-bg);
+  color: var(--warn);
+}
+
+.article-buttons {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.article-btn {
+  min-height: 72px;
+  font-size: 1.4rem;
+  font-weight: 700;
+  border-width: 2px;
+}
+
+.art-btn-der {
+  color: var(--art-der);
+  border-color: var(--art-der);
+  background: color-mix(in srgb, var(--art-der) 10%, var(--surface));
+}
+
+.art-btn-die {
+  color: var(--art-die);
+  border-color: var(--art-die);
+  background: color-mix(in srgb, var(--art-die) 10%, var(--surface));
+}
+
+.art-btn-das {
+  color: var(--art-das);
+  border-color: var(--art-das);
+  background: color-mix(in srgb, var(--art-das) 10%, var(--surface));
+}
+
+.article-flash {
+  animation: article-flash 0.4s ease-out;
+}
+
+@keyframes article-flash {
+  from {
+    transform: scale(1.15);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .article-flash {
+    animation: none;
+  }
+}
+
+.gap-sentence {
+  font-size: 1.3rem;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.gap-blank {
+  display: inline-block;
+  min-width: 4em;
+  border-bottom: 3px solid var(--accent);
+  color: transparent;
+  margin: 0 2px;
+}
+
+.build-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  min-height: 52px;
+  padding: 8px;
+  border: 2px dashed var(--border);
+  border-radius: var(--radius);
+  align-items: center;
+}
+
+.build-bank {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.build-tile {
+  min-height: 44px;
+  padding: 6px 12px;
+  font-size: 1.05rem;
+}
+
+.build-bank .build-tile.used {
+  visibility: hidden;
+}
+
+/* ---------- The Words map: one tile per lesson ---------- */
+
+.map-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+}
+
+.legend-swatch {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  border: 1px solid var(--border);
+  vertical-align: middle;
+}
+
+.legend-swatch.faint {
+  background: color-mix(in srgb, var(--accent) 12%, var(--surface));
+}
+
+.legend-swatch.strong {
+  background: color-mix(in srgb, var(--accent) 85%, var(--surface));
+}
+
+.map-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.map-unit {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 6px 0 0;
+  font-size: 1rem;
+}
+
+.map-tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(138px, 1fr));
+  gap: 8px;
+}
+
+.map-tile {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 4px;
+  min-height: 72px;
+  padding: 8px 10px;
+  border: 1px solid color-mix(in srgb, var(--c) 45%, var(--border));
+  border-radius: var(--radius);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  overflow-wrap: anywhere;
+}
+
+.map-tile.locked {
+  background: var(--surface);
+  color: var(--muted);
+  border-style: dashed;
+  border-color: var(--border);
+}
+
+.map-name {
+  font-weight: 650;
+  line-height: 1.25;
+}
+
+.map-count {
+  font-size: 12.5px;
+  opacity: 0.85;
+}
+
+.station-sheet ul.map-words {
+  list-style: none;
+  padding-left: 0;
+  max-height: 34vh;
+  overflow-y: auto;
+}
+
+.map-words li {
+  margin: 3px 0;
+}
+
+.map-practise {
+  margin: 14px 0 6px;
+}
+
+/* A test station's sheet: the unit's words before the test. */
+.sheet-words {
+  margin: 8px 0 12px;
+  padding: 10px 12px;
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--c) 10%, var(--surface));
+}

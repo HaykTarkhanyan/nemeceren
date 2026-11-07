@@ -8,6 +8,7 @@ const OPEN_UNITS_KEY = 'nemeceren.pathOpenUnits'
 const NOTICE_KEY = 'nemeceren.pathNoticeSeen'
 const MILESTONE_KEY = 'nemeceren.milestoneSeen'
 const REVIEW_SOUND_KEY = 'nemeceren.reviewSound'
+const ARTICLE_STREAK_KEY = 'nemeceren.articleBestStreak'
 
 function read(key: string, what: string): string | null {
   try {
@@ -75,4 +76,14 @@ export function readReviewSound(): boolean {
 
 export function writeReviewSound(on: boolean): void {
   write(REVIEW_SOUND_KEY, on ? 'on' : 'off', 'whether review cards are read aloud')
+}
+
+/** The best streak in the der/die/das drill on this device (0 when none yet or the storage is damaged). */
+export function readBestStreak(): number {
+  const n = Number(read(ARTICLE_STREAK_KEY, 'Your best der/die/das streak') ?? '0')
+  return Number.isInteger(n) && n >= 0 ? n : 0
+}
+
+export function writeBestStreak(n: number): void {
+  write(ARTICLE_STREAK_KEY, String(n), 'your best der/die/das streak')
 }

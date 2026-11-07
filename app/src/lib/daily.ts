@@ -2,8 +2,11 @@
 // functions: which words the games use, the rounds of match pairs, the items of listen and pick,
 // the new words of the daily mix, and which steps of the mix have something to do.
 // The games are practice: they never change the FSRS schedule (DECISIONS.md #25, #77).
-import { byCourseOrder } from '../content/lessons.ts'
-import type { CourseLesson, LessonProgress, ReviewState, WordSet } from '../content/schema.ts'
+import { isThemeLesson } from '../content/lessons.ts'
+import type { Lesson, LessonProgress, ReviewState, WordSet } from '../content/schema.ts'
+import { pathNewWords } from './plan.ts'
+import type { PathReach } from './plan.ts'
+import { lessonOfWords } from './review.ts'
 import { shuffle } from './shuffle.ts'
 import { LEARN_AHEAD_MS } from './srs.ts'
 import { foldBare } from './text.ts'
@@ -146,33 +149,31 @@ export function pickItems<W extends GameWord>(words: W[], state: ReviewState, n:
 
 /**
  * New words for the daily mix, in order: the active word set's words that are not introduced yet,
- * or, with no active set, the words of the next course lessons that are not introduced yet
- * (pre-learning: the lesson itself then feels easier). Scans lessons in course order from the
- * first one that is not done, and returns the first lesson's words that are left.
+ * or, with no active set, the new words in path order: pathNewWords, the same rule as the Words
+ * page (the lesson the path is at and the next one, so the mix pre-learns the next lesson).
+ * `from` names where the first new word comes from. `lessons` are all lessons, course and theme.
  */
 export function mixNewWords<W extends { id: string }>(input: {
   words: W[]
-  lessons: CourseLesson[]
+  lessons: Lesson[]
   progress: LessonProgress
   state: ReviewState
   set: WordSet | null
+  reach: PathReach
 }): { words: W[]; from: string } {
-  const { words, lessons, progress, state, set } = input
+  const { words, lessons, progress, state, set, reach } = input
   const byId = new Map(words.map((w) => [w.id, w]))
-  const fresh = (ids: string[]) => ids.filter((id) => !state.cards[id] && byId.has(id)).map((id) => byId.get(id) as W)
   if (set) {
-    const left = fresh(set.words)
+    const left = set.words.filter((id) => !state.cards[id] && byId.has(id)).map((id) => byId.get(id) as W)
     if (left.length > 0) return { words: left, from: `the word set "${set.title}"` }
   }
-  // A finished set gives way to the next lessons, and the text says so.
+  // A finished set gives way to the path, and the text says so.
   const setDone = set ? `the word set "${set.title}" is done, so ` : ''
-  const done = (l: CourseLesson) => progress.lessons[l.id]?.doneAt
-  for (const l of [...lessons].sort(byCourseOrder)) {
-    if (done(l)) continue
-    const left = fresh(l.words ?? [])
-    if (left.length > 0) return { words: left, from: `${setDone}lesson ${l.unit}.${l.order} ${l.title}` }
-  }
-  return { words: [], from: `${setDone}the course` }
+  const fresh = pathNewWords(words, lessons, progress, state, reach)
+  if (fresh.length === 0) return { words: [], from: `${setDone}the course` }
+  const first = lessonOfWords(lessons).get(fresh[0].id)
+  const where = !first ? 'the word bank' : isThemeLesson(first) ? `the theme "${first.theme.title}"` : `lesson ${first.unit}.${first.order} ${first.title}`
+  return { words: fresh, from: `${setDone}${where}` }
 }
 
 /** Cards due now (or within the learn-ahead window) among the words that have a card. */

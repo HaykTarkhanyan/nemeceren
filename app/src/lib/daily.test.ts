@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest'
 import type { CourseLesson, ReviewState, WordSet } from '../content/schema.ts'
 import { dueNow, introduced, matchRounds, MIN_PICK_WORDS, mixFinished, mixNewWords, mixSteps, pickGameWords, pickItems, wordKind } from './daily.ts'
-import { emptyLessonProgress, markLessonDone, startLesson } from './plan.ts'
+import { emptyLessonProgress, markLessonDone, pathNewWords, startLesson } from './plan.ts'
+import type { PathReach } from './plan.ts'
 import { introducedCard, Rating, review } from './srs.ts'
 
 const t0 = new Date(2026, 10, 6, 10, 0, 0)
@@ -106,33 +107,42 @@ describe('pickItems', () => {
 })
 
 describe('mixNewWords', () => {
-  const words = ['a', 'b', 'c', 'd', 'e'].map((id) => w(id))
-  const lessons = [lesson('l1', 1, 1, ['a', 'b']), lesson('l2', 1, 2, ['c', 'd'])]
+  const words = ['a', 'b', 'c', 'd', 'e', 'f'].map((id) => w(id))
+  const lessons = [lesson('l1', 1, 1, ['a', 'b']), lesson('l2', 1, 2, ['c', 'd']), lesson('l3', 2, 1, ['e', 'f'])]
+  const atL1: PathReach = { at: 'l1', started: new Set() }
 
-  it('takes the next lesson that still has words to learn, even before it is opened', () => {
-    const out = mixNewWords({ words, lessons, progress: emptyLessonProgress(), state: learned(['a', 'b']), set: null })
+  it('takes the new words in path order (the same rule as the Words page), even before the lesson is opened', () => {
+    const out = mixNewWords({ words, lessons, progress: emptyLessonProgress(), state: learned(['a', 'b']), set: null, reach: atL1 })
+    expect(out.words.map((x) => x.id)).toEqual(pathNewWords(words, lessons, emptyLessonProgress(), learned(['a', 'b']), atL1).map((x) => x.id))
     expect(out.words.map((x) => x.id)).toEqual(['c', 'd'])
-    expect(out.from).toContain('1.2')
+    expect(out.from).toBe('lesson 1.2 l2')
   })
 
-  it('skips lessons marked done', () => {
+  it('runs on into the next lesson and stops where the path stops', () => {
     let p = startLesson(emptyLessonProgress(), 'l1', t0)
     p = markLessonDone(p, 'l1', true, t0)
-    const out = mixNewWords({ words, lessons, progress: p, state: learned([]), set: null })
-    expect(out.words.map((x) => x.id)).toEqual(['c', 'd'])
+    const out = mixNewWords({ words, lessons, progress: p, state: learned([]), set: null, reach: atL1 })
+    // A lesson marked done still gives its words first: they come in course order.
+    expect(out.words.map((x) => x.id)).toEqual(['a', 'b', 'c', 'd'])
+    expect(out.from).toBe('lesson 1.1 l1')
   })
 
-  it('falls back to the next lessons when the active set is done, and says so', () => {
+  it('falls back to the path when the active set is done, and says so', () => {
     const set: WordSet = { id: 's', title: 'Set', description: 'd', words: ['e'] }
-    const out = mixNewWords({ words, lessons, progress: emptyLessonProgress(), state: learned(['e']), set })
-    expect(out.words.map((x) => x.id)).toEqual(['a', 'b'])
+    const out = mixNewWords({ words, lessons, progress: emptyLessonProgress(), state: learned(['e']), set, reach: atL1 })
+    expect(out.words.map((x) => x.id)).toEqual(['a', 'b', 'c', 'd'])
     expect(out.from).toBe('the word set "Set" is done, so lesson 1.1 l1')
   })
 
   it('uses the active set instead, in set order, without words already learned', () => {
     const set: WordSet = { id: 's', title: 'Set', description: 'd', words: ['e', 'a', 'c'] }
-    const out = mixNewWords({ words, lessons, progress: emptyLessonProgress(), state: learned(['a']), set })
+    const out = mixNewWords({ words, lessons, progress: emptyLessonProgress(), state: learned(['a']), set, reach: atL1 })
     expect(out.words.map((x) => x.id)).toEqual(['e', 'c'])
+  })
+
+  it('says "the course" when the path has no new words left', () => {
+    const out = mixNewWords({ words, lessons, progress: emptyLessonProgress(), state: learned(['a', 'b', 'c', 'd', 'e']), set: null, reach: atL1 })
+    expect(out).toEqual({ words: [], from: 'the course' })
   })
 })
 

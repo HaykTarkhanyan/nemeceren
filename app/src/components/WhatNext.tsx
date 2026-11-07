@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { content } from '../content/load.ts'
 import type { StudyWord } from '../lib/customWords.ts'
 import { messageOf } from '../lib/errors.ts'
-import { listeningWords, lockedWordIds, nextLesson, nextTest, weakWords } from '../lib/plan.ts'
+import { listeningWords, nextLesson, nextTest, weakWords } from '../lib/plan.ts'
 import { link } from '../lib/router.ts'
 import { addExtraNewWords, useProgress } from '../lib/storage.ts'
 
@@ -30,10 +30,11 @@ export function WhatNext(props: { words: StudyWord[]; allWords: boolean; onMoreN
 
   const now = new Date()
   const available = words.filter((w) => !state.cards[w.id]).length
-  // A picked unit or lesson already includes the words of its unopened lessons. Only course
-  // lessons count here: the message below points to the next course lesson, and theme lessons
+  // A picked unit or lesson already includes all its words. With "all", the course words the path
+  // has not reached wait (new words follow the path). Only course lessons count here: theme lessons
   // are not part of the course (their words wait until Hayk opens them).
-  const locked = allWords ? [...lockedWordIds(content.lessons, progress)].filter((id) => !state.cards[id]).length : 0
+  const inWords = new Set(words.map((w) => w.id))
+  const locked = allWords ? new Set(content.lessons.flatMap((l) => l.words ?? []).filter((id) => !state.cards[id] && !inWords.has(id))).size : 0
   const weak = weakWords(words, state, data.log, now)
   const lesson = nextLesson(content.lessons, progress)
   const test = nextTest(content.tests, content.lessons, data.results)
@@ -58,10 +59,9 @@ export function WhatNext(props: { words: StudyWord[]; allWords: boolean; onMoreN
               ))}
             </div>
           </>
-        ) : locked > 0 && lesson ? (
+        ) : locked > 0 ? (
           <span className="small">
-            The next {locked} new words come with a lesson. Open <a href={link('lesson', lesson.lesson.id)}>{lesson.lesson.title}</a> to unlock
-            its words.
+            The next {locked} new words wait further along the path. Do <a href={link('line')}>your next station</a> to move on.
           </span>
         ) : allWords ? (
           <span className="small warn-text">No more new words prepared yet. Ask Claude for more.</span>

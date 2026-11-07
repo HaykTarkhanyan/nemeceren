@@ -2,6 +2,57 @@
 
 Date: 2026-11-07. Inputs: Hayk's answers Q29-Q32 in the chat. *(Claude's call)* marks choices made without Hayk.
 
+## As built (2026-11-07, for DECISIONS.md)
+
+Built in a worktree while Hayk was away, so every point below is Claude's call. Each one says why and what else was considered.
+
+1. **One function decides new words: `pathNewWords` (app/src/lib/plan.ts).** `wordsForSource({kind:'all'})` returns the introduced words first, then `pathNewWords`. The Words review's `nextCard` takes the first card-less word in that list, and the daily mix's `mixNewWords` (no active set) returns `pathNewWords` as it is. `pathReach` (lib/path.ts) turns the path into `{at, started}`, and `goalView.reachOf(progress)` is the glue every caller uses. **Why:** the design asked for one tested place. **Alternative rejected:** sorting inside `nextCard` (srs.ts), which knows nothing about lessons.
+2. **The reach is "Du bist hier" plus the next lesson, plus lessons with a done station ahead.** A test station belongs to the lesson before it. **Why the extra rule:** a failed test keeps "Du bist hier" on the test (path.test.ts already has that case). Without the rule, a learner who moves on past a failed test would get no new words from the lessons they finish. A lesson that is only opened ahead still waits, as the design says. **Alternative rejected:** skipping tried-but-failed tests when working out "Du bist hier", which would change what the path shows.
+3. **The order inside the reach:** course words first, then words of opened theme lessons, then words in no lesson (there are none today). A word listed in two lessons comes at its first place. A lesson marked done still gives its leftover words first, while the old mix skipped done lessons. **Why:** words follow the path, earliest first. The mix's "New words from ..." names the lesson of the first word.
+4. **All words and What next follow the same rule.** All words calls a card-less word "locked" when the path has not reached it; before, "locked" meant its lesson was not opened. What next says "wait further along the path" and links to your next station, instead of "open the lesson". **Why:** with the old wording, the Map, All words and the review would disagree. **Left as it was:** `contentRunway` (the author-facing line on Stats) still counts by opened lessons.
+5. **The test station's sheet** says "N of the M Unit U words are not learned yet" (not learned = never reviewed). "Review Unit U words" saves the unit pick per device (`lib/wordReview.ts`) and opens the Words Review tab, but does not start a round. **Why:** the learner still picks the direction (Hayk's Q24). The Map's "Review these" works the same way.
+6. **Say the words:** 8 words drawn at random from the 16 weakest (most lapses first, then lowest stability), so "Play again" brings some new ones. Only words up to the unit the path is at, as in the design; the other games have no unit filter.
+   - **Spoken check:** every word of the German, the article aside, must be heard (`compareSpoken`, the best of 3 alternatives).
+   - **"Type instead" hides the German** and plays it, so typing becomes dictation. **Why:** typing a word you can see is copying.
+   - **What gets logged:** said right is Good, typed is Good or Again. A recognition miss or a Skip is not logged.
+   - A word not said or typed right comes back once at the end.
+7. **Typed sentences** (say the sentence, build the sentence) ignore case and **all** punctuation, not only the final mark. Umlauts and ß stay strict; a slip there shows as a near miss and counts as wrong. **Why:** a missing comma is not what is practised. **Alternative rejected:** the test `translate` rule as written, which is case-sensitive and keeps inner punctuation.
+8. **Say the sentence:** 6 items. After any spoken try, the sentence shows word by word with audio, as SpeakLine does. Below 80% the learner can try again, type, or go on, and that try is not logged.
+9. **der/die/das:**
+   - It opens with a start screen, so the 60 seconds don't begin by surprise.
+   - After a wrong tap, the right article shows for 1.3 s, and the noun comes back 3 places later.
+   - A noun the cards give two articles (der/die See) is left out.
+   - Every tap is logged (recognition).
+   - "Practise these" plays a new 60-second round on the nouns that went wrong.
+   - The best streak is kept in localStorage (`nemeceren.articleBestStreak`, try/catch through `homeView.ts`).
+10. **Fill the gap:**
+    - **The English shows with the question,** not only after it. **Why:** distractors of the same kind and gender often fit the German too ("Der ___ ist neu": Tisch, Stuhl, Computer). Only the meaning makes one answer right.
+    - **Nouns:** the distractors have the same gender, so the article left in the sentence gives no hint.
+    - **Plurals** get other cards' plurals.
+    - **Inflected forms** are only taken from other cards' own examples with the same ending (wohnst, kommst for arbeitest), never made up.
+    - **Kinds:** a verb is a card whose English starts with "to", or a modal (not morgen, zusammen); capitalised words like Hallo and Armenien go together.
+    - The same unit comes first, and a card without 2 distractors is skipped. 757 of the 881 example cards give an item.
+11. **Build the sentence:**
+    - **Material:** only one-sentence examples ("Ich bin Hayk. - Freut mich!" is skipped).
+    - **The distractors:** 1 verb form (the persons of sein, haben, the modals and the past tenses, or the ich, wir and ihr forms of a regular verb: these are real German for every verb, also fahrt, so no "fahrst" appears), 1 article or case form, then words from other sentences. Article or verb forms fill up when no other words are left.
+    - **The first tile** keeps its capital only if that word is seen capitalised mid-sentence somewhere. **Why:** a "Vielen" tile with a capital gave away the first word in the browser check. The cost is a lowercase city name that only ever starts sentences.
+    - **Ask Claude** names the word card ("practice game ..., word card X (its example sentence)").
+12. **The Map:**
+    - **Tile counts:** "known" is the All words status `known`. The strength is the average of `strengthOf` divided by 4.
+    - **Tile colour:** 8% to 88% of the unit colour. The text switches to the unit's text colour from 70%, for contrast.
+    - **"locked"** means not reached (path rule 2, or an unopened theme) with none of its words started.
+    - **Theme lessons** use the accent colour.
+    - **The sheet** links all seven games on that lesson's words (`#/daily/<game>/<lesson id>`), including match and listen. App.tsx passes the route's third part as `lesson`.
+13. **Shared code:**
+    - `FocusBar` and `useReviewSound` moved from WordsPage to `components/FocusBar.tsx`.
+    - The recognition types, errors and a `useRecognition` hook are in `lib/recognition.ts`, and SpeakLine imports them.
+    - `savePractice` (components/GameFrame.tsx) reports a failed save with `reportError` and the game goes on. **Alternative rejected:** a per-item Retry button like ListenPick's, which is more UI for a practice log entry.
+    - A blocked mic or a failed start is reported and switches the game to typing; "nothing heard" is only a note.
+14. **Not done or risky:**
+    - Speech is untested on a real phone: the check was headless.
+    - The Daily card's "More practice" now has 10 buttons in 2 columns, which is long on a phone.
+    - DECISIONS.md is not edited (the main session copies this section).
+
 ## Hayk's answers
 
 | ID | Question | Answer |

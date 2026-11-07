@@ -3,12 +3,13 @@
 // on the desktop, a card list on the phone (styles.css, .words-table). The rules are in lib/allWords.ts.
 import { Fragment, useMemo, useState } from 'react'
 import { content } from '../content/load.ts'
-import { lessonLabel } from '../content/lessons.ts'
+import { isThemeLesson, lessonLabel } from '../content/lessons.ts'
 import { buildRows, correctPct, filterRows, relativeDue, relativePast, SORT_LABEL, sortRows, sourceText, STATUS_LABEL, statusCounts, strengthOf, WORD_STATUSES } from '../lib/allWords.ts'
 import { WordDe } from './ReviewCard.tsx'
 import type { SortKey, SourceFilter, StatusFilter, WordRow } from '../lib/allWords.ts'
 import { asSentence, checkText } from '../lib/customWords.ts'
 import { messageOf, reportError } from '../lib/errors.ts'
+import { reachOf } from '../lib/goalView.ts'
 import { sourceLessons, sourceThemes } from '../lib/plan.ts'
 import { link } from '../lib/router.ts'
 import { deleteCustomWord, STATE_DAYS, useProgress } from '../lib/storage.ts'
@@ -53,6 +54,7 @@ export function AllWords(props: {
         lessons: content.lessons,
         themes: content.themes,
         progress: view.lessonProgress,
+        reach: reachOf(view),
         state: view.reviewState,
         log: view.reviewLog,
       }),
@@ -186,7 +188,7 @@ export function AllWords(props: {
         reviews of the last {STATE_DAYS} days (practice not included).
       </p>
       {shown.length === 0 ? (
-        <p className="muted">No words match.{status === 'all' && counts.locked > 0 ? ' Words of lessons you have not opened are under "locked".' : ''}</p>
+        <p className="muted">No words match.{status === 'all' && counts.locked > 0 ? ' Words the path has not reached yet are under "locked".' : ''}</p>
       ) : (
         <div className="words-table-wrap">
           <table className="words-table">
@@ -290,8 +292,8 @@ export function AllWords(props: {
         <summary>What the statuses mean</summary>
         <ul>
           <li>
-            <strong>locked</strong>: in a lesson you have not opened yet (hidden unless you pick "locked"). <strong>not started</strong>: waiting among the
-            daily new words.
+            <strong>locked</strong>: in a lesson further along the path than the one you are at and the next (hidden unless you pick "locked"), or in a
+            theme lesson you have not opened. <strong>not started</strong>: waiting among the daily new words.
           </li>
           <li>
             <strong>new</strong>: added by you (or from a lesson hint) and not reviewed yet; it comes up right away.
@@ -353,7 +355,9 @@ function WordDetail({ row, onEdit, onDelete, onPractice }: { row: WordRow; onEdi
         ))}
       {row.status === 'locked' && row.source.kind === 'lesson' && (
         <p className="small muted">
-          Opening <a href={link('lesson', row.source.lesson.id)}>{lessonLabel(row.source.lesson)}</a> adds it to your daily new words.
+          {isThemeLesson(row.source.lesson) ? 'Opening ' : 'It joins your daily new words when the path reaches '}
+          <a href={link('lesson', row.source.lesson.id)}>{lessonLabel(row.source.lesson)}</a>
+          {isThemeLesson(row.source.lesson) ? ' adds it to your daily new words.' : '.'}
         </p>
       )}
       <div>

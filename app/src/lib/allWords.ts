@@ -6,7 +6,8 @@ import { lessonLabel } from '../content/lessons.ts'
 import type { CourseLesson, CustomWord, Lesson, LessonProgress, ReviewLogEntry, ReviewState, StoredCard, ThemeLesson, Word } from '../content/schema.ts'
 import { practiceWord, withoutArticle } from './customWords.ts'
 import { daysBetween, localDay } from './dates.ts'
-import { lockedWordIds } from './plan.ts'
+import { pathNewWords } from './plan.ts'
+import type { PathReach } from './plan.ts'
 import { KNOWN_DAYS } from './stats.ts'
 import { foldBare, foldSpelled } from './text.ts'
 
@@ -34,7 +35,7 @@ export const STRUGGLING_LAPSES = 2
 
 /**
  * One status per word, first match wins:
- *   no card:  own word -> new (it is introduced right away); content word of an unopened lesson -> locked; else not started
+ *   no card:  own word -> new (it is introduced right away); content word the path has not reached -> locked; else not started
  *   card never reviewed (reps 0, added from the "already in lesson" hint) -> new
  *   lapses >= 2, or the last scheduled review (practice does not count) was graded Again -> struggling
  *   FSRS state Review with an interval of 21 days or more -> known (the Stats page's rule)
@@ -88,12 +89,15 @@ export function buildRows(input: {
   lessons: CourseLesson[]
   themes: ThemeLesson[]
   progress: LessonProgress
+  /** Where the path is: a content word without a card is "locked" until the path reaches it (lib/plan.ts pathNewWords). */
+  reach: PathReach
   state: ReviewState
   log: ReviewLogEntry[]
 }): WordRow[] {
   const { state } = input
   const allLessons: Lesson[] = [...input.lessons, ...input.themes]
-  const locked = lockedWordIds(allLessons, input.progress)
+  const reachable = new Set(pathNewWords(input.words, allLessons, input.progress, state, input.reach).map((w) => w.id))
+  const locked = new Set(input.words.filter((w) => !state.cards[w.id] && !reachable.has(w.id)).map((w) => w.id))
   const lessonsOf = new Map<string, Lesson[]>()
   for (const l of allLessons) {
     for (const id of l.words ?? []) {
