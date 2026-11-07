@@ -2,6 +2,81 @@
 
 Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
+## 84. Path events are stored in a new Neon table `path_events` and synced like study sessions; GET /v1/state returns all of them, all time (OK'd by Hayk, 2026-11-07, Q16)
+
+- **Date:** 2026-11-07 - **Status:** active
+- **Why:**
+  - **No place to record it:** the path (#82) and the daily goal (#83) need to know which section ranges were finished on which day, and when a daily mix ran to its end. Nothing stored that: `lesson_progress.last_section` is only the section at the top of the screen (it moves backwards when scrolling up), and `done_at` is one manual flag per lesson.
+  - **Hayk's OK:** he said yes to exactly four items: the migration, the backend code, the function deploy, and the new streak rule going live.
+- **What it is:**
+  - **Migration `005_path_events.sql`:** one new table, nothing existing changed. A row is either a station (`lesson_id` plus the half-open range `section_from`/`section_to`) or a daily mix. CHECKs repeat the API's rules.
+  - **Sync:** `POST /v1/sync` upserts path events, and the later `updatedAt` wins, so undo is a soft delete that reaches every device.
+  - **State:** `GET /v1/state` returns every event that is not deleted, with no window, because the streak and freezes are derived from the whole history since the launch day.
+  - **Tools:** `progress.py path` shows the goal per day. The smoke test covers the table, and passed with 12 new checks.
+  - **Applied and deployed 2026-11-07:** the migration ran in 0.2 s, `neon deploy` changed only `function api`, and the smoke test passed every check in 19 s.
+- **Alternatives rejected:**
+  - **Steps done as a column on `lesson_progress`:** that record is merged whole by the later `updatedAt`, so two devices could overwrite each other's steps, and it has no per-day history for the goal.
+  - **Saving stations as fake test attempts** (the #81 trick): attempts need items, and they would show on the Results page and count as study days.
+  - **Storing freezes and streak counters:** derived values can't drift between devices, and an undo fixes them automatically.
+- **What would change this:**
+  - **The table getting large:** it adds a few rows per learner per day, so it would take years. Then return a window plus a stored streak checkpoint.
+  - **Neon Free plan limits** coming into view.
+
+## 83. A daily goal (1 station or the daily mix) and a goal-based streak from 2026-11-08, with earned freezes and milestones (asked for by Hayk, 2026-11-07; revisits #18 and #62 for the streak only)
+
+- **Date:** 2026-11-07 - **Status:** active
+- **Why:**
+  - **"Addictive":** Hayk wants Home to be something they open "in an addicted manner for many days". In the interview (design `_knowledge/2026-11-07_path-home-design.md`), Hayk picked the daily goal plus a streak freeze (Q4).
+  - **The rules Hayk chose:** the goal is 1 station or the daily mix (Q6), and the streak counts goal days (Q7).
+  - **The friends:** a one-time notice plus 1 starter freeze for every learner, for Anahit and Armen (Q14).
+- **What it does** (`app/src/lib/goal.ts`, pure, 15 tests):
+  - **A goal day** is a local day with a station done (a lesson step, or "mark lesson as done" on a course or theme lesson), a submitted course-test attempt (pass or fail), or a daily mix run to its end (Stop does not count).
+  - **The streak:**
+    - before `PATH_LAUNCH_DAY` = 2026-11-08 (the day after the deploy) it is the old rule, any study day;
+    - from then on it counts goal days;
+    - so the streak each learner had on launch day carries on.
+  - **Freezes:**
+    - everyone starts with 1, holds at most 2, and earns one for every 7 goal days in a row;
+    - a missed day uses a freeze automatically;
+    - a frozen day keeps the streak but does not add to it.
+  - **Milestones:** 7, 30 and 100 days get a card on Home. A toast says "Goal done for today".
+  - **Where it shows:** the goal ring follows today's goal even before the launch day. Study-day counts on the Stats page stay activity-based.
+- **Alternatives rejected:**
+  - **Keeping "any study day"** (Q7, option 2): a minute on the timer kept the streak, so it measured showing up, not learning.
+  - **XP and leagues** (Q4): rewards repeating easy work.
+  - **A stricter goal** (reviews plus a station): too much on a light day.
+  - **Recounting old days with the new rule:** no station existed before, so every streak would have dropped to 0 on launch day.
+- **What would change this:**
+  - **Streak anxiety,** like the "one easy station at 23:58" pattern: then a weekly goal instead.
+  - **Hayk wanting the goal configurable:** presets in Settings.
+  - **Freezes running out too often:** raise the cap or the earn rate.
+
+## 82. Home is the course drawn as Munich U-Bahn lines: a unit per line, lessons split into 1-3 stations, tests on the line, nothing locked (asked for by Hayk, 2026-11-07)
+
+- **Date:** 2026-11-07 - **Status:** active
+- **Why:** Hayk wanted Home "A Lot more like Duolingo", a path you move along. In the interview Hayk picked the U-Bahn look (Q5), short steps (Q2), then bigger ones, 1-3 per lesson (Q10), nothing locked (Q3), and Home opening at the top (Q11). Hayk tried the mockup (`_knowledge/2026-11-07_path-home-mockup.html`) on the phone: "Looks nice".
+- **What it does** (`app/src/lib/path.ts`, `stationActions.ts`, `PathLines`, `StationSheet`, `HomePage`):
+  - **Stations:**
+    - a lesson splits into `clamp(round(sections / 5.5), 1, 3)` stations, or by its optional `stations` override (`print-stations.ts` shows every cut);
+    - tests follow their lesson, and each unit ends at an Endstation;
+    - today that is 108 stations to A1.
+  - **When a station is done:** a station is done when station events cover its section range (ranges, so a later resplit keeps progress), or its lesson has `doneAt`, or (tests) the best score reaches `PASS_PERCENT`. "Du bist hier" is the first station not done.
+  - **The lesson page:** `#/lesson/<id>/station/<k>` shows one station's sections and a Station done button, then Next station or Back to the line (`#/line`). "Mark lesson as done" records the stations not finished yet.
+  - **Home:**
+    - a thin A1 bar, then the daily card (goal, streak, the mix, reviews due, and "More practice" folded, which now holds "Your mistakes" from #81), then the lines;
+    - finished units fold, and a pill jumps to your station;
+    - the old "Course" card and the flat test list are gone.
+  - **Look:** our own colours and drawing (unit colours in `path.ts`), German station names from the lesson titles.
+- **Alternatives rejected:**
+  - **Locking stations with a jump-ahead test** (Q3): Hayk wants everything open.
+  - **One node per lesson:** often 30 minutes, too long for a light session.
+  - **A winding trail or a plain list** (Q5): Hayk picked the U-Bahn.
+  - **Hand-written splits for every lesson:** the rule plus an override is enough, and new units get the rule automatically.
+- **What would change this:**
+  - **Hayk skipping around a lot:** then the "current station" rule (first not done) may need a "last opened" marker.
+  - **A2 units:** they need unit titles in `UNIT_TITLES` and a second level bar.
+  - **Lessons growing past about 17 sections:** they would hit the 3-station cap, so revisit `SECTIONS_PER_STATION`.
+
 ## 81. Mistakes replay: wrong items from tests and lesson exercises come back the next day until right on two different days; a redo is saved as an ordinary one-item attempt "m-<source>-i<n>", so no backend change (asked for by Hayk, 2026-11-06)
 
 - **Date:** 2026-11-06 - **Status:** active

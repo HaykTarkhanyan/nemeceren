@@ -9,4 +9,4 @@ export const AUTH_URL = 'https://ep-sweet-morning-b1ujs35d.neonauth.c-5.eu-centr
  * the streak only when the daily goal was met. Set to the day after the deploy, so nobody loses a
  * streak on deploy day. Before it, the old rule (any study day) applies.
  */
-export const PATH_LAUNCH_DAY = '2026-12-31'
+export const PATH_LAUNCH_DAY = '2026-11-08'
