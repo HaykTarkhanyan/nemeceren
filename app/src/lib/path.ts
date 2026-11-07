@@ -18,7 +18,7 @@ export function unitTextColor(unit: number): string {
   return ((unit % UNIT_COLORS.length) + UNIT_COLORS.length) % UNIT_COLORS.length === 3 ? '#1b1f24' : '#fff'
 }
 
-/** Unit titles from SYLLABUS.md ("Units to A1"); a unit without one is shown as "Unit N". */
+/** Unit titles from SYLLABUS.md ("Units to A1" and "A2"); a unit without one is shown as "Unit N". */
 export const UNIT_TITLES: Record<number, string> = {
   0: 'Sounds and first words',
   1: 'Meeting people',
@@ -28,6 +28,17 @@ export const UNIT_TITLES: Record<number, string> = {
   5: 'Work and class day',
   6: 'Getting around, feeling ill',
   7: 'A1 wrap-up',
+  // A2 (SYLLABUS.md, "A2", DECISIONS.md #72)
+  8: 'Telling what happened',
+  9: 'Reasons and opinions',
+  10: 'At work: the office',
+  11: 'At work: polite requests',
+  12: 'In class',
+  13: 'Comparing and choosing',
+  14: 'Invitations and celebrations',
+  15: 'People and clubs',
+  16: 'Money, contracts, phone',
+  17: 'Flat and neighbours',
 }
 
 export function unitTitle(unit: number): string {

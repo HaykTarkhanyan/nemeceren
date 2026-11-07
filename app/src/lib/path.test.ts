@@ -15,6 +15,7 @@ import {
   stationRanges,
   unitColor,
   unitTextColor,
+  unitTitle,
   type PathEventLike,
 } from './path.ts'
 
@@ -142,6 +143,12 @@ describe('stations from the course', () => {
     expect(unitTextColor(3)).toBe('#1b1f24')
     expect([0, 1, 2, 4, 5, 6, 7].map(unitTextColor)).toEqual(Array(7).fill('#fff'))
     expect(unitTextColor(11)).toBe(unitTextColor(3))
+  })
+
+  it('A2 units have their syllabus titles', () => {
+    expect(unitTitle(8)).toBe('Telling what happened')
+    expect(unitTitle(17)).toBe('Flat and neighbours')
+    expect(unitTitle(18)).toBe('Unit 18')
   })
 
   it('unit colours cycle after Unit 7', () => {
