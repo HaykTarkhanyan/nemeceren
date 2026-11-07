@@ -83,6 +83,8 @@ Ten units of A1 size (about 11 h, about 6 lessons and 90-100 words each), so the
 
 **Unit 8 as written (2026-11-07, DECISIONS.md #87):** six lessons (five plus the story) and 91 cards. The table's musste, konnte, wollte also get durfte and sollte (Nicos ch. 11.1 has dürfen), and wollte is the past of möchte. The Präteritum of other verbs is only named for recognition (B1). Chunks with a pointer: `letzte Woche`, `letztes Jahr`, `letzten Monat` (adjective endings, Units 13-14), `ins Kino` (Unit 10). Lesson 5 links Nicos Weg A2 ch. 4 (travel) for its trip situations, outside the row's chapter. The southern `ich bin gesessen` is for recognition. The final test comes after the story.
 
+**Unit 9 as written (2026-11-07, DECISIONS.md #88):** six lessons (five plus the story) and 94 cards. The weil part in position 1 (`Weil es regnet, nehmen wir den Bus`) comes with deshalb and trotzdem, and `also` (= so) is named next to them. Chunks with a pointer: `dafür`, `dagegen`, `Dann sehen wir uns` (Unit 12), `meiner Meinung nach` (a fixed phrase), `ins Museum` (Unit 10), `eine gute Idee` (Units 13-14). The grammar of Nicos Weg ch. 5 (reflexive verbs, verbs with prepositions) stays in Unit 12; its situations are used. For subordinate clauses, lessons 1 and 4 also link Nicos Weg A2 ch. 1 ("Geld ist für mich ...") and the Welcome lesson "Pläne machen", outside the row's chapter. The final test comes after the story.
+
 ## Later: B1 (outlook, planned in detail once A2 is reached)
 
 About 45 h per unit:

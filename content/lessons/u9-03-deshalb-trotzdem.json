@@ -1,0 +1,149 @@
+{
+  "id": "u9-03-deshalb-trotzdem",
+  "unit": 9,
+  "order": 3,
+  "level": "A2",
+  "title": "That's why, and still: deshalb and trotzdem (Deshalb bin ich müde)",
+  "summary": "deshalb gives the result, trotzdem says 'still, anyway'. Both take position 1, so the verb comes right after them. A whole weil part can take position 1 too. Plus: how do you feel, and why?",
+  "goals": [
+    "Say what follows with deshalb: Ich arbeite viel. Deshalb bin ich oft müde.",
+    "Say 'still, anyway' with trotzdem",
+    "Start with a weil part: Weil es regnet, nehmen wir den Bus.",
+    "Say how you feel and why: froh, nervös, sauer, zufrieden"
+  ],
+  "nicosWeg": [
+    { "title": "Nicos Weg A2, chapter 5: So stressful! (Das hört sich gut an!)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519797" }
+  ],
+  "words": ["deshalb", "trotzdem", "also", "froh", "traurig", "nervoes", "sauer", "zufrieden", "wach", "faul", "fit", "sportlich", "angst", "schlimm", "nass", "spaziergang", "spazieren-gehen", "ruhe"],
+  "sections": [
+    {
+      "id": "deshalb",
+      "type": "explanation",
+      "title": "deshalb: that's why",
+      "text": "[[weil]] gives the reason. [[deshalb]] gives the result:\n- [[Ich bin müde, weil ich viel arbeite.]] (the reason)\n- [[Ich arbeite viel. Deshalb bin ich müde.]] (the result)\n\n[[deshalb]] takes **position 1**, so the verb comes right after it, then the subject. It's the rule from Unit 1: the verb is always second, as in [[In München wohne ich.]] [[deshalb]] can also go after the verb: [[Ich bin deshalb müde.]]"
+    },
+    {
+      "id": "trotzdem",
+      "type": "explanation",
+      "title": "trotzdem: still, anyway",
+      "text": "[[trotzdem]] says that something happens **even though** there's a reason against it:\n- [[Es regnet. Trotzdem gehen wir spazieren.]] = It's raining. We're going for a walk anyway.\n- [[Ich war müde. Trotzdem bin ich zum Training gegangen.]] = I was tired. Still, I went to training.\n\nThe word order is the same as with [[deshalb]]: position 1 and the verb next, or after the verb: [[Wir gehen trotzdem spazieren.]]\n\n[[spazieren gehen]] = to go for a walk; [[der Spaziergang]] = a walk."
+    },
+    {
+      "id": "deshalb-trotzdem-table",
+      "type": "table",
+      "title": "Result, or 'anyway'?",
+      "columns": [{ "header": "First", "de": "words" }, { "header": "Then", "de": "words" }, { "header": "English" }],
+      "rows": [
+        ["Ich arbeite viel.", "Deshalb bin ich oft müde.", "I work a lot. That's why I'm often tired."],
+        ["Der Bus hatte Verspätung.", "Deshalb bin ich zu spät gekommen.", "The bus was late. That's why I was late."],
+        ["Ich habe heute frei.", "Deshalb bin ich so froh.", "I've got the day off. That's why I'm so glad."],
+        ["Es regnet.", "Trotzdem gehen wir spazieren.", "It's raining. We're going for a walk anyway."],
+        ["Ich war krank.", "Trotzdem habe ich gearbeitet.", "I was ill. Still, I worked."]
+      ]
+    },
+    {
+      "type": "comparison",
+      "text": "Russian поэтому doesn't move the verb: поэтому я устал. German [[deshalb]] does: [[Deshalb bin ich müde.]] The verb jumps in front of the subject. [[trotzdem]] is like всё равно, and it moves the verb too: [[Trotzdem gehen wir spazieren.]]"
+    },
+    {
+      "id": "verb-next",
+      "type": "warning",
+      "title": "The verb comes next",
+      "text": "After [[deshalb]] or [[trotzdem]] in position 1 comes the verb, not the subject: [[Deshalb bin ich müde]], not 'Deshalb ich bin müde'. This is the mistake Russian and English speakers make most."
+    },
+    {
+      "id": "weil-first",
+      "type": "tip",
+      "title": "A whole weil part in position 1",
+      "text": "Position 1 can even hold a whole [[weil]] part. Then the main verb comes right after the comma, so two verbs meet:\n- [[Weil ich krank bin, bleibe ich zu Hause.]]\n- [[Weil es regnet, nehmen wir den Bus.]]\n- [[Weil der Kurs um neun anfängt, stehe ich um sieben auf.]]"
+    },
+    {
+      "id": "also",
+      "type": "explanation",
+      "title": "also means 'so', not 'also'",
+      "text": "In speech you'll often hear [[also]] instead of [[deshalb]]: [[Ich habe heute Zeit, also kann ich dir helfen.]] It works the same way: the verb comes next.\n\nAt the start, with a comma, [[also]] is just 'well' or 'so': [[Also, ich finde das gut.]] And English 'also' is [[auch]]."
+    },
+    {
+      "id": "feelings",
+      "type": "explanation",
+      "title": "How do you feel?",
+      "text": "Nicos Weg A2, chapter 5 asks how people feel. At A2 you can say more than [[gut]], and say why:\n- [[Ich bin froh, weil ich heute frei habe.]] ([[froh]] = glad)\n- [[Ich bin nervös, weil ich morgen eine Prüfung habe.]]\n- [[Ich bin traurig, weil meine Freundin jetzt in Berlin wohnt.]] ([[traurig]] = sad)\n- [[Ich bin sauer, weil Thomas schon wieder zu spät kommt.]] ([[sauer]] = sour, and in speech: annoyed)\n- [[Ich bin zufrieden, weil ich viel geschafft habe.]] ([[zufrieden]] = satisfied)\n- [[Ich habe Angst, weil der Verkehr so gefährlich ist.]] ([[die Angst]] = fear)\n\nShort ones: [[Ich bin noch nicht wach.]] (awake) [[Heute bin ich faul.]] (lazy) [[Das ist nicht so schlimm.]] (bad, serious)"
+    },
+    {
+      "id": "sport-rest",
+      "type": "explanation",
+      "title": "Sport and rest",
+      "text": "- [[Ich mache viel Sport, deshalb bin ich fit.]]\n- [[Thomas ist nicht sehr sportlich. Trotzdem joggt er jeden Morgen.]] ([[sportlich]] = sporty)\n- [[Nach der Arbeit brauche ich Ruhe.]] ([[die Ruhe]] = quiet, rest)\n- [[Am Sonntag machen wir einen Spaziergang.]]\n- [[Es regnet, und ich habe keinen Schirm. Jetzt bin ich nass.]] ([[nass]] = wet)"
+    },
+    {
+      "id": "result-examples",
+      "type": "examples",
+      "title": "Examples",
+      "items": [
+        { "de": "Ich arbeite viel. Deshalb bin ich oft müde.", "en": "I work a lot. That's why I'm often tired." },
+        { "de": "Es regnet. Trotzdem gehen wir spazieren.", "en": "It's raining. We're going for a walk anyway." },
+        { "de": "Weil ich krank bin, bleibe ich heute zu Hause.", "en": "Because I'm ill, I'm staying at home today." },
+        { "de": "Ich bin nervös, weil ich morgen eine Prüfung habe.", "en": "I'm nervous because I have an exam tomorrow." },
+        { "de": "Der Zug hatte Verspätung, deshalb habe ich den Termin verpasst.", "en": "The train was late, so I missed the appointment." },
+        { "de": "Ich war müde, aber ich bin trotzdem zum Training gegangen.", "en": "I was tired, but I still went to training." },
+        { "de": "Das ist nicht so schlimm.", "en": "That's not so bad." },
+        { "de": "Ich habe heute Zeit, also kann ich dir helfen.", "en": "I've got time today, so I can help you." }
+      ]
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat",
+      "items": [
+        { "de": "Deshalb bin ich müde.", "en": "That's why I'm tired." },
+        { "de": "Trotzdem gehen wir spazieren.", "en": "We're going for a walk anyway." },
+        { "de": "Weil es regnet, nehmen wir den Bus.", "en": "Because it's raining, we're taking the bus." },
+        { "de": "Ich bin sauer, weil Thomas schon wieder zu spät kommt.", "en": "I'm annoyed because Thomas is late again." },
+        { "de": "Das ist nicht so schlimm.", "en": "That's not so bad." }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: I worked a lot. That's why I'm tired.",
+          "text": "Ich habe viel gearbeitet. Deshalb ___ ich müde.",
+          "answers": [["bin"]],
+          "explanation": "deshalb takes position 1, so the verb comes next and the subject after it: Deshalb bin ich müde."
+        },
+        {
+          "type": "mc",
+          "instruction": "Pick the word that fits.",
+          "question": "Ich war krank. ___ bin ich zur Arbeit gegangen.",
+          "options": ["Trotzdem", "Deshalb", "Weil"],
+          "answer": "Trotzdem",
+          "explanation": "Being ill is a reason against going to work, and you went anyway: trotzdem. deshalb would mean that being ill was the reason for going. After weil the verb would go to the end."
+        },
+        {
+          "type": "order",
+          "prompt": "(I was tired.) Still, I went to training.",
+          "tiles": ["trotzdem", "bin", "ich", "zum", "Training", "gegangen"],
+          "answers": ["Trotzdem bin ich zum Training gegangen", "Ich bin trotzdem zum Training gegangen", "Zum Training bin ich trotzdem gegangen"],
+          "explanation": "trotzdem in position 1, then the verb: Trotzdem bin ich ... gegangen. Or after the verb: Ich bin trotzdem zum Training gegangen."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: Because the weather is nice, we're going by bike.",
+          "text": "Weil das Wetter schön ist, ___ wir mit dem Rad.",
+          "answers": [["fahren"]],
+          "explanation": "The weil part is position 1, so the main verb comes right after the comma: Weil das Wetter schön ist, fahren wir mit dem Rad."
+        },
+        {
+          "type": "listen_mc",
+          "audio": "Ich bin heute sehr nervös, weil ich am Nachmittag eine Prüfung habe.",
+          "question": "Why is the person nervous?",
+          "questionLang": "en",
+          "options": ["eine Prüfung am Nachmittag", "ein Konzert am Nachmittag", "einen Termin am Nachmittag"],
+          "answer": "eine Prüfung am Nachmittag",
+          "explanation": "weil ich am Nachmittag eine Prüfung habe = because I have an exam in the afternoon. nervös = nervous."
+        }
+      ]
+    }
+  ]
+}

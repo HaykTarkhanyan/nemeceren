@@ -1,0 +1,145 @@
+{
+  "id": "u9-02-keine-zeit",
+  "unit": 9,
+  "order": 2,
+  "level": "A2",
+  "title": "Sorry, no time: weil with separable verbs and the Perfekt, and denn (Leider keine Zeit)",
+  "summary": "After weil a separable verb joins up again (weil ich früh aufstehe), and in the Perfekt haben or sein goes last (weil ich verschlafen habe). denn gives a reason with normal word order. Plus a busy week: training, music, visitors.",
+  "goals": [
+    "Use weil with separable verbs: weil der Kurs um neun anfängt",
+    "Use weil with the Perfekt: weil ich verschlafen habe",
+    "Give a reason with denn, which keeps the normal word order",
+    "Say why you have no time: Training, Konzert, Besuch"
+  ],
+  "nicosWeg": [
+    { "title": "Nicos Weg A2, chapter 5: So stressful! (Alltag und Freizeit, Freizeitstress)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519797" },
+    { "title": "Nicos Weg A2, chapter 12: Working world (Berufswahl): denn", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519797" }
+  ],
+  "videos": [
+    { "id": "DWkaLIghET8", "title": "und, aber, oder, denn, sondern", "minutes": 14 }
+  ],
+  "words": ["denn", "verschlafen", "kalender", "voll", "training", "trainieren", "joggen", "verein", "gitarre", "ueben", "konzert", "mannschaft", "spiel", "besuch", "gerade", "einmal", "pro"],
+  "tests": ["u9-t1-weil-denn"],
+  "sections": [
+    {
+      "id": "weil-separable",
+      "type": "explanation",
+      "title": "Separable verbs join up again",
+      "text": "In a normal sentence a separable verb splits, and the small part goes to the end (Unit 3): [[Ich stehe um sechs auf.]] After [[weil]] the verb goes to the end too, so the two parts meet and join up again, in one word:\n- [[Ich stehe um sechs auf.]] becomes [[weil ich um sechs aufstehe]]\n- [[Der Kurs fängt um neun an.]] becomes [[weil der Kurs um neun anfängt]]\n- [[Ich rufe meine Mutter an.]] becomes [[weil ich meine Mutter anrufe]]"
+    },
+    {
+      "id": "joined-table",
+      "type": "table",
+      "title": "Split, then joined",
+      "columns": [{ "header": "Normal sentence", "de": "words" }, { "header": "After weil", "de": "words" }, { "header": "English" }],
+      "rows": [
+        ["Ich stehe früh auf.", "weil ich früh aufstehe", "because I get up early"],
+        ["Der Film fängt um acht an.", "weil der Film um acht anfängt", "because the film starts at eight"],
+        ["Eva kauft heute ein.", "weil Eva heute einkauft", "because Eva is doing the shopping today"],
+        ["Thomas kommt nicht mit.", "weil Thomas nicht mitkommt", "because Thomas isn't coming along"],
+        ["Wir sehen heute fern.", "weil wir heute fernsehen", "because we're watching TV today"]
+      ]
+    },
+    {
+      "id": "weil-perfekt",
+      "type": "explanation",
+      "title": "The Perfekt: haben or sein goes last",
+      "text": "In the Perfekt, [[haben]] or [[sein]] is the verb that moves. It goes behind the participle, in last place:\n- [[Ich habe den Bus verpasst.]] becomes [[weil ich den Bus verpasst habe]]\n- [[Der Zug ist nicht gekommen.]] becomes [[weil der Zug nicht gekommen ist]]\n- [[Ich bin spät aufgestanden.]] becomes [[weil ich spät aufgestanden bin]]\n- [[Ich habe verschlafen.]] becomes [[weil ich verschlafen habe]]\n\n[[verschlafen]] = to oversleep. Like [[vergessen]] (Unit 8), its participle looks like the infinitive. [[Entschuldigung, ich komme zu spät, weil ich verschlafen habe.]] is the classic excuse."
+    },
+    {
+      "id": "denn",
+      "type": "explanation",
+      "title": "denn: a reason with normal word order",
+      "text": "[[denn]] also means 'because', but it doesn't move the verb. It joins two normal sentences, like [[und]], [[aber]] and [[oder]]:\n- [[Ich komme nicht, weil ich krank bin.]]\n- [[Ich komme nicht, denn ich bin krank.]]\n\nBoth mean the same. [[denn]] sounds a little more formal and is common in writing; in speech most people say [[weil]]. Two limits:\n- the [[denn]] part always comes second: first what happens, then [[denn]] and the reason;\n- it can't answer [[Warum?]] on its own: [[Warum? - Weil ich krank bin.]], never 'Denn ich bin krank.'"
+    },
+    {
+      "id": "denn-dann-den",
+      "type": "warning",
+      "title": "denn, dann or den?",
+      "text": "Three words that look alike:\n- [[denn]] = because: [[Ich bleibe zu Hause, denn ich bin müde.]]\n- [[dann]] = then: [[Zuerst arbeite ich, dann gehe ich nach Hause.]]\n- [[den]] = the (Unit 4): [[Ich nehme den Bus.]]"
+    },
+    {
+      "id": "busy-week",
+      "type": "explanation",
+      "title": "A full week",
+      "text": "Nicos Weg A2, chapter 5 is about stress in your free time. When a friend asks [[Hast du am Dienstag Zeit?]], you often need a reason:\n- [[Leider nicht, denn am Dienstag habe ich Training.]] ([[das Training]]; [[trainieren]] = to train). After [[denn]] comes a normal sentence, which may start with the time.\n- [[Am Mittwoch geht es nicht, weil ich Gitarre übe.]] ([[die Gitarre]]; [[üben]] = to practise)\n- [[Am Donnerstag habe ich ein Spiel mit meiner Mannschaft.]] ([[das Spiel]] = game, match; [[die Mannschaft]] = team)\n- [[Am Freitag habe ich ein Konzert.]] ([[das Konzert]])\n- [[Am Wochenende bekomme ich Besuch.]] ([[der Besuch]] = visit, visitors)\n\n[[Mein Kalender ist voll!]] = My calendar is full! [[Ich habe gerade keine Zeit.]] = I don't have time right now."
+    },
+    {
+      "id": "how-often",
+      "type": "explanation",
+      "title": "How often? einmal pro Woche",
+      "text": "[[einmal]] = once, [[zweimal]] = twice, [[dreimal]] = three times. Add [[pro]] (per) and the time:\n- [[Ich gehe zweimal pro Woche joggen.]] ([[joggen]] = to go running)\n- [[Im Verein trainieren wir einmal pro Woche.]] ([[der Verein]] = club)\n- [[Ich übe jeden Tag, denn am Samstag habe ich ein Konzert.]]"
+    },
+    {
+      "id": "busy-examples",
+      "type": "examples",
+      "title": "Examples",
+      "items": [
+        { "de": "Entschuldigung, ich komme zu spät, weil ich verschlafen habe.", "en": "Sorry, I'm late because I overslept." },
+        { "de": "Ich bin immer müde, weil ich um fünf aufstehe.", "en": "I'm always tired because I get up at five." },
+        { "de": "Eva war nicht im Kurs, weil sie den Bus verpasst hat.", "en": "Eva wasn't in class because she missed the bus." },
+        { "de": "Ich habe keine Zeit, denn ich habe heute Training.", "en": "I don't have time, because I've got training today." },
+        { "de": "Wir können am Samstag nicht, weil wir Besuch bekommen.", "en": "We can't on Saturday because we're having visitors." },
+        { "de": "Mein Kalender ist voll. Ich habe gerade keine Zeit.", "en": "My calendar is full. I don't have time right now." },
+        { "de": "Im Verein trainieren wir zweimal pro Woche.", "en": "At the club we train twice a week." },
+        { "de": "Unsere Mannschaft hat das Spiel gewonnen!", "en": "Our team won the match!" }
+      ]
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat",
+      "items": [
+        { "de": "weil ich um sechs aufstehe", "en": "because I get up at six" },
+        { "de": "weil der Kurs um neun anfängt", "en": "because the class starts at nine" },
+        { "de": "Entschuldigung, ich komme zu spät, weil ich verschlafen habe.", "en": "Sorry, I'm late because I overslept." },
+        { "de": "Ich komme nicht, denn ich bin krank.", "en": "I'm not coming, because I'm ill." },
+        { "de": "Mein Kalender ist voll!", "en": "My calendar is full!" },
+        { "de": "Ich gehe zweimal pro Woche joggen.", "en": "I go running twice a week." }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap with aufstehen: I drink a lot of coffee because I get up at five every day.",
+          "text": "Ich trinke viel Kaffee, weil ich jeden Tag um fünf ___.",
+          "answers": [["aufstehe"]],
+          "explanation": "After weil the verb goes to the end, so the separable verb joins up again: ich stehe ... auf becomes weil ich ... aufstehe."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: Thomas is late because he overslept.",
+          "text": "Thomas kommt zu spät, weil er verschlafen ___.",
+          "answers": [["hat"]],
+          "explanation": "In the Perfekt, haben goes to the very end, behind the participle: weil er verschlafen hat."
+        },
+        {
+          "type": "mc",
+          "question": "Which sentence means the same as 'Ich komme nicht, weil ich krank bin'?",
+          "questionLang": "en",
+          "options": ["Ich komme nicht, denn ich bin krank.", "Ich komme nicht, denn ich krank bin.", "Ich komme nicht, dann ich bin krank."],
+          "answer": "Ich komme nicht, denn ich bin krank.",
+          "explanation": "denn keeps the normal order: denn ich bin krank. Only weil sends the verb to the end. dann means 'then'."
+        },
+        {
+          "type": "order",
+          "prompt": "I'm late because the bus didn't come.",
+          "tiles": ["ich", "komme", "zu", "spät", "weil", "der", "Bus", "nicht", "gekommen", "ist"],
+          "answers": ["Ich komme zu spät weil der Bus nicht gekommen ist", "Weil der Bus nicht gekommen ist komme ich zu spät", "Zu spät komme ich weil der Bus nicht gekommen ist"],
+          "explanation": "In the Perfekt, sein goes behind the participle, in last place: weil der Bus nicht gekommen ist."
+        },
+        {
+          "type": "listen_mc",
+          "audio": "Am Dienstag kann ich leider nicht, denn ich habe Training. Aber am Mittwoch habe ich Zeit.",
+          "question": "When does the person have time?",
+          "questionLang": "en",
+          "options": ["am Mittwoch", "am Dienstag", "am Donnerstag"],
+          "answer": "am Mittwoch",
+          "explanation": "Am Dienstag kann ich leider nicht, denn ich habe Training = I can't on Tuesday, because I have training. Aber am Mittwoch habe ich Zeit."
+        }
+      ]
+    }
+  ]
+}

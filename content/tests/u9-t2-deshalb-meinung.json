@@ -1,0 +1,83 @@
+{
+  "id": "u9-t2-deshalb-meinung",
+  "title": "That's why, and what do you think? (deshalb, trotzdem, dass)",
+  "level": "A2",
+  "created": "2026-11-07",
+  "description": "Unit 9 check after lessons 3 and 4.",
+  "unit": 9,
+  "lesson": "u9-04-ich-finde-dass",
+  "items": [
+    {"type": "gap", "instruction": "Fill in the gap: When are you getting up tomorrow?", "text": "Wann stehst du morgen ___?", "answers": [["auf"]], "explanation": "Review (Unit 3): in a normal sentence the small part goes to the end: stehst ... auf. After weil or dass it joins up again: weil ich früh aufstehe."},
+    {"type": "gap", "instruction": "Fill in the gap: On Saturday we tidied the flat.", "text": "Am Samstag haben wir die Wohnung ___.", "answers": [["aufgeräumt"]], "explanation": "Review (Unit 8): separable verbs put ge- in the middle: auf + ge + räumt = aufgeräumt."},
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: I had a lot of stress. That's why I just slept on Sunday.",
+      "text": "Ich hatte viel Stress. Deshalb ___ ich am Sonntag nur geschlafen.",
+      "answers": [["habe"]],
+      "explanation": "deshalb takes position 1, so the verb comes next: Deshalb habe ich ... geschlafen."
+    },
+    {
+      "type": "order",
+      "prompt": "(The flat is reasonably priced.) That's why we're staying here.",
+      "tiles": ["deshalb", "bleiben", "wir", "hier"],
+      "answers": ["Deshalb bleiben wir hier", "Wir bleiben deshalb hier", "Hier bleiben wir deshalb"],
+      "explanation": "deshalb in position 1, then the verb, then the subject: Deshalb bleiben wir hier. deshalb can also go after the verb: Wir bleiben deshalb hier."
+    },
+    {
+      "type": "mc",
+      "question": "Thomas is late again, and you're annoyed. What do you say?",
+      "questionLang": "en",
+      "options": ["Ich bin sauer.", "Ich bin froh.", "Ich bin zufrieden."],
+      "answer": "Ich bin sauer.",
+      "explanation": "sauer = sour, and in speech: annoyed. froh = glad, zufrieden = satisfied."
+    },
+    {
+      "type": "translate",
+      "direction": "en-de",
+      "text": "It's cold, but we're going swimming anyway.",
+      "references": ["Es ist kalt, aber wir gehen trotzdem schwimmen.", "Es ist kalt. Trotzdem gehen wir schwimmen.", "Es ist kalt, trotzdem gehen wir schwimmen.", "Es ist kalt, aber trotzdem gehen wir schwimmen."],
+      "explanation": "trotzdem = still, anyway: there's a reason against it (cold), and you go anyway. After the verb: wir gehen trotzdem schwimmen; in position 1 the verb comes next: Trotzdem gehen wir schwimmen."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: Because I have time today, I can help you.",
+      "text": "Weil ich heute Zeit habe, ___ ich dir helfen.",
+      "answers": [["kann"]],
+      "explanation": "The weil part takes position 1, so the main verb comes right after the comma: ..., kann ich dir helfen."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: I think (that) the people in Munich are very nice.",
+      "text": "Ich finde, dass die Leute in München sehr nett ___.",
+      "answers": [["sind"]],
+      "explanation": "After dass the verb goes to the very end: dass die Leute ... sehr nett sind (die Leute is plural, so sind)."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in das or dass: I hope (that) the train is on time.",
+      "text": "Ich hoffe, ___ der Zug pünktlich ist.",
+      "answers": [["dass"]],
+      "explanation": "The verb ist goes to the end (pünktlich ist), so it's dass, with two s. With normal word order it could be das: Ich hoffe, das stimmt."
+    },
+    {
+      "type": "listen_mc",
+      "audio": "Meiner Meinung nach ist die U-Bahn in München sehr gut. Sie ist sauber und fährt oft. Aber am Morgen ist sie immer sehr voll.",
+      "question": "What doesn't the person like about the U-Bahn?",
+      "questionLang": "en",
+      "options": ["Sie ist am Morgen voll.", "Sie ist nicht sauber.", "Sie fährt nicht oft."],
+      "answer": "Sie ist am Morgen voll.",
+      "explanation": "Aber am Morgen ist sie immer sehr voll = but in the morning it's always very full. Sie ist sauber und fährt oft: those are the good things."
+    },
+    {
+      "type": "dictation",
+      "text": "Ich glaube, dass sie morgen keine Zeit hat.",
+      "explanation": "glauben + dass: the verb hat goes to the very end."
+    },
+    {
+      "type": "write",
+      "instruction": "A classmate asks the question below. Answer in 5-6 sentences: two things you like and one thing you don't like, each with a reason (weil or denn). Use dass twice (Ich finde, dass ...; Ich glaube, dass ...) and deshalb or trotzdem once. Claude will check it.",
+      "prompt": "Wie findest du das Leben in München?",
+      "minWords": 45
+    }
+  ]
+}

@@ -1,0 +1,143 @@
+{
+  "id": "u9-01-warum-weil",
+  "unit": 9,
+  "order": 1,
+  "level": "A2",
+  "title": "Why? Because ... (Warum? Weil ...)",
+  "summary": "Give a reason with weil: the verb goes to the very end. Ich komme nicht, weil ich krank bin. Say why you're late, why you can't come and why you're learning German.",
+  "goals": [
+    "Give a reason with weil, with the verb at the end",
+    "Answer Warum? with a short Weil ... answer",
+    "Use weil with a modal verb: weil ich arbeiten muss",
+    "Say why you're late, absent or can't come, and why you're learning German"
+  ],
+  "nicosWeg": [
+    { "title": "Nicos Weg A2, chapter 1: Money (Geld ist für mich ...): subordinate clauses", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519797" }
+  ],
+  "words": ["weil", "verkehr", "baustelle", "dringend", "fehlen", "guenstig", "bequem", "gefaehrlich", "parken", "rad", "gesundheit", "universitaet", "ausbildung", "stelle", "erfahrung", "verdienen"],
+  "sections": [
+    {
+      "id": "warum-weil",
+      "type": "explanation",
+      "title": "From two sentences to one",
+      "text": "In Unit 7 you answered [[Warum?]] with a second sentence: [[Warum kommst du nicht? - Ich bin krank.]] Now join the two with [[weil]] (because):\n- [[Ich komme nicht, weil ich krank bin.]]\n- [[Warum kommst du nicht? - Weil ich krank bin.]]\n\nAfter [[weil]], the verb goes to the **very end**: [[ich bin krank]] becomes [[weil ich krank bin]]. The short answer [[Weil ich krank bin.]] is normal in speech, as in English ('Because I'm ill.')."
+    },
+    {
+      "id": "weil-table",
+      "type": "table",
+      "title": "The verb goes to the end",
+      "columns": [{ "header": "Main part", "de": "words" }, { "header": "weil + ... + verb", "de": "words" }, { "header": "English" }],
+      "rows": [
+        ["Ich komme heute nicht,", "weil ich Fieber habe.", "I'm not coming today because I have a temperature."],
+        ["Ich lerne Deutsch,", "weil ich in München arbeite.", "I'm learning German because I work in Munich."],
+        ["Wir wohnen gern hier,", "weil die Miete günstig ist.", "We like living here because the rent is reasonable."],
+        ["Eva fährt mit dem Rad,", "weil das Wetter schön ist.", "Eva is going by bike because the weather is nice."],
+        ["Thomas fehlt heute,", "weil er krank ist.", "Thomas is absent today because he's ill."]
+      ]
+    },
+    {
+      "id": "weil-modal",
+      "type": "explanation",
+      "title": "With a modal verb",
+      "text": "With [[müssen]], [[können]] or [[wollen]] there are two verbs at the end. The infinitive comes first, and the modal verb goes behind it, in last place:\n- [[Ich muss arbeiten.]] becomes [[weil ich arbeiten muss]]\n- [[Ich kann heute nicht kommen.]] becomes [[weil ich heute nicht kommen kann]]\n- [[Ich will in Deutschland studieren.]] becomes [[weil ich in Deutschland studieren will]]\n\nThe past from Unit 8 works the same way: [[Ich konnte nicht kommen, weil ich arbeiten musste.]] [[Ich war nicht da, weil ich keine Zeit hatte.]]\n\n**Always a comma** before [[weil]]."
+    },
+    {
+      "type": "comparison",
+      "text": "Russian потому что and Armenian որովհետև leave the word order as it is: я не приду, потому что я болен. German moves the verb to the end: [[weil ich krank bin]]. Armenian helps with 'be' sentences: որովհետև հիվանդ եմ ('because ill I-am') already has the German order. With a modal verb it's the reverse: Armenian puts the modal first (պետք է աշխատեմ, ուզում եմ սովորել), German puts it last: [[weil ich arbeiten muss]], [[weil ich lernen will]] (next section)."
+    },
+    {
+      "id": "weil-end",
+      "type": "warning",
+      "title": "All the way to the end",
+      "text": "The verb goes behind everything: behind [[nicht]], the time and the place. [[weil ich heute keine Zeit habe]], not 'weil ich habe heute keine Zeit'. You'll hear the second one in fast speech, but write and learn the verb at the end."
+    },
+    {
+      "id": "late-absent",
+      "type": "explanation",
+      "title": "Late, absent, or can't come",
+      "text": "Three everyday reasons.\n\n**Late:** [[Entschuldigung, ich komme zu spät, weil ...]]\n- [[weil so viel Verkehr ist]] ([[der Verkehr]] = traffic)\n- [[weil die U-Bahn Verspätung hat]]\n- [[weil auf der Straße eine Baustelle ist]] ([[die Baustelle]] = roadworks, building site)\n\n**Absent:** [[Eva fehlt heute, weil sie beim Arzt ist.]] ([[fehlen]] = to be absent, to be missing)\n\n**Can't come or must go:** [[Ich muss leider gehen, weil es dringend ist.]] ([[dringend]] = urgent)"
+    },
+    {
+      "id": "why-german",
+      "type": "explanation",
+      "title": "Why German?",
+      "text": "Everyone in a German course hears [[Warum lernst du Deutsch?]] Some answers:\n- [[Weil ich in München arbeite.]]\n- [[Weil ich hier eine Stelle suche.]] ([[die Stelle]] = job, position)\n- [[Weil ich an der Universität studieren will.]] ([[die Universität]])\n- [[Weil ich eine Ausbildung machen will.]] ([[die Ausbildung]] = vocational training, an apprenticeship)\n- [[Weil ich mehr Geld verdienen will.]] ([[verdienen]] = to earn)\n- [[Weil ich mit meinen Kollegen Deutsch sprechen will.]]\n\nFor a job, [[die Erfahrung]] (experience) matters too: [[Ich habe drei Jahre Erfahrung als Entwickler.]]"
+    },
+    {
+      "id": "why-bike",
+      "type": "explanation",
+      "title": "Why the bike? Why the U-Bahn?",
+      "text": "Reasons for a choice often use adjectives:\n- [[Ich fahre mit dem Rad, weil das gut für die Gesundheit ist.]] ([[das Rad]] = [[das Fahrrad]] in everyday speech; [[die Gesundheit]] = health)\n- [[Ich nehme die U-Bahn, weil man in der Stadt schlecht parken kann.]] ([[parken]] = to park)\n- [[Ich fahre nicht mit dem Rad, weil der Verkehr gefährlich ist.]] ([[gefährlich]] = dangerous)\n- [[Ich nehme den Bus, weil er bequem und günstig ist.]] ([[bequem]] = comfortable, convenient; [[günstig]] = good value, not expensive)\n\n[[Gesundheit!]] is also what people say when someone sneezes."
+    },
+    {
+      "id": "weil-examples",
+      "type": "examples",
+      "title": "Examples",
+      "items": [
+        { "de": "Warum lernst du Deutsch? - Weil ich in München arbeite.", "en": "Why are you learning German? - Because I work in Munich." },
+        { "de": "Ich komme heute nicht, weil ich Fieber habe.", "en": "I'm not coming today because I have a temperature." },
+        { "de": "Entschuldigung, ich komme zu spät, weil so viel Verkehr ist.", "en": "Sorry, I'm late because there's so much traffic." },
+        { "de": "Ich kann nicht kommen, weil ich arbeiten muss.", "en": "I can't come because I have to work." },
+        { "de": "Thomas fehlt heute, weil er beim Arzt ist.", "en": "Thomas is absent today because he's at the doctor's." },
+        { "de": "Wir nehmen die U-Bahn, weil sie schnell und bequem ist.", "en": "We take the U-Bahn because it's fast and convenient." },
+        { "de": "Ich suche eine Stelle, weil ich mehr Geld verdienen will.", "en": "I'm looking for a job because I want to earn more money." },
+        { "de": "Ich war nicht da, weil ich keine Zeit hatte.", "en": "I wasn't there because I didn't have time." }
+      ]
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat",
+      "items": [
+        { "de": "Warum?", "en": "Why?" },
+        { "de": "Weil ich krank bin.", "en": "Because I'm ill." },
+        { "de": "Ich komme zu spät, weil die U-Bahn Verspätung hat.", "en": "I'm late because the U-Bahn is delayed." },
+        { "de": "Ich kann nicht kommen, weil ich arbeiten muss.", "en": "I can't come because I have to work." },
+        { "de": "Ich lerne Deutsch, weil ich hier eine Stelle suche.", "en": "I'm learning German because I'm looking for a job here." }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: Eva is absent today because she has a headache.",
+          "text": "Eva fehlt heute, weil sie Kopfschmerzen ___.",
+          "answers": [["hat"]],
+          "explanation": "After weil the verb goes to the very end: sie hat Kopfschmerzen becomes weil sie Kopfschmerzen hat."
+        },
+        {
+          "type": "mc",
+          "question": "Which sentence is correct?",
+          "questionLang": "en",
+          "options": ["Ich komme nicht mit, weil ich keine Zeit habe.", "Ich komme nicht mit, weil ich habe keine Zeit.", "Ich komme nicht mit, weil habe ich keine Zeit."],
+          "answer": "Ich komme nicht mit, weil ich keine Zeit habe.",
+          "explanation": "After weil comes the subject, then the rest, and the verb last: weil ich keine Zeit habe. In fast speech you may hear 'weil ich habe ...', but don't write it."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: I'm learning German because I want to study in Germany.",
+          "text": "Ich lerne Deutsch, weil ich in Deutschland studieren ___.",
+          "answers": [["will", "möchte"]],
+          "explanation": "With a modal verb, the infinitive comes first and the modal verb goes last: weil ich ... studieren will."
+        },
+        {
+          "type": "order",
+          "prompt": "I'm staying at home because I have to work.",
+          "tiles": ["ich", "bleibe", "zu", "Hause", "weil", "ich", "arbeiten", "muss"],
+          "answers": ["Ich bleibe zu Hause weil ich arbeiten muss", "Weil ich arbeiten muss bleibe ich zu Hause", "Zu Hause bleibe ich weil ich arbeiten muss"],
+          "explanation": "weil, then the subject, and both verbs at the end, the modal verb last: weil ich arbeiten muss. The weil part can also come first (lesson 3): Weil ich arbeiten muss, bleibe ich zu Hause."
+        },
+        {
+          "type": "listen_mc",
+          "audio": "Entschuldigung, ich komme zu spät, weil auf der Straße eine Baustelle ist.",
+          "question": "Why is the person late?",
+          "questionLang": "en",
+          "options": ["Auf der Straße ist eine Baustelle.", "Auf der Straße ist so viel Verkehr.", "Auf der Straße ist ein Unfall."],
+          "answer": "Auf der Straße ist eine Baustelle.",
+          "explanation": "weil auf der Straße eine Baustelle ist = because there are roadworks on the street. die Baustelle = roadworks, building site."
+        }
+      ]
+    }
+  ]
+}

@@ -537,6 +537,72 @@
           "lesson": "u8-04-musste-konnte",
           "section": "which-past",
           "star": true
+        },
+        {
+          "title": "weil: the verb goes to the end",
+          "lesson": "u9-01-warum-weil",
+          "section": "weil-table",
+          "star": true
+        },
+        {
+          "title": "weil with a modal verb: weil ich arbeiten muss",
+          "lesson": "u9-01-warum-weil",
+          "section": "weil-modal"
+        },
+        {
+          "title": "weil with separable verbs: weil ich früh aufstehe",
+          "lesson": "u9-02-keine-zeit",
+          "section": "weil-separable",
+          "star": true
+        },
+        {
+          "title": "weil with the Perfekt: weil ich verschlafen habe",
+          "lesson": "u9-02-keine-zeit",
+          "section": "weil-perfekt"
+        },
+        {
+          "title": "denn: a reason with normal word order",
+          "lesson": "u9-02-keine-zeit",
+          "section": "denn",
+          "star": true
+        },
+        {
+          "title": "denn, dann or den?",
+          "lesson": "u9-02-keine-zeit",
+          "section": "denn-dann-den"
+        },
+        {
+          "title": "deshalb and trotzdem: the verb comes next",
+          "lesson": "u9-03-deshalb-trotzdem",
+          "section": "deshalb-trotzdem-table",
+          "star": true
+        },
+        {
+          "title": "A weil part in position 1: Weil es regnet, nehmen wir den Bus",
+          "lesson": "u9-03-deshalb-trotzdem",
+          "section": "weil-first"
+        },
+        {
+          "title": "also means 'so', not 'also'",
+          "lesson": "u9-03-deshalb-trotzdem",
+          "section": "also"
+        },
+        {
+          "title": "dass: the verb goes to the end",
+          "lesson": "u9-04-ich-finde-dass",
+          "section": "dass",
+          "star": true
+        },
+        {
+          "title": "das or dass?",
+          "lesson": "u9-04-ich-finde-dass",
+          "section": "das-dass"
+        },
+        {
+          "title": "doch: 'yes' against a 'not'",
+          "lesson": "u9-05-einverstanden",
+          "section": "doch",
+          "star": true
         }
       ]
     },
@@ -996,6 +1062,65 @@
           "lesson": "u8-05-reise",
           "section": "trip-email",
           "star": true
+        },
+        {
+          "title": "Late, absent, can't come: weil ...",
+          "lesson": "u9-01-warum-weil",
+          "section": "late-absent",
+          "star": true
+        },
+        {
+          "title": "Why are you learning German?",
+          "lesson": "u9-01-warum-weil",
+          "section": "why-german"
+        },
+        {
+          "title": "A full week: Training, Konzert, Besuch",
+          "lesson": "u9-02-keine-zeit",
+          "section": "busy-week"
+        },
+        {
+          "title": "How often? einmal pro Woche",
+          "lesson": "u9-02-keine-zeit",
+          "section": "how-often"
+        },
+        {
+          "title": "How do you feel? froh, nervös, sauer",
+          "lesson": "u9-03-deshalb-trotzdem",
+          "section": "feelings"
+        },
+        {
+          "title": "What do you think? Meiner Meinung nach ...",
+          "lesson": "u9-04-ich-finde-dass",
+          "section": "asking-opinions",
+          "star": true
+        },
+        {
+          "title": "Life in Munich: opinions",
+          "lesson": "u9-04-ich-finde-dass",
+          "section": "life-in-munich"
+        },
+        {
+          "title": "Agree, disagree, not sure",
+          "lesson": "u9-05-einverstanden",
+          "section": "agree-disagree",
+          "star": true
+        },
+        {
+          "title": "Du hast recht. Ich bin einverstanden.",
+          "lesson": "u9-05-einverstanden",
+          "section": "recht-einverstanden"
+        },
+        {
+          "title": "Giving reasons in a discussion: außerdem, echt, total",
+          "lesson": "u9-05-einverstanden",
+          "section": "arguing"
+        },
+        {
+          "title": "Planning in a group chat: Vorschlag, dafür, dagegen",
+          "lesson": "u9-05-einverstanden",
+          "section": "group-chat",
+          "star": true
         }
       ]
     },
@@ -1123,6 +1248,11 @@
           "title": "On a trip: Strand, Museum, Jugendherberge",
           "lesson": "u8-05-reise",
           "section": "trip-words"
+        },
+        {
+          "title": "Feelings: froh, traurig, nervös, sauer, zufrieden",
+          "lesson": "u9-03-deshalb-trotzdem",
+          "section": "feelings"
         }
       ]
     }

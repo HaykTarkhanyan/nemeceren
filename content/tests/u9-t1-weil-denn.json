@@ -1,0 +1,84 @@
+{
+  "id": "u9-t1-weil-denn",
+  "title": "Why? Because ... (weil and denn)",
+  "level": "A2",
+  "created": "2026-11-07",
+  "description": "Unit 9 check after lessons 1 and 2.",
+  "unit": 9,
+  "lesson": "u9-02-keine-zeit",
+  "items": [
+    {"type": "gap", "instruction": "Fill in the gap: We wanted to go to the cinema, but we didn't have time.", "text": "Wir ___ ins Kino gehen, aber wir hatten keine Zeit.", "answers": [["wollten"]], "explanation": "Review (Unit 8): wollen in the past: wir wollten. The infinitive gehen goes to the end."},
+    {"type": "gap", "instruction": "Fill in the gap: I think the film is boring.", "text": "Ich finde ___ Film langweilig.", "answers": [["den"]], "explanation": "Review (Unit 4): finden takes the accusative: der Film becomes den Film."},
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: Thomas isn't coming because he has a temperature.",
+      "text": "Thomas kommt nicht, weil er Fieber ___.",
+      "answers": [["hat"]],
+      "explanation": "After weil the verb goes to the very end: weil er Fieber hat."
+    },
+    {
+      "type": "mc",
+      "question": "Which sentence is correct?",
+      "questionLang": "en",
+      "options": ["Ich fahre mit dem Bus, weil mein Rad kaputt ist.", "Ich fahre mit dem Bus, weil mein Rad ist kaputt.", "Ich fahre mit dem Bus, weil ist mein Rad kaputt."],
+      "answer": "Ich fahre mit dem Bus, weil mein Rad kaputt ist.",
+      "explanation": "After weil: the subject (mein Rad), the rest (kaputt), and the verb last (ist)."
+    },
+    {
+      "type": "order",
+      "prompt": "I'm taking the bus because I can't park.",
+      "tiles": ["ich", "nehme", "den", "Bus", "weil", "ich", "nicht", "parken", "kann"],
+      "answers": ["Ich nehme den Bus weil ich nicht parken kann", "Weil ich nicht parken kann nehme ich den Bus", "Den Bus nehme ich weil ich nicht parken kann"],
+      "explanation": "With a modal verb, the infinitive comes first and the modal verb last: weil ich nicht parken kann. The weil part can also come first; then the main verb follows the comma: Weil ich nicht parken kann, nehme ich den Bus."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap with anfangen: I have to go now because the meeting starts at nine.",
+      "text": "Ich muss jetzt gehen, weil die Besprechung um neun ___.",
+      "answers": [["anfängt"]],
+      "explanation": "After weil the separable verb joins up again at the end: die Besprechung fängt um neun an becomes weil die Besprechung um neun anfängt."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: Sorry, I'm late because I didn't get up until nine.",
+      "text": "Entschuldigung, ich komme zu spät, weil ich erst um neun aufgestanden ___.",
+      "answers": [["bin"]],
+      "explanation": "aufstehen takes sein in the Perfekt: ich bin aufgestanden. After weil, bin goes to the very end, behind the participle: weil ich erst um neun aufgestanden bin."
+    },
+    {
+      "type": "mc",
+      "question": "Which sentence is correct?",
+      "questionLang": "en",
+      "options": ["Ich trinke noch einen Kaffee, denn ich bin sehr müde.", "Ich trinke noch einen Kaffee, denn ich sehr müde bin.", "Ich trinke noch einen Kaffee, weil ich bin sehr müde."],
+      "answer": "Ich trinke noch einen Kaffee, denn ich bin sehr müde.",
+      "explanation": "denn keeps the normal order: denn ich bin sehr müde. weil sends the verb to the end: weil ich sehr müde bin."
+    },
+    {
+      "type": "listen_mc",
+      "audio": "Am Donnerstag kann ich leider nicht, weil ich mit meiner Mannschaft ein Spiel habe. Geht es am Freitag?",
+      "question": "Why can't the person come on Thursday?",
+      "questionLang": "en",
+      "options": ["ein Spiel mit der Mannschaft", "ein Training mit dem Verein", "ein Termin mit der Chefin"],
+      "answer": "ein Spiel mit der Mannschaft",
+      "explanation": "weil ich mit meiner Mannschaft ein Spiel habe = because I have a match with my team. die Mannschaft = team, das Spiel = match."
+    },
+    {
+      "type": "dictation",
+      "text": "Wir können nicht kommen, denn wir bekommen Besuch.",
+      "explanation": "denn keeps the normal order: denn wir bekommen Besuch. der Besuch = visitors."
+    },
+    {
+      "type": "translate",
+      "direction": "en-de",
+      "text": "Sorry, I couldn't come because I was ill.",
+      "references": ["Entschuldigung, ich konnte nicht kommen, weil ich krank war.", "Tut mir leid, ich konnte nicht kommen, weil ich krank war.", "Entschuldigung, ich konnte nicht kommen, denn ich war krank.", "Tut mir leid, ich konnte nicht kommen, denn ich war krank."],
+      "explanation": "konnte (Unit 8) in second place and kommen at the end. After weil, war goes to the very end: weil ich krank war. With denn the order stays normal: denn ich war krank."
+    },
+    {
+      "type": "write",
+      "instruction": "Your friend sends the message below. Answer in 5-6 sentences: say on which days you can't, and why (use weil and denn). Use at least one separable verb or one Perfekt in a weil part (weil ich früh aufstehe, weil ich ... vergessen habe). Then suggest a day that works. Claude will check it.",
+      "prompt": "Ich gehe zweimal pro Woche joggen. Kommst du mit? Wann hast du Zeit?",
+      "minWords": 40
+    }
+  ]
+}

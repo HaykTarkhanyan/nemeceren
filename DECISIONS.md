@@ -2,6 +2,28 @@
 
 Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
+## 88. Unit 9 as written: weil, denn, deshalb, trotzdem and dass in five lessons, the weil part in position 1, das or dass, and dafür, dagegen and meiner Meinung nach as chunks (written with the course-unit skill, 2026-11-07; Hayk away, so Claude's calls)
+
+- **Date:** 2026-11-07 - **Status:** active; builds on #87
+- **Why:**
+  - **Six lessons, as the A2 table says:** weil with simple and modal verbs (1); weil with separable verbs and the Perfekt, plus denn (2); deshalb, trotzdem and also (3); opinions with dass (4); agreeing, disagreeing and planning in a group chat (5); the story, a team's group chat (6). Tests after lessons 2, 4 and 6.
+  - **One rule for the verb at the end:** weil (lesson 1) and dass (lesson 4) are taught as the same rule, with the two traps that need it most: a separable verb joins up again (weil ich früh aufstehe), and haben or sein goes last in the Perfekt (weil ich verschlafen habe). The joined forms the unit uses (aufstehe, anfängt, einkauft, mitkommt) and verschlafen and vergessen got curated popups (course-unit skill, Notes for A2).
+  - **The weil part in position 1** (Weil es regnet, nehmen wir den Bus) comes in lesson 3, as part of the position-1 rule that deshalb and trotzdem need. Order items from lesson 1 on accept it as a correct order.
+  - **denn** comes next to weil (normal word order; it can't answer Warum? alone). The research order puts denn at late A1 (item 10), but the course hadn't taught it, and the Unit 9 row lists it.
+  - **Chunks with a pointer:** dafür, dagegen (da- words: Unit 12); meiner Meinung nach (a fixed phrase, explained as the dative plus nach); ins Museum (Unit 10, like ins Kino); eine gute Idee, keine gute Idee (adjective endings: Units 13-14, extending Unit 3's Gute Idee!); Dann sehen wir uns (reflexive: Unit 12, like Wir treffen uns).
+  - **Not here:** obwohl (B1, research item 21); wenn (Unit 11); indirect questions with ob (Unit 12); Wie wäre es mit ...? (Konjunktiv II: Unit 11); the grammar of Nicos Weg A2 ch. 5 (reflexive verbs, verbs with prepositions: Unit 12). Its situations (free-time stress, feelings, discussions) are used.
+  - **Words:** 94 new cards, 15-19 per teaching lesson and 5 in the story. They fill A1 gaps (denn, also, glauben, klar, gegen, fehlen, günstig, verdienen, die Stelle, der Verein, zufrieden, gerade, einmal, das Thema, die Gruppe, die Lösung, der Plan) and add A2 words for reasons, free time, feelings, opinions and discussions. Two cards are B1 in the Goethe list: trotzdem (on the row) and meiner Meinung nach, because giving an opinion needs it. Das stimmt is A2 ("Das stimmt nicht." is an example in the Goethe A1/A2 lists), though the verb stimmen is B1. Two words are in no Goethe list, so their level is Claude's estimate (A2): verschlafen (the classic excuse) and der Biergarten (Munich). recht haben, dafür and dagegen are A2 in the DWDS list (B1 in the Goethe TSV), so they're A2. The song card das Leben is listed in lesson 4 too. B1 words left out: der Grund, anstrengend, der Stau, die Erkältung, klingen, ehrlich, ernst.
+  - **End task:** a written group chat (four messages from colleagues in the prompt; Hayk writes the four replies), then the live role-play with Claude. `digits` is off: the task asks for no times, and the umlaut keys matter more.
+- **Alternatives rejected:**
+  - weil and dass in one lesson (two kinds of clause at once, and dass belongs with the opinion verbs);
+  - leaving the weil part in position 1 to B1 (it's common in speech and follows from the position-1 rule Hayk has known since Unit 1);
+  - der Grund as a card (B1; Warum? and weil do the job);
+  - opinions about politics or the news (Hayk's priorities are work, class and friends, so the topics are the city, the U-Bahn, Sundays and free time).
+- **What would change this:**
+  - Hayk putting the verb second after weil or dass in u9-t1 or u9-t2: then add a drill before Unit 10;
+  - mixing up deshalb (verb next) and weil (verb last): then a contrast drill;
+  - doch still answered with ja after the unit.
+
 ## 87. Unit 8 as written: the Perfekt of every verb type by name, the short past of all five modal verbs, vor + dative for "ago", and letzte/letztes/letzten as chunks (written with the course-unit skill, 2026-11-07; Hayk away, so Claude's calls)
 
 - **Date:** 2026-11-07 - **Status:** active; builds on #70 (Unit 5's recognition-only participles)

@@ -1,0 +1,140 @@
+{
+  "id": "u9-05-einverstanden",
+  "unit": 9,
+  "order": 5,
+  "level": "A2",
+  "title": "Agree or disagree (Das stimmt! Das finde ich nicht.)",
+  "summary": "Agree, disagree and argue politely: Genau! Du hast recht. Ja, aber ... Doch! Then the group chat: make a suggestion, say you're for or against it, and give a reason.",
+  "goals": [
+    "Agree: Das stimmt. Genau! Du hast recht. Einverstanden!",
+    "Disagree politely: Das finde ich nicht. Ja, aber ...",
+    "Answer a 'not' question with doch",
+    "Make a suggestion in a group chat and say you're for or against it"
+  ],
+  "nicosWeg": [
+    { "title": "Nicos Weg A2, chapter 5: So stressful! (Das meinen Sie nicht ernst!)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519797" },
+    { "title": "Nicos Weg A2, chapter 17: With feeling (Meiner Meinung nach)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519797" }
+  ],
+  "words": ["genau", "das-stimmt", "recht-haben", "einverstanden", "doch", "idee", "vorschlag", "dafuer", "dagegen", "gegen", "auf-jeden-fall", "auf-keinen-fall", "echt", "total", "ausserdem", "bloed", "klar", "gruppe", "nachricht"],
+  "sections": [
+    {
+      "id": "agree-disagree",
+      "type": "table",
+      "title": "Agree, disagree, not sure",
+      "columns": [{ "header": "You want to ..." }, { "header": "Say", "de": "words" }],
+      "rows": [
+        ["agree", "Das stimmt. / Genau! / Richtig!"],
+        ["agree with a person", "Du hast recht. / Sie haben recht."],
+        ["agree to a plan", "Einverstanden! / Gute Idee! / Klar!"],
+        ["agree strongly", "Auf jeden Fall!"],
+        ["half agree", "Ja, aber ... / Na ja ..."],
+        ["disagree", "Das finde ich nicht. / Das stimmt nicht."],
+        ["disagree strongly", "Auf keinen Fall!"],
+        ["not sure", "Ich weiß nicht. / Vielleicht. / Keine Ahnung."]
+      ]
+    },
+    {
+      "id": "recht-einverstanden",
+      "type": "explanation",
+      "title": "Du hast recht. Ich bin einverstanden.",
+      "text": "Two phrases that don't work like English:\n- 'You're right' is [[Du hast recht]] or [[Sie haben recht]], with [[haben]]. Never 'Du bist recht'.\n- 'I agree (to a plan)' is [[Ich bin einverstanden]], with [[sein]]. Alone, [[Einverstanden!]] means 'Agreed!'\n\nAnd [[Das stimmt.]] is for what someone said: 'That's true.' A person [[hat recht]]; a sentence [[stimmt]]."
+    },
+    {
+      "type": "comparison",
+      "text": "Russian and Armenian use 'to be' in both: ты прав and դու ճիշտ ես (you are right); я согласен and համաձայն եմ (I agree). (Russian shows the 'be' only in the past: ты был прав.) German keeps [[sein]] for [[einverstanden]], but 'right' takes [[haben]]: [[Du hast recht.]]"
+    },
+    {
+      "id": "doch",
+      "type": "explanation",
+      "title": "doch: 'yes' against a 'not'",
+      "text": "When a question has [[nicht]] or [[kein]] and your answer is 'yes', say [[doch]], not [[ja]]:\n- [[Kommst du nicht mit? - Doch!]] = Aren't you coming? - Yes, I am!\n- [[Hast du keine Zeit? - Doch, ich habe Zeit.]]\n- [[Das stimmt nicht! - Doch, das stimmt!]]\n\nIf you agree with the 'not', say [[nein]]: [[Kommst du nicht mit? - Nein, ich habe keine Zeit.]]"
+    },
+    {
+      "type": "comparison",
+      "text": "English has no single word for this, and neither does Russian: Ты не придёшь? - Нет, приду! ('no, I will come'). German has one short word: [[Doch!]]"
+    },
+    {
+      "id": "arguing",
+      "type": "explanation",
+      "title": "Giving reasons in a discussion",
+      "text": "Give a reason with [[weil]] or [[denn]], and add another one with [[außerdem]] (besides, also). [[außerdem]] takes position 1 like [[deshalb]], so the verb comes next:\n- [[Ich bin dagegen, weil das zu teuer ist. Außerdem habe ich am Samstag keine Zeit.]]\n\nSoften it with [[Ja, aber ...]]: [[Ja, das stimmt, aber es ist sehr teuer.]]\n\nWith friends, people say it more strongly:\n- [[Das ist echt eine gute Idee!]] ([[echt]] = really)\n- [[Das finde ich total gut.]] ([[total]] = totally)\n- [[Ich finde das blöd.]] ([[blöd]] = stupid, annoying; only with friends)\n\nTake [[eine gute Idee]] and [[keine gute Idee]] as fixed phrases, like [[Gute Idee!]] (Unit 3): the -e on [[gute]] is an adjective ending, and those come in Units 13 and 14."
+    },
+    {
+      "id": "group-chat",
+      "type": "explanation",
+      "title": "In the group chat",
+      "text": "[[die Gruppe]] = group; [[die Nachricht]] = message. A plan in a group chat often goes like this:\n1. A suggestion: [[Ich habe einen Vorschlag: Wir gehen am Samstag wandern.]] Or, as in Unit 3: [[Wollen wir am Samstag wandern?]] ([[der Vorschlag]] = suggestion; [[die Idee]] = idea)\n2. For or against: [[Ich bin dafür!]] = I'm for it. [[Ich bin dagegen.]] = I'm against it. [[Klar, ich komme mit!]] = Sure, I'm coming!\n3. With a reason: [[Ich bin für Sonntag, weil ich am Samstag arbeiten muss.]] ([[für]] = for, Unit 4; [[gegen]] = against, also with the accusative: [[Ich bin gegen den Vorschlag.]])\n4. The end: [[Gut, also Sonntag um zehn?]] - [[Einverstanden!]]\n\nTake [[dafür]] (for it) and [[dagegen]] (against it) as fixed phrases for now; Unit 12 explains words like these."
+    },
+    {
+      "id": "discussion-examples",
+      "type": "examples",
+      "title": "Examples",
+      "items": [
+        { "de": "Das stimmt, die Miete ist zu hoch.", "en": "That's true, the rent is too high." },
+        { "de": "Du hast recht. Das ist zu teuer.", "en": "You're right. That's too expensive." },
+        { "de": "Kommst du nicht mit? - Doch, ich komme mit!", "en": "Aren't you coming? - Yes, I am!" },
+        { "de": "Ich habe einen Vorschlag: Wir gehen am Freitag ins Kino.", "en": "I have a suggestion: let's go to the cinema on Friday." },
+        { "de": "Gute Idee, ich bin dafür!", "en": "Good idea, I'm for it!" },
+        { "de": "Ich bin dagegen, weil ich am Freitag keine Zeit habe.", "en": "I'm against it because I don't have time on Friday." },
+        { "de": "Das ist zu weit. Außerdem ist es sehr teuer.", "en": "It's too far. Besides, it's very expensive." },
+        { "de": "Samstag um zehn? - Einverstanden!", "en": "Saturday at ten? - Agreed!" }
+      ]
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat",
+      "items": [
+        { "de": "Das stimmt.", "en": "That's true." },
+        { "de": "Genau!", "en": "Exactly!" },
+        { "de": "Du hast recht.", "en": "You're right." },
+        { "de": "Doch!", "en": "Yes! (against a 'not')" },
+        { "de": "Ich bin dafür.", "en": "I'm for it." },
+        { "de": "Auf keinen Fall!", "en": "No way!" }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "mc",
+          "question": "Your friend asks: 'Kommst du heute nicht?' You are coming. What do you answer?",
+          "questionLang": "en",
+          "options": ["Doch, ich komme.", "Ja, ich komme nicht.", "Nein, ich komme."],
+          "answer": "Doch, ich komme.",
+          "explanation": "The question has nicht and your answer is 'yes': doch. Nein would agree with the 'not' (I'm not coming)."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: You're right. (du)",
+          "text": "Du ___ recht.",
+          "answers": [["hast"]],
+          "explanation": "recht haben: Du hast recht. German says 'have right', not 'be right'."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: I'm against it because it's too expensive.",
+          "text": "Ich bin ___, weil das zu teuer ist.",
+          "answers": [["dagegen"]],
+          "explanation": "dagegen = against it. For it: dafür."
+        },
+        {
+          "type": "order",
+          "prompt": "Besides, the weather is bad.",
+          "tiles": ["außerdem", "ist", "das", "Wetter", "schlecht"],
+          "answers": ["Außerdem ist das Wetter schlecht", "Das Wetter ist außerdem schlecht"],
+          "explanation": "außerdem takes position 1 like deshalb, so the verb comes next: Außerdem ist das Wetter schlecht. It can also go after the verb."
+        },
+        {
+          "type": "listen_mc",
+          "audio": "Wollen wir am Samstag wandern? - Ich bin dagegen, weil ich am Samstag arbeiten muss.",
+          "question": "Why is the second person against it?",
+          "questionLang": "en",
+          "options": ["Sie muss am Samstag arbeiten.", "Sie hat am Samstag Besuch.", "Sie findet Wandern langweilig."],
+          "answer": "Sie muss am Samstag arbeiten.",
+          "explanation": "Ich bin dagegen, weil ich am Samstag arbeiten muss = I'm against it because I have to work on Saturday."
+        }
+      ]
+    }
+  ]
+}

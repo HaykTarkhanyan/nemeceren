@@ -1,0 +1,183 @@
+{
+  "id": "u9-06-geschichte-gruppenchat",
+  "unit": 9,
+  "order": 6,
+  "level": "A2",
+  "title": "Story: the team outing (Der Gruppenchat)",
+  "summary": "A scene to read and hear: an office team plans an outing in their group chat, and nobody agrees. It uses only German from Units 0-9, with questions between the parts.",
+  "goals": [
+    "Follow a discussion with reasons and opinions: weil, denn, deshalb, trotzdem, dass.",
+    "Notice how people suggest, agree and disagree in a chat: Ich habe einen Vorschlag. Ich bin dagegen. Einverstanden!"
+  ],
+  "words": ["gewitter", "biergarten", "drinnen", "loesung", "plan"],
+  "tests": ["u9-t3-gruppenchat"],
+  "sections": [
+    {
+      "type": "explanation",
+      "id": "how-to-read",
+      "title": "How to read the story",
+      "text": "A group chat in three parts, from Wednesday to Friday, in an office in Munich. Each line is one message. Read each message first and try to understand it; tap **translation** only when you need it. **Play the scene** reads a whole part, each person in their own voice. After each part come a few questions.\n\nNew words in the story: [[das Gewitter]] (thunderstorm), [[der Biergarten]] (beer garden), [[drinnen]] (inside), [[die Lösung]] (solution), [[der Plan]] (plan).\n\n[[Hallo zusammen!]] = Hi all! [[Ach!]] = Oh! [[ins Museum]] works like [[ins Kino]]: a fixed phrase until Unit 10. [[bei Gewitter]] = in a thunderstorm. [[Dann sehen wir uns.]] = See you then. Like [[Wir treffen uns]], a fixed phrase until Unit 12. [[Ich lade euch ein.]] = I'll invite you, and here also: I'll pay for you."
+    },
+    {
+      "type": "dialogue",
+      "id": "part-1",
+      "title": "Part 1: Wednesday, the idea",
+      "lines": [
+        { "speaker": "Eva", "de": "Hallo zusammen! Am Freitag machen wir mit dem Team einen Ausflug. Wer hat eine Idee?", "en": "Hi all! On Friday we're going on an outing with the team. Who has an idea?" },
+        { "speaker": "Aram", "de": "Wollen wir ins Museum gehen?", "en": "Shall we go to a museum?" },
+        { "speaker": "Thomas", "de": "Ins Museum? Ich finde Museen langweilig.", "en": "A museum? I find museums boring." },
+        { "speaker": "Eva", "de": "Ich habe einen Vorschlag: Wir wandern in den Bergen.", "en": "I have a suggestion: we go hiking in the mountains." },
+        { "speaker": "Charlotte", "de": "Gute Idee! Ich bin dafür.", "en": "Good idea! I'm for it." },
+        { "speaker": "Thomas", "de": "Ich bin dagegen, weil ich nicht sportlich bin. Außerdem fährt der Zug um sieben ab.", "en": "I'm against it because I'm not sporty. Besides, the train leaves at seven." },
+        { "speaker": "Eva", "de": "Das stimmt nicht. Der Zug fährt erst um neun.", "en": "That's not true. The train doesn't leave until nine." },
+        { "speaker": "Eva", "de": "Kommst du dann nicht mit?", "en": "So aren't you coming?" },
+        { "speaker": "Thomas", "de": "Doch, ich komme mit. Aber nur, weil ihr alle dafür seid.", "en": "Yes, I'm coming. But only because you're all for it." },
+        { "speaker": "Aram", "de": "Ich finde die Idee gut, denn die Natur ist dort so schön.", "en": "I like the idea, because nature is so beautiful there." },
+        { "speaker": "Charlotte", "de": "Und am Abend essen wir im Biergarten!", "en": "And in the evening we'll eat in a beer garden!" },
+        { "speaker": "Thomas", "de": "Biergarten? Auf jeden Fall! Einverstanden.", "en": "Beer garden? Definitely! Agreed." },
+        { "speaker": "Eva", "de": "Super! Also Freitag um neun am Bahnhof.", "en": "Great! So Friday at nine at the station." }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Questions on part 1",
+      "items": [
+        {
+          "type": "mc",
+          "question": "Why is Thomas against the hike at first?",
+          "questionLang": "en",
+          "options": ["Er ist nicht sportlich.", "Er findet Museen langweilig.", "Er muss am Freitag arbeiten."],
+          "answer": "Er ist nicht sportlich.",
+          "explanation": "Thomas: Ich bin dagegen, weil ich nicht sportlich bin. He does find museums boring, but that was about Aram's idea, not the hike."
+        },
+        {
+          "type": "mc",
+          "question": "What does Thomas say about the beer garden?",
+          "questionLang": "en",
+          "options": ["Auf jeden Fall!", "Auf keinen Fall!", "Das stimmt nicht."],
+          "answer": "Auf jeden Fall!",
+          "explanation": "Biergarten? Auf jeden Fall! = Beer garden? Definitely! Auf keinen Fall = no way."
+        },
+        {
+          "type": "gap",
+          "instruction": "Aram likes the idea because nature is so beautiful there.",
+          "text": "Ich finde die Idee gut, ___ die Natur ist dort so schön.",
+          "answers": [["denn"]],
+          "explanation": "denn keeps the normal order: denn die Natur ist dort so schön. With weil, the verb would go to the end: weil die Natur dort so schön ist."
+        }
+      ]
+    },
+    {
+      "type": "dialogue",
+      "id": "part-2",
+      "title": "Part 2: Thursday, the weather",
+      "lines": [
+        { "speaker": "Eva", "de": "Leute, ich habe gerade gelesen, dass es morgen ein Gewitter gibt.", "en": "Folks, I've just read that there'll be a thunderstorm tomorrow." },
+        { "speaker": "Thomas", "de": "Oh nein! Dann bleiben wir zu Hause, oder?", "en": "Oh no! Then we'll stay at home, right?" },
+        { "speaker": "Eva", "de": "Nein! Aber bei Gewitter ist Wandern in den Bergen gefährlich. Deshalb brauchen wir eine Lösung.", "en": "No! But hiking in the mountains is dangerous in a thunderstorm. That's why we need a solution." },
+        { "speaker": "Aram", "de": "Ich habe eine Lösung: Am Vormittag gehen wir ins Museum.", "en": "I have a solution: in the morning we go to a museum." },
+        { "speaker": "Thomas", "de": "Ins Museum? Das finde ich immer noch langweilig.", "en": "A museum? I still find that boring." },
+        { "speaker": "Charlotte", "de": "Ach, Thomas! Im Museum regnet es nicht.", "en": "Oh, Thomas! It doesn't rain in a museum." },
+        { "speaker": "Aram", "de": "Und das Museum hat ein Café. Da können wir in der Pause einen Kaffee trinken.", "en": "And the museum has a café. We can have a coffee there in the break." },
+        { "speaker": "Thomas", "de": "Na ja ... Und der Biergarten?", "en": "Well ... And the beer garden?" },
+        { "speaker": "Aram", "de": "Der Biergarten hat auch ein Restaurant. Da können wir drinnen sitzen.", "en": "The beer garden has a restaurant too. We can sit inside there." },
+        { "speaker": "Charlotte", "de": "Aber im Biergarten will ich draußen sitzen!", "en": "But in a beer garden I want to sit outside!" },
+        { "speaker": "Eva", "de": "Bei Gewitter? Das ist keine gute Idee.", "en": "In a thunderstorm? That's not a good idea." },
+        { "speaker": "Charlotte", "de": "Du hast recht. Gut, dann sitzen wir drinnen.", "en": "You're right. OK, then we'll sit inside." },
+        { "speaker": "Thomas", "de": "Museum und Restaurant. Einverstanden! Dann muss ich nicht wandern.", "en": "Museum and restaurant. Agreed! Then I don't have to hike." }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Questions on part 2",
+      "items": [
+        {
+          "type": "mc",
+          "question": "Why do they need a new plan?",
+          "questionLang": "en",
+          "options": ["Morgen gibt es ein Gewitter.", "Der Zug fährt morgen nicht.", "Thomas ist morgen krank."],
+          "answer": "Morgen gibt es ein Gewitter.",
+          "explanation": "Eva: Ich habe gerade gelesen, dass es morgen ein Gewitter gibt. dass sends the verb to the end: ... ein Gewitter gibt."
+        },
+        {
+          "type": "mc",
+          "question": "Where will they sit in the evening?",
+          "questionLang": "en",
+          "options": ["drinnen", "draußen", "im Park"],
+          "answer": "drinnen",
+          "explanation": "Charlotte wants to sit outside, but Eva says bei Gewitter it's not a good idea. Charlotte: Gut, dann sitzen wir drinnen."
+        },
+        {
+          "type": "gap",
+          "instruction": "Eva gives the result: That's why we need a solution.",
+          "text": "Bei Gewitter ist Wandern gefährlich. ___ brauchen wir eine Lösung.",
+          "answers": [["Deshalb", "Also", "Darum", "Deswegen"]],
+          "explanation": "deshalb takes position 1, then the verb: Deshalb brauchen wir eine Lösung. Also works the same way in speech."
+        }
+      ]
+    },
+    {
+      "type": "dialogue",
+      "id": "part-3",
+      "title": "Part 3: Friday morning",
+      "lines": [
+        { "speaker": "Thomas", "de": "Guten Morgen! Habt ihr schon aus dem Fenster gesehen? Die Sonne scheint!", "en": "Good morning! Have you looked out of the window yet? The sun is shining!" },
+        { "speaker": "Charlotte", "de": "Wirklich? Kein Gewitter?", "en": "Really? No thunderstorm?" },
+        { "speaker": "Eva", "de": "Ich habe gelesen, dass das Gewitter erst am Abend kommt.", "en": "I've read that the thunderstorm won't come until the evening." },
+        { "speaker": "Aram", "de": "Trotzdem bleiben wir beim Plan, oder?", "en": "We're sticking to the plan anyway, right?" },
+        { "speaker": "Thomas", "de": "Genau! Der Plan ist gut. Museum und Restaurant!", "en": "Exactly! The plan is good. Museum and restaurant!" },
+        { "speaker": "Charlotte", "de": "Thomas! Du findest Museen langweilig!", "en": "Thomas! You find museums boring!" },
+        { "speaker": "Thomas", "de": "Ja, aber heute finde ich das Museum super.", "en": "Yes, but today I think the museum is great." },
+        { "speaker": "Herr Müller", "de": "Guten Morgen, Team! Ich lese hier seit Mittwoch so viele Nachrichten.", "en": "Good morning, team! I've been reading so many messages here since Wednesday." },
+        { "speaker": "Herr Müller", "de": "Ich habe nur eine Frage: Wann arbeiten wir eigentlich?", "en": "I have just one question: when do we actually work?" },
+        { "speaker": "Eva", "de": "Ähm ... am Montag?", "en": "Um ... on Monday?" },
+        { "speaker": "Herr Müller", "de": "Na gut. Dann sehen wir uns um zehn im Museum. Und am Abend lade ich euch im Biergarten ein.", "en": "Oh well. Then see you at ten in the museum. And in the evening the beer garden is on me." },
+        { "speaker": "Aram", "de": "Super! Da kommen wir auf jeden Fall!", "en": "Great! We'll definitely come to that!" },
+        { "speaker": "Charlotte", "de": "Und wir sitzen draußen!", "en": "And we're sitting outside!" },
+        { "speaker": "Eva", "de": "Charlotte ... drinnen!", "en": "Charlotte ... inside!" }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Questions on part 3",
+      "items": [
+        {
+          "type": "mc",
+          "question": "What's the weather like on Friday morning?",
+          "questionLang": "en",
+          "options": ["Die Sonne scheint.", "Es gibt ein Gewitter.", "Es regnet."],
+          "answer": "Die Sonne scheint.",
+          "explanation": "Thomas: Die Sonne scheint! The thunderstorm comes only in the evening: erst am Abend."
+        },
+        {
+          "type": "mc",
+          "question": "What does Herr Müller do in the evening?",
+          "questionLang": "en",
+          "options": ["Er lädt das Team ein.", "Er bleibt im Büro.", "Er geht wandern."],
+          "answer": "Er lädt das Team ein.",
+          "explanation": "Am Abend lade ich euch im Biergarten ein = in the evening I'll treat you in the beer garden. einladen is separable: er lädt ... ein."
+        },
+        {
+          "type": "order",
+          "prompt": "We're sticking to the plan anyway. (Aram)",
+          "tiles": ["trotzdem", "bleiben", "wir", "beim", "Plan"],
+          "answers": ["Trotzdem bleiben wir beim Plan", "Wir bleiben trotzdem beim Plan", "Beim Plan bleiben wir trotzdem"],
+          "explanation": "trotzdem in position 1, then the verb: Trotzdem bleiben wir beim Plan. Or after the verb: Wir bleiben trotzdem beim Plan. bei einem Plan bleiben = to stick to a plan."
+        }
+      ]
+    },
+    {
+      "type": "examples",
+      "id": "story-lines",
+      "title": "Useful lines from the story",
+      "items": [
+        { "de": "Ich habe einen Vorschlag: Wir wandern in den Bergen.", "en": "I have a suggestion: let's go hiking in the mountains." },
+        { "de": "Gute Idee! Ich bin dafür.", "en": "Good idea! I'm for it." },
+        { "de": "Ich bin dagegen, weil ich nicht sportlich bin.", "en": "I'm against it because I'm not sporty." },
+        { "de": "Deshalb brauchen wir eine Lösung.", "en": "That's why we need a solution." },
+        { "de": "Trotzdem bleiben wir beim Plan.", "en": "We're sticking to the plan anyway." },
+        { "de": "Am Abend lade ich euch ein.", "en": "In the evening it's on me.", "note": "einladen: to invite; also to pay for someone." }
+      ]
+    }
+  ]
+}

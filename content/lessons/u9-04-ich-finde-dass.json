@@ -1,0 +1,141 @@
+{
+  "id": "u9-04-ich-finde-dass",
+  "unit": 9,
+  "order": 4,
+  "level": "A2",
+  "title": "What do you think? Ich finde, dass ... (Meinungen)",
+  "summary": "Say what you think with finden, glauben and meinen, with or without dass. After dass the verb goes to the end, as after weil. Ask for opinions, and talk about life in Munich.",
+  "goals": [
+    "Say what you think: Ich finde, ... / Ich glaube, dass ...",
+    "Use dass with the verb at the end",
+    "Ask: Was meinst du? Wie findest du ...?",
+    "Write das and dass correctly",
+    "Say what you think of life in Munich"
+  ],
+  "nicosWeg": [
+    { "title": "Nicos Weg A2, Welcome to A2!: Future plans (Pläne machen): dass", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519797" },
+    { "title": "Nicos Weg A2, chapter 10: How do you live? (Stadt oder Land?)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519797" }
+  ],
+  "words": ["dass", "meinung", "meiner-meinung-nach", "meinen", "glauben", "sicher", "wahrscheinlich", "hoffentlich", "ahnung", "thema", "unterschied", "natur", "sauber", "schmutzig", "modern", "typisch", "freundlich", "offen", "park", "leben"],
+  "tests": ["u9-t2-deshalb-meinung"],
+  "sections": [
+    {
+      "id": "i-think",
+      "type": "explanation",
+      "title": "I think ...",
+      "text": "In Unit 4 you said what you think of a thing with [[finden]]: [[Ich finde den Film gut.]] For a whole thought, put a comma and a normal sentence after it:\n- [[Ich finde, München ist schön.]] = I think Munich is nice. (your opinion)\n- [[Ich glaube, Eva kommt heute nicht.]] = I think Eva isn't coming today. (you're not sure; [[glauben]] = to believe)\n- [[Ich meine, wir brauchen mehr Zeit.]] = I think we need more time. ([[meinen]] = to think, to mean)\n\n[[Ich denke, ...]] ([[denken]], Unit 8) works too."
+    },
+    {
+      "id": "dass",
+      "type": "explanation",
+      "title": "dass: the verb goes to the end",
+      "text": "You can also join the thought with [[dass]] (that). Then the verb goes to the end, as after [[weil]]:\n- [[Ich finde, München ist schön.]] = [[Ich finde, dass München schön ist.]]\n- [[Ich glaube, Eva kommt heute nicht.]] = [[Ich glaube, dass Eva heute nicht kommt.]]\n\nBoth are correct and mean the same. Without [[dass]], the order stays normal; with [[dass]], the verb goes last. The comma comes in both."
+    },
+    {
+      "id": "dass-table",
+      "type": "table",
+      "title": "More ways to start",
+      "columns": [{ "header": "Start", "de": "words" }, { "header": "dass + ... + verb", "de": "words" }, { "header": "English" }],
+      "rows": [
+        ["Ich weiß,", "dass das schwer ist.", "I know (that) it's difficult."],
+        ["Ich hoffe,", "dass du bald wieder gesund bist.", "I hope (that) you're well again soon."],
+        ["Ich bin sicher,", "dass Thomas morgen kommt.", "I'm sure (that) Thomas is coming tomorrow."],
+        ["Es ist wichtig,", "dass wir pünktlich sind.", "It's important that we're on time."],
+        ["Ich finde es gut,", "dass die U-Bahn so oft fährt.", "I think it's good that the U-Bahn runs so often."],
+        ["Schön,", "dass du da bist!", "Nice that you're here!"]
+      ]
+    },
+    {
+      "type": "comparison",
+      "text": "Russian что and Armenian որ do the same job as [[dass]]: я думаю, что ...; կարծում եմ, որ ... Russian has the same comma. What's new is the verb at the end: [[Ich glaube, dass er heute kommt.]]"
+    },
+    {
+      "id": "das-dass",
+      "type": "warning",
+      "title": "das or dass?",
+      "text": "They sound the same, but:\n- [[das]] (one s) = 'the', or 'that, this' for a thing: [[das Buch]], [[Das ist gut.]]\n- [[dass]] (two s) joins two sentences, after a comma, and sends the verb to the end: [[Ich glaube, dass das gut ist.]]\n\nIf the verb goes to the end, write [[dass]]: [[Ich glaube, dass das stimmt.]] With normal word order it can be [[das]]: [[Ich glaube, das stimmt.]]"
+    },
+    {
+      "id": "asking-opinions",
+      "type": "explanation",
+      "title": "What do you think? In my opinion ...",
+      "text": "In a German course, a discussion starts with a topic: [[Das Thema heute: Stadt oder Land?]] ([[das Thema]] = topic)\n\nTo ask:\n- [[Was meinst du?]] / [[Was meinen Sie?]] = What do you think?\n- [[Wie findest du München?]] = What do you think of Munich?\n- [[Was ist deine Meinung?]] = What's your opinion? ([[die Meinung]])\n\nTo answer:\n- [[Meiner Meinung nach ist München zu teuer.]] = In my opinion, Munich is too expensive. Learn it as a fixed phrase. It takes position 1, so the verb comes next. ([[meiner]] is the dative from Unit 6, and here [[nach]] comes after the noun.)\n- [[Er kommt wahrscheinlich nicht.]] = He's probably not coming.\n- [[Ich bin nicht sicher.]] / [[Keine Ahnung!]] = I'm not sure. / No idea!\n- [[Hoffentlich hat der Zug keine Verspätung.]] = Hopefully the train won't be late."
+    },
+    {
+      "id": "life-in-munich",
+      "type": "explanation",
+      "title": "Life in Munich",
+      "text": "People in Germany love to talk about their city: the U-Bahn, the prices, the rules. A few opinions:\n- [[Ich finde es gut, dass am Sonntag die Geschäfte geschlossen sind. Dann ist Ruhe.]] ([[die Ruhe]], lesson 3)\n- [[In Jerewan sind die Geschäfte auch am Sonntag offen. Das ist ein Unterschied.]] ([[offen]] = open; [[der Unterschied]] = difference)\n- [[Die Stadt ist sauber, aber der Bahnhof ist ein bisschen schmutzig.]]\n- [[Ich glaube, dass die Leute hier sehr freundlich sind.]]\n- [[Die U-Bahn ist modern und fährt oft.]]\n- [[München hat viele Parks, und die Berge sind nicht weit. Ich bin gern in der Natur.]]\n- [[Was ist typisch für München?]] ([[typisch]] = typical)\n\n[[Das Leben in München ist teuer.]] = Life in Munich is expensive. ([[das Leben]] = life, from the song 'Sieben Tage lang'.)"
+    },
+    {
+      "id": "opinion-examples",
+      "type": "examples",
+      "title": "Examples",
+      "items": [
+        { "de": "Ich finde, dass München sehr schön ist.", "en": "I think Munich is very beautiful." },
+        { "de": "Ich glaube, Eva kommt heute nicht.", "en": "I think Eva isn't coming today." },
+        { "de": "Was meinst du? - Ich bin nicht sicher.", "en": "What do you think? - I'm not sure." },
+        { "de": "Meiner Meinung nach ist die Miete zu hoch.", "en": "In my opinion the rent is too high." },
+        { "de": "Ich hoffe, dass du bald wieder gesund bist.", "en": "I hope you're well again soon." },
+        { "de": "Schön, dass du da bist!", "en": "Nice that you're here!" },
+        { "de": "Hoffentlich regnet es am Samstag nicht.", "en": "Hopefully it won't rain on Saturday." },
+        { "de": "Wie findest du München? - Ich finde es toll!", "en": "What do you think of Munich? - I think it's great!" }
+      ]
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat",
+      "items": [
+        { "de": "Was meinst du?", "en": "What do you think?" },
+        { "de": "Ich finde, dass das eine gute Idee ist.", "en": "I think that's a good idea." },
+        { "de": "Ich glaube, dass er heute nicht kommt.", "en": "I think he isn't coming today." },
+        { "de": "Meiner Meinung nach ist München zu teuer.", "en": "In my opinion, Munich is too expensive." },
+        { "de": "Keine Ahnung!", "en": "No idea!" }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: I think (that) Thomas has no time today.",
+          "text": "Ich glaube, dass Thomas heute keine Zeit ___.",
+          "answers": [["hat"]],
+          "explanation": "After dass the verb goes to the very end, as after weil: dass Thomas heute keine Zeit hat."
+        },
+        {
+          "type": "mc",
+          "instruction": "das or dass?",
+          "question": "Ich weiß, ___ Deutsch nicht einfach ist.",
+          "options": ["dass", "das"],
+          "answer": "dass",
+          "explanation": "The verb ist goes to the end, so it's dass (two s): dass Deutsch nicht einfach ist. das (one s) is 'the' or 'this, that', and it keeps the normal word order: Ich weiß, das ist nicht einfach."
+        },
+        {
+          "type": "order",
+          "prompt": "I hope (that) the weather is nice on Saturday.",
+          "tiles": ["ich", "hoffe", "dass", "das", "Wetter", "am", "Samstag", "schön", "ist"],
+          "answers": ["Ich hoffe dass das Wetter am Samstag schön ist", "Ich hoffe dass am Samstag das Wetter schön ist", "Dass das Wetter am Samstag schön ist hoffe ich", "Dass am Samstag das Wetter schön ist hoffe ich"],
+          "explanation": "Ich hoffe, then dass, the subject, the rest, and the verb last: dass das Wetter am Samstag schön ist. Here you need both: dass joins the sentences, das is the article of das Wetter."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: What do you think? (du)",
+          "text": "Was ___ du?",
+          "answers": [["meinst", "denkst", "glaubst"]],
+          "explanation": "Was meinst du? = What do you think? Was denkst du? works too."
+        },
+        {
+          "type": "listen_mc",
+          "audio": "Ich finde es gut, dass die Geschäfte am Sonntag geschlossen sind. Dann ist die Stadt ruhig.",
+          "question": "What does the person like?",
+          "questionLang": "en",
+          "options": ["Die Geschäfte sind am Sonntag geschlossen.", "Die Restaurants sind am Sonntag geschlossen.", "Die Museen sind am Sonntag geschlossen."],
+          "answer": "Die Geschäfte sind am Sonntag geschlossen.",
+          "explanation": "Ich finde es gut, dass die Geschäfte am Sonntag geschlossen sind = I think it's good that the shops are closed on Sunday."
+        }
+      ]
+    }
+  ]
+}

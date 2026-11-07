@@ -1,6 +1,64 @@
 {
   "ignore": ["Hayk", "Charlotte", "Eva", "Meier", "Müller", "Schmidt", "Thomas", "Weber", "Aram", "Tarkhanyan", "Goethestraße", "Siemens", "Berlin", "Marienplatz", "Moosach"],
   "entries": {
+    "Verkehr": [
+      {"lemma": "Verkehr", "pos": "noun", "article": "der", "level": "A2", "gloss": ["traffic"]}
+    ],
+    "Wandern": [
+      {"lemma": "Wandern", "pos": "noun", "article": "das", "level": "A1", "gloss": ["hiking"], "note": "The verb wandern used as a noun: Wandern ist gesund."}
+    ],
+    "modern": [
+      {"lemma": "modern", "pos": "adjective", "level": "A2", "gloss": ["modern"]}
+    ],
+    "ach": [
+      {"lemma": "ach", "pos": "interjection", "gloss": ["oh"], "note": "Ach, Thomas! = Oh, Thomas!"}
+    ],
+    "Ach": [
+      {"lemma": "ach", "pos": "interjection", "gloss": ["oh"], "note": "Ach, Thomas! = Oh, Thomas!"}
+    ],
+    "zusammen": [
+      {"lemma": "zusammen", "pos": "adverb", "level": "A1", "gloss": ["together"], "note": "Hallo zusammen! = Hi all!"}
+    ],
+    "Fall": [
+      {"lemma": "Fall", "pos": "noun", "article": "der", "plural": "Fälle", "gloss": ["case"], "note": "auf jeden Fall = definitely; auf keinen Fall = no way"}
+    ],
+    "aufstehe": [
+      {"lemma": "aufstehen", "pos": "verb", "form": "ich form, present", "level": "A1", "gloss": ["to get up"], "note": "Joined at the end after weil or dass: weil ich früh aufstehe. In a normal sentence it splits: Ich stehe früh auf."}
+    ],
+    "anfängt": [
+      {"lemma": "anfangen", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["to start, to begin"], "note": "Joined at the end after weil or dass: weil der Kurs um neun anfängt. In a normal sentence it splits: Der Kurs fängt um neun an."}
+    ],
+    "einkauft": [
+      {"lemma": "einkaufen", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["to do the shopping"], "note": "Joined at the end after weil or dass: weil Eva heute einkauft. In a normal sentence it splits: Eva kauft heute ein."}
+    ],
+    "mitkommt": [
+      {"lemma": "mitkommen", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["to come along"], "note": "Joined at the end after weil or dass: weil Thomas nicht mitkommt. In a normal sentence it splits: Thomas kommt nicht mit."}
+    ],
+    "verschlafen": [
+      {"lemma": "verschlafen", "pos": "verb", "level": "A2", "gloss": ["to oversleep"], "note": "Ich habe verschlafen. = I overslept. The participle looks like the infinitive: weil ich verschlafen habe."}
+    ],
+    "vergessen": [
+      {"lemma": "vergessen", "pos": "verb", "level": "A2", "gloss": ["to forget (du vergisst)"], "note": "The participle looks like the infinitive: Ich habe es vergessen. weil ich es vergessen habe."}
+    ],
+    "denn": [
+      {"lemma": "denn", "pos": "conjunction", "level": "A1", "gloss": ["because, for"], "note": "Normal word order after it: Ich komme nicht, denn ich bin krank."},
+      {"lemma": "denn", "pos": "particle", "gloss": ["(in questions) then, so"], "note": "Wie geht es dir denn? = So how are you?"}
+    ],
+    "doch": [
+      {"lemma": "doch", "pos": "particle", "level": "A2", "gloss": ["yes (against a 'not' question)", "but, after all (in other sentences)"], "note": "Kommst du nicht mit? - Doch! = Aren't you coming? - Yes, I am!"}
+    ],
+    "recht": [
+      {"lemma": "recht haben", "pos": "phrase", "level": "A2", "gloss": ["to be right"], "note": "Du hast recht. = You're right. With haben, not sein."}
+    ],
+    "stimmt": [
+      {"lemma": "stimmen", "pos": "verb", "form": "er/sie/es form, present", "level": "B1", "gloss": ["is right, is true"], "note": "Das stimmt. = That's true. Das stimmt nicht. = That's not true."}
+    ],
+    "dafür": [
+      {"lemma": "dafür", "pos": "adverb", "level": "A2", "gloss": ["for it, in favour"], "note": "Ich bin dafür. = I'm for it. Unit 12 explains words like this."}
+    ],
+    "dagegen": [
+      {"lemma": "dagegen", "pos": "adverb", "level": "A2", "gloss": ["against it"], "note": "Ich bin dagegen. = I'm against it. Unit 12 explains words like this."}
+    ],
     "gewisst": [
       {"lemma": "wissen", "pos": "verb", "form": "wrong participle", "gloss": ["(not a word)"], "note": "The participle of wissen is gewusst."}
     ],
@@ -573,7 +631,7 @@
       {"lemma": "der", "pos": "article", "form": "dative (masculine, neuter)", "level": "A1", "gloss": ["the (dative of der and das)"], "note": "mit dem Bus; am = an dem, im = in dem, zum = zu dem"}
     ],
     "nach": [
-      {"lemma": "nach", "pos": "preposition", "level": "A1", "gloss": ["after; (in times) past", "to (a place)"], "note": "zehn nach drei = 3:10; nach Hause = home"}
+      {"lemma": "nach", "pos": "preposition", "level": "A1", "gloss": ["after; (in times) past", "to (a place)"], "note": "zehn nach drei = 3:10; nach Hause = home; meiner Meinung nach = in my opinion (nach after the noun)"}
     ],
     "zu": [
       {"lemma": "zu", "pos": "preposition", "level": "A1", "gloss": ["to; at"], "note": "zu Hause = at home"},
@@ -640,7 +698,7 @@
       {"lemma": "Zahl", "pos": "noun", "article": "die", "form": "plural", "gloss": ["numbers"]}
     ],
     "Stimmt": [
-      {"lemma": "stimmen", "pos": "verb", "form": "er/sie/es form, present", "level": "B1", "gloss": ["is right"], "note": "Stimmt so. = Keep the change."}
+      {"lemma": "stimmen", "pos": "verb", "form": "er/sie/es form, present", "level": "B1", "gloss": ["is right, is true"], "note": "Stimmt! = That's right. Stimmt so. = Keep the change."}
     ],
     "getrennt": [
       {"lemma": "getrennt", "pos": "adverb", "level": "B1", "gloss": ["separately"], "note": "Getrennt, bitte. = Separate bills, please."}
@@ -854,7 +912,7 @@
       {"lemma": "passen", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["fits, suits"], "note": "Passt dir Montag? = Does Monday suit you?"}
     ],
     "fehlt": [
-      {"lemma": "fehlen", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["is missing"], "note": "Was fehlt Ihnen? = What's the matter? (at the doctor's)"}
+      {"lemma": "fehlen", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["is missing; is absent"], "note": "Was fehlt Ihnen? = What's the matter? (at the doctor's) Eva fehlt heute. = Eva is absent today."}
     ],
     "Stock": [
       {"lemma": "Stock", "pos": "noun", "article": "der", "level": "A1", "gloss": ["floor, storey"], "note": "im ersten Stock = on the first floor"}
@@ -897,7 +955,8 @@
       {"lemma": "bei", "pos": "preposition", "level": "A1", "gloss": ["at (someone's place)", "at (a company)", "near"], "note": "bei meinen Eltern, bei Siemens, beim Arzt"}
     ],
     "meinen": [
-      {"lemma": "mein", "pos": "determiner", "form": "accusative masculine; dative plural", "level": "A1", "gloss": ["my"], "note": "für meinen Bruder; bei meinen Eltern"}
+      {"lemma": "mein", "pos": "determiner", "form": "accusative masculine; dative plural", "level": "A1", "gloss": ["my"], "note": "für meinen Bruder; bei meinen Eltern"},
+      {"lemma": "meinen", "pos": "verb", "level": "A2", "gloss": ["to mean (what you say); to reckon, to think"], "note": "Was meinen Sie? = What do you think?"}
     ],
     "Fahrtrichtung": [
       {"lemma": "Fahrtrichtung", "pos": "noun", "article": "die", "gloss": ["direction of travel"], "note": "Ausstieg in Fahrtrichtung links. = Exit on the left."}

@@ -24,6 +24,12 @@ Topics cut from current work so they don't get lost.
   - Unit 10 (stehen/stellen, liegen/legen): `stehen`, `liegen` and `sitzen` already have cards (Unit 8, lesson 1). List them; don't add new ones.
   - Units 13-14 (adjective endings): explain the Unit 8 chunks `letzte Woche`, `letztes Jahr`, `letzten Monat` and `eine lange Geschichte`.
   - No video in the three Learn German playlists covers musste/konnte/wollte, so lesson u8-04 has none. Add one if a good one turns up.
+- (Done 2026-11-07 with Unit 9: u7-07's line "A2 adds weil in Unit 9" is kept, and denn, the topic of u6-07's video on und, aber, oder, denn, sondern, is now taught in u9-02.)
+- **Notes from Unit 9 for later A2 units** (2026-11-07):
+  - Unit 11 (wenn): wenn sends the verb to the end like weil and dass (u9-01, u9-04), so build on that rule. Unit 9 left out `Wie wäre es mit ...?` for suggestions.
+  - Unit 12 (reflexive verbs, verbs with prepositions, da- words): explain the Unit 9 chunks `dafür`, `dagegen` and `Dann sehen wir uns`. The grammar of Nicos Weg A2 ch. 5 (reflexive verbs, verbs with prepositions) was left for Unit 12, and so was `Angst haben vor`.
+  - Units 13-14 (adjective endings): explain `eine gute Idee` and `keine gute Idee` from Unit 9.
+  - No video in the three playlists covers weil, deshalb or trotzdem; u9-02 reuses the conjunctions video. The "das or dass?" video (wKdqpdvjQNI) was left out of u9-04: its captions say das has a longer a than dass and cover the relative das (Unit 15). Add one if a good one turns up.
 - **Duolingo-style features not picked (2026-11-06)**, research in `_knowledge/2026-11-06_duolingo-research.md` section 6:
   - F1: a daily goal, an earned streak freeze and milestones;
   - F3: session polish (progress bar, sounds, end screen) outside the daily mix;

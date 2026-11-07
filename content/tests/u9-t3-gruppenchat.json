@@ -1,0 +1,84 @@
+{
+  "id": "u9-t3-gruppenchat",
+  "title": "Agree, disagree, and the group chat (Unit 9 final)",
+  "level": "A2",
+  "created": "2026-11-07",
+  "description": "Unit 9 check after lessons 5 and 6, with the unit's final task.",
+  "unit": 9,
+  "lesson": "u9-06-geschichte-gruppenchat",
+  "items": [
+    {"type": "gap", "instruction": "Fill in the gap: Eva is working in the office today.", "text": "Eva arbeitet heute ___ Büro.", "answers": [["im"]], "explanation": "Review (Unit 6): Wo? takes the dative: in dem = im. das Büro, im Büro."},
+    {"type": "gap", "instruction": "Fill in the gap: Do you know Eva? (du)", "text": "___ du Eva?", "answers": [["Kennst"]], "explanation": "Review (Unit 7): kennen for people and places, wissen for facts: Kennst du Eva?"},
+    {
+      "type": "mc",
+      "question": "Your colleague says: 'Die Besprechung war zu lang.' You agree. What do you say?",
+      "questionLang": "en",
+      "options": ["Das stimmt.", "Das finde ich nicht.", "Auf keinen Fall."],
+      "answer": "Das stimmt.",
+      "explanation": "Das stimmt = that's true. Das finde ich nicht = I don't think so. Auf keinen Fall = no way."
+    },
+    {
+      "type": "mc",
+      "question": "Your boss, Frau Weber, says something true. How do you say 'You're right'?",
+      "questionLang": "en",
+      "options": ["Sie haben recht.", "Sie sind recht.", "Sie stimmen recht."],
+      "answer": "Sie haben recht.",
+      "explanation": "recht haben, with haben: Sie haben recht (du: Du hast recht). A statement stimmt: Das stimmt."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: Aren't you hungry? - Yes, I am hungry.",
+      "text": "Hast du keinen Hunger? - ___, ich habe Hunger.",
+      "answers": [["Doch"]],
+      "explanation": "The question has kein and the answer is 'yes': Doch. Nein would mean 'no, I'm not hungry'."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: Hiking on Sunday? I'm for it, because I have time on Sunday.",
+      "text": "Wandern am Sonntag? Ich bin ___, weil ich am Sonntag Zeit habe.",
+      "answers": [["dafür"]],
+      "explanation": "dafür = for it, in favour (against it: dagegen). The reason follows with weil and the verb at the end: weil ich am Sonntag Zeit habe."
+    },
+    {
+      "type": "order",
+      "prompt": "I can't come because I haven't prepared anything yet.",
+      "tiles": ["ich", "kann", "nicht", "kommen", "weil", "ich", "noch", "nichts", "vorbereitet", "habe"],
+      "answers": ["Ich kann nicht kommen weil ich noch nichts vorbereitet habe", "Weil ich noch nichts vorbereitet habe kann ich nicht kommen"],
+      "explanation": "kann ... kommen is the verb bracket. After weil, habe goes to the very end, behind vorbereitet (vor + be-, so no ge-: Unit 8)."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: The museum is great. Besides, there's a café there.",
+      "text": "Das Museum ist toll. ___ gibt es dort ein Café.",
+      "answers": [["Außerdem"]],
+      "explanation": "außerdem = besides. It takes position 1, so the verb comes next: Außerdem gibt es dort ein Café."
+    },
+    {
+      "type": "listen_mc",
+      "audio": "Hallo zusammen! Ich finde die Idee mit dem Biergarten super, aber am Freitag kann ich nicht, weil ich Besuch bekomme. Geht es auch am Samstag?",
+      "question": "Why can't the person come on Friday?",
+      "questionLang": "en",
+      "options": ["Sie bekommt Besuch.", "Sie muss arbeiten.", "Sie hat Training."],
+      "answer": "Sie bekommt Besuch.",
+      "explanation": "weil ich Besuch bekomme = because I'm having visitors. The person likes the beer garden idea and asks about Saturday."
+    },
+    {
+      "type": "dictation",
+      "text": "Ich habe gelesen, dass es morgen regnet.",
+      "explanation": "dass sends the verb to the end: dass es morgen regnet."
+    },
+    {
+      "type": "translate",
+      "direction": "en-de",
+      "text": "In my opinion that's a good idea.",
+      "references": ["Meiner Meinung nach ist das eine gute Idee.", "Ich finde, das ist eine gute Idee.", "Ich finde, dass das eine gute Idee ist."],
+      "explanation": "Meiner Meinung nach takes position 1, so ist comes next. With Ich finde, dass ... the verb goes to the end."
+    },
+    {
+      "type": "write",
+      "instruction": "Unit 9 final task. Your team plans an outing in a group chat, and the messages are below. Write a reply after each message, 2-3 sentences each. Reply 1: say what you think of Eva's suggestion, with a reason (weil or denn). Reply 2: agree or disagree with Thomas, and say why. Reply 3: react to the rain with deshalb or trotzdem. Reply 4: make your own suggestion (Ich habe einen Vorschlag: ...) and say why it's good. Use dass at least once (Ich finde, dass ...; Ich glaube, dass ...). Claude will check it. Then ask Claude for the live role-play: Claude plays your colleagues in the chat.",
+      "prompt": "Eva: Hallo zusammen! Wir machen am Samstag einen Ausflug. Ich habe einen Vorschlag: Wir fahren mit dem Rad zum See.\nThomas: Mit dem Rad? Ich bin dagegen. Das ist zu weit, und ich bin nicht sportlich.\nCharlotte: Ich finde die Idee gut. Aber ich habe gelesen, dass es am Samstag regnet.\nEva: Gut. Wer hat noch eine Idee? Wir brauchen bald einen Plan!",
+      "minWords": 50
+    }
+  ]
+}
