@@ -22,6 +22,9 @@
     "Fall": [
       {"lemma": "Fall", "pos": "noun", "article": "der", "plural": "Fälle", "gloss": ["case"], "note": "auf jeden Fall = definitely; auf keinen Fall = no way"}
     ],
+    "lebe": [
+      {"lemma": "leben", "pos": "verb", "form": "ich form, present", "level": "A1", "gloss": ["to live (be alive; also: live in a place)"], "note": "Ich lebe in München. = I live in Munich. For your address, wohnen is the everyday verb: Ich wohne in München."}
+    ],
     "aufstehe": [
       {"lemma": "aufstehen", "pos": "verb", "form": "ich form, present", "level": "A1", "gloss": ["to get up"], "note": "Joined at the end after weil or dass: weil ich früh aufstehe. In a normal sentence it splits: Ich stehe früh auf."}
     ],
