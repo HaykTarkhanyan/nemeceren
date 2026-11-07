@@ -70,15 +70,24 @@ export function lockedWordIds(lessons: Lesson[], p: LessonProgress): Set<string>
 /**
  * The course lessons whose words can come as new words (words follow the path, design
  * _knowledge/2026-11-07_practice-games-design.md): every lesson up to the one the path is at, the
- * next one (pre-learning), and lessons with a station done ahead of the path. All of them when the
- * path is done. A lesson only opened far ahead is not reached: its words wait.
+ * next one (pre-learning), lessons with a station done ahead of the path, and the lesson after each
+ * of those. So a test not passed (where "Du bist hier" stays) does not stop new words while Hayk
+ * goes on with the lessons after it. All of them when the path is done. A lesson only opened far
+ * ahead is not reached: its words wait.
  */
 export function reachableLessons(lessons: CourseLesson[], reach: PathReach): Set<string> {
   const sorted = [...lessons].sort(byCourseOrder)
   if (reach.at === null) return new Set(sorted.map((l) => l.id))
   const at = sorted.findIndex((l) => l.id === reach.at)
   if (at < 0) throw new Error(`The path is at lesson "${reach.at}", which is not in the course`)
-  return new Set(sorted.filter((l, i) => i <= at + 1 || reach.started.has(l.id)).map((l) => l.id))
+  const started = (i: number) => i >= 0 && reach.started.has(sorted[i].id)
+  return new Set(sorted.filter((_, i) => i <= at + 1 || started(i) || started(i - 1)).map((l) => l.id))
+}
+
+/** The highest unit the path reaches (reachableLessons); -Infinity for a course without lessons. */
+export function reachedUnit(lessons: CourseLesson[], reach: PathReach): number {
+  const reached = reachableLessons(lessons, reach)
+  return Math.max(...lessons.filter((l) => reached.has(l.id)).map((l) => l.unit))
 }
 
 /**

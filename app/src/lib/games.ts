@@ -69,6 +69,28 @@ export function spokenSentence(expected: string, heard: string): { words: Spoken
   return { ...c, right: c.score >= SPOKEN_SENTENCE_MIN }
 }
 
+export type SentenceOutcome = 'said' | 'typed' | 'missed'
+
+/** One "Say the sentence" item: whether the German was shown yet, and how it ended (null while open). */
+export interface SentenceState {
+  answerShown: boolean
+  done: SentenceOutcome | null
+}
+
+export const SENTENCE_START: SentenceState = { answerShown: false, done: null }
+
+/**
+ * A try at one sentence: the new state, and whether to log it as practice. A failed spoken try is
+ * a recognition miss (never logged) but shows the sentence, so any try after that would only copy
+ * it: it is not logged, and the item ends as missed. A typed answer before that is logged right or wrong.
+ */
+export function sentenceTry(s: SentenceState, t: { how: 'said' | 'typed'; right: boolean }): { state: SentenceState; log: boolean } {
+  if (s.done) return { state: s, log: false }
+  if (s.answerShown) return { state: { answerShown: true, done: t.right || t.how === 'typed' ? 'missed' : null }, log: false }
+  if (t.how === 'said') return { state: { answerShown: true, done: t.right ? 'said' : null }, log: t.right }
+  return { state: { answerShown: true, done: t.right ? 'typed' : 'missed' }, log: true }
+}
+
 /** A typed sentence: case and punctuation ignored, umlauts and ß strict (a slip there is a near miss, still wrong). */
 export function checkSentence(typed: string, expected: string): Comparison {
   return compareText(dropPunctuation(typed), dropPunctuation(expected), false)
@@ -99,6 +121,43 @@ export function articleNouns<W extends { de: string }>(words: W[]): ArticleNoun<
     out.push({ word: w, article, noun: rest })
   }
   return out
+}
+
+/** One 60-second round of the drill so far. */
+export interface ArticleRound<W> {
+  right: number
+  wrong: number
+  streak: number
+  bestThisRound: number
+  /** Nouns tapped wrong at least once, in order. */
+  missed: ArticleNoun<W>[]
+  /** Nouns already answered (and logged) this round. */
+  answered: ReadonlySet<string>
+}
+
+export function emptyArticleRound<W>(): ArticleRound<W> {
+  return { right: 0, wrong: 0, streak: 0, bestThisRound: 0, missed: [], answered: new Set() }
+}
+
+/**
+ * A tap in the drill: the new counts, and whether to log it as practice. Only a noun's first answer
+ * in a round is logged, so a miss that comes back (and a noun seen again after the queue wraps)
+ * adds no more rows to the review log (it is synced and cached on the device).
+ */
+export function articleTap<W>(round: ArticleRound<W>, noun: ArticleNoun<W>, article: Article): { round: ArticleRound<W>; log: boolean } {
+  const right = article === noun.article
+  const streak = right ? round.streak + 1 : 0
+  return {
+    log: !round.answered.has(noun.noun),
+    round: {
+      right: round.right + (right ? 1 : 0),
+      wrong: round.wrong + (right ? 0 : 1),
+      streak,
+      bestThisRound: Math.max(round.bestThisRound, streak),
+      missed: right || round.missed.some((m) => m.noun === noun.noun) ? round.missed : [...round.missed, noun],
+      answered: new Set([...round.answered, noun.noun]),
+    },
+  }
 }
 
 /** The queue with `item` put in again `gap` places after position `at` (at the end if the queue is shorter). */

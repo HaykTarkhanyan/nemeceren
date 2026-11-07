@@ -61,7 +61,8 @@ export function WhatNext(props: { words: StudyWord[]; allWords: boolean; onMoreN
           </>
         ) : locked > 0 ? (
           <span className="small">
-            The next {locked} new words wait further along the path. Do <a href={link('line')}>your next station</a> to move on.
+            The next {locked} new words are in lessons further along the path. They come as you do stations: <a href={link('line')}>your next station</a>,
+            or a station of the lesson after the last one you did.
           </span>
         ) : allWords ? (
           <span className="small warn-text">No more new words prepared yet. Ask Claude for more.</span>

@@ -4,17 +4,21 @@ import type { ReviewState, Word } from '../content/schema.ts'
 import { ASK_HEADER } from './askClaude.ts'
 import {
   articleNouns,
+  articleTap,
   askGameText,
   buildItem,
   buildTiles,
   capitalizedWords,
   checkSentence,
   checkTiles,
+  emptyArticleRound,
   gameWords,
   gapIn,
   gapItems,
   isVerbCard,
   requeue,
+  SENTENCE_START,
+  sentenceTry,
   sentenceWords,
   spokenSentence,
   spokenWordRight,
@@ -75,6 +79,25 @@ describe('speaking: words and sentences', () => {
     expect(spokenSentence(s, 'ich wohne seit Jahren in Münster').right).toBe(false)
   })
 
+  it('say the sentence: once the answer was shown, a further try is neither logged nor counted', () => {
+    const run = (...tries: { how: 'said' | 'typed'; right: boolean }[]) => {
+      let s = SENTENCE_START
+      const logs: boolean[] = []
+      for (const t of tries) {
+        const out = sentenceTry(s, t)
+        logs.push(out.log)
+        s = out.state
+      }
+      return { logs, done: s.done }
+    }
+    expect(run({ how: 'said', right: true })).toEqual({ logs: [true], done: 'said' })
+    expect(run({ how: 'typed', right: true })).toEqual({ logs: [true], done: 'typed' })
+    expect(run({ how: 'typed', right: false })).toEqual({ logs: [true], done: 'missed' })
+    // A failed spoken try shows the sentence: copying it afterwards (said or typed) is not logged.
+    expect(run({ how: 'said', right: false }, { how: 'typed', right: true })).toEqual({ logs: [false, false], done: 'missed' })
+    expect(run({ how: 'said', right: false }, { how: 'said', right: false }, { how: 'said', right: true })).toEqual({ logs: [false, false, false], done: 'missed' })
+  })
+
   it('a typed sentence ignores case and punctuation, but not umlauts or ß', () => {
     expect(checkSentence('ich wohne in münchen', 'Ich wohne in München.').correct).toBe(true)
     expect(checkSentence('Hallo ich bin Hayk', 'Hallo, ich bin Hayk.').correct).toBe(true)
@@ -91,6 +114,26 @@ describe('der/die/das', () => {
       ['tisch', 'der', 'Tisch'],
       ['eltern', 'die', 'Eltern'],
     ])
+  })
+
+  it('logs at most one practice entry per noun per round: its first answer', () => {
+    const [tisch, lampe] = articleNouns([card('tisch', 'der Tisch'), card('lampe', 'die Lampe')])
+    let r = emptyArticleRound()
+    const steps: boolean[] = []
+    for (const [noun, article] of [
+      [tisch, 'die'],
+      [lampe, 'die'],
+      [tisch, 'der'],
+      [tisch, 'der'],
+    ] as const) {
+      const out = articleTap(r, noun, article)
+      steps.push(out.log)
+      r = out.round
+    }
+    // Only the first answer to each noun is logged; the miss that came back is not logged again.
+    expect(steps).toEqual([true, true, false, false])
+    expect([r.right, r.wrong, r.streak, r.bestThisRound]).toEqual([3, 1, 3, 3])
+    expect(r.missed.map((m) => m.noun)).toEqual(['Tisch'])
   })
 
   it('a wrong noun comes back a few places later', () => {

@@ -48,7 +48,13 @@ Built in a worktree while Hayk was away, so every point below is Claude's call. 
     - The recognition types, errors and a `useRecognition` hook are in `lib/recognition.ts`, and SpeakLine imports them.
     - `savePractice` (components/GameFrame.tsx) reports a failed save with `reportError` and the game goes on. **Alternative rejected:** a per-item Retry button like ListenPick's, which is more UI for a practice log entry.
     - A blocked mic or a failed start is reported and switches the game to typing; "nothing heard" is only a note.
-14. **Not done or risky:**
+14. **Review fixes (after the merge, each with a failing test first):**
+    - **New words after a failed test:** the reach now also takes the lesson after each lesson with a done station. Without it, a test not passed (pass mark 80%) kept "Du bist hier" on the test and new words dried up: with 6 lessons done and no test taken, there were 0 new words. "Say the words" keeps to the highest unit reached (`reachedUnit`), not the unit of "Du bist hier". The What next text now says the words come as you do stations: the next one, or one of the lesson after the last you did.
+    - **Words "Words from":** the page keeps its own pick only when saving it failed (`pickWordSource`), so a pick saved from the Map or a test station always wins. The bug did not show in practice, because the page remounts on every route change (the ErrorBoundary is keyed by the route), but the code no longer depends on that.
+    - **der/die/das:** only a noun's first answer in a round is logged (`articleTap`). That is about 15-30 rows a round instead of 40-80, because the review log is synced and cached on the device, in storage every site on hayktarkhanyan.github.io shares.
+    - **Speech on the wrong word:** recognition runs through `makeRecognizer`, with `cancel()`. Skip, Type instead, Show the answer and leaving a card cancel it, and a result for an ended session is dropped.
+    - **Say the sentence:** once the sentence was shown (after a failed spoken try), any further try is neither logged nor counted, and the item ends as missed (`sentenceTry`). The card says so. **Alternative rejected:** hiding the sentence for typing, which would take away hearing the right sentence, the point of the game.
+15. **Not done or risky:**
     - Speech is untested on a real phone: the check was headless.
     - The Daily card's "More practice" now has 10 buttons in 2 columns, which is long on a phone.
     - DECISIONS.md is not edited (the main session copies this section).

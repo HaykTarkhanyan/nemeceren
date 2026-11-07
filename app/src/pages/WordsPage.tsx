@@ -23,6 +23,7 @@ import type { StudyWord } from '../lib/customWords.ts'
 import { addDays, localDay } from '../lib/dates.ts'
 import { messageOf, reportError } from '../lib/errors.ts'
 import { reachOf } from '../lib/goalView.ts'
+import { pickWordSource } from '../lib/wordReview.ts'
 import { lessonStatus, parseSourceKey, sourceKey, sourceLabel, sourceLessons, sourceThemes, wordsForSource } from '../lib/plan.ts'
 import type { WordSource } from '../lib/plan.ts'
 import { dueOnDay, GOAL_ROUND_MIN, pickMode, ROUND_SIZE, roundSummary } from '../lib/review.ts'
@@ -64,7 +65,7 @@ function Words({ tab }: { tab: (typeof WORDS_TABS)[number] }) {
   // Practice started from the words list (All words, Word sets) goes back to the list when stopped,
   // not into a scheduled review that would move the schedule and use up new words.
   const [practiceFromList, setPracticeFromList] = useState(false)
-  // The pick applies at once, even if this device cannot save it (that error is shown).
+  // A pick this device could not save (that error is shown) still applies on this page; a saved pick lives in the settings.
   const [picked, setPicked] = useState<string | null>(null)
   // The add/edit form for Hayk's own words, and what it last did.
   const [form, setForm] = useState<{ editing: CustomWordView | null } | null>(null)
@@ -82,12 +83,10 @@ function Words({ tab }: { tab: (typeof WORDS_TABS)[number] }) {
   // limit, so 200+ lesson words can't arrive in one day (Hayk, 2026-10-02; DECISIONS.md #66).
   const newLimit = source.kind === 'all' ? settings.newPerDay : Number.POSITIVE_INFINITY
   function pick(key: string) {
-    setPicked(key)
-    try {
-      updateSettings({ wordSource: key })
-    } catch (err) {
-      reportError(`Could not remember the word pick on this device: ${messageOf(err)}`)
-    }
+    // The page keeps its own pick only when this device could not save it (lib/wordReview.ts).
+    const out = pickWordSource(key, (k) => updateSettings({ wordSource: k }))
+    setPicked(out.picked)
+    if (out.problem) reportError(out.problem)
   }
   const whatNext = (
     <WhatNext

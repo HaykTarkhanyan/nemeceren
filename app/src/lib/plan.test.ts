@@ -15,6 +15,7 @@ import {
   parseSourceKey,
   pathNewWords,
   reachableLessons,
+  reachedUnit,
   runwayText,
   setLastSection,
   sourceKey,
@@ -126,6 +127,24 @@ describe('new words follow the path (pathNewWords)', () => {
 
   it('also reaches a lesson with a station done ahead of the path', () => {
     expect(ids(at('A', ['C']))).toEqual(['a1', 'a2', 'shared', 'b1', 'c1', 'free'])
+  })
+
+  it('failed test, then 3 lessons done -> new words from the lesson after the last started one', () => {
+    // The path stays at the test after A (not passed); B, C and D were done after it.
+    const course = ['A', 'B', 'C', 'D', 'E', 'F'].map((id, i) => lesson(id, 1, i + 1, [`${id.toLowerCase()}1`]))
+    const cards = course.map((l) => word(l.words![0]))
+    const learned = ['a1', 'b1', 'c1', 'd1'].reduce((s, id) => review(s, id, Rating.Good, t0).state, emptyState(t0))
+    const fresh = pathNewWords(cards, course, emptyLessonProgress(), learned, at('A', ['B', 'C', 'D']))
+    expect(fresh.map((w) => w.id)).toEqual(['e1'])
+    expect([...reachableLessons(course, at('A', ['B', 'C', 'D']))]).toEqual(['A', 'B', 'C', 'D', 'E'])
+    expect(reachedUnit(course, at('A', ['B', 'C', 'D']))).toBe(1)
+  })
+
+  it('reachedUnit: the highest unit the path reaches', () => {
+    expect(reachedUnit(lessons, at('A'))).toBe(1)
+    expect(reachedUnit(lessons, at('B'))).toBe(2)
+    expect(reachedUnit(lessons, at('A', ['C']))).toBe(2)
+    expect(reachedUnit(lessons, at(null))).toBe(2)
   })
 
   it('leaves out words that already have a card', () => {
