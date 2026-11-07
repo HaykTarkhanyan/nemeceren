@@ -14,6 +14,7 @@ import {
   pathProgress,
   stationRanges,
   unitColor,
+  unitTextColor,
   type PathEventLike,
 } from './path.ts'
 
@@ -137,6 +138,12 @@ describe('stations from the course', () => {
     expect(englishName('Just a title')).toBe('Just a title')
   })
 
+  it('the orange line gets dark text, the others white', () => {
+    expect(unitTextColor(3)).toBe('#1b1f24')
+    expect([0, 1, 2, 4, 5, 6, 7].map(unitTextColor)).toEqual(Array(7).fill('#fff'))
+    expect(unitTextColor(11)).toBe(unitTextColor(3))
+  })
+
   it('unit colours cycle after Unit 7', () => {
     expect(unitColor(0)).toBe('#5f7286')
     expect(unitColor(7)).toBe('#7a4bb3')
@@ -178,6 +185,10 @@ describe('which stations are done', () => {
     const p = pathProgress(st, { ...noProgress, lessonProgress: lp })
     expect(p.done.has('a#0') && p.done.has('a#1')).toBe(true)
     expect(p.done.has('b#0')).toBe(false)
+    // Done only through doneAt (a lesson finished before the path): the sheet offers no undo for it.
+    expect(p.fromEvents.size).toBe(0)
+    const both = pathProgress(st, { ...noProgress, lessonProgress: lp, events: [done('a', 0, 5)] })
+    expect([...both.fromEvents]).toEqual(['a#0'])
   })
 
   it('a resplit lesson keeps its done ranges', () => {

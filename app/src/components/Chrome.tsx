@@ -13,7 +13,8 @@ import { HeaderTimer, TimerStopPanel } from './StudyTimer.tsx'
 import { SyncStatusLine } from './SyncStatus.tsx'
 
 export function Header({ route }: { route: string[] }) {
-  const here = route[0] ?? ''
+  // #/line is Home scrolled to the current station.
+  const here = route[0] === 'line' ? '' : (route[0] ?? '')
   const guest = useIsGuest()
   // What Stop would save, while the stop panel is open under the header bar.
   const [stopping, setStopping] = useState<StopPlan | null>(null)

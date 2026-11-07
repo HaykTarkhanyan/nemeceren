@@ -17,7 +17,9 @@ export function finishStation(store: ProgressStore, lesson: Lesson, k: number, n
   const range = stationRanges(lesson)[k]
   if (range === undefined) throw new Error(`Lesson "${lesson.id}" has no station ${k + 1}`)
   store.recordStationDone(lesson.id, range[0], range[1])
-  if (missingRanges(lesson, store.getView().pathEvents).length === 0) markDone(store, lesson, now)
+  // A redo of a done lesson keeps the day it was done.
+  const view = store.getView()
+  if (missingRanges(lesson, view.pathEvents).length === 0 && !view.lessonProgress.lessons[lesson.id]?.doneAt) markDone(store, lesson, now)
 }
 
 /**

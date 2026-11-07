@@ -2,11 +2,11 @@
 // One foldable line per unit, a station per lesson step, story step, test and Endstation. The current
 // station ("Du bist hier") is the first one not done; a pill jumps to it when it is off screen.
 import type { CSSProperties } from 'react'
-import { useEffect, useState } from 'react'
+import { memo, useEffect, useState } from 'react'
 import { content } from '../content/load.ts'
 import { PASS_PERCENT } from '../lib/grading.ts'
 import { readOpenUnits, writeOpenUnits } from '../lib/homeView.ts'
-import { englishName, germanName, testStationName, unitColor, unitTitle } from '../lib/path.ts'
+import { englishName, germanName, testStationName, unitColor, unitTextColor, unitTitle } from '../lib/path.ts'
 import type { PathProgress, Station } from '../lib/path.ts'
 
 const lessonById = new Map(content.lessons.map((l) => [l.id, l]))
@@ -66,14 +66,25 @@ function StationRow({ s, path, onOpen }: { s: Station; path: PathProgress; onOpe
               Du bist hier
             </span>
           )}
-          {sub && <span className="sub">{s.kind === 'story' && !done && s.step === 0 ? `Story. ${sub.replace(/^Story:\s*/, '')}` : sub}</span>}
+          {sub && <span className="sub">{sub}</span>}
         </span>
       </button>
     </li>
   )
 }
 
-export function PathLines({ stations, path, onOpen, scrollToCurrent }: { stations: Station[]; path: PathProgress; onOpen: (s: Station) => void; scrollToCurrent: boolean }) {
+/** Memoised: opening a station's sheet re-renders Home, not the 108 stations. */
+export const PathLines = memo(function PathLines({
+  stations,
+  path,
+  onOpen,
+  scrollToCurrent,
+}: {
+  stations: Station[]
+  path: PathProgress
+  onOpen: (s: Station) => void
+  scrollToCurrent: boolean
+}) {
   const units = [...new Set(stations.map((s) => s.unit))]
   const [openUnits, setOpenUnits] = useState(readOpenUnits)
   const [pill, setPill] = useState(false)
@@ -115,7 +126,7 @@ export function PathLines({ stations, path, onOpen, scrollToCurrent }: { station
         const complete = counts.total > 0 && counts.done === counts.total
         const next = units[i + 1]
         return (
-          <details key={u} className={`unit-line${complete ? ' complete' : ''}`} style={{ '--c': unitColor(u) } as CSSProperties} open={isOpen(u)} onToggle={(e) => toggled(u, e.currentTarget.open)}>
+          <details key={u} className={`unit-line${complete ? ' complete' : ''}`} style={{ '--c': unitColor(u), '--on-c': unitTextColor(u) } as CSSProperties} open={isOpen(u)} onToggle={(e) => toggled(u, e.currentTarget.open)}>
             <summary>
               <span className="ubadge">U{u}</span>
               <span className="utitle">{unitTitle(u)}</span>
@@ -152,4 +163,4 @@ export function PathLines({ stations, path, onOpen, scrollToCurrent }: { station
       )}
     </div>
   )
-}
+})

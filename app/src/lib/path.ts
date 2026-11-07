@@ -13,6 +13,11 @@ export function unitColor(unit: number): string {
   return UNIT_COLORS[((unit % UNIT_COLORS.length) + UNIT_COLORS.length) % UNIT_COLORS.length]
 }
 
+/** Text on the line colour: dark on the orange U3 (white there is about 3:1), white on the others. */
+export function unitTextColor(unit: number): string {
+  return ((unit % UNIT_COLORS.length) + UNIT_COLORS.length) % UNIT_COLORS.length === 3 ? '#1b1f24' : '#fff'
+}
+
 /** Unit titles from SYLLABUS.md ("Units to A1"); a unit without one is shown as "Unit N". */
 export const UNIT_TITLES: Record<number, string> = {
   0: 'Sounds and first words',
@@ -150,6 +155,8 @@ export function missingRanges(lesson: Lesson, events: PathEventLike[]): [number,
 export interface PathProgress {
   /** Ids of done stations, Endstations included. */
   done: Set<string>
+  /** Lesson stations that station events cover (not only the lesson's doneAt): only these can be undone from the path. */
+  fromEvents: Set<string>
   /** Best score in percent of every test station that was taken. */
   best: Map<string, number>
   /** "Du bist hier": the first counted station (not an Endstation) that is not done; null when all are. */
@@ -164,11 +171,14 @@ export function pathProgress(
 ): PathProgress {
   const ranges = doneRangesByLesson(input.events)
   const done = new Set<string>()
+  const fromEvents = new Set<string>()
   const best = new Map<string, number>()
   for (const s of stations) {
     if ((s.kind === 'step' || s.kind === 'story') && s.lessonId !== undefined) {
       const finished = input.lessonProgress.lessons[s.lessonId]?.doneAt != null
-      if (finished || isCovered([s.from!, s.to!], ranges.get(s.lessonId) ?? [])) done.add(s.id)
+      const covered = isCovered([s.from!, s.to!], ranges.get(s.lessonId) ?? [])
+      if (covered) fromEvents.add(s.id)
+      if (finished || covered) done.add(s.id)
     } else if (s.kind === 'test') {
       const status = testStatus(input.results.filter((r) => r.testId === s.testId && r.lessonId === undefined))
       if (status.kind === 'new') continue
@@ -187,7 +197,7 @@ export function pathProgress(
     if (s.kind === 'end' && u && u.done === u.total) done.add(s.id)
   }
   const current = stations.find((s) => s.kind !== 'end' && !done.has(s.id)) ?? null
-  return { done, best, current, units }
+  return { done, fromEvents, best, current, units }
 }
 
 /** Progress in the lowest level that still has stations to do (A1 now); the highest level when all are done. */

@@ -9,7 +9,8 @@ import { BlockView } from '../components/LessonBlocks.tsx'
 import { Tabs } from '../components/Tabs.tsx'
 import { VideoList } from '../components/VideoList.tsx'
 import { messageOf, reportError } from '../lib/errors.ts'
-import { courseStations, doneRangesByLesson, isCovered, stationRanges } from '../lib/path.ts'
+import { doneRangesByLesson, isCovered, stationRanges } from '../lib/path.ts'
+import { STATIONS } from '../lib/goalView.ts'
 import { lessonStatus, setLastSection, startLesson } from '../lib/plan.ts'
 import type { LessonStatus } from '../lib/plan.ts'
 import { link, tabLink, tabOf } from '../lib/router.ts'
@@ -323,7 +324,7 @@ function LessonView({ lesson, linked, station }: { lesson: Lesson; linked: numbe
   const doneRanges = doneRangesByLesson(view.pathEvents).get(lesson.id) ?? []
   const isStationDone = (k: number) => status === 'done' || isCovered(ranges[k], doneRanges)
   const shown = station === null ? lesson.sections.map((block, i) => ({ block, i })) : lesson.sections.map((block, i) => ({ block, i })).filter(({ i }) => i >= ranges[station][0] && i < ranges[station][1])
-  const pathStations = courseStations(content.lessons, content.tests)
+  const pathStations = STATIONS
   const at = station === null ? -1 : pathStations.findIndex((s) => s.id === `${lesson.id}#${station}`)
   const nextStation = at >= 0 ? pathStations.slice(at + 1).find((s) => s.kind !== 'end') : undefined
   const nextHref = nextStation === undefined ? null : nextStation.kind === 'test' ? link('test', nextStation.testId!) : link('lesson', nextStation.lessonId!, 'station', String(nextStation.step))

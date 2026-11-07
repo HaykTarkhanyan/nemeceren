@@ -260,7 +260,7 @@ export function StatsPage() {
           <li>
             The streak counts days in a row up to today; before you do today's part it still counts up to yesterday. Until {PATH_LAUNCH_DAY} every study
             day counted. From then on a day counts when you met the daily goal: 1 station on the Home path, or the daily mix run to its end. A streak
-            freeze covers one missed day; you start with 1, earn one for every 7 goal days in a row, and hold at most {MAX_FREEZES}.
+            freeze covers one missed day of a streak; you start with 1, earn one for every 7 goal days in a row, and hold at most {MAX_FREEZES}.
           </li>
           <li>
             Timer minutes are the time the study timer ran, without pauses, on the day the session started. A stop under {SHORT_SESSION_MS / 60_000}{' '}

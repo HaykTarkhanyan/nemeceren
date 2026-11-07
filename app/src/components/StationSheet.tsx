@@ -6,7 +6,7 @@ import { content } from '../content/load.ts'
 import type { LessonBlock } from '../content/schema.ts'
 import { messageOf, reportError } from '../lib/errors.ts'
 import { PASS_PERCENT } from '../lib/grading.ts'
-import { englishName, germanName, testStationName, unitColor, unitTitle } from '../lib/path.ts'
+import { englishName, germanName, testStationName, unitColor, unitTextColor, unitTitle } from '../lib/path.ts'
 import type { PathProgress, Station } from '../lib/path.ts'
 import { link } from '../lib/router.ts'
 import { undoStation } from '../lib/stationActions.ts'
@@ -88,7 +88,7 @@ export function StationSheet({ station, path, onClose }: { station: Station | nu
       </>
     )
     action = { href: link('lesson', lesson.id, 'station', String(s.step)), label: done ? 'Do it again' : prevDone ? 'Continue' : 'Start' }
-    if (done) {
+    if (path.fromEvents.has(s.id)) {
       undo = () => {
         try {
           undoStation(progressStore(), lesson, [s.from!, s.to!], new Date())
@@ -103,7 +103,7 @@ export function StationSheet({ station, path, onClose }: { station: Station | nu
   return (
     <>
       <div className="sheet-scrim" onClick={onClose} />
-      <div className="station-sheet" role="dialog" aria-modal="true" style={{ '--c': unitColor(s.unit) } as CSSProperties}>
+      <div className="station-sheet" role="dialog" aria-modal="true" style={{ '--c': unitColor(s.unit), '--on-c': unitTextColor(s.unit) } as CSSProperties}>
         <div className="grab" />
         <span className="ubadge">U{s.unit}</span>
         {body}

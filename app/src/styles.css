@@ -2120,7 +2120,7 @@ details > summary {
 .ubadge {
   display: inline-block;
   background: var(--c);
-  color: #fff;
+  color: var(--on-c, #fff);
   font-weight: 800;
   font-size: 14px;
   border-radius: 5px;
@@ -2334,7 +2334,7 @@ ol.line {
   display: inline-block;
   font-size: 11px;
   font-weight: 700;
-  color: #fff;
+  color: var(--on-c, #fff);
   background: var(--c);
   border-radius: 999px;
   padding: 1px 8px;
@@ -2412,7 +2412,7 @@ ol.line {
 .sheet-actions .sheet-go {
   background: var(--c);
   border-color: var(--c);
-  color: #fff;
+  color: var(--on-c, #fff);
 }
 
 .goal-toast {

@@ -38,8 +38,16 @@ export function computeGoal(progress: ProgressView, today: string): GoalView {
   return { goal, path, stations: STATIONS, today }
 }
 
+// Home, the goal toast and the Stats page all read the same progress object: compute once per state.
+let last: { progress: ProgressView; today: string; view: GoalView } | null = null
+
 export function useGoal(): GoalView {
   const progress = useProgress()
   const today = localDay(new Date())
-  return useMemo(() => computeGoal(progress, today), [progress, today])
+  return useMemo(() => {
+    if (last && last.progress === progress && last.today === today) return last.view
+    const view = computeGoal(progress, today)
+    last = { progress, today, view }
+    return view
+  }, [progress, today])
 }

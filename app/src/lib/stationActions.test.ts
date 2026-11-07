@@ -83,4 +83,13 @@ describe('station actions', () => {
     expect(ranges(store)).toEqual([['th-song', 0, 14]])
     expect(store.getView().lessonProgress.lessons[course.id].doneAt).toBeNull()
   })
+
+  it('redoing a station keeps the date the lesson was done', () => {
+    const { store } = guest()
+    finishStation(store, course, 0, now)
+    finishStation(store, course, 1, now)
+    const later = new Date('2026-11-20T10:00:00.000Z')
+    finishStation(store, course, 0, later)
+    expect(store.getView().lessonProgress.lessons[course.id].doneAt).toBe(now.toISOString())
+  })
 })

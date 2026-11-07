@@ -2,7 +2,9 @@
 // its ring, the streak and freezes, the daily mix's Start button, and, folded away, the single
 // activities and where the mix takes its new words from.
 import { content } from '../content/load.ts'
+import { memo } from 'react'
 import { practiceWord } from '../lib/customWords.ts'
+import { MIX } from '../lib/daily.ts'
 import { messageOf, reportError } from '../lib/errors.ts'
 import { MAX_FREEZES, MILESTONES } from '../lib/goal.ts'
 import type { GoalStreak } from '../lib/goal.ts'
@@ -38,7 +40,8 @@ function GoalRing({ met }: { met: boolean }) {
   )
 }
 
-export function DailyCard({ goal }: { goal: GoalStreak }) {
+/** Memoised: opening a station's sheet does not recompute the mix plan. */
+export const DailyCard = memo(function DailyCard({ goal }: { goal: GoalStreak }) {
   const progress = useProgress()
   const settings = useSettings()
   const now = new Date()
@@ -93,7 +96,7 @@ export function DailyCard({ goal }: { goal: GoalStreak }) {
           <a href={link('words')}>
             {due} review{due === 1 ? '' : 's'} due
           </a>{' '}
-          on the Words page (the mix takes up to 15).
+          on the Words page (the mix takes up to {MIX.maxReviews}).
         </p>
       )}
       <details className="more-practice">
@@ -141,4 +144,4 @@ export function DailyCard({ goal }: { goal: GoalStreak }) {
       {plan.setProblem && <div className="alert warn">{plan.setProblem}</div>}
     </section>
   )
-}
+})
