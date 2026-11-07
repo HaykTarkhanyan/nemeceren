@@ -106,8 +106,8 @@
           "type": "gap",
           "instruction": "Fill in the gaps: I come from Armenia and I live in Munich.",
           "text": "Ich ___ aus Armenien und ich ___ in München.",
-          "answers": [["komme", "bin"], ["wohne", "bin", "arbeite", "lerne"]],
-          "explanation": "With ich the verb ends in -e: ich komme, ich wohne."
+          "answers": [["komme", "bin"], ["wohne", "lebe", "bin", "arbeite", "lerne"]],
+          "explanation": "With ich the verb ends in -e: ich komme, ich wohne. Ich lebe in München is right too; wohnen is the everyday verb for where you live."
         },
         {
           "type": "gap",
