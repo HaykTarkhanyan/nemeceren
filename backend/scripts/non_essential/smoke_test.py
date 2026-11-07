@@ -688,10 +688,11 @@ def run(api: str, auth: str, conn: Any, ctx: dict[str, Any], test_account: dict[
     p1 = path_event("station", today, lessonId="u1-01-sich-vorstellen", sectionFrom=0, sectionTo=5)
     p2 = path_event("daily-mix", today)
     p3 = path_event("station", day_ago(40), lessonId="t-smoke-song", sectionFrom=0, sectionTo=14)
-    r = sync({"pathEvents": [p1, p2, p3]})
-    check(r.status == 200 and r.json()["pathEvents"] == {"received": 3, "written": 3, "unchanged": 0, "stale": []}, "three new path events are written", r.text())
-    r = sync({"pathEvents": [p1, p2, p3]})
-    check(r.status == 200 and r.json()["pathEvents"] == {"received": 3, "written": 0, "unchanged": 3, "stale": []}, "the same path events again are unchanged", r.text())
+    p4 = path_event("review-round", today)
+    r = sync({"pathEvents": [p1, p2, p3, p4]})
+    check(r.status == 200 and r.json()["pathEvents"] == {"received": 4, "written": 4, "unchanged": 0, "stale": []}, "four new path events (with a review round) are written", r.text())
+    r = sync({"pathEvents": [p1, p2, p3, p4]})
+    check(r.status == 200 and r.json()["pathEvents"] == {"received": 4, "written": 0, "unchanged": 4, "stale": []}, "the same path events again are unchanged", r.text())
     later = iso(now + timedelta(seconds=1))
     p2_gone = {**p2, "updatedAt": later, "deletedAt": later}
     r = sync({"pathEvents": [p2_gone]})
@@ -707,6 +708,7 @@ def run(api: str, auth: str, conn: Any, ctx: dict[str, Any], test_account: dict[
         (path_event("station", today), "a station without a lesson and range", "pathEvents.0.lessonId"),
         (path_event("daily-mix", today, lessonId="u1-01-sich-vorstellen", sectionFrom=0, sectionTo=1), "a daily mix with a range", "pathEvents.0.kind"),
         (path_event("lesson", today), "an unknown kind", "pathEvents.0.kind"),
+        (path_event("review-round", today, lessonId="u1-01-sich-vorstellen", sectionFrom=0, sectionTo=1), "a review round with a range", "pathEvents.0.kind"),
         ({**path_event("daily-mix", today), "updatedAt": iso(now - timedelta(days=1))}, "an event changed before it was made", "pathEvents.0.updatedAt"),
     ):
         r = sync({"pathEvents": [bad]})
@@ -725,7 +727,7 @@ def run(api: str, auth: str, conn: Any, ctx: dict[str, Any], test_account: dict[
             check(True, f"the path_events table refuses {what} (CHECK constraint)")
     r = request(plain, "GET", f"{api}/v1/state?days=1", token=token)
     got = sorted(r.json()["pathEvents"], key=lambda x: x["id"]) if r.status == 200 else None
-    check(got == sorted([p1, p3], key=lambda x: x["id"]), "GET /v1/state returns every path event that is not undone, all time", r.text())
+    check(got == sorted([p1, p3, p4], key=lambda x: x["id"]), "GET /v1/state returns every path event that is not undone, all time", r.text())
 
     # ---- 6. Claude's review, then read everything back ----
     try:

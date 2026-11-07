@@ -531,8 +531,11 @@ export const StudySession = z.strictObject({ id: z.string().min(1), ...StudySess
 // ---------- Path events (the Home path and the daily goal, DECISIONS.md #84; stored in Neon) ----------
 
 const PathEventFields = {
-  /** "station": a slice of a lesson was finished; "daily-mix": the daily mix ran to its end. */
-  kind: z.enum(['station', 'daily-mix']),
+  /**
+   * "station": a slice of a lesson was finished; "daily-mix": the daily mix ran to its end;
+   * "review-round": a word review round on the Words page ended with 10+ cards graded (DECISIONS.md #86).
+   */
+  kind: z.enum(['station', 'daily-mix', 'review-round']),
   /** Station events only: the lesson (course or theme) and the half-open section range finished. */
   lessonId: Slug.optional(),
   sectionFrom: z.number().int().nonnegative().optional(),
@@ -547,7 +550,7 @@ const PathEventFields = {
 }
 
 function checkPathEvent(
-  x: { kind: 'station' | 'daily-mix'; lessonId?: string; sectionFrom?: number; sectionTo?: number; createdAt: string; updatedAt: string },
+  x: { kind: 'station' | 'daily-mix' | 'review-round'; lessonId?: string; sectionFrom?: number; sectionTo?: number; createdAt: string; updatedAt: string },
   ctx: z.RefinementCtx,
 ): void {
   const range = [x.lessonId, x.sectionFrom, x.sectionTo]
@@ -555,7 +558,7 @@ function checkPathEvent(
     if (range.some((v) => v === undefined)) ctx.addIssue({ code: 'custom', path: ['lessonId'], message: 'a station event needs lessonId, sectionFrom and sectionTo' })
     else if (x.sectionTo! <= x.sectionFrom!) ctx.addIssue({ code: 'custom', path: ['sectionTo'], message: 'must be larger than sectionFrom' })
   } else if (range.some((v) => v !== undefined)) {
-    ctx.addIssue({ code: 'custom', path: ['kind'], message: 'a daily-mix event has no lessonId, sectionFrom or sectionTo' })
+    ctx.addIssue({ code: 'custom', path: ['kind'], message: 'a daily-mix or review-round event has no lessonId, sectionFrom or sectionTo' })
   }
   if (Date.parse(x.updatedAt) < Date.parse(x.createdAt)) ctx.addIssue({ code: 'custom', path: ['updatedAt'], message: 'is before createdAt' })
 }

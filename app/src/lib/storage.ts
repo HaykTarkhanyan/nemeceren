@@ -698,6 +698,15 @@ export function createProgressStore(deps: StoreDeps) {
       return id
     },
 
+    /** A word review round on the Words page ended with 10+ cards graded (it counts for the daily goal). Returns the id. */
+    recordReviewRoundDone(): string {
+      const id = deps.newId()
+      const now = deps.now()
+      const at = now.toISOString()
+      putPathEvent(id, { kind: 'review-round', localDay: localDay(now), at, createdAt: at, updatedAt: at })
+      return id
+    },
+
     /** Undoes a path event (a soft delete, so the other devices learn it too) and starts a sync. */
     deletePathEvent(id: string) {
       const { id: _id, pending: _pending, ...rest } = pathEvent(id)
@@ -770,6 +779,7 @@ export const editStudySession = (id: string, minutes: number, label: string) => 
 export const deleteStudySession = (id: string) => progressStore().deleteStudySession(id)
 export const recordStationDone = (lessonId: string, from: number, to: number) => progressStore().recordStationDone(lessonId, from, to)
 export const recordDailyMixDone = () => progressStore().recordDailyMixDone()
+export const recordReviewRoundDone = () => progressStore().recordReviewRoundDone()
 export const deletePathEvent = (id: string) => progressStore().deletePathEvent(id)
 export const refreshState = () => progressStore().refresh()
 

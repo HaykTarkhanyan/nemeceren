@@ -112,7 +112,7 @@ export function courseStations(lessons: CourseLesson[], tests: Test[]): Station[
 
 /** The fields of a path event that the path and the goal read (PathEvent in content/schema.ts has them all). */
 export type PathEventLike = {
-  kind: 'station' | 'daily-mix'
+  kind: 'station' | 'daily-mix' | 'review-round'
   lessonId?: string
   sectionFrom?: number
   sectionTo?: number

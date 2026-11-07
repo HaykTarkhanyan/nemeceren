@@ -36,11 +36,11 @@ describe('goal days', () => {
 
   it('counts station events, daily mixes and course-test attempts, pass or fail', () => {
     const days = goalDays({
-      events: [station('2026-11-08'), { kind: 'daily-mix', localDay: '2026-11-09' }, station('2026-11-10', { deletedAt: '2026-11-10T10:00:00.000Z' })],
+      events: [station('2026-11-08'), { kind: 'daily-mix', localDay: '2026-11-09' }, station('2026-11-10', { deletedAt: '2026-11-10T10:00:00.000Z' }), { kind: 'review-round', localDay: '2026-11-12' }],
       results: [attempt('u1-t1-vorstellen-sprachen', '2026-11-11')],
       courseTestIds: course,
     })
-    expect([...days].sort()).toEqual(['2026-11-08', '2026-11-09', '2026-11-11'])
+    expect([...days].sort()).toEqual(['2026-11-08', '2026-11-09', '2026-11-11', '2026-11-12'])
   })
 
   it('does not count lesson exercises, mistakes replay or tests off the path', () => {

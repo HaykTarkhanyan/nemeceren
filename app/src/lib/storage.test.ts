@@ -756,4 +756,11 @@ describe('path events', () => {
     expect(() => env.store.recordStationDone('u1-01-sich-vorstellen', 4, 4)).toThrow(/cannot be saved: sectionTo: must be larger than sectionFrom/)
     expect(env.store.getView().pathEvents).toEqual([])
   })
+
+  it('recordReviewRoundDone saves a review-round event without a lesson or range', () => {
+    const env = setup([])
+    env.store.startGuest()
+    const id = env.store.recordReviewRoundDone()
+    expect(env.store.getView().pathEvents.map((e) => [e.id, e.kind, e.lessonId ?? null, e.localDay])).toEqual([[id, 'review-round', null, '2026-09-29']])
+  })
 })

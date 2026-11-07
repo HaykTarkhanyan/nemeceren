@@ -1,7 +1,8 @@
 // The daily goal and the goal-based streak (DECISIONS.md #83). Pure functions over the synced
 // history, so every device derives the same streak and freezes and nothing extra is stored.
 //   goal day     a local day with a station done (lesson step or theme lesson), a submitted attempt
-//                of a course test (pass or fail), or a daily mix run to its end
+//                of a course test (pass or fail), a daily mix run to its end, or a word review round
+//                that ended with 10+ cards graded (DECISIONS.md #86)
 //   streak       before the launch day: consecutive study days (the old rule, stats.ts); from the
 //                launch day on: consecutive goal days, where a missed day is covered by a freeze
 //                if one is held and there is a streak to keep (a frozen day keeps the streak but does not

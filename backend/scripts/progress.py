@@ -855,7 +855,7 @@ def cmd_path(conn: psycopg.Connection, args: argparse.Namespace) -> None:
         if e["kind"] == "station":
             d["stations"].append(f"{e['lesson_id']} [{e['section_from']}-{e['section_to']})")
         else:
-            d["mix"].append("daily mix")
+            d["mix"].append("daily mix" if e["kind"] == "daily-mix" else "review round (10+ cards)")
     for a in attempts:
         if a["test_id"] in course_tests:
             s = a["score"]

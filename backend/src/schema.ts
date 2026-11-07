@@ -233,7 +233,7 @@ export const StudySessionUpload = z
 export const PathEventUpload = z
   .strictObject({
     id: ClientId,
-    kind: z.enum(['station', 'daily-mix']),
+    kind: z.enum(['station', 'daily-mix', 'review-round']),
     lessonId: Slug.optional(),
     sectionFrom: Count.optional(),
     sectionTo: Count.min(1).optional(),
@@ -250,7 +250,7 @@ export const PathEventUpload = z
       if (range.some((v) => v === undefined)) ctx.addIssue({ code: 'custom', path: ['lessonId'], message: 'a station event needs lessonId, sectionFrom and sectionTo' })
       else if (x.sectionTo! <= x.sectionFrom!) ctx.addIssue({ code: 'custom', path: ['sectionTo'], message: 'must be larger than sectionFrom' })
     } else if (range.some((v) => v !== undefined)) {
-      ctx.addIssue({ code: 'custom', path: ['kind'], message: 'a daily-mix event has no lessonId, sectionFrom or sectionTo' })
+      ctx.addIssue({ code: 'custom', path: ['kind'], message: 'a daily-mix or review-round event has no lessonId, sectionFrom or sectionTo' })
     }
     if (Date.parse(x.updatedAt) < Date.parse(x.createdAt)) {
       ctx.addIssue({ code: 'custom', path: ['updatedAt'], message: 'is before createdAt' })
