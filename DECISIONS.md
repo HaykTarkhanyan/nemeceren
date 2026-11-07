@@ -2,6 +2,72 @@
 
 Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
+## 93. The Words "Map" tab: one tile per lesson, grouped by unit, coloured by the average word strength (asked for by Hayk, 2026-11-07, Q31)
+
+- **Date:** 2026-11-07 - **Status:** active
+- **Why:** Hayk wants a vocabulary page of tiles "like a heatmap: the more words I know, the more accented the colour". Hayk chose one tile per lesson (Q31).
+- **What it does** (`lib/vocabMap.ts`, `components/VocabMap.tsx`, `#/words/map`):
+  - **Tiles:** one per course lesson, under its unit's badge and title, plus theme lessons in the accent colour.
+  - **Colour:** 8% to 88% of the unit colour by the average `strengthOf` divided by 4 *(Claude's call: average strength rather than only "known", so learning words already colour a little)*.
+  - **Labels:** "known/total", or "locked" when the path hasn't reached the lesson.
+  - **Tapping a tile** opens its words with "Review these" and all seven games on that lesson's words.
+  - Details: "As built" 12 in `_knowledge/2026-11-07_practice-games-design.md`.
+- **Alternatives rejected:**
+  - **One tile per unit, or topic tiles** (Q31).
+  - **Colouring only by "known":** a unit you're working through would stay grey for weeks.
+- **What would change this:**
+  - **Too many tiles once A2 grows:** fold finished units.
+  - **Hayk wanting known-only colouring.**
+
+## 92. Five practice games, all practice only: say the words, say the sentence (both with typing), der/die/das speed drill, fill the gap, and a deliberately hard build the sentence (asked for by Hayk, 2026-11-07, Q30, Q32)
+
+- **Date:** 2026-11-07 - **Status:** active
+- **Why:**
+  - **Speaking:** Hayk wants to say German words in a list, as in Duolingo, plus sentences, "but also option to type for cases I can't speak" (Q30).
+  - **New exercises:** the article drill, fill the gap, and build the sentence, "don't make it super easy like in duo, I want proper learning" (Q32).
+- **What it does** (`lib/games.ts`, pure, 27 tests incl. runs over every real card; `SpeakGames.tsx`, `ArticleDrill.tsx`, `GapFill.tsx`, `BuildSentence.tsx`, `GameFrame.tsx`; `#/daily/<game>[/<lesson>]`):
+  - **Practice only:** every answer is a practice log entry, so the schedule is never moved (#25). Games don't count for the daily goal.
+  - **Say the words:** 8 of the 16 weakest words. A word must be heard in full. "Type instead" hides the German and plays it (dictation), and missed words come back once.
+  - **Say the sentence:** a card example's English. A spoken answer counts from 80% word match; a typed one is compared ignoring case and all punctuation, with umlauts and ß strict.
+  - **der/die/das:** a 60-second round, the article colours, a streak, the best streak per device, and wrong nouns coming back 3 places later.
+  - **Fill the gap:** the English shows with the question, and distractors of the same kind, gender and form come from other cards' own examples, never made up. 757 of 881 example cards give an item.
+  - **Build the sentence:**
+    - plausible extra tiles: a real verb form of another person or tense, an article or case form, and words from other sentences;
+    - the first word's capital is kept only if that word appears capitalised mid-sentence;
+    - Type instead;
+    - a different order shows the expected sentence and Ask Claude.
+  - **Shared code:** `FocusBar` moved to `components/FocusBar.tsx` and recognition to `lib/recognition.ts`.
+  - Details: "As built" 6-11 and 13 in `_knowledge/2026-11-07_practice-games-design.md`.
+- **Alternatives rejected:**
+  - **Duolingo-style tiles that all fit:** Hayk wants real learning.
+  - **Made-up inflected forms as distractors:** they could teach wrong German.
+  - **A new review mode or a new table for games:** a backend change for no gain.
+- **What would change this:**
+  - **Speech recognition misbehaving** on Hayk's phone (it is untested on a real device).
+  - **The article drill flooding the practice log.**
+  - **Hayk wanting games to count for the goal.**
+
+## 91. New words follow the path: one function, `pathNewWords`, picks them in course order from the lesson at "Du bist hier" plus the next one, for the Words page and the daily mix (asked for by Hayk, 2026-11-07, Q29; revisits #26, #50)
+
+- **Date:** 2026-11-07 - **Status:** active
+- **Why:** Hayk wants "a more logical progression of words, more Duo style" (Q29: "words follow the path").
+- **What it does:**
+  - **The function:** `pathNewWords` (`lib/plan.ts`) takes words with no card in course order (unit, lesson, position in the lesson's `words`), first course words, then opened theme lessons, then words in no lesson.
+  - **Reach** (`pathReach` in `lib/path.ts`, used through `goalView.reachOf`): the lesson at "Du bist hier", the next lesson, and lessons with a done station ahead. That last part keeps one failed test from stopping new words.
+  - **Who uses it:** `wordsForSource({kind:'all'})` puts introduced words first, then `pathNewWords`; the daily mix's `mixNewWords` uses it when no word set is active.
+  - **Same rule elsewhere:** All words' "locked" and What next follow it.
+  - **On a test station:** the sheet shows how many of the unit's words aren't learned, with "Review Unit N words".
+  - **Unchanged:** picking a unit or a lesson on the Words page still brings all its words with no daily cap (#66), and own words stay outside the limit (#58).
+  - Details: "As built" 1-5 in `_knowledge/2026-11-07_practice-games-design.md`.
+- **Alternatives rejected:**
+  - **Sorting inside `nextCard`:** it knows nothing about lessons.
+  - **Skipping failed tests when working out "Du bist hier":** it would change what the path shows.
+  - **Keeping the old rule** (unlocked by opening a lesson, in words.json order).
+- **What would change this:**
+  - **Hayk opening lessons ahead and expecting their words.**
+  - **The reach feeling too narrow on a busy day.**
+  - **`contentRunway`** (the author line on Stats) still counts by opened lessons; align it if it starts to mislead.
+
 ## 90. Unit 10 as written: Wo? and Wohin? with all nine two-way prepositions, the position and placement verbs with an object test, a phone note and a handover email; setzen and stecken left out (written with the course-unit skill, 2026-11-07; Hayk away, so Claude's calls)
 
 - **Date:** 2026-11-07 - **Status:** active; builds on #71 (Unit 6 taught Wo? + dative only) and #88
