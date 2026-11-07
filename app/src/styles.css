@@ -2444,3 +2444,141 @@ ol.line {
   padding: 12px;
   font-size: 1.05rem;
 }
+
+/* ---------- The focus review (DECISIONS.md #85) ---------- */
+
+:root {
+  --art-der: #2a62b8;
+  --art-die: #c8323c;
+  --art-das: #2f8a52;
+}
+
+:root[data-theme='dark'] {
+  --art-der: #7da2f0;
+  --art-die: #ff8a8a;
+  --art-das: #6fd08e;
+}
+
+.art {
+  font-weight: 700;
+}
+
+.art-der {
+  color: var(--art-der);
+}
+
+.art-die {
+  color: var(--art-die);
+}
+
+.art-das {
+  color: var(--art-das);
+}
+
+.focus-review {
+  position: fixed;
+  inset: 0;
+  z-index: 15;
+  background: var(--bg);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.focus-bar {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 10px;
+  align-items: center;
+  padding: 10px 16px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.focus-progress {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  font-size: 12px;
+  color: var(--muted);
+  text-align: center;
+}
+
+.focus-progress span:first-child {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.focus-progress .bar {
+  height: 6px;
+  border-radius: 3px;
+  background: var(--border);
+  overflow: hidden;
+}
+
+.focus-progress .bar i {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  transition: width 0.3s;
+}
+
+.focus-body {
+  flex: 1;
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.focus-review .word-card {
+  min-height: 52vh;
+  justify-content: center;
+}
+
+.focus-review .word-big {
+  font-size: 2rem;
+  text-align: center;
+}
+
+.focus-review .word-meaning {
+  font-size: 1.3rem;
+  text-align: center;
+}
+
+.word-card.can-flip {
+  cursor: pointer;
+}
+
+.example-line {
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.word-meta {
+  margin: 0;
+}
+
+.round-end .hard-words {
+  margin: 0;
+  padding-left: 18px;
+}
+
+@media (max-width: 600px) {
+  .focus-review .grades {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .focus-review .grades .btn {
+    min-height: 56px;
+  }
+}

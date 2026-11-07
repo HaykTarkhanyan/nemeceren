@@ -2,7 +2,12 @@
 // daily mix. The card only shows the word and collects the grade; saving is the caller's job.
 import { useEffect, useRef, useState } from 'react'
 import type { FormEvent } from 'react'
-import type { ReviewMode } from '../content/schema.ts'
+import { content } from '../content/load.ts'
+import { isThemeLesson } from '../content/lessons.ts'
+import type { Lesson, ReviewMode } from '../content/schema.ts'
+import { germanName } from '../lib/path.ts'
+import { lessonOfWords, splitArticle } from '../lib/review.ts'
+import { link } from '../lib/router.ts'
 import { nearMissText } from './ResultView.tsx'
 import { De, GlossScope } from './GermanText.tsx'
 import { PlayButtons } from './Speaker.tsx'
@@ -36,6 +41,28 @@ function isTyping(target: EventTarget | null): boolean {
   )
 }
 
+// Each word's lesson, for "From 1.2 ..." on the answer side (DECISIONS.md #85).
+const LESSON_OF = lessonOfWords(content.allLessons)
+const LEVEL_OF = new Map(content.words.map((w) => [w.id, w.level]))
+
+function lessonName(l: Lesson): string {
+  return isThemeLesson(l) ? l.theme.title : `${l.unit}.${l.order} ${germanName(l.title)}`
+}
+
+/** The German word with der/die/das in its colour (blue, red, green), the rest with word popups. */
+export function WordDe({ de }: { de: string }) {
+  const { article, rest } = splitArticle(de)
+  if (!article) return <De text={de} />
+  return (
+    <>
+      <span className={`art art-${article}`} lang="de">
+        {article}
+      </span>{' '}
+      <De text={rest} />
+    </>
+  )
+}
+
 export function Card(props: {
   word: StudyWord
   isNew: boolean
@@ -44,8 +71,10 @@ export function Card(props: {
   intervals: Record<Grade, string> | null
   disabled: boolean
   onGrade: (rating: Grade, typed: Typed | null, timeMs: number) => void
+  /** Read the German word aloud when the answer shows (the focus review's sound switch). */
+  autoSpeak?: boolean
 }) {
-  const { word, isNew, mode, intervals, disabled, onGrade } = props
+  const { word, isNew, mode, intervals, disabled, onGrade, autoSpeak = false } = props
   const [revealed, setRevealed] = useState(false)
   const [typed, setTyped] = useState('')
   const [check, setCheck] = useState<Comparison | null>(null)
@@ -63,6 +92,11 @@ export function Card(props: {
   useEffect(() => {
     if (typingMode) inputRef.current?.focus()
   }, [typingMode])
+
+  // The word read aloud as the answer shows (listening mode already played it).
+  useEffect(() => {
+    if (done && autoSpeak && mode !== 'listening') speak(word.de)
+  }, [done])
 
   const submitGrade = (g: Grade) => {
     if (disabled) return
@@ -99,7 +133,13 @@ export function Card(props: {
   return (
     // Word popups only once the answer is shown (Hayk, 2026-09-29); never on his own words (glossary/gate.ts).
     <GlossScope surface={word.custom ? { kind: 'custom-word' } : { kind: 'review-card', revealed: done }}>
-    <section className="card word-card">
+    <section
+      className={`card word-card${!typingMode && !revealed ? ' can-flip' : ''}`}
+      onClick={(e) => {
+        // Tap the card to flip it (not a button, link or field on it).
+        if (!typingMode && !revealed && !(e.target as HTMLElement).closest('button, a, input')) setRevealed(true)
+      }}
+    >
       {(isNew || word.custom) && (
         <span className="row">
           {isNew && <span className="badge pending">new word</span>}
@@ -109,7 +149,7 @@ export function Card(props: {
 
       {mode === 'recognition' && (
         <p className="word-big">
-          <De text={word.de} />
+          <WordDe de={word.de} />
         </p>
       )}
       {mode === 'production' && (
@@ -162,7 +202,7 @@ export function Card(props: {
 
       {done && (
         <div className="answer-block">
-          {mode === 'recognition' ? <p className="word-meaning">{word.en}</p> : <p className="word-big"><De text={word.de} /></p>}
+          {mode === 'recognition' ? <p className="word-meaning">{word.en}</p> : <p className="word-big"><WordDe de={word.de} /></p>}
           {mode === 'listening' && <p className="word-meaning">{word.en}</p>}
           {word.plural && (
             <p>
@@ -171,9 +211,23 @@ export function Card(props: {
           )}
           {word.example && (
             <div className="example">
-              <De text={word.example.de} />
+              <span className="row example-line">
+                <De text={word.example.de} />
+                <PlayButtons text={word.example.de} />
+              </span>
               {word.example.en && <div className="muted">{word.example.en}</div>}
             </div>
+          )}
+          {!word.custom && (
+            <p className="word-meta small muted">
+              {LEVEL_OF.get(word.id) && <span className="badge">{LEVEL_OF.get(word.id)}</span>}
+              {LESSON_OF.get(word.id) && (
+                <>
+                  {' '}
+                  From <a href={link('lesson', LESSON_OF.get(word.id)!.id)}>{lessonName(LESSON_OF.get(word.id)!)}</a>
+                </>
+              )}
+            </p>
           )}
           {word.custom?.note && <p className="small muted">Your note: {word.custom.note}</p>}
           {claude && (

@@ -7,6 +7,7 @@ import { messageOf, reportError } from './errors.ts'
 const OPEN_UNITS_KEY = 'nemeceren.pathOpenUnits'
 const NOTICE_KEY = 'nemeceren.pathNoticeSeen'
 const MILESTONE_KEY = 'nemeceren.milestoneSeen'
+const REVIEW_SOUND_KEY = 'nemeceren.reviewSound'
 
 function read(key: string, what: string): string | null {
   try {
@@ -65,4 +66,13 @@ export function milestoneSeen(n: number, day: string): boolean {
 
 export function markMilestoneSeen(n: number, day: string): void {
   write(MILESTONE_KEY, JSON.stringify([...seenMilestones(), `${n}:${day}`].slice(-20)), 'the milestones already shown')
+}
+
+/** The focus review reads each word aloud when its answer shows, unless switched off on this device. */
+export function readReviewSound(): boolean {
+  return read(REVIEW_SOUND_KEY, 'Whether review cards are read aloud') !== 'off'
+}
+
+export function writeReviewSound(on: boolean): void {
+  write(REVIEW_SOUND_KEY, on ? 'on' : 'off', 'whether review cards are read aloud')
 }

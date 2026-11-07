@@ -2,30 +2,36 @@
 // word) and the "All words" list, each a tab in the URL ("#/words", "#/words/all"). Hayk adds his
 // own words here too (DECISIONS.md #58). When nothing is left to review, the "What next" menu
 // offers more work instead of a dead end.
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
 import { content } from '../content/load.ts'
-import type { Lesson, ReviewLogEntry, ReviewMode, ReviewState, StoredCard } from '../content/schema.ts'
+import type { Lesson, ReviewLogEntry, ReviewState, StoredCard } from '../content/schema.ts'
 import { AllWords } from '../components/AllWords.tsx'
-import { Card, MODES } from '../components/ReviewCard.tsx'
+import { GlossScope } from '../components/GermanText.tsx'
+import { Card, MODES, WordDe } from '../components/ReviewCard.tsx'
 import { WhatNext } from '../components/WhatNext.tsx'
 import { Tabs } from '../components/Tabs.tsx'
 import { WordForm } from '../components/WordForm.tsx'
 import { WordSetsTab } from '../components/WordSetsTab.tsx'
 import type { PracticeHow } from '../components/WordSetsTab.tsx'
-import { ListenGame, MatchGame } from './DailyPage.tsx'
+import { canListen, ListenGame, MatchGame } from './DailyPage.tsx'
 import { practiceWord } from '../lib/customWords.ts'
 import type { StudyWord } from '../lib/customWords.ts'
+import { addDays, localDay } from '../lib/dates.ts'
 import { messageOf, reportError } from '../lib/errors.ts'
+import { readReviewSound, writeReviewSound } from '../lib/homeView.ts'
 import { lessonStatus, parseSourceKey, sourceKey, sourceLabel, sourceLessons, sourceThemes, wordsForSource } from '../lib/plan.ts'
 import type { WordSource } from '../lib/plan.ts'
+import { dueOnDay, GOAL_ROUND_MIN, pickMode, ROUND_SIZE, roundSummary } from '../lib/review.ts'
+import type { SessionMode } from '../lib/review.ts'
 import { practiceEntry, scheduledEntry } from '../lib/reviewEntries.ts'
 import type { Typed } from '../lib/reviewEntries.ts'
 import { link, tabOf } from '../lib/router.ts'
 import { updateSettings, useSettings } from '../lib/settings.ts'
 import { counts, LEARN_AHEAD_MS, nextCard, previewIntervals, Rating } from '../lib/srs.ts'
 import type { Grade } from '../lib/srs.ts'
-import { recordPractice, recordReview, requestFlush, useProgress } from '../lib/storage.ts'
+import { useSpeech } from '../lib/speech.ts'
+import { recordPractice, recordReview, recordReviewRoundDone, requestFlush, useProgress } from '../lib/storage.ts'
 import type { CustomWordView } from '../lib/storage.ts'
 
 export const WORDS_TABS = ['review', 'all', 'sets'] as const
@@ -48,7 +54,7 @@ function Words({ tab }: { tab: (typeof WORDS_TABS)[number] }) {
   const progress = useProgress()
   const state = progress.reviewState
   const settings = useSettings()
-  const [mode, setMode] = useState<ReviewMode | null>(null)
+  const [mode, setMode] = useState<SessionMode | null>(null)
   const [practice, setPractice] = useState<StudyWord[] | null>(null)
   // Each practice start gets a fresh session, even from the "practice done" screen.
   const [practiceRun, setPracticeRun] = useState(0)
@@ -161,6 +167,11 @@ function Words({ tab }: { tab: (typeof WORDS_TABS)[number] }) {
         }}
         newLimit={newLimit}
         whatNext={whatNext}
+        onPractice={(list) => {
+          setPractice(list)
+          setPracticeFromList(false)
+          setPracticeRun((r) => r + 1)
+        }}
       />
     )
   }
@@ -233,7 +244,7 @@ function Words({ tab }: { tab: (typeof WORDS_TABS)[number] }) {
             </div>
           )}
           <h2>Choose a mode</h2>
-          {MODES.map((m) => (
+          {[...MODES, MIXED_MODE].map((m) => (
             <button key={m.mode} type="button" className="card mode-card" onClick={() => setMode(m.mode)}>
               <strong>{m.title}</strong>
               <span className="muted">{m.desc}</span>
@@ -310,8 +321,132 @@ interface Failed {
   message: string
 }
 
+const MIXED_MODE = { mode: 'mixed' as const, title: 'Mixed', desc: 'Each card picks a direction: flip, type the German, or listen and type.' }
+
+function modeTitle(mode: SessionMode): string {
+  return mode === 'mixed' ? MIXED_MODE.title : (MODES.find((m) => m.mode === mode)?.title ?? mode)
+}
+
+/** The top bar of the focus review: close, how far the round is, and the sound switch. */
+function FocusBar(props: { onClose: () => void; closeLabel: string; done: number; target: number; label: string; sound: boolean; onSound: () => void }) {
+  const { onClose, closeLabel, done, target, label, sound, onSound } = props
+  return (
+    <div className="focus-bar">
+      <button type="button" className="btn small" onClick={onClose}>
+        {closeLabel}
+      </button>
+      <div className="focus-progress" aria-label={`${done} of ${target}`}>
+        <span>
+          {label}: {done} of {target}
+        </span>
+        <span className="bar">
+          <i style={{ width: `${target ? Math.min(100, (100 * done) / target) : 0}%` }} />
+        </span>
+      </div>
+      <button type="button" className="btn small" aria-pressed={sound} onClick={onSound}>
+        {sound ? 'Sound on' : 'Sound off'}
+      </button>
+    </div>
+  )
+}
+
+function useReviewSound(): [boolean, () => void] {
+  const [sound, setSound] = useState(readReviewSound)
+  return [
+    sound,
+    () => {
+      writeReviewSound(!sound)
+      setSound(!sound)
+    },
+  ]
+}
+
+/** After a round: how it went, the hard words to practise, and what is due tomorrow (DECISIONS.md #85). */
+function RoundEnd(props: {
+  entries: ReviewLogEntry[]
+  words: StudyWord[]
+  state: ReviewState
+  counted: boolean
+  canContinue: boolean
+  onNext: () => void
+  onExit: () => void
+  onPractice: (list: StudyWord[]) => void
+}) {
+  const { entries, words, state, counted, canContinue, onNext, onExit, onPractice } = props
+  const s = roundSummary(entries)
+  const byId = new Map(words.map((w) => [w.id, w]))
+  const hard = s.hardIds.map((id) => byId.get(id)).filter((w): w is StudyWord => w !== undefined)
+  const tomorrow = dueOnDay(state, new Set(words.map((w) => w.id)), addDays(localDay(new Date()), 1))
+  return (
+    <div className="stack round-end">
+      <h2>Round done</h2>
+      <div className="stats">
+        <div className="stat">
+          <div className="stat-num">{s.cards}</div>
+          <div className="muted">cards</div>
+        </div>
+        <div className="stat">
+          <div className="stat-num">{s.percent}%</div>
+          <div className="muted">Good or Easy</div>
+        </div>
+        <div className="stat">
+          <div className="stat-num">{s.minutes}</div>
+          <div className="muted">minutes</div>
+        </div>
+        <div className="stat">
+          <div className="stat-num">{s.fresh}</div>
+          <div className="muted">new words</div>
+        </div>
+      </div>
+      {counted ? (
+        <p className="ok-text">This round counts for today's goal.</p>
+      ) : (
+        <p className="muted small">A round of {GOAL_ROUND_MIN} or more cards counts for the daily goal.</p>
+      )}
+      {hard.length > 0 && (
+        <section className="card stack">
+          <h3>Hard this round</h3>
+          {/* The answers were all shown in the round, so word popups are allowed (glossary/gate.ts). */}
+          <GlossScope surface={{ kind: 'review-card', revealed: true }}>
+            <ul className="hard-words">
+              {hard.map((w) => (
+                <li key={w.id}>
+                  <WordDe de={w.de} /> <span className="muted">{w.en}</span>
+                </li>
+              ))}
+            </ul>
+          </GlossScope>
+          <div>
+            <button type="button" className="btn" onClick={() => onPractice(hard)}>
+              Practise these ({hard.length}), schedule unchanged
+            </button>
+          </div>
+        </section>
+      )}
+      <p className="muted small">
+        {tomorrow} word{tomorrow === 1 ? '' : 's'} due tomorrow.
+      </p>
+      <div className="row">
+        {canContinue && (
+          <button type="button" className="btn primary" onClick={onNext}>
+            Next round
+          </button>
+        )}
+        <button type="button" className={`btn${canContinue ? '' : ' primary'}`} onClick={onExit}>
+          Done
+        </button>
+      </div>
+    </div>
+  )
+}
+
+/**
+ * Scheduled reviews in the full-screen focus view (DECISIONS.md #85): rounds of up to ROUND_SIZE
+ * cards, each with an end screen. A round that ends with GOAL_ROUND_MIN or more cards counts for the
+ * daily goal (a review-round path event, #86).
+ */
 function Session(props: {
-  mode: ReviewMode
+  mode: SessionMode
   words: StudyWord[]
   /** The unit or lesson the words come from; null for all words. */
   sourceName: string | null
@@ -319,13 +454,29 @@ function Session(props: {
   onExit: () => void
   newLimit: number
   whatNext: ReactNode
+  onPractice: (list: StudyWord[]) => void
 }) {
-  const { mode, words, sourceName, state, onExit, newLimit, whatNext } = props
+  const { mode, words, sourceName, state, onExit, newLimit, whatNext, onPractice } = props
+  const listen = canListen(useSpeech())
+  const [sound, toggleSound] = useReviewSound()
   const [now, setNow] = useState(() => new Date())
   const [saving, setSaving] = useState(false)
   const [failed, setFailed] = useState<Failed | null>(null)
-  const [stats, setStats] = useState({ reviewed: 0, again: 0 })
+  const [round, setRound] = useState<ReviewLogEntry[]>([])
+  const [graded, setGraded] = useState(0)
+  const startCounts = () => {
+    const c = counts(words, state, new Date(), newLimit)
+    return Math.min(ROUND_SIZE, c.due + c.newLeft)
+  }
+  const [available, setAvailable] = useState(startCounts)
+  const recorded = useRef(false)
   const next = nextCard(words, state, now, newLimit)
+  const roundOver = round.length > 0 && (round.length >= ROUND_SIZE || next.kind !== 'card')
+  const target = Math.min(ROUND_SIZE, Math.max(available, round.length + (next.kind === 'card' && !roundOver ? 1 : 0)))
+  // One direction per card, kept while the card is on screen.
+  const cardKey = next.kind === 'card' ? `${next.word.id}-${graded}` : ''
+  const cardIsNew = next.kind === 'card' && next.isNew
+  const cardMode = useMemo(() => pickMode(mode, listen, Math.random, cardIsNew), [cardKey, mode, listen, cardIsNew])
 
   // When the only cards left are due later today, check again once the first one comes into range.
   const waitUntil = next.kind === 'wait' ? next.due.getTime() : null
@@ -336,10 +487,18 @@ function Session(props: {
     return () => window.clearTimeout(t)
   }, [waitUntil])
 
-  // A review round is over (nothing due now): send it.
-  const roundOver = next.kind !== 'card' && stats.reviewed > 0
+  // A round is over: it counts for the daily goal with GOAL_ROUND_MIN+ cards; send it.
   useEffect(() => {
-    if (roundOver) requestFlush()
+    if (!roundOver) return
+    if (round.length >= GOAL_ROUND_MIN && !recorded.current) {
+      recorded.current = true
+      try {
+        recordReviewRoundDone()
+      } catch (err) {
+        reportError(`Could not save the finished review round for your daily goal: ${messageOf(err)}`)
+      }
+    }
+    requestFlush()
   }, [roundOver])
 
   /** Saves on this device (the outbox); the store then shows the new state everywhere. */
@@ -348,7 +507,8 @@ function Session(props: {
     try {
       recordReview(entry, card)
       setFailed(null)
-      setStats((s) => ({ reviewed: s.reviewed + 1, again: s.again + (entry.rating === Rating.Again ? 1 : 0) }))
+      setRound((r) => [...r, entry])
+      setGraded((g) => g + 1)
       setNow(new Date())
     } catch (err) {
       setFailed({ entry, card, message: messageOf(err) })
@@ -358,40 +518,56 @@ function Session(props: {
   }
 
   function grade(word: StudyWord, isNew: boolean, rating: Grade, typed: Typed | null, timeMs: number) {
-    const { entry, card } = scheduledEntry({ state, word, isNew, mode, rating, typed, timeMs, at: new Date() })
+    const { entry, card } = scheduledEntry({ state, word, isNew, mode: cardMode, rating, typed, timeMs, at: new Date() })
     persist(entry, card)
   }
 
-  const header = (
-    <div className="row between">
-      <button type="button" className="btn small" onClick={onExit}>
-        Back to modes
-      </button>
-      <span className="muted small">
-        {MODES.find((m) => m.mode === mode)?.title}
-        {sourceName ? ` (${sourceName})` : ''} - reviewed {stats.reviewed}
-      </span>
-    </div>
-  )
-
-  if (failed) {
-    return (
-      <div className="stack">
-        {header}
-        <div className="alert error" role="alert">
-          <span>Your last grade was NOT saved: {failed.message}</span>
-          <button type="button" className="btn small" disabled={saving} onClick={() => persist(failed.entry, failed.card)}>
-            Retry saving
-          </button>
-        </div>
-      </div>
-    )
+  function nextRound() {
+    recorded.current = false
+    setRound([])
+    setAvailable(startCounts())
+    setNow(new Date())
+    window.scrollTo(0, 0)
   }
 
-  if (next.kind !== 'card') {
-    return (
-      <div className="stack">
-        {header}
+  const bar = (
+    <FocusBar
+      onClose={onExit}
+      closeLabel="Close"
+      done={round.length}
+      target={target}
+      label={`${modeTitle(mode)}${sourceName ? ` (${sourceName})` : ''}`}
+      sound={sound}
+      onSound={toggleSound}
+    />
+  )
+
+  let body: ReactNode
+  if (failed) {
+    body = (
+      <div className="alert error" role="alert">
+        <span>Your last grade was NOT saved: {failed.message}</span>
+        <button type="button" className="btn small" disabled={saving} onClick={() => persist(failed.entry, failed.card)}>
+          Retry saving
+        </button>
+      </div>
+    )
+  } else if (roundOver) {
+    body = (
+      <RoundEnd
+        entries={round}
+        words={words}
+        state={state}
+        counted={round.length >= GOAL_ROUND_MIN}
+        canContinue={next.kind === 'card'}
+        onNext={nextRound}
+        onExit={onExit}
+        onPractice={onPractice}
+      />
+    )
+  } else if (next.kind !== 'card') {
+    body = (
+      <>
         <div className="card center">
           {next.kind === 'wait' ? (
             <p>
@@ -401,27 +577,29 @@ function Session(props: {
           ) : (
             <p>Today's reviews are done.</p>
           )}
-          <p className="muted">
-            This session: {stats.reviewed} reviewed, {stats.again} marked Again.
-          </p>
         </div>
         {whatNext}
-      </div>
+      </>
+    )
+  } else {
+    body = (
+      <Card
+        key={cardKey}
+        word={next.word}
+        isNew={next.isNew}
+        mode={cardMode}
+        intervals={previewIntervals(state, next.word.id, now)}
+        disabled={saving}
+        autoSpeak={sound}
+        onGrade={(rating, typed, timeMs) => grade(next.word, next.isNew, rating, typed, timeMs)}
+      />
     )
   }
 
   return (
-    <div className="stack">
-      {header}
-      <Card
-        key={`${next.word.id}-${stats.reviewed}`}
-        word={next.word}
-        isNew={next.isNew}
-        mode={mode}
-        intervals={previewIntervals(state, next.word.id, now)}
-        disabled={saving}
-        onGrade={(rating, typed, timeMs) => grade(next.word, next.isNew, rating, typed, timeMs)}
-      />
+    <div className="focus-review" role="dialog" aria-label="Word review">
+      {bar}
+      <div className="focus-body">{body}</div>
     </div>
   )
 }
@@ -430,12 +608,15 @@ function Session(props: {
  * Extra practice of weak words. It does NOT change the FSRS schedule: each answer is only logged,
  * with practice: true, so the statistics and Claude can see it (DECISIONS.md #25).
  */
-function PracticeSession(props: { mode: ReviewMode; words: StudyWord[]; state: ReviewState; onExit: () => void; whatNext: ReactNode }) {
+function PracticeSession(props: { mode: SessionMode; words: StudyWord[]; state: ReviewState; onExit: () => void; whatNext: ReactNode }) {
   const { mode, words, state, onExit, whatNext } = props
+  const listen = canListen(useSpeech())
+  const [sound, toggleSound] = useReviewSound()
   const [index, setIndex] = useState(0)
   const [again, setAgain] = useState(0)
   const [saving, setSaving] = useState(false)
   const [failed, setFailed] = useState<{ entry: ReviewLogEntry; message: string } | null>(null)
+  const cardMode = useMemo(() => pickMode(mode, listen), [index, mode, listen])
   // The practice round is over: send it.
   const practiceOver = index >= words.length && index > 0
   useEffect(() => {
@@ -458,38 +639,22 @@ function PracticeSession(props: { mode: ReviewMode; words: StudyWord[]; state: R
 
   function grade(word: StudyWord, rating: Grade, typed: Typed | null, timeMs: number) {
     const answer = typed ? { text: typed.answer, correct: typed.check.correct, nearMiss: typed.check.nearMiss } : null
-    persist(practiceEntry({ state, word, mode, rating, answer, timeMs, at: new Date() }))
+    persist(practiceEntry({ state, word, mode: cardMode, rating, answer, timeMs, at: new Date() }))
   }
 
-  const header = (
-    <div className="row between">
-      <button type="button" className="btn small" onClick={onExit}>
-        Stop practice
-      </button>
-      <span className="muted small">
-        Practice ({MODES.find((m) => m.mode === mode)?.title}) - {Math.min(index, words.length)}/{words.length}, schedule unchanged
-      </span>
-    </div>
-  )
-
+  let body: ReactNode
   if (failed) {
-    return (
-      <div className="stack">
-        {header}
-        <div className="alert error" role="alert">
-          <span>Your last answer was NOT saved: {failed.message}</span>
-          <button type="button" className="btn small" disabled={saving} onClick={() => persist(failed.entry)}>
-            Retry saving
-          </button>
-        </div>
+    body = (
+      <div className="alert error" role="alert">
+        <span>Your last answer was NOT saved: {failed.message}</span>
+        <button type="button" className="btn small" disabled={saving} onClick={() => persist(failed.entry)}>
+          Retry saving
+        </button>
       </div>
     )
-  }
-
-  if (index >= words.length) {
-    return (
-      <div className="stack">
-        {header}
+  } else if (index >= words.length) {
+    body = (
+      <>
         <div className="card center">
           <p>
             Practice done: {words.length} word{words.length === 1 ? '' : 's'}, {again} marked Again.
@@ -497,23 +662,36 @@ function PracticeSession(props: { mode: ReviewMode; words: StudyWord[]; state: R
           <p className="muted small">Your review schedule is unchanged; the answers were logged as practice.</p>
         </div>
         {whatNext}
-      </div>
+      </>
     )
-  }
-
-  const word = words[index]
-  return (
-    <div className="stack">
-      {header}
+  } else {
+    const word = words[index]
+    body = (
       <Card
         key={`${word.id}-${index}`}
         word={word}
         isNew={false}
-        mode={mode}
+        mode={cardMode}
         intervals={null}
         disabled={saving}
+        autoSpeak={sound}
         onGrade={(r, typed, ms) => grade(word, r, typed, ms)}
       />
+    )
+  }
+
+  return (
+    <div className="focus-review" role="dialog" aria-label="Word practice">
+      <FocusBar
+        onClose={onExit}
+        closeLabel="Stop"
+        done={Math.min(index, words.length)}
+        target={words.length}
+        label={`Practice, ${modeTitle(mode)}, schedule unchanged`}
+        sound={sound}
+        onSound={toggleSound}
+      />
+      <div className="focus-body">{body}</div>
     </div>
   )
 }
