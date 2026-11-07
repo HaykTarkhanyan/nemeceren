@@ -12,6 +12,9 @@ done = [
   "DECISIONS #82 (path Home), #83 (daily goal and streak from 2026-11-08), #84 (path_events table).",
   "Final whole-branch review (one Opus reviewer): 0 critical, 3 important, 8 minor. Fixed the 3 important plus 2 minors re-graded (Home opens at the top per Q11; no freeze spent without a streak): f65152f, each with a failing test first where testable; suite 415/415. 5 minors deferred (see DEFERRED_TODO.md).",
   "Pushed f65152f on 2026-11-07 13:10 local; GitHub Pages deploy.",
+  "Self-review (inline): progress.py path ran against Neon; Stats page checked live; fixed S1-S3 (story label, MIX limit, freeze help text) and the 5 deferred minors (e85ea8e). Learning: _learnings/2026-11-07-1316_stopping-npm-dev-leaves-vite-running.md.",
+  "Hayk's progress reset (Q20, all of it, backup first): backup C:/Users/hayk_/OneDrive/Desktop/misc/nemeceren-backups/2026-11-07-1325_progress_80d2bb80.json (215 KB), then 185 reviews, 122 cards, 10 attempts, 14 lesson records, 2 notes, 2 timer sessions deleted in one transaction; other accounts unchanged.",
+  "Word review (Q21-Q26, DECISIONS #85-#86): focus view in rounds of 20, Mixed per round (new words flip first), coloured articles, read aloud with a Sound switch, example audio, level and lesson link, round end screen with Practise these; review rounds of 10+ cards count for the goal (migration 006 applied, function redeployed after neon config plan, smoke test passed); All words strength bars and Practise now. 427 tests; guest-mode browser check at 390 px found and fixed two bugs (a new word asked to be typed in Mixed; German outside a GlossScope on the end screen).",
 ]
 pending = [
   "Hayk's phone check after the push: the station flow, the goal ring, the notice.",
@@ -43,6 +46,10 @@ commits = [
   "e08607d Backend: path_events table, sync and state, progress.py path",
   "4c9864e Launch day 2026-11-08, decisions #82-#84",
   "f65152f Fixes from the final review of the path Home",
+  "e85ea8e self-review fixes and deferred minors",
+  "71277fe review-round path event kind (migration 006)",
+  "8434499 Word review: focus mode, Mixed, richer answer side, round end screen",
+  "28df684 All words: strength bars, coloured articles, Practise now; decisions #85-#86",
 ]
 notes = """
 Subagents: one builder check of the design, one final whole-branch reviewer (Opus). No paid APIs. Neon: one migration, one deploy, one smoke test run.
