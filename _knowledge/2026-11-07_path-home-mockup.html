@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Path mockup</title>
+<style>
+:root {
+  --bg: #f6f7f9; --surface: #ffffff; --text: #1b1f24; --muted: #5d6673; --border: #d9dee5;
+  --accent: #1f5fbf; --accent-text: #ffffff; --ok: #1f7a3a; --ok-bg: #e5f4ea; --warn: #8a5a00; --warn-bg: #fff4d6;
+  --radius: 10px; --sheet-shadow: 0 -8px 30px rgba(0,0,0,.18);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111418; --surface: #1a1f25; --text: #e6e9ed; --muted: #9aa4b1; --border: #2e3640;
+    --accent: #5b9bf0; --accent-text: #0b1220; --ok: #6fd08e; --ok-bg: #16301f; --warn: #f1c35b; --warn-bg: #3a2f12;
+    --sheet-shadow: 0 -8px 30px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111418; --surface: #1a1f25; --text: #e6e9ed; --muted: #9aa4b1; --border: #2e3640;
+  --accent: #5b9bf0; --accent-text: #0b1220; --ok: #6fd08e; --ok-bg: #16301f; --warn: #f1c35b; --warn-bg: #3a2f12;
+  --sheet-shadow: 0 -8px 30px rgba(0,0,0,.6);
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--bg); color: var(--text); font: 15px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+button { font: inherit; color: inherit; }
+
+/* mockup controls, outside the app */
+.controls { max-width: 420px; margin: 0 auto; padding: 10px 16px; font-size: 13px; color: var(--muted);
+  display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; border-bottom: 1px dashed var(--border); }
+.controls strong { color: var(--text); width: 100%; }
+.controls select, .controls button { font-size: 13px; padding: 4px 8px; border-radius: 6px; border: 1px solid var(--border);
+  background: var(--surface); color: var(--text); }
+
+.app { max-width: 420px; margin: 0 auto; padding: 0 16px 120px; }
+.topbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 0 8px; }
+.brand { font-weight: 700; letter-spacing: .2px; }
+.tabs { display: flex; gap: 14px; font-size: 13px; color: var(--muted); padding-bottom: 10px; border-bottom: 1px solid var(--border); overflow: hidden; }
+.tabs .on { color: var(--text); font-weight: 600; border-bottom: 2px solid var(--accent); padding-bottom: 8px; margin-bottom: -11px; }
+.a1 { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); }
+.a1 .bar { width: 70px; height: 5px; border-radius: 3px; background: var(--border); overflow: hidden; }
+.a1 .bar i { display: block; height: 100%; background: var(--muted); }
+
+/* daily card */
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px; margin: 14px 0 6px; }
+.goal { display: flex; gap: 12px; align-items: center; }
+.ring { flex: none; width: 44px; height: 44px; }
+.goal-text { flex: 1; min-width: 0; }
+.goal-text b { display: block; }
+.goal-text span { color: var(--muted); font-size: 13px; }
+.streakrow { display: flex; gap: 14px; flex-wrap: wrap; margin: 12px 0; font-size: 13px; color: var(--muted); }
+.streakrow b { color: var(--text); }
+.streakrow svg { width: 16px; height: 16px; vertical-align: -3px; margin-right: 3px; }
+.mix { display: flex; gap: 10px; align-items: center; justify-content: space-between; border-top: 1px solid var(--border); padding-top: 12px; }
+.mix span { font-size: 13px; color: var(--muted); }
+.btn { border: 1px solid var(--border); background: var(--surface); padding: 8px 14px; border-radius: 8px; cursor: pointer; white-space: nowrap; }
+.btn.primary { background: var(--accent); color: var(--accent-text); border-color: var(--accent); font-weight: 600; }
+
+/* the lines */
+.unit { margin: 18px 0 0; --c: #888; }
+.unit > summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: auto 1fr auto; gap: 4px 10px; align-items: center;
+  padding: 10px 12px; border-radius: var(--radius); background: var(--surface); border: 1px solid var(--border); }
+.unit > summary::-webkit-details-marker { display: none; }
+.ubadge { background: var(--c); color: #fff; font-weight: 800; font-size: 14px; border-radius: 5px; padding: 3px 7px; min-width: 34px; text-align: center; }
+.utitle { font-weight: 650; min-width: 0; }
+.ucount { font-size: 12px; color: var(--muted); }
+.ubar { grid-column: 1 / -1; height: 4px; border-radius: 2px; background: color-mix(in srgb, var(--c) 18%, transparent); overflow: hidden; }
+.ubar i { display: block; height: 100%; background: var(--c); }
+.unit.complete > summary .ucount { color: var(--c); font-weight: 600; }
+
+ol.line { list-style: none; margin: 6px 0 0; padding: 0; }
+.st { position: relative; }
+.st::before { content: ""; position: absolute; left: 21px; width: 6px; top: 0; bottom: 0; background: var(--c); }
+.st.ahead::before { background: color-mix(in srgb, var(--c) 28%, transparent); }
+.st.current::before { background: linear-gradient(var(--c) 50%, color-mix(in srgb, var(--c) 28%, transparent) 50%); }
+.st:first-child::before { top: 50%; }
+.st:last-child::before { bottom: 50%; }
+.st > button { position: relative; display: grid; grid-template-columns: 48px 1fr; align-items: center; width: 100%; text-align: left;
+  background: none; border: 0; padding: 7px 0; cursor: pointer; min-height: 52px; }
+.dot { justify-self: center; width: 22px; height: 22px; border-radius: 50%; background: var(--surface);
+  border: 4px solid color-mix(in srgb, var(--c) 45%, var(--surface)); display: grid; place-items: center; z-index: 1; }
+.dot svg { width: 12px; height: 12px; }
+.done .dot { background: var(--c); border-color: var(--c); color: #fff; }
+.current .dot { width: 32px; height: 32px; border: 6px solid var(--c); box-shadow: 0 0 0 0 color-mix(in srgb, var(--c) 55%, transparent); animation: pulse 1.8s infinite; }
+@keyframes pulse { 70% { box-shadow: 0 0 0 12px transparent; } 100% { box-shadow: 0 0 0 0 transparent; } }
+.k-test .dot { border-radius: 4px; transform: rotate(45deg); width: 20px; height: 20px; }
+.k-test .dot svg { transform: rotate(-45deg); }
+.k-test.current .dot { width: 28px; height: 28px; }
+.k-test.tried .dot { background: linear-gradient(135deg, var(--c) 50%, var(--surface) 50%); }
+.k-end .dot { width: 32px; height: 32px; border: 5px solid var(--c); background: var(--surface); box-shadow: inset 0 0 0 4px var(--surface), inset 0 0 0 12px color-mix(in srgb, var(--c) 30%, var(--surface)); }
+.k-end.done .dot { box-shadow: inset 0 0 0 4px var(--surface), inset 0 0 0 12px var(--c); }
+.lbl { min-width: 0; padding-right: 4px; }
+.st.later > button { min-height: 40px; padding: 3px 0; }
+.lbl .name { font-weight: 600; }
+.ahead .lbl .name { color: color-mix(in srgb, var(--text) 70%, var(--bg)); font-weight: 500; }
+.lbl .step { font-size: 12px; color: var(--muted); margin-left: 4px; font-weight: 500; }
+.lbl .sub { font-size: 12.5px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.here { display: inline-block; font-size: 11px; font-weight: 700; color: #fff; background: var(--c); border-radius: 999px; padding: 1px 8px; margin-left: 6px; vertical-align: 1px; }
+.tried-badge { color: var(--warn); }
+.transfer { margin: 4px 0 0 48px; font-size: 12px; color: var(--muted); }
+
+/* bottom sheet, toast, jump pill */
+.scrim { position: fixed; inset: 0; background: rgba(0,0,0,.35); display: none; z-index: 10; }
+.sheet { position: fixed; left: 50%; bottom: 0; transform: translate(-50%, 100%); width: 100%; max-width: 420px; background: var(--surface);
+  border-radius: 16px 16px 0 0; box-shadow: var(--sheet-shadow); padding: 16px 16px 22px; transition: transform .2s ease; z-index: 11; --c: #888; }
+.sheet.open { transform: translate(-50%, 0); }
+.scrim.open { display: block; }
+.sheet .grab { width: 40px; height: 4px; border-radius: 2px; background: var(--border); margin: -4px auto 12px; }
+.sheet h3 { margin: 6px 0 2px; font-size: 18px; }
+.sheet .meta { color: var(--muted); font-size: 13px; }
+.sheet ul { margin: 10px 0 14px; padding-left: 18px; }
+.sheet li { margin: 3px 0; }
+.sheet .row { display: flex; gap: 10px; justify-content: flex-end; }
+.sheet .btn.primary { background: var(--c); border-color: var(--c); color: #fff; }
+.toast { position: fixed; left: 50%; top: 14px; transform: translate(-50%, -150%); max-width: 388px; width: calc(100% - 32px);
+  background: var(--surface); border: 1px solid var(--border); border-left: 5px solid var(--ok); border-radius: 10px; padding: 12px 14px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.15); transition: transform .25s ease; z-index: 20; }
+.toast.open { transform: translate(-50%, 0); }
+.toast b { display: block; }
+.toast.milestone { border-left-color: #e07b1a; }
+.jump { position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%); display: none; z-index: 5; border-radius: 999px;
+  background: var(--text); color: var(--bg); border: 0; padding: 9px 16px; font-weight: 600; box-shadow: 0 6px 18px rgba(0,0,0,.25); cursor: pointer; }
+.jump.show { display: block; }
+.note { font-size: 12px; color: var(--muted); margin: 26px 0 0; }
+</style>
+</head>
+<body>
+<div class="controls">
+  <strong>Mockup controls (not part of the app). Made-up progress, real course.</strong>
+  <label>Scenario <select id="scenario">
+    <option value="now">Like now: Unit 0, retake 0-T2</option>
+    <option value="mid">Later: middle of Unit 2</option>
+    <option value="day7">Goal just met on day 7</option>
+  </select></label>
+  <button id="theme">Light / dark</button>
+  <button id="reset">Reset</button>
+</div>
+
+<div class="app">
+  <div class="topbar">
+    <span class="brand">nemeceren</span>
+    <span class="a1" title="How far along the path to A1 (end of Unit 7)">A1 <span class="bar"><i id="a1bar"></i></span> <span id="a1pct"></span></span>
+  </div>
+  <div class="tabs"><span class="on">Home</span><span>Lessons</span><span>Words</span><span>Notes</span><span>Stats</span></div>
+
+  <section class="card" id="daily"></section>
+  <div id="lines"></div>
+  <p class="note">Tap any station. Nothing is locked; "Du bist hier" (you are here) is the first station not done yet. Starting a station or the daily mix pretends you finished it.</p>
+</div>
+
+<div class="scrim" id="scrim"></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true"></div>
+<div class="toast" id="toast" role="status"></div>
+<button class="jump" id="jump">Du bist hier &darr;</button>
+
+<script>
+const COURSE = {"lessons":[{"id":"u0-01-laute","unit":0,"order":1,"title":"Sounds: reading German aloud (Die Laute)","sections":["Why this lesson comes first","Letters that sound different from English","","Long and short vowels","The umlauts ä, ö, ü","","Two kinds of ch","What Russian and Armenian already give you","Listen and repeat aloud","Check yourself"],"story":false},{"id":"u0-02-begruessen","unit":0,"order":2,"title":"Hello and goodbye (Begrüßen und verabschieden)","sections":["Greetings through the day","In Munich","du or Sie?","","How are you?","","Listen and repeat aloud","Check yourself"],"story":false},{"id":"u0-03-ueberleben","unit":0,"order":3,"title":"Survival phrases (Wichtige Sätze)","sections":["Your emergency kit","When you didn't understand","Asking about words and languages","Please, thank you, sorry","","","","Listen and repeat aloud","Check yourself"],"story":false},{"id":"u0-04-alphabet","unit":0,"order":4,"title":"The alphabet and spelling (Das Alphabet)","sections":["Why spelling matters","The German alphabet","","Spelling conversations","Spell these aloud, then press the speaker to check","On the phone","Check yourself"],"story":false},{"id":"u0-05-zahlen","unit":0,"order":5,"title":"Numbers 0-100 (Die Zahlen)","sections":["0 to 12: learn these by heart","13 to 19","The tens","The German number trick","","Phone numbers and prices","Listen and repeat aloud","Check yourself"],"story":false},{"id":"u1-01-sich-vorstellen","unit":1,"order":1,"title":"Introducing yourself (Sich vorstellen)","sections":["Three verbs to start with","Examples","heißen, kommen, wohnen in the present tense","","Sounds in these words","","","Say these questions aloud","Check yourself","Grammar words you'll hear in the videos"],"story":false},{"id":"u1-02-laender-sprachen","unit":1,"order":2,"title":"Countries and languages (Länder und Sprachen)","sections":["Two questions you will hear everywhere","Countries and languages","sprechen changes its vowel","lernen (regular) and sprechen (e to i)","","","auch and aber","","Listen and repeat aloud","Check yourself"],"story":false},{"id":"u1-03-andere-vorstellen","unit":1,"order":3,"title":"Introducing others and the verb sein (Das ist ...)","sections":["Introducing someone","sein (to be): learn it by heart","","The personal pronouns","","How old are you?","","Listen and repeat aloud","Check yourself"],"story":false},{"id":"u1-04-beruf","unit":1,"order":4,"title":"Work and jobs (Beruf und Arbeit)","sections":["Talking about work","No 'a' before jobs","Male and female job names","arbeiten and machen","","In tech","Small talk at work","Listen and repeat aloud","Check yourself"],"story":false},{"id":"u1-05-kontaktdaten","unit":1,"order":5,"title":"Contact details (Adresse, Telefonnummer, E-Mail)","sections":["The questions","","German addresses","Saying an email address aloud","At the reception desk","","Listen and repeat aloud","Check yourself"],"story":false},{"id":"u1-06-fragen-smalltalk","unit":1,"order":6,"title":"Questions, class and small talk (Fragen und Smalltalk)","sections":["Where the verb goes","The verb position","","haben (to have)","","In class","A first small talk","","","Listen and repeat aloud","Check yourself"],"story":false},{"id":"u1-07-geschichte-im-kurs","unit":1,"order":7,"title":"Story: the first day of a German course (Im Deutschkurs)","sections":["How to read the story","Part 1: The first lesson","Questions on part 1","Part 2: Working in pairs","Questions on part 2","Part 3: Swapping numbers","Questions on part 3","Useful lines from the story"],"story":true},{"id":"u2-01-der-die-das","unit":2,"order":1,"title":"der, die, das: every noun has a gender (Die Artikel)","sections":["Three genders","The articles","Why this is hard for you, and what helps","Patterns that (almost) always work","How to remember","Things around you","Listen and repeat: noun plus article","Check yourself"],"story":false},{"id":"u2-02-was-ist-das","unit":2,"order":2,"title":"What is that? ein or der, kein or nicht (Was ist das?)","sections":["ein first, der after","kein or nicht?","kein works like ein","","Describing things","Colours","","Naming and describing","Listen and repeat aloud","Check yourself"],"story":false},{"id":"u2-03-plural","unit":2,"order":3,"title":"One book, two books: plurals (Singular und Plural)","sections":["The good news and the bad news","The main plural patterns","","","","Plurals in sentences","Listen and repeat: singular and plural","Check yourself"],"story":false},{"id":"u2-04-familie","unit":2,"order":4,"title":"Family and my, your, his, her (Meine Familie)","sections":["The family","mein and meine","my, your, his, her, our, their","","","Talking about family","","Listen and repeat aloud","Check yourself"],"story":false},{"id":"u2-05-wohnung","unit":2,"order":5,"title":"Your flat (Meine Wohnung)","sections":["The flat","Compound nouns: the last part decides","","Describing your flat","Talking about where you live","Listen and repeat aloud","Check yourself"],"story":false},{"id":"u2-06-haben-brauchen","unit":2,"order":6,"title":"What you have and need: einen, keinen (haben, brauchen)","sections":["One change: einen","ein and kein after haben and brauchen","","Everyday sentences","","","Listen and repeat aloud","Check yourself"],"story":false},{"id":"u3-01-uhrzeit","unit":3,"order":1,"title":"What time is it? (Wie spät ist es?)","sections":["Two ways to tell the time","The official way: hours, Uhr, minutes","The everyday way","The trap: halb","Think in Russian here","In Munich you'll also hear ...","At what time? um","Examples","Listen and repeat","Check yourself"],"story":false},{"id":"u3-02-wochentage","unit":3,"order":2,"title":"Days and parts of the day (Wochentage und Tageszeiten)","sections":["The days of the week","All days are der","Days you already know","Parts of the day","in der Nacht, and Gute Nacht","From ... to: von ... bis","Sunday is quiet","Time first, verb second","The verb stays second","Examples","Listen and repeat","Check yourself"],"story":false},{"id":"u3-03-tagesablauf","unit":3,"order":3,"title":"Your day: separable verbs (Mein Tag)","sections":["Eva's day","Verbs that split","Separable verbs in this unit","","","Two ready-made phrases","First, then: zuerst, dann","Feierabend","Listen and repeat","Check yourself"],"story":false},{"id":"u3-04-datum","unit":3,"order":4,"title":"Dates, months and birthdays (Das Datum)","sections":["The months","","The seasons","When? um, am, im","am and im are chunks for now","First, second, third: ordinal numbers","Ordinal numbers","Saying the date","","Birthdays","Not before the day","Two dates in Munich","Examples","Listen and repeat","Check yourself"],"story":false},{"id":"u3-05-modalverben","unit":3,"order":5,"title":"Can, want, must: the verb bracket (können, wollen, müssen)","sections":["You already know this shape","können, wollen, müssen","","The verb bracket","Separable verbs stay in one piece at the end","","Ich will is not 'I will'","muss nicht = don't have to","Suggesting something: Wollen wir ...?","zu Hause, nach Hause","Examples","Listen and repeat","Check yourself"],"story":false},{"id":"u3-06-verabredungen","unit":3,"order":6,"title":"Making, moving and declining plans (Verabredungen)","sections":["Ask, say yes, say no, move the time","Saying no nicely","Moving a time, and being late","Wir treffen uns","At work: appointments with Sie","","A message exchange","Listen and repeat","Check yourself"],"story":false},{"id":"u4-01-im-cafe","unit":4,"order":1,"title":"In a café: ordering drinks (Im Café)","sections":["Three ways to order","möchten (would like)","","einen, eine, ein when you order","Drinks and cake","","","In a Munich beer garden","At the café","Listen and repeat","Check yourself"],"story":false},{"id":"u4-02-akkusativ","unit":4,"order":2,"title":"The accusative: den, einen, keinen (Der Akkusativ)","sections":["Who does it, and what it's done to","Nominative and accusative","Which verbs?","es gibt = there is, there are","","","Examples","Listen and repeat","Check yourself"],"story":false},{"id":"u4-03-essen","unit":4,"order":3,"title":"Food, and verbs that change their vowel (Essen)","sections":["Everyday food","","In Munich","Meals","Verbs that change their vowel","essen, nehmen, lesen, fahren","","Examples","Listen and repeat","Check yourself"],"story":false},{"id":"u4-04-einkaufen","unit":4,"order":4,"title":"Shopping for food (Einkaufen)","sections":["Amounts","","Prices","At the counter","Cash","At the market","Listen and repeat","Check yourself"],"story":false},{"id":"u4-05-moegen-gern","unit":4,"order":5,"title":"Likes and free time: mögen, gern, lieber, am liebsten (Was magst du?)","sections":["Two ways to like","mögen (to like)","mag or möchte?","gern, lieber, am liebsten","","","Does it taste good?","Free time","How often?","Examples","Listen and repeat","Check yourself"],"story":false},{"id":"u4-06-pronomen","unit":4,"order":6,"title":"Him, her, me, you, and für, ohne (Pronomen im Akkusativ)","sections":["ihn, sie, es","Pronouns: who does it, and who it's done to","Now Unit 3 makes sense","für and ohne","","Verbs for people","","Examples","Listen and repeat","Check yourself"],"story":false},{"id":"u4-07-restaurant","unit":4,"order":7,"title":"In a restaurant: order, ask, pay (Im Restaurant)","sections":["From the door to the bill","Ordering for two","Asking about a dish","Paying and tipping","In a Munich beer garden","Dinner for two","Listen and repeat","Check yourself"],"story":false},{"id":"u5-01-arbeitstag","unit":5,"order":1,"title":"A day at work (Mein Arbeitstag)","sections":["Aram's work day","At work","What you do at work","-in for women","du or Sie at work?","Listen and repeat","Check yourself"],"story":false},{"id":"u5-02-imperativ","unit":5,"order":2,"title":"Instructions: the imperative (Lesen Sie! Lies!)","sections":["The Sie form: verb first","In class","The du and ihr forms","The imperative","","Make it softer","From the boss","Listen and repeat","Check yourself"],"story":false},{"id":"u5-03-duerfen-sollen","unit":5,"order":3,"title":"Allowed and supposed to: dürfen and sollen (Regeln)","sections":["dürfen and sollen","","dürfen: allowed to","","muss nicht or darf nicht?","sollen: someone wants it","Rules at work and in class","Listen and repeat","Check yourself"],"story":false},{"id":"u5-04-koennten-sie","unit":5,"order":4,"title":"Asking politely: Könnten Sie ...? (Höflich bitten)","sections":["From Können Sie to Könnten Sie","When you don't understand","","Help and thanks","Too fast?","Examples","Listen and repeat","Check yourself"],"story":false},{"id":"u5-05-perfekt","unit":5,"order":5,"title":"Talking about the past: the Perfekt (Ich habe gearbeitet)","sections":["The verb bracket again","Regular verbs: ge- ... -t","","Irregular verbs: ge- ... -en","haben or sein?","Verbs with sein","Two special groups","","","Examples","Listen and repeat","Check yourself"],"story":false},{"id":"u5-06-war-hatte","unit":5,"order":6,"title":"How was it? war and hatte (Wie war dein Wochenende?)","sections":["war and hatte","war and hatte","","","How was the weekend?","Your weekend in six sentences","Monday morning","Listen and repeat","Check yourself"],"story":false},{"id":"u6-01-dativ","unit":6,"order":1,"title":"The dative: dem, der, den (Der Dativ)","sections":["The third case","The three cases","Two things to notice","The seven dative words","Short forms","","seit + the present","The chunks from Units 3-5, explained","Examples","Listen and repeat","Check yourself"],"story":false},{"id":"u6-02-wo","unit":6,"order":2,"title":"Where is it? Places and buildings (Wo?)","sections":["Wo? + dative","Where?","Wo? or Wohin?","","In a building","","Examples","Listen and repeat","Check yourself"],"story":false},{"id":"u6-03-verkehr","unit":6,"order":3,"title":"By bus and train: getting around Munich (Mit Bus und Bahn)","sections":["How do you get there?","mit + dative","Getting on, changing, getting off","","Announcements and signs","Tickets in Munich","Examples","Listen and repeat","Check yourself"],"story":false},{"id":"u6-04-weg","unit":6,"order":4,"title":"Asking the way (Wie komme ich zum ...?)","sections":["Asking","Understanding directions","","rechts or richtig?","Asking the way","Listen and repeat","Check yourself"],"story":false},{"id":"u6-05-mir-dir","unit":6,"order":5,"title":"To me, to you: mir, dir, ihm (Pronomen im Dativ)","sections":["Pronouns in all three cases","You've used them since Unit 0","Verbs with the dative","","gefallen and mögen","Das ist mir egal.","Examples","Listen and repeat","Check yourself"],"story":false},{"id":"u6-06-gesundheit","unit":6,"order":6,"title":"Feeling ill: Mir tut der Kopf weh (Gesundheit)","sections":["The body","What hurts?","","How do you feel?","At the doctor's","Two numbers","Examples","Listen and repeat","Check yourself"],"story":false},{"id":"u6-07-krankmeldung","unit":6,"order":7,"title":"Calling in sick (Krankmeldung)","sections":["A short email in four parts","An email to the boss","A message to the teacher","By phone","The rules in Germany","","Listen and repeat","Check yourself"],"story":false},{"id":"u7-01-formulare","unit":7,"order":1,"title":"Forms and personal details (Formulare)","sections":["A typical form","Filling it in","Anmeldung","Home and abroad","Examples","Listen and repeat","Check yourself"],"story":false},{"id":"u7-02-post-telefon","unit":7,"order":2,"title":"Post, phone and internet (Post und Telefon)","sections":["At the post office","On the phone","Numbers","Examples","Listen and repeat","Check yourself"],"story":false},{"id":"u7-03-kleidung","unit":7,"order":3,"title":"Clothes and colours (Kleidung)","sections":["Clothes","Colours","Talking about clothes, with grammar you know","Colours after ist","Shoes off?","Examples","Listen and repeat","Check yourself"],"story":false},{"id":"u7-04-wetter","unit":7,"order":4,"title":"Weather and nature (Das Wetter)","sections":["What's the weather like?","","North, south, east, west","Föhn","Examples","Listen and repeat","Check yourself"],"story":false},{"id":"u7-05-reisen","unit":7,"order":5,"title":"Travel and hotels (Reisen)","sections":["At the hotel","Airport and station","Travelling, with grammar you know","Sightseeing","Munich airport","Examples","Listen and repeat","Check yourself"],"story":false},{"id":"u7-06-feste","unit":7,"order":6,"title":"Family, people and celebrations (Feste und Familie)","sections":["More family","People","Congratulations and good wishes","","When you're invited","Examples","Listen and repeat","Check yourself"],"story":false},{"id":"u7-07-a1-abschluss","unit":7,"order":7,"title":"Small words that matter, and the A1 check (Kleine Wörter)","sections":["wissen (to know a fact)","wissen or kennen?","","Little words you'll use every day","","Your A1 check","Examples","Listen and repeat","Check yourself"],"story":false}],"tests":[{"id":"u0-t1-laute-gruesse","title":"Sounds and greetings","unit":0,"lesson":"u0-02-begruessen","created":"2026-09-29","items":10},{"id":"u0-t2-ueberleben-alphabet","title":"Survival phrases and spelling","unit":0,"lesson":"u0-04-alphabet","created":"2026-09-29","items":8},{"id":"u0-t3-zahlen","title":"Numbers 0-100","unit":0,"lesson":"u0-05-zahlen","created":"2026-09-29","items":10},{"id":"u1-t1-vorstellen-sprachen","title":"Introducing yourself, countries and languages","unit":1,"lesson":"u1-02-laender-sprachen","created":"2026-09-29","items":12},{"id":"u1-t2-leute-beruf","title":"Introducing others, sein, and jobs","unit":1,"lesson":"u1-04-beruf","created":"2026-09-29","items":12},{"id":"u1-t3-kontakt-fragen","title":"Contact details, questions and class phrases (Unit 1 final)","unit":1,"lesson":"u1-06-fragen-smalltalk","created":"2026-09-29","items":12},{"id":"u2-t1-artikel","title":"Articles, kein and nicht, describing things","unit":2,"lesson":"u2-02-was-ist-das","created":"2026-09-29","items":12},{"id":"u2-t2-plural-familie","title":"Plurals, family and possessives","unit":2,"lesson":"u2-04-familie","created":"2026-09-29","items":12},{"id":"u2-t3-familie-wohnung","title":"Your flat, haben and brauchen (Unit 2 final)","unit":2,"lesson":"u2-06-haben-brauchen","created":"2026-09-29","items":12},{"id":"u3-t1-uhrzeit-tage","title":"Times and days","unit":3,"lesson":"u3-02-wochentage","created":"2026-10-02","items":11},{"id":"u3-t2-tagesablauf-datum","title":"Your day, separable verbs and dates","unit":3,"lesson":"u3-04-datum","created":"2026-10-02","items":12},{"id":"u3-t3-verabredungen","title":"Modal verbs and making plans (Unit 3 final)","unit":3,"lesson":"u3-06-verabredungen","created":"2026-10-02","items":12},{"id":"u3-t4-checkpoint-0-3","title":"Checkpoint: Units 0-3","unit":3,"lesson":"u3-06-verabredungen","created":"2026-10-02","items":16},{"id":"u4-t1-cafe-akkusativ","title":"In a café, and the accusative","unit":4,"lesson":"u4-02-akkusativ","created":"2026-10-02","items":12},{"id":"u4-t2-essen-freizeit","title":"Food, shopping and what you like","unit":4,"lesson":"u4-05-moegen-gern","created":"2026-10-02","items":12},{"id":"u4-t3-restaurant","title":"Pronouns and the restaurant (Unit 4 final)","unit":4,"lesson":"u4-07-restaurant","created":"2026-10-02","items":12},{"id":"u5-t1-arbeit-imperativ","title":"Work and instructions","unit":5,"lesson":"u5-02-imperativ","created":"2026-10-02","items":12},{"id":"u5-t2-regeln-bitten","title":"Rules and polite requests","unit":5,"lesson":"u5-04-koennten-sie","created":"2026-10-02","items":12},{"id":"u5-t3-wochenende","title":"The past and your weekend (Unit 5 final)","unit":5,"lesson":"u5-06-war-hatte","created":"2026-10-02","items":12},{"id":"u6-t1-dativ-orte","title":"The dative and places","unit":6,"lesson":"u6-02-wo","created":"2026-10-02","items":12},{"id":"u6-t2-verkehr-weg","title":"Bus, train and directions","unit":6,"lesson":"u6-04-weg","created":"2026-10-02","items":12},{"id":"u6-t3-gesundheit-krankmeldung","title":"To me, health and calling in sick (Unit 6 final)","unit":6,"lesson":"u6-07-krankmeldung","created":"2026-10-02","items":12},{"id":"u7-t1-formulare-post","title":"Forms, post and phone","unit":7,"lesson":"u7-02-post-telefon","created":"2026-10-02","items":11},{"id":"u7-t2-kleidung-wetter","title":"Clothes and weather","unit":7,"lesson":"u7-04-wetter","created":"2026-10-02","items":11},{"id":"u7-t3-reisen-feste","title":"Travel and celebrations","unit":7,"lesson":"u7-06-feste","created":"2026-10-02","items":12},{"id":"u7-t4-a1-check","title":"A1 final check (Units 0-7)","unit":7,"lesson":"u7-07-a1-abschluss","created":"2026-10-02","items":18}]};
+const PASS = 80;
+const UNITS = [
+  { n: 0, title: 'Sounds and first words', color: '#5f7286' },
+  { n: 1, title: 'Meeting people', color: '#2f8a52' },
+  { n: 2, title: 'People and things', color: '#c8323c' },
+  { n: 3, title: 'Making plans', color: '#de7a12' },
+  { n: 4, title: 'Eating out and free time', color: '#12898a' },
+  { n: 5, title: 'Work and class day', color: '#a8690f' },
+  { n: 6, title: 'Getting around, feeling ill', color: '#2a62b8' },
+  { n: 7, title: 'A1 wrap-up', color: '#7a4bb3' },
+];
+const ICON = {
+  check: '<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 6.3l2.3 2.3 4.7-5"/></svg>',
+  book: '<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1.5 2.5h3.5a1 1 0 0 1 1 1v6.5a1 1 0 0 0-1-1H1.5zM10.5 2.5H7a1 1 0 0 0-1 1v6.5a1 1 0 0 1 1-1h3.5z"/></svg>',
+  flame: '<svg viewBox="0 0 16 16"><path fill="#e07b1a" d="M8 1c.5 2.6 3.8 4 3.8 7.6A3.8 3.8 0 0 1 8 15a3.8 3.8 0 0 1-3.8-3.9c0-1.6.8-2.6 1.6-3.4.1 1 .6 1.8 1.4 2.1C7 7.6 6.6 4.4 8 1z"/></svg>',
+  freeze: '<svg viewBox="0 0 16 16" fill="none" stroke="#3a8ad6" stroke-width="1.6" stroke-linecap="round"><path d="M8 1.5v13M2.4 4.8l11.2 6.4M2.4 11.2l11.2-6.4M6 2.8l2 1.4 2-1.4M6 13.2l2-1.4 2 1.4"/></svg>',
+};
+
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const germanName = (t) => (t.match(/\(([^)]+)\)\s*$/) || [null, t])[1];
+const englishName = (t) => t.replace(/\s*\([^)]+\)\s*$/, '');
+
+function splitSteps(n) {
+  const k = Math.min(3, Math.max(1, Math.round(n / 5.5)));
+  const out = []; let a = 0;
+  for (let i = 0; i < k; i++) { const b = Math.round(((i + 1) * n) / k); out.push([a, b]); a = b; }
+  return out;
+}
+
+// Stations in course order: lesson steps, then the tests that follow that lesson, then the terminus.
+const STATIONS = [];
+for (const u of UNITS) {
+  const lessons = COURSE.lessons.filter((l) => l.unit === u.n).sort((a, b) => a.order - b.order);
+  for (const l of lessons) {
+    const steps = splitSteps(l.sections.length);
+    steps.forEach(([a, b], i) => STATIONS.push({ id: `${l.id}#${i}`, unit: u.n, kind: l.story ? 'story' : 'step', lesson: l, step: i, of: steps.length,
+      sections: l.sections.slice(a, b) }));
+    COURSE.tests.filter((t) => t.lesson === l.id).sort((a, b) => a.id.localeCompare(b.id))
+      .forEach((t) => STATIONS.push({ id: t.id, unit: u.n, kind: 'test', test: t }));
+  }
+  STATIONS.push({ id: `end-${u.n}`, unit: u.n, kind: 'end' });
+}
+const COUNTED = STATIONS.filter((s) => s.kind !== 'end');
+
+function lessonStations(prefixes) { return COUNTED.filter((s) => prefixes.some((p) => s.id.startsWith(p))).map((s) => s.id); }
+
+const SCENARIOS = {
+  now: () => ({ done: new Set(lessonStations(['u0-01', 'u0-02', 'u0-03', 'u0-04', 'u0-t1', 'u0-05-zahlen#0'])), best: { 'u0-t2-ueberleben-alphabet': 63, 'u0-t1-laute-gruesse': 88 },
+    streak: 3, freezes: 0, goal: false, due: 12, fresh: 5, mistakes: 3 }),
+  mid: () => ({ done: new Set(lessonStations(['u0-', 'u1-', 'u2-01', 'u2-02-was-ist-das#0'])), best: {},
+    streak: 12, freezes: 1, goal: false, due: 18, fresh: 5, mistakes: 6 }),
+  day7: () => ({ done: new Set(lessonStations(['u0-01', 'u0-02', 'u0-03', 'u0-04', 'u0-t1', 'u0-t2', 'u0-05-zahlen#0'])), best: { 'u0-t2-ueberleben-alphabet': 88, 'u0-t1-laute-gruesse': 88 },
+    streak: 6, freezes: 0, goal: false, due: 9, fresh: 5, mistakes: 1, autoMeet: true }),
+};
+
+let S; let openUnits = {};
+function load(name) { S = SCENARIOS[name](); openUnits = {}; render(); if (S.autoMeet) setTimeout(meetGoal, 500, 'Test 0-T2 passed (pretend).'); else scrollTo(0, 0); }
+
+const isDone = (s) => s.kind === 'end' ? COUNTED.filter((x) => x.unit === s.unit).every((x) => S.done.has(x.id)) : S.done.has(s.id);
+const currentStation = () => COUNTED.find((s) => !S.done.has(s.id));
+const unitOf = (n) => UNITS.find((u) => u.n === n);
+
+function render() {
+  const cur = currentStation();
+  const doneCount = COUNTED.filter((s) => S.done.has(s.id)).length;
+  const pct = Math.round((100 * doneCount) / COUNTED.length);
+  document.getElementById('a1bar').style.width = pct + '%';
+  document.getElementById('a1pct').textContent = pct + '%';
+
+  // daily card
+  const r = 18, C = 2 * Math.PI * r;
+  const ring = `<svg class="ring" viewBox="0 0 44 44"><circle cx="22" cy="22" r="${r}" fill="none" stroke="var(--border)" stroke-width="5"/>
+    <circle cx="22" cy="22" r="${r}" fill="none" stroke="var(--ok)" stroke-width="5" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${S.goal ? 0 : C}" transform="rotate(-90 22 22)" style="transition: stroke-dashoffset .6s"/>
+    ${S.goal ? '<path d="M14.5 22.5l5 5 10-11" fill="none" stroke="var(--ok)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>' : ''}</svg>`;
+  const nextMs = [7, 30, 100].find((m) => m > S.streak);
+  document.getElementById('daily').innerHTML = `
+    <div class="goal">${ring}<div class="goal-text"><b>${S.goal ? 'Goal done for today' : 'Today: 1 station or the daily mix'}</b>
+      <span>${S.goal ? 'Anything more is a bonus.' : `Do it to keep your streak.`}</span></div></div>
+    <div class="streakrow"><span>${ICON.flame}<b>${S.streak}</b> day${S.streak === 1 ? '' : 's'} streak</span>
+      <span>${ICON.freeze}<b>${S.freezes}</b>/2 freezes</span>
+      ${nextMs ? `<span>${nextMs - S.streak} to the ${nextMs}-day mark</span>` : ''}</div>
+    <div class="mix"><span>Daily mix: ${S.due} reviews, ${S.fresh} new, ${S.mistakes} mistakes. About 12 min.</span>
+      <button class="btn primary" id="mixbtn">Start</button></div>`;
+  document.getElementById('mixbtn').onclick = () => meetGoal('Daily mix done (pretend).');
+
+  // lines
+  const html = UNITS.map((u) => {
+    const st = STATIONS.filter((s) => s.unit === u.n);
+    const counted = st.filter((s) => s.kind !== 'end');
+    const nDone = counted.filter((s) => S.done.has(s.id)).length;
+    const complete = nDone === counted.length;
+    const curUnit = cur ? cur.unit : 99;
+    const defaultOpen = u.n === curUnit || u.n === curUnit + 1;
+    const open = openUnits[u.n] ?? defaultOpen;
+    const next = unitOf(u.n + 1);
+    const items = st.map((s) => stationHtml(s, cur)).join('');
+    return `<details class="unit${complete ? ' complete' : ''}" data-unit="${u.n}" style="--c:${u.color}" ${open ? 'open' : ''}>
+      <summary><span class="ubadge">U${u.n}</span><span class="utitle">${esc(u.title)}</span>
+        <span class="ucount">${complete ? 'done' : `${nDone}/${counted.length}`}</span><span class="ubar"><i style="width:${(100 * nDone) / counted.length}%"></i></span></summary>
+      <ol class="line">${items}</ol>
+      ${next ? `<div class="transfer">Umsteigen (change) to <b style="color:${next.color}">U${next.n}</b> ${esc(next.title)}</div>` : '<div class="transfer">End of A1. The Goethe A1 mock exam runs in the chat with Claude.</div>'}
+    </details>`;
+  }).join('');
+  const lines = document.getElementById('lines');
+  lines.innerHTML = html;
+  lines.querySelectorAll('details').forEach((d) => d.addEventListener('toggle', () => { openUnits[d.dataset.unit] = d.open; }));
+  lines.querySelectorAll('[data-st]').forEach((b) => (b.onclick = () => openSheet(STATIONS.find((s) => s.id === b.dataset.st))));
+  observeCurrent();
+}
+
+function stationHtml(s, cur) {
+  const done = isDone(s);
+  const isCur = cur && s.id === cur.id;
+  const best = s.kind === 'test' ? S.best[s.id] : undefined;
+  const cls = ['st', `k-${s.kind}`, s.kind !== 'test' && s.kind !== 'end' && s.step > 0 ? 'later' : '', done ? 'done' : isCur ? 'current' : 'ahead', best !== undefined && !done ? 'tried' : ''].join(' ');
+  let name, step = '', sub;
+  if (s.kind === 'end') { name = 'Endstation'; sub = done ? `Unit ${s.unit} done` : `Unit ${s.unit} complete when every station is done`; }
+  else if (s.kind === 'test') {
+    name = `Test ${s.unit}-T${s.id.match(/-t(\d)/)[1]}`;
+    sub = done ? `passed, best ${best ?? 85}%` : best !== undefined ? `<span class="tried-badge">best ${best}%</span>, pass from ${PASS}%` : `${s.test.items} items: ${esc(s.test.title)}`;
+  } else {
+    name = germanName(s.lesson.title); step = s.of > 1 ? `${s.step + 1}/${s.of}` : '';
+    sub = done ? (s.step === 0 ? 'done' : '') : s.step === 0 ? esc(englishName(s.lesson.title)) : '';
+  }
+  let glyph = '';
+  if (done) glyph = ICON.check; else if (s.kind === 'story') glyph = `<span style="color:var(--c)">${ICON.book}</span>`;
+  return `<li class="${cls}" ${isCur ? 'id="current"' : ''}><button data-st="${esc(s.id)}">
+    <span class="dot">${glyph}</span>
+    <span class="lbl"><span class="name">${esc(name)}</span>${step ? `<span class="step">${step}</span>` : ''}${isCur ? '<span class="here" title="You are here">Du bist hier</span>' : ''}
+      ${sub ? `<div class="sub">${sub}</div>` : ''}</span></button></li>`;
+}
+
+function openSheet(s) {
+  const u = unitOf(s.unit);
+  const sheet = document.getElementById('sheet');
+  sheet.style.setProperty('--c', u.color);
+  const done = isDone(s);
+  let body = '', action = null, label = '';
+  if (s.kind === 'end') {
+    const left = COUNTED.filter((x) => x.unit === s.unit && !S.done.has(x.id)).length;
+    body = `<h3>Endstation: Unit ${s.unit}</h3><div class="meta">${esc(u.title)}</div>
+      <p>${done ? 'You reached the end of this line.' : `${left} station${left === 1 ? '' : 's'} left on this line.`}</p>`;
+  } else if (s.kind === 'test') {
+    const best = S.best[s.id];
+    body = `<h3>Test ${s.unit}-T${s.id.match(/-t(\d)/)[1]}</h3><div class="meta">${esc(s.test.title)}</div>
+      <p>${s.test.items} items, passed from ${PASS}%.${best !== undefined ? ` Your best so far: ${best}%.` : ''}</p>`;
+    label = done ? 'Take it again' : best !== undefined ? 'Retake' : 'Take the test';
+    action = () => { S.done.add(s.id); S.best[s.id] = Math.max(S.best[s.id] || 0, 88); return 'Test passed (pretend).'; };
+  } else {
+    const secs = s.sections.map((t) => `<li>${t ? esc(t) : '<span class="meta">Exercises</span>'}</li>`).join('');
+    body = `<h3>${esc(germanName(s.lesson.title))} ${s.of > 1 ? `<span class="meta">step ${s.step + 1} of ${s.of}</span>` : ''}</h3>
+      <div class="meta">${esc(englishName(s.lesson.title))}. About 8 minutes.</div>
+      <ul>${secs}</ul>`;
+    label = done ? 'Do it again' : s.step > 0 && S.done.has(`${s.lesson.id}#${s.step - 1}`) ? 'Continue' : 'Start';
+    action = () => { S.done.add(s.id); return 'Station done (pretend).'; };
+  }
+  sheet.innerHTML = `<div class="grab"></div><span class="ubadge" style="background:${u.color}">U${u.n}</span>${body}
+    <div class="row"><button class="btn" id="closeSheet">Close</button>${action ? `<button class="btn primary" id="goSheet">${label}</button>` : ''}</div>`;
+  document.getElementById('closeSheet').onclick = closeSheet;
+  if (action) document.getElementById('goSheet').onclick = () => { const msg = action(); closeSheet(); render(); meetGoal(msg); };
+  sheet.classList.add('open'); document.getElementById('scrim').classList.add('open');
+}
+function closeSheet() { document.getElementById('sheet').classList.remove('open'); document.getElementById('scrim').classList.remove('open'); }
+document.getElementById('scrim').onclick = closeSheet;
+
+let toastTimer;
+function toast(html, milestone) {
+  const t = document.getElementById('toast');
+  t.className = 'toast' + (milestone ? ' milestone' : ''); t.innerHTML = html;
+  requestAnimationFrame(() => t.classList.add('open'));
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('open'), milestone ? 5000 : 3200);
+}
+function meetGoal(what) {
+  if (S.goal) { toast(`<b>${what}</b>Goal already done today.`); render(); return; }
+  S.goal = true; S.streak += 1;
+  let extra = '';
+  if (S.streak % 7 === 0 && S.freezes < 2) { S.freezes += 1; extra = ` You earned a streak freeze (${S.freezes}/2).`; }
+  render();
+  if ([7, 30, 100].includes(S.streak)) toast(`<b>${S.streak} days in a row.</b>${extra || ' Freezes are full (2/2).'}`, true);
+  else toast(`<b>${what} Goal done for today.</b>Streak: ${S.streak} days.${extra}`);
+}
+
+// "Du bist hier" pill when the current station is off screen
+let io;
+function observeCurrent() {
+  if (io) io.disconnect();
+  const el = document.getElementById('current'); const jump = document.getElementById('jump');
+  if (!el) { jump.classList.remove('show'); return; }
+  io = new IntersectionObserver(([e]) => jump.classList.toggle('show', !e.isIntersecting));
+  io.observe(el);
+}
+function scrollToCurrent(smooth = true) {
+  const cur = currentStation(); if (!cur) return;
+  const d = document.querySelector(`details[data-unit="${cur.unit}"]`);
+  if (d && !d.open) { d.open = true; openUnits[cur.unit] = true; }
+  document.getElementById('current')?.scrollIntoView({ behavior: smooth ? 'smooth' : 'instant', block: 'center' });
+}
+document.getElementById('jump').onclick = () => scrollToCurrent(true);
+
+document.getElementById('scenario').onchange = (e) => load(e.target.value);
+document.getElementById('reset').onclick = () => load(document.getElementById('scenario').value);
+document.getElementById('theme').onclick = () => {
+  const root = document.documentElement;
+  const dark = root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+  root.dataset.theme = dark ? 'light' : 'dark';
+};
+load('now');
+</script>
+</body>
+</html>
