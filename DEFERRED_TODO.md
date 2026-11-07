@@ -32,3 +32,9 @@ Topics cut from current work so they don't get lost.
   - then make check-content require it on course tests.
   - Not done yet: careful content work, best as its own session or one agent with a review.
 
+- **Path Home follow-ups (minors from the final review, 2026-11-07):**
+  - Undo on a station of a lesson finished before the path (`doneAt`, no events) clears the whole lesson's stations: hide "Mark as not done" there, or ask first.
+  - Redoing a station rewrites the lesson's `doneAt` date (`finishStation` marks done again): only mark done when `doneAt` is null.
+  - Phone performance: `computeGoal` runs per progress change in GoalToast and Home; DailyCard recomputes on every sheet open; LessonsPage rebuilds `courseStations` (reuse `STATIONS`, memo DailyCard and PathLines).
+  - Contrast: white on the U3 orange `#de7a12` is about 3.0:1; darken it a little or per theme.
+  - No header tab is active on `#/line`.

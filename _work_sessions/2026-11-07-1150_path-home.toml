@@ -1,0 +1,50 @@
+title = "The path Home: U-Bahn lines, daily goal, goal-based streak with freezes"
+date = "2026-11-07"
+time = "11:50"
+areas = ["_knowledge", "app/src", "app/scripts/non_essential", "content/README.md", "backend", "progress/README.md", "DECISIONS.md"]
+done = [
+  "Interview with Hayk (AskUserQuestion, Q2-Q16): U-Bahn look, lessons split into stations (first 'short', then 1-3 per lesson after the mockup), nothing locked, daily goal = 1 station or the daily mix, streak = goal days, freezes, a thin overall progress bar; Anahit and Armen get a one-time notice plus 1 starter freeze for everyone.",
+  "A clickable throwaway mockup (real course, made-up progress), sent to Hayk's phone; Hayk: 'Looks nice'. Kept as _knowledge/2026-11-07_path-home-mockup.html.",
+  "Design _knowledge/2026-11-07_path-home-design.md (builder check by one subagent folded in) and plan _knowledge/2026-11-07_path-home-plan.md; both approved by Hayk.",
+  "Built inline in batched commits (Hayk: 'batch the relevant tasks'): path.ts (stations, done by section-range coverage, current station, level progress), goal.ts (goal days, streak, freezes, milestones), PathEvent record through outbox/store/sync/state, stationActions.ts, the lesson station view (#/lesson/<id>/station/<k>, Station done, Next station, Back to the line #/line), mark lesson done records stations, the daily mix event, the new Home (level bar, DailyCard, notice, milestone card, PathLines, StationSheet, Du bist hier pill, GoalToast), Stats tiles on the goal streak.",
+  "Backend (OK'd by Hayk, Q16): migration 005_path_events.sql applied, neon deploy (only function api changed), smoke test passed every check in 19 s (12 new path-event checks). progress.py path shows the goal per day.",
+  "Checks: vitest 358 -> 411, typecheck clean, check-content OK, build OK. Guest-mode Playwright at 390 and 360 px, light and dark: station flow, toast, undo, test sheet, pill, folds, daily mix to the end meets the goal; 0 console errors.",
+  "DECISIONS #82 (path Home), #83 (daily goal and streak from 2026-11-08), #84 (path_events table).",
+  "Final whole-branch review (one Opus reviewer): 0 critical, 3 important, 8 minor. Fixed the 3 important plus 2 minors re-graded (Home opens at the top per Q11; no freeze spent without a streak): f65152f, each with a failing test first where testable; suite 415/415. 5 minors deferred (see DEFERRED_TODO.md).",
+  "Pushed f65152f on 2026-11-07 13:10 local; GitHub Pages deploy.",
+]
+pending = [
+  "Hayk's phone check after the push: the station flow, the goal ring, the notice.",
+  "The other open issue from 2026-11-06: Android Chrome says the app can't be installed (manifest, PNG icons, service worker).",
+  "Unit titles for A2 units in path.ts UNIT_TITLES when A2 lessons are written.",
+]
+next = """
+The goal-based streak starts on 2026-11-08 (PATH_LAUNCH_DAY). Check with `uv run backend/scripts/progress.py path --days 3` (and --user for Anahit or Armen only if Hayk asks) that stations and mixes arrive.
+Then the install issue (manifest, icons, service worker), and the deferred minors from the review if Hayk wants them.
+"""
+files = [
+  "_knowledge/2026-11-07_path-home-design.md", "_knowledge/2026-11-07_path-home-plan.md", "_knowledge/2026-11-07_path-home-mockup.html",
+  "app/src/lib/path.ts", "app/src/lib/goal.ts", "app/src/lib/goalView.ts", "app/src/lib/stationActions.ts", "app/src/lib/homeView.ts (+ tests for each)",
+  "app/src/lib/outbox.ts", "app/src/lib/storage.ts", "app/src/lib/daily.ts", "app/src/lib/config.ts", "app/src/content/schema.ts",
+  "app/src/pages/HomePage.tsx", "app/src/pages/DailyCard.tsx (was DailyPanel.tsx)", "app/src/pages/LessonsPage.tsx", "app/src/pages/DailyPage.tsx", "app/src/pages/StatsPage.tsx",
+  "app/src/components/PathLines.tsx", "app/src/components/StationSheet.tsx", "app/src/components/GoalToast.tsx", "app/src/App.tsx", "app/src/styles.css",
+  "app/scripts/non_essential/print-stations.ts", "content/README.md",
+  "backend/db/migrations/005_path_events.sql", "backend/src/schema.ts", "backend/src/sync.ts", "backend/src/state.ts", "backend/src/config.ts", "backend/README.md",
+  "backend/scripts/progress.py", "backend/scripts/non_essential/smoke_test.py", "progress/README.md", "DECISIONS.md",
+]
+commits = [
+  "0531241 Path Home design and its mockup",
+  "15efc50 Path Home implementation plan",
+  "47b3542 Path: stations from the course, done-ness, current station, progress",
+  "f67aa1d Path events in the app, and the goal-based streak with freezes",
+  "6c12875 Lesson stations, Station done, and the daily mix event",
+  "c771107 Path Home: U-Bahn lines, daily card with goal and streak, station sheet",
+  "0e4af9e Path Home: the goal toast fires on any flip after the first render",
+  "e08607d Backend: path_events table, sync and state, progress.py path",
+  "4c9864e Launch day 2026-11-08, decisions #82-#84",
+  "f65152f Fixes from the final review of the path Home",
+]
+notes = """
+Subagents: one builder check of the design, one final whole-branch reviewer (Opus). No paid APIs. Neon: one migration, one deploy, one smoke test run.
+The uncommitted CLAUDE.md "Tasks (kachayt)" section and the untracked .vscode/ are from elsewhere; not touched.
+"""
