@@ -227,6 +227,36 @@ export const StudySessionUpload = z
     }
   })
 
+// ---------- path events (the Home path and the daily goal, DECISIONS.md #84) ----------
+
+/** The app's PathEventRecord plus the id (app/src/content/schema.ts) and the table (005_path_events.sql). */
+export const PathEventUpload = z
+  .strictObject({
+    id: ClientId,
+    kind: z.enum(['station', 'daily-mix']),
+    lessonId: Slug.optional(),
+    sectionFrom: Count.optional(),
+    sectionTo: Count.min(1).optional(),
+    localDay: IsoDate,
+    at: IsoDateTime,
+    createdAt: IsoDateTime,
+    updatedAt: IsoDateTime,
+    /** Soft delete (undo). */
+    deletedAt: IsoDateTime.optional(),
+  })
+  .superRefine((x, ctx) => {
+    const range = [x.lessonId, x.sectionFrom, x.sectionTo]
+    if (x.kind === 'station') {
+      if (range.some((v) => v === undefined)) ctx.addIssue({ code: 'custom', path: ['lessonId'], message: 'a station event needs lessonId, sectionFrom and sectionTo' })
+      else if (x.sectionTo! <= x.sectionFrom!) ctx.addIssue({ code: 'custom', path: ['sectionTo'], message: 'must be larger than sectionFrom' })
+    } else if (range.some((v) => v !== undefined)) {
+      ctx.addIssue({ code: 'custom', path: ['kind'], message: 'a daily-mix event has no lessonId, sectionFrom or sectionTo' })
+    }
+    if (Date.parse(x.updatedAt) < Date.parse(x.createdAt)) {
+      ctx.addIssue({ code: 'custom', path: ['updatedAt'], message: 'is before createdAt' })
+    }
+  })
+
 // ---------- one sync batch ----------
 
 function checkUnique<T>(list: T[], key: (x: T) => string, field: string, name: string, ctx: z.RefinementCtx): void {
@@ -248,6 +278,7 @@ export const SyncBody = z
     notes: z.array(NoteUpload).max(SYNC_LIMITS.notes).default([]),
     customWords: z.array(CustomWordUpload).max(SYNC_LIMITS.customWords).default([]),
     studySessions: z.array(StudySessionUpload).max(SYNC_LIMITS.studySessions).default([]),
+    pathEvents: z.array(PathEventUpload).max(SYNC_LIMITS.pathEvents).default([]),
   })
   .superRefine((b, ctx) => {
     checkUnique(b.reviewEvents, (e) => e.id, 'reviewEvents', 'id', ctx)
@@ -258,6 +289,7 @@ export const SyncBody = z
     checkUnique(b.notes, (n) => n.id, 'notes', 'id', ctx)
     checkUnique(b.customWords, (w) => w.id, 'customWords', 'id', ctx)
     checkUnique(b.studySessions, (x) => x.id, 'studySessions', 'id', ctx)
+    checkUnique(b.pathEvents, (x) => x.id, 'pathEvents', 'id', ctx)
   })
 
 export type ReviewEventUpload = z.infer<typeof ReviewEventUpload>
@@ -269,4 +301,5 @@ export type NewWordExtraUpload = z.infer<typeof NewWordExtraUpload>
 export type NoteUpload = z.infer<typeof NoteUpload>
 export type CustomWordUpload = z.infer<typeof CustomWordUpload>
 export type StudySessionUpload = z.infer<typeof StudySessionUpload>
+export type PathEventUpload = z.infer<typeof PathEventUpload>
 export type SyncBody = z.infer<typeof SyncBody>

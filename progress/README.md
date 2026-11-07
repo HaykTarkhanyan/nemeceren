@@ -7,6 +7,7 @@ Claude reads and grades progress from the repo root:
 ```bash
 uv run backend/scripts/progress.py summary --days 7      # activity (measured and timer minutes), words, most-missed words, lessons, attempts, notes and own words waiting
 uv run backend/scripts/progress.py sessions --days 7     # study timer sessions, oldest first: day, minutes, start-stop (UTC), pauses, label
+uv run backend/scripts/progress.py path --days 14        # the daily goal per day: stations done, daily mixes, course-test attempts
 uv run backend/scripts/progress.py ungraded              # attempts waiting for a review
 uv run backend/scripts/progress.py show <attempt-id>     # one attempt in full
 uv run backend/scripts/progress.py review <attempt-id> review.json
@@ -88,5 +89,6 @@ Hayk times their study with the timer in the app's header (Start, Pause/Resume, 
 In `progress.py`:
 
 - `summary` shows two kinds of minutes per day and in total: **measured** (the time the app measured on word cards and test items, capped as on the Stats page) and **timer** (the sessions, with their count in brackets). The timer usually shows more: it also covers lessons, videos and books.
+- `path [--days N]` shows the Home path and the daily goal (DECISIONS.md #83) per local day (default 7 days): the stations done (lesson id and section range; a whole theme lesson is one range), "daily mix" for a mix run to its end, and the course-test attempts with their score; a day with any of them met the goal, "-" is a day without. Undone stations are left out.
 - `sessions [--days N]` lists the sessions (default 7 days, by the local day of the start), oldest first: id, day, minutes, start and stop in UTC with the paused minutes (or "added by hand"), "edited", and the label.
 - A day with a timer session (also one added by hand) counts as a study day in `summary`, in the streak and in the study-day counts, like a day with a review or an answered test item.

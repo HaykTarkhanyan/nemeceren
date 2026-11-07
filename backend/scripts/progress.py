@@ -822,6 +822,56 @@ def cmd_summary(conn: psycopg.Connection, args: argparse.Namespace) -> None:
     LOG.info("\n".join(lines))
 
 
+def cmd_path(conn: psycopg.Connection, args: argparse.Namespace) -> None:
+    """Per local day: stations done, daily mixes, course-test attempts, and whether the daily goal was met (DECISIONS.md #83)."""
+    if args.days < 1 or args.days > 366:
+        raise RuntimeError("--days must be between 1 and 366")
+    user = resolve_user(conn, args.user)
+    today = date.today()
+    since = today - timedelta(days=args.days - 1)
+    events = conn.execute(
+        """SELECT local_day::text AS day, kind, lesson_id, section_from, section_to
+             FROM path_events
+            WHERE user_id = %s AND deleted_at IS NULL AND local_day BETWEEN %s AND %s
+            ORDER BY at, id""",
+        (user["user_id"], since, today),
+    ).fetchall()
+    # Course tests are the ones a lesson owns (test JSON "lesson"); lesson exercises have lesson_id set.
+    course_tests = {
+        json.loads(p.read_text(encoding="utf-8"))["id"]
+        for p in (REPO_ROOT / "content" / "tests").glob("*.json")
+        if "lesson" in json.loads(p.read_text(encoding="utf-8"))
+    }
+    attempts = conn.execute(
+        """SELECT local_day::text AS day, test_id, score
+             FROM test_attempts
+            WHERE user_id = %s AND lesson_id IS NULL AND local_day BETWEEN %s AND %s
+            ORDER BY submitted_at""",
+        (user["user_id"], since, today),
+    ).fetchall()
+    days: dict[str, dict[str, list[str]]] = {}
+    for e in events:
+        d = days.setdefault(e["day"], {"stations": [], "mix": [], "tests": []})
+        if e["kind"] == "station":
+            d["stations"].append(f"{e['lesson_id']} [{e['section_from']}-{e['section_to']})")
+        else:
+            d["mix"].append("daily mix")
+    for a in attempts:
+        if a["test_id"] in course_tests:
+            s = a["score"]
+            days.setdefault(a["day"], {"stations": [], "mix": [], "tests": []})["tests"].append(f"{a['test_id']} {s['correct']}/{s['total']}")
+    LOG.info(f"Path and daily goal of {user['email']}, {since} to {today}: {sum(1 for d in days.values() if any(d.values()))} goal day(s), oldest first.")
+    day = since
+    while day <= today:
+        d = days.get(day.isoformat())
+        if d is None:
+            LOG.info(f"{day}  -")
+        else:
+            parts = d["stations"] + d["mix"] + d["tests"]
+            LOG.info(f"{day}  goal met: {'; '.join(parts)}")
+        day += timedelta(days=1)
+
+
 def cmd_sessions(conn: psycopg.Connection, args: argparse.Namespace) -> None:
     if args.days < 1 or args.days > 366:
         raise RuntimeError("--days must be between 1 and 366")
@@ -1063,10 +1113,11 @@ def main() -> None:
         ("ungraded", "list test attempts without a review"),
         ("summary", "activity of the last N days"),
         ("sessions", "study timer sessions of the last N days, oldest first"),
+        ("path", "stations done, daily mixes and course tests per day: the daily goal (last N days)"),
     ):
         p = sub.add_parser(name, help=help_text)
         p.add_argument("--user", default=None, help="email or user id (default: NEMECEREN_DEFAULT_USER in .env.local)")
-        if name in ("summary", "sessions"):
+        if name in ("summary", "sessions", "path"):
             p.add_argument("--days", type=int, default=7)
     p = sub.add_parser("show", help="print one attempt in full")
     p.add_argument("attempt_id")
@@ -1119,6 +1170,7 @@ def main() -> None:
         "review": cmd_review,
         "summary": cmd_summary,
         "sessions": cmd_sessions,
+        "path": cmd_path,
         "notes": cmd_notes,
         "note": cmd_note,
         "note-feedback": cmd_note_feedback,

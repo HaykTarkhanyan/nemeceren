@@ -11,12 +11,14 @@
 //   customWords     every custom word (Hayk's own words) that is not deleted, with Claude's check, oldest first
 //   studySessions   study sessions (the timer, or added by hand) that are not deleted and started in the
 //                   last `days` days (the same window as reviewEvents), oldest first
+//   pathEvents      every path event (station done, daily mix done) that is not deleted, all time
+//                   (the streak and its freezes need the whole history), oldest first
 // The field names match the app's types (app/src/content/schema.ts), plus an `id` on events and
 // attempts. Keys the app models as optional (not nullable) are left out when empty.
 import { withTransaction } from './db.ts'
 import type { StoredCard } from './schema.ts'
-import { CUSTOM_WORD_JSON, NOTE_JSON, STUDY_SESSION_JSON } from './sync.ts'
-import type { CustomWordRecord, NoteRecord, StudySessionRecord } from './sync.ts'
+import { CUSTOM_WORD_JSON, NOTE_JSON, PATH_EVENT_JSON, STUDY_SESSION_JSON } from './sync.ts'
+import type { CustomWordRecord, NoteRecord, PathEventRecord, StudySessionRecord } from './sync.ts'
 
 interface LessonRecord {
   startedAt: string
@@ -38,6 +40,7 @@ export interface StateResponse {
   notes: NoteRecord[]
   customWords: CustomWordRecord[]
   studySessions: StudySessionRecord[]
+  pathEvents: PathEventRecord[]
 }
 
 interface EventRow {
@@ -203,6 +206,13 @@ export async function loadState(userId: string, days: number): Promise<StateResp
       [userId, clock.since],
     )
 
+    const pathRows = await client.query<{ event: PathEventRecord }>(
+      `SELECT ${PATH_EVENT_JSON('pe')} AS event FROM path_events pe
+        WHERE pe.user_id = $1 AND pe.deleted_at IS NULL
+        ORDER BY pe.at, pe.id`,
+      [userId],
+    )
+
     return {
       serverTime: clock.now.toISOString(),
       userId,
@@ -216,6 +226,7 @@ export async function loadState(userId: string, days: number): Promise<StateResp
       notes: noteRows.rows.map((r) => r.note),
       customWords: wordRows.rows.map((r) => r.word),
       studySessions: sessionRows.rows.map((r) => r.session),
+      pathEvents: pathRows.rows.map((r) => r.event),
     }
   })
 }

@@ -89,7 +89,7 @@ LOG = logging.getLogger("smoke_test")
 APP_ORIGIN = "http://localhost:5173"
 SMOKE_EMAIL_RE = re.compile(r"^nemeceren-smoke-[0-9a-f]{12}@example\.com$")
 # A user's progress rows. The test account keeps its allowlist entry; a throwaway user loses it too.
-DATA_TABLES = ("review_events", "review_cards", "test_attempts", "lesson_progress", "new_word_extras", "notes", "custom_words", "study_sessions")
+DATA_TABLES = ("review_events", "review_cards", "test_attempts", "lesson_progress", "new_word_extras", "notes", "custom_words", "study_sessions", "path_events")
 USER_TABLES = (*DATA_TABLES, "allowed_users")
 
 
@@ -298,7 +298,7 @@ def run(api: str, auth: str, conn: Any, ctx: dict[str, Any], test_account: dict[
     check(
         s["userId"] == user_id and s["cards"] == {} and s["reviewEvents"] == [] and s["attempts"] == [] and s["studyDays"] == []
         and s["lessonProgress"] == {"version": 1, "lessons": {}} and s["newWordExtras"] == {} and s["notes"] == []
-        and s["customWords"] == [] and s["studySessions"] == [],
+        and s["customWords"] == [] and s["studySessions"] == [] and s["pathEvents"] == [],
         "the user's state is empty",
         s,
     )
@@ -677,6 +677,55 @@ def run(api: str, auth: str, conn: Any, ctx: dict[str, Any], test_account: dict[
 
     r = request(plain, "GET", f"{api}/v1/state?days=1", token=token)
     check(r.status == 200 and r.json()["studySessions"] == [s1_edit], "GET /v1/state?days=1 returns only the session that started in the last day", r.text())
+
+    # ---- 5d. path events (the Home path and the daily goal, DECISIONS.md #84) ----
+    def path_event(kind: str, local_day: str, **extra: Any) -> dict[str, Any]:
+        t = iso(now)
+        return {"id": str(uuid.uuid4()), "kind": kind, "localDay": local_day, "at": t, "createdAt": t, "updatedAt": t, **extra}
+
+    # A station today, a daily mix today (undone below), and a station 40 days ago (outside the
+    # reviewEvents window: path events come back for all time).
+    p1 = path_event("station", today, lessonId="u1-01-sich-vorstellen", sectionFrom=0, sectionTo=5)
+    p2 = path_event("daily-mix", today)
+    p3 = path_event("station", day_ago(40), lessonId="t-smoke-song", sectionFrom=0, sectionTo=14)
+    r = sync({"pathEvents": [p1, p2, p3]})
+    check(r.status == 200 and r.json()["pathEvents"] == {"received": 3, "written": 3, "unchanged": 0, "stale": []}, "three new path events are written", r.text())
+    r = sync({"pathEvents": [p1, p2, p3]})
+    check(r.status == 200 and r.json()["pathEvents"] == {"received": 3, "written": 0, "unchanged": 3, "stale": []}, "the same path events again are unchanged", r.text())
+    later = iso(now + timedelta(seconds=1))
+    p2_gone = {**p2, "updatedAt": later, "deletedAt": later}
+    r = sync({"pathEvents": [p2_gone]})
+    check(r.status == 200 and r.json()["pathEvents"]["written"] == 1, "a path event can be undone (soft delete)", r.text())
+    r = sync({"pathEvents": [p2]})
+    check(
+        r.status == 200 and r.json()["pathEvents"] == {"received": 1, "written": 0, "unchanged": 0, "stale": [p2_gone]},
+        "an older version of an undone event is not written (the undo comes back as stale)",
+        r.text(),
+    )
+    for bad, what, path in (
+        (path_event("station", today, lessonId="u1-01-sich-vorstellen", sectionFrom=5, sectionTo=5), "a station with an empty range", "pathEvents.0.sectionTo"),
+        (path_event("station", today), "a station without a lesson and range", "pathEvents.0.lessonId"),
+        (path_event("daily-mix", today, lessonId="u1-01-sich-vorstellen", sectionFrom=0, sectionTo=1), "a daily mix with a range", "pathEvents.0.kind"),
+        (path_event("lesson", today), "an unknown kind", "pathEvents.0.kind"),
+        ({**path_event("daily-mix", today), "updatedAt": iso(now - timedelta(days=1))}, "an event changed before it was made", "pathEvents.0.updatedAt"),
+    ):
+        r = sync({"pathEvents": [bad]})
+        issues = r.json().get("error", {}).get("details", {}).get("issues", []) if r.status == 400 else []
+        check(r.status == 400 and r.error_code() == "invalid_body" and any(i["path"] == path for i in issues), f"{what} -> 400 invalid_body at {path}", r.text())
+    for what, kind, lesson, a, b in (("a station with an empty range", "station", "u1-01-x", 3, 3), ("a daily mix with a lesson", "daily-mix", "u1-01-x", None, None)):
+        try:
+            with conn.transaction():
+                conn.execute(
+                    """INSERT INTO path_events (user_id, id, kind, lesson_id, section_from, section_to, local_day, at, created_at, updated_at)
+                       VALUES (%s, %s, %s, %s, %s, %s, %s, now(), now(), now())""",
+                    (user_id, str(uuid.uuid4()), kind, lesson, a, b, today),
+                )
+            check(False, f"the path_events table refuses {what}")
+        except psycopg.errors.CheckViolation:
+            check(True, f"the path_events table refuses {what} (CHECK constraint)")
+    r = request(plain, "GET", f"{api}/v1/state?days=1", token=token)
+    got = sorted(r.json()["pathEvents"], key=lambda x: x["id"]) if r.status == 200 else None
+    check(got == sorted([p1, p3], key=lambda x: x["id"]), "GET /v1/state returns every path event that is not undone, all time", r.text())
 
     # ---- 6. Claude's review, then read everything back ----
     try:

@@ -19,7 +19,7 @@ export function isAllowedOrigin(origin: string): boolean {
 export const MAX_BODY_BYTES = 2 * 1024 * 1024
 
 /** Most items of each kind in one POST /v1/sync. The app splits a bigger outbox into several batches. */
-export const SYNC_LIMITS = { reviewEvents: 1000, cards: 2000, attempts: 20, lessons: 500, newWordExtras: 31, notes: 50, customWords: 20, studySessions: 100 } as const
+export const SYNC_LIMITS = { reviewEvents: 1000, cards: 2000, attempts: 20, lessons: 500, newWordExtras: 31, notes: 50, customWords: 20, studySessions: 100, pathEvents: 200 } as const
 
 /** GET /v1/state returns raw review events and study sessions from this many days back (the Stats page charts 30 days). */
 export const STATE_DAYS = { default: 35, max: 400 } as const

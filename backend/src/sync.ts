@@ -11,7 +11,8 @@
 //   customWords              upsert per word; the record with the later updatedAt wins; a change of
 //                            its fields clears Claude's check (a delete alone keeps it)
 //   studySessions            upsert per session; the record with the later updatedAt wins
-// For the last six, whatever the server already had in a newer version comes back as "stale",
+//   pathEvents               upsert per event; the record with the later updatedAt wins (undo = soft delete)
+// For the last seven, whatever the server already had in a newer version comes back as "stale",
 // so a device that was offline can adopt it. A locked note comes back as stale whenever the
 // upload differs from it, with its feedback. Each table takes the whole list as one JSON
 // parameter (jsonb_to_recordset): one query per table per batch.
@@ -25,6 +26,7 @@ import type {
   LessonUpload,
   NewWordExtraUpload,
   NoteUpload,
+  PathEventUpload,
   ReviewEventUpload,
   StoredCard,
   StudySessionUpload,
@@ -60,6 +62,7 @@ export interface SyncResult {
   notes: { received: number; written: number; unchanged: number; stale: NoteRecord[] }
   customWords: { received: number; written: number; unchanged: number; stale: CustomWordRecord[] }
   studySessions: { received: number; written: number; unchanged: number; stale: StudySessionRecord[] }
+  pathEvents: { received: number; written: number; unchanged: number; stale: PathEventRecord[] }
 }
 
 /**
@@ -73,6 +76,12 @@ export type CustomWordRecord = Record<string, unknown> & { id: string; updatedAt
  * StudySession. Optional keys (label, manual, deletedAt) are left out when empty.
  */
 export type StudySessionRecord = Record<string, unknown> & { id: string; updatedAt: string }
+
+/**
+ * A path event as the server has it (also the shape of GET /v1/state pathEvents): the app's
+ * PathEvent. Optional keys (lessonId, sectionFrom, sectionTo, deletedAt) are left out when empty.
+ */
+export type PathEventRecord = Record<string, unknown> & { id: string; updatedAt: string }
 
 /** timestamptz as the app writes it (Date.prototype.toISOString): 2026-09-29T10:00:00.000Z */
 const iso = (col: string) => `to_char(${col} AT TIME ZONE 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS.MS"Z"')`
@@ -291,6 +300,38 @@ SELECT
      FROM input i JOIN study_sessions ss ON ss.user_id = $1 AND ss.id = i.id
     WHERE ss.updated_at > i.updated_at) AS stale`
 
+/** One path event as JSON in the app's field names, empty keys left out; the same shape as GET /v1/state pathEvents. */
+export const PATH_EVENT_JSON = (x: string) => `jsonb_strip_nulls(jsonb_build_object(
+  'id', ${x}.id::text, 'kind', ${x}.kind, 'lessonId', ${x}.lesson_id,
+  'sectionFrom', ${x}.section_from, 'sectionTo', ${x}.section_to, 'localDay', ${x}.local_day::text,
+  'at', ${iso(`${x}.at`)}, 'createdAt', ${iso(`${x}.created_at`)}, 'updatedAt', ${iso(`${x}.updated_at`)},
+  'deletedAt', CASE WHEN ${x}.deleted_at IS NULL THEN NULL ELSE ${iso(`${x}.deleted_at`)} END))`
+
+// The later updated_at wins (an undo is a later soft delete).
+const UPSERT_PATH_EVENTS = `
+WITH input AS (
+  SELECT * FROM jsonb_to_recordset($2::jsonb) AS x(
+    id uuid, kind text, lesson_id text, section_from integer, section_to integer, local_day date,
+    at timestamptz, created_at timestamptz, updated_at timestamptz, deleted_at timestamptz)
+),
+up AS (
+  INSERT INTO path_events AS pe (user_id, id, kind, lesson_id, section_from, section_to, local_day, at,
+                                 created_at, updated_at, deleted_at)
+  SELECT $1, id, kind, lesson_id, section_from, section_to, local_day, at, created_at, updated_at, deleted_at FROM input
+  ON CONFLICT (user_id, id) DO UPDATE
+    SET kind = excluded.kind, lesson_id = excluded.lesson_id, section_from = excluded.section_from,
+        section_to = excluded.section_to, local_day = excluded.local_day, at = excluded.at,
+        created_at = excluded.created_at, updated_at = excluded.updated_at, deleted_at = excluded.deleted_at,
+        received_at = now()
+    WHERE excluded.updated_at > pe.updated_at
+  RETURNING id
+)
+SELECT
+  (SELECT count(*)::int FROM up) AS written,
+  (SELECT coalesce(jsonb_agg(${PATH_EVENT_JSON('pe')} ORDER BY pe.id), '[]'::jsonb)
+     FROM input i JOIN path_events pe ON pe.user_id = $1 AND pe.id = i.id
+    WHERE pe.updated_at > i.updated_at) AS stale`
+
 function conflictError(kind: string, ids: string[]): HttpError {
   return new HttpError(
     409,
@@ -420,6 +461,23 @@ async function upsertStudySessions(client: PoolClient, userId: string, sessions:
   return { received: sessions.length, written: r.written, unchanged: sessions.length - r.written - r.stale.length, stale: r.stale }
 }
 
+async function upsertPathEvents(client: PoolClient, userId: string, events: PathEventUpload[]): Promise<SyncResult['pathEvents']> {
+  const rows = events.map((x) => ({
+    id: x.id,
+    kind: x.kind,
+    lesson_id: x.lessonId ?? null,
+    section_from: x.sectionFrom ?? null,
+    section_to: x.sectionTo ?? null,
+    local_day: x.localDay,
+    at: x.at,
+    created_at: x.createdAt,
+    updated_at: x.updatedAt,
+    deleted_at: x.deletedAt ?? null,
+  }))
+  const { rows: [r] } = await client.query<{ written: number; stale: PathEventRecord[] }>(UPSERT_PATH_EVENTS, [userId, JSON.stringify(rows)])
+  return { received: events.length, written: r.written, unchanged: events.length - r.written - r.stale.length, stale: r.stale }
+}
+
 export async function applySync(userId: string, body: SyncBody): Promise<SyncResult> {
   const total =
     body.reviewEvents.length +
@@ -429,7 +487,8 @@ export async function applySync(userId: string, body: SyncBody): Promise<SyncRes
     body.newWordExtras.length +
     body.notes.length +
     body.customWords.length +
-    body.studySessions.length
+    body.studySessions.length +
+    body.pathEvents.length
   if (total === 0) {
     // Enforces the free-plan rule: the app only syncs when its outbox has something in it.
     throw new HttpError(400, 'empty_batch', 'Nothing to sync: send at least one item, and skip the request otherwise.')
@@ -448,6 +507,7 @@ export async function applySync(userId: string, body: SyncBody): Promise<SyncRes
       notes: body.notes.length > 0 ? await upsertNotes(client, userId, body.notes) : upserts,
       customWords: body.customWords.length > 0 ? await upsertCustomWords(client, userId, body.customWords) : upserts,
       studySessions: body.studySessions.length > 0 ? await upsertStudySessions(client, userId, body.studySessions) : upserts,
+      pathEvents: body.pathEvents.length > 0 ? await upsertPathEvents(client, userId, body.pathEvents) : upserts,
     }
   })
 }
