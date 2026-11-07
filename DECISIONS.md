@@ -2,6 +2,27 @@
 
 Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
+## 87. Unit 8 as written: the Perfekt of every verb type by name, the short past of all five modal verbs, vor + dative for "ago", and letzte/letztes/letzten as chunks (written with the course-unit skill, 2026-11-07; Hayk away, so Claude's calls)
+
+- **Date:** 2026-11-07 - **Status:** active; builds on #70 (Unit 5's recognition-only participles)
+- **Why:**
+  - **Six lessons, as the A2 table says:** five teaching lessons and the story. So the tests come after lessons 2, 4 and 6, and the final test (with the email) follows the story.
+  - **Grammar by name:** separable participles (lesson 2: "ge- goes in the middle") and no-ge participles (lesson 3: be-, er-, ver-, also emp-, ent-, ge-, and -ieren), with the stress rule as the reason ("ge- only when the first syllable is stressed"). Lesson 1 adds 11 irregular participles, the mixed verbs (gebracht, gedacht, gekannt, gewusst) and vowel families, because "Perfekt of all verbs" needs them.
+  - **Modal verbs:** the table has musste, konnte, wollte; durfte and sollte come as one line each, because Nicos Weg A2 ch. 11.1 teaches dürfen and the pattern is the same. `wollte` is taught as the past of möchte. The Präteritum of other verbs stays at B1 (research item 20); lesson 4 only names it for recognition (machte, fuhr). konnte vs könnte gets a warning, since Hayk knows "Könnten Sie ...?" from Unit 5.
+  - **Chunks with a pointer:** `letzte Woche`, `letztes Jahr`, `letzten Monat` (adjective endings: Units 13-14), with the hint "the ending copies the article"; `ins Kino` (Unit 10); `Das ist eine lange Geschichte` (a fixed phrase in the story). `vor zwei Tagen` builds on Unit 6's dative plural -n.
+  - **Regional:** the southern `ich bin gesessen / gestanden / gelegen` is mentioned for recognition, because Hayk lives in Munich.
+  - **Words:** 91 new cards. They fill A1 gaps (geben, laufen, liegen, sitzen, stehen, waschen, gewinnen, früher, letzt-, dauern, der Anfang, das Ende, der Schluss, das Gespräch, zurück, das Ticket, der Schüler, die Klasse, jung, umziehen, anmachen, ausmachen, abgeben, mitmachen) and add A2 words for trips, mishaps and excuses. One B1 card, die Besprechung, because a working day needs it (as Unit 6 did with die U-Bahn). B1 words left out: danach, absagen, aufwachen, der Stau, die Erkältung, erleben. The song card `schaffen` is listed in lesson 4 too.
+  - **End task:** a written email, so no live role-play. `digits` is off on it, because the time words are words (letzte Woche, vor ...), and the umlaut keys matter more in an email.
+- **Alternatives rejected:**
+  - seven lessons (six plus the story, like Units 4, 6 and 7): the row says about 6, and the trip lesson carries the email;
+  - teaching the Präteritum of all verbs (B1 in the research order);
+  - explaining the endings of letzte now (adjective endings are Units 13-14);
+  - leaving liegen, sitzen and stehen to Unit 10: a trip report needs "am See gelegen", and Unit 10 can build on the cards.
+- **What would change this:**
+  - Hayk mixing up the two participle rules in u8-t1 or u8-t2: then add a contrast drill;
+  - the trip lesson feeling too heavy (after the independent review it has 21 cards; Museum, Schloss, fantastisch and spannend moved to the story, which now has 9): move more words into the story;
+  - konnte and könnte still getting mixed up after the unit.
+
 ## 86. A word review round that ends with 10+ cards counts for the daily goal, as a third path event kind 'review-round' (asked for by Hayk, 2026-11-07, Q23; backend OK'd, Q26)
 
 - **Date:** 2026-11-07 - **Status:** active (extends #83 and #84)

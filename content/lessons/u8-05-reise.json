@@ -1,0 +1,144 @@
+{
+  "id": "u8-05-reise",
+  "unit": 8,
+  "order": 5,
+  "level": "A2",
+  "title": "Telling about a trip (Wie war die Reise?)",
+  "summary": "Words for a trip, how to tell it in order (zuerst, dann, am Ende), how to say how it was, and an email to a friend about it.",
+  "goals": [
+    "Name places and things on a trip: der Strand, das Museum, die Jugendherberge",
+    "Tell a trip in order with zuerst, dann, später, am Ende",
+    "Say how long it took and how it was: Es hat viel Spaß gemacht.",
+    "Write an email to a friend about a trip"
+  ],
+  "nicosWeg": [
+    { "title": "Nicos Weg A2, chapter 4: Mobility (Unterwegs, Im Hotel)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519797" }
+  ],
+  "words": ["flug", "unterkunft", "jugendherberge", "zelt", "rucksack", "strand", "insel", "landschaft", "kirche", "zentrum", "postkarte", "ferien", "verreisen", "dauern", "anfang", "ende", "schluss", "furchtbar", "besonders", "noch-nie", "spass"],
+  "sections": [
+    {
+      "id": "trip-words",
+      "type": "table",
+      "title": "On a trip",
+      "columns": [{ "header": "German", "de": "words" }, { "header": "English" }],
+      "rows": [
+        ["der Flug", "flight"],
+        ["die Unterkunft", "accommodation, a place to stay"],
+        ["die Jugendherberge", "youth hostel"],
+        ["das Zelt", "tent"],
+        ["der Rucksack", "backpack"],
+        ["der Strand", "beach"],
+        ["die Insel", "island"],
+        ["die Landschaft", "landscape, scenery"],
+        ["das Museum", "museum"],
+        ["die Kirche", "church"],
+        ["das Schloss", "castle, palace"],
+        ["das Zentrum", "centre (of a town)"],
+        ["die Postkarte", "postcard"]
+      ]
+    },
+    {
+      "id": "urlaub-ferien",
+      "type": "tip",
+      "text": "[[der Urlaub]] (Unit 5) is time off work. [[die Ferien]] are school or university holidays, and the word is always plural: [[Die Ferien waren super.]] [[verreisen]] = to go away on a trip: [[Im Sommer sind wir verreist.]] It starts with ver-, so no ge- (lesson 3), and it takes [[sein]] because you go somewhere."
+    },
+    {
+      "id": "trip-order",
+      "type": "explanation",
+      "title": "Telling it in order",
+      "text": "A trip story needs order words. You know [[zuerst]] and [[dann]] (Unit 3) and [[später]]. New:\n- [[am Anfang]] = at the beginning ([[der Anfang]])\n- [[am Ende]] = at the end ([[das Ende]])\n- [[zum Schluss]] = finally, to finish ([[der Schluss]])\n\n[[am]] is [[an dem]] and [[zum]] is [[zu dem]] (Unit 6). Like a time, they take position 1, so the verb comes next:\n- [[Zuerst sind wir nach Salzburg gefahren.]]\n- [[Dann haben wir das Schloss besichtigt.]]\n- [[Später haben wir am See im Zelt geschlafen.]]\n- [[Am Ende waren wir sehr müde.]]"
+    },
+    {
+      "id": "how-was-it",
+      "type": "explanation",
+      "title": "How long, and how was it?",
+      "text": "- [[Wie lange hat die Reise gedauert?]] - [[Drei Tage.]] ([[dauern]] = to last, to take)\n- [[Der Flug hat zwei Stunden gedauert.]]\n- [[Es hat viel Spaß gemacht!]] = It was a lot of fun! ([[der Spaß]] = fun)\n- [[Es hat mir gut gefallen.]] = I liked it. ([[gefallen]] starts with ge- already, so no extra ge-: lesson 3.)\n- [[Das Wetter war fantastisch.]] [[Das Essen war furchtbar.]]\n- [[Das Museum war besonders spannend.]] ([[besonders]] = especially; [[spannend]] = exciting)"
+    },
+    {
+      "id": "ever-never",
+      "type": "explanation",
+      "title": "Have you ever been ...?",
+      "text": "[[Warst du schon mal in Wien?]] = Have you ever been to Vienna? Here [[schon mal]] means 'ever'.\n- [[Ja, letztes Jahr.]]\n- [[Nein, noch nie.]] = No, never.\n- [[Ich war noch nie in Wien.]] = I've never been to Vienna.\n\nGerman uses [[war]] here, where English says 'have been'."
+    },
+    {
+      "id": "trip-email",
+      "type": "explanation",
+      "title": "An email about a trip",
+      "text": "Write it like the email in Unit 6: greeting, news, details, closing.\n1. **Greeting:** [[Liebe Eva,]] / [[Lieber Aram,]] / [[Hallo Eva,]]\n2. **A question, then the news**, starting with a small letter after the comma: [[wie geht's? Ich war letzte Woche in Wien!]]\n3. **When, where, what:** [[Wir sind mit dem Zug gefahren. Die Reise hat vier Stunden gedauert. Wir haben in einer Jugendherberge übernachtet.]]\n4. **How it was:** [[Es hat viel Spaß gemacht.]]\n5. **A question back and the closing:** [[Und du? Was hast du gemacht?]] Then [[Viele Grüße]] and your name."
+    },
+    {
+      "id": "email-example",
+      "type": "examples",
+      "title": "An email to a friend",
+      "items": [
+        { "de": "Hallo Eva,", "en": "Hi Eva," },
+        { "de": "wie geht's? Ich war letzte Woche in Wien!", "en": "how are you? I was in Vienna last week!" },
+        { "de": "Wir haben in einer Jugendherberge im Zentrum übernachtet.", "en": "We stayed in a youth hostel in the centre." },
+        { "de": "Die Unterkunft war billig, und die Landschaft war fantastisch.", "en": "The accommodation was cheap, and the scenery was fantastic." },
+        { "de": "Am Anfang hat es geregnet, aber dann war das Wetter fantastisch.", "en": "At the beginning it rained, but then the weather was fantastic." },
+        { "de": "Zuerst haben wir das Schloss besichtigt, dann waren wir im Museum.", "en": "First we visited the palace, then we were at the museum." },
+        { "de": "Das Museum war besonders spannend.", "en": "The museum was especially exciting." },
+        { "de": "Zum Schluss habe ich viele Postkarten geschrieben.", "en": "To finish, I wrote lots of postcards." },
+        { "de": "Es hat viel Spaß gemacht! Warst du schon mal in Wien?", "en": "It was a lot of fun! Have you ever been to Vienna?" },
+        { "de": "Viele Grüße", "en": "Best wishes", "note": "then your name on the next line: Aram" }
+      ]
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat",
+      "items": [
+        { "de": "Wie lange hat die Reise gedauert?", "en": "How long did the trip take?" },
+        { "de": "Wir haben in einer Jugendherberge übernachtet.", "en": "We stayed in a youth hostel." },
+        { "de": "Zuerst sind wir nach Salzburg gefahren.", "en": "First we went to Salzburg." },
+        { "de": "Am Ende waren wir sehr müde.", "en": "At the end we were very tired." },
+        { "de": "Wir haben am Strand gelegen.", "en": "We lay on the beach." },
+        { "de": "Ich reise nur mit einem Rucksack.", "en": "I travel with just a backpack." },
+        { "de": "Es hat viel Spaß gemacht!", "en": "It was a lot of fun!" },
+        { "de": "Ich war noch nie in Wien.", "en": "I've never been to Vienna." }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: How long did the trip take?",
+          "text": "Wie lange hat die Reise ___?",
+          "answers": [["gedauert"]],
+          "explanation": "dauern is regular: ge- ... -t, gedauert."
+        },
+        {
+          "type": "mc",
+          "question": "Which sentence means 'It was a lot of fun'?",
+          "questionLang": "en",
+          "options": ["Es hat viel Spaß gemacht.", "Es ist viel Spaß gemacht.", "Es hat viel Spaß gehabt."],
+          "answer": "Es hat viel Spaß gemacht.",
+          "explanation": "Spaß machen = to be fun, said of a thing: Es hat Spaß gemacht (machen takes haben). Spaß haben is said of people: Wir hatten viel Spaß."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: At the end we were very tired.",
+          "text": "Am ___ waren wir sehr müde.",
+          "answers": [["Ende"]],
+          "explanation": "am Ende = at the end (das Ende). am Anfang = at the beginning."
+        },
+        {
+          "type": "order",
+          "prompt": "First we went to Salzburg.",
+          "tiles": ["zuerst", "sind", "wir", "nach", "Salzburg", "gefahren"],
+          "answers": ["Zuerst sind wir nach Salzburg gefahren", "Wir sind zuerst nach Salzburg gefahren", "Nach Salzburg sind wir zuerst gefahren"],
+          "explanation": "zuerst in position 1, then the verb sind, and gefahren at the end. Another part can come first too: Nach Salzburg sind wir zuerst gefahren."
+        },
+        {
+          "type": "mc",
+          "question": "You've never been to Vienna. What do you say?",
+          "questionLang": "en",
+          "options": ["Ich war noch nie in Wien.", "Ich war schon mal in Wien.", "Ich war letzte Woche in Wien."],
+          "answer": "Ich war noch nie in Wien.",
+          "explanation": "noch nie = never (so far). schon mal = ever, or once before."
+        }
+      ]
+    }
+  ]
+}

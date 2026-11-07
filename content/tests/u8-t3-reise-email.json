@@ -1,0 +1,83 @@
+{
+  "id": "u8-t3-reise-email",
+  "title": "A trip and an email (Unit 8 final)",
+  "level": "A2",
+  "created": "2026-11-07",
+  "description": "Unit 8 check after lessons 5 and 6, with the unit's final task.",
+  "unit": 8,
+  "lesson": "u8-06-geschichte-salzburg",
+  "items": [
+    {"type": "gap", "instruction": "Fill in the gap: The train leaves at eight.", "text": "Der Zug fährt um acht ___.", "answers": [["ab"]], "explanation": "Review (Unit 3): in the present a separable verb splits, and the small part goes to the end: fährt ... ab."},
+    {"type": "gap", "instruction": "Fill in the gap: I like the city. (The city pleases me.)", "text": "Die Stadt gefällt ___.", "answers": [["mir"]], "explanation": "Review (Unit 6): gefallen takes the dative: Die Stadt gefällt mir."},
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: How long did the flight take?",
+      "text": "Wie lange hat der Flug ___?",
+      "answers": [["gedauert"]],
+      "explanation": "dauern is regular: gedauert."
+    },
+    {
+      "type": "mc",
+      "question": "You want a cheap place to sleep, in a dormitory with other young travellers. Where do you stay?",
+      "questionLang": "en",
+      "options": ["in einer Jugendherberge", "in einer Kirche", "in einem Museum"],
+      "answer": "in einer Jugendherberge",
+      "explanation": "die Jugendherberge = youth hostel. in einer Jugendherberge: Wo? + dative."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: In the summer we went away.",
+      "text": "Im Sommer ___ wir verreist.",
+      "answers": [["sind"]],
+      "explanation": "verreisen means going somewhere, so sein: wir sind verreist. ver-, so no ge-."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: The party was a lot of fun.",
+      "text": "Die Party hat viel Spaß ___.",
+      "answers": [["gemacht"]],
+      "explanation": "Spaß machen = to be fun, said of a thing: Die Party hat viel Spaß gemacht. Spaß haben is said of people: Wir hatten viel Spaß."
+    },
+    {
+      "type": "order",
+      "prompt": "First we visited the castle.",
+      "tiles": ["zuerst", "haben", "wir", "das", "Schloss", "besichtigt"],
+      "answers": ["Zuerst haben wir das Schloss besichtigt", "Wir haben zuerst das Schloss besichtigt", "Wir haben das Schloss zuerst besichtigt", "Das Schloss haben wir zuerst besichtigt"],
+      "explanation": "zuerst in position 1, then haben; besichtigen has be-, so no ge-: besichtigt."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: To finish, we ate fish.",
+      "text": "Zum ___ haben wir Fisch gegessen.",
+      "answers": [["Schluss"]],
+      "explanation": "zum Schluss = finally, to finish (der Schluss; zum = zu dem)."
+    },
+    {
+      "type": "listen_mc",
+      "audio": "Ich war noch nie in Hamburg, aber letztes Jahr war ich zwei Wochen in Wien.",
+      "question": "Where was the person last year?",
+      "questionLang": "en",
+      "options": ["in Wien", "in Hamburg", "in Salzburg"],
+      "answer": "in Wien",
+      "explanation": "letztes Jahr war ich zwei Wochen in Wien. noch nie in Hamburg = never in Hamburg."
+    },
+    {
+      "type": "dictation",
+      "text": "Wir haben in einer Jugendherberge übernachtet.",
+      "explanation": "übernachten: the first syllable isn't stressed, so no ge-: übernachtet."
+    },
+    {
+      "type": "translate",
+      "direction": "en-de",
+      "text": "I've never been to Vienna.",
+      "references": ["Ich war noch nie in Wien.", "Ich bin noch nie in Wien gewesen."],
+      "explanation": "noch nie = never (so far). In speech, war is more common than bin ... gewesen."
+    },
+    {
+      "type": "write",
+      "instruction": "Unit 8 final task: write an email to a friend about a trip, real or made up. Start with a greeting and a question. Then say when you went (letzte Woche, vor ...) and how long the journey took, where you stayed, what you did in order (zuerst, dann, am Ende) and how it was. Use the Perfekt, and war, hatte or a modal verb in the past (musste, konnte, wollte). End with a question back and a closing. About 8-10 sentences. Claude will check it.",
+      "prompt": "Schreiben Sie eine E-Mail an eine Freundin oder einen Freund: Wie war Ihre Reise?",
+      "minWords": 70
+    }
+  ]
+}

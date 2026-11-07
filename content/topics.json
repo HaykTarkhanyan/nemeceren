@@ -471,6 +471,72 @@
           "lesson": "u7-07-a1-abschluss",
           "section": "wissen-kennen",
           "star": true
+        },
+        {
+          "title": "vor + a time = ago: vor zwei Tagen",
+          "lesson": "u8-01-vor-zwei-tagen",
+          "section": "vor-ago",
+          "star": true
+        },
+        {
+          "title": "letzte Woche, letztes Jahr, letzten Monat",
+          "lesson": "u8-01-vor-zwei-tagen",
+          "section": "letzte"
+        },
+        {
+          "title": "More irregular participles: gefunden, geholfen, gelegen ...",
+          "lesson": "u8-01-vor-zwei-tagen",
+          "section": "more-irregular",
+          "star": true
+        },
+        {
+          "title": "Mixed verbs: gebracht, gedacht, gekannt, gewusst",
+          "lesson": "u8-01-vor-zwei-tagen",
+          "section": "mixed-verbs"
+        },
+        {
+          "title": "Irregular participles in vowel families",
+          "lesson": "u8-01-vor-zwei-tagen",
+          "section": "vowel-families"
+        },
+        {
+          "title": "Separable verbs in the Perfekt: angerufen, aufgestanden",
+          "lesson": "u8-02-arbeitstag-gestern",
+          "section": "separable-perfekt",
+          "star": true
+        },
+        {
+          "title": "Separable verbs with sein: angekommen, ausgegangen",
+          "lesson": "u8-02-arbeitstag-gestern",
+          "section": "separable-sein"
+        },
+        {
+          "title": "No ge-: be-, er-, ver- and -ieren (besucht, telefoniert)",
+          "lesson": "u8-03-verpasst-vergessen",
+          "section": "no-ge",
+          "star": true
+        },
+        {
+          "title": "Why no ge-? Listen for the stress",
+          "lesson": "u8-03-verpasst-vergessen",
+          "section": "stress-rule"
+        },
+        {
+          "title": "musste, konnte, wollte",
+          "lesson": "u8-04-musste-konnte",
+          "section": "modal-past-table",
+          "star": true
+        },
+        {
+          "title": "konnte or könnte?",
+          "lesson": "u8-04-musste-konnte",
+          "section": "konnte-koennte"
+        },
+        {
+          "title": "Which past? war, hatte, musste or the Perfekt",
+          "lesson": "u8-04-musste-konnte",
+          "section": "which-past",
+          "star": true
         }
       ]
     },
@@ -882,6 +948,54 @@
           "title": "Little words: warum, bald, gleich, kaputt ...",
           "lesson": "u7-07-a1-abschluss",
           "section": "little-words"
+        },
+        {
+          "title": "When was it? vorgestern, damals, früher",
+          "lesson": "u8-01-vor-zwei-tagen",
+          "section": "when-past"
+        },
+        {
+          "title": "Yesterday at work",
+          "lesson": "u8-02-arbeitstag-gestern",
+          "section": "workday-past"
+        },
+        {
+          "title": "What happened? Was ist passiert?",
+          "lesson": "u8-03-verpasst-vergessen",
+          "section": "was-ist-passiert",
+          "star": true
+        },
+        {
+          "title": "Sorry, I couldn't come",
+          "lesson": "u8-04-musste-konnte",
+          "section": "sorry-excuses",
+          "star": true
+        },
+        {
+          "title": "Back then: früher, damals, als Kind",
+          "lesson": "u8-04-musste-konnte",
+          "section": "frueher-damals"
+        },
+        {
+          "title": "Telling a trip in order: am Anfang, am Ende, zum Schluss",
+          "lesson": "u8-05-reise",
+          "section": "trip-order"
+        },
+        {
+          "title": "How long, and how was it? Es hat Spaß gemacht",
+          "lesson": "u8-05-reise",
+          "section": "how-was-it"
+        },
+        {
+          "title": "Have you ever been ...? schon mal, noch nie",
+          "lesson": "u8-05-reise",
+          "section": "ever-never"
+        },
+        {
+          "title": "An email about a trip",
+          "lesson": "u8-05-reise",
+          "section": "trip-email",
+          "star": true
         }
       ]
     },
@@ -1004,6 +1118,11 @@
           "title": "More family",
           "lesson": "u7-06-feste",
           "section": "family-2"
+        },
+        {
+          "title": "On a trip: Strand, Museum, Jugendherberge",
+          "lesson": "u8-05-reise",
+          "section": "trip-words"
         }
       ]
     }

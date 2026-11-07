@@ -19,6 +19,11 @@ Topics cut from current work so they don't get lost.
 - **Prune the popup stopgap entries.** 38 common words got hand-written glossary entries on 2026-09-29 as a stopgap for two popup bugs, which are now fixed in code (DECISIONS.md #46). Some may now be redundant; others fix misleading generated glosses and must stay. Review them one by one.
 - **Node 20 is past end of life (April 2026):** move the PC and CI to Node 22/24, then Vitest 5 (DECISIONS.md #11). Hayk chose to stay on 20 for now (2026-09-29). This also blocks `neon skills install/update` (needs Node 22.20+); the workaround is a manual download from Neon's skill registry.
 - **Goethe A2/B1 Modellsaetze**: download when Hayk works at those levels (URLs in `_knowledge/2026-09-28_llm-tutoring-and-materials.md`).
+- (Done 2026-11-07 with Unit 8: the participles of separable and be-/er-/ver-/-ieren verbs, which Unit 5 left for recognition (#70), are now taught by name.)
+- **Notes from Unit 8 for later A2 units** (2026-11-07):
+  - Unit 10 (stehen/stellen, liegen/legen): `stehen`, `liegen` and `sitzen` already have cards (Unit 8, lesson 1). List them; don't add new ones.
+  - Units 13-14 (adjective endings): explain the Unit 8 chunks `letzte Woche`, `letztes Jahr`, `letzten Monat` and `eine lange Geschichte`.
+  - No video in the three Learn German playlists covers musste/konnte/wollte, so lesson u8-04 has none. Add one if a good one turns up.
 - **Duolingo-style features not picked (2026-11-06)**, research in `_knowledge/2026-11-06_duolingo-research.md` section 6:
   - F1: a daily goal, an earned streak freeze and milestones;
   - F3: session polish (progress bar, sounds, end screen) outside the daily mix;

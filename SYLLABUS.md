@@ -81,6 +81,8 @@ Ten units of A1 size (about 11 h, about 6 lessons and 90-100 words each), so the
 | 16 | **Money, contracts, phone** | report a lost card, change or cancel a contract | passive present (wird repariert), lassen | ch. 1, 7 | report a lost card; cancel a contract | ~11 |
 | 17 | **Flat and neighbours** | rules in the building, repairs, notes to neighbours | two-way prepositions revisited, review of A2 | ch. 3 | a note to a neighbour and a repair request | ~11 |
 
+**Unit 8 as written (2026-11-07, DECISIONS.md #87):** six lessons (five plus the story) and 91 cards. The table's musste, konnte, wollte also get durfte and sollte (Nicos ch. 11.1 has dürfen), and wollte is the past of möchte. The Präteritum of other verbs is only named for recognition (B1). Chunks with a pointer: `letzte Woche`, `letztes Jahr`, `letzten Monat` (adjective endings, Units 13-14), `ins Kino` (Unit 10). Lesson 5 links Nicos Weg A2 ch. 4 (travel) for its trip situations, outside the row's chapter. The southern `ich bin gesessen` is for recognition. The final test comes after the story.
+
 ## Later: B1 (outlook, planned in detail once A2 is reached)
 
 About 45 h per unit:

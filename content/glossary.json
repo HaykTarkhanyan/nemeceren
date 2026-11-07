@@ -1,6 +1,51 @@
 {
   "ignore": ["Hayk", "Charlotte", "Eva", "Meier", "Müller", "Schmidt", "Thomas", "Weber", "Aram", "Tarkhanyan", "Goethestraße", "Siemens", "Berlin", "Marienplatz", "Moosach"],
   "entries": {
+    "gewisst": [
+      {"lemma": "wissen", "pos": "verb", "form": "wrong participle", "gloss": ["(not a word)"], "note": "The participle of wissen is gewusst."}
+    ],
+    "gekennt": [
+      {"lemma": "kennen", "pos": "verb", "form": "wrong participle", "gloss": ["(not a word)"], "note": "The participle of kennen is gekannt."}
+    ],
+    "gefotografiert": [
+      {"lemma": "fotografieren", "pos": "verb", "form": "wrong participle", "gloss": ["(not a word)"], "note": "Verbs in -ieren take no ge-: fotografiert."}
+    ],
+    "geaufräumt": [
+      {"lemma": "aufräumen", "pos": "verb", "form": "wrong participle", "gloss": ["(not a word)"], "note": "ge- goes after the small part: aufgeräumt."}
+    ],
+    "gevergessen": [
+      {"lemma": "vergessen", "pos": "verb", "form": "wrong participle", "gloss": ["(not a word)"], "note": "ver- takes no ge-: the participle is vergessen."}
+    ],
+    "vergesst": [
+      {"lemma": "vergessen", "pos": "verb", "form": "ihr form, present", "gloss": ["(you all) forget"], "note": "Not the participle: Ich habe es vergessen."}
+    ],
+    "letzte": [
+      {"lemma": "letzte", "pos": "adjective", "level": "A1", "gloss": ["last"], "note": "letzte Woche = last week (die Woche)"}
+    ],
+    "Letzte": [
+      {"lemma": "letzte", "pos": "adjective", "level": "A1", "gloss": ["last"], "note": "letzte Woche = last week (die Woche)"}
+    ],
+    "letztes": [
+      {"lemma": "letzte", "pos": "adjective", "level": "A1", "form": "with a das-word", "gloss": ["last"], "note": "letztes Jahr = last year (das Jahr)"}
+    ],
+    "Letztes": [
+      {"lemma": "letzte", "pos": "adjective", "level": "A1", "form": "with a das-word", "gloss": ["last"], "note": "letztes Jahr = last year (das Jahr)"}
+    ],
+    "letzten": [
+      {"lemma": "letzte", "pos": "adjective", "level": "A1", "form": "with a den-word", "gloss": ["last"], "note": "letzten Monat = last month (der Monat)"}
+    ],
+    "Mozartkugeln": [
+      {"lemma": "Mozartkugel", "pos": "noun", "article": "die", "plural": "Mozartkugeln", "form": "plural", "gloss": ["a round chocolate sweet from Salzburg"], "note": "Named after Mozart, who was born in Salzburg."}
+    ],
+    "na": [
+      {"lemma": "na", "pos": "interjection", "gloss": ["well; oh well"], "note": "Na gut. = Oh well. / All right then."}
+    ],
+    "ähm": [
+      {"lemma": "ähm", "pos": "interjection", "gloss": ["um, er (when you hesitate)"]}
+    ],
+    "ihrer": [
+      {"lemma": "ihr", "pos": "determiner", "form": "dative feminine", "gloss": ["her"], "note": "Sie hilft ihrer Schwester. = She helps her sister."}
+    ],
     "rein": [
       {"lemma": "rein", "pos": "adverb", "gloss": ["in (spoken for herein)"], "note": "Komm rein! = Come in! Also an adjective: pure (reines Wasser)"}
     ],
@@ -172,7 +217,7 @@
       {"lemma": "lange", "pos": "adverb", "level": "A1", "gloss": ["long, for a long time"], "note": "Wie lange? = How long?"}
     ],
     "mal": [
-      {"lemma": "mal", "pos": "particle", "gloss": ["once; just (makes a request softer)"], "note": "Noch mal, bitte. = Once more, please."}
+      {"lemma": "mal", "pos": "particle", "gloss": ["once; just (makes a request softer)"], "note": "Noch mal, bitte. = Once more, please. Warst du schon mal in Wien? = Have you ever been to Vienna?"}
     ],
     "schon": [
       {"lemma": "schon", "pos": "adverb", "level": "A1", "gloss": ["already"], "note": "Wie lange wohnst du schon hier? = How long have you lived here?"}
@@ -545,7 +590,7 @@
       {"lemma": "halb", "pos": "adjective", "level": "A1", "gloss": ["half"], "note": "halb drei = 2:30 (half an hour before three)"}
     ],
     "vor": [
-      {"lemma": "vor", "pos": "preposition", "level": "A1", "gloss": ["before; (in times) to", "in front of"], "note": "zehn vor drei = 2:50; vor der Tür = in front of the door"}
+      {"lemma": "vor", "pos": "preposition", "level": "A1", "gloss": ["before; (in times) to", "in front of", "(with a length of time) ago"], "note": "zehn vor drei = 2:50; vor der Tür = in front of the door; vor zwei Tagen = two days ago"}
     ],
     "bis": [
       {"lemma": "bis", "pos": "preposition", "level": "A1", "gloss": ["until, to"], "note": "von neun bis fünf = from nine to five; Bis morgen! = See you tomorrow!"}

@@ -1,0 +1,175 @@
+{
+  "id": "u8-01-vor-zwei-tagen",
+  "unit": 8,
+  "order": 1,
+  "level": "A2",
+  "title": "When did it happen? vor zwei Tagen, letzte Woche (Wann war das?)",
+  "summary": "Say when something happened: vorgestern, vor zwei Tagen, letzte Woche, damals. Then the Perfekt from Unit 5 again, with more irregular verbs.",
+  "goals": [
+    "Say when something happened: vor zwei Tagen, letzte Woche, letztes Jahr",
+    "Ask Wann war das? and answer",
+    "Use the Perfekt of more irregular verbs: gefunden, geholfen, gegeben, gewusst"
+  ],
+  "nicosWeg": [
+    { "title": "Nicos Weg A2, Welcome to A2!: Biographical information (Lebenslinien)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519797" }
+  ],
+  "videos": [
+    {"id": "pEundIQVwmU", "title": "The Perfekt and its participles", "minutes": 25}
+  ],
+  "words": ["vorgestern", "damals", "frueher", "letzte-woche", "letztes-jahr", "vor-zwei-tagen", "geben", "laufen", "liegen", "sitzen", "stehen", "singen", "waschen", "gewinnen", "denken"],
+  "stations": [5, 10],
+  "sections": [
+    {
+      "id": "when-past",
+      "type": "explanation",
+      "title": "When was it?",
+      "text": "Unit 5 taught you to say **what** you did: [[Ich habe gearbeitet.]] Now say **when**. You already know [[gestern]] and [[am Wochenende]]. Here are more:\n- [[vorgestern]] = the day before yesterday\n- [[letzte Woche]] = last week\n- [[letztes Jahr]] = last year\n- [[vor zwei Tagen]] = two days ago\n- [[damals]] = back then, at that time\n- [[früher]] = in the past, formerly: [[Früher habe ich in Jerewan gewohnt.]] = I used to live in Yerevan.\n\nThe question is [[Wann war das?]] (When was that?), with [[war]] from Unit 5."
+    },
+    {
+      "id": "vor-ago",
+      "type": "table",
+      "title": "vor + a time = ago",
+      "columns": [{ "header": "German", "de": "words" }, { "header": "English" }],
+      "rows": [
+        ["vor einer Stunde", "an hour ago"],
+        ["vor einem Tag", "a day ago"],
+        ["vor zwei Tagen", "two days ago"],
+        ["vor einer Woche", "a week ago"],
+        ["vor drei Wochen", "three weeks ago"],
+        ["vor einem Monat", "a month ago"],
+        ["vor einem Jahr", "a year ago"],
+        ["vor zehn Jahren", "ten years ago"]
+      ]
+    },
+    {
+      "id": "vor-dative",
+      "type": "explanation",
+      "title": "Why einem, einer, Tagen?",
+      "text": "Here [[vor]] takes the **dative** (Unit 6): [[einem]] for [[der Tag]], [[der Monat]] and [[das Jahr]], [[einer]] for [[die Woche]] and [[die Stunde]]. In the plural the noun adds -n, as in [[mit den Kindern]]: [[zwei Tage]], so [[vor zwei Tagen]]; [[zehn Jahre]], so [[vor zehn Jahren]]. [[Wochen]] and [[Stunden]] already end in -n.\n\nYou know [[vor]] from clock times ([[fünf vor acht]]) and places ([[vor der Tür]]). Before a length of time, it means 'ago'."
+    },
+    {
+      "type": "comparison",
+      "text": "Russian два дня назад and Armenian երկու օր առաջ put 'ago' after the time, like English. German puts [[vor]] **before** it: [[vor zwei Tagen]]."
+    },
+    {
+      "id": "letzte",
+      "type": "explanation",
+      "title": "letzte Woche, letztes Jahr, letzten Monat",
+      "text": "'Last' changes its ending with the noun:\n- [[die Woche]]: [[letzte Woche]]\n- [[das Jahr]], [[das Wochenende]]: [[letztes Jahr]], [[letztes Wochenende]]\n- [[der Monat]], [[der Sommer]]: [[letzten Monat]], [[letzten Sommer]]\n\nA time with no preposition takes the accusative (Unit 4): [[den Monat]], so [[letzten Monat]]. The ending copies the article: [[die]] gives -e, [[das]] gives -es, [[den]] gives -en. Learn these as fixed phrases for now; adjective endings come in Units 13 and 14. There is no preposition: [[letzte Woche]] alone means 'last week'."
+    },
+    {
+      "id": "perfekt-review",
+      "type": "explanation",
+      "title": "The Perfekt again",
+      "text": "To tell what happened, use the Perfekt from Unit 5: [[haben]] or [[sein]] in second place, the participle at the end.\n- Regular verbs: ge- ... -t: [[gemacht]], [[gekauft]], [[gearbeitet]].\n- Irregular verbs: ge- ... -en, often with a new vowel: [[gegessen]], [[getrunken]], [[geschrieben]].\n- [[sein]] for movement and change ([[Ich bin gefahren.]]), [[haben]] for the rest.\n\nA time often comes first, and the verb stays second: [[Letzte Woche habe ich viel gearbeitet.]] [[Vor zwei Tagen bin ich nach Salzburg gefahren.]]"
+    },
+    {
+      "id": "more-irregular",
+      "type": "table",
+      "title": "More irregular participles",
+      "columns": [{ "header": "Verb", "de": "words" }, { "header": "Participle", "de": "words" }, { "header": "Example", "de": "words" }],
+      "rows": [
+        ["finden", "gefunden", "Ich habe den Schlüssel gefunden."],
+        ["helfen", "geholfen", "Eva hat mir geholfen."],
+        ["geben", "gegeben", "Ich habe ihm meine Nummer gegeben."],
+        ["gewinnen", "gewonnen", "Wir haben gewonnen!"],
+        ["singen", "gesungen", "Wir haben zusammen gesungen."],
+        ["waschen", "gewaschen", "Ich habe die Jacke gewaschen."],
+        ["sitzen", "gesessen", "Wir haben im Café gesessen."],
+        ["liegen", "gelegen", "Wir haben am See gelegen."],
+        ["stehen", "gestanden", "Ich habe lange an der Kasse gestanden."],
+        ["laufen", "ist gelaufen", "Ich bin nach Hause gelaufen."],
+        ["sein", "ist gewesen", "Ich bin in Wien gewesen."]
+      ]
+    },
+    {
+      "id": "irregular-tips",
+      "type": "tip",
+      "title": "Two things to know",
+      "text": "- [[laufen]] (to walk, to run) is movement, so [[sein]]: [[Ich bin gelaufen.]] For [[sein]] itself you know the short past [[war]] (Unit 5); [[gewesen]] is its Perfekt, and [[Ich war in Wien]] is more common.\n- In Munich, Austria and Switzerland people say [[Ich bin gesessen]], [[ich bin gelegen]], [[ich bin gestanden]]. In the north it's [[haben]]. Both are correct; you'll hear [[sein]] in Munich."
+    },
+    {
+      "id": "mixed-verbs",
+      "type": "explanation",
+      "title": "Four verbs in between",
+      "text": "A few verbs change their vowel but end in -t like regular ones:\n- [[bringen]]: [[gebracht]] (you know [[mitgebracht]], Unit 5)\n- [[denken]]: [[gedacht]]\n- [[kennen]]: [[gekannt]]\n- [[wissen]]: [[gewusst]]\n\n[[Das habe ich nicht gewusst!]] = I didn't know that! [[Das habe ich auch gedacht.]] = I thought so too."
+    },
+    {
+      "id": "vowel-families",
+      "type": "tip",
+      "title": "Learn them in families",
+      "text": "Many irregular verbs change their vowel the same way:\n- i to u: [[finden]] [[gefunden]], [[trinken]] [[getrunken]], [[singen]] [[gesungen]]\n- ei to ie: [[schreiben]] [[geschrieben]], [[bleiben]] [[geblieben]]\n- e to o: [[helfen]] [[geholfen]], [[sprechen]] [[gesprochen]], [[nehmen]] [[genommen]]\n- no change: [[essen]] [[gegessen]], [[lesen]] [[gelesen]], [[fahren]] [[gefahren]], [[waschen]] [[gewaschen]]"
+    },
+    {
+      "id": "when-examples",
+      "type": "examples",
+      "title": "Examples",
+      "items": [
+        { "de": "Wann war das? - Vor zwei Wochen.", "en": "When was that? - Two weeks ago." },
+        { "de": "Letzte Woche habe ich viel gearbeitet.", "en": "Last week I worked a lot." },
+        { "de": "Vorgestern bin ich nach Hause gelaufen.", "en": "The day before yesterday I walked home." },
+        { "de": "Letztes Jahr bin ich nach Armenien geflogen.", "en": "Last year I flew to Armenia." },
+        { "de": "Eva hat mir gestern geholfen.", "en": "Eva helped me yesterday." },
+        { "de": "Früher habe ich in Jerewan gewohnt.", "en": "I used to live in Yerevan." },
+        { "de": "Damals hatte ich wenig Geld.", "en": "Back then I had little money." },
+        { "de": "Das habe ich nicht gewusst!", "en": "I didn't know that!" }
+      ]
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat",
+      "items": [
+        { "de": "Wann war das?", "en": "When was that?" },
+        { "de": "Vor zwei Tagen.", "en": "Two days ago." },
+        { "de": "Letzte Woche habe ich viel gearbeitet.", "en": "Last week I worked a lot." },
+        { "de": "Letztes Jahr bin ich nach Armenien geflogen.", "en": "Last year I flew to Armenia." },
+        { "de": "Ich habe den Schlüssel gefunden.", "en": "I found the key." },
+        { "de": "Das habe ich nicht gewusst!", "en": "I didn't know that!" }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: I was in Salzburg two days ago.",
+          "text": "Ich war vor zwei ___ in Salzburg.",
+          "answers": [["Tagen"]],
+          "explanation": "vor + dative. In the dative plural the noun adds -n: zwei Tage, vor zwei Tagen."
+        },
+        {
+          "type": "mc",
+          "question": "Which means 'last year'?",
+          "questionLang": "en",
+          "options": ["letztes Jahr", "letzte Jahr", "vor Jahr"],
+          "answer": "letztes Jahr",
+          "explanation": "das Jahr, so letztes Jahr (the ending copies das). die Woche gives letzte Woche."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: Eva helped me.",
+          "text": "Eva hat mir ___.",
+          "answers": [["geholfen"]],
+          "explanation": "helfen is irregular: e changes to o, geholfen. Like sprechen, gesprochen."
+        },
+        {
+          "type": "order",
+          "prompt": "Last week I worked a lot.",
+          "tiles": ["letzte", "Woche", "habe", "ich", "viel", "gearbeitet"],
+          "answers": ["Letzte Woche habe ich viel gearbeitet", "Ich habe letzte Woche viel gearbeitet", "Viel habe ich letzte Woche gearbeitet"],
+          "explanation": "The time can come first; habe stays in second place, gearbeitet goes to the end. Another part can come first too: Viel habe ich letzte Woche gearbeitet."
+        },
+        {
+          "type": "listen_mc",
+          "audio": "Vor drei Wochen war ich in Wien, und letzte Woche war ich in Salzburg.",
+          "question": "When was the person in Vienna?",
+          "questionLang": "en",
+          "options": ["vor drei Wochen", "letzte Woche", "vor drei Tagen"],
+          "answer": "vor drei Wochen",
+          "explanation": "Vor drei Wochen war ich in Wien = three weeks ago I was in Vienna. Salzburg was last week."
+        }
+      ]
+    }
+  ]
+}

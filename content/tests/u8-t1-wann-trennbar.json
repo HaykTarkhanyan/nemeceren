@@ -1,0 +1,85 @@
+{
+  "id": "u8-t1-wann-trennbar",
+  "title": "Last week, and yesterday at work",
+  "level": "A2",
+  "created": "2026-11-07",
+  "description": "Unit 8 check after lessons 1 and 2.",
+  "unit": 8,
+  "lesson": "u8-02-arbeitstag-gestern",
+  "items": [
+    {"type": "gap", "instruction": "Fill in the gap: I go by bus.", "text": "Ich fahre mit ___ Bus.", "answers": [["dem"]], "explanation": "Review (Unit 6): mit takes the dative: der Bus, mit dem Bus."},
+    {"type": "gap", "instruction": "Fill in the gap: I don't know. (a fact)", "text": "Ich ___ es nicht.", "answers": [["weiß"]], "explanation": "Review (Unit 7): wissen is for facts: ich weiß, with no -e and no -t."},
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: Two years ago I lived in Yerevan.",
+      "text": "Vor zwei ___ habe ich in Jerewan gewohnt.",
+      "answers": [["Jahren"]],
+      "explanation": "vor + dative. In the dative plural the noun adds -n: zwei Jahre, vor zwei Jahren."
+    },
+    {
+      "type": "mc",
+      "question": "Which means 'last week'?",
+      "questionLang": "en",
+      "options": ["letzte Woche", "letztes Woche", "vor Woche"],
+      "answer": "letzte Woche",
+      "explanation": "die Woche, so letzte Woche (the ending copies die). das Jahr gives letztes Jahr."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: I found the key.",
+      "text": "Ich habe den Schlüssel ___.",
+      "answers": [["gefunden"]],
+      "explanation": "finden is irregular: i changes to u, gefunden. Like trinken, getrunken."
+    },
+    {
+      "type": "mc",
+      "question": "Which sentence means 'I didn't know that'?",
+      "questionLang": "en",
+      "options": ["Das habe ich nicht gewusst.", "Das habe ich nicht gewisst.", "Das habe ich nicht gekennt."],
+      "answer": "Das habe ich nicht gewusst.",
+      "explanation": "wissen changes its vowel and ends in -t: gewusst. kennen works the same way: gekannt."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: On Saturday I did the shopping.",
+      "text": "Am Samstag habe ich ___.",
+      "answers": [["eingekauft"]],
+      "explanation": "einkaufen is separable: ein + ge + kauft = eingekauft, in one word."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: The train left at eight.",
+      "text": "Der Zug ___ um acht abgefahren.",
+      "answers": [["ist"]],
+      "explanation": "abfahren is movement, so sein: der Zug ist abgefahren."
+    },
+    {
+      "type": "listen_mc",
+      "audio": "Gestern bin ich früh aufgestanden. Um neun hatte ich eine Besprechung, und am Abend habe ich die Wohnung aufgeräumt.",
+      "question": "What did the person do in the evening?",
+      "questionLang": "en",
+      "options": ["die Wohnung aufgeräumt", "eine Besprechung gehabt", "früh aufgestanden"],
+      "answer": "die Wohnung aufgeräumt",
+      "explanation": "am Abend habe ich die Wohnung aufgeräumt. aufräumen is separable: aufgeräumt. The meeting was at nine."
+    },
+    {
+      "type": "dictation",
+      "text": "Vorgestern bin ich mit Eva ausgegangen.",
+      "explanation": "vorgestern = the day before yesterday. ausgehen takes sein: ich bin ausgegangen."
+    },
+    {
+      "type": "order",
+      "prompt": "When did you get back? (du)",
+      "tiles": ["wann", "bist", "du", "zurückgekommen"],
+      "answers": ["Wann bist du zurückgekommen"],
+      "explanation": "Question word, then bist (zurückkommen takes sein), and the participle at the end."
+    },
+    {
+      "type": "write",
+      "instruction": "Your colleague asks the question below. Answer in 5-6 sentences about one day last week: when it was (letzte Woche, vor ... Tagen), when you got up, what you did at work or in class, and what you did in the evening. Use at least three separable verbs (aufgestanden, angerufen, eingekauft ...). Claude will check it.",
+      "prompt": "Was hast du letzte Woche gemacht? Erzähl mal!",
+      "digits": true,
+      "minWords": 40
+    }
+  ]
+}

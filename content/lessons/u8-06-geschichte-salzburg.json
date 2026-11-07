@@ -1,0 +1,185 @@
+{
+  "id": "u8-06-geschichte-salzburg",
+  "unit": 8,
+  "order": 6,
+  "level": "A2",
+  "title": "Story: a weekend in Salzburg (Ein Wochenende in Salzburg)",
+  "summary": "A scene to read and hear: on Monday morning Aram tells Eva about a trip to Salzburg that started badly. It uses only German from Units 0-8, with questions between the parts.",
+  "goals": [
+    "Follow a longer conversation about the past: the Perfekt, war and hatte, musste and konnte.",
+    "Notice how people tell a story and react to it: Erzähl mal! Oh nein! Und dann?"
+  ],
+  "words": ["geschichte", "fluss", "bruecke", "tourist", "schirm", "museum", "schloss", "fantastisch", "spannend"],
+  "tests": ["u8-t3-reise-email"],
+  "sections": [
+    {
+      "type": "explanation",
+      "id": "how-to-read",
+      "title": "How to read the story",
+      "text": "A scene in three parts, on a Monday morning in an office in Munich. Read each line first and try to understand it; tap **translation** only when you need it. **Play the scene** reads a whole part, each person in their own voice. After each part come a few questions.\n\nNew words in the story: [[die Geschichte]] (story), [[der Fluss]] (river), [[die Brücke]] (bridge), [[der Tourist]] (tourist), [[der Schirm]] (umbrella). Four words from lesson 5 become cards here too: [[das Museum]], [[das Schloss]], [[fantastisch]], [[spannend]].\n\n[[Das ist eine lange Geschichte.]] = It's a long story. Take it as a fixed phrase: the -e on [[lange]] is an adjective ending (Units 13-14). [[Mozartkugeln]] are chocolates from Salzburg, the city where Mozart was born. [[Ähm]] is the German 'um' when you don't know what to say."
+    },
+    {
+      "type": "dialogue",
+      "id": "part-1",
+      "title": "Part 1: The train",
+      "lines": [
+        { "speaker": "Eva", "de": "Guten Morgen, Aram! Wie war dein Wochenende?", "en": "Good morning, Aram! How was your weekend?" },
+        { "speaker": "Aram", "de": "Guten Morgen! Gut, aber das ist eine lange Geschichte.", "en": "Good morning! Good, but it's a long story." },
+        { "speaker": "Eva", "de": "Erzähl mal!", "en": "Go on, tell me!" },
+        { "speaker": "Aram", "de": "Am Samstag wollte ich mit Thomas nach Salzburg fahren.", "en": "On Saturday I wanted to go to Salzburg with Thomas." },
+        { "speaker": "Aram", "de": "Der Zug sollte um sieben Uhr abfahren.", "en": "The train was supposed to leave at seven." },
+        { "speaker": "Aram", "de": "Aber ich bin zu spät aufgestanden.", "en": "But I got up too late." },
+        { "speaker": "Eva", "de": "Oh nein! Und dann?", "en": "Oh no! And then?" },
+        { "speaker": "Aram", "de": "Ich bin zum Bahnhof gelaufen, aber ich habe den Zug verpasst.", "en": "I ran to the station, but I missed the train." },
+        { "speaker": "Eva", "de": "Und Thomas?", "en": "And Thomas?" },
+        { "speaker": "Aram", "de": "Thomas war schon im Zug. Er hat mich angerufen und gefragt: Wo bist du?", "en": "Thomas was already on the train. He called me and asked: Where are you?" },
+        { "speaker": "Aram", "de": "Ich musste eine Stunde warten. Dann habe ich den Zug um acht genommen.", "en": "I had to wait an hour. Then I took the eight o'clock train." },
+        { "speaker": "Eva", "de": "Hatte der Zug auch Verspätung?", "en": "Was that train late too?" },
+        { "speaker": "Aram", "de": "Natürlich! Zwanzig Minuten. Ich bin erst um zehn in Salzburg angekommen.", "en": "Of course! Twenty minutes. I didn't get to Salzburg until ten." },
+        { "speaker": "Eva", "de": "Das tut mir leid!", "en": "I'm sorry!" }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Questions on part 1",
+      "items": [
+        {
+          "type": "mc",
+          "question": "Why did Aram miss the train?",
+          "questionLang": "en",
+          "options": ["Er ist zu spät aufgestanden.", "Er hat sein Ticket vergessen.", "Der Zug hatte Verspätung."],
+          "answer": "Er ist zu spät aufgestanden.",
+          "explanation": "Aram: Aber ich bin zu spät aufgestanden. aufstehen is separable and takes sein: er ist aufgestanden. The delay was on the second train."
+        },
+        {
+          "type": "mc",
+          "question": "When did Aram arrive in Salzburg?",
+          "questionLang": "en",
+          "options": ["um zehn", "um sieben", "um acht"],
+          "answer": "um zehn",
+          "explanation": "Ich bin erst um zehn in Salzburg angekommen. erst = not until. Seven and eight were the times of the two trains."
+        },
+        {
+          "type": "gap",
+          "instruction": "Aram says he had to wait an hour.",
+          "text": "Ich ___ eine Stunde warten.",
+          "answers": [["musste"]],
+          "explanation": "müssen in the past: ich musste. The infinitive warten goes to the end."
+        }
+      ]
+    },
+    {
+      "type": "dialogue",
+      "id": "part-2",
+      "title": "Part 2: In Salzburg",
+      "lines": [
+        { "speaker": "Eva", "de": "Und wie war Salzburg?", "en": "And how was Salzburg?" },
+        { "speaker": "Aram", "de": "Fantastisch! Zuerst haben wir das Schloss besichtigt.", "en": "Fantastic! First we visited the palace." },
+        { "speaker": "Aram", "de": "Dann sind wir zur Brücke am Fluss gegangen.", "en": "Then we went to the bridge by the river." },
+        { "speaker": "Aram", "de": "Da waren so viele Touristen!", "en": "There were so many tourists there!" },
+        { "speaker": "Eva", "de": "Und das Wetter?", "en": "And the weather?" },
+        { "speaker": "Aram", "de": "Am Anfang war es schön. Aber plötzlich hat es geregnet.", "en": "At the beginning it was nice. But suddenly it started to rain." },
+        { "speaker": "Aram", "de": "Und ich hatte keinen Schirm. Ich habe ihn zu Hause vergessen.", "en": "And I didn't have an umbrella. I'd left it at home." },
+        { "speaker": "Eva", "de": "Oh nein! Was habt ihr dann gemacht?", "en": "Oh no! What did you do then?" },
+        { "speaker": "Aram", "de": "Wir waren zwei Stunden im Museum. Es war wirklich spannend.", "en": "We spent two hours in the museum. It was really exciting." },
+        { "speaker": "Aram", "de": "Ich habe viel fotografiert.", "en": "I took a lot of photos." },
+        { "speaker": "Eva", "de": "Und habt ihr Mozartkugeln probiert?", "en": "And did you try Mozartkugeln?" },
+        { "speaker": "Aram", "de": "Natürlich! Ich habe dir eine mitgebracht.", "en": "Of course! I brought you one." },
+        { "speaker": "Eva", "de": "Danke! Das ist nett.", "en": "Thanks! That's nice of you." }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Questions on part 2",
+      "items": [
+        {
+          "type": "mc",
+          "question": "What did Aram leave at home?",
+          "questionLang": "en",
+          "options": ["den Schirm", "das Ticket", "die Geldbörse"],
+          "answer": "den Schirm",
+          "explanation": "Ich hatte keinen Schirm. Ich habe ihn zu Hause vergessen. ihn = den Schirm."
+        },
+        {
+          "type": "mc",
+          "question": "What did Aram and Thomas do when it rained?",
+          "questionLang": "en",
+          "options": ["Sie waren im Museum.", "Sie waren am Fluss.", "Sie sind nach Hause gefahren."],
+          "answer": "Sie waren im Museum.",
+          "explanation": "Wir waren zwei Stunden im Museum. They were at the bridge by the river before the rain."
+        },
+        {
+          "type": "gap",
+          "instruction": "Aram says he took a lot of photos.",
+          "text": "Ich habe viel ___.",
+          "answers": [["fotografiert"]],
+          "explanation": "fotografieren ends in -ieren, so no ge-: fotografiert."
+        }
+      ]
+    },
+    {
+      "type": "dialogue",
+      "id": "part-3",
+      "title": "Part 3: Eva's weekend, and the meeting",
+      "lines": [
+        { "speaker": "Aram", "de": "Und du, Eva? Was hast du am Wochenende gemacht?", "en": "And you, Eva? What did you do at the weekend?" },
+        { "speaker": "Eva", "de": "Ich wollte eigentlich wandern, aber ich konnte nicht.", "en": "I actually wanted to go hiking, but I couldn't." },
+        { "speaker": "Eva", "de": "Meine Schwester ist am Samstag umgezogen. Ich musste ihr helfen.", "en": "My sister moved house on Saturday. I had to help her." },
+        { "speaker": "Aram", "de": "Oh, das ist viel Arbeit!", "en": "Oh, that's a lot of work!" },
+        { "speaker": "Eva", "de": "Ja! Wir haben von neun bis sechs gearbeitet.", "en": "Yes! We worked from nine to six." },
+        { "speaker": "Eva", "de": "Am Abend haben wir die Wohnung aufgeräumt und zusammen gekocht.", "en": "In the evening we tidied the flat and cooked together." },
+        { "speaker": "Eva", "de": "Und am Sonntag habe ich nur geschlafen!", "en": "And on Sunday I just slept!" },
+        { "speaker": "Aram", "de": "Das verstehe ich!", "en": "I can understand that!" },
+        { "speaker": "Herr Müller", "de": "Guten Morgen, Frau Meier! Guten Morgen, Herr Tarkhanyan!", "en": "Good morning, Ms Meier! Good morning, Mr Tarkhanyan!" },
+        { "speaker": "Herr Müller", "de": "Die Besprechung fängt in fünf Minuten an. Haben Sie alles vorbereitet?", "en": "The meeting starts in five minutes. Have you prepared everything?" },
+        { "speaker": "Eva", "de": "Ja, natürlich.", "en": "Yes, of course." },
+        { "speaker": "Aram", "de": "Ähm ... fast.", "en": "Um ... almost." },
+        { "speaker": "Herr Müller", "de": "Fast?", "en": "Almost?" },
+        { "speaker": "Aram", "de": "Aber ich habe Mozartkugeln aus Salzburg mitgebracht!", "en": "But I brought Mozartkugeln from Salzburg!" },
+        { "speaker": "Herr Müller", "de": "Na gut. Dann beginnen wir mit den Mozartkugeln.", "en": "Oh well. Then we'll start with the Mozartkugeln." }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Questions on part 3",
+      "items": [
+        {
+          "type": "mc",
+          "question": "Why couldn't Eva go hiking?",
+          "questionLang": "en",
+          "options": ["Sie musste ihrer Schwester helfen.", "Sie war krank.", "Sie hatte keinen Schirm."],
+          "answer": "Sie musste ihrer Schwester helfen.",
+          "explanation": "Meine Schwester ist am Samstag umgezogen. Ich musste ihr helfen. helfen takes the dative: ihr, ihrer Schwester."
+        },
+        {
+          "type": "order",
+          "prompt": "My sister moved house on Saturday. (Eva)",
+          "tiles": ["meine", "Schwester", "ist", "am", "Samstag", "umgezogen"],
+          "answers": ["Meine Schwester ist am Samstag umgezogen", "Am Samstag ist meine Schwester umgezogen"],
+          "explanation": "umziehen is separable (um + ge + zogen) and takes sein: ist umgezogen."
+        },
+        {
+          "type": "mc",
+          "question": "Is Aram ready for the meeting?",
+          "questionLang": "en",
+          "options": ["Fast. Aber er hat Mozartkugeln mitgebracht.", "Ja. Er hat alles am Freitag vorbereitet.", "Nein. Er hat die Besprechung vergessen."],
+          "answer": "Fast. Aber er hat Mozartkugeln mitgebracht.",
+          "explanation": "Aram: Ähm ... fast. fast = almost. Then: Aber ich habe Mozartkugeln aus Salzburg mitgebracht!"
+        }
+      ]
+    },
+    {
+      "type": "examples",
+      "id": "story-lines",
+      "title": "Useful lines from the story",
+      "items": [
+        { "de": "Das ist eine lange Geschichte.", "en": "It's a long story.", "note": "A fixed phrase." },
+        { "de": "Erzähl mal!", "en": "Go on, tell me!" },
+        { "de": "Oh nein! Und dann?", "en": "Oh no! And then?" },
+        { "de": "Ich wollte eigentlich wandern, aber ich konnte nicht.", "en": "I actually wanted to go hiking, but I couldn't." },
+        { "de": "Ich bin erst um zehn angekommen.", "en": "I didn't arrive until ten." },
+        { "de": "Na gut.", "en": "Oh well. All right then." }
+      ]
+    }
+  ]
+}

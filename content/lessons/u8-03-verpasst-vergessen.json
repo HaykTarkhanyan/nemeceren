@@ -1,0 +1,149 @@
+{
+  "id": "u8-03-verpasst-vergessen",
+  "unit": 8,
+  "order": 3,
+  "level": "A2",
+  "title": "When things go wrong: verbs without ge- (Ich habe den Zug verpasst)",
+  "summary": "Verbs that start with be-, er- or ver- and verbs that end in -ieren take no ge- in the Perfekt: verpasst, vergessen, passiert. Use them to tell what went wrong.",
+  "goals": [
+    "Form the Perfekt of verbs with be-, er-, ver- and -ieren: besucht, verpasst, telefoniert",
+    "Ask Was ist passiert? and tell what went wrong",
+    "Hear the rule: no ge- when the first syllable isn't stressed"
+  ],
+  "words": ["verpassen", "verlieren", "vergessen", "erreichen", "beschreiben", "versuchen", "vorbereiten", "fotografieren", "reservieren", "probieren", "organisieren", "passieren", "diskutieren", "ticket", "unfall", "geldboerse", "leer", "ploetzlich", "zum-glueck"],
+  "sections": [
+    {
+      "id": "no-ge",
+      "type": "explanation",
+      "title": "No ge- at the front",
+      "text": "Unit 5 also showed you [[besucht]] and [[telefoniert]]: no ge-. Two groups of verbs never take ge-:\n1. Verbs that start with **be-, er-, ver-** (and a few more: **emp-, ent-, ge-**): [[besuchen]], [[besucht]]; [[erzählen]], [[erzählt]]; [[verstehen]], [[verstanden]].\n2. Verbs that end in **-ieren**: [[telefonieren]], [[telefoniert]]; [[studieren]], [[studiert]].\n\nThe end stays as usual: -t for regular verbs ([[verpasst]]), -en for irregular ones ([[verstanden]], [[vergessen]])."
+    },
+    {
+      "id": "be-er-ver",
+      "type": "table",
+      "title": "be-, er-, ver- (and emp-, ge-)",
+      "columns": [{ "header": "Verb", "de": "words" }, { "header": "Perfekt", "de": "words" }, { "header": "English" }],
+      "rows": [
+        ["besuchen", "ich habe besucht", "I visited"],
+        ["bekommen", "ich habe bekommen", "I got, I received"],
+        ["beginnen", "es hat begonnen", "it began"],
+        ["beschreiben", "ich habe beschrieben", "I described"],
+        ["erzählen", "ich habe erzählt", "I told"],
+        ["erklären", "ich habe erklärt", "I explained"],
+        ["erreichen", "ich habe erreicht", "I reached, I caught (a train)"],
+        ["verstehen", "ich habe verstanden", "I understood"],
+        ["vergessen", "ich habe vergessen", "I forgot"],
+        ["verlieren", "ich habe verloren", "I lost"],
+        ["verpassen", "ich habe verpasst", "I missed"],
+        ["versuchen", "ich habe versucht", "I tried"],
+        ["empfehlen", "ich habe empfohlen", "I recommended"],
+        ["gefallen", "es hat mir gefallen", "I liked it"]
+      ]
+    },
+    {
+      "id": "ieren",
+      "type": "table",
+      "title": "-ieren",
+      "columns": [{ "header": "Verb", "de": "words" }, { "header": "Perfekt", "de": "words" }, { "header": "English" }],
+      "rows": [
+        ["telefonieren", "ich habe telefoniert", "I phoned"],
+        ["studieren", "ich habe studiert", "I studied"],
+        ["fotografieren", "ich habe fotografiert", "I took photos"],
+        ["reservieren", "ich habe reserviert", "I reserved"],
+        ["probieren", "ich habe probiert", "I tried, I tasted"],
+        ["organisieren", "ich habe organisiert", "I organised"],
+        ["diskutieren", "ich habe diskutiert", "I discussed"],
+        ["reparieren", "ich habe repariert", "I repaired"],
+        ["passieren", "es ist passiert", "it happened"]
+      ]
+    },
+    {
+      "id": "stress-rule",
+      "type": "tip",
+      "title": "Listen for the stress",
+      "text": "ge- comes only when the verb is stressed on its first syllable: **MA**chen, [[gemacht]]; **AUF**stehen, [[aufgestanden]]. In these verbs the first syllable is weak: be**SU**chen, ver**STE**hen, telefo**NIE**ren. So no ge-: [[besucht]], [[verstanden]], [[telefoniert]]. The same goes for [[übernachten]] (Unit 7): [[Wir haben im Hotel übernachtet.]]"
+    },
+    {
+      "id": "two-traps",
+      "type": "warning",
+      "title": "Two traps",
+      "text": "- [[vorbereiten]] (to prepare) has both: a separable [[vor]] and a verb with be-. The be- wins, so no ge-: [[Ich habe die Besprechung vorbereitet.]]\n- [[bekommen]] means 'to get', never 'to become': [[Ich habe eine E-Mail bekommen.]] = I got an email. Its participle looks like the infinitive, and so does [[vergessen]]: [[Ich habe es vergessen.]]"
+    },
+    {
+      "id": "was-ist-passiert",
+      "type": "explanation",
+      "title": "What happened?",
+      "text": "When something goes wrong, people ask [[Was ist passiert?]] [[passieren]] takes [[sein]]. Answers:\n- [[Ich habe den Zug verpasst.]] = I missed the train.\n- [[Ich habe mein Ticket vergessen.]] = I forgot my ticket.\n- [[Ich habe meine Geldbörse verloren.]] = I've lost my wallet.\n- [[Mein Handy war leer.]] = My phone was dead.\n- [[Auf der Straße war ein Unfall.]] = There was an accident on the road.\n- [[Plötzlich hat es geregnet.]] = Suddenly it started to rain.\n\nAnd the good news at the end: [[Zum Glück habe ich den Zug noch erreicht.]] = Luckily I still caught the train. ([[zum Glück]] = luckily; [[zum]] = [[zu dem]], Unit 6.)"
+    },
+    {
+      "id": "trouble-examples",
+      "type": "examples",
+      "title": "Examples",
+      "items": [
+        { "de": "Was ist passiert?", "en": "What happened?" },
+        { "de": "Ich habe den Bus verpasst.", "en": "I missed the bus." },
+        { "de": "Ich habe meinen Schlüssel vergessen.", "en": "I forgot my key." },
+        { "de": "Eva hat ihre Geldbörse verloren.", "en": "Eva has lost her wallet." },
+        { "de": "Plötzlich war mein Handy leer.", "en": "Suddenly my phone was dead." },
+        { "de": "Ich habe es versucht.", "en": "I tried." },
+        { "de": "Wir haben einen Tisch reserviert.", "en": "We reserved a table." },
+        { "de": "Hast du den Kuchen probiert?", "en": "Did you try the cake?" }
+      ]
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat",
+      "items": [
+        { "de": "Was ist passiert?", "en": "What happened?" },
+        { "de": "Ich habe den Zug verpasst.", "en": "I missed the train." },
+        { "de": "Ich habe meine Geldbörse verloren.", "en": "I've lost my wallet." },
+        { "de": "Mein Handy war leer.", "en": "My phone was dead." },
+        { "de": "Zum Glück habe ich den Zug noch erreicht.", "en": "Luckily I still caught the train." },
+        { "de": "In Salzburg haben wir viel fotografiert.", "en": "In Salzburg we took a lot of photos." }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: I missed the train.",
+          "text": "Ich habe den Zug ___.",
+          "answers": [["verpasst"]],
+          "explanation": "verpassen starts with ver-, so no ge-: verpasst."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: What happened?",
+          "text": "Was ___ passiert?",
+          "answers": [["ist"]],
+          "explanation": "passieren takes sein: Was ist passiert?"
+        },
+        {
+          "type": "mc",
+          "question": "Which sentence means 'We took a lot of photos'?",
+          "questionLang": "en",
+          "options": ["Wir haben viel fotografiert.", "Wir haben viel gefotografiert.", "Wir sind viel fotografiert."],
+          "answer": "Wir haben viel fotografiert.",
+          "explanation": "Verbs in -ieren take no ge-: fotografiert, and they take haben. passieren is the exception: Was ist passiert?"
+        },
+        {
+          "type": "mc",
+          "question": "Which sentence means 'I forgot my ticket'?",
+          "questionLang": "en",
+          "options": ["Ich habe mein Ticket vergessen.", "Ich habe mein Ticket gevergessen.", "Ich habe mein Ticket vergesst."],
+          "answer": "Ich habe mein Ticket vergessen.",
+          "explanation": "vergessen: ver-, so no ge-, and it's irregular (-en), so the participle looks like the infinitive."
+        },
+        {
+          "type": "order",
+          "prompt": "Suddenly my phone was dead.",
+          "tiles": ["plötzlich", "war", "mein", "Handy", "leer"],
+          "answers": ["Plötzlich war mein Handy leer", "Mein Handy war plötzlich leer"],
+          "explanation": "war in second place. leer = empty; for a phone: the battery is dead."
+        }
+      ]
+    }
+  ]
+}

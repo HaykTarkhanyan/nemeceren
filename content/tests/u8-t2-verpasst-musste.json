@@ -1,0 +1,86 @@
+{
+  "id": "u8-t2-verpasst-musste",
+  "title": "What went wrong, and musste, konnte, wollte",
+  "level": "A2",
+  "created": "2026-11-07",
+  "description": "Unit 8 check after lessons 3 and 4.",
+  "unit": 8,
+  "lesson": "u8-04-musste-konnte",
+  "items": [
+    {"type": "gap", "instruction": "Fill in the gap: I'll call you tomorrow. (du)", "text": "Ich rufe ___ morgen an.", "answers": [["dich"]], "explanation": "Review (Unit 4): du becomes dich when it's the object: Ich rufe dich an."},
+    {"type": "gap", "instruction": "Fill in the gap: Please open the window! (Sie)", "text": "___ Sie bitte das Fenster!", "answers": [["Öffnen"]], "explanation": "Review (Unit 5): the Sie imperative puts the verb first, then Sie: Öffnen Sie bitte ..."},
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: I missed the bus.",
+      "text": "Ich habe den Bus ___.",
+      "answers": [["verpasst"]],
+      "explanation": "verpassen starts with ver-, so no ge-: verpasst."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: What happened?",
+      "text": "Was ist ___?",
+      "answers": [["passiert"]],
+      "explanation": "passieren ends in -ieren, so no ge-: passiert. It takes sein: Was ist passiert?"
+    },
+    {
+      "type": "mc",
+      "question": "Which sentence means 'In Salzburg we took a lot of photos'?",
+      "questionLang": "en",
+      "options": ["In Salzburg haben wir viel fotografiert.", "In Salzburg haben wir viel gefotografiert.", "In Salzburg sind wir viel fotografiert."],
+      "answer": "In Salzburg haben wir viel fotografiert.",
+      "explanation": "-ieren verbs take no ge-: fotografiert, with haben."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: I've lost my wallet.",
+      "text": "Ich habe meine Geldbörse ___.",
+      "answers": [["verloren"]],
+      "explanation": "verlieren: ver-, so no ge-, and it's irregular: verloren."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: Yesterday I had to work until eight.",
+      "text": "Gestern ___ ich bis acht arbeiten.",
+      "answers": [["musste"]],
+      "explanation": "müssen in the past: drop the umlaut, add -te: ich musste. arbeiten stays at the end."
+    },
+    {
+      "type": "mc",
+      "question": "A friend asks why you and Eva weren't at the party yesterday. Which answer is right?",
+      "questionLang": "en",
+      "options": ["Wir konnten gestern nicht kommen.", "Wir könnten gestern nicht kommen.", "Wir können gestern nicht kommen."],
+      "answer": "Wir konnten gestern nicht kommen.",
+      "explanation": "wir konnten (no umlaut) is the past of können. könnten = could or would (polite, or 'if ...'), not the past. können is the present, which doesn't fit gestern."
+    },
+    {
+      "type": "gap",
+      "instruction": "Fill in the gap: We wanted to go hiking.",
+      "text": "Wir ___ wandern.",
+      "answers": [["wollten"]],
+      "explanation": "wollen in the past: wir wollten."
+    },
+    {
+      "type": "listen_mc",
+      "audio": "Tut mir leid, ich konnte gestern nicht kommen. Ich musste zum Arzt.",
+      "question": "Why couldn't the person come?",
+      "questionLang": "en",
+      "options": ["Ich musste zum Arzt.", "Ich hatte keine Lust.", "Ich habe den Zug verpasst."],
+      "answer": "Ich musste zum Arzt.",
+      "explanation": "Ich musste zum Arzt = I had to go to the doctor. With a place, no second verb is needed."
+    },
+    {
+      "type": "order",
+      "prompt": "As a child I wasn't allowed to watch TV for long.",
+      "tiles": ["als", "Kind", "durfte", "ich", "nicht", "lange", "fernsehen"],
+      "answers": ["Als Kind durfte ich nicht lange fernsehen", "Ich durfte als Kind nicht lange fernsehen", "Lange durfte ich als Kind nicht fernsehen"],
+      "explanation": "durfte (the past of dürfen) in second place, fernsehen in one piece at the end. Another part can come first too: Lange durfte ich als Kind nicht fernsehen."
+    },
+    {
+      "type": "write",
+      "instruction": "Yesterday you missed an important meeting at work (or a class). Your colleague writes the message below. Answer in 4-5 sentences: say sorry, say what happened (verpasst, vergessen ...), and what you wanted to do and had to do (wollte, musste, konnte). Claude will check it.",
+      "prompt": "Wo warst du gestern? Wir hatten um zehn eine Besprechung!",
+      "minWords": 35
+    }
+  ]
+}

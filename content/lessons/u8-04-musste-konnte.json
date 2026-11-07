@@ -1,0 +1,151 @@
+{
+  "id": "u8-04-musste-konnte",
+  "unit": 8,
+  "order": 4,
+  "level": "A2",
+  "title": "Had to, could, wanted: musste, konnte, wollte (Ich musste arbeiten)",
+  "summary": "Like war and hatte, the modal verbs have a short past: Ich musste arbeiten. Ich konnte nicht kommen. Use it to explain and apologise, and to talk about the old days.",
+  "goals": [
+    "Use musste, konnte, wollte, durfte and sollte with an infinitive at the end",
+    "Explain why you couldn't come: Ich wollte kommen, aber ich musste arbeiten.",
+    "Know which past to use when you speak",
+    "Tell konnte (could, was able) from könnte (could you, polite)"
+  ],
+  "nicosWeg": [
+    { "title": "Nicos Weg A2, chapter 11: The past and today (Das Leben heute und damals, Frauensache?)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519797" }
+  ],
+  "words": ["endlich", "eigentlich", "hoffen", "wirklich", "natuerlich", "fast", "erst", "schaffen", "schueler", "schuelerin", "jung", "klasse", "streng"],
+  "tests": ["u8-t2-verpasst-musste"],
+  "sections": [
+    {
+      "id": "modal-past",
+      "type": "explanation",
+      "title": "Like war and hatte",
+      "text": "In Unit 5, [[sein]] and [[haben]] got a short past: [[war]], [[hatte]]. The modal verbs from Unit 3 work the same way. People rarely use the Perfekt for them:\n- [[Ich musste arbeiten.]] = I had to work.\n- [[Ich konnte nicht kommen.]] = I couldn't come.\n- [[Ich wollte dich anrufen.]] = I wanted to call you.\n\nThe verb bracket stays: the modal verb in second place, the infinitive at the end, just as in the present ([[Ich muss arbeiten.]])."
+    },
+    {
+      "id": "modal-past-table",
+      "type": "table",
+      "title": "musste, konnte, wollte",
+      "columns": [{ "header": "Person", "de": "words" }, { "header": "müssen", "de": "words" }, { "header": "können", "de": "words" }, { "header": "wollen", "de": "words" }],
+      "rows": [
+        ["ich", "musste", "konnte", "wollte"],
+        ["du", "musstest", "konntest", "wolltest"],
+        ["er / sie / es", "musste", "konnte", "wollte"],
+        ["wir", "mussten", "konnten", "wollten"],
+        ["ihr", "musstet", "konntet", "wolltet"],
+        ["sie / Sie", "mussten", "konnten", "wollten"]
+      ]
+    },
+    {
+      "id": "modal-past-rule",
+      "type": "explanation",
+      "title": "How they're made",
+      "text": "Drop the umlaut and add -te: [[müssen]], [[musste]]; [[können]], [[konnte]]; [[dürfen]], [[durfte]]. [[wollen]] and [[sollen]] have no umlaut to drop: [[wollte]], [[sollte]].\n\nAs with [[war]] and [[hatte]]: [[ich musste]] = [[er musste]], with no -t.\n\n[[möchten]] has no past of its own, so use [[wollte]]: [[Ich möchte ins Kino gehen.]] Yesterday: [[Ich wollte ins Kino gehen.]] ([[ins Kino]] is still a chunk: Unit 10.)"
+    },
+    {
+      "type": "comparison",
+      "text": "Russian builds this the same way: я хотел прийти, но должен был работать = [[Ich wollte kommen, aber ich musste arbeiten.]] A modal verb in the past, then an infinitive. The difference: German always sends the infinitive to the very end: [[Ich konnte gestern nicht kommen.]]"
+    },
+    {
+      "id": "durfte-sollte",
+      "type": "explanation",
+      "title": "durfte and sollte",
+      "text": "- [[Als Kind durfte ich nicht lange fernsehen.]] = As a child I wasn't allowed to watch TV for long.\n- [[Ich sollte um neun da sein.]] = I was supposed to be there at nine.\n\n[[als Kind]] = as a child, the same [[als]] as in [[Ich arbeite als Entwickler]] (Unit 1)."
+    },
+    {
+      "id": "konnte-koennte",
+      "type": "warning",
+      "title": "konnte or könnte?",
+      "text": "The umlaut changes the meaning:\n- [[Ich konnte nicht kommen.]] = I couldn't come (yesterday). The past.\n- [[Könnten Sie mir helfen?]] = Could you help me? Polite (Unit 5), not the past.\n\nFor the past: no umlaut."
+    },
+    {
+      "id": "which-past",
+      "type": "explanation",
+      "title": "Which past?",
+      "text": "When you speak:\n- [[sein]], [[haben]] and the modal verbs take the short past: [[war]], [[hatte]], [[musste]], [[konnte]], [[wollte]].\n- All other verbs take the Perfekt: [[Ich habe gearbeitet.]] [[Ich bin gefahren.]]\n\nA normal mix: [[Ich wollte am Samstag wandern, aber es hat geregnet. Ich war zu Hause und habe gelesen.]]\n\nIn books and the news you'll also see a short past of other verbs ([[machte]], [[fuhr]]). That's written German, and it comes at B1."
+    },
+    {
+      "id": "sorry-excuses",
+      "type": "explanation",
+      "title": "Sorry, I couldn't come",
+      "text": "At work and with friends, the modal past explains and apologises:\n- [[Tut mir leid, ich konnte gestern nicht kommen. Ich musste zum Arzt.]] (With a place, German needs no second verb: [[Ich musste zum Arzt.]] = I had to go to the doctor.)\n- [[Ich wollte eigentlich kommen, aber ich hatte keine Zeit.]] ([[eigentlich]] = actually: that was the plan)\n- [[Ich wollte dich anrufen, aber mein Handy war leer.]]\n- [[Ich musste bis acht arbeiten, aber ich habe alles geschafft.]] ([[schaffen]] = to manage. In the song 'Sieben Tage lang' it has its southern meaning, to work.)\n- [[Ich bin erst um zehn nach Hause gekommen.]] ([[erst]] = not until)\n- [[Endlich Feierabend!]] = Finally, the working day is over!"
+    },
+    {
+      "id": "frueher-damals",
+      "type": "explanation",
+      "title": "Back then: früher and damals",
+      "text": "Nicos Weg A2, chapter 11 compares life now and back then. With [[früher]], [[damals]] and [[als Kind]] the modal past is everywhere:\n- [[Früher musste ich jeden Tag um sechs aufstehen.]]\n- [[Als Schüler durfte ich nicht lange ausgehen.]] ([[der Schüler]], [[die Schülerin]] = pupil)\n- [[Unsere Lehrerin war sehr streng.]] ([[streng]] = strict)\n- [[In meiner Klasse waren dreißig Schüler.]]\n- [[Damals war ich jung. Ich konnte noch kein Deutsch.]] ([[können]] + a language = to know it)"
+    },
+    {
+      "id": "modal-past-examples",
+      "type": "examples",
+      "title": "Examples",
+      "items": [
+        { "de": "Warum warst du nicht da? - Ich musste arbeiten.", "en": "Why weren't you there? - I had to work." },
+        { "de": "Ich konnte nicht kommen. Ich war krank.", "en": "I couldn't come. I was ill." },
+        { "de": "Wir wollten wandern, aber es hat geregnet.", "en": "We wanted to go hiking, but it rained." },
+        { "de": "Natürlich wollte ich kommen!", "en": "Of course I wanted to come!" },
+        { "de": "Das tut mir wirklich leid.", "en": "I'm really sorry." },
+        { "de": "Ich habe den Zug fast verpasst.", "en": "I almost missed the train." },
+        { "de": "Ich hoffe, du bist wieder gesund.", "en": "I hope you're well again." },
+        { "de": "Endlich bin ich fertig!", "en": "Finally I'm done!" }
+      ]
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat",
+      "items": [
+        { "de": "Ich musste arbeiten.", "en": "I had to work." },
+        { "de": "Ich konnte gestern nicht kommen.", "en": "I couldn't come yesterday." },
+        { "de": "Ich wollte dich anrufen.", "en": "I wanted to call you." },
+        { "de": "Ich wollte eigentlich kommen, aber ich hatte keine Zeit.", "en": "I actually meant to come, but I didn't have time." },
+        { "de": "Als Kind durfte ich nicht lange fernsehen.", "en": "As a child I wasn't allowed to watch TV for long." }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: I had to work yesterday.",
+          "text": "Gestern ___ ich arbeiten.",
+          "answers": [["musste"]],
+          "explanation": "müssen in the past: drop the umlaut, add -te: ich musste."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: We couldn't come.",
+          "text": "Wir ___ nicht kommen.",
+          "answers": [["konnten"]],
+          "explanation": "können in the past: wir konnten, with no umlaut."
+        },
+        {
+          "type": "mc",
+          "question": "Which sentence talks about the past: 'I couldn't come'?",
+          "questionLang": "en",
+          "options": ["Ich konnte nicht kommen.", "Ich könnte nicht kommen.", "Ich kann nicht kommen."],
+          "answer": "Ich konnte nicht kommen.",
+          "explanation": "konnte (no umlaut) is the past. könnte is the polite or 'would' form, kann is the present."
+        },
+        {
+          "type": "order",
+          "prompt": "I wanted to call you.",
+          "tiles": ["ich", "wollte", "dich", "anrufen"],
+          "answers": ["Ich wollte dich anrufen", "Dich wollte ich anrufen"],
+          "explanation": "wollte in second place, the infinitive anrufen in one piece at the end. Another part can come first too: Dich wollte ich anrufen."
+        },
+        {
+          "type": "listen_mc",
+          "audio": "Ich wollte am Samstag wandern, aber ich musste arbeiten.",
+          "question": "What did the person have to do on Saturday?",
+          "questionLang": "en",
+          "options": ["arbeiten", "wandern", "einkaufen"],
+          "answer": "arbeiten",
+          "explanation": "ich wollte wandern = I wanted to go hiking; aber ich musste arbeiten = but I had to work."
+        }
+      ]
+    }
+  ]
+}

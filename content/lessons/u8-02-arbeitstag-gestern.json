@@ -1,0 +1,148 @@
+{
+  "id": "u8-02-arbeitstag-gestern",
+  "unit": 8,
+  "order": 2,
+  "level": "A2",
+  "title": "Yesterday at work: separable verbs in the Perfekt (Ich habe die Kundin angerufen)",
+  "summary": "Tell what you did at work and at home: aufgestanden, angerufen, aufgeräumt. In separable verbs, ge- goes in the middle.",
+  "goals": [
+    "Form the participle of separable verbs: angerufen, aufgestanden, eingekauft",
+    "Choose haben or sein for them",
+    "Tell someone about yesterday at work in 5-6 sentences"
+  ],
+  "words": ["aufraeumen", "ausgehen", "zurueckkommen", "umziehen", "aufmachen", "zumachen", "anmachen", "ausmachen", "abgeben", "mitmachen", "besprechung", "gespraech", "stressig", "stress", "zurueck"],
+  "tests": ["u8-t1-wann-trennbar"],
+  "stations": [6],
+  "sections": [
+    {
+      "id": "separable-perfekt",
+      "type": "explanation",
+      "title": "ge- goes in the middle",
+      "text": "Unit 5 showed you [[aufgestanden]] and [[eingekauft]] to recognise. Here is the rule. A separable verb (Unit 3) keeps its small part at the front, and **ge-** goes between the small part and the verb:\n- auf + ge + standen = [[aufgestanden]]\n- ein + ge + kauft = [[eingekauft]]\n- an + ge + rufen = [[angerufen]]\n\nThe rest is the participle of the verb without its small part: [[kaufen]] gives [[gekauft]], so [[einkaufen]] gives [[eingekauft]]. It's one word, and the small part is still stressed: **AUF**gestanden, **AN**gerufen."
+    },
+    {
+      "id": "separable-haben",
+      "type": "table",
+      "title": "With haben",
+      "columns": [{ "header": "Verb", "de": "words" }, { "header": "Perfekt", "de": "words" }, { "header": "English" }],
+      "rows": [
+        ["anfangen", "es hat angefangen", "it started"],
+        ["anrufen", "ich habe angerufen", "I called"],
+        ["einkaufen", "ich habe eingekauft", "I did the shopping"],
+        ["abholen", "ich habe abgeholt", "I picked up"],
+        ["fernsehen", "ich habe ferngesehen", "I watched TV"],
+        ["einladen", "ich habe eingeladen", "I invited"],
+        ["aufräumen", "ich habe aufgeräumt", "I tidied up"],
+        ["anmachen, ausmachen", "ich habe angemacht, ausgemacht", "I switched on, off"],
+        ["aufmachen, zumachen", "ich habe aufgemacht, zugemacht", "I opened, closed"],
+        ["abgeben", "ich habe abgegeben", "I handed in"],
+        ["kennenlernen", "ich habe kennengelernt", "I got to know, I met"]
+      ]
+    },
+    {
+      "id": "separable-sein",
+      "type": "table",
+      "title": "With sein: movement and change",
+      "columns": [{ "header": "Verb", "de": "words" }, { "header": "Perfekt", "de": "words" }, { "header": "English" }],
+      "rows": [
+        ["aufstehen", "ich bin aufgestanden", "I got up"],
+        ["ankommen", "ich bin angekommen", "I arrived"],
+        ["abfahren", "ich bin abgefahren", "I left"],
+        ["einsteigen, aussteigen", "ich bin eingestiegen, ausgestiegen", "I got on, off"],
+        ["umsteigen", "ich bin umgestiegen", "I changed (trains)"],
+        ["zurückkommen", "ich bin zurückgekommen", "I came back"],
+        ["mitkommen", "ich bin mitgekommen", "I came along"],
+        ["ausgehen", "ich bin ausgegangen", "I went out"],
+        ["umziehen", "ich bin umgezogen", "I moved (house)"]
+      ]
+    },
+    {
+      "type": "tip",
+      "text": "You already know most of these participles without the small part: [[gekommen]] gives [[angekommen]], [[zurückgekommen]] and [[mitgekommen]]; [[gefahren]] gives [[abgefahren]]; [[gegangen]] gives [[ausgegangen]]; [[gesehen]] gives [[ferngesehen]]; [[gebracht]] gives [[mitgebracht]]."
+    },
+    {
+      "type": "comparison",
+      "text": "In Unit 3 you saw that Russian prefixes never leave the verb (позвонить), while German ones jump to the end: [[Ich rufe dich an.]] In the Perfekt the German small part comes back to the front, with ge- inside: [[Ich habe dich angerufen.]] So [[Ich bin angekommen]] looks like Russian я приехал: the prefix first, then the verb."
+    },
+    {
+      "type": "warning",
+      "text": "The small part comes first, then ge-, then the rest, all in one word: [[aufgestanden]], not 'geaufstanden'; [[eingekauft]], not 'ein gekauft'."
+    },
+    {
+      "id": "workday-past",
+      "type": "explanation",
+      "title": "Yesterday at work",
+      "text": "With these verbs you can tell a whole working day:\n1. [[Gestern bin ich um sechs aufgestanden.]]\n2. [[Um acht hat die Arbeit angefangen.]]\n3. [[Ich habe den Computer angemacht und E-Mails gelesen.]]\n4. [[Um zehn hatten wir eine Besprechung.]] ([[die Besprechung]] = meeting)\n5. [[Dann habe ich eine Kundin angerufen.]]\n6. [[Um fünf habe ich den Computer ausgemacht.]]\n7. [[Am Abend bin ich mit Eva ausgegangen.]]\n\nTo say how it was: [[Der Tag war stressig.]] [[Ich hatte viel Stress.]] To say you're back: [[Um sieben war ich wieder zurück.]]"
+    },
+    {
+      "id": "workday-examples",
+      "type": "examples",
+      "title": "Monday morning in the office",
+      "items": [
+        { "de": "Was hast du gestern gemacht?", "en": "What did you do yesterday?" },
+        { "de": "Ich habe die Wohnung aufgeräumt.", "en": "I tidied the flat." },
+        { "de": "Meine Schwester ist nach Berlin umgezogen.", "en": "My sister has moved to Berlin." },
+        { "de": "Wann bist du zurückgekommen? - Um elf.", "en": "When did you get back? - At eleven." },
+        { "de": "Ich habe die Hausaufgabe abgegeben.", "en": "I handed in the homework." },
+        { "de": "Ich hatte ein Gespräch mit der Chefin.", "en": "I had a talk with the boss." },
+        { "de": "Hast du das Fenster zugemacht?", "en": "Did you close the window?" }
+      ]
+    },
+    {
+      "type": "audio",
+      "title": "Listen and repeat",
+      "items": [
+        { "de": "Ich bin um sechs aufgestanden.", "en": "I got up at six." },
+        { "de": "Ich habe eine Kundin angerufen.", "en": "I called a customer." },
+        { "de": "Am Samstag habe ich eingekauft.", "en": "On Saturday I did the shopping." },
+        { "de": "Am Abend bin ich ausgegangen.", "en": "In the evening I went out." },
+        { "de": "Wann bist du zurückgekommen?", "en": "When did you get back?" },
+        { "de": "Der Tag war stressig.", "en": "The day was stressful." }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: I called my mother.",
+          "text": "Ich habe meine Mutter ___.",
+          "answers": [["angerufen"]],
+          "explanation": "anrufen is separable: an + ge + rufen = angerufen."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: When did you get back? (du)",
+          "text": "Wann ___ du zurückgekommen?",
+          "answers": [["bist"]],
+          "explanation": "zurückkommen is movement, so sein: du bist zurückgekommen."
+        },
+        {
+          "type": "mc",
+          "question": "Which sentence means 'I tidied up the flat'?",
+          "questionLang": "en",
+          "options": ["Ich habe die Wohnung aufgeräumt.", "Ich habe die Wohnung geaufräumt.", "Ich bin die Wohnung aufgeräumt."],
+          "answer": "Ich habe die Wohnung aufgeräumt.",
+          "explanation": "aufräumen takes haben, and ge- goes after the small part: aufgeräumt."
+        },
+        {
+          "type": "order",
+          "prompt": "On Friday we went out.",
+          "tiles": ["am", "Freitag", "sind", "wir", "ausgegangen"],
+          "answers": ["Am Freitag sind wir ausgegangen", "Wir sind am Freitag ausgegangen"],
+          "explanation": "ausgehen takes sein; sind in second place, ausgegangen at the end."
+        },
+        {
+          "type": "listen_mc",
+          "audio": "Gestern bin ich um sechs aufgestanden, und um acht hat die Arbeit angefangen.",
+          "question": "When did work start?",
+          "questionLang": "en",
+          "options": ["um acht", "um sechs", "um halb acht"],
+          "answer": "um acht",
+          "explanation": "um acht hat die Arbeit angefangen. Six was when the person got up."
+        }
+      ]
+    }
+  ]
+}
