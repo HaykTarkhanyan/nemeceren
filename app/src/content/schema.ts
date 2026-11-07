@@ -528,6 +528,44 @@ export const StudySessionRecord = z.strictObject(StudySessionFields).superRefine
 /** A study session as the server has it (GET /v1/state, stale in a sync reply). */
 export const StudySession = z.strictObject({ id: z.string().min(1), ...StudySessionFields }).superRefine(checkSession)
 
+// ---------- Path events (the Home path and the daily goal, DECISIONS.md #84; stored in Neon) ----------
+
+const PathEventFields = {
+  /** "station": a slice of a lesson was finished; "daily-mix": the daily mix ran to its end. */
+  kind: z.enum(['station', 'daily-mix']),
+  /** Station events only: the lesson (course or theme) and the half-open section range finished. */
+  lessonId: Slug.optional(),
+  sectionFrom: z.number().int().nonnegative().optional(),
+  sectionTo: z.number().int().positive().optional(),
+  /** The learner's local day when it was finished. */
+  localDay: IsoDate,
+  at: IsoDateTime,
+  createdAt: IsoDateTime,
+  updatedAt: IsoDateTime,
+  /** Soft delete (undo). */
+  deletedAt: IsoDateTime.optional(),
+}
+
+function checkPathEvent(
+  x: { kind: 'station' | 'daily-mix'; lessonId?: string; sectionFrom?: number; sectionTo?: number; createdAt: string; updatedAt: string },
+  ctx: z.RefinementCtx,
+): void {
+  const range = [x.lessonId, x.sectionFrom, x.sectionTo]
+  if (x.kind === 'station') {
+    if (range.some((v) => v === undefined)) ctx.addIssue({ code: 'custom', path: ['lessonId'], message: 'a station event needs lessonId, sectionFrom and sectionTo' })
+    else if (x.sectionTo! <= x.sectionFrom!) ctx.addIssue({ code: 'custom', path: ['sectionTo'], message: 'must be larger than sectionFrom' })
+  } else if (range.some((v) => v !== undefined)) {
+    ctx.addIssue({ code: 'custom', path: ['kind'], message: 'a daily-mix event has no lessonId, sectionFrom or sectionTo' })
+  }
+  if (Date.parse(x.updatedAt) < Date.parse(x.createdAt)) ctx.addIssue({ code: 'custom', path: ['updatedAt'], message: 'is before createdAt' })
+}
+
+/** A path event as the app writes it (the upload without the id). */
+export const PathEventRecord = z.strictObject(PathEventFields).superRefine(checkPathEvent)
+
+/** A path event as the server has it (GET /v1/state, stale in a sync reply). */
+export const PathEvent = z.strictObject({ id: z.string().min(1), ...PathEventFields }).superRefine(checkPathEvent)
+
 const ARTICLE = /^(der|die|das) /
 
 export const Word = z
@@ -809,6 +847,8 @@ export type WordCheck = z.infer<typeof WordCheck>
 export type CustomWord = z.infer<typeof CustomWord>
 export type StudySessionRecord = z.infer<typeof StudySessionRecord>
 export type StudySession = z.infer<typeof StudySession>
+export type PathEventRecord = z.infer<typeof PathEventRecord>
+export type PathEvent = z.infer<typeof PathEvent>
 export type TableColumn = z.infer<typeof TableColumn>
 export type LessonProgress = z.infer<typeof LessonProgress>
 export type ReviewMode = z.infer<typeof ReviewMode>

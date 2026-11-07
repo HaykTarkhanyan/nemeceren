@@ -40,6 +40,7 @@ const emptyStateReply = (over: Record<string, unknown> = {}) => ({
   notes: [],
   customWords: [],
   studySessions: [],
+  pathEvents: [],
   ...over,
 })
 
@@ -57,11 +58,12 @@ function okSync(body: Record<string, unknown>, over: Record<string, unknown> = {
     notes: { received: n('notes'), written: n('notes'), unchanged: 0, stale: [] },
     customWords: { received: n('customWords'), written: n('customWords'), unchanged: 0, stale: [] },
     studySessions: { received: n('studySessions'), written: n('studySessions'), unchanged: 0, stale: [] },
+    pathEvents: { received: n('pathEvents'), written: n('pathEvents'), unchanged: 0, stale: [] },
     ...over,
   })
 }
 
-function setup(handlers: Handler[], opts: { storage?: Map<string, string> } = {}) {
+function setup(handlers: Handler[], opts: { storage?: Map<string, string>; now?: () => Date } = {}) {
   const calls: Call[] = []
   const errors: string[] = []
   const storage = opts.storage ?? new Map<string, string>()
@@ -98,7 +100,7 @@ function setup(handlers: Handler[], opts: { storage?: Map<string, string> } = {}
       setItem: (k, v) => void storage.set(k, v),
       removeItem: (k) => void storage.delete(k),
     },
-    now: () => new Date('2026-09-29T10:00:00.000Z'),
+    now: opts.now ?? (() => new Date('2026-09-29T10:00:00.000Z')),
     newId: () => `00000000-0000-4000-8000-${String(++ids).padStart(12, '0')}`,
     reportError: (m) => void errors.push(m),
     onSignedOut: () => void signedOut++,
@@ -712,5 +714,46 @@ describe('study sessions', () => {
     expect(env.store.getStatus().pending).toBe(0)
     expect(env.storage.size).toBe(0)
     expect(env.calls).toEqual([])
+  })
+})
+
+describe('path events', () => {
+  it('recordStationDone stamps localDay at save time', () => {
+    let clock = new Date(2026, 10, 7, 23, 59, 0)
+    const env = setup([], { now: () => clock })
+    env.store.startGuest()
+    const a = env.store.recordStationDone('u1-01-sich-vorstellen', 0, 5)
+    clock = new Date(2026, 10, 8, 0, 1, 0)
+    const b = env.store.recordStationDone('u1-01-sich-vorstellen', 5, 10)
+    expect(env.store.getView().pathEvents.map((x) => [x.id, x.localDay])).toEqual([
+      [a, '2026-11-07'],
+      [b, '2026-11-08'],
+    ])
+  })
+
+  it('recordDailyMixDone has no lessonId or range, and syncs at once', async () => {
+    const env = await started([(c) => okSync(c.body!)])
+    const id = env.store.recordDailyMixDone()
+    await env.store.flush()
+    expect(env.calls[1].body!.pathEvents).toEqual([
+      { id, kind: 'daily-mix', localDay: '2026-09-29', at: '2026-09-29T10:00:00.000Z', createdAt: '2026-09-29T10:00:00.000Z', updatedAt: '2026-09-29T10:00:00.000Z' },
+    ])
+    expect(env.store.getView().pathEvents[0].pending).toBe(false)
+  })
+
+  it('deletePathEvent soft-deletes and the view hides it', () => {
+    const env = setup([])
+    env.store.startGuest()
+    const id = env.store.recordStationDone('u1-01-sich-vorstellen', 0, 5)
+    env.store.deletePathEvent(id)
+    expect(env.store.getView().pathEvents).toEqual([])
+    expect(() => env.store.deletePathEvent(id)).toThrow(/There is no path event/)
+  })
+
+  it('an invalid range throws and saves nothing', () => {
+    const env = setup([])
+    env.store.startGuest()
+    expect(() => env.store.recordStationDone('u1-01-sich-vorstellen', 4, 4)).toThrow(/cannot be saved: sectionTo: must be larger than sectionFrom/)
+    expect(env.store.getView().pathEvents).toEqual([])
   })
 })

@@ -14,7 +14,7 @@ import {
   sameJson,
   SYNC_LIMITS,
 } from './outbox.ts'
-import type { CustomWordRecord, NoteRecord, Outbox, ServerNote, ServerState, StudySession, StudySessionRecord, SyncResponse } from './outbox.ts'
+import type { CustomWordRecord, NoteRecord, Outbox, PathEventRecord, ServerNote, ServerState, StudySession, StudySessionRecord, SyncResponse } from './outbox.ts'
 import type { CustomWord } from '../content/schema.ts'
 import { emptyState, Rating, review } from './srs.ts'
 
@@ -66,6 +66,7 @@ const server = (over: Partial<ServerState> = {}): ServerState => ({
   notes: [],
   customWords: [],
   studySessions: [],
+  pathEvents: [],
   ...over,
 })
 
@@ -80,6 +81,7 @@ const reply = (over: Partial<SyncResponse> = {}): SyncResponse => ({
   notes: { received: 0, written: 0, unchanged: 0, stale: [] },
   customWords: { received: 0, written: 0, unchanged: 0, stale: [] },
   studySessions: { received: 0, written: 0, unchanged: 0, stale: [] },
+  pathEvents: { received: 0, written: 0, unchanged: 0, stale: [] },
   ...over,
 })
 
@@ -231,6 +233,7 @@ describe('parsing', () => {
     notes: [],
     customWords: [],
     studySessions: [],
+    pathEvents: [],
   }
 
   it('reads the server state into the app types, keeping the ids', () => {
@@ -364,6 +367,7 @@ describe('notes: the lock rule', () => {
       notes: [serverNote('c', noteRec('Server c', t1), feedback)],
       customWords: [],
       studySessions: [],
+      pathEvents: [],
     }
     expect(parseState('state', raw).notes[0].feedback).toEqual(feedback)
     // The offline copy is the state as JSON; it must parse back the same.
@@ -605,5 +609,67 @@ describe('study sessions: merge, view and study days', () => {
     expect(() => parseState('state', bad)).toThrow(/studySessions\.0\.endedAt: is before startedAt/)
     const manualFalse = { ...raw, studySessions: [{ ...raw.studySessions[0], manual: false }] }
     expect(() => parseState('state', manualFalse)).toThrow(/studySessions\.0\.manual/)
+  })
+})
+
+const pathRec = (localDay: string, updatedAt: string, over: Partial<PathEventRecord> = {}): PathEventRecord => ({
+  kind: 'station',
+  lessonId: 'u1-01-sich-vorstellen',
+  sectionFrom: 0,
+  sectionTo: 5,
+  localDay,
+  at: `${localDay}T09:00:00.000Z`,
+  createdAt: `${localDay}T09:00:00.000Z`,
+  updatedAt,
+  ...over,
+})
+
+describe('path events in the outbox', () => {
+  const t1 = '2026-11-07T09:00:00.000Z'
+  const t2 = '2026-11-07T11:00:00.000Z'
+
+  it('batch carries pathEvents up to SYNC_LIMITS.pathEvents', () => {
+    const pathEvents = Object.fromEntries(Array.from({ length: 205 }, (_, i) => [sid(i), pathRec('2026-11-07', t1)]))
+    const o: Outbox = { ...emptyOutbox(), pathEvents }
+    expect(outboxSize(o)).toBe(205)
+    const b = nextBatch(o)!
+    expect(Object.keys(b)).toEqual(['pathEvents'])
+    expect(b.pathEvents).toHaveLength(SYNC_LIMITS.pathEvents)
+    expect(b.pathEvents![0]).toEqual({ id: sid(0), ...pathEvents[sid(0)] })
+  })
+
+  it('ack drops sent pathEvents that did not change', () => {
+    const o: Outbox = { ...emptyOutbox(), pathEvents: { [sid(1)]: pathRec('2026-11-07', t1), [sid(2)]: pathRec('2026-11-07', t1) } }
+    const b = nextBatch(o)!
+    // Undone while the batch was on its way: it stays for the next sync.
+    const changed: Outbox = { ...o, pathEvents: { ...o.pathEvents, [sid(2)]: pathRec('2026-11-07', t2, { deletedAt: t2 }) } }
+    expect(Object.keys(removeSent(changed, b).pathEvents)).toEqual([sid(2)])
+  })
+
+  it('view marks unsynced pathEvents pending, hides deleted ones, oldest first; a reply keeps stale versions', () => {
+    const s = server({ pathEvents: [{ id: sid(1), ...pathRec('2026-11-06', t1) }, { id: sid(2), ...pathRec('2026-11-06', t1) }] })
+    const o: Outbox = {
+      ...emptyOutbox(),
+      pathEvents: { [sid(2)]: pathRec('2026-11-06', t2, { deletedAt: t2 }), [sid(3)]: pathRec('2026-11-07', t1, { kind: 'daily-mix', lessonId: undefined, sectionFrom: undefined, sectionTo: undefined }) },
+    }
+    const v = buildView(s, o, '2026-11-07')
+    expect(v.pathEvents.map((x) => [x.id, x.kind, x.pending])).toEqual([
+      [sid(1), 'station', false],
+      [sid(3), 'daily-mix', true],
+    ])
+    const newer = { id: sid(4), ...pathRec('2026-11-07', t2) }
+    const after = applySent(s, { pathEvents: [{ id: sid(4), ...pathRec('2026-11-07', t1) }] }, reply({ pathEvents: { received: 1, written: 0, unchanged: 0, stale: [newer] } }))
+    expect(after.pathEvents.find((x) => x.id === sid(4))).toEqual(newer)
+  })
+
+  it('reads an outbox saved before path events existed, and refuses a broken event loudly', () => {
+    const { pathEvents: _x, ...old } = emptyOutbox()
+    expect(parseOutbox('outbox', old).pathEvents).toEqual({})
+    const noRange = pathRec('2026-11-07', t1, { sectionTo: undefined })
+    expect(() => parseOutbox('outbox', { ...emptyOutbox(), pathEvents: { [sid(1)]: noRange } })).toThrow(/a station event needs lessonId, sectionFrom and sectionTo/)
+    const backwards = pathRec('2026-11-07', t1, { sectionFrom: 5, sectionTo: 5 })
+    expect(() => parseOutbox('outbox', { ...emptyOutbox(), pathEvents: { [sid(1)]: backwards } })).toThrow(/sectionTo: must be larger than sectionFrom/)
+    const mixWithRange = pathRec('2026-11-07', t1, { kind: 'daily-mix' })
+    expect(() => parseOutbox('outbox', { ...emptyOutbox(), pathEvents: { [sid(1)]: mixWithRange } })).toThrow(/a daily-mix event has no lessonId/)
   })
 })

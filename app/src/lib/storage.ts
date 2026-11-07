@@ -9,7 +9,7 @@
 // Guest mode (startGuest, DECISIONS.md #55): the same store with an empty state in memory; changes
 // go straight into it, nothing is written to browser storage and no request is ever made.
 import { useSyncExternalStore } from 'react'
-import { StudySessionRecord as StudySessionRecordSchema } from '../content/schema.ts'
+import { PathEventRecord as PathEventRecordSchema, StudySessionRecord as StudySessionRecordSchema } from '../content/schema.ts'
 import type { LessonProgress, Result, ReviewLogEntry, StoredCard } from '../content/schema.ts'
 import { ContentError } from '../content/validate.ts'
 import { AuthFailure, getToken } from './auth.ts'
@@ -40,6 +40,8 @@ import type {
   NoteRecord,
   NoteView,
   Outbox,
+  PathEventRecord,
+  PathEventView,
   ProgressView,
   SavedResult,
   ServerState,
@@ -51,7 +53,7 @@ import { introducedCard } from './srs.ts'
 import type { ReviewEvent, TestItemEvent } from './stats.ts'
 import { activeMsFor, cleanLabel, manualStart } from './timer.ts'
 
-export type { CustomWordView, NoteView, ProgressView, SavedResult, StudySessionView }
+export type { CustomWordView, NoteView, PathEventView, ProgressView, SavedResult, StudySessionView }
 
 /** An error answer from the API: { error: { code, message, details? }, requestId }. */
 export class ApiError extends Error {
@@ -136,6 +138,7 @@ function emptyServerState(now: Date): ServerState {
     notes: [],
     customWords: [],
     studySessions: [],
+    pathEvents: [],
   }
 }
 
@@ -321,14 +324,15 @@ export function createProgressStore(deps: StoreDeps) {
       if (cached === null) {
         throw new NetworkError(`${messageOf(err)}. There is no copy of your progress on this device yet, so the app needs the internet once.`)
       }
-      // Offline copies saved before notes and custom words (2026-09-30) or study sessions (2026-10-02)
-      // existed have no such key: that copy had none.
+      // Offline copies saved before notes and custom words (2026-09-30), study sessions (2026-10-02)
+      // or path events (2026-11-07) existed have no such key: that copy had none.
       const copy =
         cached !== null && typeof cached === 'object'
           ? {
               ...('notes' in cached ? {} : { notes: [] }),
               ...('customWords' in cached ? {} : { customWords: [] }),
               ...('studySessions' in cached ? {} : { studySessions: [] }),
+              ...('pathEvents' in cached ? {} : { pathEvents: [] }),
               ...cached,
             }
           : cached
@@ -444,6 +448,21 @@ export function createProgressStore(deps: StoreDeps) {
   function putSession(id: string, record: StudySessionRecord) {
     const checked = checkedSession(record)
     change((o) => ({ ...o, studySessions: { ...o.studySessions, [id]: checked } }))
+    void flush()
+  }
+
+  /** The path event to change: it must exist (not deleted). */
+  function pathEvent(id: string): PathEventView {
+    const x = current().pathEvents.find((v) => v.id === id)
+    if (!x) throw new Error(`There is no path event ${id} (was it undone on another device?)`)
+    return x
+  }
+
+  /** Validates a path event before it goes into the outbox, so a bad one never reaches the API. */
+  function putPathEvent(id: string, record: PathEventRecord) {
+    const r = PathEventRecordSchema.safeParse(record)
+    if (!r.success) throw new Error(`This step cannot be saved: ${r.error.issues.map((i) => `${i.path.join('.')}: ${i.message}`).join('; ')}`)
+    change((o) => ({ ...o, pathEvents: { ...o.pathEvents, [id]: r.data } }))
     void flush()
   }
 
@@ -658,6 +677,34 @@ export function createProgressStore(deps: StoreDeps) {
       putSession(id, { ...rest, updatedAt: at, deletedAt: at })
     },
 
+    /**
+     * A finished station: the half-open section range [from, to) of a lesson (a whole theme lesson
+     * is one range). Saved with the local day at this moment, then synced. Returns the id.
+     */
+    recordStationDone(lessonId: string, from: number, to: number): string {
+      const id = deps.newId()
+      const now = deps.now()
+      const at = now.toISOString()
+      putPathEvent(id, { kind: 'station', lessonId, sectionFrom: from, sectionTo: to, localDay: localDay(now), at, createdAt: at, updatedAt: at })
+      return id
+    },
+
+    /** The daily mix ran to its end (every planned step finished). Returns the id. */
+    recordDailyMixDone(): string {
+      const id = deps.newId()
+      const now = deps.now()
+      const at = now.toISOString()
+      putPathEvent(id, { kind: 'daily-mix', localDay: localDay(now), at, createdAt: at, updatedAt: at })
+      return id
+    },
+
+    /** Undoes a path event (a soft delete, so the other devices learn it too) and starts a sync. */
+    deletePathEvent(id: string) {
+      const { id: _id, pending: _pending, ...rest } = pathEvent(id)
+      const at = changedAt(rest.updatedAt)
+      putPathEvent(id, { ...rest, updatedAt: at, deletedAt: at })
+    },
+
     /** Deletes a note without feedback (a soft delete, so the other devices learn it too) and starts a sync. */
     deleteNote(id: string) {
       if (guest) throw new Error('Guest mode has no notes.')
@@ -721,6 +768,9 @@ export const saveStudySession = (s: { startedAt: string; endedAt: string; active
 export const addManualStudySession = (day: string, minutes: number, label: string) => progressStore().addManualStudySession(day, minutes, label)
 export const editStudySession = (id: string, minutes: number, label: string) => progressStore().editStudySession(id, minutes, label)
 export const deleteStudySession = (id: string) => progressStore().deleteStudySession(id)
+export const recordStationDone = (lessonId: string, from: number, to: number) => progressStore().recordStationDone(lessonId, from, to)
+export const recordDailyMixDone = () => progressStore().recordDailyMixDone()
+export const deletePathEvent = (id: string) => progressStore().deletePathEvent(id)
 export const refreshState = () => progressStore().refresh()
 
 /** Starts a sync unless the outbox is empty (e.g. after a review round). */
