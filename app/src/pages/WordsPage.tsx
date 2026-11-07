@@ -7,6 +7,7 @@ import type { ReactNode } from 'react'
 import { content } from '../content/load.ts'
 import type { Lesson, ReviewLogEntry, ReviewState, StoredCard } from '../content/schema.ts'
 import { AllWords } from '../components/AllWords.tsx'
+import { FocusBar, useReviewSound } from '../components/FocusBar.tsx'
 import { GlossScope } from '../components/GermanText.tsx'
 import { Card, MODES, WordDe } from '../components/ReviewCard.tsx'
 import { WhatNext } from '../components/WhatNext.tsx'
@@ -20,7 +21,6 @@ import type { StudyWord } from '../lib/customWords.ts'
 import { addDays, localDay } from '../lib/dates.ts'
 import { messageOf, reportError } from '../lib/errors.ts'
 import { reachOf } from '../lib/goalView.ts'
-import { readReviewSound, writeReviewSound } from '../lib/homeView.ts'
 import { lessonStatus, parseSourceKey, sourceKey, sourceLabel, sourceLessons, sourceThemes, wordsForSource } from '../lib/plan.ts'
 import type { WordSource } from '../lib/plan.ts'
 import { dueOnDay, GOAL_ROUND_MIN, pickMode, ROUND_SIZE, roundSummary } from '../lib/review.ts'
@@ -327,40 +327,6 @@ const MIXED_MODE = { mode: 'mixed' as const, title: 'Mixed', desc: 'Each card pi
 
 function modeTitle(mode: SessionMode): string {
   return mode === 'mixed' ? MIXED_MODE.title : (MODES.find((m) => m.mode === mode)?.title ?? mode)
-}
-
-/** The top bar of the focus review: close, how far the round is, and the sound switch. */
-function FocusBar(props: { onClose: () => void; closeLabel: string; done: number; target: number; label: string; sound: boolean; onSound: () => void }) {
-  const { onClose, closeLabel, done, target, label, sound, onSound } = props
-  return (
-    <div className="focus-bar">
-      <button type="button" className="btn small" onClick={onClose}>
-        {closeLabel}
-      </button>
-      <div className="focus-progress" aria-label={`${done} of ${target}`}>
-        <span>
-          {label}: {done} of {target}
-        </span>
-        <span className="bar">
-          <i style={{ width: `${target ? Math.min(100, (100 * done) / target) : 0}%` }} />
-        </span>
-      </div>
-      <button type="button" className="btn small" aria-pressed={sound} onClick={onSound}>
-        {sound ? 'Sound on' : 'Sound off'}
-      </button>
-    </div>
-  )
-}
-
-function useReviewSound(): [boolean, () => void] {
-  const [sound, setSound] = useState(readReviewSound)
-  return [
-    sound,
-    () => {
-      writeReviewSound(!sound)
-      setSound(!sound)
-    },
-  ]
 }
 
 /** After a round: how it went, the hard words to practise, and what is due tomorrow (DECISIONS.md #85). */

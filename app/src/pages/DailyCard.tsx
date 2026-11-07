@@ -12,7 +12,7 @@ import { updateSettings, useSettings } from '../lib/settings.ts'
 import { useSpeech } from '../lib/speech.ts'
 import { counts } from '../lib/srs.ts'
 import { useProgress } from '../lib/storage.ts'
-import { canListen, currentMistakes, mixPlan, mixSummary, studyPool } from './DailyPage.tsx'
+import { canListen, currentMistakes, GAME_LABEL, mixPlan, mixSummary, PRACTICE_GAMES, studyPool } from './DailyPage.tsx'
 
 const RING_R = 18
 const RING_C = 2 * Math.PI * RING_R
@@ -105,6 +105,14 @@ export const DailyCard = memo(function DailyCard({ goal }: { goal: GoalStreak })
             </a>
             <a className="btn" href={link('daily', 'listen')}>
               Listen and pick
+            </a>
+            {PRACTICE_GAMES.map((g) => (
+              <a key={g} className="btn" href={link('daily', g)}>
+                {GAME_LABEL[g]}
+              </a>
+            ))}
+            <a className="btn" href={link('words', 'map')}>
+              Words map
             </a>
             <a className="btn" href={link('words', 'sets')}>
               Word sets

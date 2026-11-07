@@ -4,45 +4,10 @@
 // uploaded or saved, and nothing is logged. A mismatch is never a mistake (recognition mishears).
 import { useEffect, useRef, useState } from 'react'
 import { messageOf, reportError } from '../lib/errors.ts'
+import { RECOGNITION_ERRORS, recognitionCtor } from '../lib/recognition.ts'
+import type { Recognition } from '../lib/recognition.ts'
 import { bestAlternative, compareSpoken } from '../lib/speaking.ts'
 import { speak } from '../lib/speech.ts'
-
-// The Web Speech API's recognition part, which TypeScript's DOM types leave out.
-interface RecognitionAlternative {
-  transcript: string
-}
-interface RecognitionEvent {
-  results: ArrayLike<ArrayLike<RecognitionAlternative>>
-}
-interface RecognitionErrorEvent {
-  error: string
-}
-interface Recognition {
-  lang: string
-  continuous: boolean
-  interimResults: boolean
-  maxAlternatives: number
-  onresult: ((e: RecognitionEvent) => void) | null
-  onerror: ((e: RecognitionErrorEvent) => void) | null
-  onend: (() => void) | null
-  start: () => void
-  stop: () => void
-  abort: () => void
-}
-type RecognitionCtor = new () => Recognition
-
-function recognitionCtor(): RecognitionCtor | null {
-  const w = window as unknown as { SpeechRecognition?: RecognitionCtor; webkitSpeechRecognition?: RecognitionCtor }
-  return w.SpeechRecognition ?? w.webkitSpeechRecognition ?? null
-}
-
-const RECOGNITION_ERRORS: Record<string, string> = {
-  'no-speech': 'Nothing was heard. Press the mic and say the line.',
-  'audio-capture': 'No microphone was found.',
-  'not-allowed': 'The microphone is blocked for this site. Allow it in the browser (the icon next to the address), then try again.',
-  network: 'Speech recognition needs the internet (the browser sends the audio to its recognition service).',
-  aborted: 'Stopped.',
-}
 
 type Phase = { kind: 'idle' } | { kind: 'listening' } | { kind: 'done'; heard: string | null; note: string | null } | { kind: 'error'; message: string }
 
@@ -229,7 +194,7 @@ export function SpeakLine({ text }: { text: string }) {
   )
 }
 
-function MicIcon() {
+export function MicIcon() {
   return (
     <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
       <rect x="9" y="3" width="6" height="11" rx="3" fill="currentColor" />

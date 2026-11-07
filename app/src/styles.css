@@ -2602,6 +2602,133 @@ ol.line {
   background: var(--ok);
 }
 
+/* ---------- Practice games (design: _knowledge/2026-11-07_practice-games-design.md) ---------- */
+
+.focus-review.game .game-card {
+  min-height: 0;
+  justify-content: flex-start;
+}
+
+.mic-big {
+  min-height: 56px;
+  font-size: 1.05rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.game-list {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.game-list li {
+  margin: 4px 0;
+}
+
+.badge.game-said,
+.badge.game-typed {
+  background: var(--ok-bg);
+  color: var(--ok);
+}
+
+.badge.game-missed {
+  background: var(--warn-bg);
+  color: var(--warn);
+}
+
+.article-buttons {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.article-btn {
+  min-height: 72px;
+  font-size: 1.4rem;
+  font-weight: 700;
+  border-width: 2px;
+}
+
+.art-btn-der {
+  color: var(--art-der);
+  border-color: var(--art-der);
+  background: color-mix(in srgb, var(--art-der) 10%, var(--surface));
+}
+
+.art-btn-die {
+  color: var(--art-die);
+  border-color: var(--art-die);
+  background: color-mix(in srgb, var(--art-die) 10%, var(--surface));
+}
+
+.art-btn-das {
+  color: var(--art-das);
+  border-color: var(--art-das);
+  background: color-mix(in srgb, var(--art-das) 10%, var(--surface));
+}
+
+.article-flash {
+  animation: article-flash 0.4s ease-out;
+}
+
+@keyframes article-flash {
+  from {
+    transform: scale(1.15);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .article-flash {
+    animation: none;
+  }
+}
+
+.gap-sentence {
+  font-size: 1.3rem;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.gap-blank {
+  display: inline-block;
+  min-width: 4em;
+  border-bottom: 3px solid var(--accent);
+  color: transparent;
+  margin: 0 2px;
+}
+
+.build-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  min-height: 52px;
+  padding: 8px;
+  border: 2px dashed var(--border);
+  border-radius: var(--radius);
+  align-items: center;
+}
+
+.build-bank {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.build-tile {
+  min-height: 44px;
+  padding: 6px 12px;
+  font-size: 1.05rem;
+}
+
+.build-bank .build-tile.used {
+  visibility: hidden;
+}
+
 /* A test station's sheet: the unit's words before the test. */
 .sheet-words {
   margin: 8px 0 12px;

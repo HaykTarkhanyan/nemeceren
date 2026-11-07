@@ -35,7 +35,7 @@ function Page({ route }: { route: string[] }) {
       // "Back to the line" after a station: Home, scrolled to the current station.
       return <HomePage scrollToCurrent />
     case 'daily':
-      return <DailyPage sub={arg} />
+      return <DailyPage sub={arg} lesson={sub} />
     case 'test':
       return <TestPage id={arg ?? ''} />
     case 'lessons':
