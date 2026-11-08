@@ -17,7 +17,7 @@
     "Понять, что такое Elternabend, Elterngespräch и Sprechstunde"
   ],
   "words": ["klassenlehrerin", "elternabend", "elterngespraech", "sprechstunde", "dolmetscher", "aufschreiben", "aergern"],
-  "stations": [6],
+  "stations": [6, 13],
   "sections": [
     {
       "id": "anrede",
@@ -190,7 +190,10 @@
         ["der Dolmetscher / die Dolmetscherin", "переводчик / переводчица"],
         ["traurig", "грустный"],
         ["ärgern", "дразнить, обижать"],
-        ["die Hilfe", "помощь"]
+        ["die Hilfe", "помощь"],
+        ["mitmachen", "участвовать, работать на уроке"],
+        ["aufmerksam", "внимательный"],
+        ["das Zeugnis", "табель"]
       ]
     },
     {
@@ -241,6 +244,72 @@
           "options": ["Können Sie das bitte wiederholen?", "Können Sie das bitte mitbringen?", "Können Sie das bitte abholen?"],
           "answer": "Können Sie das bitte wiederholen?",
           "explanation": "wiederholen = повторить. mitbringen - принести с собой, abholen - забрать."
+        }
+      ]
+    },
+    {
+      "id": "lehrerin-sagt",
+      "type": "examples",
+      "title": "Что учительница может сказать о ребёнке",
+      "items": [
+        {
+          "de": "Max macht gut mit.",
+          "en": "Макс хорошо работает на уроках.",
+          "note": "mitmachen = участвовать, включаться в работу. Эти фразы достаточно понимать."
+        },
+        { "de": "Mila ist sehr aufmerksam.", "en": "Мила очень внимательная." },
+        { "de": "Er hat schon Freunde gefunden.", "en": "Он уже нашёл друзей." },
+        { "de": "Sie arbeitet langsam.", "en": "Она работает медленно." },
+        { "de": "Er stört manchmal den Unterricht.", "en": "Он иногда мешает на уроке.", "note": "stören = мешать." },
+        { "de": "Sie muss zu Hause mehr lesen.", "en": "Ей нужно больше читать дома." },
+        { "de": "Er braucht Hilfe beim Schreiben.", "en": "Ему нужна помощь с письмом.", "note": "beim Schreiben = при письме, когда он пишет." },
+        { "de": "Sie kommt oft zu spät.", "en": "Она часто опаздывает.", "note": "zu spät = слишком поздно." }
+      ]
+    },
+    {
+      "id": "zeugnis",
+      "type": "tip",
+      "title": "Первый табель (Zeugnis)",
+      "text": "[[das Zeugnis]] - табель. В первом классе оценок обычно ещё нет: ребёнок получает письменную характеристику, то есть текст о том, что он уже умеет. Оценки ([[die Noten]]) появляются позже, обычно со второго или третьего класса. Когда именно, зависит от земли и школы.\n\nВнимание: в Германии **1** - лучшая оценка ([[sehr gut]]), а **6** - худшая. Не так, как в русской школе, где лучшая оценка - пятёрка."
+    },
+    {
+      "type": "exercise",
+      "title": "Поняли учительницу?",
+      "items": [
+        {
+          "type": "listen_mc",
+          "audio": "Mila stört manchmal den Unterricht.",
+          "question": "Учительница этим довольна?",
+          "questionLang": "en",
+          "options": ["Nein, das ist ein Problem.", "Ja, das ist gut."],
+          "answer": "Nein, das ist ein Problem.",
+          "explanation": "Mila stört manchmal den Unterricht = Мила иногда мешает на уроке. Это проблема."
+        },
+        {
+          "type": "listen_mc",
+          "audio": "Max hat schon Freunde gefunden.",
+          "question": "Что хорошего рассказала учительница?",
+          "questionLang": "en",
+          "options": ["Er hat Freunde.", "Er liest sehr gut.", "Er kommt immer pünktlich."],
+          "answer": "Er hat Freunde.",
+          "explanation": "Er hat schon Freunde gefunden = он уже нашёл друзей."
+        },
+        {
+          "type": "listen_mc",
+          "audio": "Mila kommt oft zu spät.",
+          "question": "В чём проблема?",
+          "questionLang": "en",
+          "options": ["zu spät", "zu langsam", "zu laut"],
+          "answer": "zu spät",
+          "explanation": "Sie kommt oft zu spät = она часто опаздывает. zu spät = слишком поздно."
+        },
+        {
+          "type": "mc",
+          "question": "Учительница говорит, что вашему сыну нужна помощь с письмом. Какую фразу вы слышите?",
+          "questionLang": "en",
+          "options": ["Er braucht Hilfe beim Schreiben.", "Er braucht Hilfe beim Lesen.", "Er schreibt schon sehr gut."],
+          "answer": "Er braucht Hilfe beim Schreiben.",
+          "explanation": "schreiben = писать, lesen = читать. Er braucht Hilfe = ему нужна помощь."
         }
       ]
     }

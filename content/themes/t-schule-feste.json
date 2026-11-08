@@ -1,0 +1,264 @@
+{
+  "id": "t-schule-feste",
+  "theme": {
+    "kind": "topic",
+    "title": "Schule: Feste und Geburtstage",
+    "variety": "standard German"
+  },
+  "onlyFor": ["elya@nemeceren.example", "claude-test@example.com"],
+  "level": "A1",
+  "title": "Праздники и дни рождения (Feste und Geburtstage)",
+  "summary": "Шествие с фонариками, школьные праздники, день рождения в классе, приглашения от одноклассников и встречи детей: что сказать другим родителям и учительнице.",
+  "goals": [
+    "Понять, что такое Sankt Martin и Laternenumzug, и прочитать письмо о шествии",
+    "Предложить помощь на школьном празднике: принести пирог, помочь у стойки",
+    "Спросить учительницу, можно ли принести угощение на день рождения",
+    "Прочитать приглашение на день рождения и ответить на него",
+    "Договориться с другими родителями о встрече детей и сказать об аллергии"
+  ],
+  "words": ["laterne", "laternenumzug", "kostuem", "backen", "kindergeburtstag", "verabredung", "allergie", "nuss"],
+  "stations": [5, 10],
+  "sections": [
+    {
+      "id": "about",
+      "type": "explanation",
+      "title": "Праздники в школьном году",
+      "text": "В начальной школе в течение года бывает несколько праздников, и родителей часто просят помочь. Обычно (зависит от школы и региона):\n- **ноябрь**: [[Sankt Martin]] - шествие с фонариками, подробнее ниже;\n- **декабрь**: [[die Weihnachtsfeier]] - рождественский праздник: дети поют, иногда приглашают родителей или просят принести печенье ([[die Plätzchen]]);\n- **февраль**: [[der Fasching]] или [[der Karneval]] - во многих школах дети в этот день приходят в карнавальных костюмах ([[das Kostüm]]), а вместо уроков бывает праздник;\n- **лето**: [[das Schulfest]] или [[das Sommerfest]] - праздник всей школы с играми и столом с пирогами.\n\nЕщё бывают дни рождения: в классе и дома у одноклассников. Родители одноклассников между собой часто сразу говорят на [[du]], как мамы на детской площадке. С учительницей - на [[Sie]]."
+    },
+    {
+      "id": "sankt-martin",
+      "type": "explanation",
+      "title": "Sankt Martin: шествие с фонариками",
+      "text": "[[Sankt Martin]] (день святого Мартина) - **11 ноября**. Во многих регионах в этот день или рядом с ним дети вечером, когда темно, идут шествием с фонариками: [[der Laternenumzug]]. Его устраивают школа, детский сад или церковная община, родители идут рядом.\n- [[die Laterne]] - фонарик, часто самодельный: его мастерят дома или на уроках.\n- Дети поют песни о Мартине и о фонариках ([[die Martinslieder]]), например [[Laterne, Laterne]].\n- Иногда впереди едет всадник в красном плаще (святой Мартин), а в конце горит костёр ([[das Martinsfeuer]]).\n\nОбычай есть не везде и выглядит по-разному: где-то его называют [[das Laternenfest]], и день может быть другим. Когда и где встречаются, школа обычно пишет в письме."
+    },
+    {
+      "id": "laternenumzug",
+      "type": "examples",
+      "title": "Письмо о шествии и вопросы",
+      "items": [
+        { "de": "Am Mittwoch, 11. November, ist unser Laternenumzug.", "en": "В среду, 11 ноября, наше шествие с фонариками." },
+        { "de": "Wir treffen uns um 17 Uhr auf dem Schulhof.", "en": "Встречаемся в 17 часов на школьном дворе.", "note": "der Schulhof - школьный двор." },
+        { "de": "Bitte geben Sie Ihrem Kind eine Laterne mit.", "en": "Пожалуйста, дайте ребёнку с собой фонарик." },
+        { "de": "Die Eltern sind herzlich eingeladen.", "en": "Родителей сердечно приглашаем.", "note": "Значит, родители тоже могут прийти." },
+        { "de": "Wo treffen wir uns?", "en": "Где мы встречаемся?" },
+        { "de": "Wann ist der Laternenumzug zu Ende?", "en": "Когда закончится шествие?" }
+      ]
+    },
+    {
+      "id": "schulfest",
+      "type": "examples",
+      "title": "Школьный праздник: пироги и помощь",
+      "items": [
+        { "de": "Wer bringt einen Kuchen mit?", "en": "Кто принесёт пирог?", "note": "Перед праздником часто вывешивают список или присылают его в чат, и родители вписывают, кто что принесёт и когда поможет. Пироги потом продают на столе с пирогами (Kuchenbuffet)." },
+        { "de": "Ich bringe einen Kuchen mit.", "en": "Я принесу пирог." },
+        { "de": "Ich backe Muffins.", "en": "Я испеку маффины." },
+        { "de": "Ich kann von 14 bis 15 Uhr helfen.", "en": "Я могу помочь с 14 до 15 часов." },
+        { "de": "Ich helfe gern am Stand.", "en": "Я с удовольствием помогу у стойки.", "note": "der Stand - стойка, прилавок на празднике." },
+        { "de": "Sind Nüsse im Kuchen?", "en": "В пироге есть орехи?" }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Попробуйте",
+      "items": [
+        {
+          "type": "mc",
+          "question": "Что ребёнок несёт на шествие в день святого Мартина?",
+          "questionLang": "en",
+          "options": ["eine Laterne", "einen Kuchen", "ein Kostüm"],
+          "answer": "eine Laterne",
+          "explanation": "die Laterne - фонарик. Kostüm (костюм) нужен на карнавал (Fasching), пирог (Kuchen) - на школьный праздник."
+        },
+        {
+          "type": "listen_mc",
+          "audio": "Wir treffen uns um siebzehn Uhr auf dem Schulhof.",
+          "question": "Где встречаются?",
+          "questionLang": "en",
+          "options": ["auf dem Schulhof", "in der Kirche", "vor dem Rathaus"],
+          "answer": "auf dem Schulhof",
+          "explanation": "auf dem Schulhof = на школьном дворе, в 17 часов."
+        },
+        {
+          "type": "gap",
+          "instruction": "Вставьте слово: 'Я принесу пирог.'",
+          "text": "Ich bringe einen Kuchen ___.",
+          "answers": [["mit"]],
+          "explanation": "mitbringen = принести с собой. bringe стоит на втором месте, mit уходит в конец."
+        },
+        {
+          "type": "order",
+          "prompt": "Я могу помочь с 14 до 15 часов.",
+          "tiles": ["ich", "kann", "von", "14", "bis", "15", "Uhr", "helfen"],
+          "answers": ["Ich kann von 14 bis 15 Uhr helfen", "Von 14 bis 15 Uhr kann ich helfen"],
+          "explanation": "kann стоит на втором месте, helfen - в конце. von ... bis ... = с ... до ..."
+        },
+        {
+          "type": "mc",
+          "question": "Как спросить, есть ли в пироге орехи?",
+          "questionLang": "en",
+          "options": ["Sind Nüsse im Kuchen?", "Ist das dein Kuchen?", "Wo ist der Kuchen?"],
+          "answer": "Sind Nüsse im Kuchen?",
+          "explanation": "die Nuss, мн. ч. die Nüsse - орех, орехи. im Kuchen = в пироге."
+        }
+      ]
+    },
+    {
+      "id": "geburtstag-klasse",
+      "type": "explanation",
+      "title": "День рождения ребёнка в классе",
+      "text": "Во многих классах ребёнок в свой день рождения приносит что-нибудь для всех: пирог, маффины или печенье. Но в школах разные правила: некоторые просят обходиться без сладкого или хотят знать заранее, например из-за аллергий. Лучше спросить учительницу за несколько дней:\n- [[Mila hat am Freitag Geburtstag.]] - В пятницу у Милы день рождения.\n- [[Darf sie einen Kuchen mitbringen?]] - Можно ей принести пирог?\n- [[Darf er Muffins für die Klasse mitbringen?]] - Можно ему принести маффины для класса?\n- [[Wie viele Kinder sind in der Klasse?]] - Сколько детей в классе?\n- [[Gibt es Kinder mit Allergien?]] - Есть дети с аллергией?"
+    },
+    {
+      "id": "am-schultor",
+      "type": "dialogue",
+      "title": "У школьных ворот",
+      "lines": [
+        { "speaker": "Katrin (мама Лены)", "de": "Hallo! Du bist die Mama von Mila, oder?", "en": "Привет! Ты мама Милы, да?" },
+        { "speaker": "Вы (мама Милы)", "de": "Ja, genau. Hallo!", "en": "Да, точно. Привет!" },
+        { "speaker": "Katrin (мама Лены)", "de": "Ich bin Katrin, die Mama von Lena.", "en": "Я Катрин, мама Лены." },
+        { "speaker": "Katrin (мама Лены)", "de": "Lena hat am Samstag Geburtstag.", "en": "В субботу у Лены день рождения." },
+        { "speaker": "Katrin (мама Лены)", "de": "Kann Mila kommen?", "en": "Мила может прийти?" },
+        { "speaker": "Вы (мама Милы)", "de": "Ja, sie kommt gern!", "en": "Да, она с удовольствием придёт!" },
+        { "speaker": "Вы (мама Милы)", "de": "Wann soll ich sie abholen?", "en": "Когда мне её забрать?" },
+        { "speaker": "Katrin (мама Лены)", "de": "Um fünf Uhr, bitte.", "en": "В пять, пожалуйста." },
+        { "speaker": "Вы (мама Милы)", "de": "Mila hat eine Nussallergie.", "en": "У Милы аллергия на орехи." },
+        { "speaker": "Katrin (мама Лены)", "de": "Danke, gut zu wissen!", "en": "Спасибо, хорошо, что сказала!" },
+        { "speaker": "Katrin (мама Лены)", "de": "Kann Lena auch mal zu euch kommen?", "en": "А Лена может как-нибудь прийти к вам?" },
+        { "speaker": "Вы (мама Милы)", "de": "Gern! Vielleicht am Freitag?", "en": "Конечно! Может, в пятницу?" }
+      ]
+    },
+    {
+      "id": "einladung",
+      "type": "examples",
+      "title": "Приглашение на день рождения",
+      "items": [
+        { "de": "Einladung zu meinem Geburtstag!", "en": "Приглашение на мой день рождения!" },
+        { "de": "Liebe Mila, ich werde sieben und möchte mit dir feiern.", "en": "Дорогая Мила, мне исполняется семь, и я хочу отпраздновать с тобой." },
+        { "de": "Wann: am Samstag, 21. November, von 14 bis 17 Uhr", "en": "Когда: в субботу, 21 ноября, с 14 до 17 часов" },
+        { "de": "Wo: bei uns zu Hause, Rosenstraße 5", "en": "Где: у нас дома, Розенштрассе 5" },
+        { "de": "Abholen: um 17 Uhr", "en": "Забрать: в 17 часов" },
+        { "de": "Bitte gebt bis Mittwoch Bescheid.", "en": "Пожалуйста, сообщите до среды.", "note": "gebt - форма для ihr (вы, когда на 'ты' обращаются к нескольким): здесь ко всем родителям. Bescheid geben = сообщить, дать ответ." },
+        { "de": "Deine Lena", "en": "Твоя Лена" }
+      ]
+    },
+    {
+      "id": "vorlage-antwort",
+      "type": "examples",
+      "title": "Шаблон: ответ на приглашение",
+      "items": [
+        { "de": "Hallo Katrin,", "en": "Привет, Катрин,", "note": "Другим родителям обычно пишут на du." },
+        { "de": "vielen Dank für die Einladung!", "en": "большое спасибо за приглашение!" },
+        { "de": "Mila kommt gern.", "en": "Мила с удовольствием придёт.", "note": "Если не получится: Max kann leider nicht kommen. - Макс, к сожалению, не сможет прийти." },
+        { "de": "Sie hat eine Nussallergie.", "en": "У неё аллергия на орехи." },
+        { "de": "Ich hole sie um 17 Uhr ab.", "en": "Я заберу её в 17 часов." },
+        { "de": "Viele Grüße", "en": "С приветом", "note": "На следующей строке - ваше имя." }
+      ]
+    },
+    {
+      "id": "geschenk",
+      "type": "tip",
+      "title": "Подарок",
+      "text": "На детский день рождения ([[der Kindergeburtstag]]) обычно приносят подарок. Часто это небольшая вещь: книга, игра, что-то для рисования. Твёрдой суммы нет. Если не уверены, спросите других родителей или маму именинника:\n- [[Was wünscht sich Lena?]] - Что Лена хочет в подарок?\n- [[Was spielt Lena gern?]] - Во что Лена любит играть?"
+    },
+    {
+      "id": "verabredung",
+      "type": "examples",
+      "title": "Встреча детей дома (Verabredung)",
+      "items": [
+        { "de": "Kann Max am Freitag zu uns kommen?", "en": "Может Макс в пятницу прийти к нам?", "note": "die Verabredung - договорённость о встрече. Родители договариваются между собой, часто на du." },
+        { "de": "Ich hole ihn um fünf Uhr ab.", "en": "Я заберу его в пять." },
+        { "de": "Isst er alles?", "en": "Он всё ест?" },
+        { "de": "Meine Tochter hat eine Nussallergie.", "en": "У моей дочери аллергия на орехи." },
+        { "de": "Er darf keine Nüsse essen.", "en": "Ему нельзя есть орехи.", "note": "darf kein ... = нельзя." },
+        { "de": "Hier ist meine Handynummer.", "en": "Вот мой номер телефона.", "note": "das Handy - мобильный телефон." }
+      ]
+    },
+    {
+      "type": "audio",
+      "title": "Скажите вслух",
+      "items": [
+        { "de": "Ich bringe einen Kuchen mit.", "en": "Я принесу пирог." },
+        { "de": "Ich kann von 14 bis 15 Uhr helfen.", "en": "Я могу помочь с 14 до 15 часов." },
+        { "de": "Darf sie einen Kuchen mitbringen?", "en": "Можно ей принести пирог?" },
+        { "de": "Mila kommt gern!", "en": "Мила с удовольствием придёт!" },
+        { "de": "Max kann leider nicht kommen.", "en": "Макс, к сожалению, не сможет прийти." },
+        { "de": "Wann soll ich sie abholen?", "en": "Когда мне её забрать?" },
+        { "de": "Kann Max am Freitag zu uns kommen?", "en": "Может Макс в пятницу прийти к нам?" },
+        { "de": "Meine Tochter hat eine Nussallergie.", "en": "У моей дочери аллергия на орехи." }
+      ]
+    },
+    {
+      "id": "woerter",
+      "type": "table",
+      "title": "Слова, которые стоит запомнить",
+      "columns": [{ "header": "Немецкий", "de": "words" }, { "header": "Русский" }],
+      "rows": [
+        ["der Laternenumzug", "шествие с фонариками"],
+        ["die Laterne", "фонарик"],
+        ["das Kostüm", "карнавальный костюм"],
+        ["das Schulfest", "школьный праздник"],
+        ["der Kuchen", "пирог, торт"],
+        ["backen", "печь"],
+        ["helfen", "помогать"],
+        ["der Kindergeburtstag", "детский день рождения"],
+        ["die Einladung", "приглашение"],
+        ["Bescheid geben", "сообщить, дать ответ"],
+        ["das Geschenk", "подарок"],
+        ["die Verabredung", "договорённость о встрече"],
+        ["die Allergie", "аллергия"],
+        ["die Nuss / die Nüsse", "орех / орехи"]
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Проверьте себя",
+      "items": [
+        {
+          "type": "translate",
+          "direction": "en-de",
+          "instruction": "Переведите на немецкий.",
+          "text": "Мила с удовольствием придёт!",
+          "references": ["Mila kommt gern!", "Mila kommt gerne!"],
+          "explanation": "kommt gern = с удовольствием придёт. gern и gerne значат одно и то же."
+        },
+        {
+          "type": "listen_mc",
+          "audio": "Lena feiert am Samstag von zwei bis fünf Uhr. Bitte holt die Kinder um fünf Uhr ab.",
+          "question": "Когда забирать детей?",
+          "questionLang": "en",
+          "options": ["um fünf Uhr", "um zwei Uhr", "um vier Uhr"],
+          "answer": "um fünf Uhr",
+          "explanation": "Bitte holt die Kinder um fünf Uhr ab = заберите детей в пять. Праздник с двух до пяти."
+        },
+        {
+          "type": "gap",
+          "instruction": "Вставьте слово: 'Макс, к сожалению, не сможет прийти.'",
+          "text": "Max kann leider nicht ___.",
+          "answers": [["kommen", "mitkommen"]],
+          "explanation": "kann + глагол в конце: Max kann leider nicht kommen (или mitkommen - пойти вместе)."
+        },
+        {
+          "type": "order",
+          "prompt": "Когда мне её забрать?",
+          "tiles": ["wann", "soll", "ich", "sie", "abholen"],
+          "answers": ["Wann soll ich sie abholen"],
+          "explanation": "Вопрос: Wann + soll + ich, а abholen - в конце. soll ich = мне (нужно)."
+        },
+        {
+          "type": "mc",
+          "question": "Как сказать, что дочери нельзя есть орехи?",
+          "questionLang": "en",
+          "options": ["Sie darf keine Nüsse essen.", "Sie möchte keine Nüsse essen.", "Sie isst gern Nüsse."],
+          "answer": "Sie darf keine Nüsse essen.",
+          "explanation": "darf kein = нельзя. möchte kein = не хочет, isst gern = любит есть."
+        },
+        {
+          "type": "dictation",
+          "instruction": "Послушайте и напишите.",
+          "text": "Kann Max am Freitag zu uns kommen?",
+          "explanation": "Вопрос начинается с глагола Kann. Freitag (пятница) - с большой буквы."
+        }
+      ]
+    }
+  ]
+}

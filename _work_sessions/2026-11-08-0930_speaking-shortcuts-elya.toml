@@ -11,13 +11,15 @@ done = [
   "Four Elya-only lessons (DECISIONS #96), Russian explanations, beginner phrases: t-schule-krank (sick note, Sekretariat call, Entschuldigung, Attest), t-schule-lehrerin (Sie, Elterngespraech, Elternabend, weak German, a child's problem), t-schule-briefe (Elternbrief key words, Abschnitt, Einverstaendniserklaerung, money, head lice, class chat), t-schule-alltag (school things, homework, Hort/Ganztag, bringing and picking up, Ferien). 29 word cards with Russian meanings. Written by one agent (~314k tokens, facts checked with sources), reviewed by me line by line: 2 fixes (Bauchschmerzen 'usually' plural, 'Heute holt ihn die Oma ab').",
   "Glossary: the generator takes a card's en as the popup gloss, so English curated entries for the 34 new spellings keep popups English (Mittagessen in u4-03 had turned Russian).",
   "Browser check (local Python Playwright, test password read from .env.local, never printed): guest sees 3 themes and no Schule lesson; the test account sees 7 and the Schule tiles on the map; lesson renders at 390 px; 0 console errors. Committed 2724785 and pushed.",
+  "Q44: Hayk is fine with the rest of the app in English. Asked to review Elya's lessons and extend them. The review found coverage gaps, not errors. The same agent was resumed (~410k tokens): a class-trip letter with reading questions (briefe), teacher feedback phrases and the first report card (lehrerin), vomiting, diarrhoea and 'well again' (krank), and a fifth lesson t-schule-feste (St. Martin, school fair, a birthday in class, party invitations, playdates, allergies). 9 more cards, 38 in total. I reviewed it all line by line: one fix (the sich übergeben table gloss).",
+  "The agent had inserted sections mid-lesson. Saved checks find their block by section index (itemsForResult: sections[result.section]), so I rebuilt the three lessons append-only: committed sections at their committed indices (checked by script), the new part at the end, and the old station cuts kept (krank [7,11], lehrerin [6,13], briefe pinned to its auto [7,13]). The krank Durchfall item moved from the old final block into a new final block with 3 more items. The files were spliced from the committed text, so the diff is 241 lines added and 4 removed. Rule added to content/README.md, plus _learnings/2026-11-08-1800_append-only-published-lessons.md.",
+  "Checks: glossary covered, check-content OK (8 theme lessons, 1057 words), 496 tests, build, 0 Cyrillic popup entries; browser: guest 3 themes, test account 8, no console errors.",
 ]
 pending = [
   "Q34: save the learning about agents hanging when the PC sleeps.",
   "Q36: CLAUDE.md rule on gating commits on real exit codes.",
   "Q38: the mic-blocked message points at the address bar, which the installed app lacks.",
   "Q39: try one continuous recognition session per round to cut Android's mic beeps.",
-  "Elya reads the app in English apart from her four lessons (course, ~1,000 word meanings, popups, buttons): check how well she reads English.",
 ]
 next = """
 If Elya needs more: more theme lessons with the same onlyFor, Russian in the en fields, English curated glossary entries for each new card's spellings.

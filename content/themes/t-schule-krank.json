@@ -16,7 +16,7 @@
     "Понять, когда школа может попросить справку от врача (Attest)",
     "Предупредить, что заберёте ребёнка раньше из-за врача"
   ],
-  "words": ["sekretariat", "erkaeltung", "husten", "bauchschmerzen", "halsschmerzen", "attest", "kinderarzt"],
+  "words": ["sekretariat", "erkaeltung", "husten", "bauchschmerzen", "halsschmerzen", "attest", "kinderarzt", "durchfall"],
   "stations": [7, 11],
   "sections": [
     {
@@ -203,7 +203,10 @@
         ["das Attest", "справка от врача"],
         ["der Kinderarzt / die Kinderärztin", "детский врач"],
         ["abholen", "забирать (ребёнка)"],
-        ["Gute Besserung!", "Выздоравливайте!"]
+        ["Gute Besserung!", "Выздоравливайте!"],
+        ["der Durchfall", "понос"],
+        ["sich übergeben", "вырвать (о рвоте): er hat sich übergeben - его вырвало"],
+        ["wieder gesund", "снова здоров"]
       ]
     },
     {
@@ -255,6 +258,84 @@
           "options": ["Gute Besserung!", "Guten Appetit!", "Gute Reise!"],
           "answer": "Gute Besserung!",
           "explanation": "Gute Besserung! = выздоравливай(те)! Guten Appetit! - приятного аппетита, Gute Reise! - хорошей поездки."
+        }
+      ]
+    },
+    {
+      "id": "magen-darm",
+      "type": "examples",
+      "title": "Ещё: рвота и понос",
+      "items": [
+        {
+          "de": "Er hat sich übergeben.",
+          "en": "Его вырвало.",
+          "note": "sich übergeben - вежливое слово для рвоты. В письмах школы и у врача также пишут erbrechen, das Erbrechen: это слово достаточно узнавать."
+        },
+        { "de": "Sie hat Durchfall.", "en": "У неё понос.", "note": "der Durchfall - понос, диарея. Как Husten, идёт с haben." },
+        { "de": "Er hat Bauchschmerzen und Durchfall.", "en": "У него болит живот и понос." },
+        { "de": "Sie kann nichts essen.", "en": "Она ничего не может есть." },
+        {
+          "de": "Wann darf er wieder in die Schule kommen?",
+          "en": "Когда ему можно снова в школу?",
+          "note": "Для школьников единого правила нет. Некоторые школы просят подождать 48 часов без рвоты и поноса. Спросите в школе."
+        }
+      ]
+    },
+    {
+      "id": "wieder-gesund",
+      "type": "examples",
+      "title": "Снова здоров",
+      "items": [
+        { "de": "Sie ist wieder gesund.", "en": "Она снова здорова." },
+        { "de": "Es geht ihm schon besser.", "en": "Ему уже лучше." },
+        { "de": "Sie hat kein Fieber mehr.", "en": "У неё больше нет температуры." },
+        { "de": "Er kommt morgen wieder in die Schule.", "en": "Завтра он снова пойдёт в школу." },
+        { "de": "Er war drei Tage krank.", "en": "Он болел три дня.", "note": "war = был (прошедшее время от sein)." }
+      ]
+    },
+    {
+      "type": "audio",
+      "title": "Скажите вслух: живот и выздоровление",
+      "items": [
+        { "de": "Er hat Durchfall.", "en": "У него понос." },
+        { "de": "Sie ist wieder gesund.", "en": "Она снова здорова." },
+        { "de": "Er kommt morgen wieder in die Schule.", "en": "Завтра он снова пойдёт в школу." }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Проверьте себя: живот и выздоровление",
+      "items": [
+        {
+          "type": "gap",
+          "instruction": "Вставьте слово: 'У него понос.'",
+          "text": "Er hat ___.",
+          "answers": [["Durchfall"]],
+          "explanation": "der Durchfall - понос. Как Husten и Fieber, идёт с haben: er hat Durchfall."
+        },
+        {
+          "type": "listen_mc",
+          "audio": "Mein Sohn hat sich übergeben. Er bleibt heute zu Hause.",
+          "question": "Что случилось с сыном?",
+          "questionLang": "en",
+          "options": ["Er hat sich übergeben.", "Er hat Husten.", "Er hat Halsschmerzen."],
+          "answer": "Er hat sich übergeben.",
+          "explanation": "sich übergeben = вырвать: er hat sich übergeben - его вырвало. Поэтому он сегодня остаётся дома."
+        },
+        {
+          "type": "mc",
+          "question": "Как сказать учительнице, что дочь снова здорова?",
+          "questionLang": "en",
+          "options": ["Sie ist wieder gesund.", "Sie ist wieder krank.", "Sie hat wieder Fieber."],
+          "answer": "Sie ist wieder gesund.",
+          "explanation": "wieder gesund = снова здорова. wieder krank - снова больна, wieder Fieber - снова температура."
+        },
+        {
+          "type": "order",
+          "prompt": "Завтра он снова пойдёт в школу.",
+          "tiles": ["er", "kommt", "morgen", "wieder", "in", "die", "Schule"],
+          "answers": ["Er kommt morgen wieder in die Schule", "Morgen kommt er wieder in die Schule"],
+          "explanation": "kommt стоит на втором месте. Сначала когда (morgen), потом wieder, в конце куда (in die Schule)."
         }
       ]
     }

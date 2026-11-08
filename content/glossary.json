@@ -1,5 +1,5 @@
 {
-  "ignore": ["Hayk", "Charlotte", "Eva", "Meier", "Müller", "Schmidt", "Thomas", "Weber", "Aram", "Tarkhanyan", "Goethestraße", "Siemens", "Berlin", "Marienplatz", "Moosach", "Berger", "Hoffmann", "Lindner", "Krause", "Sabine", "Peter", "Becker", "Schulz", "Wagner", "Petrowa", "Mila", "Max"],
+  "ignore": ["Hayk", "Charlotte", "Eva", "Meier", "Müller", "Schmidt", "Thomas", "Weber", "Aram", "Tarkhanyan", "Goethestraße", "Siemens", "Berlin", "Marienplatz", "Moosach", "Berger", "Hoffmann", "Lindner", "Krause", "Sabine", "Peter", "Becker", "Schulz", "Wagner", "Petrowa", "Mila", "Max", "Katrin", "Lena", "Rosenstraße"],
   "entries": {
     "Verkehr": [
       {"lemma": "Verkehr", "pos": "noun", "article": "der", "level": "A2", "gloss": ["traffic"]}
@@ -1393,6 +1393,88 @@
     ],
     "Turnen": [
       {"lemma": "Turnen", "pos": "noun", "article": "das", "gloss": ["PE (at primary school)", "gymnastics"]}
+    ],
+    "Durchfall": [
+      {"lemma": "Durchfall", "pos": "noun", "article": "der", "level": "B1", "gloss": ["diarrhoea"], "note": "Sie hat Durchfall."}
+    ],
+    "Laterne": [
+      {"lemma": "Laterne", "pos": "noun", "article": "die", "plural": "Laternen", "level": "B1", "gloss": ["lantern", "street lamp"]}
+    ],
+    "Laternen": [
+      {"lemma": "Laterne", "pos": "noun", "article": "die", "form": "plural", "level": "B1", "gloss": ["lanterns; street lamps"]}
+    ],
+    "Laternenumzug": [
+      {"lemma": "Laternenumzug", "pos": "noun", "article": "der", "plural": "Laternenumzüge", "level": "B1", "gloss": ["lantern procession (around St Martin's Day)"]}
+    ],
+    "Laternenumzüge": [
+      {"lemma": "Laternenumzug", "pos": "noun", "article": "der", "form": "plural", "level": "B1", "gloss": ["lantern processions"]}
+    ],
+    "Kostüm": [
+      {"lemma": "Kostüm", "pos": "noun", "article": "das", "plural": "Kostüme", "level": "B1", "gloss": ["costume, fancy dress"]}
+    ],
+    "Kostüme": [
+      {"lemma": "Kostüm", "pos": "noun", "article": "das", "form": "plural", "level": "B1", "gloss": ["costumes"]}
+    ],
+    "backen": [
+      {"lemma": "backen", "pos": "verb", "level": "A2", "gloss": ["to bake"], "note": "ich backe, du backst / bäckst"}
+    ],
+    "backe": [
+      {"lemma": "backen", "pos": "verb", "form": "ich form, present", "level": "A2", "gloss": ["bake"]}
+    ],
+    "Kindergeburtstag": [
+      {"lemma": "Kindergeburtstag", "pos": "noun", "article": "der", "plural": "Kindergeburtstage", "level": "B1", "gloss": ["child's birthday party"]}
+    ],
+    "Kindergeburtstage": [
+      {"lemma": "Kindergeburtstag", "pos": "noun", "article": "der", "form": "plural", "level": "B1", "gloss": ["children's birthday parties"]}
+    ],
+    "Verabredung": [
+      {"lemma": "Verabredung", "pos": "noun", "article": "die", "plural": "Verabredungen", "level": "B1", "gloss": ["arrangement to meet, date, appointment"]}
+    ],
+    "Verabredungen": [
+      {"lemma": "Verabredung", "pos": "noun", "article": "die", "form": "plural", "level": "B1", "gloss": ["arrangements to meet, appointments"]}
+    ],
+    "Allergie": [
+      {"lemma": "Allergie", "pos": "noun", "article": "die", "plural": "Allergien", "level": "B1", "gloss": ["allergy"]}
+    ],
+    "Allergien": [
+      {"lemma": "Allergie", "pos": "noun", "article": "die", "form": "plural", "level": "B1", "gloss": ["allergies"]}
+    ],
+    "Nuss": [
+      {"lemma": "Nuss", "pos": "noun", "article": "die", "plural": "Nüsse", "level": "A2", "gloss": ["nut"]}
+    ],
+    "Nüsse": [
+      {"lemma": "Nuss", "pos": "noun", "article": "die", "form": "plural", "level": "A2", "gloss": ["nuts"]}
+    ],
+    "Weihnachtsfeier": [
+      {"lemma": "Weihnachtsfeier", "pos": "noun", "article": "die", "plural": "Weihnachtsfeiern", "gloss": ["Christmas party"]}
+    ],
+    "Schulfest": [
+      {"lemma": "Schulfest", "pos": "noun", "article": "das", "plural": "Schulfeste", "gloss": ["school fair, school party"]}
+    ],
+    "Sommerfest": [
+      {"lemma": "Sommerfest", "pos": "noun", "article": "das", "plural": "Sommerfeste", "gloss": ["summer party, summer fair"]}
+    ],
+    "Martinslieder": [
+      {"lemma": "Martinslied", "pos": "noun", "article": "das", "form": "plural", "gloss": ["St Martin's songs"]}
+    ],
+    "Martinsfeuer": [
+      {"lemma": "Martinsfeuer", "pos": "noun", "article": "das", "gloss": ["St Martin's bonfire"]}
+    ],
+    "Laternenfest": [
+      {"lemma": "Laternenfest", "pos": "noun", "article": "das", "plural": "Laternenfeste", "gloss": ["lantern festival"]}
+    ],
+    "Nussallergie": [
+      {"lemma": "Nussallergie", "pos": "noun", "article": "die", "plural": "Nussallergien", "gloss": ["nut allergy"]}
+    ],
+    "Noten": [
+      {"lemma": "Note", "pos": "noun", "article": "die", "form": "plural", "level": "A2", "gloss": ["marks, grades (at school)", "(musical) notes"]}
+    ],
+    "Stand": [
+      {"lemma": "Stand", "pos": "noun", "article": "der", "plural": "Stände", "gloss": ["stand, stall (at a fair)", "state, status"]}
+    ],
+    "übergeben": [
+      {"lemma": "übergeben", "pos": "verb", "gloss": ["(sich übergeben) to vomit, to be sick"], "note": "Er hat sich übergeben. = He was sick."},
+      {"lemma": "übergeben", "pos": "verb", "gloss": ["to hand over"]}
     ]
   }
 }

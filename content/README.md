@@ -259,6 +259,13 @@ Every block may have an optional `title`, and an optional `id` (kebab-case like 
 ```
 Each check is saved like a test attempt (see `progress/README.md`) with the test id `<lesson id>-ex<n>` (`n` counts the lesson's exercise blocks from 1), so no test may have that id. Claude reviews them like tests.
 
+**Changing a lesson someone may have started: append only.** A saved check points at its block by section index (`section`), its test id counts exercise blocks, and finished stations are saved as section ranges. So once a lesson is live:
+- add new sections only after the last one;
+- add new items only at the end of an exercise block;
+- keep the existing `stations` cuts (adding a cut for the new part is fine).
+
+Inserting or removing a section in the middle makes old results show other questions. Rows added to a table and lines added to `examples` or `audio` are safe. (Learned 2026-11-08 extending Elya's lessons, `_learnings/2026-11-08-1800_append-only-published-lessons.md`.)
+
 The glossary covers all German in lessons: `[[...]]` in the text blocks, `examples`, `audio` and `dialogue` sentences, table cells in `"words"` columns, and the German fields of exercise items.
 
 ### Stories: the last lesson of each unit

@@ -26,7 +26,12 @@ Newest at the top. Never delete a superseded entry - mark it and add a new one.
   - **Elya needing more** (Gymnasium choice, a Zeugnis, a Kita letter): more lessons with the same `onlyFor`.
   - **A second Russian-speaking learner:** then a real explanation-language setting instead of Russian in `en`.
   - **Popups:** glossary popups stay English. Russian popups only if Elya finds the English ones a problem.
-- **Glossary detail:** `npm run glossary` uses a word card's `en` as the popup gloss. The 29 new cards (`elya` tag) have Russian `en`, so `content/glossary.json` got English curated entries for those 34 spellings. Without them, Hayk's course would have shown Russian too: `Mittagessen` in `u4-03-essen` had turned into "обед". New cards with Russian `en` need the same curated entries.
+- **Extended the same day** (Hayk: "review the materials ... and if it makes sense extend them", with English for the rest of the app confirmed, Q44). The review found gaps in what the lessons cover, not errors:
+  - **New part at the end of three lessons:** a whole class-trip letter to read, with questions (`t-schule-briefe`); what a teacher says about a first grader, plus the first report card, which in grade 1 is a written assessment and has no marks (`t-schule-lehrerin`); vomiting, diarrhoea and "well again" (`t-schule-krank`).
+  - **A fifth lesson, `t-schule-feste`:** St. Martin lantern walks, the school fair's cake list, a birthday in class, invitations to a classmate's party, playdates and allergies.
+  - **9 more cards**, 38 in total.
+  - **Append-only:** the extensions only add sections after the last one, because saved checks and stations are keyed by section index (content/README.md, Lessons).
+- **Glossary detail:** `npm run glossary` uses a word card's `en` as the popup gloss. The new cards (`elya` tag, 38 after the extension) have Russian `en`, so `content/glossary.json` has English curated entries for all their spellings. Check: 0 popup entries, generated or curated, contain Cyrillic. Without them, Hayk's course would have shown Russian too: `Mittagessen` in `u4-03-essen` had turned into "обед". New cards with Russian `en` need the same curated entries.
 
 ## 95. A theme lesson can be limited to some learners with `onlyFor` (sign-in emails); others never see it or the words only it lists (2026-11-08, for #96)
 

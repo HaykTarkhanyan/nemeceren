@@ -16,6 +16,7 @@
     "Коротко ответить на письмо или в родительском чате"
   ],
   "words": ["elternbrief", "abschnitt", "zurueckgeben", "mitgeben", "spaetestens", "einverstaendniserklaerung", "kopflaus"],
+  "stations": [7, 13],
   "sections": [
     {
       "id": "about",
@@ -234,6 +235,92 @@
           "instruction": "Послушайте и напишите.",
           "text": "Wir kommen gern.",
           "explanation": "wir kommen = мы придём, gern = с удовольствием."
+        }
+      ]
+    },
+    {
+      "id": "brief-ausflug",
+      "type": "examples",
+      "title": "Целое письмо: экскурсия в зоопарк",
+      "items": [
+        { "de": "Liebe Eltern,", "en": "Дорогие родители," },
+        {
+          "de": "am Dienstag, 17. November, fahren wir in den Tierpark.",
+          "en": "во вторник, 17 ноября, мы едем в зоопарк.",
+          "note": "der Tierpark - зоопарк, как der Zoo."
+        },
+        { "de": "Wir treffen uns um 8 Uhr vor der Schule.", "en": "Встречаемся в 8 часов перед школой." },
+        { "de": "Wir fahren mit dem Bus und sind um 12:30 Uhr zurück.", "en": "Едем на автобусе и вернёмся в 12:30." },
+        { "de": "Der Ausflug kostet 6 Euro.", "en": "Экскурсия стоит 6 евро." },
+        {
+          "de": "Bitte geben Sie Ihrem Kind ein Pausenbrot, eine Trinkflasche und eine Regenjacke mit.",
+          "en": "Пожалуйста, дайте ребёнку с собой бутерброд, бутылку для воды и дождевик."
+        },
+        { "de": "Viele Grüße, Sabine Becker", "en": "С приветом, Сабине Беккер", "note": "Так подписывается учительница." },
+        {
+          "de": "Abschnitt: bitte bis Freitag, 13. November, zurückgeben",
+          "en": "Отрывная часть: вернуть до пятницы, 13 ноября",
+          "note": "Эту часть отрезают по линии и возвращают в школу."
+        },
+        {
+          "de": "Mein Kind darf am Ausflug in den Tierpark teilnehmen.",
+          "en": "Моему ребёнку можно участвовать в экскурсии в зоопарк.",
+          "note": "Рядом на бланке есть место для имени ребёнка и для подписи (Unterschrift)."
+        }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Поняли письмо?",
+      "items": [
+        {
+          "type": "mc",
+          "question": "Где и во сколько встречаются дети?",
+          "questionLang": "en",
+          "options": ["um 8 Uhr vor der Schule", "um 8 Uhr im Tierpark", "um 12:30 Uhr vor der Schule"],
+          "answer": "um 8 Uhr vor der Schule",
+          "explanation": "Wir treffen uns um 8 Uhr vor der Schule = встречаемся в 8 часов перед школой. 12:30 - время возвращения."
+        },
+        {
+          "type": "mc",
+          "question": "В какой день экскурсия?",
+          "questionLang": "en",
+          "options": ["am Dienstag", "am Freitag", "am Mittwoch"],
+          "answer": "am Dienstag",
+          "explanation": "Экскурсия во вторник (am Dienstag, 17. November). Пятница (Freitag) - это срок для отрывной части."
+        },
+        {
+          "type": "mc",
+          "question": "Когда дети вернутся?",
+          "questionLang": "en",
+          "options": ["um 12:30 Uhr", "um 8 Uhr", "um 13:30 Uhr"],
+          "answer": "um 12:30 Uhr",
+          "explanation": "Wir sind um 12:30 Uhr zurück = мы вернёмся в 12:30."
+        },
+        {
+          "type": "mc",
+          "question": "Сколько стоит экскурсия?",
+          "questionLang": "en",
+          "options": ["6 Euro", "8 Euro", "12 Euro"],
+          "answer": "6 Euro",
+          "explanation": "Der Ausflug kostet 6 Euro = экскурсия стоит 6 евро."
+        },
+        {
+          "type": "mc",
+          "question": "Что ребёнку нужно взять с собой?",
+          "questionLang": "en",
+          "options": ["ein Pausenbrot, eine Trinkflasche und eine Regenjacke", "Sportzeug und Hausschuhe", "ein Buch und das Federmäppchen"],
+          "answer": "ein Pausenbrot, eine Trinkflasche und eine Regenjacke",
+          "explanation": "Bitte geben Sie Ihrem Kind ... mit = дайте ребёнку с собой: бутерброд, бутылку для воды и дождевик."
+        },
+        {
+          "type": "listen_mc",
+          "audio": "Bitte geben Sie den Abschnitt bis Freitag zurück.",
+          "question": "До какого дня нужно вернуть отрывную часть?",
+          "questionLang": "en",
+          "options": ["bis Freitag", "bis Dienstag", "bis Montag"],
+          "answer": "bis Freitag",
+          "explanation": "bis Freitag = до пятницы. Вторник (Dienstag) - день самой экскурсии."
         }
       ]
     }
