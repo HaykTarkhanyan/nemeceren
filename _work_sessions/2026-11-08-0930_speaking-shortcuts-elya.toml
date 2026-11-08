@@ -1,0 +1,27 @@
+title = "Say the words from English, hands-free mic, app shortcuts, Elya's account and her Russian school lessons"
+date = "2026-11-08"
+time = "09:30"
+areas = ["app/src/lib/recognition.ts", "app/src/components/SpeakGames.tsx", "app/src/components/SpeakLine.tsx", "app/public/manifest.webmanifest", "app/src/content", "app/src/lib/visibleContent.ts", "app/src/pages", "app/src/components", "content/themes", "content/words.json", "content/glossary*.json", "content/README.md", "DECISIONS.md", "CLAUDE.md"]
+done = [
+  "Say the words asks from English (type or say the German) and Stop always stops the mic: a 1.5 s grace timer finishes the listen when the browser never sends onend (9dd4170).",
+  "No Android widget for web apps; Hayk picked app shortcuts (Q37): Daily mix, Review, Say words, Map (d811f89, DECISIONS #94).",
+  "Hands-free Say the words: after the first tap the mic starts by itself on each word, the right word ends the listen at once (live results through ListenOptions.accept) and the next word comes after 1.5 s; bigger English prompt, helper text below the buttons, the German is not repeated after a spoken right answer (cde2eba). The on/off beeps come from Android's speech service (Q39 open).",
+  "Elya's account (elya@nemeceren.example, login 'Elya'): sign-up open 16:24:57-16:25:05 with an exit trap, allowlisted; probe sign-up 400, her sign-in 200. Her first password was refused as too short; Hayk picked a longer one. DECISIONS #97. The password is in no repo file.",
+  "onlyFor on theme lessons (DECISIONS #95): visibleThemesAndWords + useVisibleContent hide limited lessons and their own words on Themes, the map, All words, the word picker and the add-word check; a guest sees none; check-content keeps a limited lesson's words out of lessons everyone sees. 4 new tests (496 total).",
+  "Four Elya-only lessons (DECISIONS #96), Russian explanations, beginner phrases: t-schule-krank (sick note, Sekretariat call, Entschuldigung, Attest), t-schule-lehrerin (Sie, Elterngespraech, Elternabend, weak German, a child's problem), t-schule-briefe (Elternbrief key words, Abschnitt, Einverstaendniserklaerung, money, head lice, class chat), t-schule-alltag (school things, homework, Hort/Ganztag, bringing and picking up, Ferien). 29 word cards with Russian meanings. Written by one agent (~314k tokens, facts checked with sources), reviewed by me line by line: 2 fixes (Bauchschmerzen 'usually' plural, 'Heute holt ihn die Oma ab').",
+  "Glossary: the generator takes a card's en as the popup gloss, so English curated entries for the 34 new spellings keep popups English (Mittagessen in u4-03 had turned Russian).",
+  "Browser check (local Python Playwright, test password read from .env.local, never printed): guest sees 3 themes and no Schule lesson; the test account sees 7 and the Schule tiles on the map; lesson renders at 390 px; 0 console errors. Committed 2724785 and pushed.",
+]
+pending = [
+  "Q34: save the learning about agents hanging when the PC sleeps.",
+  "Q36: CLAUDE.md rule on gating commits on real exit codes.",
+  "Q38: the mic-blocked message points at the address bar, which the installed app lacks.",
+  "Q39: try one continuous recognition session per round to cut Android's mic beeps.",
+  "Elya reads the app in English apart from her four lessons (course, ~1,000 word meanings, popups, buttons): check how well she reads English.",
+]
+next = """
+If Elya needs more: more theme lessons with the same onlyFor, Russian in the en fields, English curated glossary entries for each new card's spellings.
+"""
+notes = """
+Hayk's own uncommitted kachayt section in CLAUDE.md was left unstaged; only the Elya line was staged (git diff -U0 + git apply --cached --unidiff-zero).
+"""
