@@ -12,5 +12,11 @@
     { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
     { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
     { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Daily mix", "short_name": "Daily mix", "description": "Today's reviews, new words and games", "url": "./#/daily", "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" }] },
+    { "name": "Review words", "short_name": "Review", "description": "Word review in the focus view", "url": "./#/words", "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" }] },
+    { "name": "Say the words", "short_name": "Say words", "description": "See the English, say or type the German", "url": "./#/daily/speak", "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" }] },
+    { "name": "Word map", "short_name": "Map", "description": "Your words by lesson, as a heat map", "url": "./#/words/map", "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" }] }
   ]
 }

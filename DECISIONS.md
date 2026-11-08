@@ -2,6 +2,19 @@
 
 Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
+## 94. Home-screen quick access is four app shortcuts in the manifest; no streak widget for now (Hayk's choice, 2026-11-08, Q37)
+
+- **Date:** 2026-11-08 - **Status:** active
+- **Why:** Hayk asked for an Android widget showing the daily streak. Chrome on Android has no home-screen widgets for web apps; manifest `widgets` are only hosted by the Windows 11 Widgets Board (Edge). Given the options (Q37), Hayk picked app shortcuts.
+- **What it is:** `shortcuts` in `app/public/manifest.webmanifest`: Daily mix (`#/daily`), Review (`#/words`), Say words (`#/daily/speak`) and Map (`#/words/map`), each with the app icon. You see them by long-pressing the installed app's icon. Chromium 157 on `vite preview`: 0 manifest and 0 installability errors, all four URLs inside the scope. An installed app picks up the new manifest at Chrome's next update check, which can take a day; reinstalling gets it at once.
+- **Alternatives rejected (Q37, not picked now):**
+  - **An evening streak reminder:** Web Push plus a scheduled sender on Neon, which is a backend change.
+  - **A small native Android app** with a Glance widget: the Android SDK, a per-phone streak token, and a hand-installed APK.
+  - **A widget app such as KWGT reading a private JSON link:** a third-party dependency and a secret link.
+- **What would change this:**
+  - **Chrome on Android supporting web app widgets.**
+  - **Hayk wanting the streak number on the home screen** after all (then the reminder or the native app).
+
 ## 93. The Words "Map" tab: one tile per lesson, grouped by unit, coloured by the average word strength (asked for by Hayk, 2026-11-07, Q31)
 
 - **Date:** 2026-11-07 - **Status:** active
