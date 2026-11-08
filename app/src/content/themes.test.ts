@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { link, parseRoute, tabLink, tabOf } from '../lib/router.ts'
 import { germanFields } from './german.ts'
-import { isCourseLesson, isThemeLesson, lessonLabel } from './lessons.ts'
+import { isCourseLesson, isThemeLesson, lessonLabel, visibleThemesAndWords, visibleTo } from './lessons.ts'
 import type { ThemeLesson } from './schema.ts'
 import { checkAllContent, ContentError, parseCourseLesson, parseLesson, parseThemeLesson } from './validate.ts'
 
@@ -114,6 +114,21 @@ describe('theme lessons: check-content', () => {
     ])
   })
 
+  it('keeps the words of a lesson for some learners out of lessons everyone sees (DECISIONS.md #95)', () => {
+    const limited = { ...topic, id: 't-schule', words: ['termin'], onlyFor: ['elya@nemeceren.example'] }
+    const out = checkAllContent({
+      tests: [],
+      words,
+      lessons: [],
+      themes: [{ file, text: JSON.stringify(topic) }, { file: 'content/themes/t-schule.json', text: JSON.stringify(limited) }],
+      topics,
+      extras,
+    })
+    expect(out.problems).toEqual([
+      'content/themes/t-beim-arzt.json: words[0]: "termin" belongs to t-schule, which only some learners see (its meaning may not be in English); give this lesson its own card',
+    ])
+  })
+
   it('puts the German of theme lessons under the glossary check', () => {
     const l = parseThemeLesson(file, topic) as ThemeLesson
     const fields = germanFields([], { file: 'content/words.json', words: [] }, [{ file, lesson: l }])
@@ -142,5 +157,39 @@ describe('tabs in the URL', () => {
     expect(tabLink('words', ['review', 'all'] as const, 'all')).toBe('#/words/all')
     // A theme lesson opens like any lesson, at a section too (a Topics link).
     expect(parseRoute(link('lesson', 't-beim-arzt', 'dialogue'))).toEqual(['lesson', 't-beim-arzt', 'dialogue'])
+  })
+})
+
+describe('theme lessons for some learners only (onlyFor, DECISIONS.md #95)', () => {
+  const forElya = parseThemeLesson('content/themes/t-schule.json', { ...topic, id: 't-schule', words: ['schulranzen', 'termin'], onlyFor: ['elya@nemeceren.example'] })
+  const everyone = parseThemeLesson(file, topic)
+  const words = [{ id: 'termin' }, { id: 'schulranzen' }, { id: 'hallo' }]
+  const courseLesson = parseCourseLesson('content/lessons/u1-01-x.json', { ...course, words: ['hallo'] })
+
+  it('shows a limited lesson only to the emails it lists, never to a guest', () => {
+    expect(visibleTo(forElya, 'elya@nemeceren.example')).toBe(true)
+    expect(visibleTo(forElya, 'Elya@Nemeceren.example')).toBe(true)
+    expect(visibleTo(forElya, 'anahit@nemeceren.example')).toBe(false)
+    expect(visibleTo(forElya, null)).toBe(false)
+    expect(visibleTo(everyone, null)).toBe(true)
+  })
+
+  it('hides the lesson and the words only it lists; a word another visible lesson lists stays', () => {
+    const other = visibleThemesAndWords([everyone, forElya], words, [courseLesson], 'anahit@nemeceren.example')
+    expect(other.themes.map((l) => l.id)).toEqual(['t-beim-arzt'])
+    // "termin" is also in t-beim-arzt, so only "schulranzen" goes.
+    expect(other.words.map((w) => w.id)).toEqual(['termin', 'hallo'])
+    const elya = visibleThemesAndWords([everyone, forElya], words, [courseLesson], 'elya@nemeceren.example')
+    expect(elya.themes.map((l) => l.id)).toEqual(['t-beim-arzt', 't-schule'])
+    expect(elya.words).toBe(words)
+  })
+
+  it('allows onlyFor on theme lessons only, with lowercase emails', () => {
+    expect(problemsOf(() => parseLesson('content/lessons/u1-01-x.json', { ...course, onlyFor: ['elya@nemeceren.example'] }))).toEqual([
+      'content/lessons/u1-01-x.json: onlyFor: only a theme lesson can be limited to some learners (the course and its path are the same for everyone)',
+    ])
+    expect(problemsOf(() => parseThemeLesson(file, { ...topic, onlyFor: ['Elya@nemeceren.example'] }))).toEqual([`${file}: onlyFor[0]: write the email in lowercase`])
+    expect(problemsOf(() => parseThemeLesson(file, { ...topic, onlyFor: ['elya'] }))[0]).toMatch(/onlyFor\[0\]: must be an email address/)
+    expect(problemsOf(() => parseThemeLesson(file, { ...topic, onlyFor: [] }))[0]).toMatch(/^content\/themes\/t-beim-arzt\.json: onlyFor:/)
   })
 })

@@ -297,6 +297,7 @@ A theme lesson is a lesson (everything in [Lessons](#lessons) holds: blocks, tex
 | `theme.year` | no | a whole number |
 | `theme.url` | no | where to listen, watch or read; must start with `https://`; a `topic` has none. The card links to it as "Listen" (song), "Watch" (video) or "Read" (article), in a new tab |
 | `theme.variety` | no | "standard German", "Bavarian", "youth slang", ... |
+| `onlyFor` | no | lowercase sign-in emails, e.g. `["elya@nemeceren.example"]`: only these learners see the lesson (DECISIONS.md #95). Everyone else, and a guest, never sees it, nor the words that only it lists: not under Themes, on the word map, in All words or in the "Words from" picker. It hides, it does not protect (the repo is public). Course lessons can't have it |
 | `unit`, `order` | never | a lesson has either `unit` and `order` (course, `lessons/`) or `theme` (`themes/`), exactly one of the two |
 | everything else | | as in [Lessons](#lessons): `level`, `title`, `summary`, `goals`, `words`, `tests`, `nicosWeg`, `sections` |
 

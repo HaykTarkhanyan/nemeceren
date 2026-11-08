@@ -1,5 +1,5 @@
 {
-  "ignore": ["Hayk", "Charlotte", "Eva", "Meier", "Müller", "Schmidt", "Thomas", "Weber", "Aram", "Tarkhanyan", "Goethestraße", "Siemens", "Berlin", "Marienplatz", "Moosach", "Berger", "Hoffmann", "Lindner", "Krause", "Sabine", "Peter"],
+  "ignore": ["Hayk", "Charlotte", "Eva", "Meier", "Müller", "Schmidt", "Thomas", "Weber", "Aram", "Tarkhanyan", "Goethestraße", "Siemens", "Berlin", "Marienplatz", "Moosach", "Berger", "Hoffmann", "Lindner", "Krause", "Sabine", "Peter", "Becker", "Schulz", "Wagner", "Petrowa", "Mila", "Max"],
   "entries": {
     "Verkehr": [
       {"lemma": "Verkehr", "pos": "noun", "article": "der", "level": "A2", "gloss": ["traffic"]}
@@ -1207,6 +1207,192 @@
     ],
     "unter": [
       {"lemma": "unter", "pos": "preposition", "level": "A1", "gloss": ["under, below"], "note": "unter dem Tisch. On the phone: unter 089 ... = at 089 ..."}
+    ],
+    "Sekretariat": [
+      {"lemma": "Sekretariat", "pos": "noun", "article": "das", "plural": "Sekretariate", "level": "A2", "gloss": ["school office, secretary's office"]}
+    ],
+    "Sekretariate": [
+      {"lemma": "Sekretariat", "pos": "noun", "article": "das", "form": "plural", "level": "A2", "gloss": ["school offices"]}
+    ],
+    "Erkältung": [
+      {"lemma": "Erkältung", "pos": "noun", "article": "die", "plural": "Erkältungen", "level": "B1", "gloss": ["cold (illness)"]}
+    ],
+    "Erkältungen": [
+      {"lemma": "Erkältung", "pos": "noun", "article": "die", "form": "plural", "level": "B1", "gloss": ["colds (illness)"]}
+    ],
+    "Husten": [
+      {"lemma": "Husten", "pos": "noun", "article": "der", "level": "B1", "gloss": ["cough"], "note": "Er hat Husten. = He has a cough."}
+    ],
+    "Bauchschmerzen": [
+      {"lemma": "Bauchschmerzen", "pos": "noun", "article": "die", "level": "A2", "gloss": ["stomachache, tummy ache"], "note": "Plural only: Ich habe Bauchschmerzen."}
+    ],
+    "Attest": [
+      {"lemma": "Attest", "pos": "noun", "article": "das", "plural": "Atteste", "level": "B1", "gloss": ["doctor's certificate, sick note"]}
+    ],
+    "Atteste": [
+      {"lemma": "Attest", "pos": "noun", "article": "das", "form": "plural", "level": "B1", "gloss": ["doctor's certificates"]}
+    ],
+    "Kinderarzt": [
+      {"lemma": "Kinderarzt", "pos": "noun", "article": "der", "plural": "Kinderärzte", "level": "B1", "gloss": ["paediatrician, children's doctor"]}
+    ],
+    "Kinderärzte": [
+      {"lemma": "Kinderarzt", "pos": "noun", "article": "der", "form": "plural", "level": "B1", "gloss": ["paediatricians"]}
+    ],
+    "Klassenlehrerin": [
+      {"lemma": "Klassenlehrerin", "pos": "noun", "article": "die", "plural": "Klassenlehrerinnen", "level": "B1", "gloss": ["class teacher (female)"]}
+    ],
+    "Klassenlehrerinnen": [
+      {"lemma": "Klassenlehrerin", "pos": "noun", "article": "die", "form": "plural", "level": "B1", "gloss": ["class teachers (female)"]}
+    ],
+    "Elternabend": [
+      {"lemma": "Elternabend", "pos": "noun", "article": "der", "plural": "Elternabende", "level": "B1", "gloss": ["parents' evening (meeting of a class's parents)"]}
+    ],
+    "Elternabende": [
+      {"lemma": "Elternabend", "pos": "noun", "article": "der", "form": "plural", "level": "B1", "gloss": ["parents' evenings"]}
+    ],
+    "Elterngespräch": [
+      {"lemma": "Elterngespräch", "pos": "noun", "article": "das", "plural": "Elterngespräche", "level": "B1", "gloss": ["parent-teacher meeting"]}
+    ],
+    "Elterngespräche": [
+      {"lemma": "Elterngespräch", "pos": "noun", "article": "das", "form": "plural", "level": "B1", "gloss": ["parent-teacher meetings"]}
+    ],
+    "Sprechstunde": [
+      {"lemma": "Sprechstunde", "pos": "noun", "article": "die", "plural": "Sprechstunden", "level": "A2", "gloss": ["office hours, consultation hour"]}
+    ],
+    "Sprechstunden": [
+      {"lemma": "Sprechstunde", "pos": "noun", "article": "die", "form": "plural", "level": "A2", "gloss": ["office hours"]}
+    ],
+    "Dolmetscher": [
+      {"lemma": "Dolmetscher", "pos": "noun", "article": "der", "plural": "Dolmetscher", "level": "B1", "gloss": ["interpreter"]}
+    ],
+    "Dolmetscherin": [
+      {"lemma": "Dolmetscherin", "pos": "noun", "article": "die", "plural": "Dolmetscherinnen", "level": "B1", "gloss": ["interpreter (female)"]}
+    ],
+    "aufschreiben": [
+      {"lemma": "aufschreiben", "pos": "verb", "level": "B1", "gloss": ["to write down"], "note": "Separable: Ich schreibe es auf."}
+    ],
+    "ärgern": [
+      {"lemma": "ärgern", "pos": "verb", "level": "A2", "gloss": ["to tease, to annoy", "(sich ärgern) to be annoyed"]}
+    ],
+    "ärgert": [
+      {"lemma": "ärgern", "pos": "verb", "form": "er/sie/es form, present", "level": "A2", "gloss": ["teases, annoys"]}
+    ],
+    "Elternbrief": [
+      {"lemma": "Elternbrief", "pos": "noun", "article": "der", "plural": "Elternbriefe", "level": "B1", "gloss": ["letter to parents (from school)"]}
+    ],
+    "Elternbriefe": [
+      {"lemma": "Elternbrief", "pos": "noun", "article": "der", "form": "plural", "level": "B1", "gloss": ["letters to parents"]}
+    ],
+    "Abschnitt": [
+      {"lemma": "Abschnitt", "pos": "noun", "article": "der", "plural": "Abschnitte", "level": "B1", "gloss": ["tear-off slip", "section, part"]}
+    ],
+    "Abschnitte": [
+      {"lemma": "Abschnitt", "pos": "noun", "article": "der", "form": "plural", "level": "B1", "gloss": ["tear-off slips; sections"]}
+    ],
+    "zurückgeben": [
+      {"lemma": "zurückgeben", "pos": "verb", "level": "B1", "gloss": ["to give back, to return"], "note": "Separable: Geben Sie den Zettel zurück."}
+    ],
+    "mitgeben": [
+      {"lemma": "mitgeben", "pos": "verb", "level": "B1", "gloss": ["to give (someone something) to take along"], "note": "Separable: Geben Sie Ihrem Kind 5 Euro mit."}
+    ],
+    "spätestens": [
+      {"lemma": "spätestens", "pos": "adverb", "level": "B1", "gloss": ["at the latest"], "note": "bis spätestens Freitag = by Friday at the latest"}
+    ],
+    "Einverständniserklärung": [
+      {"lemma": "Einverständniserklärung", "pos": "noun", "article": "die", "plural": "Einverständniserklärungen", "level": "B2", "gloss": ["consent form, written consent"]}
+    ],
+    "Einverständniserklärungen": [
+      {"lemma": "Einverständniserklärung", "pos": "noun", "article": "die", "form": "plural", "level": "B2", "gloss": ["consent forms"]}
+    ],
+    "Kopflaus": [
+      {"lemma": "Kopflaus", "pos": "noun", "article": "die", "plural": "Kopfläuse", "level": "B1", "gloss": ["head louse"]}
+    ],
+    "Kopfläuse": [
+      {"lemma": "Kopflaus", "pos": "noun", "article": "die", "form": "plural", "level": "B1", "gloss": ["head lice"]}
+    ],
+    "Schulranzen": [
+      {"lemma": "Schulranzen", "pos": "noun", "article": "der", "plural": "Schulranzen", "level": "B1", "gloss": ["school bag, satchel"]}
+    ],
+    "Federmäppchen": [
+      {"lemma": "Federmäppchen", "pos": "noun", "article": "das", "plural": "Federmäppchen", "level": "B1", "gloss": ["pencil case"]}
+    ],
+    "Trinkflasche": [
+      {"lemma": "Trinkflasche", "pos": "noun", "article": "die", "plural": "Trinkflaschen", "level": "B1", "gloss": ["water bottle, drinking bottle"]}
+    ],
+    "Trinkflaschen": [
+      {"lemma": "Trinkflasche", "pos": "noun", "article": "die", "form": "plural", "level": "B1", "gloss": ["water bottles"]}
+    ],
+    "Hausschuh": [
+      {"lemma": "Hausschuh", "pos": "noun", "article": "der", "plural": "Hausschuhe", "level": "B1", "gloss": ["slipper, indoor shoe"]}
+    ],
+    "Hausschuhe": [
+      {"lemma": "Hausschuh", "pos": "noun", "article": "der", "form": "plural", "level": "B1", "gloss": ["slippers, indoor shoes"]}
+    ],
+    "Sportzeug": [
+      {"lemma": "Sportzeug", "pos": "noun", "article": "das", "level": "B1", "gloss": ["sports kit, PE clothes"]}
+    ],
+    "Pausenbrot": [
+      {"lemma": "Pausenbrot", "pos": "noun", "article": "das", "plural": "Pausenbrote", "level": "B1", "gloss": ["sandwich or snack for the school break"]}
+    ],
+    "Pausenbrote": [
+      {"lemma": "Pausenbrot", "pos": "noun", "article": "das", "form": "plural", "level": "B1", "gloss": ["sandwiches for the school break"]}
+    ],
+    "Hort": [
+      {"lemma": "Hort", "pos": "noun", "article": "der", "plural": "Horte", "level": "B1", "gloss": ["after-school care club"], "note": "Names and rules differ by state and town."}
+    ],
+    "Horte": [
+      {"lemma": "Hort", "pos": "noun", "article": "der", "form": "plural", "level": "B1", "gloss": ["after-school care clubs"]}
+    ],
+    "Mittagessen": [
+      {"lemma": "Mittagessen", "pos": "noun", "article": "das", "plural": "Mittagessen", "level": "A2", "gloss": ["lunch"]}
+    ],
+    "Hausaufgabenheft": [
+      {"lemma": "Hausaufgabenheft", "pos": "noun", "article": "das", "plural": "Hausaufgabenhefte", "gloss": ["homework diary, homework notebook"]}
+    ],
+    "Ganztagsschule": [
+      {"lemma": "Ganztagsschule", "pos": "noun", "article": "die", "plural": "Ganztagsschulen", "gloss": ["all-day school"]}
+    ],
+    "Ganztag": [
+      {"lemma": "Ganztag", "pos": "noun", "article": "der", "gloss": ["all-day school care"], "note": "Short for Ganztagsschule or Ganztagsbetreuung: im Ganztag."}
+    ],
+    "Mittagsbetreuung": [
+      {"lemma": "Mittagsbetreuung", "pos": "noun", "article": "die", "gloss": ["after-school care (for a few hours after lessons)"]}
+    ],
+    "Beurlaubung": [
+      {"lemma": "Beurlaubung", "pos": "noun", "article": "die", "plural": "Beurlaubungen", "gloss": ["leave of absence (from school)"]}
+    ],
+    "Wandertag": [
+      {"lemma": "Wandertag", "pos": "noun", "article": "der", "plural": "Wandertage", "gloss": ["school outing day"]}
+    ],
+    "Klassenfahrt": [
+      {"lemma": "Klassenfahrt", "pos": "noun", "article": "die", "plural": "Klassenfahrten", "level": "A2", "gloss": ["class trip (several days)"]}
+    ],
+    "Läusekamm": [
+      {"lemma": "Läusekamm", "pos": "noun", "article": "der", "plural": "Läusekämme", "gloss": ["nit comb, lice comb"]}
+    ],
+    "Klassenchat": [
+      {"lemma": "Klassenchat", "pos": "noun", "article": "der", "plural": "Klassenchats", "gloss": ["class group chat"]}
+    ],
+    "Info": [
+      {"lemma": "Info", "pos": "noun", "article": "die", "plural": "Infos", "gloss": ["info, information"], "note": "Short for die Information."}
+    ],
+    "Mütze": [
+      {"lemma": "Mütze", "pos": "noun", "article": "die", "plural": "Mützen", "level": "A2", "gloss": ["cap, (knitted) hat"]}
+    ],
+    "Zeugnis": [
+      {"lemma": "Zeugnis", "pos": "noun", "article": "das", "plural": "Zeugnisse", "level": "A2", "gloss": ["school report, report card", "certificate"]}
+    ],
+    "Betrag": [
+      {"lemma": "Betrag", "pos": "noun", "article": "der", "plural": "Beträge", "level": "B1", "gloss": ["amount, sum (of money)"]}
+    ],
+    "nächste": [
+      {"lemma": "nächste", "pos": "adjective", "level": "A2", "gloss": ["next"], "note": "nächste Woche = next week"}
+    ],
+    "Infos": [
+      {"lemma": "Info", "pos": "noun", "article": "die", "form": "plural", "gloss": ["info, information"], "note": "Short for die Informationen."}
+    ],
+    "Turnen": [
+      {"lemma": "Turnen", "pos": "noun", "article": "das", "gloss": ["PE (at primary school)", "gymnastics"]}
     ]
   }
 }

@@ -256,6 +256,17 @@ function crossReferences(tests: TestT[], words: WordT[], lessons: CourseLesson[]
       if (tooLong(id, ex.block.items.length)) problems.push(`${l.id}: id: too long for Mistakes replay ("${redoTestId(id, ex.block.items.length - 1)}" is over ${REDO_ID_MAX} characters)`)
     }
   }
+  // A lesson for some learners only (DECISIONS.md #95) owns its words: their meanings may be in that
+  // learner's language (Elya's are Russian, #96), so a lesson everyone sees must not list them.
+  const limitedOwner = new Map<string, string>()
+  for (const l of themes) if (l.onlyFor !== undefined) for (const id of l.words ?? []) limitedOwner.set(id, l.id)
+  for (const l of all) {
+    if (l.onlyFor !== undefined) continue
+    l.words?.forEach((id, i) => {
+      const owner = limitedOwner.get(id)
+      if (owner) problems.push(`content/${isThemeLesson(l) ? 'themes' : 'lessons'}/${l.id}.json: words[${i}]: "${id}" belongs to ${owner}, which only some learners see (its meaning may not be in English); give this lesson its own card`)
+    })
+  }
   const position = new Map<string, string>()
   for (const l of lessons) {
     const key = `${l.unit}/${l.order}`

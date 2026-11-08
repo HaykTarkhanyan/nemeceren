@@ -11,6 +11,7 @@ import { messageOf } from '../lib/errors.ts'
 import { link } from '../lib/router.ts'
 import { useIsGuest } from '../lib/session.ts'
 import { addContentCard, saveCustomWord, useProgress } from '../lib/storage.ts'
+import { useVisibleContent } from '../lib/visibleContent.ts'
 import type { CustomWordView } from '../lib/storage.ts'
 import { UmlautBar, umlautKeys } from './UmlautBar.tsx'
 
@@ -22,7 +23,8 @@ export function WordForm(props: { editing: CustomWordView | null; onDone: (messa
   const [error, setError] = useState<string | null>(null)
   const problem = customWordProblem(draft)
   // Only when adding: editing his own word is never a duplicate of a content word.
-  const match = editing ? null : contentMatch(draft.de, content.words, content.allLessons)
+  const visible = useVisibleContent()
+  const match = editing ? null : contentMatch(draft.de, visible.words, content.allLessons)
   const bareNoun = looksLikeBareNoun(draft.de)
   const set = (key: keyof CustomWordDraft) => (e: { target: { value: string } }) => setDraft({ ...draft, [key]: e.target.value })
 

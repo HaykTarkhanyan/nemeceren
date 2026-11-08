@@ -1,0 +1,241 @@
+{
+  "id": "t-schule-briefe",
+  "theme": {
+    "kind": "topic",
+    "title": "Schule: Elternbriefe und Apps",
+    "variety": "standard German"
+  },
+  "onlyFor": ["elya@nemeceren.example", "claude-test@example.com"],
+  "level": "A2",
+  "title": "Письма из школы и чаты (Elternbriefe und Apps)",
+  "summary": "Как найти в письме родителям главное: что нужно сделать, до какого числа и сколько денег дать с собой, и как коротко ответить учительнице или в родительском чате.",
+  "goals": [
+    "Найти в письме из школы, что нужно сделать и до какого числа",
+    "Узнавать длинные слова: Elternbrief, Abschnitt, Einverständniserklärung",
+    "Понять письмо про вшей (Kopfläuse) и знать, что делать",
+    "Коротко ответить на письмо или в родительском чате"
+  ],
+  "words": ["elternbrief", "abschnitt", "zurueckgeben", "mitgeben", "spaetestens", "einverstaendniserklaerung", "kopflaus"],
+  "sections": [
+    {
+      "id": "about",
+      "type": "explanation",
+      "title": "Как читать письмо из школы",
+      "text": "Школа часто пишет родителям: [[der Elternbrief]] (письмо родителям). Его кладут ребёнку в папку или в ранец, присылают по e-mail или через школьное приложение, это зависит от школы. Каждое слово понимать не нужно. Ищите три вещи:\n1. **Что** сделать: подписать, заполнить, дать ребёнку с собой.\n2. **До какого числа**: [[bis Freitag]], [[bis spätestens Montag]].\n3. **Что дать с собой**: деньги, вещи.\n\nДлинные немецкие слова собраны из коротких, как из кубиков. В этом уроке их нужно только **узнавать**; говорить вы будете короткими фразами."
+    },
+    {
+      "id": "fristen",
+      "type": "table",
+      "title": "Сроки и даты",
+      "columns": [{ "header": "Немецкий", "de": "words" }, { "header": "Русский" }],
+      "rows": [
+        ["bis Freitag", "до пятницы (в пятницу ещё можно)"],
+        ["bis spätestens Montag", "не позднее понедельника"],
+        ["spätestens", "самое позднее, не позднее"],
+        ["am Mittwoch", "в среду"],
+        ["ab Montag", "начиная с понедельника"],
+        ["morgen", "завтра"],
+        ["nächste Woche", "на следующей неделе"]
+      ]
+    },
+    {
+      "id": "aufgaben",
+      "type": "examples",
+      "title": "Что от вас хотят: типичные фразы",
+      "items": [
+        { "de": "Bitte unterschreiben Sie den Brief.", "en": "Пожалуйста, подпишите письмо.", "note": "unterschreiben = подписать." },
+        { "de": "Bitte füllen Sie den Abschnitt aus.", "en": "Пожалуйста, заполните отрывную часть.", "note": "der Abschnitt - нижняя часть листа: её отрезают по линии и возвращают в школу. ausfüllen = заполнить." },
+        { "de": "Bitte geben Sie den Abschnitt bis Freitag zurück.", "en": "Пожалуйста, верните отрывную часть до пятницы.", "note": "zurückgeben = вернуть, отдать обратно." },
+        { "de": "Bitte geben Sie Ihrem Kind 5 Euro mit.", "en": "Пожалуйста, дайте ребёнку с собой 5 евро.", "note": "mitgeben = дать с собой. Ihrem Kind = вашему ребёнку." },
+        { "de": "Ihr Kind braucht feste Schuhe und eine Regenjacke.", "en": "Вашему ребёнку нужны крепкая обувь и дождевик." },
+        { "de": "Bitte melden Sie Ihr Kind bis zum 10. Oktober an.", "en": "Пожалуйста, запишите ребёнка до 10 октября.", "note": "anmelden = записать, зарегистрировать." }
+      ]
+    },
+    {
+      "id": "lange-woerter",
+      "type": "explanation",
+      "title": "Длинные слова по частям",
+      "text": "Длинное немецкое слово читайте с конца: последняя часть - главная, она же даёт род.\n- [[der Elternbrief]] = [[Eltern]] (родители) + [[Brief]] (письмо): письмо родителям.\n- [[die Einverständniserklärung]] = [[Einverständnis]] (согласие) + [[Erklärung]] (заявление): **письменное согласие** родителей, например на экскурсию или на фото ребёнка. Подписать его - значит разрешить.\n- [[die Unterschrift]] = подпись; [[unterschreiben]] = подписать.\n- [[der Wandertag]] = [[wandern]] (ходить пешком) + [[Tag]] (день): день, когда класс вместо уроков идёт на прогулку или экскурсию.\n- [[die Klassenfahrt]] = [[Klasse]] (класс) + [[Fahrt]] (поездка): поездка класса на несколько дней.\n\nВсе эти слова достаточно узнавать в письме."
+    },
+    {
+      "id": "geld",
+      "type": "examples",
+      "title": "Экскурсии и деньги",
+      "items": [
+        { "de": "Am Mittwoch machen wir einen Ausflug in den Zoo.", "en": "В среду мы идём на экскурсию в зоопарк.", "note": "der Ausflug - экскурсия, поездка на один день." },
+        { "de": "Der Ausflug kostet 8 Euro.", "en": "Экскурсия стоит 8 евро." },
+        { "de": "Bitte geben Sie das Geld bis Montag mit.", "en": "Пожалуйста, дайте деньги с собой до понедельника." },
+        { "de": "Wir sind um 13 Uhr zurück.", "en": "Мы вернёмся в 13 часов." },
+        { "de": "Bitte überweisen Sie den Betrag.", "en": "Пожалуйста, переведите сумму.", "note": "überweisen = перевести деньги через банк. der Betrag = сумма. Номер счёта будет в письме." }
+      ]
+    },
+    {
+      "id": "kopflaeuse",
+      "type": "warning",
+      "title": "Письмо про вшей (Kopfläuse)",
+      "text": "Письмо о вшах ([[die Kopfläuse]]) приходит во многие классы, это обычное дело и не говорит о грязи. [[die Kopflaus]] - головная вошь. Что обычно пишут и что делать:\n- Проверьте голову ребёнка: нанесите на влажные волосы бальзам и расчешите их прядь за прядью специальным частым гребнем ([[der Läusekamm]]).\n- Если нашли вшей, **сразу сообщите школе**: по закону о защите от инфекций родители обязаны это сделать. Средство от вшей продаётся в аптеке ([[die Apotheke]]).\n- Обычно ребёнок может снова ходить в школу после первой правильной обработки. Часто школа просит письменное подтверждение родителей, иногда справку от врача.\n- Обработку повторяют примерно через 8-10 дней.\n\nТочные правила - в письме школы. Сообщить школе можно так: [[Meine Tochter hat Läuse.]] или [[Mein Sohn hat Läuse.]]"
+    },
+    {
+      "type": "exercise",
+      "title": "Попробуйте",
+      "items": [
+        {
+          "type": "mc",
+          "question": "Как по-немецки 'подписать'?",
+          "questionLang": "en",
+          "options": ["unterschreiben", "ausfüllen", "zurückgeben"],
+          "answer": "unterschreiben",
+          "explanation": "unterschreiben = подписать (die Unterschrift - подпись). ausfüllen - заполнить, zurückgeben - вернуть."
+        },
+        {
+          "type": "mc",
+          "question": "Учительница просит заполнить и вернуть нижнюю часть листа, которую отрезают. Как она называется?",
+          "questionLang": "en",
+          "options": ["der Abschnitt", "die Unterschrift", "der Ausflug"],
+          "answer": "der Abschnitt",
+          "explanation": "der Abschnitt - отрывная часть листа. die Unterschrift - подпись, der Ausflug - экскурсия."
+        },
+        {
+          "type": "listen_mc",
+          "audio": "Liebe Eltern, am Donnerstag machen wir einen Ausflug. Bitte geben Sie Ihrem Kind sechs Euro mit.",
+          "question": "Сколько денег дать ребёнку с собой?",
+          "questionLang": "en",
+          "options": ["6 Euro", "16 Euro", "60 Euro"],
+          "answer": "6 Euro",
+          "explanation": "sechs = 6. Сравните: sechzehn = 16, sechzig = 60."
+        },
+        {
+          "type": "gap",
+          "instruction": "Вставьте слово: 'Пожалуйста, верните отрывную часть до пятницы.'",
+          "text": "Bitte geben Sie den Abschnitt bis Freitag ___.",
+          "answers": [["zurück"]],
+          "explanation": "zurückgeben = вернуть. В предложении geben стоит рано, а zurück уходит в конец."
+        },
+        {
+          "type": "mc",
+          "question": "Вы нашли у ребёнка вшей. Что нужно сделать по правилам?",
+          "questionLang": "en",
+          "options": ["die Schule sofort informieren", "nichts sagen", "nur den Kinderarzt anrufen"],
+          "answer": "die Schule sofort informieren",
+          "explanation": "Родители обязаны сразу сообщить школе (die Schule sofort informieren). Врач может помочь, но школе всё равно нужно сказать."
+        }
+      ]
+    },
+    {
+      "id": "chat",
+      "type": "explanation",
+      "title": "Приложения и родительский чат",
+      "text": "Многие школы присылают новости по e-mail или через приложение; какое именно, решает школа, и обычно об этом рассказывают на первом родительском собрании.\n\nКроме того, у родителей класса часто есть общий чат, например в WhatsApp: [[der Klassenchat]]. Там пишут о праздниках, забытых вещах, домашних заданиях. Важное от школы всё равно приходит официально: письмом, по e-mail или через приложение школы.\n\nВ родительском чате часто пишут коротко и на [[du]]. Учительнице - на [[Sie]]."
+    },
+    {
+      "id": "chat-antworten",
+      "type": "examples",
+      "title": "Короткие фразы для чата",
+      "items": [
+        { "de": "Danke für die Info!", "en": "Спасибо за информацию!", "note": "die Info - коротко от die Information." },
+        { "de": "Wir kommen gern.", "en": "Мы с удовольствием придём." },
+        { "de": "Wir können leider nicht kommen.", "en": "К сожалению, мы не сможем прийти." },
+        { "de": "Haben die Kinder morgen Sport?", "en": "У детей завтра физкультура?" },
+        { "de": "Welche Hausaufgaben haben die Kinder?", "en": "Какие у детей домашние задания?" },
+        { "de": "Hat jemand eine blaue Mütze gefunden?", "en": "Кто-нибудь нашёл синюю шапку?" }
+      ]
+    },
+    {
+      "id": "vorlage-antwort",
+      "type": "examples",
+      "title": "Шаблон: короткий ответ учительнице",
+      "items": [
+        { "de": "Liebe Frau Becker,", "en": "Дорогая фрау Беккер," },
+        { "de": "vielen Dank für den Brief.", "en": "большое спасибо за письмо." },
+        { "de": "Mila darf mitkommen.", "en": "Миле можно поехать.", "note": "То есть: я разрешаю ей участвовать в экскурсии. О сыне: Max darf mitkommen." },
+        { "de": "Das Geld gebe ich ihr morgen mit.", "en": "Деньги я дам ей с собой завтра.", "note": "ihr = ей (о дочери), ihm = ему (о сыне)." },
+        { "de": "Der Abschnitt ist unterschrieben.", "en": "Отрывная часть подписана." },
+        { "de": "Viele Grüße", "en": "С приветом", "note": "На следующей строке - ваше имя." }
+      ]
+    },
+    {
+      "type": "audio",
+      "title": "Скажите вслух",
+      "items": [
+        { "de": "Danke für die Info!", "en": "Спасибо за информацию!" },
+        { "de": "Wir kommen gern.", "en": "Мы с удовольствием придём." },
+        { "de": "Wir können leider nicht kommen.", "en": "К сожалению, мы не сможем прийти." },
+        { "de": "Bis wann muss ich das abgeben?", "en": "До какого числа это нужно сдать?" },
+        { "de": "Mila darf mitkommen.", "en": "Миле можно поехать." },
+        { "de": "Meine Tochter hat Läuse.", "en": "У моей дочери вши." }
+      ]
+    },
+    {
+      "id": "woerter",
+      "type": "table",
+      "title": "Слова для узнавания",
+      "columns": [{ "header": "Немецкий", "de": "words" }, { "header": "Русский" }],
+      "rows": [
+        ["der Elternbrief", "письмо родителям"],
+        ["unterschreiben", "подписать"],
+        ["die Unterschrift", "подпись"],
+        ["ausfüllen", "заполнить"],
+        ["der Abschnitt", "отрывная часть листа"],
+        ["zurückgeben", "вернуть"],
+        ["mitgeben", "дать с собой"],
+        ["spätestens", "не позднее"],
+        ["die Einverständniserklärung", "письменное согласие"],
+        ["der Ausflug", "экскурсия, поездка"],
+        ["der Wandertag", "день прогулки или экскурсии класса"],
+        ["die Kopfläuse", "вши"],
+        ["der Klassenchat", "чат класса"]
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Проверьте себя",
+      "items": [
+        {
+          "type": "translate",
+          "direction": "en-de",
+          "instruction": "Переведите на немецкий.",
+          "text": "Спасибо за информацию!",
+          "references": ["Danke für die Info!", "Danke für die Information!", "Vielen Dank für die Info!", "Vielen Dank für die Information!", "Danke für die Infos!", "Danke für die Informationen!", "Vielen Dank für die Infos!", "Vielen Dank für die Informationen!"],
+          "explanation": "Danke für ... = спасибо за ... die Info - коротко от die Information."
+        },
+        {
+          "type": "order",
+          "prompt": "К сожалению, мы не сможем прийти.",
+          "tiles": ["wir", "können", "leider", "nicht", "kommen"],
+          "answers": ["Wir können leider nicht kommen", "Leider können wir nicht kommen"],
+          "explanation": "können стоит на втором месте, kommen - в конце. leider (к сожалению) может стоять и в начале: тогда Leider können wir ..."
+        },
+        {
+          "type": "mc",
+          "question": "Какое слово означает письменное согласие родителей?",
+          "questionLang": "en",
+          "options": ["die Einverständniserklärung", "die Entschuldigung", "der Elternbrief"],
+          "answer": "die Einverständniserklärung",
+          "explanation": "Einverständnis (согласие) + Erklärung (заявление). die Entschuldigung - объяснительная о пропуске, der Elternbrief - письмо родителям."
+        },
+        {
+          "type": "listen_mc",
+          "audio": "Bitte füllen Sie den Abschnitt aus und geben Sie ihn bis spätestens Mittwoch zurück.",
+          "question": "До какого дня нужно вернуть отрывную часть?",
+          "questionLang": "en",
+          "options": ["Mittwoch", "Montag", "Donnerstag"],
+          "answer": "Mittwoch",
+          "explanation": "bis spätestens Mittwoch = не позднее среды."
+        },
+        {
+          "type": "gap",
+          "instruction": "Вставьте слово: 'Пожалуйста, дайте ребёнку с собой десять евро.'",
+          "text": "Bitte geben Sie Ihrem Kind zehn Euro ___.",
+          "answers": [["mit"]],
+          "explanation": "mitgeben = дать с собой. mit уходит в конец предложения."
+        },
+        {
+          "type": "dictation",
+          "instruction": "Послушайте и напишите.",
+          "text": "Wir kommen gern.",
+          "explanation": "wir kommen = мы придём, gern = с удовольствием."
+        }
+      ]
+    }
+  ]
+}

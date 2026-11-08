@@ -278,6 +278,15 @@ export const Lesson = z.strictObject({
   order: z.number().int().positive().optional(),
   /** Theme lessons only. */
   theme: Theme.optional(),
+  /**
+   * Theme lessons only: the sign-in emails (lowercase) of the learners who see this lesson
+   * (DECISIONS.md #95). Nobody else sees it or the words only it lists: not under Themes, not on the
+   * word map, not in All words or the word picker. Leave out for a lesson everyone sees.
+   */
+  onlyFor: z
+    .array(z.email({ error: 'must be an email address' }).refine((e) => e === e.toLowerCase(), { message: 'write the email in lowercase' }))
+    .min(1)
+    .optional(),
   level: Level,
   title: Text,
   summary: Text,
@@ -312,6 +321,7 @@ export const Lesson = z.strictObject({
     for (const key of ['unit', 'order'] as const) {
       if (l[key] === undefined) ctx.addIssue({ code: 'custom', path: [key], message: `required for a course lesson (a theme lesson has "theme" instead of unit and order)` })
     }
+    if (l.onlyFor !== undefined) ctx.addIssue({ code: 'custom', path: ['onlyFor'], message: 'only a theme lesson can be limited to some learners (the course and its path are the same for everyone)' })
     if (l.id.startsWith(THEME_ID_PREFIX)) ctx.addIssue({ code: 'custom', path: ['id'], message: `"${THEME_ID_PREFIX}" is for theme lesson ids; a course lesson id does not start with it` })
   }
   const seen = new Map<string, number>()

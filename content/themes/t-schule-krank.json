@@ -1,0 +1,262 @@
+{
+  "id": "t-schule-krank",
+  "theme": {
+    "kind": "topic",
+    "title": "Schule: Kind krankmelden",
+    "variety": "standard German"
+  },
+  "onlyFor": ["elya@nemeceren.example", "claude-test@example.com"],
+  "level": "A1",
+  "title": "Ребёнок заболел (Mein Kind ist krank)",
+  "summary": "Как утром сообщить школе, что ребёнок заболел, написать учительнице короткое сообщение и объяснительную, и какие слова о болезни нужны родителям.",
+  "goals": [
+    "Позвонить в секретариат и сказать, что ребёнок болен и остаётся дома",
+    "Назвать симптомы: температура, кашель, боль в животе, простуда",
+    "Написать учительнице короткое сообщение и объяснительную (Entschuldigung)",
+    "Понять, когда школа может попросить справку от врача (Attest)",
+    "Предупредить, что заберёте ребёнка раньше из-за врача"
+  ],
+  "words": ["sekretariat", "erkaeltung", "husten", "bauchschmerzen", "halsschmerzen", "attest", "kinderarzt"],
+  "stations": [7, 11],
+  "sections": [
+    {
+      "id": "about",
+      "type": "explanation",
+      "title": "Что делать, если ребёнок заболел",
+      "text": "Если ребёнок заболел, школу нужно предупредить **в тот же день, лучше утром до начала уроков**. Обычно это выглядит так:\n\n1. **Утром**: позвонить в секретариат школы ([[das Sekretariat]]) или написать учительнице. Если никто не берёт трубку, обычно можно оставить сообщение на автоответчике.\n2. **Когда ребёнок вернулся**: дать ему с собой письменную объяснительную от родителей ([[die Entschuldigung]]).\n3. **Иногда**: справку от врача ([[das Attest]]).\n\nЕдиных правил для всей Германии нет: как сообщать, до какого дня принести объяснительную и когда нужна справка, решают федеральная земля и школа. Некоторые школы принимают сообщение по e-mail, через школьное приложение или онлайн-форму. Точные правила - в письме школы или в школьных правилах. Если не уверены, спросите в секретариате."
+    },
+    {
+      "id": "symptome",
+      "type": "examples",
+      "title": "Что с ребёнком: симптомы",
+      "items": [
+        { "de": "Mein Sohn ist krank.", "en": "Мой сын болен.", "note": "mein Sohn / meine Tochter: как мой / моя." },
+        { "de": "Meine Tochter hat Fieber.", "en": "У моей дочери температура.", "note": "das Fieber - высокая температура, жар." },
+        { "de": "Er hat Husten.", "en": "У него кашель." },
+        { "de": "Sie hat Bauchschmerzen.", "en": "У неё болит живот.", "note": "Bauch (живот) + Schmerzen (боли). Такие слова обычно во множественном числе: Halsschmerzen, Kopfschmerzen." },
+        { "de": "Sie hat Halsschmerzen.", "en": "У неё болит горло." },
+        { "de": "Er hat Kopfschmerzen.", "en": "У него болит голова." },
+        { "de": "Er ist erkältet.", "en": "Он простудился.", "note": "Или: Er hat eine Erkältung - у него простуда." },
+        { "de": "Ihm ist schlecht.", "en": "Его тошнит, ему плохо.", "note": "Ihm (ему) - о сыне, ihr (ей) - о дочери: Ihr ist schlecht." }
+      ]
+    },
+    {
+      "type": "comparison",
+      "title": "Как 'у него кашель'",
+      "text": "О симптомах говорят с [[haben]] (иметь): [[Er hat Husten]], [[Sie hat Fieber]] - буквально 'он имеет кашель', по-русски 'у него кашель'. А [[krank]] и [[erkältet]] идут с [[sein]] (быть): [[Er ist krank]] - 'он болен'.\n\n[[er]] = он (сын), [[sie]] = она (дочь)."
+    },
+    {
+      "id": "anruf",
+      "type": "dialogue",
+      "title": "Звонок в секретариат",
+      "lines": [
+        { "speaker": "Frau Schulz (Sekretariat)", "de": "Grundschule am Park, Sekretariat, Schulz, guten Morgen.", "en": "Начальная школа 'Ам Парк', секретариат, Шульц, доброе утро." },
+        { "speaker": "Frau Petrowa", "de": "Guten Morgen, hier ist Petrowa.", "en": "Доброе утро, это Петрова." },
+        { "speaker": "Frau Petrowa", "de": "Meine Tochter Mila ist krank.", "en": "Моя дочь Мила заболела." },
+        { "speaker": "Frau Schulz (Sekretariat)", "de": "Oh, das tut mir leid.", "en": "Ой, сочувствую." },
+        { "speaker": "Frau Schulz (Sekretariat)", "de": "In welche Klasse geht sie?", "en": "В каком она классе?" },
+        { "speaker": "Frau Petrowa", "de": "Sie ist in der ersten Klasse, bei Frau Becker.", "en": "Она в первом классе, у фрау Беккер." },
+        { "speaker": "Frau Schulz (Sekretariat)", "de": "Was hat sie denn?", "en": "А что с ней?" },
+        { "speaker": "Frau Petrowa", "de": "Sie hat Fieber und Husten.", "en": "У неё температура и кашель." },
+        { "speaker": "Frau Schulz (Sekretariat)", "de": "Wie lange bleibt sie zu Hause?", "en": "Сколько она пробудет дома?" },
+        { "speaker": "Frau Petrowa", "de": "Ich weiß es noch nicht.", "en": "Я пока не знаю." },
+        { "speaker": "Frau Petrowa", "de": "Ich rufe morgen wieder an.", "en": "Я позвоню завтра ещё раз." },
+        { "speaker": "Frau Schulz (Sekretariat)", "de": "Gut, ich sage Frau Becker Bescheid.", "en": "Хорошо, я передам фрау Беккер." },
+        { "speaker": "Frau Schulz (Sekretariat)", "de": "Gute Besserung!", "en": "Пусть выздоравливает!" },
+        { "speaker": "Frau Petrowa", "de": "Danke, auf Wiederhören!", "en": "Спасибо, до свидания!" }
+      ]
+    },
+    {
+      "id": "anruf-notes",
+      "type": "explanation",
+      "title": "Что важно в этом звонке",
+      "text": "- [[Hier ist Petrowa.]]: так представляются по телефону. Вместо Petrowa - ваша фамилия.\n- Главная фраза: [[Meine Tochter ist krank.]] или [[Mein Sohn ist krank.]] Официальнее: [[Ich möchte meinen Sohn krankmelden.]] ([[krankmelden]] = сообщить, что болен). После глагола [[mein Sohn]] становится [[meinen Sohn]], как в русском 'сына'; [[meine Tochter]] не меняется.\n- [[Wie lange?]] = как долго? Ответы: [[heute]] (сегодня), [[bis Freitag]] (до пятницы), [[Ich weiß es noch nicht.]] (Я пока не знаю.)\n- [[Ich sage Frau Becker Bescheid.]] = я передам фрау Беккер. Эту фразу достаточно понимать.\n- [[Gute Besserung!]] = выздоравливайте! Ответ: [[Danke!]]\n- [[Auf Wiederhören!]] - 'до свидания' только по телефону (буквально 'до нового слышания')."
+    },
+    {
+      "type": "audio",
+      "title": "Скажите вслух",
+      "items": [
+        { "de": "Guten Morgen, hier ist Petrowa.", "en": "Доброе утро, это Петрова.", "note": "Вместо Petrowa - ваша фамилия." },
+        { "de": "Mein Sohn ist krank.", "en": "Мой сын болен." },
+        { "de": "Meine Tochter ist krank.", "en": "Моя дочь больна." },
+        { "de": "Sie hat Fieber.", "en": "У неё температура." },
+        { "de": "Er bleibt heute zu Hause.", "en": "Он сегодня останется дома." },
+        { "de": "Sie kommt am Montag wieder.", "en": "Она вернётся в понедельник." },
+        { "de": "Ich möchte meinen Sohn krankmelden.", "en": "Я хочу сообщить, что мой сын заболел." }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Попробуйте",
+      "items": [
+        {
+          "type": "mc",
+          "question": "Как сказать по телефону: 'Мой сын болен'?",
+          "questionLang": "en",
+          "options": ["Mein Sohn ist krank.", "Meine Sohn ist krank.", "Mein Sohn hat krank."],
+          "answer": "Mein Sohn ist krank.",
+          "explanation": "der Sohn - мужской род, поэтому mein Sohn (как 'мой'). krank идёт с ist (быть), а не с hat."
+        },
+        {
+          "type": "gap",
+          "instruction": "Вставьте глагол: 'У моей дочери температура.'",
+          "text": "Meine Tochter ___ Fieber.",
+          "answers": [["hat"]],
+          "explanation": "О симптомах говорят с haben: sie hat Fieber, er hat Husten - как 'у неё температура'."
+        },
+        {
+          "type": "gap",
+          "instruction": "Вставьте слово: 'Он сегодня остаётся дома.'",
+          "text": "Er bleibt heute zu ___.",
+          "answers": [["Hause", "Haus"]],
+          "explanation": "zu Hause = дома (где?), с большой буквы (разговорно также zu Haus). А nach Hause = домой (куда?)."
+        },
+        {
+          "type": "order",
+          "prompt": "Она вернётся в понедельник.",
+          "tiles": ["sie", "kommt", "am", "Montag", "wieder"],
+          "answers": ["Sie kommt am Montag wieder", "Am Montag kommt sie wieder"],
+          "explanation": "wiederkommen = вернуться. kommt стоит на втором месте, а wieder уходит в конец предложения."
+        },
+        {
+          "type": "listen_mc",
+          "audio": "Guten Morgen, hier ist Petrowa. Mein Sohn hat Bauchschmerzen. Er bleibt heute zu Hause.",
+          "question": "Что с сыном?",
+          "questionLang": "en",
+          "options": ["Bauchschmerzen", "Fieber", "Husten"],
+          "answer": "Bauchschmerzen",
+          "explanation": "Mein Sohn hat Bauchschmerzen = у сына болит живот (Bauch - живот, Schmerzen - боли)."
+        }
+      ]
+    },
+    {
+      "id": "nachricht",
+      "type": "explanation",
+      "title": "Написать учительнице",
+      "text": "Многие учительницы дают родителям e-mail или номер для сообщений; в других школах пишут через школьное приложение. Как именно - решает школа.\n\nОбращение в письме:\n- к учительнице: [[Liebe Frau Becker]] (дружелюбно, так пишут очень часто) или [[Sehr geehrte Frau Becker]] (официально);\n- к учителю: [[Lieber Herr Wagner]] или [[Sehr geehrter Herr Wagner]].\n\nПосле обращения ставят запятую, и следующая строка начинается с маленькой буквы. Сохраните шаблоны ниже в заметках телефона: утром останется вписать имя ребёнка и даты."
+    },
+    {
+      "id": "vorlage-nachricht",
+      "type": "examples",
+      "title": "Шаблон: сообщение утром",
+      "items": [
+        { "de": "Liebe Frau Becker,", "en": "Дорогая фрау Беккер,", "note": "Учителю-мужчине: Lieber Herr Wagner," },
+        { "de": "mein Sohn Max ist heute krank.", "en": "мой сын Макс сегодня болен.", "note": "О дочери: meine Tochter Mila ist heute krank." },
+        { "de": "Er hat Fieber.", "en": "У него температура." },
+        { "de": "Er bleibt heute und morgen zu Hause.", "en": "Он останется дома сегодня и завтра." },
+        { "de": "Ich schreibe später eine Entschuldigung.", "en": "Объяснительную я напишу позже." },
+        { "de": "Viele Grüße", "en": "С приветом", "note": "На следующей строке - ваше имя и фамилия." }
+      ]
+    },
+    {
+      "id": "entschuldigung",
+      "type": "explanation",
+      "title": "Объяснительная (Entschuldigung)",
+      "text": "Когда ребёнок вернулся в школу, школа обычно ждёт **письменную объяснительную** от родителей: [[die Entschuldigung]]. Вы знаете это слово как 'извините'; здесь это записка, которая 'извиняет' пропуск.\n\nСрок назначает школа: часто объяснительную приносят в первый день после болезни или в течение нескольких дней. Во многих школах для этого есть бланк или специальная тетрадь: тогда достаточно вписать даты и подписать ([[unterschreiben]]). Если бланка нет, подойдёт короткий текст ниже."
+    },
+    {
+      "id": "vorlage-entschuldigung",
+      "type": "examples",
+      "title": "Шаблон: объяснительная",
+      "items": [
+        { "de": "Sehr geehrte Frau Becker,", "en": "Уважаемая фрау Беккер," },
+        { "de": "meine Tochter Mila war vom 3. bis 5. November krank.", "en": "моя дочь Мила болела с 3 по 5 ноября.", "note": "Точка после числа = порядковое число: vom 3. bis 5. = с третьего по пятое. О сыне: mein Sohn Max war ... krank." },
+        { "de": "Bitte entschuldigen Sie ihr Fehlen.", "en": "Пожалуйста, извините её отсутствие.", "note": "ihr Fehlen = её отсутствие; о сыне: sein Fehlen." },
+        { "de": "Mit freundlichen Grüßen", "en": "С уважением", "note": "Ниже - подпись (die Unterschrift) и ваше имя." }
+      ]
+    },
+    {
+      "id": "attest",
+      "type": "warning",
+      "title": "Когда нужна справка от врача (Attest)",
+      "text": "[[das Attest]] - справка от врача. Общего правила для всей Германии нет: решают земля и школа. Обычно справку могут попросить:\n- если ребёнок болеет дольше нескольких дней (в одних школах раньше, в других позже);\n- если ребёнок болеет прямо перед каникулами или сразу после них;\n- если пропусков очень много.\n\nТочные правила - в письме школы или в школьных правилах. Справку выписывает детский врач: [[der Kinderarzt]] или [[die Kinderärztin]]. У врача можно сказать: [[Ich brauche ein Attest für die Schule.]]"
+    },
+    {
+      "id": "frueher",
+      "type": "examples",
+      "title": "Забрать раньше или к врачу",
+      "items": [
+        { "de": "Meine Tochter hat heute einen Arzttermin.", "en": "У моей дочери сегодня приём у врача.", "note": "der Arzttermin = Arzt (врач) + Termin (назначенное время)." },
+        { "de": "Der Termin ist um zehn Uhr.", "en": "Приём в десять часов." },
+        { "de": "Kann ich sie heute früher abholen?", "en": "Можно мне сегодня забрать её раньше?" },
+        { "de": "Ich hole meinen Sohn um elf Uhr ab.", "en": "Я заберу сына в одиннадцать.", "note": "abholen = забрать: hole в начале, ab в конце." },
+        { "de": "Bitte holen Sie Ihr Kind ab.", "en": "Пожалуйста, заберите вашего ребёнка.", "note": "Так может сказать школа, если ребёнку стало плохо на уроке." },
+        { "de": "Ich komme sofort.", "en": "Я сейчас приду." }
+      ]
+    },
+    {
+      "id": "woerter",
+      "type": "table",
+      "title": "Слова, которые стоит запомнить",
+      "columns": [{ "header": "Немецкий", "de": "words" }, { "header": "Русский" }],
+      "rows": [
+        ["das Sekretariat", "секретариат, канцелярия школы"],
+        ["krank", "больной, болен"],
+        ["das Fieber", "температура, жар"],
+        ["der Husten", "кашель"],
+        ["die Bauchschmerzen", "боль в животе"],
+        ["die Halsschmerzen", "боль в горле"],
+        ["die Erkältung", "простуда"],
+        ["erkältet", "простужен, простужена"],
+        ["zu Hause bleiben", "оставаться дома"],
+        ["die Entschuldigung", "объяснительная (записка о пропуске)"],
+        ["das Attest", "справка от врача"],
+        ["der Kinderarzt / die Kinderärztin", "детский врач"],
+        ["abholen", "забирать (ребёнка)"],
+        ["Gute Besserung!", "Выздоравливайте!"]
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Проверьте себя",
+      "items": [
+        {
+          "type": "translate",
+          "direction": "en-de",
+          "instruction": "Переведите на немецкий.",
+          "text": "Моя дочь сегодня больна.",
+          "references": ["Meine Tochter ist heute krank.", "Heute ist meine Tochter krank."],
+          "explanation": "meine Tochter (die Tochter - женский род) + ist + krank. heute можно поставить после ist или в начало."
+        },
+        {
+          "type": "mc",
+          "question": "Ребёнок вернулся в школу после болезни. Какую записку родители обычно дают ему с собой?",
+          "questionLang": "en",
+          "options": ["die Entschuldigung", "das Zeugnis", "der Stundenplan"],
+          "answer": "die Entschuldigung",
+          "explanation": "die Entschuldigung - объяснительная от родителей о пропуске. das Zeugnis - табель с оценками, der Stundenplan - расписание уроков."
+        },
+        {
+          "type": "gap",
+          "instruction": "Вставьте слово: 'У него температура и кашель.'",
+          "text": "Er hat ___ und Husten.",
+          "answers": [["Fieber", "Temperatur"]],
+          "explanation": "das Fieber - температура, жар. Разговорно можно и Er hat Temperatur. Как все существительные, пишется с большой буквы."
+        },
+        {
+          "type": "dictation",
+          "instruction": "Послушайте и напишите.",
+          "text": "Mein Sohn bleibt heute zu Hause.",
+          "explanation": "zu Hause = дома. Hause - с большой буквы, Sohn - тоже (существительное)."
+        },
+        {
+          "type": "listen_mc",
+          "audio": "Hallo, hier ist das Sekretariat der Grundschule. Ihre Tochter hat Bauchschmerzen. Bitte holen Sie sie ab.",
+          "question": "О чём просит секретариат?",
+          "questionLang": "en",
+          "options": ["die Tochter abholen", "eine Entschuldigung schreiben", "ein Attest bringen"],
+          "answer": "die Tochter abholen",
+          "explanation": "Bitte holen Sie sie ab = пожалуйста, заберите её. У дочери болит живот (Bauchschmerzen)."
+        },
+        {
+          "type": "mc",
+          "question": "Как пожелать больному ребёнку выздоровления?",
+          "questionLang": "en",
+          "options": ["Gute Besserung!", "Guten Appetit!", "Gute Reise!"],
+          "answer": "Gute Besserung!",
+          "explanation": "Gute Besserung! = выздоравливай(те)! Guten Appetit! - приятного аппетита, Gute Reise! - хорошей поездки."
+        }
+      ]
+    }
+  ]
+}

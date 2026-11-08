@@ -1,0 +1,223 @@
+{
+  "id": "t-schule-alltag",
+  "theme": {
+    "kind": "topic",
+    "title": "Schule: Der Schulalltag",
+    "variety": "standard German"
+  },
+  "onlyFor": ["elya@nemeceren.example", "claude-test@example.com"],
+  "level": "A1",
+  "title": "Школьные будни (Der Schulalltag)",
+  "summary": "Школьные вещи, домашние задания, расписание и перемена, продлёнка и обед, дорога в школу, каникулы и то, что ребёнок рассказывает дома.",
+  "goals": [
+    "Назвать школьные вещи: ранец, пенал, бутылка для воды, сменная обувь",
+    "Понимать слова о школьном дне: Stundenplan, Pause, Hausaufgaben",
+    "Понять, что такое Hort, Ganztag и Mittagsbetreuung",
+    "Сказать, кто отводит и забирает ребёнка",
+    "Понимать, что ребёнок говорит дома"
+  ],
+  "words": ["schulranzen", "federmaeppchen", "trinkflasche", "hausschuh", "sportzeug", "pausenbrot", "hort", "mittagessen"],
+  "stations": [7],
+  "sections": [
+    {
+      "id": "about",
+      "type": "explanation",
+      "title": "Школьный день",
+      "text": "Уроки - [[der Unterricht]], один урок - [[die Stunde]]. В первом классе уроки часто заканчиваются в середине дня. Между уроками - перемена ([[die Pause]]). На большой перемене дети едят то, что принесли из дома: [[das Pausenbrot]]. Какие уроки в какой день, написано в расписании: [[der Stundenplan]].\n\nПосле уроков многие дети остаются под присмотром в школе или рядом с ней, об этом ниже."
+    },
+    {
+      "id": "sachen",
+      "type": "examples",
+      "title": "Что нужно в школе",
+      "items": [
+        { "de": "Der Schulranzen ist schwer.", "en": "Ранец тяжёлый.", "note": "der Schulranzen - школьный ранец. Короче: der Ranzen." },
+        { "de": "Das Federmäppchen ist im Schulranzen.", "en": "Пенал в ранце.", "note": "В пенале: der Bleistift (карандаш), der Radiergummi (ластик), die Buntstifte (цветные карандаши)." },
+        { "de": "Hast du deine Trinkflasche?", "en": "Ты взял(а) свою бутылку для воды?", "note": "Так спрашивают ребёнка утром, на du." },
+        { "de": "Die Hausschuhe bleiben in der Schule.", "en": "Сменная обувь остаётся в школе.", "note": "Во многих начальных школах дети ходят в классе в тапочках (Hausschuhe). Нужны ли они, решает школа." },
+        { "de": "Heute brauchst du dein Sportzeug.", "en": "Сегодня тебе нужна спортивная форма.", "note": "Спортивную форму носят в мешке: der Turnbeutel." },
+        { "de": "Ich mache dir ein Pausenbrot.", "en": "Я сделаю тебе бутерброд на перемену." }
+      ]
+    },
+    {
+      "type": "comparison",
+      "title": "Род не совпадает с русским",
+      "text": "[[der Schulranzen]], [[das Federmäppchen]], [[die Trinkflasche]]: у каждого существительного свой род, как в русском, но он часто другой. Пенал по-русски 'он', а [[das Federmäppchen]] - 'оно': все слова на -chen среднего рода. Учите слово сразу с [[der]], [[die]] или [[das]]."
+    },
+    {
+      "id": "hausaufgaben",
+      "type": "explanation",
+      "title": "Домашние задания",
+      "text": "[[die Hausaufgaben]] - домашние задания (обычно во множественном числе). Их записывают в [[das Hausaufgabenheft]] - тетрадь для заданий, немного похожую на дневник. Часто учительница пишет туда и короткие сообщения родителям, а вы можете там же ответить. Заглядывайте в неё каждый день.\n\nДома с ребёнком:\n- [[Hast du Hausaufgaben?]] - У тебя есть домашние задания?\n- [[Zeig mal dein Heft!]] - Покажи-ка тетрадь!\n- [[Das machst du super!]] - У тебя здорово получается!"
+    },
+    {
+      "id": "betreuung",
+      "type": "explanation",
+      "title": "После уроков: Hort, Ganztag, Mittagsbetreuung",
+      "text": "После уроков ребёнок может остаться под присмотром. Как это называется и как устроено, **сильно зависит от земли, города и школы**:\n- [[der Hort]] - продлёнка после уроков, часто до вечера, иногда в отдельном здании;\n- [[die Ganztagsschule]] или [[der Ganztag]] - школа полного дня: уроки, обед, занятия и присмотр до второй половины дня;\n- [[die Mittagsbetreuung]] - присмотр на несколько часов после уроков.\n\nБывают и другие названия. С 1 августа 2026 года у первоклассников по закону есть право на присмотр полного дня; каждый год это право распространяется на следующий класс. Где и как записать ребёнка, спросите в школе или в городе.\n\nОбед - [[das Mittagessen]]. Обедают обычно в столовой: [[die Mensa]]. Обед, как правило, платный; сколько он стоит и как его заказать, сообщает школа."
+    },
+    {
+      "id": "bringen-abholen",
+      "type": "examples",
+      "title": "Отвести и забрать",
+      "items": [
+        { "de": "Ich bringe meine Tochter zur Schule.", "en": "Я отвожу дочь в школу.", "note": "bringen = отводить, приводить. zur Schule = в школу." },
+        { "de": "Ich hole sie um zwölf Uhr ab.", "en": "Я забираю её в двенадцать.", "note": "abholen = забирать: hole в начале, ab в конце." },
+        { "de": "Heute holt ihn die Oma ab.", "en": "Сегодня его забирает бабушка.", "note": "Если ребёнка забирает кто-то другой, школа или продлёнка обычно должны знать это заранее, часто письменно." },
+        { "de": "Mein Sohn geht allein nach Hause.", "en": "Сын идёт домой сам." },
+        { "de": "Der Schulweg ist kurz.", "en": "Дорога в школу короткая.", "note": "der Schulweg = Schule (школа) + Weg (дорога)." },
+        { "de": "Er fährt mit dem Bus.", "en": "Он ездит на автобусе." }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Попробуйте",
+      "items": [
+        {
+          "type": "mc",
+          "question": "Как называется сумка, в которой первоклассник носит книги и тетради?",
+          "questionLang": "en",
+          "options": ["der Schulranzen", "der Turnbeutel", "das Federmäppchen"],
+          "answer": "der Schulranzen",
+          "explanation": "der Schulranzen - школьный ранец. der Turnbeutel - мешок для спортивной формы, das Federmäppchen - пенал."
+        },
+        {
+          "type": "mc",
+          "question": "Где лежат карандаши и ластик?",
+          "questionLang": "en",
+          "options": ["im Federmäppchen", "in der Trinkflasche", "im Hausschuh"],
+          "answer": "im Federmäppchen",
+          "explanation": "das Federmäppchen - пенал. im = in dem: в пенале."
+        },
+        {
+          "type": "gap",
+          "instruction": "Вставьте слово: 'Я забираю её в двенадцать.'",
+          "text": "Ich hole sie um zwölf Uhr ___.",
+          "answers": [["ab"]],
+          "explanation": "abholen = забирать. hole стоит на втором месте, а ab уходит в конец."
+        },
+        {
+          "type": "order",
+          "prompt": "Я отвожу дочь в школу.",
+          "tiles": ["ich", "bringe", "meine", "Tochter", "zur", "Schule"],
+          "answers": ["Ich bringe meine Tochter zur Schule", "Meine Tochter bringe ich zur Schule", "Zur Schule bringe ich meine Tochter"],
+          "explanation": "Глагол bringe всегда на втором месте. Чаще всего: Ich bringe meine Tochter zur Schule."
+        },
+        {
+          "type": "listen_mc",
+          "audio": "Heute haben wir Sport. Ich brauche mein Sportzeug.",
+          "question": "Что нужно ребёнку сегодня?",
+          "questionLang": "en",
+          "options": ["das Sportzeug", "die Hausschuhe", "das Pausenbrot"],
+          "answer": "das Sportzeug",
+          "explanation": "Heute haben wir Sport = сегодня у нас физкультура, поэтому нужна спортивная форма (das Sportzeug)."
+        }
+      ]
+    },
+    {
+      "id": "kind-sagt",
+      "type": "examples",
+      "title": "Что ребёнок говорит дома",
+      "items": [
+        { "de": "Ich habe Hunger.", "en": "Я хочу есть.", "note": "Буквально: у меня голод." },
+        { "de": "Ich habe Durst.", "en": "Я хочу пить." },
+        { "de": "Wir haben heute Sport.", "en": "У нас сегодня физкультура.", "note": "Sport в расписании - это физкультура." },
+        { "de": "Ich habe meine Trinkflasche vergessen.", "en": "Я забыл(а) бутылку для воды.", "note": "vergessen = забыть." },
+        { "de": "Die Lehrerin ist nett.", "en": "Учительница добрая." },
+        { "de": "In der Pause spiele ich Fußball.", "en": "На перемене я играю в футбол." },
+        { "de": "Morgen ist schulfrei!", "en": "Завтра в школу не надо!", "note": "schulfrei = нет уроков." }
+      ]
+    },
+    {
+      "id": "ferien",
+      "type": "explanation",
+      "title": "Каникулы (Ferien)",
+      "text": "[[die Ferien]] - школьные каникулы, всегда во множественном числе. Даты каникул в каждой федеральной земле свои, а летние каникулы из года в год сдвигаются. Школа сообщает даты родителям, их также публикует ваша земля.\n- [[Wann sind die Ferien?]] - Когда каникулы?\n- [[Die Ferien beginnen am Montag.]] - Каникулы начинаются в понедельник.\n- [[nach den Ferien]] - после каникул.\n\n**Важно:** в Германии ходить в школу обязательно в каждый учебный день, и в дни прямо перед каникулами и после них тоже. Освобождение от уроков ([[die Beurlaubung]]) нужно заранее просить у школы, и дают его только в особых случаях. Поездка в отпуск обычно таким случаем не считается, а за пропуск без разрешения могут выписать штраф."
+    },
+    {
+      "type": "audio",
+      "title": "Скажите вслух",
+      "items": [
+        { "de": "Hast du deine Trinkflasche?", "en": "Ты взял(а) свою бутылку для воды?" },
+        { "de": "Hast du Hausaufgaben?", "en": "У тебя есть домашние задания?" },
+        { "de": "Ich hole dich um zwölf Uhr ab.", "en": "Я заберу тебя в двенадцать." },
+        { "de": "Mein Sohn geht in den Hort.", "en": "Мой сын ходит на продлёнку." },
+        { "de": "Meine Tochter isst in der Schule zu Mittag.", "en": "Моя дочь обедает в школе.", "note": "zu Mittag essen = обедать." },
+        { "de": "Wann sind die Ferien?", "en": "Когда каникулы?" },
+        { "de": "Wie war es in der Schule?", "en": "Как было в школе?" }
+      ]
+    },
+    {
+      "id": "woerter",
+      "type": "table",
+      "title": "Слова, которые стоит запомнить",
+      "columns": [{ "header": "Немецкий", "de": "words" }, { "header": "Русский" }],
+      "rows": [
+        ["der Schulranzen", "школьный ранец"],
+        ["das Federmäppchen", "пенал"],
+        ["die Trinkflasche", "бутылка для воды"],
+        ["die Hausschuhe", "тапочки, сменная обувь"],
+        ["das Sportzeug", "спортивная форма"],
+        ["der Turnbeutel", "мешок для спортивной формы"],
+        ["das Pausenbrot", "бутерброд на перемену"],
+        ["der Stundenplan", "расписание уроков"],
+        ["die Hausaufgaben", "домашние задания"],
+        ["das Hausaufgabenheft", "тетрадь для домашних заданий"],
+        ["der Hort", "продлёнка"],
+        ["das Mittagessen", "обед"],
+        ["bringen / abholen", "отводить / забирать"],
+        ["die Ferien", "каникулы"]
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Проверьте себя",
+      "items": [
+        {
+          "type": "translate",
+          "direction": "en-de",
+          "instruction": "Переведите на немецкий так, как скажет ребёнок.",
+          "text": "Я хочу есть.",
+          "references": ["Ich habe Hunger."],
+          "explanation": "По-немецки 'я хочу есть' = Ich habe Hunger (у меня голод). Так же: Ich habe Durst - я хочу пить."
+        },
+        {
+          "type": "gap",
+          "instruction": "Вставьте слово: 'У нас сегодня физкультура.'",
+          "text": "Wir haben heute ___.",
+          "answers": [["Sport", "Turnen"]],
+          "explanation": "Физкультура в расписании - Sport, с большой буквы. В некоторых школах её называют Turnen."
+        },
+        {
+          "type": "mc",
+          "question": "Как спросить ребёнка, как было в школе?",
+          "questionLang": "en",
+          "options": ["Wie war es in der Schule?", "Wo ist die Schule?", "Wann ist die Schule?"],
+          "answer": "Wie war es in der Schule?",
+          "explanation": "Wie war es? = как было? Wo - где, wann - когда."
+        },
+        {
+          "type": "dictation",
+          "instruction": "Послушайте и напишите.",
+          "text": "Hast du deine Trinkflasche?",
+          "explanation": "Вопрос начинается с глагола: Hast du ...? die Trinkflasche - с большой буквы."
+        },
+        {
+          "type": "listen_mc",
+          "audio": "Mein Sohn geht nach der Schule in den Hort. Ich hole ihn um fünf Uhr ab.",
+          "question": "Во сколько мама забирает сына?",
+          "questionLang": "en",
+          "options": ["um fünf Uhr", "um zwölf Uhr", "um elf Uhr"],
+          "answer": "um fünf Uhr",
+          "explanation": "Ich hole ihn um fünf Uhr ab = я забираю его в пять. До этого он в продлёнке (im Hort)."
+        },
+        {
+          "type": "order",
+          "prompt": "Сын идёт домой сам.",
+          "tiles": ["mein", "Sohn", "geht", "allein", "nach", "Hause"],
+          "answers": ["Mein Sohn geht allein nach Hause", "Allein geht mein Sohn nach Hause", "Nach Hause geht mein Sohn allein"],
+          "explanation": "geht всегда на втором месте. Чаще всего: Mein Sohn geht allein nach Hause. nach Hause = домой."
+        }
+      ]
+    }
+  ]
+}

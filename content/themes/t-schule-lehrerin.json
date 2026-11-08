@@ -1,0 +1,248 @@
+{
+  "id": "t-schule-lehrerin",
+  "theme": {
+    "kind": "topic",
+    "title": "Schule: Mit der Lehrerin sprechen",
+    "variety": "standard German"
+  },
+  "onlyFor": ["elya@nemeceren.example", "claude-test@example.com"],
+  "level": "A1",
+  "title": "Разговор с учительницей (Mit der Lehrerin sprechen)",
+  "summary": "Как обратиться к учительнице, попросить о встрече, сказать, что вы пока говорите по-немецки немного, спросить, как дела у ребёнка, и рассказать о проблеме.",
+  "goals": [
+    "Правильно обратиться к учителю: Frau или Herr + фамилия, на Sie",
+    "Попросить о коротком разговоре или о встрече",
+    "Сказать: я говорю немного по-немецки, говорите медленно, запишите, пожалуйста",
+    "Спросить, как дела у ребёнка, и рассказать о проблеме",
+    "Понять, что такое Elternabend, Elterngespräch и Sprechstunde"
+  ],
+  "words": ["klassenlehrerin", "elternabend", "elterngespraech", "sprechstunde", "dolmetscher", "aufschreiben", "aergern"],
+  "stations": [6],
+  "sections": [
+    {
+      "id": "anrede",
+      "type": "explanation",
+      "title": "Как обращаться к учителю",
+      "text": "К учителю обращаются **[[Frau]] или [[Herr]] + фамилия** и на **[[Sie]]** (на 'вы'): [[Frau Becker]], [[Herr Wagner]]. Отчества в немецком нет, а просто по имени к учителю обычно не обращаются.\n\nГлавная учительница класса - [[die Klassenlehrerin]] (учитель-мужчина: [[der Klassenlehrer]]). В начальной школе она обычно ведёт много уроков в своём классе, и для родителей это главный контакт.\n\nПриветствие: [[Guten Morgen, Frau Becker!]] или [[Guten Tag, Herr Wagner!]] Прощание: [[Auf Wiedersehen!]]"
+    },
+    {
+      "type": "comparison",
+      "title": "Sie - как русское 'Вы'",
+      "text": "[[Sie]] с большой буквы - вежливое 'Вы', как в русском. Глагол с ним выглядит так же, как с 'они': [[Haben Sie Zeit?]], [[Können Sie kommen?]]\n\n[[Frau]] и [[Herr]] - примерно 'госпожа' и 'господин', но в немецком это звучит совсем обычно, не торжественно."
+    },
+    {
+      "id": "treffen",
+      "type": "explanation",
+      "title": "Встречи с учителем: три слова",
+      "text": "- [[der Elternabend]] - **родительское собрание** для всех родителей класса, обычно вечером. Первое собрание обычно бывает в начале учебного года; на нём часто выбирают представителей родителей класса. Приходите, даже если понимаете мало: там раздают важную информацию.\n- [[das Elterngespräch]] - **разговор** родителей с учительницей об одном ребёнке. Попросить о нём может и родитель, и учительница.\n- [[die Sprechstunde]] - **приёмные часы**, когда учитель принимает родителей. В начальной школе часто просто договариваются о встрече: лично, запиской или по e-mail.\n\nКак часто бывают собрания и как записаться на разговор, зависит от земли и от школы."
+    },
+    {
+      "id": "termin",
+      "type": "examples",
+      "title": "Попросить о разговоре",
+      "items": [
+        { "de": "Haben Sie kurz Zeit?", "en": "У вас есть минутка?", "note": "Так можно спросить утром у двери класса. kurz = коротко." },
+        { "de": "Ich möchte gern mit Ihnen sprechen.", "en": "Я хотела бы с вами поговорить.", "note": "Ihnen = вам (после mit)." },
+        { "de": "Können wir einen Termin machen?", "en": "Можем договориться о встрече?", "note": "der Termin - назначенная встреча, время." },
+        { "de": "Wann haben Sie Sprechstunde?", "en": "Когда у вас приёмные часы?" },
+        { "de": "Geht es am Dienstag?", "en": "Во вторник получится?" },
+        { "de": "Ich arbeite bis vier Uhr.", "en": "Я работаю до четырёх." }
+      ]
+    },
+    {
+      "id": "sprache",
+      "type": "examples",
+      "title": "Если немецкий пока слабый",
+      "items": [
+        { "de": "Ich spreche nur ein bisschen Deutsch.", "en": "Я говорю по-немецки совсем немного.", "note": "Честная и нормальная фраза: учителя её часто слышат." },
+        { "de": "Bitte sprechen Sie langsam.", "en": "Пожалуйста, говорите медленно." },
+        { "de": "Können Sie das bitte wiederholen?", "en": "Можете, пожалуйста, повторить?" },
+        { "de": "Können Sie das bitte aufschreiben?", "en": "Можете, пожалуйста, это записать?", "note": "aufschreiben = записать. Записанное потом легко перевести в телефоне." },
+        { "de": "Was bedeutet das?", "en": "Что это значит?" },
+        { "de": "Darf ich einen Dolmetscher mitbringen?", "en": "Можно мне прийти с переводчиком?", "note": "Переводчица - eine Dolmetscherin. Это может быть и знакомый, который хорошо говорит по-немецки." }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Попробуйте",
+      "items": [
+        {
+          "type": "mc",
+          "question": "Как поздороваться с учительницей по фамилии Беккер?",
+          "questionLang": "en",
+          "options": ["Guten Tag, Frau Becker!", "Guten Tag, Becker!", "Guten Tag, Lehrerin!"],
+          "answer": "Guten Tag, Frau Becker!",
+          "explanation": "Frau + фамилия. Одна фамилия без Frau звучит грубо, а слово Lehrerin как обращение не используют."
+        },
+        {
+          "type": "gap",
+          "instruction": "Вставьте слово: 'Пожалуйста, говорите медленно.'",
+          "text": "Bitte sprechen Sie ___.",
+          "answers": [["langsam", "langsamer"]],
+          "explanation": "langsam = медленно (langsamer = медленнее, тоже подходит). Bitte sprechen Sie langsam - вежливая просьба на Sie."
+        },
+        {
+          "type": "order",
+          "prompt": "Можете, пожалуйста, это записать?",
+          "tiles": ["können", "Sie", "das", "bitte", "aufschreiben"],
+          "answers": ["Können Sie das bitte aufschreiben", "Können Sie bitte das aufschreiben"],
+          "explanation": "В вопросе глагол Können стоит первым, aufschreiben - в конце. Sie всегда с большой буквы."
+        },
+        {
+          "type": "mc",
+          "question": "Как называется родительское собрание для всего класса?",
+          "questionLang": "en",
+          "options": ["der Elternabend", "das Elterngespräch", "die Sprechstunde"],
+          "answer": "der Elternabend",
+          "explanation": "der Elternabend = Eltern (родители) + Abend (вечер): собрание всех родителей класса. das Elterngespräch - разговор об одном ребёнке, die Sprechstunde - приёмные часы учителя."
+        },
+        {
+          "type": "translate",
+          "direction": "en-de",
+          "instruction": "Переведите на немецкий.",
+          "text": "Я говорю по-немецки совсем немного.",
+          "references": ["Ich spreche nur ein bisschen Deutsch.", "Ich spreche nur wenig Deutsch.", "Ich spreche ein bisschen Deutsch.", "Ich spreche wenig Deutsch.", "Ich spreche nur sehr wenig Deutsch.", "Ich spreche sehr wenig Deutsch."],
+          "explanation": "ich spreche (от sprechen) + nur ein bisschen (совсем немного) + Deutsch. Deutsch как язык - с большой буквы."
+        }
+      ]
+    },
+    {
+      "id": "an-der-tuer",
+      "type": "dialogue",
+      "title": "Утром у двери класса",
+      "lines": [
+        { "speaker": "Frau Petrowa", "de": "Guten Morgen, Frau Becker!", "en": "Доброе утро, фрау Беккер!" },
+        { "speaker": "Frau Becker", "de": "Guten Morgen, Frau Petrowa!", "en": "Доброе утро, фрау Петрова!" },
+        { "speaker": "Frau Petrowa", "de": "Haben Sie kurz Zeit?", "en": "У вас есть минутка?" },
+        { "speaker": "Frau Becker", "de": "Jetzt leider nicht.", "en": "Сейчас, к сожалению, нет." },
+        { "speaker": "Frau Becker", "de": "Können Sie am Donnerstag kommen?", "en": "Вы можете прийти в четверг?" },
+        { "speaker": "Frau Petrowa", "de": "Ja, um wie viel Uhr?", "en": "Да, во сколько?" },
+        { "speaker": "Frau Becker", "de": "Um halb eins, nach der vierten Stunde.", "en": "В половине первого, после четвёртого урока." },
+        { "speaker": "Frau Petrowa", "de": "Gut, das passt.", "en": "Хорошо, мне подходит." },
+        { "speaker": "Frau Petrowa", "de": "Ich spreche nur ein bisschen Deutsch.", "en": "Я говорю по-немецки совсем немного." },
+        { "speaker": "Frau Becker", "de": "Kein Problem, ich spreche langsam.", "en": "Ничего страшного, я буду говорить медленно." },
+        { "speaker": "Frau Petrowa", "de": "Danke, bis Donnerstag!", "en": "Спасибо, до четверга!" }
+      ]
+    },
+    {
+      "id": "elterngespraech",
+      "type": "dialogue",
+      "title": "В четверг: разговор об одном ребёнке",
+      "lines": [
+        { "speaker": "Frau Becker", "de": "Schön, dass Sie da sind.", "en": "Хорошо, что вы пришли." },
+        { "speaker": "Frau Petrowa", "de": "Wie geht es Max in der Schule?", "en": "Как у Макса дела в школе?" },
+        { "speaker": "Frau Becker", "de": "Er ist fleißig und lernt schnell.", "en": "Он старательный и быстро учится." },
+        { "speaker": "Frau Becker", "de": "Aber er ist oft sehr still.", "en": "Но он часто очень тихий." },
+        { "speaker": "Frau Petrowa", "de": "Ja, zu Hause ist er oft traurig.", "en": "Да, дома он часто грустный." },
+        { "speaker": "Frau Petrowa", "de": "Ein Junge ärgert ihn in der Pause.", "en": "Один мальчик обижает его на перемене." },
+        { "speaker": "Frau Becker", "de": "Danke, das ist wichtig.", "en": "Спасибо, это важно." },
+        { "speaker": "Frau Becker", "de": "Ich spreche mit dem Jungen.", "en": "Я поговорю с этим мальчиком." },
+        { "speaker": "Frau Petrowa", "de": "Vielen Dank für Ihre Hilfe!", "en": "Большое спасибо за помощь!" }
+      ]
+    },
+    {
+      "id": "gespraech-notes",
+      "type": "explanation",
+      "title": "Что важно в этих разговорах",
+      "text": "- [[um halb eins]] = в половине первого (12:30). Как в русском: 'половина первого', то есть половина пути к часу.\n- [[nach der vierten Stunde]]: [[die Stunde]] в школе - это урок. 'После четвёртого урока'.\n- [[Wie geht es Max in der Schule?]] - главный вопрос. Подставьте имя своего ребёнка.\n- [[fleißig]] (старательный) и [[still]] (тихий) учителя часто говорят о детях; эти слова достаточно понимать.\n- [[Das passt.]] = мне подходит."
+    },
+    {
+      "id": "probleme",
+      "type": "examples",
+      "title": "Если у ребёнка проблема",
+      "items": [
+        { "de": "Mein Sohn ist oft traurig.", "en": "Мой сын часто грустит." },
+        { "de": "Meine Tochter versteht die Hausaufgaben nicht.", "en": "Моя дочь не понимает домашние задания." },
+        { "de": "Ein Kind ärgert sie.", "en": "Один ребёнок её обижает.", "note": "ärgern = дразнить, доставать. sie = её (о дочери), ihn = его (о сыне)." },
+        { "de": "Er möchte nicht in die Schule gehen.", "en": "Он не хочет ходить в школу." },
+        { "de": "Sie hat keine Freunde in der Klasse.", "en": "У неё нет друзей в классе." },
+        { "de": "Was können wir zu Hause machen?", "en": "Что мы можем делать дома?" }
+      ]
+    },
+    {
+      "type": "audio",
+      "title": "Скажите вслух",
+      "items": [
+        { "de": "Guten Tag, Frau Becker!", "en": "Здравствуйте, фрау Беккер!" },
+        { "de": "Haben Sie kurz Zeit?", "en": "У вас есть минутка?" },
+        { "de": "Ich möchte gern mit Ihnen sprechen.", "en": "Я хотела бы с вами поговорить." },
+        { "de": "Ich spreche nur ein bisschen Deutsch.", "en": "Я говорю по-немецки совсем немного." },
+        { "de": "Bitte sprechen Sie langsam.", "en": "Пожалуйста, говорите медленно." },
+        { "de": "Können Sie das bitte aufschreiben?", "en": "Можете, пожалуйста, это записать?" },
+        { "de": "Wie geht es Mila in der Schule?", "en": "Как у Милы дела в школе?", "note": "Вместо Mila - имя вашего ребёнка." },
+        { "de": "Vielen Dank für Ihre Hilfe!", "en": "Большое спасибо за помощь!" }
+      ]
+    },
+    {
+      "id": "woerter",
+      "type": "table",
+      "title": "Слова, которые стоит запомнить",
+      "columns": [{ "header": "Немецкий", "de": "words" }, { "header": "Русский" }],
+      "rows": [
+        ["die Klassenlehrerin", "классная руководительница"],
+        ["der Elternabend", "родительское собрание"],
+        ["das Elterngespräch", "разговор родителей с учителем"],
+        ["die Sprechstunde", "приёмные часы"],
+        ["der Termin", "назначенная встреча"],
+        ["langsam", "медленно"],
+        ["wiederholen", "повторить"],
+        ["aufschreiben", "записать"],
+        ["der Dolmetscher / die Dolmetscherin", "переводчик / переводчица"],
+        ["traurig", "грустный"],
+        ["ärgern", "дразнить, обижать"],
+        ["die Hilfe", "помощь"]
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Проверьте себя",
+      "items": [
+        {
+          "type": "listen_mc",
+          "audio": "Können Sie am Donnerstag um halb eins kommen?",
+          "question": "Когда встреча?",
+          "questionLang": "en",
+          "options": ["am Donnerstag um 12:30 Uhr", "am Donnerstag um 11:30 Uhr", "am Dienstag um 12:30 Uhr"],
+          "answer": "am Donnerstag um 12:30 Uhr",
+          "explanation": "halb eins = половина первого = 12:30, как в русском. Donnerstag - четверг, Dienstag - вторник."
+        },
+        {
+          "type": "gap",
+          "instruction": "Вставьте глагол: 'Один мальчик обижает моего сына.'",
+          "text": "Ein Junge ___ meinen Sohn.",
+          "answers": [["ärgert"]],
+          "explanation": "ärgern, er/sie ärgert = дразнит, обижает. Окончание -t, как у других глаголов с er/sie."
+        },
+        {
+          "type": "translate",
+          "direction": "en-de",
+          "instruction": "Переведите на немецкий.",
+          "text": "Как у Милы дела в школе?",
+          "references": ["Wie geht es Mila in der Schule?", "Wie geht's Mila in der Schule?"],
+          "explanation": "Wie geht es ...? = как дела у ...? После него сразу имя: Wie geht es Mila?"
+        },
+        {
+          "type": "order",
+          "prompt": "Я хотела бы с вами поговорить.",
+          "tiles": ["ich", "möchte", "mit", "Ihnen", "sprechen"],
+          "answers": ["Ich möchte mit Ihnen sprechen", "Mit Ihnen möchte ich sprechen"],
+          "explanation": "möchte стоит на втором месте, sprechen - в конце. mit Ihnen = с вами."
+        },
+        {
+          "type": "dictation",
+          "instruction": "Послушайте и напишите.",
+          "text": "Haben Sie kurz Zeit?",
+          "explanation": "Haben Sie ...? - вопрос начинается с глагола. Sie (вы) и Zeit (время) - с большой буквы."
+        },
+        {
+          "type": "mc",
+          "question": "Учительница сказала что-то, а вы не поняли. Что можно ответить?",
+          "questionLang": "en",
+          "options": ["Können Sie das bitte wiederholen?", "Können Sie das bitte mitbringen?", "Können Sie das bitte abholen?"],
+          "answer": "Können Sie das bitte wiederholen?",
+          "explanation": "wiederholen = повторить. mitbringen - принести с собой, abholen - забрать."
+        }
+      ]
+    }
+  ]
+}

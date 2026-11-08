@@ -13,6 +13,7 @@ import { englishName, germanName, unitColor, unitTextColor, unitTitle } from '..
 import { reachableLessons, sourceKey, sourceLabel } from '../lib/plan.ts'
 import { link } from '../lib/router.ts'
 import { useProgress } from '../lib/storage.ts'
+import { useVisibleContent } from '../lib/visibleContent.ts'
 import { lessonTiles, tileShade } from '../lib/vocabMap.ts'
 import type { LessonTile } from '../lib/vocabMap.ts'
 import { openWordReview } from '../lib/wordReview.ts'
@@ -27,21 +28,22 @@ function groupColors(unit: number | null): CSSProperties {
 export function VocabMap() {
   const view = useProgress()
   const [open, setOpen] = useState<{ tile: LessonTile; unit: number | null } | null>(null)
+  const visible = useVisibleContent()
   const rows = useMemo(
     () =>
       buildRows({
-        words: content.words,
+        words: visible.words,
         custom: [],
         lessons: content.lessons,
-        themes: content.themes,
+        themes: visible.themes,
         progress: view.lessonProgress,
         reach: reachOf(view),
         state: view.reviewState,
         log: view.reviewLog,
       }),
-    [view],
+    [view, visible],
   )
-  const groups = lessonTiles({ rows, lessons: content.lessons, themes: content.themes, reachable: reachableLessons(content.lessons, reachOf(view)), progress: view.lessonProgress })
+  const groups = lessonTiles({ rows, lessons: content.lessons, themes: visible.themes, reachable: reachableLessons(content.lessons, reachOf(view)), progress: view.lessonProgress })
   return (
     <section className="stack vocab-map">
       <p className="muted small map-legend">

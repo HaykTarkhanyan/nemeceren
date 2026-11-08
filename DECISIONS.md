@@ -2,6 +2,44 @@
 
 Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
+## 97. A fourth learner (Elya, Hayk's friend) gets an account the same way as Armen (asked for by Hayk, 2026-11-08; applies #57, #60 and #75)
+
+- **Date:** 2026-11-08 - **Status:** active
+- **Why:** Hayk asked for an account with the login "Elya". Same steps as #75:
+  1. Sign-up opened, the account `elya@nemeceren.example` created through the auth API's `sign-up/email`, and sign-up closed again (open 16:24:57-16:25:05 local; the closing step was an exit trap).
+  2. Allowlisted with `progress.py allow-user`.
+  - **Password:** the first password Hayk picked was refused (`PASSWORD_TOO_SHORT`: Neon Auth needs at least 8 characters, and nothing was created), so Hayk picked a longer one.
+  - **Checks:** the config says sign-up is disabled; a probe sign-up answers HTTP 400 `EMAIL_PASSWORD_SIGN_UP_DISABLED`; Elya's sign-in answers 200; `progress.py users` lists exactly Hayk, the test account, Anahit, Armen and Elya.
+  - Typing "Elya" at sign-in works through #60.
+  - The password is not stored in any file.
+- **Alternatives rejected:** the same as #75 (the username plugin, real emails): nothing needs them yet.
+- **What would change this:** the same as #75. A forgotten password means recreating the account and losing its progress, and more friends joining would mean real emails and password reset.
+
+## 96. Elya's school lessons are four theme lessons of kind "topic", explained in Russian, shown only to her (asked for by Hayk, 2026-11-08, Q41-Q43)
+
+- **Date:** 2026-11-08 - **Status:** active
+- **Why:** Elya's child has just started first grade at a German Grundschule, and Hayk asked for a few lessons on school situations "only for her". Hayk's answers: she is a beginner (Q41), explanations are in Russian (Q42), and all four topics (Q43): the child is sick or absent, talking with the teacher, letters, forms and apps, and everyday school life. Files: `content/themes/t-schule-krank.json`, `t-schule-lehrerin.json`, `t-schule-briefe.json` and `t-schule-alltag.json`, each with `onlyFor` (#95). Russian goes into the fields the schema calls `en` (translations, word meanings) and into the text blocks; the German she should say is kept to short, set phrases, and long official words (Einverständniserklärung, Krankmeldung) are taught as words to recognise. The Bundesland is unknown, so school rules are written as "usually" and point to the school's own letter.
+- **Alternatives rejected:**
+  - **A separate course unit:** the course and its path are the same for everyone (#82), and these topics are not in SYLLABUS.md.
+  - **A new `ru` language field:** the `en` fields already take any non-German text, and the only person reading them reads Russian.
+- **What would change this:**
+  - **Elya needing more** (Gymnasium choice, a Zeugnis, a Kita letter): more lessons with the same `onlyFor`.
+  - **A second Russian-speaking learner:** then a real explanation-language setting instead of Russian in `en`.
+  - **Popups:** glossary popups stay English. Russian popups only if Elya finds the English ones a problem.
+- **Glossary detail:** `npm run glossary` uses a word card's `en` as the popup gloss. The 29 new cards (`elya` tag) have Russian `en`, so `content/glossary.json` got English curated entries for those 34 spellings. Without them, Hayk's course would have shown Russian too: `Mittagessen` in `u4-03-essen` had turned into "обед". New cards with Russian `en` need the same curated entries.
+
+## 95. A theme lesson can be limited to some learners with `onlyFor` (sign-in emails); others never see it or the words only it lists (2026-11-08, for #96)
+
+- **Date:** 2026-11-08 - **Status:** active
+- **Why:** Hayk wanted lessons "needed only for" Elya. `onlyFor` is an optional list of lowercase sign-in emails on a theme lesson. `visibleThemesAndWords` in `app/src/content/lessons.ts` and the hook `useVisibleContent` in `app/src/lib/visibleContent.ts` drop such lessons for everyone else. This covers the Themes tab, the word map, All words and its filter, the Words source picker and the duplicate check when adding your own word. Words go too, but only those that no visible lesson lists. A guest sees no limited lesson. Course lessons can't carry `onlyFor`, because the course and the Home path are the same for everyone. The test account is listed next to Elya, for browser checks. Words held back until their lesson is opened (content/README.md) are never introduced to anyone who can't open the lesson. check-content refuses a word that a limited lesson lists and a lesson everyone sees also lists: a limited lesson's word meanings may be in its learner's language (Russian for #96). Without this rule, a later course unit could reuse a card like `husten` and show Hayk a Russian meaning.
+- **This hides, it does not protect:** content is bundled into the app for everyone, and the repo is public. Nothing private goes into a limited lesson.
+- **Alternatives rejected:**
+  - **Per-user content from the API:** a backend change and a second content path, just to hide four public lessons.
+  - **A separate build or URL for Elya:** two deployments to keep in step.
+  - **Tags on the user instead of emails on the lesson:** there is no user profile to hold them, and emails are already the login.
+- **What would change this:** a lesson whose content really must stay private (then it can't live in this repo at all); many per-learner lessons (then groups instead of email lists).
+
+## 94. Home-screen quick access is four app shortcuts in the manifest; no streak widget for now (Hayk's choice, 2026-11-08, Q37)
 ## 94. Home-screen quick access is four app shortcuts in the manifest; no streak widget for now (Hayk's choice, 2026-11-08, Q37)
 
 - **Date:** 2026-11-08 - **Status:** active

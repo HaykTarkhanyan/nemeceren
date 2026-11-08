@@ -44,7 +44,33 @@ export function isCourseLesson(l: Lesson): l is CourseLesson {
   return l.theme === undefined && l.unit !== undefined && l.order !== undefined
 }
 
-export const THEME_KIND_LABEL: Record<ThemeKind, string> = { song: 'Song', video: 'Video', article: 'Article', topic: 'Topic' }
+/**
+ * Whether the learner signed in with this email sees the lesson (DECISIONS.md #95): every lesson
+ * without `onlyFor`, else only the emails it lists. A guest (null) sees no limited lesson.
+ */
+export function visibleTo(lesson: Lesson, email: string | null): boolean {
+  return lesson.onlyFor === undefined || (email !== null && lesson.onlyFor.includes(email.toLowerCase()))
+}
+
+/**
+ * The theme lessons and content words this learner sees: theme lessons limited to other learners are
+ * left out, and so are the words that only such lessons list (a word that a visible lesson or a course
+ * lesson also lists stays).
+ */
+export function visibleThemesAndWords<W extends { id: string }>(
+  themes: ThemeLesson[],
+  words: W[],
+  courseLessons: Lesson[],
+  email: string | null,
+): { themes: ThemeLesson[]; words: W[] } {
+  const shown = themes.filter((l) => visibleTo(l, email))
+  if (shown.length === themes.length) return { themes, words }
+  const kept = new Set([...courseLessons, ...shown].flatMap((l) => l.words ?? []))
+  const hidden = new Set(themes.filter((l) => !visibleTo(l, email)).flatMap((l) => (l.words ?? []).filter((id) => !kept.has(id))))
+  return { themes: shown, words: words.filter((w) => !hidden.has(w.id)) }
+}
+
+export const THEME_KIND_LABEL: Record<ThemeKind, string> ={ song: 'Song', video: 'Video', article: 'Article', topic: 'Topic' }
 
 /** The external link's text: "Listen" for a song, "Watch", "Read"; a topic has no source. */
 export const THEME_LINK_LABEL: Record<Exclude<ThemeKind, 'topic'>, string> = { song: 'Listen', video: 'Watch', article: 'Read' }

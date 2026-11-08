@@ -18,6 +18,7 @@ import { lessonLyrics, wordCounts } from '../lib/lyrics.ts'
 import { KNOWN_DAYS } from '../lib/stats.ts'
 import { finishStation, markLessonDoneWithEvents, markLessonNotDone } from '../lib/stationActions.ts'
 import { progressStore, saveLessonProgress, useProgress } from '../lib/storage.ts'
+import { useVisibleContent } from '../lib/visibleContent.ts'
 
 const STATUS_LABEL: Record<LessonStatus, string> = { 'not-started': 'not started', 'in-progress': 'in progress', done: 'done' }
 const STATUS_CLASS: Record<LessonStatus, string> = { 'not-started': '', 'in-progress': 'pending', done: 'ok' }
@@ -140,11 +141,12 @@ function SourceLink({ theme, className }: { theme: Theme; className?: string }) 
 
 function ThemeList() {
   const progress = useProgress().lessonProgress
-  if (content.themes.length === 0) return <p className="muted">No theme lessons yet. Send Claude a song or video link.</p>
+  const { themes } = useVisibleContent()
+  if (themes.length === 0) return <p className="muted">No theme lessons yet. Send Claude a song or video link.</p>
   return (
     <>
       <p className="muted small">Lessons built from songs, videos, articles and topics you bring. They are not part of the course, so take them in any order.</p>
-      {content.themes.map((l) => (
+      {themes.map((l) => (
         <ThemeCard key={l.id} lesson={l} status={lessonStatus(progress, l.id)} />
       ))}
     </>

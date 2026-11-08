@@ -37,6 +37,7 @@ import type { Grade } from '../lib/srs.ts'
 import { useSpeech } from '../lib/speech.ts'
 import { recordPractice, recordReview, recordReviewRoundDone, requestFlush, useProgress } from '../lib/storage.ts'
 import type { CustomWordView } from '../lib/storage.ts'
+import { useVisibleContent } from '../lib/visibleContent.ts'
 
 export const WORDS_TABS = ['review', 'all', 'sets', 'map'] as const
 const TAB_LABEL = { review: 'Review', all: 'All words', sets: 'Word sets', map: 'Map' } as const
@@ -274,7 +275,7 @@ function SourcePicker({ source, onPick }: { source: WordSource; onPick: (key: st
   const view = useProgress()
   const progress = view.lessonProgress
   const lessons = sourceLessons(content.lessons)
-  const themes = sourceThemes(content.themes)
+  const themes = sourceThemes(useVisibleContent().themes)
   const units = [...new Set(lessons.map((l) => l.unit))]
   const unopened = (l: Lesson) => lessonStatus(progress, l.id) === 'not-started'
   const pickedLessons = [...lessons, ...themes].filter((l) =>

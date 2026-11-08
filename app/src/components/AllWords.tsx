@@ -13,6 +13,7 @@ import { reachOf } from '../lib/goalView.ts'
 import { sourceLessons, sourceThemes } from '../lib/plan.ts'
 import { link } from '../lib/router.ts'
 import { deleteCustomWord, STATE_DAYS, useProgress } from '../lib/storage.ts'
+import { useVisibleContent } from '../lib/visibleContent.ts'
 import type { CustomWordView } from '../lib/storage.ts'
 import { Speaker } from './Speaker.tsx'
 import { PracticeButtons } from './WordSetsTab.tsx'
@@ -46,19 +47,20 @@ export function AllWords(props: {
   const [open, setOpen] = useState<ReadonlySet<string>>(() => new Set())
   const [ticked, setTicked] = useState<ReadonlySet<string>>(() => new Set())
   const [pick, setPick] = useState<PracticePick>('shown')
+  const visible = useVisibleContent()
   const rows = useMemo(
     () =>
       buildRows({
-        words: content.words,
+        words: visible.words,
         custom: view.customWords,
         lessons: content.lessons,
-        themes: content.themes,
+        themes: visible.themes,
         progress: view.lessonProgress,
         reach: reachOf(view),
         state: view.reviewState,
         log: view.reviewLog,
       }),
-    [view],
+    [view, visible],
   )
   const now = new Date()
   // A word set narrows the rows first; the other filters then work as usual.
@@ -161,9 +163,9 @@ export function AllWords(props: {
                 <option key={l.id} value={`lesson:${l.id}`}>{`${lessonLabel(l)} ${l.title}`}</option>
               ))}
             </optgroup>
-            {sourceThemes(content.themes).length > 0 && (
+            {sourceThemes(visible.themes).length > 0 && (
               <optgroup label="Themes">
-                {sourceThemes(content.themes).map((l) => (
+                {sourceThemes(visible.themes).map((l) => (
                   <option key={l.id} value={`lesson:${l.id}`}>
                     {lessonLabel(l)}
                   </option>
