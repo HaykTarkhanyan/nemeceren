@@ -2,8 +2,9 @@
 // "#/daily" runs the daily mix (a match-pairs warm-up, due word reviews, a few new words, listen
 // and pick), "#/daily/<game>" runs one game on its own: match, listen, and the practice games of
 // _knowledge/2026-11-07_practice-games-design.md (speak, sentences, articles, gaps, build), each
-// also on one lesson's words ("#/daily/<game>/<lesson id>", from the Words map). The games are
-// practice and never change the review schedule; the reviews and new words inside the mix are normal reviews.
+// also on the words of one lesson or several ("#/daily/<game>/<lesson id>[,<lesson id>...]", from
+// the Words map). The games are practice and never change the review schedule; the reviews and new
+// words inside the mix are normal reviews.
 import { useEffect, useRef, useState } from 'react'
 import { content } from '../content/load.ts'
 import type { ReviewState, WordSet } from '../content/schema.ts'
@@ -37,6 +38,7 @@ import { counts } from '../lib/srs.ts'
 import { messageOf, reportError } from '../lib/errors.ts'
 import { reachOf } from '../lib/goalView.ts'
 import { recordDailyMixDone, requestFlush, useProgress } from '../lib/storage.ts'
+import { lessonsOfPart, unionWordIds } from '../lib/vocabMap.ts'
 
 /** The word set the mix takes new words from, or null (the next lessons). An unknown saved id is an error to show. */
 export function activeSet(settings: Settings): { set: WordSet | null; problem: string | null } {
@@ -129,7 +131,7 @@ export function mixSummary(plan: MixPlan): string {
   return `About ${Math.max(2, minutes)} minutes: ${parts.join(', ')}.`
 }
 
-/** The practice games of #/daily/<game> (design: _knowledge/2026-11-07_practice-games-design.md); each can take one lesson's words: #/daily/<game>/<lesson id>. */
+/** The practice games of #/daily/<game> (design: _knowledge/2026-11-07_practice-games-design.md); each can take the words of one lesson or several: #/daily/<game>/<lesson id>[,<lesson id>...]. */
 export const PRACTICE_GAMES = ['speak', 'sentences', 'articles', 'gaps', 'build'] as const
 export type PracticeGameName = (typeof PRACTICE_GAMES)[number]
 export const GAME_LABEL: Record<PracticeGameName | 'match' | 'listen', string> = {
@@ -142,13 +144,14 @@ export const GAME_LABEL: Record<PracticeGameName | 'match' | 'listen', string> =
   build: 'Build the sentence',
 }
 
-export function DailyPage({ sub, lesson }: { sub?: string; lesson?: string }) {
+/** `lessons` is the part after the game: one lesson id or several, joined by commas (lib/vocabMap.ts lessonsPart). */
+export function DailyPage({ sub, lessons }: { sub?: string; lessons?: string }) {
   if (sub === undefined) return <Mix />
-  if (sub === 'match') return <MatchOnly lessonId={lesson} />
-  if (sub === 'listen') return <ListenOnly lessonId={lesson} />
+  if (sub === 'match') return <MatchOnly lessons={lessons} />
+  if (sub === 'listen') return <ListenOnly lessons={lessons} />
   if (sub === 'mistakes') return <MistakesOnly />
   const game = PRACTICE_GAMES.find((g) => g === sub)
-  if (game) return <PracticeGame game={game} lessonId={lesson} />
+  if (game) return <PracticeGame game={game} lessons={lessons} />
   return (
     <div className="alert error">
       The daily page has no part "{sub}". <a href={link('daily')}>Daily mix</a>
@@ -165,27 +168,27 @@ interface GameScope {
 }
 
 /**
- * What a game plays with: all words, or one lesson's words (from a tile on the Words map). "Say the
- * words" keeps to the highest unit the path reaches and earlier (design part 2); Hayk's own words
- * and theme words have no unit and always count.
+ * What a game plays with: all words, or the words of one lesson or several (tiles on the Words
+ * map). "Say the words" keeps to the highest unit the path reaches and earlier (design part 2);
+ * Hayk's own words and theme words have no unit and always count.
  */
-export function gameScope(progress: ProgressView, game: string, lessonId: string | undefined): GameScope | { problem: string } {
+export function gameScope(progress: ProgressView, game: string, lessons: string | undefined): GameScope | { problem: string } {
   const pool = studyPool(progress)
-  if (lessonId === undefined) {
+  if (lessons === undefined) {
     const unit = reachedUnit(content.lessons, reachOf(progress))
     const words = game === 'speak' ? pool.filter((w) => (unitOfWord(w.id) ?? Number.NEGATIVE_INFINITY) <= unit) : pool
-    return { words, pool, back: { href: link(), lesson: false } }
+    return { words, pool, back: { href: link(), lessons: 0 } }
   }
-  const lesson = content.allLessons.find((l) => l.id === lessonId)
-  if (!lesson) return { problem: `There is no lesson "${lessonId}" to practise.` }
-  const ids = new Set(lesson.words ?? [])
-  return { words: content.words.filter((w) => ids.has(w.id)), pool, back: { href: link('words', 'map'), lesson: true } }
+  const named = lessonsOfPart(lessons, content.allLessons)
+  if ('problem' in named) return named
+  const ids = new Set(unionWordIds(named.lessons))
+  return { words: content.words.filter((w) => ids.has(w.id)), pool, back: { href: link('words', 'map'), lessons: named.lessons.length } }
 }
 
-function PracticeGame({ game, lessonId }: { game: PracticeGameName; lessonId: string | undefined }) {
+function PracticeGame({ game, lessons }: { game: PracticeGameName; lessons: string | undefined }) {
   const progress = useProgress()
   const [run, setRun] = useState(0)
-  const scope = gameScope(progress, game, lessonId)
+  const scope = gameScope(progress, game, lessons)
   if ('problem' in scope) {
     return (
       <div className="alert error">
@@ -370,10 +373,10 @@ function MixEnd({ done, startedAt, nothing }: { done: Done; startedAt: number; n
   )
 }
 
-function MatchOnly({ lessonId }: { lessonId?: string }) {
+function MatchOnly({ lessons }: { lessons?: string }) {
   const progress = useProgress()
   const [run, setRun] = useState(0)
-  const scope = gameScope(progress, 'match', lessonId)
+  const scope = gameScope(progress, 'match', lessons)
   if ('problem' in scope) return <div className="alert error">{scope.problem}</div>
   return <MatchGame key={run} pool={scope.words} state={progress.reviewState} onAgain={() => setRun((r) => r + 1)} />
 }
@@ -407,10 +410,10 @@ export function MatchGame({ pool, state, onAgain, rounds = 3 }: { pool: StudyWor
   )
 }
 
-function ListenOnly({ lessonId }: { lessonId?: string }) {
+function ListenOnly({ lessons }: { lessons?: string }) {
   const progress = useProgress()
   const [run, setRun] = useState(0)
-  const scope = gameScope(progress, 'listen', lessonId)
+  const scope = gameScope(progress, 'listen', lessons)
   if ('problem' in scope) return <div className="alert error">{scope.problem}</div>
   return <ListenGame key={run} pool={scope.words} state={progress.reviewState} onAgain={() => setRun((r) => r + 1)} />
 }

@@ -1,0 +1,458 @@
+{
+  "id": "t-weisse-wand",
+  "theme": {
+    "kind": "song",
+    "title": "Weiße Wand",
+    "by": "AnnenMayKantereit",
+    "year": 2018,
+    "url": "https://www.youtube.com/watch?v=SPMutMEI_mo",
+    "variety": "colloquial spoken German, with vulgar slang"
+  },
+  "level": "B1",
+  "title": "Alone with the white wall (Weiße Wand)",
+  "summary": "AnnenMayKantereit's political song from 2018: one word, weiß, means both 'white' and 'knows', and the lyrics use it to talk about privilege, fare-dodging, headlines and the glass ceiling.",
+  "goals": [
+    "Tell the two weiß apart: white, and (ich) weiß = I know",
+    "Understand spoken short forms: nem, ner, ne, ich fahr",
+    "Use sich etwas leisten können, and obwohl with the verb at the end",
+    "Know what the song's references mean: schwarzfahren, Reichstagsbrand, Flüchtlingskrise, the glass ceiling",
+    "Recognise the vulgar words and know where not to use them"
+  ],
+  "words": [
+    "reich",
+    "sich-leisten",
+    "schwarzfahren",
+    "schlagzeile",
+    "vergleichen",
+    "obwohl",
+    "ehrlich",
+    "decke",
+    "beweisen",
+    "kriegen"
+  ],
+  "sections": [
+    {
+      "id": "about",
+      "type": "explanation",
+      "title": "About this song",
+      "text": "**AnnenMayKantereit** are the Cologne band from 'Barfuß am Klavier' (also under Themes). 'Weiße Wand' is track 6 on their album **Schlagschatten**, released on 7 December 2018. The band put out the video in October 2018, before the album. It wasn't a single.\n\nIt is the album's political song. People had often criticised the band for staying out of politics. In an interview, Severin Kantereit explained how they went about it: they started from themselves, 'four white boys who grew up in Germany and were privileged from birth', and they didn't want to point fingers or use slogans. Henning May said they had watched their country become radicalised 'in all sorts of directions'. PULS, the youth channel of Bavarian public radio, called it one of the most political songs of the year, and pointed out that the band count themselves as part of the problem, part of the 'white wall'.\n\nWhy it's good for you: the whole song plays with one word, [[weiß]] (white, and 'knows'). You also get real spoken German ([[in nem weißen Land]], [[ich fahr]]), two pieces of German history, and a few words to understand but not use at work (see 'Strong language' below).\n\nA note on spelling: some lyrics sites write 'Und Ich' and 'Und Irgendwas' with capitals, and 'Auch, wenn' with a comma. The lyrics here use standard spelling: [[und ich]], [[und irgendwas]], [[auch wenn]]. Lyrics sites write the short forms with an apostrophe ('nem, fahr'); without one, as here, is also common."
+    },
+    {
+      "id": "lyrics",
+      "type": "lyrics",
+      "title": "Full lyrics with translation",
+      "stanzas": [
+        {
+          "label": "Intro",
+          "lines": [
+            { "de": "Ich bin allein mit der weißen Wand", "en": "I'm alone with the white wall" },
+            { "de": "Und meinem Scheißverstand", "en": "And my damn mind" },
+            { "de": "Ich weiß nicht, Mann", "en": "I don't know, man" },
+            { "de": "Ich bin allein mit der weißen Wand", "en": "I'm alone with the white wall" },
+            { "de": "Und meinem Scheißverstand", "en": "And my damn mind" },
+            { "de": "Ich weiß nicht, Mann", "en": "I don't know, man" }
+          ]
+        },
+        {
+          "label": "Verse 1",
+          "lines": [
+            { "de": "Ich fahr schwarz in nem weißen Land", "en": "I ride without a ticket in a white country" },
+            { "de": "Obwohl ich mir die Reise leisten kann", "en": "Although I can afford the trip" },
+            { "de": "Und ich schau mir die Schlagzeilen an", "en": "And I look at the headlines" },
+            { "de": "Und irgendwas hat sich eingebrannt", "en": "And something has burned itself into my mind" },
+            { "de": "Flüchtlingskrise fühlt sich an wie Reichstagsbrand", "en": "The refugee crisis feels like the Reichstag fire" },
+            { "de": "Auch wenn ich das nicht vergleichen kann", "en": "Even though I can't compare the two" }
+          ]
+        },
+        {
+          "label": "Verse 2",
+          "lines": [
+            { "de": "Weißt du, Mann?", "en": "You know, man?" },
+            { "de": "Ich bin jung und weiß in nem reichen Land", "en": "I'm young and white in a rich country" },
+            { "de": "Mein Kreißsaal war umkreist von ner weißen Wand", "en": "The delivery room I was born in was surrounded by a white wall" },
+            { "de": "Ich bin jung und weiß in nem reichen Land", "en": "I'm young and white in a rich country" },
+            { "de": "Mein Kreißsaal war umkreist von ner weißen Wand", "en": "The delivery room I was born in was surrounded by a white wall" },
+            { "de": "Scheiße, Mann", "en": "Shit, man" }
+          ]
+        },
+        {
+          "label": "Verse 3",
+          "lines": [
+            { "de": "Ich bin keiner von denen, die weiterwissen", "en": "I'm not one of those who know what to do next" },
+            { "de": "Ehrlich gesagt, ich krieg selber nie was geschissen", "en": "To be honest, I never get my own shit together" },
+            { "de": "Und ich weiß nicht, wann man die Decke aus Glas einreißen kann", "en": "And I don't know when the glass ceiling can be torn down" },
+            { "de": "Die Decke aus Glas ist ne weiße Wand", "en": "The glass ceiling is a white wall" },
+            { "de": "Auch wenn ich das nicht beweisen kann", "en": "Even if I can't prove it" }
+          ]
+        },
+        {
+          "label": "Verse 4",
+          "lines": [
+            { "de": "Ich fahr schwarz in nem weißen Land", "en": "I ride without a ticket in a white country" },
+            { "de": "Das man nicht mit jedem Pass bereisen kann", "en": "That you can't visit with just any passport" },
+            { "de": "Ich fahr schwarz in nem weißen Land", "en": "I ride without a ticket in a white country" },
+            { "de": "Das man nicht mit jedem Pass bereisen kann", "en": "That you can't visit with just any passport" }
+          ]
+        },
+        {
+          "label": "Outro",
+          "lines": [
+            { "de": "Ich bin allein mit der weißen Wand", "en": "I'm alone with the white wall" },
+            { "de": "Und meinem Scheißverstand", "en": "And my damn mind" },
+            { "de": "Ich weiß nicht, Mann", "en": "I don't know, man" },
+            { "de": "Und jeder weiß, dass sie weiß ist", "en": "And everyone knows that it is white" },
+            { "de": "Und jeder weiß, dass sie weiß ist", "en": "And everyone knows that it is white" },
+            { "de": "Ich bin allein mit der weißen Wand", "en": "I'm alone with the white wall" },
+            { "de": "Und meinem Scheißverstand", "en": "And my damn mind" },
+            { "de": "Ich weiß nicht, Mann", "en": "I don't know, man" },
+            { "de": "Und jeder weiß, dass sie weiß ist", "en": "And everyone knows that it is white" },
+            { "de": "Und jeder weiß, dass sie weiß ist", "en": "And everyone knows that it is white" },
+            { "de": "Jeder weiß es", "en": "Everyone knows it" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hook",
+      "type": "examples",
+      "title": "The hook",
+      "items": [
+        {
+          "de": "Ich bin allein mit der weißen Wand",
+          "en": "I'm alone with the white wall",
+          "note": "mit + dative: die Wand becomes der Wand, and weiß gets the ending -en"
+        },
+        {
+          "de": "Und meinem Scheißverstand",
+          "en": "And my damn mind",
+          "note": "still after mit: mit meinem Verstand. Scheiß- = damn, shitty (vulgar)"
+        },
+        {
+          "de": "Ich weiß nicht, Mann",
+          "en": "I don't know, man",
+          "note": "weiß = know (wissen); Mann = 'man!' as an exclamation"
+        }
+      ]
+    },
+    {
+      "id": "weiss",
+      "type": "explanation",
+      "title": "Two words that sound the same",
+      "text": "German has two words spelled [[weiß]]:\n- the colour: [[weiß]] = white. Before a noun it takes an ending: [[die weiße Wand]], [[in einem weißen Land]]. Colours: Unit 2.\n- the verb [[wissen]] (to know a fact): [[ich weiß]], [[er weiß]], [[du weißt]]. Unit 7.\n\nThe song switches between them all the time. The hook says [[Ich bin allein mit der weißen Wand]], and right after it [[Ich weiß nicht, Mann]]. The outro puts both in one line: [[Und jeder weiß, dass sie weiß ist.]] = And everyone knows that it is white. The first [[weiß]] is the verb, the second is the colour, and [[sie]] is the wall ([[die Wand]]).\n\nThe white wall itself has more than one meaning. First it's the wall of a room where someone sits alone with their thoughts. Later it's the wall of the room where the singer was born, and then the glass ceiling. You'll meet all three below.\n\nListen for the **ei** sound (like English 'eye', Unit 0) in almost every line: [[weiß]], [[Kreißsaal]], [[umkreist]], [[reich]], [[Reise]], [[leisten]], [[beweisen]], [[einreißen]]. And most lines end on the same rhyme: [[Wand]], [[Land]], [[Verstand]], [[kann]], [[Mann]], [[eingebrannt]]."
+    },
+    {
+      "id": "weiss-forms",
+      "type": "table",
+      "title": "weiß, weißt, weiße, weißen",
+      "columns": [
+        { "header": "German", "de": "words" },
+        { "header": "What it is" },
+        { "header": "English" }
+      ],
+      "rows": [
+        ["ich weiß", "wissen, ich form", "I know"],
+        ["er weiß", "wissen, er/sie/es form", "he knows"],
+        ["Weißt du?", "wissen, du form", "Do you know?"],
+        ["Die Wand ist weiß.", "the colour, no ending after sein", "The wall is white."],
+        ["die weiße Wand", "the colour, ending -e after die", "the white wall"],
+        ["in einem weißen Land", "the colour, ending -en after einem", "in a white country"]
+      ]
+    },
+    {
+      "id": "schwarz",
+      "type": "examples",
+      "title": "Riding without a ticket",
+      "items": [
+        {
+          "de": "Ich fahr schwarz in nem weißen Land",
+          "en": "I ride without a ticket in a white country",
+          "note": "fahr = fahre; nem = einem; schwarzfahren = to ride without a ticket"
+        },
+        {
+          "de": "Obwohl ich mir die Reise leisten kann",
+          "en": "Although I can afford the trip",
+          "note": "obwohl = although, verb at the end; sich etwas leisten können = to be able to afford something"
+        }
+      ]
+    },
+    {
+      "id": "schwarz-notes",
+      "type": "explanation",
+      "title": "Black in a white country",
+      "text": "- [[schwarzfahren]] means riding a bus, tram or train without a valid ticket. It's a separable verb (Unit 3): [[Ich fahre schwarz.]] [[Er fährt nie schwarz.]] The Perfekt takes sein: [[Ich bin schwarzgefahren.]] If an inspector catches you, you pay a fine. The Goethe B1 word list's own example: [[Schwarzfahren kostet 60 Euro Strafe.]]\n- [[schwarz]] here means 'illegal, off the books', as in [[der Schwarzmarkt]] (black market) and [[die Schwarzarbeit]] (undeclared work).\n- The line sets [[schwarz]] against [[weiß]]: he rides 'black' in a 'white' country. And [[obwohl]] tells you money isn't the reason: he could pay. One way to read it, next to the second verse (young, white, in a rich country): someone so comfortable that he doesn't even pay for what he can easily afford. The song doesn't spell it out.\n- [[sich etwas leisten können]] = to be able to afford something. The [[mir]] means 'for myself' (dative): [[Ich kann mir das nicht leisten.]] = I can't afford that. Reflexive verbs come properly in Unit 12.\n- [[obwohl]] (although) sends the verb to the end, like [[weil]] in Unit 9: [[obwohl ich mir die Reise leisten kann]]. In a main clause the same idea is [[trotzdem]] (Unit 9): [[Ich kann mir die Reise leisten. Trotzdem fahre ich schwarz.]]"
+    },
+    {
+      "type": "comparison",
+      "title": "A hare, not black",
+      "text": "Russian has its own picture for [[schwarzfahren]]: ехать зайцем (to ride like a hare), and a fare dodger is a заяц. German uses 'black' instead, the same 'black' as in чёрный рынок = [[der Schwarzmarkt]]."
+    },
+    {
+      "id": "headlines",
+      "type": "examples",
+      "title": "The headlines",
+      "items": [
+        {
+          "de": "Und ich schau mir die Schlagzeilen an",
+          "en": "And I look at the headlines",
+          "note": "schau = schaue; sich etwas anschauen = to look at something (separable)"
+        },
+        {
+          "de": "Und irgendwas hat sich eingebrannt",
+          "en": "And something has burned itself into my mind",
+          "note": "irgendwas = irgendetwas, something; sich einbrennen = to burn itself in"
+        },
+        {
+          "de": "Flüchtlingskrise fühlt sich an wie Reichstagsbrand",
+          "en": "The refugee crisis feels like the Reichstag fire",
+          "note": "sich anfühlen wie = to feel like; der Brand = fire"
+        },
+        {
+          "de": "Auch wenn ich das nicht vergleichen kann",
+          "en": "Even though I can't compare the two",
+          "note": "auch wenn = even if, even though: verb at the end"
+        }
+      ]
+    },
+    {
+      "id": "history",
+      "type": "explanation",
+      "title": "Two events in one line",
+      "text": "- **[[der Reichstagsbrand]]** (the Reichstag fire): on 27 February 1933, four weeks after Hitler became chancellor, the parliament building in Berlin was set on fire. The police arrested a Dutch communist, Marinus van der Lubbe, inside the building; he was sentenced to death and executed in January 1934. The Nazis blamed the communists, and the next day a decree suspended basic rights such as freedom of speech, of the press and of assembly. It is remembered as a key step towards the Nazi dictatorship.\n- **[[die Flüchtlingskrise]]** (the refugee crisis): the word Germans use for 2015 and 2016, when more than a million refugees and migrants came to Germany, about 900,000 of them in 2015. Angela Merkel's sentence [[Wir schaffen das]] (We can do this), from 31 August 2015, is still quoted. The word itself is disputed.\n- The line says one *feels like* the other, and the next line takes it back a little: [[Auch wenn ich das nicht vergleichen kann.]] The singer is describing how the headlines felt to him, and admits the two events can't really be compared.\n- Notice the fire in the words: [[eingebrannt]] (burned in) rhymes with [[Reichstagsbrand]], and [[der Brand]] is the fire.\n- [[sich anfühlen wie]] = to feel like: [[Das fühlt sich gut an.]] = That feels good. It's separable: [[fühlt sich ... an]]."
+    },
+    {
+      "id": "privilege",
+      "type": "examples",
+      "title": "Young, white, in a rich country",
+      "items": [
+        {
+          "de": "Weißt du, Mann?",
+          "en": "You know, man?",
+          "note": "weißt = du form of wissen"
+        },
+        {
+          "de": "Ich bin jung und weiß in nem reichen Land",
+          "en": "I'm young and white in a rich country",
+          "note": "reich = rich; nem = einem"
+        },
+        {
+          "de": "Mein Kreißsaal war umkreist von ner weißen Wand",
+          "en": "The delivery room I was born in was surrounded by a white wall",
+          "note": "der Kreißsaal = delivery room; umkreist = surrounded; ner = einer"
+        }
+      ]
+    },
+    {
+      "id": "privilege-notes",
+      "type": "explanation",
+      "title": "Born behind a white wall",
+      "text": "- [[der Kreißsaal]] is the delivery room in a hospital, so [[mein Kreißsaal]] is the room where he was born. The first part comes from the old verb [[kreißen]] (to be in labour), which goes back to a word for screaming. It has nothing to do with [[der Kreis]] (circle), but it sounds the same, and the song plays with that: [[Kreißsaal]], [[umkreist]] ([[umkreisen]] = to circle around, to surround).\n- So the white wall is now the wall of the hospital where he was born: from his first day he was inside a white, rich world. That's how the band explained the song: four white boys who grew up in Germany, 'privileged from birth'.\n- [[war umkreist von]] = was surrounded by. [[war]] + a participle describes a state; [[von]] takes the dative: [[von einer weißen Wand]].\n- [[Weißt du, Mann?]] and [[Scheiße, Mann!]]: here [[Mann]] isn't 'a man' but the exclamation 'man!', as in English. Fine with friends, too familiar with a stranger."
+    },
+    {
+      "id": "short-forms",
+      "type": "table",
+      "title": "Spoken short forms",
+      "columns": [
+        { "header": "In the song", "de": "words" },
+        { "header": "Standard German", "de": "words" },
+        { "header": "Note" }
+      ],
+      "rows": [
+        ["in nem weißen Land", "in einem weißen Land", "nem = einem (dative)"],
+        ["von ner weißen Wand", "von einer weißen Wand", "ner = einer (dative, feminine)"],
+        ["ist ne weiße Wand", "ist eine weiße Wand", "ne = eine"],
+        ["ich fahr", "ich fahre", "the -e drops, like ich sitz in 'Barfuß am Klavier'"],
+        ["ich schau mir das an", "ich schaue mir das an", "the same dropped -e"],
+        ["ich krieg", "ich kriege", "kriegen = bekommen, in speech"],
+        ["nie was", "nie etwas", "was = etwas (something)"],
+        ["irgendwas", "irgendetwas", "something"]
+      ]
+    },
+    {
+      "id": "glass",
+      "type": "examples",
+      "title": "The glass ceiling",
+      "items": [
+        {
+          "de": "Ich bin keiner von denen, die weiterwissen",
+          "en": "I'm not one of those who know what to do next",
+          "note": "keiner von denen = not one of those; die weiterwissen = who know how to go on"
+        },
+        {
+          "de": "Ehrlich gesagt, ich krieg selber nie was geschissen",
+          "en": "To be honest, I never get my own shit together",
+          "note": "vulgar; krieg = kriege; was = etwas"
+        },
+        {
+          "de": "Und ich weiß nicht, wann man die Decke aus Glas einreißen kann",
+          "en": "And I don't know when the glass ceiling can be torn down",
+          "note": "die Decke aus Glas = die gläserne Decke; einreißen = to tear down (separable)"
+        },
+        {
+          "de": "Die Decke aus Glas ist ne weiße Wand",
+          "en": "The glass ceiling is a white wall",
+          "note": "ne = eine"
+        },
+        {
+          "de": "Auch wenn ich das nicht beweisen kann",
+          "en": "Even if I can't prove it",
+          "note": "beweisen = to prove"
+        }
+      ]
+    },
+    {
+      "id": "glass-notes",
+      "type": "explanation",
+      "title": "A ceiling that is a wall",
+      "text": "- [[die Decke]] is the ceiling of a room (and also a blanket). [[Die Decke aus Glas]] is the singer's way of saying [[die gläserne Decke]], the glass ceiling: an invisible barrier that stops people from rising to the top in their jobs. Marilyn Loden first used the term in 1978, about women; today it's also used for minorities.\n- The song says the glass ceiling is a white wall. PULS read it as the band admitting they are part of the problem themselves. And again the singer takes a step back: [[Auch wenn ich das nicht beweisen kann.]]\n- [[keiner von denen, die weiterwissen]]: [[keiner]] = nobody, not one; [[von denen]] = of those; [[die weiterwissen]] = who know what to do next. A common phrase: [[Ich weiß nicht mehr weiter.]] = I don't know what to do any more.\n- [[Ehrlich gesagt]] = honestly, to be honest. Useful, and fine everywhere: [[Ehrlich gesagt weiß ich es nicht.]]\n- [[wann man die Decke aus Glas einreißen kann]]: [[man]] = one, you, people (Unit 5). After [[wann]] in the middle of a sentence, the verb goes to the end ([[kann]]). [[einreißen]] is separable: [[Sie reißen die Wand ein.]] = They're tearing the wall down."
+    },
+    {
+      "id": "strong-language",
+      "type": "warning",
+      "title": "Strong language",
+      "text": "Three things in this song are vulgar. Understand them, but don't use them at work, in class, with your landlord, or with people you don't know well.\n- [[Scheiße]] = shit. [[Scheiße, Mann!]] is what you say when something goes wrong. A milder word: [[Mist!]]\n- [[Scheißverstand]] = damn mind. Scheiß- in front of a noun makes it 'damn, shitty'. Some lyrics sites write it as two words; it means the same. [[der Verstand]] on its own is a neutral word: mind, reason.\n- [[nie was geschissen kriegen]] = to never get anything done, never get your act together. [[geschissen]] is the participle of [[scheißen]] (to shit). It works like the everyday [[nichts gebacken kriegen]] (literally 'get nothing baked'), with a vulgar word in place of 'baked'. A clean way to say it, still casual: [[Ich kriege nichts auf die Reihe.]]"
+    },
+    {
+      "id": "passport",
+      "type": "examples",
+      "title": "Not with every passport",
+      "items": [
+        {
+          "de": "Das man nicht mit jedem Pass bereisen kann",
+          "en": "That you can't visit with just any passport",
+          "note": "das = which (das Land); bereisen = to travel around (a place); verb at the end"
+        },
+        {
+          "de": "Und jeder weiß, dass sie weiß ist",
+          "en": "And everyone knows that it is white",
+          "note": "the first weiß = knows, the second = white; sie = die Wand"
+        },
+        {
+          "de": "Jeder weiß es",
+          "en": "Everyone knows it",
+          "note": "jeder = everyone"
+        }
+      ]
+    },
+    {
+      "id": "passport-notes",
+      "type": "explanation",
+      "title": "Passports, and the last line",
+      "text": "- [[in nem weißen Land, das man nicht mit jedem Pass bereisen kann]]: [[das]] means 'which' here and points back to [[das Land]]. That makes it a relative clause, so the verb goes to the end ([[kann]]). Relative clauses come in Unit 15; for now, notice the pattern: [[das Land, das ...]], [[die Leute, die ...]].\n- [[bereisen]] = to travel around a place, with the place as a direct object: [[ein Land bereisen]]. Compare [[reisen]] (to travel): [[nach Deutschland reisen]].\n- [[mit jedem Pass]] = with every passport. The German passport is one of the strongest in the world: in January 2026 the Henley Passport Index ranked it fourth, with 185 destinations open without a visa. Many other passports need a visa just to visit Germany. That's the privilege in the line: the same country is open to some people and closed to others.\n- The outro sums the song up with its pun: [[Und jeder weiß, dass sie weiß ist.]] Everyone knows the wall is white; it's obvious. Then the last words: [[Jeder weiß es.]] = Everyone knows it.\n\nThe table below collects every clause in the song where the verb goes to the end."
+    },
+    {
+      "id": "verb-end",
+      "type": "table",
+      "title": "The verb goes to the end",
+      "columns": [
+        { "header": "Starts with", "de": "words" },
+        { "header": "Clause from the song", "de": "words" },
+        { "header": "English" }
+      ],
+      "rows": [
+        ["obwohl", "obwohl ich mir die Reise leisten kann", "although I can afford the trip"],
+        ["auch wenn", "auch wenn ich das nicht vergleichen kann", "even though I can't compare the two"],
+        ["die", "keiner von denen, die weiterwissen", "not one of those who know what to do next"],
+        ["wann", "wann man die Decke aus Glas einreißen kann", "when the glass ceiling can be torn down"],
+        ["das", "ein Land, das man nicht mit jedem Pass bereisen kann", "a country you can't visit with just any passport"],
+        ["dass", "dass sie weiß ist", "that it is white"]
+      ]
+    },
+    {
+      "id": "words",
+      "type": "table",
+      "title": "Words worth keeping",
+      "columns": [
+        { "header": "German", "de": "words" },
+        { "header": "English" }
+      ],
+      "rows": [
+        ["reich", "rich"],
+        ["sich leisten", "to afford"],
+        ["schwarzfahren", "to ride without a ticket"],
+        ["die Schlagzeile", "headline"],
+        ["vergleichen", "to compare"],
+        ["obwohl", "although"],
+        ["ehrlich", "honest; honestly"],
+        ["die Decke", "ceiling; blanket"],
+        ["beweisen", "to prove"],
+        ["kriegen", "to get (spoken)"]
+      ]
+    },
+    {
+      "type": "tip",
+      "title": "How to use it",
+      "text": "1. Listen once with the link above, without reading.\n2. Open the full lyrics and listen again, reading along. Each time you hear [[weiß]], decide: white or knows?\n3. Say the hook with Henning May: [[Ich bin allein mit der weißen Wand]].\n4. Make two sentences of your own, one with [[sich leisten]] and one with [[obwohl]]. For example: [[Ich kann mir das nicht leisten.]]"
+    },
+    {
+      "type": "audio",
+      "title": "Say the key lines slowly",
+      "items": [
+        { "de": "Ich bin allein mit der weißen Wand", "en": "I'm alone with the white wall" },
+        { "de": "Ich weiß nicht, Mann", "en": "I don't know, man" },
+        { "de": "Obwohl ich mir die Reise leisten kann", "en": "Although I can afford the trip" },
+        { "de": "Ich bin jung und weiß in einem reichen Land", "en": "I'm young and white in a rich country", "note": "standard form: einem, not nem" },
+        { "de": "Und jeder weiß, dass sie weiß ist", "en": "And everyone knows that it is white" },
+        { "de": "Ehrlich gesagt weiß ich es nicht.", "en": "To be honest, I don't know." }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "mc",
+          "question": "Which sentence uses weiß to mean 'white'?",
+          "questionLang": "en",
+          "options": [
+            "Die Wand ist weiß.",
+            "Er weiß es nicht.",
+            "Ich weiß, dass du müde bist."
+          ],
+          "answer": "Die Wand ist weiß.",
+          "explanation": "Die Wand ist weiß = the wall is white (the colour). In the other two, weiß is the verb wissen: er weiß, ich weiß = he knows, I know."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: My brother never rides without a ticket.",
+          "text": "Mein Bruder ___ nie schwarz.",
+          "answers": [["fährt"]],
+          "hint": "schwarzfahren splits up. Which form of fahren goes with er (mein Bruder)?",
+          "explanation": "schwarzfahren is separable: mein Bruder fährt ... schwarz. fahren changes its vowel with du and er/sie/es: du fährst, er fährt."
+        },
+        {
+          "type": "mc",
+          "question": "A friend says: 'Ich kann mir die Wohnung nicht leisten.' What does she mean?",
+          "questionLang": "en",
+          "options": [
+            "Die Wohnung ist zu teuer für mich.",
+            "Die Wohnung ist zu klein für mich.",
+            "Ich habe keine Zeit für die Wohnung."
+          ],
+          "answer": "Die Wohnung ist zu teuer für mich.",
+          "explanation": "sich etwas leisten können = to be able to afford something. Ich kann mir das nicht leisten = I can't afford it: it's too expensive for me."
+        },
+        {
+          "type": "order",
+          "prompt": "although I can afford the trip",
+          "tiles": ["obwohl", "ich", "mir", "die", "Reise", "leisten", "kann"],
+          "answers": ["obwohl ich mir die Reise leisten kann"],
+          "explanation": "After obwohl the verb goes to the end: leisten kann. The short pronoun mir comes early, right after ich, before die Reise."
+        },
+        {
+          "type": "gap",
+          "instruction": "The song says nem and ner. Write the standard German forms.",
+          "text": "Ich bin jung und weiß in ___ reichen Land. Mein Kreißsaal war umkreist von ___ weißen Wand.",
+          "answers": [["einem"], ["einer"]],
+          "explanation": "nem = einem (in + dative, das Land); ner = einer (von + dative, die Wand). In speech the ei- disappears: einem becomes nem, einer becomes ner, eine becomes ne."
+        },
+        {
+          "type": "gap",
+          "instruction": "Fill in the gap: a country that you can't visit with just any passport.",
+          "text": "ein Land, ___ man nicht mit jedem Pass bereisen kann",
+          "answers": [["das", "welches"]],
+          "explanation": "It points back to das Land, so the relative pronoun is das (which, that). welches is also correct, but rarer. In a relative clause the verb (kann) goes to the end."
+        }
+      ]
+    }
+  ]
+}

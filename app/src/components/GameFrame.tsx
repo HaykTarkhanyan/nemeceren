@@ -14,11 +14,11 @@ import { FocusBar } from './FocusBar.tsx'
 import { MicIcon } from './SpeakLine.tsx'
 import { UmlautBar, umlautKeys } from './UmlautBar.tsx'
 
-/** Where a game was started from: Home (the Daily card) or a lesson tile on the Words map. */
+/** Where a game was started from: Home (the Daily card) or lesson tiles on the Words map. */
 export interface GameBack {
   href: string
-  /** True for a game on one lesson's words (from the Words map). */
-  lesson: boolean
+  /** How many lessons' words the game plays on (tiles on the Words map); 0 for a game from Home. */
+  lessons: number
 }
 
 export function GameFrame(props: { title: string; done: number; target: number; back: GameBack; sound: boolean; onSound: () => void; children: ReactNode }) {
@@ -78,7 +78,7 @@ export function GameEnd({ title, back, onAgain, children }: { title: string; bac
         <button type="button" className="btn primary" onClick={onAgain}>
           Play again
         </button>
-        {back.lesson ? (
+        {back.lessons > 0 ? (
           <a className="btn" href={back.href}>
             Back to the map
           </a>
@@ -101,11 +101,12 @@ export function TooFewWords({ need, what, back }: { need: number; what: string; 
   return (
     <div className="card stack">
       <p>
-        This game needs at least {need} {what} you have already learned (reviewed at least once){back.lesson ? ' in this lesson' : ''}.
+        This game needs at least {need} {what} you have already learned (reviewed at least once)
+        {back.lessons === 1 ? ' in this lesson' : back.lessons > 1 ? ` in these ${back.lessons} lessons` : ''}.
       </p>
       <p>
         <a href={link('words')}>Review words</a>
-        {back.lesson ? (
+        {back.lessons > 0 ? (
           <>
             {' '}
             or go <a href={back.href}>back to the map</a>.

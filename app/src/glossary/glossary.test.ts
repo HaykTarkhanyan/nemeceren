@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { germanFields, itemGermanFields, segments, wordsIn, wordTokens } from '../content/german.ts'
+import { GlossEntry as GlossEntrySchema } from '../content/schema.ts'
 import type { GlossEntry, Item, Test } from '../content/schema.ts'
 import { glossEnabled } from './gate.ts'
 import { formInfo, formNote, isFormEntry, isLemmaEntry, kaikkiUrl, lemmaEntry, mapPos, shortGloss } from './kaikki.ts'
@@ -389,5 +390,15 @@ describe('kaikki parsing', () => {
     const a: KaikkiEntry = { word: 'a', pos: 'noun', senses: [{ glosses: ['alternative form of A'], tags: ['alt-of'] }] }
     expect(isLemmaEntry(a)).toBe(false)
     expect(lemmaEntry(a)).toBeNull()
+  })
+})
+
+describe('popups stay English (DECISIONS.md #96)', () => {
+  it('refuses a gloss in Cyrillic, such as a Russian card meaning that leaked into the glossary', () => {
+    const entry = (gloss: string) => ({ lemma: 'backen', pos: 'verb', gloss: [gloss] })
+    expect(GlossEntrySchema.safeParse(entry('to bake')).success).toBe(true)
+    const bad = GlossEntrySchema.safeParse(entry('печь'))
+    expect(bad.success).toBe(false)
+    expect(bad.error?.issues[0].message).toMatch(/popups are English for every learner/)
   })
 })

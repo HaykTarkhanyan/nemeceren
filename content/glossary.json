@@ -1475,6 +1475,105 @@
     "übergeben": [
       {"lemma": "übergeben", "pos": "verb", "gloss": ["(sich übergeben) to vomit, to be sick"], "note": "Er hat sich übergeben. = He was sick."},
       {"lemma": "übergeben", "pos": "verb", "gloss": ["to hand over"]}
+    ],
+    "nem": [
+      {"lemma": "ein", "pos": "article", "form": "spoken short form of einem (dative)", "level": "A1", "gloss": ["a, an"], "note": "in nem Land = in einem Land"}
+    ],
+    "ner": [
+      {"lemma": "ein", "pos": "article", "form": "spoken short form of einer (dative, feminine)", "level": "A1", "gloss": ["a, an"], "note": "von ner Wand = von einer Wand"}
+    ],
+    "ne": [
+      {"lemma": "ein", "pos": "article", "form": "spoken short form of eine", "level": "A1", "gloss": ["a, an"], "note": "ist ne Wand = ist eine Wand"},
+      {"lemma": "ne", "pos": "particle", "gloss": ["right?, isn't it?"], "note": "At the end of a spoken sentence: Gut, ne? = Good, right?"}
+    ],
+    "fahr": [
+      {"lemma": "fahren", "pos": "verb", "form": "ich form, spoken (fahre); also the du command", "level": "A1", "gloss": ["to go (by car, bus, bike), to drive"], "note": "ich fahr = ich fahre. Ich fahr schwarz. = I ride without a ticket."}
+    ],
+    "schau": [
+      {"lemma": "schauen", "pos": "verb", "form": "ich form, spoken (schaue); also the du command", "level": "B1", "gloss": ["to look"], "note": "ich schau mir das an = ich schaue mir das an (sich etwas anschauen = to look at something)"}
+    ],
+    "was": [
+      {"lemma": "was", "pos": "pronoun", "level": "A1", "gloss": ["what"]},
+      {"lemma": "etwas", "pos": "pronoun", "form": "spoken short form of etwas", "gloss": ["something, anything"], "note": "nie was = nie etwas (never anything)"}
+    ],
+    "irgendwas": [
+      {"lemma": "irgendwas", "pos": "pronoun", "gloss": ["something, anything"], "note": "Spoken form of irgendetwas."}
+    ],
+    "Mann": [
+      {"lemma": "Mann", "pos": "noun", "article": "der", "plural": "Männer", "level": "A1", "gloss": ["man; husband"]},
+      {"lemma": "Mann", "pos": "interjection", "gloss": ["man! (exclamation)"], "note": "Ich weiß nicht, Mann. = I don't know, man."}
+    ],
+    "Scheiße": [
+      {"lemma": "Scheiße", "pos": "noun", "article": "die", "gloss": ["shit (vulgar)"], "note": "Vulgar. Scheiße! = Shit! A milder word: Mist!"}
+    ],
+    "Scheißverstand": [
+      {"lemma": "Scheißverstand", "pos": "noun", "article": "der", "gloss": ["damn mind (vulgar)"], "note": "Scheiß- (vulgar: damn, shitty) + der Verstand (mind, reason)"}
+    ],
+    "geschissen": [
+      {"lemma": "scheißen", "pos": "verb", "form": "past participle", "gloss": ["to shit (vulgar)"], "note": "nie was geschissen kriegen = never get anything done (vulgar). Clean: nichts auf die Reihe kriegen"}
+    ],
+    "scheißen": [
+      {"lemma": "scheißen", "pos": "verb", "gloss": ["to shit (vulgar)"], "note": "Vulgar. scheißen auf = not to give a damn about"}
+    ],
+    "Mist": [
+      {"lemma": "Mist", "pos": "interjection", "gloss": ["damn! (mild)"], "note": "Mist! is the polite way to swear."},
+      {"lemma": "Mist", "pos": "noun", "article": "der", "gloss": ["rubbish, nonsense", "manure"]}
+    ],
+    "schwarz": [
+      {"lemma": "schwarz", "pos": "adjective", "level": "A1", "gloss": ["black"]},
+      {"lemma": "schwarz", "pos": "adverb", "gloss": ["illegally, off the books"], "note": "schwarzfahren: Ich fahre schwarz. = I ride without a ticket."}
+    ],
+    "Schwarzarbeit": [
+      {"lemma": "Schwarzarbeit", "pos": "noun", "article": "die", "gloss": ["undeclared work, working off the books"]}
+    ],
+    "leisten": [
+      {"lemma": "leisten", "pos": "verb", "level": "B1", "gloss": ["(sich etwas leisten) to afford", "to achieve, to provide"], "note": "Ich kann mir das nicht leisten. = I can't afford that."}
+    ],
+    "eingebrannt": [
+      {"lemma": "einbrennen", "pos": "verb", "form": "past participle", "gloss": ["to burn in"], "note": "Das hat sich eingebrannt. = That has burned itself into my memory."}
+    ],
+    "sich": [
+      {"lemma": "sich", "pos": "pronoun", "level": "A1", "gloss": ["himself, herself, itself, themselves (reflexive)", "each other"], "note": "Das fühlt sich gut an. = That feels good."}
+    ],
+    "fühlt": [
+      {"lemma": "fühlen", "pos": "verb", "form": "er/sie/es and ihr form, present", "level": "A2", "gloss": ["to feel"]},
+      {"lemma": "anfühlen", "pos": "verb", "form": "er/sie/es and ihr form, present", "gloss": ["to feel (like)"], "note": "Separable: Das fühlt sich gut an. fühlt sich an wie = feels like"}
+    ],
+    "wie": [
+      {"lemma": "wie", "pos": "adverb", "level": "A1", "gloss": ["how"], "note": "Wie heißen Sie?"},
+      {"lemma": "wie", "pos": "conjunction", "level": "A1", "gloss": ["like, as"], "note": "so groß wie = as big as; fühlt sich an wie = feels like"}
+    ],
+    "Brand": [
+      {"lemma": "Brand", "pos": "noun", "article": "der", "plural": "Brände", "gloss": ["fire, blaze"], "note": "der Reichstagsbrand = the Reichstag fire"}
+    ],
+    "Reichstagsbrand": [
+      {"lemma": "Reichstagsbrand", "pos": "noun", "article": "der", "gloss": ["the Reichstag fire (Berlin, 1933)"]}
+    ],
+    "umkreist": [
+      {"lemma": "umkreisen", "pos": "verb", "form": "past participle", "gloss": ["surrounded, circled"], "note": "war umkreist von = was surrounded by"},
+      {"lemma": "umkreisen", "pos": "verb", "form": "er/sie/es and ihr form, present", "gloss": ["to circle (around)"]}
+    ],
+    "kreißen": [
+      {"lemma": "kreißen", "pos": "verb", "gloss": ["to be in labour (old word)"], "note": "Lives on in der Kreißsaal (delivery room). Not related to der Kreis."}
+    ],
+    "denen": [
+      {"lemma": "der", "pos": "pronoun", "form": "dative plural", "gloss": ["those; whom, which"], "note": "keiner von denen = none of those"}
+    ],
+    "weiterwissen": [
+      {"lemma": "weiterwissen", "pos": "verb", "gloss": ["to know what to do next"], "note": "Ich weiß nicht mehr weiter. = I don't know what to do any more."}
+    ],
+    "jeder": [
+      {"lemma": "jeder", "pos": "pronoun", "level": "A1", "gloss": ["everyone, everybody"], "note": "Jeder weiß es. = Everyone knows it."},
+      {"lemma": "jeder", "pos": "determiner", "level": "A1", "gloss": ["each, every"], "note": "jeden Tag = every day"}
+    ],
+    "gebacken": [
+      {"lemma": "backen", "pos": "verb", "form": "past participle", "level": "A2", "gloss": ["to bake"], "note": "nichts gebacken kriegen = to get nothing done (colloquial)"}
+    ],
+    "scheiße": [
+      {"lemma": "scheiße", "pos": "adjective", "gloss": ["shitty, lousy (vulgar)"], "note": "Vulgar. Das ist scheiße. = That's lousy."}
+    ],
+    "weiter": [
+      {"lemma": "weiter", "pos": "adverb", "gloss": ["further, on"], "note": "Ich weiß nicht mehr weiter. = I don't know what to do any more (weiterwissen)."}
     ]
   }
 }

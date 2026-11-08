@@ -788,8 +788,14 @@ export const GlossEntry = z.strictObject({
   /** Base form: "machen", "Termin". */
   lemma: Text,
   pos: POS,
-  /** 1-3 short English senses. */
-  gloss: z.array(Text).min(1).max(3),
+  /**
+   * 1-3 short English senses. Never Cyrillic: popups are English for every learner, even though
+   * Elya's word cards have Russian meanings (DECISIONS.md #96).
+   */
+  gloss: z
+    .array(Text.refine((t) => !/[Ѐ-ӿ]/.test(t), { message: 'popups are English for every learner; a word card with a Russian meaning needs an English curated entry (DECISIONS.md #96)' }))
+    .min(1)
+    .max(3),
   /** Nouns only. */
   article: z.enum(['der', 'die', 'das']).optional(),
   /** Nouns only, without the article: "Termine". */

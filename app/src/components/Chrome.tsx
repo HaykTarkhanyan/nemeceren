@@ -21,6 +21,7 @@ export function Header({ route }: { route: string[] }) {
   const nav: [string, string][] = [
     ['', 'Home'],
     ['lessons', 'Lessons'],
+    ['themes', 'Themes'],
     ['topics', 'Topics'],
     ['words', 'Words'],
     ['extras', 'Extras'],
@@ -54,7 +55,7 @@ export function Header({ route }: { route: string[] }) {
   )
 }
 
-/** Settings as a gear icon, so the nav keeps 8 text links (DECISIONS.md #54). */
+/** Settings as a gear icon, so the nav keeps 9 text links (DECISIONS.md #54). */
 function SettingsButton({ active }: { active: boolean }) {
   return (
     <a

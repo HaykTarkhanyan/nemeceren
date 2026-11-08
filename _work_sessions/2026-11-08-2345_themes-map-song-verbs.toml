@@ -1,0 +1,22 @@
+title = "Themes as its own page, practise several Map tiles, Weisse Wand song lesson, Everyday verbs set"
+date = "2026-11-08"
+time = "23:45"
+areas = ["app/src", "app/scripts", "content/themes", "content/words.json", "content/sets.json", "content/glossary*.json", "content/README.md", ".claude/skills/theme-lesson", "DECISIONS.md"]
+done = [
+  "Themes is a top-level nav page (#/themes); Lessons shows only the course; #/lessons/themes redirects with location.replace; the phone nav grid has 5 columns so 9 links fit in 2 rows (DECISIONS #98, revisits #54). Built by one agent (~232k tokens).",
+  "Map: 'Select tiles' mode ticks several tiles; a bottom bar plays the 7 practice games on the union of their words; game links take #/daily/<game>/<id>,<id> and fail loudly on an unknown, empty or repeated id. Locked tiles show '12 words, locked' (DECISIONS #99, revisits #93). Same agent; 7 new tests.",
+  "Weisse Wand (AnnenMayKantereit, Schlagschatten, 2018) theme lesson t-weisse-wand: 23 sections, the full lyrics in 6 stanzas, the weiss pun, schwarzfahren, spoken short forms, the Reichstag fire and the Fluechtlingskrise explained factually, the glass ceiling, a strong-language warning, 6 exercises, 10 word cards. Agent ~274k tokens; I reviewed it line by line, checked the unit pointers and the Goethe example, and replaced 'your paste' with neutral wording.",
+  "Everyday verbs word set (alltagsverben, 50 verbs chosen for daily life; no sourced frequency ranking was found): 48 reuse course cards, werden and fuehlen are new (DECISIONS #100).",
+  "Glossary leak fixed: 'gebacken' had been glossed from Elya's Russian backen card. build-glossary now skips cards of onlyFor lessons, and the GlossEntry schema refuses Cyrillic (with a test). My first version of the filter matched nothing, because tsx doesn't type-check; tsc caught it, and the script now throws if the filter comes out empty.",
+  "Checks: glossary covered, check-content OK (9 theme lessons, 5 sets, 1069 words), tsc, 504 tests, build; guest browser checks (Map select at 390/1280, Themes, redirect, song lesson, Word sets), 0 console errors.",
+]
+pending = [
+  "Q34, Q36, Q38, Q39 from 2026-11-08 are still open.",
+  "Q45 (new): the Map selection only practises learned words (ticking locked tiles adds nothing); a review of several tiles together is not built.",
+]
+next = """
+Hayk tries the Map select mode and the Themes page on the phone. If they want to start learning a selection early, build the multi-tile review (Q45).
+"""
+notes = """
+Ran the song agent (content/) and the app agent (app/src) in the same tree at the same time; one mid-run vitest failed because the song agent was halfway through writing words.json. Both passed afterwards.
+"""

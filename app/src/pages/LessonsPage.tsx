@@ -1,19 +1,19 @@
-// The Lessons page with two tabs: Course (lessons grouped by syllabus unit) and Themes (theme
-// lessons from songs, videos, articles and topics, DECISIONS.md #61), and the view of one lesson.
-// A theme lesson opens like a course lesson; it is just not part of the course.
+// The Lessons page (the course: lessons grouped by syllabus unit), the Themes page (theme lessons
+// from songs, videos, articles and topics, DECISIONS.md #61; a tab of Lessons until it got its own
+// nav entry), and the view of one lesson. A theme lesson opens like a course lesson; it is just not
+// part of the course.
 import { useEffect, useRef, useState } from 'react'
 import { content } from '../content/load.ts'
 import { byCourseOrder, exerciseSections, isThemeLesson, openAt, sectionIndex, THEME_KIND_LABEL, THEME_LINK_LABEL } from '../content/lessons.ts'
 import type { Lesson, Theme, ThemeLesson } from '../content/schema.ts'
 import { BlockView } from '../components/LessonBlocks.tsx'
-import { Tabs } from '../components/Tabs.tsx'
 import { VideoList } from '../components/VideoList.tsx'
 import { messageOf, reportError } from '../lib/errors.ts'
 import { doneRangesByLesson, isCovered, stationRanges } from '../lib/path.ts'
 import { STATIONS } from '../lib/goalView.ts'
 import { lessonStatus, setLastSection, startLesson } from '../lib/plan.ts'
 import type { LessonStatus } from '../lib/plan.ts'
-import { link, tabLink, tabOf } from '../lib/router.ts'
+import { link } from '../lib/router.ts'
 import { lessonLyrics, wordCounts } from '../lib/lyrics.ts'
 import { KNOWN_DAYS } from '../lib/stats.ts'
 import { finishStation, markLessonDoneWithEvents, markLessonNotDone } from '../lib/stationActions.ts'
@@ -27,24 +27,28 @@ export function StatusBadge({ status }: { status: LessonStatus }) {
   return <span className={`badge ${STATUS_CLASS[status]}`}>{STATUS_LABEL[status]}</span>
 }
 
-export const LESSON_TABS = ['course', 'themes'] as const
-const TAB_LABEL = { course: 'Course', themes: 'Themes' } as const
-
-/** `tab` is the part after "#/lessons/": none for Course, "themes" for Themes. */
-export function LessonsPage({ tab }: { tab?: string }) {
-  const current = tabOf(tab, LESSON_TABS)
-  if (current === null) {
+/** `part` is anything after "#/lessons/", which the page does not have ("#/lessons/themes" moved to "#/themes", lib/router.ts movedRoute). */
+export function LessonsPage({ part }: { part?: string }) {
+  if (part !== undefined) {
     return (
       <div className="alert error">
-        The Lessons page has no tab "{tab}". <a href={link('lessons')}>Lessons</a>
+        The Lessons page has no part "{part}". <a href={link('lessons')}>Lessons</a>
       </div>
     )
   }
   return (
     <div className="stack">
       <h1>Lessons</h1>
-      <Tabs page="lessons" tabs={LESSON_TABS} labels={TAB_LABEL} current={current} />
-      {current === 'course' ? <CourseList /> : <ThemeList />}
+      <CourseList />
+    </div>
+  )
+}
+
+export function ThemesPage() {
+  return (
+    <div className="stack">
+      <h1>Themes</h1>
+      <ThemeList />
     </div>
   )
 }
@@ -345,7 +349,7 @@ function LessonView({ lesson, linked, station }: { lesson: Lesson; linked: numbe
   return (
     <div className="stack lesson">
       {isThemeLesson(lesson) ? (
-        <a href={tabLink('lessons', LESSON_TABS, 'themes')} className="small">
+        <a href={link('themes')} className="small">
           All theme lessons
         </a>
       ) : (

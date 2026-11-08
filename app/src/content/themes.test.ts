@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { link, parseRoute, tabLink, tabOf } from '../lib/router.ts'
+import { link, movedRoute, parseRoute, tabLink, tabOf } from '../lib/router.ts'
 import { germanFields } from './german.ts'
 import { isCourseLesson, isThemeLesson, lessonLabel, visibleThemesAndWords, visibleTo } from './lessons.ts'
 import type { ThemeLesson } from './schema.ts'
@@ -141,20 +141,28 @@ describe('theme lessons: check-content', () => {
   })
 })
 
-describe('tabs in the URL', () => {
-  const lessonTabs = ['course', 'themes'] as const
+describe('the Themes page and tabs in the URL', () => {
+  const wordsTabs = ['review', 'all', 'sets', 'map'] as const
 
-  it('#/lessons is the Course tab and #/lessons/themes the Themes tab; anything else is unknown', () => {
-    expect(tabOf(parseRoute('#/lessons')[1], lessonTabs)).toBe('course')
-    expect(tabOf(parseRoute('#/lessons/themes')[1], lessonTabs)).toBe('themes')
-    expect(tabOf(parseRoute('#/lessons/course')[1], lessonTabs)).toBe('course')
-    expect(tabOf(parseRoute('#/lessons/songs')[1], lessonTabs)).toBeNull()
+  it('#/themes is its own page; the old Themes tab #/lessons/themes moved there, nothing else moved', () => {
+    expect(link('themes')).toBe('#/themes')
+    expect(movedRoute(parseRoute('#/lessons/themes'))).toBe('#/themes')
+    expect(movedRoute(parseRoute('#/lessons'))).toBeNull()
+    expect(movedRoute(parseRoute('#/themes'))).toBeNull()
+    expect(movedRoute(parseRoute('#/lessons/themes/x'))).toBeNull()
+    expect(movedRoute(parseRoute('#/lesson/t-beim-arzt'))).toBeNull()
+  })
+
+  it('no part is the first tab, a named part its tab; anything else is unknown', () => {
+    expect(tabOf(parseRoute('#/words')[1], wordsTabs)).toBe('review')
+    expect(tabOf(parseRoute('#/words/map')[1], wordsTabs)).toBe('map')
+    expect(tabOf(parseRoute('#/words/review')[1], wordsTabs)).toBe('review')
+    expect(tabOf(parseRoute('#/words/songs')[1], wordsTabs)).toBeNull()
   })
 
   it('links to a tab, the first one without its name', () => {
-    expect(tabLink('lessons', lessonTabs, 'course')).toBe('#/lessons')
-    expect(tabLink('lessons', lessonTabs, 'themes')).toBe('#/lessons/themes')
-    expect(tabLink('words', ['review', 'all'] as const, 'all')).toBe('#/words/all')
+    expect(tabLink('words', wordsTabs, 'review')).toBe('#/words')
+    expect(tabLink('words', wordsTabs, 'all')).toBe('#/words/all')
     // A theme lesson opens like any lesson, at a section too (a Topics link).
     expect(parseRoute(link('lesson', 't-beim-arzt', 'dialogue'))).toEqual(['lesson', 't-beim-arzt', 'dialogue'])
   })

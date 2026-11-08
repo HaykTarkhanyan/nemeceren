@@ -136,7 +136,7 @@ main.container {
   border-bottom: 1px solid var(--border);
 }
 
-/* Wider than the page (760 px) so brand, 8 links, sync status, study timer, theme and settings
+/* Wider than the page (760 px) so brand, 9 links, sync status, study timer, theme and settings
    buttons fit on one line from 900 px (DECISIONS.md #48, #54, #63). */
 .header-inner {
   display: flex;
@@ -261,7 +261,7 @@ main.container {
   white-space: nowrap;
 }
 
-/* Below 900 px the nav gets its own row; on a phone it is a 4-column grid (2 rows of 4). */
+/* Below 900 px the nav gets its own row; on a phone it is a 5-column grid (9 links: 2 rows, 5 and 4). */
 @media (max-width: 899px) {
   .nav {
     order: 3;
@@ -272,10 +272,10 @@ main.container {
 @media (max-width: 520px) {
   .nav {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
   }
   .nav a {
-    padding: 6px 4px;
+    padding: 6px 2px;
     text-align: center;
   }
   /* Brand and tools share the first row; with the timer running they need tighter spacing to fit 390 px. */
@@ -2776,6 +2776,7 @@ ol.line {
 }
 
 .map-tile {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -2820,6 +2821,82 @@ ol.line {
 
 .map-practise {
   margin: 14px 0 6px;
+}
+
+/* The legend and the "Select tiles" toggle. */
+.map-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px 12px;
+}
+
+.map-head .map-legend {
+  flex: 1 1 260px;
+  margin: 0;
+}
+
+/* A ticked tile in select mode: a thick ring and a tick in the corner. */
+.map-tile.ticked {
+  outline: 3px solid var(--text);
+  outline-offset: 2px;
+}
+
+/* On the corner, in the gap between tiles, so it never covers or squeezes the lesson name. */
+.map-tick {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--text);
+  color: var(--surface);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+/* Select mode's bar: stays at the bottom of the screen while tiles are ticked. */
+.map-pickbar {
+  position: sticky;
+  bottom: 0;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius) var(--radius) 0 0;
+  box-shadow: 0 -6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.map-pickbar p {
+  margin: 0;
+}
+
+.map-pickbar .daily-activities {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* On a phone the games scroll sideways in one row, so the bar does not cover a quarter of the screen. */
+@media (max-width: 520px) {
+  .map-pickbar .daily-activities {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 2px;
+  }
+  .map-pickbar .daily-activities .btn {
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
 }
 
 /* A test station's sheet: the unit's words before the test. */

@@ -1,12 +1,13 @@
+import { useEffect } from 'react'
 import { content } from './content/load.ts'
 import { AuthGate } from './components/AuthGate.tsx'
 import { GoalToast } from './components/GoalToast.tsx'
 import { ErrorBanner, ErrorBoundary, GuestBanner, Header, VoiceWarning } from './components/Chrome.tsx'
-import { useRoute } from './lib/router.ts'
+import { movedRoute, useRoute } from './lib/router.ts'
 import { DailyPage } from './pages/DailyPage.tsx'
 import { ExtrasPage } from './pages/ExtrasPage.tsx'
 import { HomePage } from './pages/HomePage.tsx'
-import { LessonPage, LessonsPage } from './pages/LessonsPage.tsx'
+import { LessonPage, LessonsPage, ThemesPage } from './pages/LessonsPage.tsx'
 import { ListenPage } from './pages/ListenPage.tsx'
 import { NotesPage } from './pages/NotesPage.tsx'
 import { ResultDetailPage, ResultsPage } from './pages/ResultsPage.tsx'
@@ -35,11 +36,13 @@ function Page({ route }: { route: string[] }) {
       // "Back to the line" after a station: Home, scrolled to the current station.
       return <HomePage scrollToCurrent />
     case 'daily':
-      return <DailyPage sub={arg} lesson={sub} />
+      return <DailyPage sub={arg} lessons={sub} />
     case 'test':
       return <TestPage id={arg ?? ''} />
     case 'lessons':
-      return <LessonsPage tab={arg} />
+      return <LessonsPage part={arg} />
+    case 'themes':
+      return <ThemesPage />
     case 'lesson':
       return sub === 'station' ? <LessonPage id={arg ?? ''} station={subArg ?? ''} /> : <LessonPage id={arg ?? ''} sectionId={sub} />
     case 'topics':
@@ -65,6 +68,11 @@ function Page({ route }: { route: string[] }) {
 
 export function App() {
   const route = useRoute()
+  const moved = movedRoute(route)
+  // An old address (a bookmark or an old link) is replaced, so Back does not lead to it again.
+  useEffect(() => {
+    if (moved !== null) window.location.replace(moved)
+  }, [moved])
   if (content.problems.length > 0) return <ContentProblems problems={content.problems} />
   return (
     <>
@@ -77,9 +85,7 @@ export function App() {
           <GoalToast />
         </ErrorBoundary>
         <main className="container">
-          <ErrorBoundary key={route.join('/')}>
-            <Page route={route} />
-          </ErrorBoundary>
+          <ErrorBoundary key={route.join('/')}>{moved === null && <Page route={route} />}</ErrorBoundary>
         </main>
       </AuthGate>
     </>

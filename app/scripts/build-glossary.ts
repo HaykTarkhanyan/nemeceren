@@ -130,7 +130,12 @@ if (problems.length > 0 || !curated) {
 }
 
 // The word bank's own English meanings are written for Hayk, so they win over Wiktionary's senses.
-const bankGloss = new Map(content.words.words.map((w) => [w.de.replace(/^(der|die|das) /, ''), w.en]))
+// Cards of lessons for some learners only (DECISIONS.md #95) may have meanings in that learner's
+// language (Russian for Elya, #96), so they never become the popup everyone sees; check-content
+// keeps those cards out of lessons everyone sees.
+const limitedWords = new Set(content.themes.filter((t) => t.lesson.onlyFor !== undefined).flatMap((t) => t.lesson.words ?? []))
+if (limitedWords.size === 0 && content.themes.some((t) => t.lesson.onlyFor !== undefined)) throw new Error('build-glossary: limited lessons list no words; the filter is broken')
+const bankGloss = new Map(content.words.words.filter((w) => !limitedWords.has(w.id)).map((w) => [w.de.replace(/^(der|die|das) /, ''), w.en]))
 const lists = readLearnerLists(content.words.words)
 
 const fields = germanFields(content.tests, content.words, [...content.lessons, ...content.themes])

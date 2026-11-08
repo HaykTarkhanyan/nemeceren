@@ -280,7 +280,7 @@ From Unit 1 on, every unit ends with a story lesson (DECISIONS.md #80): a standa
 
 ## Theme lessons: `themes/<id>.json`
 
-A theme lesson is a lesson (everything in [Lessons](#lessons) holds: blocks, text format, words, tests, exercises, glossary) built from something Hayk brings: a song, a video, an article, or just a topic ("going to the doctor"). It is not part of the course: it has a `theme` header instead of `unit` and `order`. The app lists theme lessons under Lessons, tab **Themes** (`#/lessons/themes`, alphabetical by `theme.title`); the What-next menu, Home's "next lesson" and the course's "Next lesson" button ignore them. Opening one works like a course lesson: it starts it (saved under its id), unlocks its `words`, and its exercises are saved as `<id>-ex<n>`. The repo skill `.claude/skills/theme-lesson/SKILL.md` is the workflow for writing one.
+A theme lesson is a lesson (everything in [Lessons](#lessons) holds: blocks, text format, words, tests, exercises, glossary) built from something Hayk brings: a song, a video, an article, or just a topic ("going to the doctor"). It is not part of the course: it has a `theme` header instead of `unit` and `order`. The app lists theme lessons on their own page **Themes** in the top menu (`#/themes`, alphabetical by `theme.title`; the old `#/lessons/themes` redirects there); the What-next menu, Home's "next lesson" and the course's "Next lesson" button ignore them. Opening one works like a course lesson: it starts it (saved under its id), unlocks its `words`, and its exercises are saved as `<id>-ex<n>`. The repo skill `.claude/skills/theme-lesson/SKILL.md` is the workflow for writing one.
 
 ```json
 {

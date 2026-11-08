@@ -20,7 +20,7 @@ const t0 = new Date(2026, 10, 7, 10, 0, 0)
 const words = content.words.filter((w) => w.example).slice(0, 80)
 let learned: ReviewState = emptyState(t0)
 for (const w of words) learned = review(learned, w.id, Rating.Good, t0).state
-const back: GameBack = { href: '#/', lesson: false }
+const back: GameBack = { href: '#/', lessons: 0 }
 const noop = () => {}
 
 describe('the practice games render', () => {
@@ -53,5 +53,9 @@ describe('the practice games render', () => {
     ]) {
       expect(html).toContain('This game needs at least')
     }
+    // From several tiles on the Words map: it says where the words were looked for.
+    const fromTiles = renderToStaticMarkup(<SpeakWords words={words} state={none} back={{ href: '#/words/map', lessons: 2 }} onAgain={noop} />)
+    expect(fromTiles).toContain(' in these 2 lessons')
+    expect(fromTiles).toContain('back to the map')
   })
 })

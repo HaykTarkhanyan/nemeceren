@@ -12,7 +12,7 @@ description: >-
 
 A theme lesson is a normal lesson (content/README.md, "Lessons") with a `theme` header instead of a
 place in the course (`unit`/`order`). It lives in `content/themes/<slug>.json` and appears in the app
-under Lessons → Themes. Its `words` unlock when Hayk opens it, like any lesson. It is **not tied to
+under **Themes** in the top menu (`#/themes`). Its `words` unlock when Hayk opens it, like any lesson. It is **not tied to
 their level**: the point is real German they care about, explained so they can follow it.
 
 Prerequisite: the Themes tab and the `theme` schema (DECISIONS.md, "theme lessons"). If
@@ -79,7 +79,7 @@ Prerequisite: the Themes tab and the `theme` schema (DECISIONS.md, "theme lesson
    - the full-text translation has been checked line by line, like the excerpts;
    - no exercise gives its answer away.
 9. **Commit and push** content only (`content/themes/<slug>.json`, `content/words.json`, the glossary
-   files), then watch CI. Tell Hayk the title and that it's under Lessons → Themes. Offer a chat
+   files), then watch CI. Tell Hayk the title and that it's under Themes in the top menu. Offer a chat
    drill on the lines or a sing-along/shadowing session.
 
 ## Template

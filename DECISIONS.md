@@ -2,6 +2,44 @@
 
 Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
+## 100. "Everyday verbs" is a word set of 50 verbs chosen for daily use; 48 reuse course cards, and werden and fühlen are new (asked for by Hayk, 2026-11-08)
+
+- **Date:** 2026-11-09 - **Status:** active
+- **Why:** Hayk asked for "a word section for everyday verbs, for example like, feel ... 50 top used verbs needed every day". A word set (#77) is that section: it can be the source of the daily new words, and its learned words can be practised.
+  - **The verbs:** be and have, the modal verbs, like (mögen, gefallen, lieben), feel, talking and thinking, the senses, giving and taking, buying and eating, daily routine, and werden.
+  - **Order:** the most needed first.
+  - **New cards:** 48 of the 50 already had course cards. The two new cards are `werden` (A1) and `fühlen` (A2, with "sich fühlen" in the meaning, because a reflexive `de` would make the typing and speaking checks awkward).
+  - **Who sees them:** the new cards are in no lesson, so like every word-bank card they reach the other learners only after the words of lessons they have reached (`pathNewWords`).
+- **How the 50 were chosen:** by judgment for daily life, not by a corpus ranking. The lists found (frequencylists.blogspot.com's "300 most frequent", which shows only 50, "roughly by frequency", with no corpus named; verben.org's 500, which is alphabetical) are not a reliable rank. They were used only as a rough check. They also rank verbs like besitzen, verwenden and gelten high, which are not daily-life verbs.
+- **Alternatives rejected:**
+  - **A strict top-50 by frequency:** no sourced ranking was at hand, and the news-text verbs it would bring (gelten, entsprechen) don't fit "needed every day".
+  - **A lesson about verbs:** Hayk asked for words to practise, not a lesson.
+- **What would change this:** a sourced frequency list (Jones & Tschirner, DWDS or the Leipzig corpora) that disagrees on several verbs, or Hayk missing a verb they need.
+
+## 99. Several Map tiles can be practised together, and locked tiles show their word count (asked for by Hayk, 2026-11-08)
+
+- **Date:** 2026-11-09 - **Status:** active; revisits #93
+- **Why:** Hayk: "for the heatmap page I want to be able to select multiple tiles and practice those", and "also for locked tiles show num words".
+  - **Select mode:** a "Select tiles" toggle on the Map. A tap ticks a tile (a ring and a check, `aria-pressed`) instead of opening its sheet. A bottom bar shows "N tiles, M learned words" and the 7 practice games, each greyed out below its minimum (match 3 words, listen 4, the others 1). Locked tiles can be ticked too.
+  - **Game links:** they take several lessons as `#/daily/<game>/<id>,<id>`. Lesson ids are slugs and hold no comma. An empty part, a repeated id or an unknown id shows an error, and a one-lesson link is unchanged. The games play on the union of the words. Practice still never moves the schedule (#25).
+  - **Locked tiles** read "12 words, locked" (`tileCount`).
+  - **The one-tile sheet** now uses the same game buttons as the bar, so it also greys out games with too few learned words.
+- **Alternatives rejected:**
+  - **Ticking with checkboxes inside each tile:** it competes with the tap that opens the sheet.
+  - **Practising a whole unit only:** Hayk asked for free picks.
+  - **A word review (FSRS) of the selection:** the sheet's "Review these" covers one lesson; Hayk asked to practise.
+- **What would change this:** Hayk wanting the selection to survive "Back to the map" (today only "Play again" keeps it), or a review of several lessons and not just practice.
+
+## 98. Themes is its own page in the top menu (`#/themes`); Lessons shows the course only (asked for by Hayk, 2026-11-08)
+
+- **Date:** 2026-11-09 - **Status:** active; revisits #54
+- **Why:** Hayk: "I want the themes to be a separate section, not just inside the learn part". "Themes" sits after Lessons in the nav. `#/lessons/themes` (old links, bookmarks) is replaced by `#/themes` with `location.replace`, so Back does not return to it. The "All theme lessons" link points to `#/themes`. With Notes this makes 9 text links, the case #54 avoided because a 4-column phone grid left "Stats" alone on a third row. The phone grid now has 5 columns: 2 rows (5+4) at 390 and 360 px, one row from 900 px. Guests get 5+3.
+- **Alternatives rejected:**
+  - **Keeping the tab and adding a Home card:** Hayk asked for a separate section.
+  - **Dropping another nav item to stay at 8:** each one is in use.
+  - **Hiding Themes in a "More" menu:** one more tap for something Hayk wants up front.
+- **What would change this:** a 10th nav item (then a third row or a "More" menu), or labels overflowing on a narrow phone. At 360 px "Lessons" and "Themes" already sit close together.
+
 ## 97. A fourth learner (Elya, Hayk's friend) gets an account the same way as Armen (asked for by Hayk, 2026-11-08; applies #57, #60 and #75)
 
 - **Date:** 2026-11-08 - **Status:** active
@@ -31,7 +69,9 @@ Newest at the top. Never delete a superseded entry - mark it and add a new one.
   - **A fifth lesson, `t-schule-feste`:** St. Martin lantern walks, the school fair's cake list, a birthday in class, invitations to a classmate's party, playdates and allergies.
   - **9 more cards**, 38 in total.
   - **Append-only:** the extensions only add sections after the last one, because saved checks and stations are keyed by section index (content/README.md, Lessons).
-- **Glossary detail:** `npm run glossary` uses a word card's `en` as the popup gloss. The new cards (`elya` tag, 38 after the extension) have Russian `en`, so `content/glossary.json` has English curated entries for all their spellings. Check: 0 popup entries, generated or curated, contain Cyrillic. Without them, Hayk's course would have shown Russian too: `Mittagessen` in `u4-03-essen` had turned into "обед". New cards with Russian `en` need the same curated entries.
+- **Glossary detail:** `npm run glossary` uses a word card's `en` as the popup gloss. The new cards (`elya` tag, 38 after the extension) have Russian `en`, so `content/glossary.json` has English curated entries for all their spellings. Check: 0 popup entries, generated or curated, contain Cyrillic.
+  - **Later the same night, a leak:** the Weiße Wand lesson brought the new form "gebacken", and the generator glossed it from Elya's `backen` card, in Russian.
+  - **Fix (2026-11-09):** `build-glossary` no longer takes `en` from cards that only `onlyFor` lessons list, and the glossary schema refuses any gloss with Cyrillic. A leak now fails check-content instead of reaching a popup. Without them, Hayk's course would have shown Russian too: `Mittagessen` in `u4-03-essen` had turned into "обед". New cards with Russian `en` need the same curated entries.
 
 ## 95. A theme lesson can be limited to some learners with `onlyFor` (sign-in emails); others never see it or the words only it lists (2026-11-08, for #96)
 
@@ -60,7 +100,7 @@ Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
 ## 93. The Words "Map" tab: one tile per lesson, grouped by unit, coloured by the average word strength (asked for by Hayk, 2026-11-07, Q31)
 
-- **Date:** 2026-11-07 - **Status:** active
+- **Date:** 2026-11-07 - **Status:** active (revisited 2026-11-09: several tiles can be practised together, locked tiles show their word count, #99)
 - **Why:** Hayk wants a vocabulary page of tiles "like a heatmap: the more words I know, the more accented the colour". Hayk chose one tile per lesson (Q31).
 - **What it does** (`lib/vocabMap.ts`, `components/VocabMap.tsx`, `#/words/map`):
   - **Tiles:** one per course lesson, under its unit's badge and title, plus theme lessons in the accent colour.
@@ -693,7 +733,7 @@ Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
 ## 54. Settings becomes a gear icon next to the theme button, so the nav keeps 8 text links
 
-- **Date:** 2026-09-30 - **Status:** active; revisits #48 (revisited 2026-10-02: the study timer joins the header tools, #63)
+- **Date:** 2026-09-30 - **Status:** active; revisits #48 (revisited 2026-10-02: the study timer joins the header tools, #63; revisited 2026-11-09: Themes makes 9 links, the phone grid goes to 5 columns, #98)
 - **Why:**
   - With Notes the nav would have 9 entries: a third row in the phone's 4-column grid, and more than one line at 900 px. Settings is the least used page.
   - The nav is Home, Lessons, Topics, Words, Extras, Notes, Results, Stats. The gear is a link with the accessible name "Settings" (`aria-label` and tooltip) and `aria-current` while the page is open. The sync dot still links to Settings. Guests see 7 links (no Notes, #55).
