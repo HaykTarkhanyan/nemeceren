@@ -4,7 +4,7 @@
 // uploaded or saved, and nothing is logged. A mismatch is never a mistake (recognition mishears).
 import { useEffect, useRef, useState } from 'react'
 import { messageOf, reportError } from '../lib/errors.ts'
-import { RECOGNITION_ERRORS, recognitionCtor } from '../lib/recognition.ts'
+import { RECOGNITION_ERRORS, recognitionCtor, STOP_GRACE_MS } from '../lib/recognition.ts'
 import type { Recognition } from '../lib/recognition.ts'
 import { bestAlternative, compareSpoken } from '../lib/speaking.ts'
 import { speak } from '../lib/speech.ts'
@@ -132,8 +132,21 @@ export function SpeakLine({ text }: { text: string }) {
   }
 
   function stop() {
-    if (recognition.current) recognition.current.stop()
-    else if (recorder.current) {
+    const rec = recognition.current
+    if (rec) {
+      rec.stop()
+      stopRecorder()
+      // Chrome on some Android phones never ends the session after stop(): end it after a short grace,
+      // so the button does not stay on "Listening..." (lib/recognition.ts STOP_GRACE_MS).
+      const my = session.current
+      window.setTimeout(() => {
+        if (recognition.current !== rec || my !== session.current) return
+        session.current += 1
+        recognition.current = null
+        rec.abort()
+        setPhase({ kind: 'done', heard: null, note: null })
+      }, STOP_GRACE_MS)
+    } else if (recorder.current) {
       stopRecorder()
       setPhase({ kind: 'done', heard: null, note: null })
     } else {

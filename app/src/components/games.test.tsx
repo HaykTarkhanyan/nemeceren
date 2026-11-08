@@ -25,7 +25,12 @@ const noop = () => {}
 
 describe('the practice games render', () => {
   it('each shows its first question with learned words', () => {
-    expect(renderToStaticMarkup(<SpeakWords words={words} state={learned} back={back} onAgain={noop} />)).toContain('Say the words')
+    const speak = renderToStaticMarkup(<SpeakWords words={words} state={learned} back={back} onAgain={noop} />)
+    expect(speak).toContain('Say the words')
+    // Recall, not repeating: the English shows, the German (text and play button) only after an answer.
+    expect(speak).toContain('Say or type the German')
+    expect(speak).not.toContain('word-big')
+    expect(speak).not.toContain('Slow')
     expect(renderToStaticMarkup(<SpeakSentences words={words} state={learned} back={back} onAgain={noop} />)).toContain('Say it in German')
     expect(renderToStaticMarkup(<ArticleDrill words={words} state={learned} back={back} onAgain={noop} />)).toContain('der, die or das?')
     const gaps = renderToStaticMarkup(<GapFill words={words} pool={words} state={learned} back={back} onAgain={noop} />)

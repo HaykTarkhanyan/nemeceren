@@ -42,6 +42,13 @@ export const RECOGNITION_ERRORS: Record<string, string> = {
   aborted: 'Stopped.',
 }
 
+/**
+ * After Stop, how long the browser gets to end the recognition before the app ends it itself. Chrome
+ * on some Android phones accepts stop() but never fires `end`, so the mic stayed on "Listening..."
+ * (Hayk, 2026-11-08: "pressing stop recording didn't work").
+ */
+export const STOP_GRACE_MS = 1500
+
 /** Errors after which the mic will not work this time: the games switch to typing. */
 const BLOCKING = new Set(['audio-capture', 'not-allowed', 'service-not-allowed', 'network', 'language-not-supported'])
 
@@ -68,11 +75,21 @@ export interface Recognizer {
 export function makeRecognizer(getCtor: () => RecognitionCtor | null, onListening: (on: boolean) => void, report: (message: string) => void): Recognizer {
   let current: Recognition | null = null
   let session = 0
+  // Finishes the current session now, with what was heard so far (Stop's grace ran out).
+  let finishCurrent: (() => void) | null = null
+  let isListening = false
+
+  function setListening(on: boolean) {
+    if (on === isListening) return
+    isListening = on
+    onListening(on)
+  }
 
   function end() {
     session += 1
     const rec = current
     current = null
+    finishCurrent = null
     rec?.abort()
   }
 
@@ -91,16 +108,19 @@ export function makeRecognizer(getCtor: () => RecognitionCtor | null, onListenin
     rec.maxAlternatives = 3
     let alternatives: string[] = []
     let code: string | null = null
+    let finished = false
     rec.onresult = (e) => {
       alternatives = Array.from(e.results[0] ?? [], (a) => a.transcript).filter((t) => t.trim() !== '')
     }
     rec.onerror = (e) => {
       code = e.error
     }
-    rec.onend = () => {
-      if (my !== session) return
+    const finish = () => {
+      if (finished || my !== session) return
+      finished = true
       current = null
-      onListening(false)
+      finishCurrent = null
+      setListening(false)
       if (alternatives.length > 0) {
         onDone({ kind: 'heard', alternatives })
         return
@@ -110,13 +130,20 @@ export function makeRecognizer(getCtor: () => RecognitionCtor | null, onListenin
       if (blocked) report(`Speech recognition: ${message}`)
       onDone({ kind: 'none', message, blocked })
     }
+    rec.onend = finish
+    finishCurrent = () => {
+      finish()
+      // The browser may still end it later: that end is ignored (finished), and the mic is released.
+      rec.abort()
+    }
     current = rec
-    onListening(true)
+    setListening(true)
     try {
       rec.start()
     } catch (err) {
       current = null
-      onListening(false)
+      finishCurrent = null
+      setListening(false)
       const message = `Speech recognition did not start: ${messageOf(err)}`
       report(message)
       onDone({ kind: 'none', message, blocked: true })
@@ -125,11 +152,17 @@ export function makeRecognizer(getCtor: () => RecognitionCtor | null, onListenin
 
   return {
     listen,
-    stop: () => current?.stop(),
+    stop: () => {
+      if (!current) return
+      const force = finishCurrent
+      // The button answers at once; the result follows when the browser ends the session, or after the grace.
+      setListening(false)
+      current.stop()
+      setTimeout(() => force?.(), STOP_GRACE_MS)
+    },
     cancel: () => {
-      const wasListening = current !== null
       end()
-      if (wasListening) onListening(false)
+      setListening(false)
     },
   }
 }

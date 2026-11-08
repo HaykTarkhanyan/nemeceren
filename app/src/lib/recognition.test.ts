@@ -1,5 +1,5 @@
-import { describe, expect, it } from 'vitest'
-import { makeRecognizer } from './recognition.ts'
+import { afterEach, describe, expect, it, vi } from 'vitest'
+import { makeRecognizer, STOP_GRACE_MS } from './recognition.ts'
 import type { Heard, Recognition } from './recognition.ts'
 
 /** A stand-in for the browser's SpeechRecognition: the test fires its events by hand. */
@@ -29,12 +29,17 @@ class FakeRecognition implements Recognition {
   }
 }
 
-function setup() {
+/** Like Chrome on some Android phones: stop() is accepted, but the session never ends by itself. */
+class StuckRecognition extends FakeRecognition {
+  stop() {}
+}
+
+function setup(ctor: new () => Recognition = FakeRecognition) {
   const listening: boolean[] = []
   const reported: string[] = []
   const heard: Heard[] = []
   const r = makeRecognizer(
-    () => FakeRecognition,
+    () => ctor,
     (on) => listening.push(on),
     (m) => reported.push(m),
   )
@@ -82,5 +87,49 @@ describe('speech recognition for the games (makeRecognizer)', () => {
     FakeRecognition.last!.onend?.()
     expect(s.heard.map((h) => h.kind === 'none' && h.blocked)).toEqual([false, true])
     expect(s.reported).toHaveLength(1)
+  })
+
+  describe('Stop (tap while listening)', () => {
+    afterEach(() => vi.useRealTimers())
+
+    it('answers at once, and finishes the listen itself when the browser never ends it', () => {
+      vi.useFakeTimers()
+      const s = setup(StuckRecognition)
+      s.r.listen(s.onDone)
+      const rec = FakeRecognition.last!
+      s.r.stop()
+      expect(s.listening).toEqual([true, false])
+      expect(s.heard).toEqual([])
+      vi.advanceTimersByTime(STOP_GRACE_MS)
+      expect(rec.aborted).toBe(true)
+      expect(s.heard).toHaveLength(1)
+      expect(s.heard[0]).toMatchObject({ kind: 'none', blocked: false })
+      // The browser's late end changes nothing.
+      rec.onend?.()
+      expect(s.heard).toHaveLength(1)
+      expect(s.reported).toEqual([])
+    })
+
+    it('keeps what was heard before the stop', () => {
+      vi.useFakeTimers()
+      const s = setup(StuckRecognition)
+      s.r.listen(s.onDone)
+      FakeRecognition.last!.onresult?.({ results: [[{ transcript: 'Tisch' }]] })
+      s.r.stop()
+      vi.advanceTimersByTime(STOP_GRACE_MS)
+      expect(s.heard).toEqual([{ kind: 'heard', alternatives: ['Tisch'] }])
+    })
+
+    it('a browser that ends the session on stop gives its result at once, with no second callback later', () => {
+      vi.useFakeTimers()
+      const s = setup()
+      s.r.listen(s.onDone)
+      FakeRecognition.last!.onresult?.({ results: [[{ transcript: 'Hallo' }]] })
+      s.r.stop()
+      expect(s.heard).toEqual([{ kind: 'heard', alternatives: ['Hallo'] }])
+      vi.advanceTimersByTime(STOP_GRACE_MS)
+      expect(s.heard).toHaveLength(1)
+      expect(s.listening).toEqual([true, false])
+    })
   })
 })

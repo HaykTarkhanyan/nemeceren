@@ -1,6 +1,6 @@
 // The two speaking games (design: _knowledge/2026-11-07_practice-games-design.md, part 2):
-// "Say the words" (#/daily/speak) and "Say the sentence" (#/daily/sentences). Each answer is said
-// into the mic (the browser's recognition, lib/recognition.ts) or typed. A recognition miss is never
+// "Say the words" (#/daily/speak: the English shows, say or type the German) and "Say the sentence"
+// (#/daily/sentences). Each answer is said into the mic (the browser's recognition, lib/recognition.ts) or typed. A recognition miss is never
 // the learner's error: it is not logged, and offers another try or typing. Answers are practice.
 import { useEffect, useRef, useState } from 'react'
 import type { ReviewState } from '../content/schema.ts'
@@ -110,6 +110,11 @@ export function SpeakWords({ words, state, back, onAgain }: GameProps) {
   )
 }
 
+/**
+ * One word to recall (Hayk, 2026-11-08: "the word in English appears and I type or say the German one
+ * instead of repeating what I hear/see"): the English shows, the German (text and voice) only after
+ * an answer, or after "I don't know".
+ */
 function SpeakWordCard(props: {
   word: StudyWord
   state: ReviewState
@@ -125,20 +130,22 @@ function SpeakWordCard(props: {
   const [heard, setHeard] = useState<{ text: string; right: boolean } | null>(null)
   const [missNote, setMissNote] = useState<string | null>(null)
   const [typed, setTyped] = useState<{ text: string; check: Comparison } | null>(null)
+  const [gaveUp, setGaveUp] = useState(false)
   const said = heard?.right === true
   const answered = said || typed !== null
-  const result = said ? 'said' : typed?.check.correct ? 'typed' : 'wrong'
+  const revealed = answered || gaveUp
+  const result = said ? 'said' : typed?.check.correct ? 'typed' : gaveUp && typed === null ? 'skipped' : 'wrong'
 
-  // With the sound on, the word is read aloud when it shows: say it after the voice, or type what you hear.
+  // The German is heard only once it shows, so the voice never gives the answer away.
   useEffect(() => {
-    if (sound) speak(word.de)
-  }, [word.de])
-  useEnterKey(answered, () => onDone(result))
+    if (revealed && sound) speak(word.de)
+  }, [revealed])
+  useEnterKey(revealed, () => onDone(result))
   // A recognition still running when this card goes is dropped, so it never lands on the next word.
   const cancel = rec.cancel
   useEffect(() => () => cancel(), [cancel])
 
-  /** Skip or Type instead: stop listening first, so a late result is not taken for this word. */
+  /** Type instead or I don't know: stop listening first, so a late result is not taken for this word. */
   function leaveMic(then: () => void) {
     cancel()
     then()
@@ -167,31 +174,26 @@ function SpeakWordCard(props: {
 
   const near = nearMissText(typed?.check.nearMiss)
   return (
-    <GlossScope surface={word.custom ? { kind: 'custom-word' } : { kind: 'review-card', revealed: !typing || answered }}>
+    <GlossScope surface={word.custom ? { kind: 'custom-word' } : { kind: 'review-card', revealed }}>
       <section className="card stack word-card game-card">
         {again && <span className="badge pending">once more</span>}
-        {typing && !answered ? (
-          <>
-            <p className="word-meaning">{word.en}</p>
-            <PlayButtons text={word.de} />
-            <p className="muted small">Type the German you hear. Nouns: include der/die/das.</p>
-          </>
-        ) : (
+        <p className={revealed ? 'word-meaning muted' : 'word-meaning'}>{word.en}</p>
+        {!revealed && <p className="muted small">Say or type the German. Nouns: with der, die or das.</p>}
+        {revealed && (
           <>
             <p className="word-big">
               <WordDe de={word.de} />
             </p>
-            <p className="word-meaning muted">{word.en}</p>
-            {!answered && <PlayButtons text={word.de} />}
+            <PlayButtons text={word.de} />
           </>
         )}
 
-        {!answered && !typing && (
+        {!revealed && !typing && (
           <div className="stack">
             <MicButton listening={rec.listening} onStart={listen} onStop={rec.stop} />
             {heard && !heard.right && (
               <p className="small warn-text">
-                Heard: "{heard.text}". That was not recognised as the word. Try again, or type it.
+                Heard: "{heard.text}". That was not recognised as the word. Try again, type it, or tap I don't know.
               </p>
             )}
             {missNote && <p className="small warn-text">{missNote}</p>}
@@ -199,14 +201,14 @@ function SpeakWordCard(props: {
               <button type="button" className="btn small" onClick={() => leaveMic(() => onTyping(true, null))}>
                 Type instead
               </button>
-              <button type="button" className="btn small" onClick={() => leaveMic(() => onDone('skipped'))}>
-                Skip
+              <button type="button" className="btn small" onClick={() => leaveMic(() => setGaveUp(true))}>
+                I don't know
               </button>
             </div>
           </div>
         )}
 
-        {!answered && typing && (
+        {!revealed && typing && (
           <>
             <TypeAnswer label="German word" onCheck={check} />
             <div className="row">
@@ -215,16 +217,17 @@ function SpeakWordCard(props: {
                   Use the mic
                 </button>
               )}
-              <button type="button" className="btn small" onClick={() => onDone('skipped')}>
-                Skip
+              <button type="button" className="btn small" onClick={() => setGaveUp(true)}>
+                I don't know
               </button>
             </div>
           </>
         )}
 
-        {said && <div className="alert ok">Recognised: "{heard!.text}".</div>}
+        {said && <div className="alert ok">Right. Recognised: "{heard!.text}".</div>}
         {typed && <div className={`alert ${typed.check.correct ? 'ok' : 'error'}`}>{typed.check.correct ? 'Correct!' : `Not quite${near ? ` (${near})` : ''}: you typed "${typed.text}".`}</div>}
-        {answered && (
+        {gaveUp && !answered && <p className="small muted">It comes back once at the end.</p>}
+        {revealed && (
           <button type="button" className="btn primary" onClick={() => onDone(result)}>
             Next (Enter)
           </button>
