@@ -9,7 +9,8 @@ export interface RecognitionAlternative {
   transcript: string
 }
 export interface RecognitionEvent {
-  results: ArrayLike<ArrayLike<RecognitionAlternative>>
+  /** One entry per recognised piece; `isFinal` is false for a live (interim) result. */
+  results: ArrayLike<ArrayLike<RecognitionAlternative> & { isFinal?: boolean }>
 }
 export interface RecognitionErrorEvent {
   error: string
@@ -57,9 +58,17 @@ export type Heard =
   /** Nothing usable: `blocked` means the mic or the service does not work, so typing is the way on. */
   | { kind: 'none'; message: string; blocked: boolean }
 
+export interface ListenOptions {
+  /**
+   * Checked on every result while the person talks (live results are switched on). Returning true
+   * finishes the listen at once with those alternatives: the right word needs no Stop and no silence.
+   */
+  accept?: (alternatives: string[]) => boolean
+}
+
 export interface Recognizer {
   /** Starts listening (ending any earlier listen) and calls back once with what was heard. */
-  listen: (onDone: (h: Heard) => void) => void
+  listen: (onDone: (h: Heard) => void, options?: ListenOptions) => void
   /** Ends listening early: what was said so far is still recognised. */
   stop: () => void
   /** Ends listening and drops whatever comes back (Skip, Type instead, the next card, leaving the game). */
@@ -93,7 +102,7 @@ export function makeRecognizer(getCtor: () => RecognitionCtor | null, onListenin
     rec?.abort()
   }
 
-  function listen(onDone: (h: Heard) => void) {
+  function listen(onDone: (h: Heard) => void, options: ListenOptions = {}) {
     end()
     const my = session
     const Ctor = getCtor()
@@ -104,13 +113,18 @@ export function makeRecognizer(getCtor: () => RecognitionCtor | null, onListenin
     const rec = new Ctor()
     rec.lang = 'de-DE'
     rec.continuous = false
-    rec.interimResults = false
+    rec.interimResults = options.accept !== undefined
     rec.maxAlternatives = 3
     let alternatives: string[] = []
     let code: string | null = null
     let finished = false
     rec.onresult = (e) => {
-      alternatives = Array.from(e.results[0] ?? [], (a) => a.transcript).filter((t) => t.trim() !== '')
+      if (finished || my !== session) return
+      const last = e.results[e.results.length - 1]
+      const alts = Array.from(last ?? [], (a) => a.transcript).filter((t) => t.trim() !== '')
+      if (alts.length === 0) return
+      alternatives = alts
+      if (options.accept?.(alts)) finishCurrent?.()
     }
     rec.onerror = (e) => {
       code = e.error

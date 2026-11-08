@@ -22,6 +22,9 @@ import { nearMissText } from './ResultView.tsx'
 import { WordDe } from './ReviewCard.tsx'
 import { PlayButtons } from './Speaker.tsx'
 
+/** After a spoken right answer, the next word comes after this long. */
+const AUTO_NEXT_MS = 1500
+
 const NO_RECOGNITION = 'This browser has no speech recognition (it works in Chrome and Edge), so type your answers.'
 
 interface GameProps {
@@ -46,6 +49,8 @@ export function SpeakWords({ words, state, back, onAgain }: GameProps) {
   const [outcomes, setOutcomes] = useState<ReadonlyMap<string, WordOutcome>>(() => new Map())
   const [typing, setTyping] = useState(!rec.supported)
   const [note, setNote] = useState<string | null>(rec.supported ? null : NO_RECOGNITION)
+  // After the first tap on the mic, every next word starts listening by itself (Hayk, 2026-11-08).
+  const [handsFree, setHandsFree] = useState(false)
   const frame = { title: 'Say the words', back, sound, onSound: toggleSound }
 
   if (queue.length === 0) {
@@ -100,6 +105,8 @@ export function SpeakWords({ words, state, back, onAgain }: GameProps) {
         typing={typing}
         sound={sound}
         rec={rec}
+        handsFree={handsFree}
+        onHandsFree={() => setHandsFree(true)}
         onTyping={(on, why) => {
           setTyping(on)
           setNote(why)
@@ -122,10 +129,13 @@ function SpeakWordCard(props: {
   typing: boolean
   sound: boolean
   rec: ReturnType<typeof useRecognition>
+  /** The mic was started by hand once this round: this card starts listening by itself. */
+  handsFree: boolean
+  onHandsFree: () => void
   onTyping: (on: boolean, why: string | null) => void
   onDone: (result: 'said' | 'typed' | 'wrong' | 'skipped') => void
 }) {
-  const { word, state, again, typing, sound, rec, onTyping, onDone } = props
+  const { word, state, again, typing, sound, rec, handsFree, onHandsFree, onTyping, onDone } = props
   const [shownAt] = useState(() => performance.now())
   const [heard, setHeard] = useState<{ text: string; right: boolean } | null>(null)
   const [missNote, setMissNote] = useState<string | null>(null)
@@ -136,10 +146,30 @@ function SpeakWordCard(props: {
   const revealed = answered || gaveUp
   const result = said ? 'said' : typed?.check.correct ? 'typed' : gaveUp && typed === null ? 'skipped' : 'wrong'
 
-  // The German is heard only once it shows, so the voice never gives the answer away.
+  // The German is heard only once it shows, so the voice never gives the answer away; after a spoken
+  // right answer it is not repeated (Hayk: "don't repeat the word after I say it").
   useEffect(() => {
-    if (revealed && sound) speak(word.de)
+    if (revealed && sound && !said) speak(word.de)
   }, [revealed])
+  // Said right: the next word comes by itself.
+  useEffect(() => {
+    if (!said) return
+    const t = window.setTimeout(() => onDone('said'), AUTO_NEXT_MS)
+    return () => window.clearTimeout(t)
+  }, [said])
+  // Hands-free: listen as soon as the card shows, once the app's own voice has finished, so the mic
+  // does not hear it.
+  useEffect(() => {
+    if (!handsFree || typing) return
+    let tries = 0
+    const t = window.setInterval(() => {
+      tries += 1
+      if (window.speechSynthesis?.speaking && tries < 20) return
+      window.clearInterval(t)
+      listen(false)
+    }, 150)
+    return () => window.clearInterval(t)
+  }, [])
   useEnterKey(revealed, () => onDone(result))
   // A recognition still running when this card goes is dropped, so it never lands on the next word.
   const cancel = rec.cancel
@@ -151,18 +181,23 @@ function SpeakWordCard(props: {
     then()
   }
 
-  function listen() {
+  function listen(byHand: boolean) {
+    if (byHand) onHandsFree()
     setMissNote(null)
+    const rest = splitArticle(word.de).rest
     rec.listen((h: Heard) => {
       if (h.kind === 'none') {
         if (h.blocked) onTyping(true, `${h.message} Type your answers instead.`)
         else setMissNote(h.message)
         return
       }
-      const best = bestAlternative(splitArticle(word.de).rest, h.alternatives)
+      const best = bestAlternative(rest, h.alternatives)
       const right = spokenWordRight(word.de, best)
       setHeard({ text: best, right })
       if (right) savePractice({ state, word, mode: 'production', right: true, text: best, timeMs: Math.round(performance.now() - shownAt) })
+    }, {
+      // The right word ends the listen at once: no Stop, no waiting for silence.
+      accept: (alternatives) => spokenWordRight(word.de, bestAlternative(rest, alternatives)),
     })
   }
 
@@ -177,8 +212,7 @@ function SpeakWordCard(props: {
     <GlossScope surface={word.custom ? { kind: 'custom-word' } : { kind: 'review-card', revealed }}>
       <section className="card stack word-card game-card">
         {again && <span className="badge pending">once more</span>}
-        <p className={revealed ? 'word-meaning muted' : 'word-meaning'}>{word.en}</p>
-        {!revealed && <p className="muted small">Say or type the German. Nouns: with der, die or das.</p>}
+        <p className={revealed ? 'word-meaning muted' : 'word-big speak-prompt'}>{word.en}</p>
         {revealed && (
           <>
             <p className="word-big">
@@ -190,7 +224,7 @@ function SpeakWordCard(props: {
 
         {!revealed && !typing && (
           <div className="stack">
-            <MicButton listening={rec.listening} onStart={listen} onStop={rec.stop} />
+            <MicButton listening={rec.listening} onStart={() => listen(true)} onStop={rec.stop} label={heard ? 'Try again' : 'Say it'} />
             {heard && !heard.right && (
               <p className="small warn-text">
                 Heard: "{heard.text}". That was not recognised as the word. Try again, type it, or tap I don't know.
@@ -205,6 +239,9 @@ function SpeakWordCard(props: {
                 I don't know
               </button>
             </div>
+            <p className="muted small">
+              Say the German{handsFree ? ' (the mic starts by itself for each word)' : ''}. Nouns: with der, die or das.
+            </p>
           </div>
         )}
 
@@ -221,10 +258,11 @@ function SpeakWordCard(props: {
                 I don't know
               </button>
             </div>
+            <p className="muted small">Say or type the German. Nouns: with der, die or das.</p>
           </>
         )}
 
-        {said && <div className="alert ok">Right. Recognised: "{heard!.text}".</div>}
+        {said && <div className="alert ok">Right: "{heard!.text}". Next word...</div>}
         {typed && <div className={`alert ${typed.check.correct ? 'ok' : 'error'}`}>{typed.check.correct ? 'Correct!' : `Not quite${near ? ` (${near})` : ''}: you typed "${typed.text}".`}</div>}
         {gaveUp && !answered && <p className="small muted">It comes back once at the end.</p>}
         {revealed && (
