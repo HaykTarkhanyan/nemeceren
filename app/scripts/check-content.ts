@@ -1,5 +1,5 @@
 // Validates everything Claude writes: content/tests/*.json, content/lessons/*.json, content/themes/*.json,
-// content/words.json, content/topics.json, content/extras.json, the glossary files (content/glossary.json, content/glossary.generated.json)
+// content/words.json, content/topics.json, content/extras.json, content/sets.json, content/pairs.json, the glossary files (content/glossary.json, content/glossary.generated.json)
 // including that every German word in the content has a glossary entry or is on the ignore list.
 // Then prints how much content there is. Hayk's progress lives in Neon (DECISIONS.md #21), not in
 // files, so what is left FOR HAYK (the runway) is on the app's Stats page, and Claude reads
@@ -44,6 +44,7 @@ const inLessons = new Set([...content.lessons, ...content.themes].flatMap((l) =>
 console.log(
   `check-content: OK - ${content.tests.length} test(s) with ${items} items, ${content.lessons.length} lesson(s), ${content.themes.length} theme lesson(s), ` +
     `${content.topics.groups.reduce((n, g) => n + g.items.length, 0)} topics, ${content.sets.length} word sets, ` +
+    `${content.pairs.filter((p) => p.kind === 'opposite').length} opposites and ${content.pairs.filter((p) => p.kind === 'synonym').length} synonyms, ` +
     `${content.words.words.length} words (${inLessons.size} of them in lessons), glossary ${glossKeys} entries + ` +
     `${curated?.ignore.length ?? 0} ignored (every German word covered) (took ${secs} s)`,
 )

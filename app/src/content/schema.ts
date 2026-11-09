@@ -387,6 +387,34 @@ export const WordSets = z.strictObject({ sets: z.array(WordSet).min(1) }).superR
   })
 })
 
+// ---------- Word pairs (content/pairs.json): opposites and synonyms for the "Opposites and synonyms" game ----------
+
+export const PAIR_KINDS = ['opposite', 'synonym'] as const
+
+export const WordPair = z
+  .strictObject({
+    /** Ids of two words in content/words.json; either one can be asked. */
+    a: Slug,
+    b: Slug,
+    kind: z.enum(PAIR_KINDS),
+    /** Optional, English: a regional or colloquial word, a second sense, a difference in use. */
+    note: Text.optional(),
+  })
+  .superRefine((p, ctx) => {
+    if (p.a === p.b) ctx.addIssue({ code: 'custom', path: ['b'], message: 'a word cannot be paired with itself' })
+  })
+
+/** Two words are paired at most once, in either order and of either kind. */
+export const WordPairs = z.strictObject({ pairs: z.array(WordPair).min(1) }).superRefine((x, ctx) => {
+  const seen = new Map<string, number>()
+  x.pairs.forEach((p, i) => {
+    const key = [p.a, p.b].sort().join(' ')
+    const first = seen.get(key)
+    if (first !== undefined) ctx.addIssue({ code: 'custom', path: ['pairs', i], message: `"${p.a}" and "${p.b}" are already paired in pairs[${first}]` })
+    else seen.set(key, i)
+  })
+})
+
 // ---------- Extras (content/extras.json): jokes, fun facts and everyday phrases to browse ----------
 
 export const EXTRA_TYPES = ['joke', 'fact', 'phrase'] as const
@@ -857,6 +885,8 @@ export type Topics = z.infer<typeof Topics>
 export type TopicItem = z.infer<typeof TopicItem>
 export type WordSet = z.infer<typeof WordSet>
 export type WordSets = z.infer<typeof WordSets>
+export type WordPair = z.infer<typeof WordPair>
+export type PairKind = WordPair['kind']
 export type ExtraItem = z.infer<typeof ExtraItem>
 export type ExtraType = ExtraItem['type']
 export type Extras = z.infer<typeof Extras>

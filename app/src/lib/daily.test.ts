@@ -157,9 +157,10 @@ describe('dueNow and mixSteps', () => {
 
   it('skips steps with nothing to do', () => {
     expect(mixSteps({ introduced: 0, due: 0, newAvailable: 0 })).toEqual([])
-    expect(mixSteps({ introduced: 2, due: 0, newAvailable: 5 })).toEqual(['new', 'listen'])
-    expect(mixSteps({ introduced: 10, due: 3, newAvailable: 0 })).toEqual(['warmup', 'reviews', 'listen'])
-    expect(mixSteps({ introduced: 10, due: 3, newAvailable: 0, canListen: false, mistakes: 2 })).toEqual(['warmup', 'reviews', 'mistakes'])
+    // No listen and pick in the mix (DECISIONS.md #101): it was too easy.
+    expect(mixSteps({ introduced: 2, due: 0, newAvailable: 5 })).toEqual(['new'])
+    expect(mixSteps({ introduced: 10, due: 3, newAvailable: 0 })).toEqual(['warmup', 'reviews'])
+    expect(mixSteps({ introduced: 10, due: 3, newAvailable: 0, mistakes: 2 })).toEqual(['warmup', 'reviews', 'mistakes'])
   })
 })
 

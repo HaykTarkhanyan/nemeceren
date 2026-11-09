@@ -2,6 +2,82 @@
 
 Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
+## 105. Say the words keeps one continuous mic session per round, to cut Android's start/stop beeps (asked for by Hayk, 2026-11-09; answers Q39)
+
+- **Date:** 2026-11-09 - **Status:** active (needs confirming on Hayk's phone)
+- **Why:** On Chrome for Android, the speech service plays a "tang" every time a page starts or stops recognition, and no web API turns it off. The app's sound button only controls the app's own voice. Say the words started a new listen for every word, so about two beeps per word.
+  - **The session:** `startSession` / `stopSession` in `lib/recognition.ts`, with `continuous` and `interimResults` on. Each card checks only results heard after it appeared (a result-number mark).
+  - **Results ignored:** during the 1.5 s pause, after the answer shows, and while the app's voice speaks (treated as stuck after 8 s).
+  - **When the browser ends the session:** it restarts, which beeps. Three ends within 1 s of starting in a row stop it with a visible message.
+  - **Stop and errors:** Stop, Type instead, Close, the round end and the app going to the background all end the session. Mic errors end it and switch to typing.
+  - **Measured** with a fake recognizer over a 9-word round: 10 starts before, 1 after.
+- **Not done:** Words → Review and the other speaking games keep one listen per card. Review cards each need a grade tap anyway, and the app reads German aloud between them.
+- **Sources:** the continuous mode was reported unreliable on Android Chrome in 2017-2021: sessions end after pauses and restart with a beep (react-speech-recognition issue; Stack Overflow on the start sound). Newer behaviour is unverified, so this may cut the beeps without removing them all.
+- **Alternatives rejected for now:** recording audio and recognising it without the Web Speech API. That means on-device Whisper (a large download) or a paid cloud speech API, both bigger decisions for Hayk to make.
+- **What would change this:** Hayk still hearing a beep per word (then Chrome ends sessions after each phrase, and the next step is the recording route above), or words getting missed after a card changes.
+
+## 104. A practice game "Opposites and synonyms": see a word and type or say its partner, from `content/pairs.json` (asked for by Hayk, 2026-11-09)
+
+- **Date:** 2026-11-09 - **Status:** active
+- **Why:** Hayk: "add exercise with opposites and same meaning words, e.g. I practice langsam and schnell". Hayk had also found picking from options too easy (#101), so the learner produces the word: typed, or said with the optional mic. There is nothing to pick from. The game is at `#/daily/pairs[/<lesson ids>]` (Home's More practice, a Map tile, the multi-tile bar).
+- **Content:** `content/pairs.json` has 60 opposites and 24 synonyms at A1-A2, almost all from existing cards. There are 4 new cards (sonnabend, arm-2, haesslich, trocken). Regional and colloquial words carry a note (Sonnabend, Semmel, kriegen, Grüß Gott). check-content checks the ids and refuses duplicate pairs in either direction.
+- **Rules:**
+  - **Pool:** a pair is asked in a direction whose prompt word is learned (reps > 0). Pairs with both words learned come first, and pairs with only the prompt learned fill the round of 8 (the answer screen then teaches the new word).
+  - **Answers:** every partner counts, including a synonym of a right answer ("teuer" accepts billig and günstig), with "Also right" on the reveal. Nouns need their article.
+  - **Practice only:** the schedule never moves (#25).
+  - The multi-tile bar now has 8 games and scrolls sideways at 390 px.
+- **Alternatives rejected:**
+  - **Multiple choice:** Hayk asked for real recall.
+  - **Pairs as fields on word cards:** a pair belongs to two cards, and one file is easier to check.
+- **What would change this:** too few pairs for Hayk's learned words (add pairs from later units), or pairs Hayk finds doubtful. Unsure ones are müde/wach, froh/traurig and klar/natürlich, the last only as the answer "Klar!".
+
+## 103. Wrong typed answers are lined up letter by letter with the right one; near-identical translations are graded at once (asked for by Hayk, 2026-11-09)
+
+- **Date:** 2026-11-09 - **Status:** active
+- **Why:**
+  - **The diff:** Hayk wanted to see a typo at a glance instead of comparing a red word with a green one: "see the git diff, or at least see them under each other". `TypoDiff` (`lib/charDiff.ts`, a longest-common-subsequence alignment) puts "You" above "Right" in a fixed-width font. Extra letters are marked red, missing and wrong letters green, and gaps are shaded. Below 50% similarity the two answers are only stacked. It appears:
+    - on review cards;
+    - in Say the words and Say the sentence;
+    - in Opposites and synonyms;
+    - on results for gap items (each wrong gap against its closest accepted answer) and translate items.
+  - **Instant feedback:** Hayk: "I don't want to be too reliant on exercises where Claude needs to check ... more instantaneous feedback".
+    - A `translate` answer at least 85% identical to a reference is that reference with a typo: wrong at once, shown against it. Hayk's two pending answers of 2026-11-08 ("ein bissen", "ein bischen") would have been graded instantly. Other wordings still wait, because they may be right.
+    - **New content:** auto-graded types, translate with full references, and at most one `write` item per unit (its end task). This is now in the course-unit skill and the content checklist.
+    - The 4 pending items of the day were graded.
+- **Alternatives rejected:**
+  - **Fuzzy-accepting near-identical translations as correct:** a typo is still a mistake.
+  - **Auto-grading every translation by similarity:** a different but valid wording would be marked wrong.
+- **What would change this:** a valid alternative wording being marked wrong by the 85% rule (then raise it, or add the wording to `references`).
+
+## 102. English to German word reviews can be answered by voice, hands-free after the first tap (asked for by Hayk, 2026-11-09)
+
+- **Date:** 2026-11-09 - **Status:** active
+- **Why:** Hayk: "in review words section I want the see the word in English and tell word in German exercise". Production cards in Words → Review (and in the practice sessions there) get the "Say it" mic of Say the words (#91-#94). That covers live results, the Stop grace and hands-free on later cards.
+  - **Checking:** `spokenAnswer` checks the closest recognition alternative like a typed answer. A noun counts only with its article, as typed, with the hint "Say it with der, die or das".
+  - **Grading:** a right spoken answer suggests Good and is not read aloud. After a wrong try the card shows "Heard: ..." with Try again, Type instead and Show answer. Show answer then suggests no grade, because the miss may be the recognizer's. The learner always grades.
+  - **The log:** the mode stays production, and the answer is the heard text. No new field says it was spoken.
+  - The daily mix does not get the mic yet.
+- **Alternatives rejected:**
+  - **Ignoring the article when spoken,** as the Say the words game does: Hayk wants real practice, and the typed review already requires it.
+  - **A separate speaking mode:** the mic on production cards also covers Mixed.
+- **What would change this:** Chrome on Hayk's phone often dropping or mishearing articles (then accept a missing article with a note), or Hayk wanting the mic in the daily mix too.
+
+## 101. Listen and pick leaves the daily mix; Next and the main action sit on the right (asked for by Hayk, 2026-11-09)
+
+- **Date:** 2026-11-09 - **Status:** active; revisits #77
+- **Why:**
+  - **Listen and pick:** Hayk: "I don't want exercise where I just listen and select, that's too easy". The mix is now the warm-up, reviews, new words and mistakes. Listen and pick stays a game of its own (Home, the Map) until Hayk says otherwise (Q48).
+  - **Next on the right:** Hayk is right-handed and found Next on the left awkward on the phone. Rows of action buttons get `.row.actions` (right-aligned), and the main button comes last in them: game end (Play again), word round end (Next round), station done (Next station), Say the sentence, Mistakes replay. In the game cards Next was already full width.
+  - **Crash details:** Hayk hit "Something broke: l is not a function". No reproduction was found on dev or on the live site. Runs covered:
+    - guest and the test account;
+    - all routes, the mix and every game clicked through;
+    - result pages, lessons and tests;
+    - a copy of Hayk's progress in the test account;
+    - a faked German voice and speech recognition.
+  - So the error box now shows "Details for Claude": the page address and the first stack frames, which map back to the source with a sourcemap build of the same commit.
+- **Alternatives rejected:** replacing listen and pick with another step (not asked); mirroring the whole layout for left/right hands (a setting nobody asked for).
+- **What would change this:** Hayk wanting listen and pick gone everywhere, or a listening step back in the mix in a harder form (type what you hear).
+
 ## 100. "Everyday verbs" is a word set of 50 verbs chosen for daily use; 48 reuse course cards, and werden and fühlen are new (asked for by Hayk, 2026-11-08)
 
 - **Date:** 2026-11-09 - **Status:** active

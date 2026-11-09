@@ -7,6 +7,7 @@ import type { CourseLesson, Lesson, LessonProgress, ThemeLesson } from '../conte
 import { strengthOf } from './allWords.ts'
 import type { WordStatus } from './allWords.ts'
 import { MIN_PAIRS, MIN_PICK_WORDS } from './daily.ts'
+import { PAIRS } from './pairs.ts'
 import { lessonStatus } from './plan.ts'
 
 export interface LessonTile {
@@ -109,7 +110,12 @@ export function learnedCount(ids: readonly string[], rows: { id: string; status:
   }).length
 }
 
-/** The fewest learned words a game can start with: match pairs and listen and pick need a few (lib/daily.ts); the others say themselves when they need more of a kind, such as nouns. */
+/**
+ * The fewest learned words a game can start with: match pairs and listen and pick need a few
+ * (lib/daily.ts); opposites and synonyms needs PAIRS.minItems pairs, and one learned word can ask
+ * at most two (its opposite and its synonym). The others say themselves when they need more of a
+ * kind, such as nouns.
+ */
 export function minLearned(game: string): number {
-  return game === 'match' ? MIN_PAIRS : game === 'listen' ? MIN_PICK_WORDS : 1
+  return game === 'match' ? MIN_PAIRS : game === 'listen' ? MIN_PICK_WORDS : game === 'pairs' ? Math.ceil(PAIRS.minItems / 2) : 1
 }

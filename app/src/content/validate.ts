@@ -3,7 +3,7 @@
 //   content/tests/a1-01.json: items[3].answers[0]: "..." does not use exactly the tiles [...]
 import type { z } from 'zod'
 import { exerciseSections, exerciseTestId, isCourseLesson, isThemeLesson, MISTAKE_PREFIX, REDO_ID_MAX, redoTestId, sectionIndex } from './lessons.ts'
-import { CuratedGlossary, Extras, GeneratedGlossary, Lesson, LessonProgress, Result, ReviewLogEntry, ReviewState, Test, Topics, WordList, WordSets } from './schema.ts'
+import { CuratedGlossary, Extras, GeneratedGlossary, Lesson, LessonProgress, Result, ReviewLogEntry, ReviewState, Test, Topics, WordList, WordPairs, WordSets } from './schema.ts'
 import type {
   CourseLesson,
   CuratedGlossary as CuratedGlossaryT,
@@ -18,6 +18,7 @@ import type {
   ThemeLesson,
   Topics as TopicsT,
   Word as WordT,
+  WordPair as WordPairT,
   WordSet as WordSetT,
 } from './schema.ts'
 
@@ -95,6 +96,10 @@ export function parseWordSets(file: string, data: unknown): WordSetT[] {
   return parseWith(WordSets, file, data).sets
 }
 
+export function parseWordPairs(file: string, data: unknown): WordPairT[] {
+  return parseWith(WordPairs, file, data).pairs
+}
+
 export function parseLessonProgress(file: string, data: unknown): LessonProgressT {
   return parseWith(LessonProgress, file, data)
 }
@@ -151,6 +156,8 @@ export function checkAllContent(input: {
   extras: RawFile
   /** content/sets.json; tests that are not about word sets leave it out. */
   sets?: RawFile
+  /** content/pairs.json; tests that are not about word pairs leave it out. */
+  pairs?: RawFile
 }): {
   tests: TestT[]
   words: WordT[]
@@ -159,6 +166,7 @@ export function checkAllContent(input: {
   topics: TopicsT
   extras: ExtrasT
   sets: WordSetT[]
+  pairs: WordPairT[]
   problems: string[]
 } {
   const problems: string[] = []
@@ -205,9 +213,17 @@ export function checkAllContent(input: {
     })
     problems.push(...setReferences(setsFile.file, sets, words))
   }
+  let pairs: WordPairT[] = []
+  const pairsFile = input.pairs
+  if (pairsFile) {
+    collect(() => {
+      pairs = parseWordPairs(pairsFile.file, parseJsonText(pairsFile.file, pairsFile.text))
+    })
+    problems.push(...pairReferences(pairsFile.file, pairs, words, themes))
+  }
   problems.push(...crossReferences(tests, words, lessons, themes))
   problems.push(...topicReferences(input.topics.file, topics, [...lessons, ...themes]))
-  return { tests, words, lessons, themes, topics, extras, sets, problems }
+  return { tests, words, lessons, themes, topics, extras, sets, pairs, problems }
 }
 
 /** Every word of a word set exists in content/words.json. */
@@ -219,6 +235,26 @@ function setReferences(file: string, sets: WordSetT[], words: WordT[]): string[]
       if (!ids.has(w)) problems.push(`${file}: sets[${si}].words[${wi}]: no word with id "${w}" in content/words.json`)
     }),
   )
+  return problems
+}
+
+/**
+ * Every word of a pair exists in content/words.json, and none belongs to a lesson for some learners
+ * only (DECISIONS.md #95): such a card's meaning may be in that learner's language, and the game
+ * shows it to everyone.
+ */
+function pairReferences(file: string, pairs: WordPairT[], words: WordT[], themes: ThemeLesson[]): string[] {
+  const ids = new Set(words.map((w) => w.id))
+  const limitedOwner = new Map<string, string>()
+  for (const l of themes) if (l.onlyFor !== undefined) for (const id of l.words ?? []) limitedOwner.set(id, l.id)
+  const problems: string[] = []
+  pairs.forEach((p, i) => {
+    for (const side of ['a', 'b'] as const) {
+      const id = p[side]
+      if (!ids.has(id)) problems.push(`${file}: pairs[${i}].${side}: no word with id "${id}" in content/words.json`)
+      else if (limitedOwner.has(id)) problems.push(`${file}: pairs[${i}].${side}: "${id}" belongs to ${limitedOwner.get(id)}, which only some learners see (its meaning may not be in English)`)
+    }
+  })
   return problems
 }
 

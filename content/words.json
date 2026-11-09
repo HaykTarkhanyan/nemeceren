@@ -1067,5 +1067,9 @@
   {"id": "beweisen", "de": "beweisen", "en": "to prove", "example": {"de": "Kannst du das beweisen?", "en": "Can you prove that?"}, "level": "B1", "tags": ["theme", "weisse-wand"], "added": "2026-11-09"},
   {"id": "kriegen", "de": "kriegen", "en": "to get (spoken)", "example": {"de": "Ich kriege 15 Euro in der Stunde für meine Arbeit.", "en": "I get 15 euros an hour for my work."}, "level": "A1", "tags": ["theme", "weisse-wand"], "added": "2026-11-09"},
   {"id": "werden", "de": "werden", "en": "to become, to get (du wirst, er wird)", "example": {"de": "Es wird kalt.", "en": "It's getting cold."}, "level": "A1", "tags": ["verben", "alltagsverben"], "added": "2026-11-09"},
-  {"id": "fuehlen", "de": "fühlen", "en": "to feel; sich fühlen = to feel (well, ill, tired)", "example": {"de": "Ich fühle mich heute gut.", "en": "I feel good today."}, "level": "A2", "tags": ["verben", "alltagsverben"], "added": "2026-11-09"}
+  {"id": "fuehlen", "de": "fühlen", "en": "to feel; sich fühlen = to feel (well, ill, tired)", "example": {"de": "Ich fühle mich heute gut.", "en": "I feel good today."}, "level": "A2", "tags": ["verben", "alltagsverben"], "added": "2026-11-09"},
+  {"id": "sonnabend", "de": "der Sonnabend", "plural": "die Sonnabende", "en": "Saturday (northern and eastern Germany)", "example": {"de": "Am Sonnabend gehen wir auf den Markt.", "en": "On Saturday we go to the market."}, "level": "A1", "tags": ["tage", "pairs"], "added": "2026-11-09"},
+  {"id": "arm-2", "de": "arm", "en": "poor", "example": {"de": "Sie haben nicht viel Geld, sie sind arm.", "en": "They don't have much money, they are poor."}, "level": "A2", "tags": ["adjektive", "pairs"], "added": "2026-11-09"},
+  {"id": "haesslich", "de": "hässlich", "en": "ugly", "example": {"de": "Ich finde das Kleid hässlich. Es gefällt mir nicht.", "en": "I think the dress is ugly. I don't like it."}, "level": "A2", "tags": ["adjektive", "pairs"], "added": "2026-11-09"},
+  {"id": "trocken", "de": "trocken", "en": "dry", "example": {"de": "Die Wäsche ist bald trocken.", "en": "The washing will soon be dry."}, "level": "A2", "tags": ["adjektive", "pairs"], "added": "2026-11-09"}
 ]

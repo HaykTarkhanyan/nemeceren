@@ -466,15 +466,15 @@ function LessonView({ lesson, linked, station }: { lesson: Lesson; linked: numbe
               <p>
                 <strong>Station done.</strong>
               </p>
-              <div className="row">
+              <div className="row actions">
+                <a className="btn" href={link('line')}>
+                  Back to the line
+                </a>
                 {nextHref && (
                   <a className="btn primary" href={nextHref}>
                     Next station
                   </a>
                 )}
-                <a className="btn" href={link('line')}>
-                  Back to the line
-                </a>
               </div>
             </>
           )}

@@ -1,6 +1,9 @@
+import { readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
-import type { CourseLesson, ReviewLogEntry, ReviewState, ThemeLesson } from '../content/schema.ts'
-import { dueOnDay, GOAL_ROUND_MIN, lessonOfWords, pickMode, ROUND_SIZE, roundSummary, splitArticle } from './review.ts'
+import type { CourseLesson, ReviewLogEntry, ReviewState, ThemeLesson, Word } from '../content/schema.ts'
+import { spokenWordRight } from './games.ts'
+import { dueOnDay, GOAL_ROUND_MIN, lessonOfWords, pickMode, ROUND_SIZE, roundSummary, splitArticle, spokenAnswer, suggestedGrade } from './review.ts'
+import { Rating } from './srs.ts'
 
 const entry = (wordId: string, rating: 1 | 2 | 3 | 4, extra: Partial<ReviewLogEntry> = {}): ReviewLogEntry => ({
   ts: '2026-11-08T10:00:00.000Z',
@@ -70,5 +73,60 @@ describe('review rounds', () => {
     expect(map.get('hallo')?.id).toBe('u1-01')
     expect(map.get('lied')?.id).toBe('t-song')
     expect(map.get('nothing')).toBeUndefined()
+  })
+})
+
+// The real word cards (content/load.ts needs Vite).
+const realWords = JSON.parse(readFileSync(new URL('../../../content/words.json', import.meta.url), 'utf-8')) as Word[]
+
+describe('saying the German on an English to German card', () => {
+  it('a noun said with its article is right; case and punctuation do not count', () => {
+    expect(spokenAnswer('der Tisch', ['der Tisch'])).toEqual({ answer: 'der Tisch', check: { correct: true, nearMiss: null } })
+    expect(spokenAnswer('der Tisch', ['Der Tisch.']).check.correct).toBe(true)
+    expect(spokenAnswer('Noch einmal, bitte', ['noch einmal bitte']).check.correct).toBe(true)
+    expect(spokenAnswer('heißen', ['heißen']).check.correct).toBe(true)
+  })
+
+  it('a noun without its article, or with another one, is the near miss a typed answer gets', () => {
+    expect(spokenAnswer('der Tisch', ['Tisch']).check).toEqual({ correct: false, nearMiss: ['article_missing'] })
+    expect(spokenAnswer('der Tisch', ['die Tisch']).check).toEqual({ correct: false, nearMiss: ['article_wrong'] })
+    // The article belongs right before the noun: "der" inside the phrase is not it.
+    expect(spokenAnswer('das Ende der Woche', ['Ende der Woche']).check.nearMiss).toEqual(['article_missing'])
+    expect(spokenAnswer('das Ende der Woche', ['das Ende der Woche']).check.correct).toBe(true)
+  })
+
+  it('another word, or a part of the German, is wrong with no near miss', () => {
+    expect(spokenAnswer('der Tisch', ['der Fisch']).check).toEqual({ correct: false, nearMiss: null })
+    expect(spokenAnswer('Guten Morgen', ['Morgen']).check).toEqual({ correct: false, nearMiss: null })
+  })
+
+  it('takes the alternative closest to the German, with the article', () => {
+    expect(spokenAnswer('der Tisch', ['Fisch', 'Tisch', 'der Tisch']).answer).toBe('der Tisch')
+    expect(spokenAnswer('der Tisch', ['Fisch', 'Tisch']).answer).toBe('Tisch')
+  })
+
+  it('hears the noun by the rule of "Say the words" (spokenWordRight)', () => {
+    for (const [de, heard] of [['der Tisch', 'der Tisch'], ['der Tisch', 'Fisch'], ['Guten Morgen', 'guten Morgen!'], ['Guten Morgen', 'Morgen'], ['die Uhr', 'die Uhr ist']]) {
+      const nounHeard = spokenAnswer(de, [heard]).check.correct || spokenAnswer(de, [heard]).check.nearMiss !== null
+      expect(nounHeard, `${de} / ${heard}`).toBe(spokenWordRight(de, heard))
+    }
+  })
+
+  it('on every real word card: saying the German exactly is right, and a noun without its article is not', () => {
+    expect(realWords.length).toBeGreaterThan(500)
+    for (const w of realWords) {
+      expect(spokenAnswer(w.de, [w.de]).check.correct, w.de).toBe(true)
+      const { article, rest } = splitArticle(w.de)
+      if (article) expect(spokenAnswer(w.de, [rest]).check.nearMiss, w.de).toEqual(['article_missing'])
+    }
+  })
+
+  it('suggests Good for a right answer typed or said, Again for a wrong typed one, nothing after a mishearing', () => {
+    const typed = (correct: boolean) => ({ answer: 'x', check: { correct, nearMiss: null } })
+    expect(suggestedGrade({ typed: typed(true), spoken: false })).toBe(Rating.Good)
+    expect(suggestedGrade({ typed: typed(true), spoken: true })).toBe(Rating.Good)
+    expect(suggestedGrade({ typed: typed(false), spoken: false })).toBe(Rating.Again)
+    expect(suggestedGrade({ typed: typed(false), spoken: true })).toBeNull()
+    expect(suggestedGrade(null)).toBeNull()
   })
 })

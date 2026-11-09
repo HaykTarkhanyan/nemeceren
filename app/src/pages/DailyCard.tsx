@@ -9,10 +9,9 @@ import { MAX_FREEZES, MILESTONES } from '../lib/goal.ts'
 import type { GoalStreak } from '../lib/goal.ts'
 import { link } from '../lib/router.ts'
 import { updateSettings, useSettings } from '../lib/settings.ts'
-import { useSpeech } from '../lib/speech.ts'
 import { counts } from '../lib/srs.ts'
 import { useProgress } from '../lib/storage.ts'
-import { canListen, currentMistakes, GAME_LABEL, mixPlan, mixSummary, PRACTICE_GAMES, studyPool } from './DailyPage.tsx'
+import { currentMistakes, GAME_LABEL, mixPlan, mixSummary, PRACTICE_GAMES, studyPool } from './DailyPage.tsx'
 
 const RING_R = 18
 const RING_C = 2 * Math.PI * RING_R
@@ -43,7 +42,7 @@ export const DailyCard = memo(function DailyCard({ goal }: { goal: GoalStreak })
   const progress = useProgress()
   const settings = useSettings()
   const now = new Date()
-  const plan = mixPlan(progress, settings, now, canListen(useSpeech()))
+  const plan = mixPlan(progress, settings, now)
   const mistakesDue = currentMistakes(progress, now).due.length
   const due = counts(studyPool(progress), progress.reviewState, now, settings.newPerDay).due
   const nextMilestone = MILESTONES.find((m) => m > goal.current)

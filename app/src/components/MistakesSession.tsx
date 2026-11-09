@@ -113,7 +113,7 @@ function One({ mistake, label, onNext }: { mistake: Mistake; label: string; onNe
               )}
             </div>
           )}
-          <div className="row">
+          <div className="row actions">
             {reread && (
               <a className="btn small" href={link('lesson', reread.id)}>
                 Reread {lessonLabel(reread)}: {reread.title}

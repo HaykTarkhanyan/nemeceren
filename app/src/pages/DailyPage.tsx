@@ -1,7 +1,8 @@
 // The light daily mode (design: _knowledge/2026-11-06_light-daily-mode-design.md, DECISIONS.md #77):
-// "#/daily" runs the daily mix (a match-pairs warm-up, due word reviews, a few new words, listen
-// and pick), "#/daily/<game>" runs one game on its own: match, listen, and the practice games of
-// _knowledge/2026-11-07_practice-games-design.md (speak, sentences, articles, gaps, build), each
+// "#/daily" runs the daily mix (a match-pairs warm-up, due word reviews, a few new words, your
+// mistakes), "#/daily/<game>" runs one game on its own: match, listen, and the practice games of
+// _knowledge/2026-11-07_practice-games-design.md (speak, sentences, articles, gaps, build) and
+// opposites and synonyms (pairs, content/pairs.json), each
 // also on the words of one lesson or several ("#/daily/<game>/<lesson id>[,<lesson id>...]", from
 // the Words map). The games are practice and never change the review schedule; the reviews and new
 // words inside the mix are normal reviews.
@@ -12,6 +13,7 @@ import { ArticleDrill } from '../components/ArticleDrill.tsx'
 import { BuildSentence } from '../components/BuildSentence.tsx'
 import type { GameBack } from '../components/GameFrame.tsx'
 import { GapFill, unitOfWord } from '../components/GapFill.tsx'
+import { PairsGame } from '../components/PairsGame.tsx'
 import { SpeakSentences, SpeakWords } from '../components/SpeakGames.tsx'
 import { ListenPick } from '../components/ListenPick.tsx'
 import type { PickStats } from '../components/ListenPick.tsx'
@@ -86,8 +88,8 @@ export function canListen(speech: SpeechInfo): boolean {
   return speech.supported && !(speech.loaded && speech.voices.length === 0)
 }
 
-/** What the daily mix would do now. `listen` false: no German voice, so no listen and pick. */
-export function mixPlan(progress: ProgressView, settings: Settings, now: Date, listen = true): MixPlan {
+/** What the daily mix would do now. */
+export function mixPlan(progress: ProgressView, settings: Settings, now: Date): MixPlan {
   const state = progress.reviewState
   const pool = studyPool(progress)
   const { set, problem } = activeSet(settings)
@@ -104,7 +106,7 @@ export function mixPlan(progress: ProgressView, settings: Settings, now: Date, l
   )
   const mistakes = currentMistakes(progress, now).due.slice(0, MIX.maxMistakes)
   return {
-    steps: mixSteps({ introduced: introduced(pool, state).length, due, newAvailable: newCount, mistakes: mistakes.length, canListen: listen }),
+    steps: mixSteps({ introduced: introduced(pool, state).length, due, newAvailable: newCount, mistakes: mistakes.length }),
     due,
     mistakes,
     newWords: fresh.words,
@@ -114,7 +116,7 @@ export function mixPlan(progress: ProgressView, settings: Settings, now: Date, l
   }
 }
 
-/** "about 12 minutes: a warm-up, 8 reviews, 5 new words, listen and pick". */
+/** "about 12 minutes: a warm-up, 8 reviews, 5 new words". */
 export function mixSummary(plan: MixPlan): string {
   const parts = plan.steps.map((s) =>
     s === 'warmup'
@@ -123,16 +125,14 @@ export function mixSummary(plan: MixPlan): string {
         ? `${plan.due} review${plan.due === 1 ? '' : 's'}`
         : s === 'new'
           ? `${plan.newCount} new word${plan.newCount === 1 ? '' : 's'}`
-          : s === 'listen'
-            ? 'listen and pick'
-            : `${plan.mistakes.length} of your mistake${plan.mistakes.length === 1 ? '' : 's'}`,
+          : `${plan.mistakes.length} of your mistake${plan.mistakes.length === 1 ? '' : 's'}`,
   )
-  const minutes = 2 * (plan.steps.includes('warmup') ? 1 : 0) + Math.ceil(plan.due * 0.3) + plan.newCount + (plan.steps.includes('listen') ? 2 : 0) + plan.mistakes.length
+  const minutes = 2 * (plan.steps.includes('warmup') ? 1 : 0) + Math.ceil(plan.due * 0.3) + plan.newCount + plan.mistakes.length
   return `About ${Math.max(2, minutes)} minutes: ${parts.join(', ')}.`
 }
 
 /** The practice games of #/daily/<game> (design: _knowledge/2026-11-07_practice-games-design.md); each can take the words of one lesson or several: #/daily/<game>/<lesson id>[,<lesson id>...]. */
-export const PRACTICE_GAMES = ['speak', 'sentences', 'articles', 'gaps', 'build'] as const
+export const PRACTICE_GAMES = ['speak', 'sentences', 'articles', 'gaps', 'build', 'pairs'] as const
 export type PracticeGameName = (typeof PRACTICE_GAMES)[number]
 export const GAME_LABEL: Record<PracticeGameName | 'match' | 'listen', string> = {
   match: 'Match pairs',
@@ -142,6 +142,7 @@ export const GAME_LABEL: Record<PracticeGameName | 'match' | 'listen', string> =
   articles: 'der, die, das',
   gaps: 'Fill the gap',
   build: 'Build the sentence',
+  pairs: 'Opposites and synonyms',
 }
 
 /** `lessons` is the part after the game: one lesson id or several, joined by commas (lib/vocabMap.ts lessonsPart). */
@@ -208,6 +209,8 @@ function PracticeGame({ game, lessons }: { game: PracticeGameName; lessons: stri
       return <GapFill key={run} {...props} pool={scope.pool} />
     case 'build':
       return <BuildSentence key={run} {...props} pool={scope.pool} />
+    case 'pairs':
+      return <PairsGame key={run} {...props} />
   }
 }
 
@@ -215,16 +218,14 @@ interface Done {
   warmup?: MatchStats
   reviews?: RunStats
   fresh?: RunStats
-  listen?: PickStats
   mistakes?: MistakeStats
 }
 
 function Mix() {
   const progress = useProgress()
   const settings = useSettings()
-  const speech = useSpeech()
   const state = progress.reviewState
-  const [plan] = useState(() => mixPlan(progress, settings, new Date(), canListen(speech)))
+  const [plan] = useState(() => mixPlan(progress, settings, new Date()))
   const [startedAt] = useState(() => Date.now())
   const [step, setStep] = useState(0)
   const [done, setDone] = useState<Done>({})
@@ -291,7 +292,6 @@ function Mix() {
           />
         </>
       )}
-      {current === 'listen' && <Listen pool={pool} state={state} n={MIX.listenItems} onDone={(s) => finish({ listen: s })} />}
       {current === 'mistakes' && <MistakesSession mistakes={plan.mistakes} onDone={(s) => finish({ mistakes: s })} />}
     </div>
   )
@@ -310,21 +310,6 @@ function Warmup({ pool, state, onDone }: { pool: StudyWord[]; state: ReviewState
   return <MatchPairs rounds={rounds} state={state} onDone={onDone} />
 }
 
-function Listen({ pool, state, n, onDone }: { pool: StudyWord[]; state: ReviewState; n: number; onDone: (s: PickStats) => void }) {
-  const [items] = useState(() => pickItems(pool, state, n))
-  const listen = canListen(useSpeech())
-  // Skips listen and pick once when there are too few words or no German voice (also when StrictMode runs effects twice).
-  const skipped = useRef(false)
-  const skip = items.length === 0 || !listen
-  useEffect(() => {
-    if (!skip || skipped.current) return
-    skipped.current = true
-    onDone({ right: 0, total: 0 })
-  }, [skip])
-  if (skip) return null
-  return <ListenPick items={items} state={state} onDone={onDone} />
-}
-
 function MixEnd({ done, startedAt, nothing }: { done: Done; startedAt: number; nothing: boolean }) {
   const progress = useProgress()
   const lesson = nextLesson(content.lessons, progress.lessonProgress)
@@ -333,7 +318,6 @@ function MixEnd({ done, startedAt, nothing }: { done: Done; startedAt: number; n
   if (done.warmup && done.warmup.pairs > 0) lines.push(`Matched ${done.warmup.pairs} pairs, ${done.warmup.firstTry} on the first try.`)
   if (done.reviews && done.reviews.cards > 0) lines.push(`Reviewed ${done.reviews.cards} word${done.reviews.cards === 1 ? '' : 's'} (${done.reviews.again} marked Again).`)
   if (done.fresh && done.fresh.fresh > 0) lines.push(`Learned ${done.fresh.fresh} new word${done.fresh.fresh === 1 ? '' : 's'}.`)
-  if (done.listen && done.listen.total > 0) lines.push(`Listen and pick: ${done.listen.right} of ${done.listen.total} right.`)
   if (done.mistakes) lines.push(mistakesLine(done.mistakes))
   return (
     <div className="stack">

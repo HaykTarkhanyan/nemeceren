@@ -166,10 +166,17 @@ export class ErrorBoundary extends Component<{ children: ReactNode }, { error: E
   }
   render() {
     if (this.state.error) {
+      // The page address and the first stack frames: in the built app the names are minified, but
+      // the frame positions map back to the source with a sourcemap build of the same commit.
+      const frames = (this.state.error.stack ?? '').split('\n').slice(0, 6).map((l) => l.trim()).join('\n')
       return (
         <div className="alert error" role="alert">
           <strong>Something broke on this page:</strong>
           <pre className="pre">{this.state.error.message}</pre>
+          <details>
+            <summary>Details for Claude (screenshot or copy this)</summary>
+            <pre className="pre small">{`${window.location.hash || '#/'}\n${frames}`}</pre>
+          </details>
         </div>
       )
     }

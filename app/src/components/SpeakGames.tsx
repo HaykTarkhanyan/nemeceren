@@ -3,12 +3,13 @@
 // (#/daily/sentences). Each answer is said into the mic (the browser's recognition, lib/recognition.ts) or typed. A recognition miss is never
 // the learner's error: it is not logged, and offers another try or typing. Answers are practice.
 import { useEffect, useRef, useState } from 'react'
+import { TypoDiff } from './TypoDiff.tsx'
 import type { ReviewState } from '../content/schema.ts'
 import type { StudyWord } from '../lib/customWords.ts'
 import { checkSentence, GAMES, gameWords, SENTENCE_START, sentenceTry, spokenSentence, spokenWordRight } from '../lib/games.ts'
 import type { SentenceState } from '../lib/games.ts'
-import { useRecognition } from '../lib/recognition.ts'
-import type { Heard } from '../lib/recognition.ts'
+import { makeResultRouter, useRecognition } from '../lib/recognition.ts'
+import type { Heard, SessionResult } from '../lib/recognition.ts'
 import { bestAlternative } from '../lib/speaking.ts'
 import { splitArticle } from '../lib/review.ts'
 import { speak } from '../lib/speech.ts'
@@ -24,6 +25,9 @@ import { PlayButtons } from './Speaker.tsx'
 
 /** After a spoken right answer, the next word comes after this long. */
 const AUTO_NEXT_MS = 1500
+
+/** The app's voice reads one word (or a slow replay) in well under this; longer means `speaking` is stuck. */
+const VOICE_STUCK_MS = 8000
 
 const NO_RECOGNITION = 'This browser has no speech recognition (it works in Chrome and Edge), so type your answers.'
 
@@ -49,9 +53,51 @@ export function SpeakWords({ words, state, back, onAgain }: GameProps) {
   const [outcomes, setOutcomes] = useState<ReadonlyMap<string, WordOutcome>>(() => new Map())
   const [typing, setTyping] = useState(!rec.supported)
   const [note, setNote] = useState<string | null>(rec.supported ? null : NO_RECOGNITION)
-  // After the first tap on the mic, every next word starts listening by itself (Hayk, 2026-11-08).
-  const [handsFree, setHandsFree] = useState(false)
+  // Hands-free (Hayk, 2026-11-08): the first tap on the mic starts ONE mic session for the round,
+  // and each word on screen takes the results heard after it appeared. Android beeps at every
+  // start and stop of the mic, so it is not started again for each word (2026-11-09).
+  // What the mic hears while the app's own voice speaks is dropped. A voice "speaking" for longer
+  // than any word is taken as stuck (Chrome can leave `speaking` on), so the mic never goes deaf.
+  const voiceSince = useRef<number | null>(null)
+  const [router] = useState(() =>
+    makeResultRouter(() => window.speechSynthesis?.speaking === true && (voiceSince.current === null || Date.now() - voiceSince.current < VOICE_STUCK_MS)),
+  )
+  const roundOver = queue.length === 0 || index >= queue.length
   const frame = { title: 'Say the words', back, sound, onSound: toggleSound }
+
+  useEffect(() => {
+    if (!rec.listening) return
+    const t = window.setInterval(() => {
+      if (window.speechSynthesis?.speaking !== true) voiceSince.current = null
+      else voiceSince.current ??= Date.now()
+    }, 250)
+    return () => window.clearInterval(t)
+  }, [rec.listening])
+
+  // The mic stops when the round ends or typing takes over (leaving the game: useRecognition).
+  const cancelMic = rec.cancel
+  useEffect(() => {
+    if (roundOver || typing) cancelMic()
+  }, [roundOver, typing, cancelMic])
+  // The app goes to the background: the mic stops, and a tap starts it again.
+  useEffect(() => {
+    const onHide = () => {
+      if (document.hidden) cancelMic()
+    }
+    document.addEventListener('visibilitychange', onHide)
+    return () => document.removeEventListener('visibilitychange', onHide)
+  }, [cancelMic])
+
+  function startMic() {
+    setNote(null)
+    rec.startSession({
+      onResult: router.route,
+      onEnd: (h) => {
+        if (h.blocked) setTyping(true)
+        setNote(h.blocked ? `${h.message} Type your answers instead.` : h.message)
+      },
+    })
+  }
 
   if (queue.length === 0) {
     return (
@@ -105,8 +151,8 @@ export function SpeakWords({ words, state, back, onAgain }: GameProps) {
         typing={typing}
         sound={sound}
         rec={rec}
-        handsFree={handsFree}
-        onHandsFree={() => setHandsFree(true)}
+        onStartMic={startMic}
+        attach={(take) => router.attach(rec.sessionMark(), take)}
         onTyping={(on, why) => {
           setTyping(on)
           setNote(why)
@@ -129,16 +175,16 @@ function SpeakWordCard(props: {
   typing: boolean
   sound: boolean
   rec: ReturnType<typeof useRecognition>
-  /** The mic was started by hand once this round: this card starts listening by itself. */
-  handsFree: boolean
-  onHandsFree: () => void
+  /** Starts the round's mic session (a tap on the mic); it stays on for the next words. */
+  onStartMic: () => void
+  /** This card takes the session's results heard from now on; the returned function lets go. */
+  attach: (take: (r: SessionResult) => void) => () => void
   onTyping: (on: boolean, why: string | null) => void
   onDone: (result: 'said' | 'typed' | 'wrong' | 'skipped') => void
 }) {
-  const { word, state, again, typing, sound, rec, handsFree, onHandsFree, onTyping, onDone } = props
+  const { word, state, again, typing, sound, rec, onStartMic, attach, onTyping, onDone } = props
   const [shownAt] = useState(() => performance.now())
   const [heard, setHeard] = useState<{ text: string; right: boolean } | null>(null)
-  const [missNote, setMissNote] = useState<string | null>(null)
   const [typed, setTyped] = useState<{ text: string; check: Comparison } | null>(null)
   const [gaveUp, setGaveUp] = useState(false)
   const said = heard?.right === true
@@ -151,54 +197,36 @@ function SpeakWordCard(props: {
   useEffect(() => {
     if (revealed && sound && !said) speak(word.de)
   }, [revealed])
-  // Said right: the next word comes by itself.
+  // Said right: the next word comes by itself, and the mic stays on for it.
   useEffect(() => {
     if (!said) return
     const t = window.setTimeout(() => onDone('said'), AUTO_NEXT_MS)
     return () => window.clearTimeout(t)
   }, [said])
-  // Hands-free: listen as soon as the card shows, once the app's own voice has finished, so the mic
-  // does not hear it.
+  // While this card asks (not answered, not typing), it checks what the round's mic session hears
+  // from now on: a live result that is right counts at once, a final one that is not shows what was
+  // heard, and the mic keeps listening for another try. `taken` stops a second result from counting
+  // before the card shows "Right" (and ignores the pause before the next word).
+  const taken = useRef(false)
   useEffect(() => {
-    if (!handsFree || typing) return
-    let tries = 0
-    const t = window.setInterval(() => {
-      tries += 1
-      if (window.speechSynthesis?.speaking && tries < 20) return
-      window.clearInterval(t)
-      listen(false)
-    }, 150)
-    return () => window.clearInterval(t)
-  }, [])
-  useEnterKey(revealed, () => onDone(result))
-  // A recognition still running when this card goes is dropped, so it never lands on the next word.
-  const cancel = rec.cancel
-  useEffect(() => () => cancel(), [cancel])
-
-  /** Type instead or I don't know: stop listening first, so a late result is not taken for this word. */
-  function leaveMic(then: () => void) {
-    cancel()
-    then()
-  }
-
-  function listen(byHand: boolean) {
-    if (byHand) onHandsFree()
-    setMissNote(null)
+    if (typing || revealed) return
     const rest = splitArticle(word.de).rest
-    rec.listen((h: Heard) => {
-      if (h.kind === 'none') {
-        if (h.blocked) onTyping(true, `${h.message} Type your answers instead.`)
-        else setMissNote(h.message)
-        return
-      }
-      const best = bestAlternative(rest, h.alternatives)
+    return attach((r) => {
+      if (taken.current) return
+      const best = bestAlternative(rest, r.alternatives)
       const right = spokenWordRight(word.de, best)
+      if (!right && !r.final) return
+      if (right) taken.current = true
       setHeard({ text: best, right })
       if (right) savePractice({ state, word, mode: 'production', right: true, text: best, timeMs: Math.round(performance.now() - shownAt) })
-    }, {
-      // The right word ends the listen at once: no Stop, no waiting for silence.
-      accept: (alternatives) => spokenWordRight(word.de, bestAlternative(rest, alternatives)),
     })
+  }, [typing, revealed])
+  useEnterKey(revealed, () => onDone(result))
+
+  /** Type instead: the mic stops (the round's session), so nothing more is taken for this word. */
+  function typeInstead() {
+    rec.cancel()
+    onTyping(true, null)
   }
 
   function check(text: string) {
@@ -224,23 +252,22 @@ function SpeakWordCard(props: {
 
         {!revealed && !typing && (
           <div className="stack">
-            <MicButton listening={rec.listening} onStart={() => listen(true)} onStop={rec.stop} label={heard ? 'Try again' : 'Say it'} />
+            <MicButton listening={rec.listening} onStart={onStartMic} onStop={rec.stopSession} label={heard ? 'Try again' : 'Say it'} />
             {heard && !heard.right && (
               <p className="small warn-text">
-                Heard: "{heard.text}". That was not recognised as the word. Try again, type it, or tap I don't know.
+                Heard: "{heard.text}". That was not recognised as the word. {rec.listening ? 'Say it again' : 'Try again'}, type it, or tap I don't know.
               </p>
             )}
-            {missNote && <p className="small warn-text">{missNote}</p>}
-            <div className="row">
-              <button type="button" className="btn small" onClick={() => leaveMic(() => onTyping(true, null))}>
+            <div className="row actions">
+              <button type="button" className="btn small" onClick={typeInstead}>
                 Type instead
               </button>
-              <button type="button" className="btn small" onClick={() => leaveMic(() => setGaveUp(true))}>
+              <button type="button" className="btn small" onClick={() => setGaveUp(true)}>
                 I don't know
               </button>
             </div>
             <p className="muted small">
-              Say the German{handsFree ? ' (the mic starts by itself for each word)' : ''}. Nouns: with der, die or das.
+              Say the German{rec.listening ? ' (the mic stays on for the next words)' : ''}. Nouns: with der, die or das.
             </p>
           </div>
         )}
@@ -248,7 +275,7 @@ function SpeakWordCard(props: {
         {!revealed && typing && (
           <>
             <TypeAnswer label="German word" onCheck={check} />
-            <div className="row">
+            <div className="row actions">
               {rec.supported && (
                 <button type="button" className="btn small" onClick={() => onTyping(false, null)}>
                   Use the mic
@@ -264,6 +291,7 @@ function SpeakWordCard(props: {
 
         {said && <div className="alert ok">Right: "{heard!.text}". Next word...</div>}
         {typed && <div className={`alert ${typed.check.correct ? 'ok' : 'error'}`}>{typed.check.correct ? 'Correct!' : `Not quite${near ? ` (${near})` : ''}: you typed "${typed.text}".`}</div>}
+        {typed && !typed.check.correct && typed.text.trim() !== '' && <TypoDiff typed={typed.text.trim()} expected={word.de} />}
         {gaveUp && !answered && <p className="small muted">It comes back once at the end.</p>}
         {revealed && (
           <button type="button" className="btn primary" onClick={() => onDone(result)}>
@@ -418,7 +446,7 @@ function SentenceCard(props: {
           <div className="stack">
             <MicButton listening={rec.listening} onStart={listen} onStop={rec.stop} label={spoken ? 'Say it again' : 'Say it'} />
             {missNote && <p className="small warn-text">{missNote}</p>}
-            <div className="row">
+            <div className="row actions">
               <button type="button" className="btn small" onClick={() => leaveMic(() => onTyping(true, null))}>
                 Type instead
               </button>
@@ -431,7 +459,7 @@ function SentenceCard(props: {
         {!done && typing && (
           <>
             <TypeAnswer label="German sentence" onCheck={check} />
-            <div className="row">
+            <div className="row actions">
               {rec.supported && (
                 <button type="button" className="btn small" onClick={() => onTyping(false, null)}>
                   Use the mic
@@ -462,6 +490,7 @@ function SentenceCard(props: {
           </div>
         )}
         {typed && <div className={`alert ${typed.check.correct ? 'ok' : 'error'}`}>{typed.check.correct ? 'Correct!' : `Not quite${near ? ` (${near})` : ''}: you typed "${typed.text}".`}</div>}
+        {typed && !typed.check.correct && typed.text.trim() !== '' && <TypoDiff typed={typed.text.trim()} expected={expected} />}
 
         {showAnswer && (
           <div className="example">

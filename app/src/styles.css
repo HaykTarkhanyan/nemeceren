@@ -101,6 +101,11 @@ main.container {
   gap: 8px;
 }
 
+/* A row of action buttons: right-aligned, the main one last, so Next sits under the right thumb (Hayk, 2026-11-09). */
+.row.actions {
+  justify-content: flex-end;
+}
+
 .row.between {
   justify-content: space-between;
 }
@@ -2638,6 +2643,41 @@ ol.line {
   color: var(--warn);
 }
 
+/* Opposites and synonyms (#/daily/pairs) */
+.pair-task {
+  margin: 0;
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.pair-reveal {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: var(--bg);
+}
+
+.pair-word {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  font-size: 1.15rem;
+}
+
+.pair-word.strong .pair-de {
+  font-weight: 600;
+}
+
+.pair-link {
+  margin: 0;
+}
+
 .article-buttons {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -2905,4 +2945,50 @@ ol.line {
   padding: 10px 12px;
   border-radius: var(--radius);
   background: color-mix(in srgb, var(--c) 10%, var(--surface));
+}
+
+/* A wrong typed answer above the right one, letters lined up (TypoDiff, DECISIONS.md #103). */
+.typo-diff {
+  overflow-x: auto;
+  padding: 6px 0;
+}
+
+.typo-line {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  white-space: pre;
+  line-height: 1.8;
+}
+
+.typo-label {
+  flex: none;
+  width: 3.2em;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.typo-text {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 1.15rem;
+}
+
+.typo-extra,
+.typo-changed {
+  color: var(--bad);
+  background: var(--bad-bg);
+  border-radius: 3px;
+}
+
+.typo-right-missing,
+.typo-right-changed {
+  color: var(--ok);
+  background: var(--ok-bg);
+  border-radius: 3px;
+}
+
+.typo-gap {
+  background: var(--border);
+  border-radius: 3px;
+  opacity: 0.5;
 }

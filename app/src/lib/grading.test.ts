@@ -107,6 +107,19 @@ describe('other types', () => {
     expect(gradeItem(item, '  ').status).toBe('wrong')
   })
 
+  it('translate: a near-identical answer is a typo, wrong at once and shown against the closest reference (DECISIONS.md #103)', () => {
+    const item: Item = { type: 'translate', direction: 'en-de', text: 'I speak a little German.', references: ['Ich spreche ein bisschen Deutsch.', 'Ich spreche ein wenig Deutsch.'] }
+    // Hayk's two real answers on 2026-11-08, which waited for Claude before.
+    for (const typo of ['Ich spreche ein bissen Deutsch', 'Ich spreche ein bischen Deutsch']) {
+      const g = gradeItem(item, typo)
+      expect(g.status).toBe('wrong')
+      expect(g.expected).toBe('Ich spreche ein bisschen Deutsch.')
+    }
+    expect(gradeItem(item, 'Ich spreche ein weniig Deutsch').expected).toBe('Ich spreche ein wenig Deutsch.')
+    // A different wording may be right: it still waits for Claude.
+    expect(gradeItem(item, 'Ich kann etwas Deutsch.').status).toBe('pending')
+  })
+
   it('write is always pending unless empty', () => {
     const item: Item = { type: 'write', prompt: 'P' }
     expect(gradeItem(item, 'Ich heiße Hayk.').status).toBe('pending')

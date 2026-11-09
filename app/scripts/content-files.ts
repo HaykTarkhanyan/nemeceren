@@ -3,7 +3,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
-import type { CourseLesson, CuratedGlossary, Extras, GeneratedGlossary, Test, ThemeLesson, Topics, Word, WordSet } from '../src/content/schema.ts'
+import type { CourseLesson, CuratedGlossary, Extras, GeneratedGlossary, Test, ThemeLesson, Topics, Word, WordPair, WordSet } from '../src/content/schema.ts'
 import { checkAllContent, ContentError, parseCuratedGlossary, parseGeneratedGlossary, parseJsonText } from '../src/content/validate.ts'
 import type { RawFile } from '../src/content/validate.ts'
 
@@ -52,6 +52,7 @@ export interface ContentOnDisk {
   topics: Topics
   extras: Extras
   sets: WordSet[]
+  pairs: WordPair[]
 }
 
 export function readContent(problems: string[]): ContentOnDisk {
@@ -74,6 +75,7 @@ export function readContent(problems: string[]): ContentOnDisk {
   const topicsPath = path.join(repoRoot, 'content', 'topics.json')
   const extrasPath = path.join(repoRoot, 'content', 'extras.json')
   const setsPath = path.join(repoRoot, 'content', 'sets.json')
+  const pairsPath = path.join(repoRoot, 'content', 'pairs.json')
   const checked = checkAllContent({
     tests: testFiles,
     words: { file: rel(wordsPath), text: readText(wordsPath, problems) ?? '' },
@@ -82,6 +84,7 @@ export function readContent(problems: string[]): ContentOnDisk {
     topics: { file: rel(topicsPath), text: readText(topicsPath, problems) ?? '' },
     extras: { file: rel(extrasPath), text: readText(extrasPath, problems) ?? '' },
     sets: { file: rel(setsPath), text: readText(setsPath, problems) ?? '' },
+    pairs: { file: rel(pairsPath), text: readText(pairsPath, problems) ?? '' },
   })
   problems.push(...checked.problems)
   return {
@@ -94,6 +97,7 @@ export function readContent(problems: string[]): ContentOnDisk {
     topics: checked.topics,
     extras: checked.extras,
     sets: checked.sets,
+    pairs: checked.pairs,
   }
 }
 

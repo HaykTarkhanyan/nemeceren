@@ -74,10 +74,7 @@ export function GameEnd({ title, back, onAgain, children }: { title: string; bac
       <h2>{title}</h2>
       {children}
       <p className="muted small">Practice: your review schedule is unchanged.</p>
-      <div className="row">
-        <button type="button" className="btn primary" onClick={onAgain}>
-          Play again
-        </button>
+      <div className="row actions">
         {back.lessons > 0 ? (
           <a className="btn" href={back.href}>
             Back to the map
@@ -92,6 +89,9 @@ export function GameEnd({ title, back, onAgain, children }: { title: string; bac
             </a>
           </>
         )}
+        <button type="button" className="btn primary" onClick={onAgain}>
+          Play again
+        </button>
       </div>
     </div>
   )

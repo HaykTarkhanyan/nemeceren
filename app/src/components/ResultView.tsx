@@ -1,5 +1,7 @@
 // Per-item feedback for a finished test, including Claude's review when the result has one.
 import type { Item, NearMissKind, Result, ResultItem, Review } from '../content/schema.ts'
+import { TypoDiff } from './TypoDiff.tsx'
+import { closestAnswer } from '../lib/charDiff.ts'
 import { GAP_MARKER } from '../content/schema.ts'
 import { askClaudeText, askSource } from '../lib/askClaude.ts'
 import { finalScore, finalStatus } from '../lib/grading.ts'
@@ -153,6 +155,13 @@ function ItemFeedback(props: {
           <span className="label">{ri.type === 'translate' ? 'Reference' : 'Correct'}</span>
           {germanExpected ? <De text={ri.expected} /> : <span>{ri.expected}</span>}
         </div>
+      )}
+      {/* A wrong typed answer lined up with the right one, so a typo shows at once (DECISIONS.md #103). */}
+      {ri.type === 'gap' && item?.type === 'gap' && ri.gaps?.map((g, i) =>
+        !g.correct && g.answer.trim() !== '' && item.answers[i] ? <TypoDiff key={`gap-${i}`} typed={g.answer.trim()} expected={closestAnswer(g.answer.trim(), item.answers[i])} /> : null,
+      )}
+      {ri.expected !== null && status !== 'correct' && germanExpected && typeof ri.answer === 'string' && ri.answer.trim() !== '' && (ri.type === 'translate' || ri.type === 'write') && (
+        <TypoDiff typed={ri.answer.trim()} expected={ri.expected} />
       )}
       {item?.explanation && <p className="explanation">{item.explanation}</p>}
       {review && (

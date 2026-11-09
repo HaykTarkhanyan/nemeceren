@@ -1,5 +1,6 @@
 // Auto-grading for every exercise type, plus helpers to build and score result files.
 import { GAP_MARKER, orderWords } from '../content/schema.ts'
+import { alignChars, similarity } from './charDiff.ts'
 import type { DiffOp, GapResult, Item, ItemStatus, NearMissKind, Result, ResultItem } from '../content/schema.ts'
 import { compareText, matchAny, normalizeSpaces } from './text.ts'
 
@@ -107,6 +108,9 @@ function stripEndPunct(s: string): string {
   return s.replace(/[.!?]+$/, '')
 }
 
+/** A translation at least this close to a reference, letter by letter, is that reference with a typo (DECISIONS.md #103). */
+export const TYPO_SIMILARITY = 0.85
+
 export function gradeItem(item: Item, answer: AnswerValue): Grade {
   switch (item.type) {
     case 'mc':
@@ -141,8 +145,15 @@ export function gradeItem(item: Item, answer: AnswerValue): Grade {
       const expected = item.references?.[0] ?? null
       if (text.trim() === '') return { status: 'wrong', nearMiss: null, expected }
       const typedKey = stripEndPunct(normalizeSpaces(text))
-      const exact = (item.references ?? []).some((r) => stripEndPunct(normalizeSpaces(r)) === typedKey)
-      return { status: exact ? 'correct' : 'pending', nearMiss: null, expected }
+      const refs = (item.references ?? []).map((r) => ({ r, key: stripEndPunct(normalizeSpaces(r)) }))
+      if (refs.some((x) => x.key === typedKey)) return { status: 'correct', nearMiss: null, expected }
+      // Nearly a reference letter for letter: that reference with a typo, wrong at once instead of
+      // waiting for Claude, and shown against it (DECISIONS.md #103). Other wordings may be right: pending.
+      const best = refs
+        .map((x) => ({ ...x, s: similarity(alignChars(typedKey, x.key)) }))
+        .reduce<{ r: string; key: string; s: number } | null>((b, x) => (b === null || x.s > b.s ? x : b), null)
+      if (best && best.s >= TYPO_SIMILARITY) return { status: 'wrong', nearMiss: compareText(typedKey, best.key).nearMiss, expected: best.r }
+      return { status: 'pending', nearMiss: null, expected }
     }
     case 'write': {
       const text = typeof answer === 'string' ? answer : ''

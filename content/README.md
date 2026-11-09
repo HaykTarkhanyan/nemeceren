@@ -9,6 +9,7 @@ Everything in this folder is written by Claude and read by the app in `app/`. Yo
 - `topics.json` - the Topics page: lesson sections worth revisiting, see [Topics](#topics-topicsjson).
 - `extras.json` - the Extras page: jokes, fun facts and everyday phrases to browse, see [Extras](#extras-page-extrasjson).
 - `sets.json` - topic word sets for the daily mode (Words page, Word sets tab), see [Word sets](#word-sets-setsjson).
+- `pairs.json` - opposites and synonyms for the "Opposites and synonyms" game, see [Word pairs](#word-pairs-pairsjson).
 - `glossary.json` (written by Claude) and `glossary.generated.json` (written by a script) - the word popups, see [Glossary](#glossary-word-popups).
 - After every edit run, in `app/`: `npm run glossary` (only if German text changed), then `npm run check-content`. check-content prints every problem as `file: field.path: message` and exits 1. The app refuses to start on invalid files (it shows the same list), and the GitHub Pages deploy fails while any problem is left, including a German word with no glossary entry.
 
@@ -110,7 +111,7 @@ Items are graded after the whole test is submitted. Hayk sees per-item feedback,
 }
 ```
 - `direction`: `"en-de"` or `"de-en"` (`text` is in the source language).
-- `references` (optional): an answer identical to one reference (spaces collapsed, final `.`/`!`/`?` ignored, case-sensitive) is marked correct. Anything else is `pending` and waits for your review. The first reference is shown to Hayk after submitting.
+- `references` (optional): an answer identical to one reference (spaces collapsed, final `.`/`!`/`?` ignored, case-sensitive) is marked correct. An answer at least 85% identical to a reference, letter by letter, is that reference with a typo: it is marked wrong at once and shown against that reference with the letters lined up (DECISIONS.md #103). Anything else is `pending` and waits for your review. So list every reasonable wording in `references`: each one missing sends a right answer to the review queue.
 
 ### `write` - free writing, always reviewed by you
 
@@ -380,6 +381,20 @@ Topic word lists outside the course order (DECISIONS.md #77). Hayk can pick one 
 - `words` are ids from `words.json`, 10 or more, each once, in the order they are learned: concrete and frequent words first, phrases later. check-content reports an unknown id.
 - A set may take words from any unit, including units Hayk has not reached: picking the set is the choice to learn them early. A word may be in several sets. New words a set needs go into `words.json` first, like any card.
 
+## Word pairs: `pairs.json`
+
+Opposites and synonyms for the practice game "Opposites and synonyms" (`#/daily/pairs`): the app shows one word of a pair with "Opposite?" or "Same meaning?", and Hayk types (or says) the other one. Either word can be asked.
+
+```json
+{ "pairs": [ { "a": "langsam", "b": "schnell", "kind": "opposite" }, { "a": "broetchen", "b": "semmel", "kind": "synonym", "note": "Semmel is the word in Bavaria and Austria." } ] }
+```
+
+- `a` and `b` are ids from `words.json`; `kind` is `opposite` or `synonym`; `note` is optional English, shown with the answer.
+- Two words are paired at most once, in either order and of either kind, and a word is never paired with itself. check-content reports an unknown id, a repeat, and a word that only a lesson with `onlyFor` lists (its meaning may not be in English).
+- Only real pairs, at A1-A2: a synonym must mean the same in normal use. Check doubtful ones in DWDS or Duden. Say in `note` when a word is regional (Sonnabend, Semmel), colloquial (kriegen), or when the pair holds in one sense only (leicht/einfach: easy, not light).
+- A word may be in several pairs (alt/neu and alt/jung). The game then accepts every partner, and also the synonyms of a right answer: "teuer, opposite?" takes billig and, through the synonym pair billig/günstig, günstig. So a synonym pair must hold in the sense its words have in their opposite pairs.
+- A partner that has no card yet goes into `words.json` first, like any card (gender and plural from `reference/german_nouns.csv`, level from `reference/goethe_wortliste.tsv`).
+
 ## Content runway
 
 How much prepared material is left for Hayk depends on Hayk's progress, which lives in Neon, so check-content (which runs without it, also in CI) only prints the content totals. The runway is on the app's Stats page ("Prepared material left": words not introduced yet and roughly how many days they last at Hayk's daily limit, untaken tests, unfinished lessons), and `uv run backend/scripts/progress.py summary` shows the words introduced and lessons done. When it runs low, write more. When something runs out completely the app says so ("No more new words prepared yet. Ask Claude for more.") instead of showing an empty screen.
@@ -489,4 +504,5 @@ The ignore list and entries must not overlap, and a word may be listed only once
 1. `cd app && npm run glossary` covers every word (curate or ignore what it lists), then `npm run check-content` prints `OK`.
 2. Each item has an `explanation` for the rule it practises.
 3. `gap` and `order` items list every correct variant you would accept, otherwise Hayk is marked wrong for a correct answer.
-4. Tell Hayk the test title; it appears at the top of the list on `http://localhost:5173/`.
+4. Feedback is instant wherever possible (Hayk, 2026-11-09, DECISIONS.md #103): auto-graded types, `translate` with full `references`, and at most one `write` item per unit (its end task). Every `pending` item makes Hayk wait for Claude.
+5. Tell Hayk the test title; it appears at the top of the list on `http://localhost:5173/`.

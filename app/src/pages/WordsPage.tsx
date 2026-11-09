@@ -327,7 +327,7 @@ interface Failed {
   message: string
 }
 
-const MIXED_MODE = { mode: 'mixed' as const, title: 'Mixed', desc: 'Each card picks a direction: flip, type the German, or listen and type.' }
+const MIXED_MODE = { mode: 'mixed' as const, title: 'Mixed', desc: 'Each card picks a direction: flip, say or type the German, or listen and type.' }
 
 function modeTitle(mode: SessionMode): string {
   return mode === 'mixed' ? MIXED_MODE.title : (MODES.find((m) => m.mode === mode)?.title ?? mode)
@@ -398,15 +398,15 @@ function RoundEnd(props: {
       <p className="muted small">
         {tomorrow} word{tomorrow === 1 ? '' : 's'} due tomorrow.
       </p>
-      <div className="row">
+      <div className="row actions">
+        <button type="button" className={`btn${canContinue ? '' : ' primary'}`} onClick={onExit}>
+          Done
+        </button>
         {canContinue && (
           <button type="button" className="btn primary" onClick={onNext}>
             Next round
           </button>
         )}
-        <button type="button" className={`btn${canContinue ? '' : ' primary'}`} onClick={onExit}>
-          Done
-        </button>
       </div>
     </div>
   )
@@ -441,6 +441,9 @@ function Session(props: {
     return Math.min(ROUND_SIZE, c.due + c.newLeft)
   }
   const [available, setAvailable] = useState(startCounts)
+  // After the first tap on the mic, English to German cards start listening by themselves, until
+  // Close (also across "Next round"), Type instead, or a blocked mic.
+  const [handsFree, setHandsFree] = useState(false)
   const recorded = useRef(false)
   const next = nextCard(words, state, now, newLimit)
   const roundOver = round.length > 0 && (round.length >= ROUND_SIZE || next.kind !== 'card')
@@ -563,6 +566,7 @@ function Session(props: {
         intervals={previewIntervals(state, next.word.id, now)}
         disabled={saving}
         autoSpeak={sound}
+        speech={{ handsFree, onHandsFree: setHandsFree }}
         onGrade={(rating, typed, timeMs) => grade(next.word, next.isNew, rating, typed, timeMs)}
       />
     )
@@ -588,6 +592,8 @@ function PracticeSession(props: { mode: SessionMode; words: StudyWord[]; state: 
   const [again, setAgain] = useState(0)
   const [saving, setSaving] = useState(false)
   const [failed, setFailed] = useState<{ entry: ReviewLogEntry; message: string } | null>(null)
+  // The mic as in Session: hands-free after the first tap.
+  const [handsFree, setHandsFree] = useState(false)
   const cardMode = useMemo(() => pickMode(mode, listen), [index, mode, listen])
   // The practice round is over: send it.
   const practiceOver = index >= words.length && index > 0
@@ -647,6 +653,7 @@ function PracticeSession(props: { mode: SessionMode; words: StudyWord[]; state: 
         intervals={null}
         disabled={saving}
         autoSpeak={sound}
+        speech={{ handsFree, onHandsFree: setHandsFree }}
         onGrade={(r, typed, ms) => grade(word, r, typed, ms)}
       />
     )

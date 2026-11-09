@@ -102,5 +102,7 @@ describe('the Words map: several tiles together', () => {
     expect(minLearned('match')).toBe(MIN_PAIRS)
     expect(minLearned('listen')).toBe(MIN_PICK_WORDS)
     for (const g of ['speak', 'sentences', 'articles', 'gaps', 'build']) expect(minLearned(g)).toBe(1)
+    // Opposites and synonyms: 3 pairs, at most 2 from one learned word.
+    expect(minLearned('pairs')).toBe(2)
   })
 })

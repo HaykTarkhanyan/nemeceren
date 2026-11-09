@@ -30,8 +30,10 @@ describe('the seed content', () => {
     // Theme lessons: the folder exists once Claude wrote the first one.
     const themeDir = path.join(repoRoot, 'content/themes')
     const themes = fs.existsSync(themeDir) ? fs.readdirSync(themeDir).map((n) => ({ file: `content/themes/${n}`, text: readText(`content/themes/${n}`) })) : []
-    const out = checkAllContent({ tests, words: { file: 'content/words.json', text: readText('content/words.json') }, lessons, themes, topics, extras })
+    const pairs = { file: 'content/pairs.json', text: readText('content/pairs.json') }
+    const out = checkAllContent({ tests, words: { file: 'content/words.json', text: readText('content/words.json') }, lessons, themes, topics, extras, pairs })
     expect(out.problems).toEqual([])
+    expect(out.pairs.length).toBeGreaterThan(0)
     expect(out.tests.length).toBeGreaterThan(0)
     const types = new Set(out.tests.flatMap((t) => t.items.map((i) => i.type)))
     expect([...types].sort()).toEqual(['dictation', 'gap', 'listen_mc', 'mc', 'order', 'translate', 'write'])
@@ -144,5 +146,75 @@ describe('result review validation', () => {
       parseResult('r.json', { ...result, review: { gradedAt: '2026-09-28T12:00:00Z', summary: 's', items: [{ index: 3, correct: true }] } }),
     )
     expect(p).toEqual(['r.json: review.items[0].index: index 3 is out of range (this result has items 0-0)'])
+  })
+})
+
+describe('word pair validation (content/pairs.json)', () => {
+  const words = {
+    file: 'content/words.json',
+    text: JSON.stringify([
+      { id: 'langsam', de: 'langsam', en: 'slow', level: 'A1', added: '2026-11-09' },
+      { id: 'schnell', de: 'schnell', en: 'fast', level: 'A1', added: '2026-11-09' },
+      { id: 'schulranzen', de: 'der Schulranzen', en: 'school bag', level: 'A2', added: '2026-11-09' },
+    ]),
+  }
+  const empty = { tests: [], lessons: [], topics: { file: 't.json', text: '{ "groups": [] }' }, extras: { file: 'e.json', text: '{ "items": [] }' } }
+  const pairsFile = (pairs: unknown[]) => ({ file: 'content/pairs.json', text: JSON.stringify({ pairs }) })
+  // The empty topics and extras files have problems of their own; these tests look at the pairs.
+  const pairProblems = (out: { problems: string[] }) => out.problems.filter((p) => p.startsWith('content/pairs.json'))
+
+  it('accepts real pairs and returns them', () => {
+    const out = checkAllContent({ ...empty, words, themes: [], pairs: pairsFile([{ a: 'langsam', b: 'schnell', kind: 'opposite', note: 'n' }]) })
+    expect(pairProblems(out)).toEqual([])
+    expect(out.pairs).toEqual([{ a: 'langsam', b: 'schnell', kind: 'opposite', note: 'n' }])
+  })
+
+  it('names an unknown id, a pair repeated the other way round, a word paired with itself and an unknown kind', () => {
+    const out = checkAllContent({
+      ...empty,
+      words,
+      themes: [],
+      pairs: pairsFile([
+        { a: 'langsam', b: 'langsam', kind: 'synonym' },
+        { a: 'langsam', b: 'flott', kind: 'antonym' },
+      ]),
+    })
+    expect(pairProblems(out)).toEqual([
+      'content/pairs.json: pairs[0].b: a word cannot be paired with itself',
+      'content/pairs.json: pairs[1].kind: Invalid option: expected one of "opposite"|"synonym"',
+    ])
+    const twice = checkAllContent({
+      ...empty,
+      words,
+      themes: [],
+      pairs: pairsFile([
+        { a: 'langsam', b: 'schnell', kind: 'opposite' },
+        { a: 'schnell', b: 'langsam', kind: 'synonym' },
+      ]),
+    })
+    expect(pairProblems(twice)).toEqual(['content/pairs.json: pairs[1]: "schnell" and "langsam" are already paired in pairs[0]'])
+    const unknown = checkAllContent({ ...empty, words, themes: [], pairs: pairsFile([{ a: 'langsam', b: 'flott', kind: 'opposite' }]) })
+    expect(pairProblems(unknown)).toEqual(['content/pairs.json: pairs[0].b: no word with id "flott" in content/words.json'])
+  })
+
+  it('refuses a word of a lesson for some learners only (DECISIONS.md #95): its meaning may not be in English', () => {
+    const limited = {
+      id: 't-schule',
+      theme: { kind: 'topic', title: 'School', variety: 'standard German' },
+      level: 'A1',
+      title: 'School',
+      summary: 'S',
+      goals: ['g'],
+      words: ['schulranzen'],
+      onlyFor: ['elya@nemeceren.example'],
+      sections: [{ type: 'tip', text: 't' }],
+    }
+    const out = checkAllContent({
+      ...empty,
+      words,
+      themes: [{ file: 'content/themes/t-schule.json', text: JSON.stringify(limited) }],
+      pairs: pairsFile([{ a: 'schulranzen', b: 'schnell', kind: 'synonym' }]),
+    })
+    expect(pairProblems(out)).toEqual(['content/pairs.json: pairs[0].a: "schulranzen" belongs to t-schule, which only some learners see (its meaning may not be in English)'])
   })
 })
