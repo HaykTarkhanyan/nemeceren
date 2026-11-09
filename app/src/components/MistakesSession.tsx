@@ -59,7 +59,12 @@ function One({ mistake, label, onNext }: { mistake: Mistake; label: string; onNe
   const [save, setSave] = useState<SaveStatus | null>(null)
   const plays = useRef(0)
 
-  useEffect(() => window.scrollTo(0, 0), [])
+  // A block body: since Chrome 149/150 window.scrollTo returns a Promise, and an effect that returns
+  // it makes React's production build call the Promise as a cleanup at unmount ("l is not a function",
+  // Hayk's daily mix crash, DECISIONS.md #108).
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
   function persist(r: Result) {
     try {

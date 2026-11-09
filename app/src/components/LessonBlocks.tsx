@@ -143,7 +143,9 @@ function BlockBody(props: { lesson: Lesson; block: LessonBlock; section: number;
 function LyricsView({ block }: { block: Extract<LessonBlock, { type: 'lyrics' }> }) {
   const glossary = useGlossary()
   // The dictionary-word count needs the glossary; load it now so the count shows before opening.
-  useEffect(() => ensureGlossary(), [])
+  useEffect(() => {
+    ensureGlossary()
+  }, [])
   const counts = wordCounts(lyricsLines(block), glossary.status === 'ready' ? glossary.glossary : null)
   return (
     <details className="lyrics">

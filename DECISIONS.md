@@ -2,6 +2,17 @@
 
 Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
+## 108. Effects never return a value: the daily mix crash was window.scrollTo returning a Promise (found 2026-11-09)
+
+- **Date:** 2026-11-09 - **Status:** active; closes the crash in #101
+- **Why:** Hayk's phone showed "Something broke: l is not a function" on `#/daily`. The "Details for Claude" box (#101) gave the stack: the minified function at `index-BIwmpk-7.js:9:95443` is React's effect-cleanup runner. It calls an effect's return value at unmount whenever that value is not undefined.
+  - **The culprit:** Mistakes replay had `useEffect(() => window.scrollTo(0, 0), [])`. Since Chrome 149/150, `scrollTo` returns a Promise ("Programmatic Scroll Promises"). So the effect returned a Promise, and when a mistake card unmounted (Next, or the mix moving on), React called it.
+  - **Why it hid:** the desktop Chromium 145 used for every reproduction still returns undefined, and the dev build checks the type, so nothing showed there.
+  - **Fix:** block bodies in Mistakes replay and LessonBlocks.
+  - **Guard:** `app/src/lib/effects.test.ts` fails on any expression-bodied effect whose expression is not itself a cleanup. With the old code it names the exact line.
+- **Alternatives rejected:** catching errors in cleanups (it would hide real bugs) and a lint plugin (a new dependency for one rule).
+- **What would change this:** another browser API starting to return values from inside a block body, which the guard cannot see. Effects that call such APIs should not return them.
+
 ## 107. A word counts as known from a 7-day review interval, not 21 (Hayk's choice, 2026-11-09)
 
 - **Date:** 2026-11-09 - **Status:** active
