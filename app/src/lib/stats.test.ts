@@ -145,12 +145,12 @@ describe('streaks and calendar counts', () => {
 })
 
 describe('wordProgress', () => {
-  it('splits introduced words into learning and known (Review state, interval of 21 days or more)', () => {
+  it('splits introduced words into learning and known (Review state, interval of 7 days or more)', () => {
     const words = ['a', 'b', 'c', 'd'].map((id) => ({ id, de: id, en: id, level: 'A1' as const, added: '2026-09-28' }))
     const t0 = new Date('2026-09-28T10:00:00Z')
     let s = review(emptyState(t0), 'a', Rating.Good, t0).state
     s = review(s, 'b', Rating.Easy, t0).state
-    s = { ...s, cards: { ...s.cards, b: { ...s.cards.b, state: 2, scheduled_days: 21 }, c: { ...s.cards.a, state: 2, scheduled_days: 20 } } }
+    s = { ...s, cards: { ...s.cards, b: { ...s.cards.b, state: 2, scheduled_days: 7 }, c: { ...s.cards.a, state: 2, scheduled_days: 6 } } }
     expect(wordProgress(words, s, t0)).toMatchObject({ total: 4, introduced: 3, known: 1, learning: 2, notStarted: 1 })
   })
 })

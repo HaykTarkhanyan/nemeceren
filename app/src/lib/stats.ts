@@ -21,7 +21,8 @@ import { counts } from './srs.ts'
 export const SESSION_GAP_MS = 30 * 60_000
 export const REVIEW_CAP_MS = 2 * 60_000
 export const TEST_ITEM_CAP_MS = 20 * 60_000
-export const KNOWN_DAYS = 21
+/** 7 since 2026-11-09 (was 21; Hayk: "21 is too much", DECISIONS.md #107). */
+export const KNOWN_DAYS = 7
 
 export interface ReviewEvent {
   /** When the card was graded (ms since epoch). */

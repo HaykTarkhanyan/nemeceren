@@ -27,12 +27,12 @@ describe('the status rule', () => {
     expect(wordStatus({ ...base, card: undefined, custom: true })).toBe('new')
   })
 
-  it('reads the FSRS card: never reviewed is new, Review state is review or known (21 days), the rest learning', () => {
+  it('reads the FSRS card: never reviewed is new, Review state is review or known (7 days), the rest learning', () => {
     expect(wordStatus({ ...base, card: introducedCard(t0) })).toBe('new')
     expect(wordStatus({ ...base, card: card({ state: 1, scheduled_days: 0 }) })).toBe('learning')
     expect(wordStatus({ ...base, card: card({ state: 3, scheduled_days: 0, lapses: 1 }) })).toBe('learning')
-    expect(wordStatus({ ...base, card: card({ scheduled_days: 20 }) })).toBe('review')
-    expect(wordStatus({ ...base, card: card({ scheduled_days: 21 }) })).toBe('known')
+    expect(wordStatus({ ...base, card: card({ scheduled_days: 6 }) })).toBe('review')
+    expect(wordStatus({ ...base, card: card({ scheduled_days: 7 }) })).toBe('known')
   })
 
   it('calls a word struggling after 2 lapses or when the last scheduled review was Again, before known', () => {

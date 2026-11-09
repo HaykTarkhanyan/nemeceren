@@ -43,7 +43,7 @@ describe('the Words map: one tile per lesson', () => {
     for (const t of groups.flatMap((g) => g.tiles)) expect(t).not.toHaveProperty('locked')
     expect(tileCount(groups[0].tiles[1])).toBe('0/2 learned')
     expect(tileCount(groups[2].tiles[0])).toBe('0/1 learned')
-    // Learned = reviewed at least once; known (21+ days) is added once there are any.
+    // Learned = reviewed at least once; known (7+ days) is added once there are any.
     expect(tileCount(groups[0].tiles[0])).toBe('3/4 learned, 2 known')
     expect(tileCount(groups[1].tiles[0])).toBe('1/1 learned')
   })

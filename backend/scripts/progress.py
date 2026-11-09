@@ -76,7 +76,7 @@ LOG = logging.getLogger("progress")
 # The same caps as app/src/lib/stats.ts, so minutes here match the Stats page.
 REVIEW_CAP_MS = 2 * 60_000
 TEST_ITEM_CAP_MS = 20 * 60_000
-KNOWN_DAYS = 21
+KNOWN_DAYS = 7  # same as app/src/lib/stats.ts (was 21 until 2026-11-09, DECISIONS.md #107)
 
 ISO_DATETIME = re.compile(r"^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(\.\d{1,9})?(Z|[+-]\d{2}:\d{2})$")
 REVIEW_KEYS = {"gradedAt", "summary", "items"}

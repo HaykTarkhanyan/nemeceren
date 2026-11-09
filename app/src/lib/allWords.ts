@@ -36,7 +36,7 @@ export const STRUGGLING_LAPSES = 2
  *   no card:  own word -> new (it is introduced right away); content word -> not started
  *   card never reviewed (reps 0, added from the "already in lesson" hint) -> new
  *   lapses >= 2, or the last scheduled review (practice does not count) was graded Again -> struggling
- *   FSRS state Review with an interval of 21 days or more -> known (the Stats page's rule)
+ *   FSRS state Review with an interval of 7 days or more (KNOWN_DAYS) -> known (the Stats page's rule)
  *   FSRS state Review -> review
  *   anything else (Learning, Relearning) -> learning
  */

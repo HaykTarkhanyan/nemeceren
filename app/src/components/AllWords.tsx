@@ -302,7 +302,7 @@ export function AllWords(props: {
           </li>
           <li>
             <strong>learning</strong>: still in the short first steps. <strong>review</strong>: in the long-term schedule. <strong>known</strong>: its next
-            review is 21 days or more away (the same rule as the Stats page).
+            review is 7 days or more away (the same rule as the Stats page).
           </li>
         </ul>
       </details>

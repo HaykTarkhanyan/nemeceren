@@ -2,6 +2,13 @@
 
 Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
+## 107. A word counts as known from a 7-day review interval, not 21 (Hayk's choice, 2026-11-09)
+
+- **Date:** 2026-11-09 - **Status:** active
+- **Why:** Hayk saw "0/12" on a Map tile for words reviewed many times (all 12 of Begrüßen und verabschieden had intervals of 3-10 days) and said "21 is too much, make it 7". `KNOWN_DAYS` is now 7 in `app/src/lib/stats.ts` and `backend/scripts/progress.py`. It drives the known status (All words, the Map, Stats, word sets, lesson words). Tiles also show learned words now: "12/12 learned, N known".
+- **Alternatives rejected:** keeping 21, the common Anki-style "mature" threshold. It is too slow to show progress early in the course.
+- **What would change this:** words marked known that Hayk keeps failing (then a higher threshold, or known needing two good reviews in a row).
+
 ## 106. Nothing is locked: practice uses any words, the review has no daily new-word limit, Map tiles can be reviewed together, listen and pick is gone (asked for by Hayk, 2026-11-09)
 
 - **Date:** 2026-11-09 - **Status:** active; revisits #91, #93, #99, #101

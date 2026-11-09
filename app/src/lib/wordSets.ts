@@ -12,7 +12,7 @@ export const RECENT_DAYS = 7
 
 const learned = (state: ReviewState, id: string) => (state.cards[id]?.reps ?? 0) > 0
 
-/** How far a word set is: words learned (reviewed at least once), known (interval of 21 days or more), and the total. */
+/** How far a word set is: words learned (reviewed at least once), known (interval of KNOWN_DAYS = 7 days or more), and the total. */
 export function setProgress(set: WordSet, state: ReviewState): { learned: number; known: number; total: number } {
   let l = 0
   let k = 0
