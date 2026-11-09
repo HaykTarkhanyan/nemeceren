@@ -28,7 +28,7 @@ import { lessonStatus, parseSourceKey, sourceKey, sourceLabel, sourceLessons, so
 import type { WordSource } from '../lib/plan.ts'
 import { dueOnDay, GOAL_ROUND_MIN, pickMode, REVIEW_NEW_LIMIT, ROUND_SIZE, roundSummary } from '../lib/review.ts'
 import type { SessionMode } from '../lib/review.ts'
-import { practiceEntry, scheduledEntry } from '../lib/reviewEntries.ts'
+import { logsPractice, practiceEntry, scheduledEntry } from '../lib/reviewEntries.ts'
 import type { Typed } from '../lib/reviewEntries.ts'
 import { link, tabOf } from '../lib/router.ts'
 import { updateSettings, useSettings } from '../lib/settings.ts'
@@ -621,6 +621,12 @@ function PracticeSession(props: { mode: SessionMode; words: StudyWord[]; state: 
   }
 
   function grade(word: StudyWord, rating: Grade, typed: Typed | null, timeMs: number) {
+    // A word without a card is practised but not logged (DECISIONS.md #106).
+    if (!logsPractice(state, word.id)) {
+      setAgain((a) => a + (rating === Rating.Again ? 1 : 0))
+      setIndex((i) => i + 1)
+      return
+    }
     const answer = typed ? { text: typed.answer, correct: typed.check.correct, nearMiss: typed.check.nearMiss } : null
     persist(practiceEntry({ state, word, mode: cardMode, rating, answer, timeMs, at: new Date() }))
   }

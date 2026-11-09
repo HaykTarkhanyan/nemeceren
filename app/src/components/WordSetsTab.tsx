@@ -7,7 +7,7 @@ import { messageOf, reportError } from '../lib/errors.ts'
 import { link } from '../lib/router.ts'
 import { updateSettings, useSettings } from '../lib/settings.ts'
 import { useProgress } from '../lib/storage.ts'
-import { learnedSetWords, practiceIds, PRACTICE_MAX, setProgress } from '../lib/wordSets.ts'
+import { practiceIds, PRACTICE_MAX, setProgress } from '../lib/wordSets.ts'
 
 export type PracticeHow = 'match' | 'type'
 
@@ -45,7 +45,7 @@ export function WordSetsTab({ onPractice }: { onPractice: (ids: string[], how: P
       {content.sets.map((s) => {
         const p = setProgress(s, state)
         const active = settings.activeSet === s.id
-        const ids = practiceIds(learnedSetWords(s, state), state)
+        const ids = practiceIds(s.words, state)
         return (
           <div key={s.id} className={`card stack word-set${active ? ' active' : ''}`}>
             <div className="row between">
@@ -67,7 +67,7 @@ export function WordSetsTab({ onPractice }: { onPractice: (ids: string[], how: P
                 </button>
               )}
             </div>
-            {ids.length > 0 ? <PracticeButtons ids={ids} onPractice={onPractice} /> : <p className="muted small">Learn a few of its words first to practise them.</p>}
+            <PracticeButtons ids={ids} onPractice={onPractice} />
           </div>
         )
       })}

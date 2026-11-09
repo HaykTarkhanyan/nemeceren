@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs'
 import type { ReviewLogEntry, ReviewState, WordSet } from '../content/schema.ts'
 import { checkAllContent } from '../content/validate.ts'
 import { introducedCard, Rating, review } from './srs.ts'
-import { learnedSetWords, practiceIds, PRACTICE_MAX, recentlyLearned, setProgress } from './wordSets.ts'
+import { practiceIds, PRACTICE_MAX, recentlyLearned, setProgress } from './wordSets.ts'
 
 const t0 = new Date(2026, 10, 6, 10, 0, 0)
 
@@ -37,7 +37,6 @@ describe('word sets', () => {
     state.cards.b = introducedCard(t0)
     state.cards.c = { ...state.cards.c, state: 2, scheduled_days: 30 }
     expect(setProgress(set, state)).toEqual({ learned: 2, known: 1, total: 3 })
-    expect(learnedSetWords(set, state)).toEqual(['a', 'c'])
   })
 
   it('lists words introduced in the last 7 days, newest first, ignoring practice and old ones', () => {
@@ -45,10 +44,11 @@ describe('word sets', () => {
     expect(recentlyLearned(log, learned(['a', 'b', 'c', 'd', 'e']), t0)).toEqual(['b', 'a'])
   })
 
-  it('caps a practice list and keeps only learned words', () => {
+  it('caps a practice list and puts learned words first, then the others (no locks, DECISIONS.md #106)', () => {
     const ids = Array.from({ length: 30 }, (_, i) => `w${i}`)
     expect(practiceIds(ids, learned(ids))).toHaveLength(PRACTICE_MAX)
-    expect(practiceIds(['x', 'w1'], learned(['w1']))).toEqual(['w1'])
+    expect(practiceIds(['x', 'w1'], learned(['w1']))).toEqual(['w1', 'x'])
+    expect(practiceIds(['x', 'y'], learned([]))).toEqual(['x', 'y'])
   })
 })
 

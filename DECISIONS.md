@@ -16,7 +16,8 @@ Newest at the top. Never delete a superseded entry - mark it and add a new one.
   - **The review:** no daily limit (`REVIEW_NEW_LIMIT` = infinity). With "all words", the due cards come first, then the path's new words, then the rest of the course in course order, so it never runs dry. Theme words still wait for their theme. "Next round" shows whenever words remain. The `newPerDay` setting now only limits new words in the daily mix, and Settings says so.
   - **Map review:** ticked tiles get "Review these": a normal FSRS round on all their words, with a `lessons:a,b` source. Old saved sources parse as before.
   - **Listen and pick:** removed from Home, the Map, the Word sets buttons and the code. `#/daily/listen` shows a short note. Listen items in tests stay.
-- **Kept as ordering only:** `pathNewWords` decides which new words come first. The All words and Word sets practice panels still use learned words, because typing practice there logs against a card.
+- **Kept as ordering only:** `pathNewWords` decides which new words come first.
+- **The practice panels too (same evening, Hayk's yes):** "Practise these" in All words and the Word sets buttons take any words, learned first and then the rest, up to 20 (`practiceIds`). The typing practice session skips saving for a word without a card (`logsPractice`), as the games do.
 - **Alternatives rejected:**
   - **Loading 150 words as seen** (Q46): Hayk chose no limit instead, so the words come through real first reviews.
   - **A higher daily limit:** still a limit.

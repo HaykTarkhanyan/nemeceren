@@ -1,6 +1,7 @@
 // Practice lists for the Words page (DECISIONS.md #77), as pure functions: the topic word sets
 // (content/sets.json) and their progress, words learned recently, and the words of a practice pick.
-// Practice is only for words with a reviewed card; it never changes the review schedule.
+// Practice takes any words, learned or not (2026-11-09, DECISIONS.md #106); it never changes the
+// review schedule, and an answer to a word without a card is not logged.
 import type { ReviewLogEntry, ReviewState, WordSet } from '../content/schema.ts'
 import { KNOWN_DAYS } from './stats.ts'
 
@@ -24,11 +25,6 @@ export function setProgress(set: WordSet, state: ReviewState): { learned: number
   return { learned: l, known: k, total: set.words.length }
 }
 
-/** The set's words that can be practised (learned), in set order. */
-export function learnedSetWords(set: WordSet, state: ReviewState): string[] {
-  return set.words.filter((id) => learned(state, id))
-}
-
 /**
  * Words introduced in the last `days` days, newest first: the first scheduled review of a new word
  * (isNew, not practice) in the loaded log, for words that still have a reviewed card.
@@ -48,7 +44,7 @@ export function recentlyLearned(log: ReviewLogEntry[], state: ReviewState, now: 
     .map(([id]) => id)
 }
 
-/** The learned words among ids, in the given order, at most PRACTICE_MAX. */
+/** The words of a practice pick: learned ones first, then the others, each group in the given order, at most PRACTICE_MAX. */
 export function practiceIds(ids: readonly string[], state: ReviewState): string[] {
-  return ids.filter((id) => learned(state, id)).slice(0, PRACTICE_MAX)
+  return [...ids.filter((id) => learned(state, id)), ...ids.filter((id) => !learned(state, id))].slice(0, PRACTICE_MAX)
 }
