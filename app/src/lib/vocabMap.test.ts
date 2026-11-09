@@ -27,7 +27,7 @@ describe('the Words map: one tile per lesson', () => {
   it('counts known words and averages the strength (0-4) into 0-1', () => {
     const [unit1] = lessonTiles({ rows: statuses, lessons, themes })
     const a1 = unit1.tiles[0]
-    expect([a1.known, a1.total]).toEqual([2, 4])
+    expect([a1.learned, a1.known, a1.total]).toEqual([3, 2, 4])
     // known 4 + known 4 + learning 2 + not started 0 = 10 of 16
     expect(a1.strength).toBeCloseTo(10 / 16)
   })
@@ -41,9 +41,11 @@ describe('the Words map: one tile per lesson', () => {
   it('no tile is locked: a never-started lesson or theme shows known/total like any other', () => {
     const groups = lessonTiles({ rows: statuses, lessons, themes })
     for (const t of groups.flatMap((g) => g.tiles)) expect(t).not.toHaveProperty('locked')
-    expect(tileCount(groups[0].tiles[1])).toBe('0/2')
-    expect(tileCount(groups[2].tiles[0])).toBe('0/1')
-    expect(tileCount(groups[0].tiles[0])).toBe('2/4')
+    expect(tileCount(groups[0].tiles[1])).toBe('0/2 learned')
+    expect(tileCount(groups[2].tiles[0])).toBe('0/1 learned')
+    // Learned = reviewed at least once; known (21+ days) is added once there are any.
+    expect(tileCount(groups[0].tiles[0])).toBe('3/4 learned, 2 known')
+    expect(tileCount(groups[1].tiles[0])).toBe('1/1 learned')
   })
 })
 

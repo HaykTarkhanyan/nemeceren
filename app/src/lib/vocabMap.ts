@@ -15,6 +15,8 @@ export interface LessonTile {
   lesson: Lesson
   /** The lesson's words (each once). */
   total: number
+  /** Words reviewed at least once (any status but not started or new). */
+  learned: number
   /** Words with the status "known" (next review 21+ days away). */
   known: number
   /** The average strength of the words, 0-4, divided by 4: 0 nothing started, 1 all known. */
@@ -39,6 +41,7 @@ export function lessonTiles(input: { rows: { id: string; status: WordStatus }[];
     return {
       lesson,
       total: ids.length,
+      learned: statuses.filter((s) => s !== 'not-started' && s !== 'new').length,
       known: statuses.filter((s) => s === 'known').length,
       strength: ids.length === 0 ? 0 : statuses.reduce((sum, s) => sum + strengthOf(s), 0) / (4 * ids.length),
     }
@@ -58,9 +61,12 @@ export function tileShade(strength: number): number {
   return Math.round(8 + 80 * Math.min(1, Math.max(0, strength)))
 }
 
-/** The count on a tile: "known/total". */
-export function tileCount(t: Pick<LessonTile, 'known' | 'total'>): string {
-  return `${t.known}/${t.total}`
+/**
+ * The count on a tile: "12/12 learned", plus the known ones once there are any (", 3 known"). Known
+ * needs a 21-day interval, so counting only known words showed 0 for weeks after a lesson (Hayk, 2026-11-09).
+ */
+export function tileCount(t: Pick<LessonTile, 'learned' | 'known' | 'total'>): string {
+  return `${t.learned}/${t.total} learned${t.known > 0 ? `, ${t.known} known` : ''}`
 }
 
 // ---------- several tiles together ----------
