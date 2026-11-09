@@ -11,12 +11,15 @@ import {
   capitalizedWords,
   checkSentence,
   checkTiles,
+  drillNouns,
   emptyArticleRound,
+  GAMES,
   gameWords,
   gapIn,
   gapItems,
   isVerbCard,
   requeue,
+  roundOrder,
   SENTENCE_START,
   sentenceTry,
   sentenceWords,
@@ -54,10 +57,48 @@ describe('choosing words for a game', () => {
     let s = learned(ids)
     // f is the strongest by far, so with n = 2 it is never picked (only the 4 weakest are drawn from).
     s = { ...s, cards: { ...s.cards, f: { ...s.cards.f, stability: 999 }, e: { ...s.cards.e, stability: 998 } } }
-    const out = gameWords(ids.map((id) => card(id, id)), s, 2, zero)
+    const out = gameWords(ids.map((id) => card(id, id)), s, 2, 'learned-first', zero)
     expect(out).toHaveLength(2)
     expect(out.map((w) => w.id)).not.toContain('f')
     expect(out.map((w) => w.id)).not.toContain('e')
+  })
+
+  it('from Home: a round is full, learned words first, then the next words of the path (in path order)', () => {
+    // Path order: l1 (learned), then p1..p6 not learned yet.
+    const words = ['p1', 'l1', 'p2', 'p3', 'p4', 'p5', 'p6'].map((id) => card(id, id))
+    const out = gameWords(words, learned(['l1']), 3, 'learned-first').map((w) => w.id)
+    expect(out).toHaveLength(3)
+    expect(out[0]).toBe('l1')
+    // 2 new words, drawn from the first 4 on the path, kept in path order.
+    for (const id of out.slice(1)) expect(['p1', 'p2', 'p3', 'p4']).toContain(id)
+    expect(out[1] < out[2]).toBe(true)
+    // roundOrder keeps every word, so a game that skips some (no gap, too long) can go on.
+    expect(roundOrder(words, learned(['l1']), 3, 'learned-first').map((w) => w.id).sort()).toEqual([...words.map((w) => w.id)].sort())
+  })
+
+  it('from map tiles: any word of the lessons, learned or not', () => {
+    const words = ['a', 'b', 'c', 'd'].map((id) => card(id, id))
+    expect(gameWords(words, learned([]), 4, 'any', zero).map((w) => w.id).sort()).toEqual(['a', 'b', 'c', 'd'])
+  })
+})
+
+describe('the nouns of a der/die/das round (drillNouns)', () => {
+  const nouns = Array.from({ length: 30 }, (_, i) => card(`n${String(i).padStart(2, '0')}`, `der Hund${i}`))
+
+  it('from Home: every learned noun, filled up to GAMES.articleNouns with nouns not learned yet, from the front of the path', () => {
+    const s = learned(['n29', 'n28'])
+    const out = drillNouns(nouns, s, 'learned-first').map((n) => n.word.id)
+    expect(out).toHaveLength(GAMES.articleNouns)
+    expect(out.slice(0, 2).sort()).toEqual(['n28', 'n29'])
+    // The 18 new ones come from the first 36 nouns not learned yet (all 28 here).
+    expect(out.slice(2).every((id) => id < 'n28')).toBe(true)
+    // More learned nouns than the size: all of them, nothing added.
+    const all = learned(nouns.map((n) => n.id))
+    expect(drillNouns(nouns, all, 'learned-first')).toHaveLength(30)
+  })
+
+  it('from map tiles: every noun, learned or not; nouns only', () => {
+    expect(drillNouns([...nouns.slice(0, 5), card('v', 'gehen')], learned([]), 'any').map((n) => n.word.id)).toEqual(['n00', 'n01', 'n02', 'n03', 'n04'])
   })
 })
 
@@ -210,6 +251,17 @@ describe('fill the gap: items and their options', () => {
     const more = [...pool, card('extra', 'der Schrank', 'Der Schrank ist alt.')]
     const [item] = gapItems([pool[0]], more, (id) => unit[id], 1, zero)
     expect(item.options.filter((o) => o !== 'Tisch').sort()).toEqual(['Computer', 'Schrank'])
+  })
+
+  it('prefers learned distractors over the same unit, then the same unit among the rest', () => {
+    const unit: Record<string, number> = { tisch: 1, stuhl: 2, computer: 1, extra: 1, fern: 3 }
+    const more = [...pool, card('extra', 'der Schrank', 'Der Schrank ist alt.'), card('fern', 'der Hund', 'Der Hund ist alt.')]
+    const learnedIds = new Set(['stuhl'])
+    const [item] = gapItems([pool[0]], more, (id) => unit[id], 1, zero, (id) => learnedIds.has(id))
+    // Stuhl (learned, unit 2) first, then one from the same unit as Tisch (Computer or Schrank), never Hund.
+    const wrong = item.options.filter((o) => o !== 'Tisch')
+    expect(wrong).toContain('Stuhl')
+    expect(wrong).not.toContain('Hund')
   })
 
   it('skips a card without two fitting distractors', () => {

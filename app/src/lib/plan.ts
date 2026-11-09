@@ -84,12 +84,6 @@ export function reachableLessons(lessons: CourseLesson[], reach: PathReach): Set
   return new Set(sorted.filter((_, i) => i <= at + 1 || started(i) || started(i - 1)).map((l) => l.id))
 }
 
-/** The highest unit the path reaches (reachableLessons); -Infinity for a course without lessons. */
-export function reachedUnit(lessons: CourseLesson[], reach: PathReach): number {
-  const reached = reachableLessons(lessons, reach)
-  return Math.max(...lessons.filter((l) => reached.has(l.id)).map((l) => l.unit))
-}
-
 /**
  * The one rule for new words, used by the Words page ("all") and the daily mix: content words with
  * no card yet, in course order (unit, lesson, then the word's place in the lesson's `words`) from
@@ -124,10 +118,65 @@ export function studyWords<W extends { id: string }>(words: W[], lessons: Lesson
   return [...words.filter((w) => state.cards[w.id]), ...pathNewWords(words, lessons, p, state, reach)]
 }
 
+/**
+ * The words of a practice game started from Home (2026-11-09, no locks): `pool` (the review's words:
+ * introduced words, the path's new words, own words), then every other word of the course lessons
+ * in course order, so a round is always full. The games take learned words first and then fill up
+ * from the front (lib/games.ts roundOrder). Order only: the review still takes new words from pathNewWords.
+ */
+export function withCourseRest<W extends { id: string }>(pool: W[], words: W[], lessons: CourseLesson[]): W[] {
+  const byId = new Map(words.map((w) => [w.id, w]))
+  const seen = new Set(pool.map((w) => w.id))
+  const rest: W[] = []
+  for (const l of [...lessons].sort(byCourseOrder)) {
+    for (const id of l.words ?? []) {
+      const w = byId.get(id)
+      if (!w || seen.has(id)) continue
+      seen.add(id)
+      rest.push(w)
+    }
+  }
+  return [...pool, ...rest]
+}
+
 // ---------- where a word review takes its words from ----------
 
-/** All words (the default), Hayk's own words, one unit, or one lesson (course or theme). Only filters the queue; FSRS is unchanged. */
-export type WordSource = { kind: 'all' } | { kind: 'mine' } | { kind: 'unit'; unit: number } | { kind: 'lesson'; lessonId: string }
+/**
+ * All words (the default), Hayk's own words, one unit, one lesson (course or theme), or several
+ * lessons (ticked tiles on the Words map). Only filters the queue; FSRS is unchanged.
+ */
+export type WordSource =
+  | { kind: 'all' }
+  | { kind: 'mine' }
+  | { kind: 'unit'; unit: number }
+  | { kind: 'lesson'; lessonId: string }
+  | { kind: 'lessons'; lessonIds: string[] }
+
+/** The last part of a link or key for several lessons: the lesson ids joined by commas. Ids are slugs, so they hold no comma. */
+export function lessonsPart(lessonIds: readonly string[]): string {
+  if (lessonIds.length === 0) throw new Error('A pick of map tiles needs at least one lesson')
+  return lessonIds.join(',')
+}
+
+/** The lessons a part names ("u1-01-a" or "u1-01-a,u1-02-b"), in that order; an empty part, a repeat or an unknown id is a problem to show. */
+export function lessonsOfPart<L extends { id: string }>(part: string, lessons: readonly L[]): { lessons: L[] } | { problem: string } {
+  const ids = part.split(',')
+  const out: L[] = []
+  for (const id of ids) {
+    if (id === '') return { problem: `The lesson list "${part}" has an empty part.` }
+    if (out.some((l) => l.id === id)) return { problem: `The lesson list "${part}" names "${id}" twice.` }
+    const lesson = lessons.find((l) => l.id === id)
+    if (!lesson) return { problem: `There is no lesson "${id}" to practise.` }
+    out.push(lesson)
+  }
+  return { lessons: out }
+}
+
+/** The review source for ticked lessons: one lesson as "lesson", several as "lessons". */
+export function lessonsSource(lessonIds: readonly string[]): WordSource {
+  if (lessonIds.length === 0) throw new Error('A review of map tiles needs at least one lesson')
+  return lessonIds.length === 1 ? { kind: 'lesson', lessonId: lessonIds[0] } : { kind: 'lessons', lessonIds: [...lessonIds] }
+}
 
 /** Course lessons that list words, in course order: the lessons and units a review can be limited to. */
 export function sourceLessons(lessons: CourseLesson[]): CourseLesson[] {
@@ -142,9 +191,10 @@ export function sourceThemes(themes: ThemeLesson[]): ThemeLesson[] {
 /**
  * The words a review session uses. "all" is studyWords plus Hayk's own words: new words follow
  * the path (`reach`), and a theme lesson's words wait until it is opened. "mine" is his own words
- * only. A unit or lesson takes every word its lessons list, opened or not, because picking it is
- * the explicit choice to learn them (DECISIONS.md #50); those keep words.json order. Own words
- * come after the content words, oldest first. `lessons` are all lessons, course and theme.
+ * only. A unit, a lesson or several lessons take every word their lessons list, opened or not,
+ * because picking them is the explicit choice to learn them (DECISIONS.md #50); those keep
+ * words.json order. Own words come after the content words, oldest first. `lessons` are all
+ * lessons, course and theme; a lesson id of "lessons" that is not among them is an error.
  */
 export function wordsForSource(
   source: WordSource,
@@ -155,9 +205,16 @@ export function wordsForSource(
   state: ReviewState,
   reach: PathReach,
 ): StudyWord[] {
-  if (source.kind === 'all') return [...studyWords(words, lessons, p, state, reach), ...custom]
+  // No locks (Hayk, 2026-11-09: "as many as I want"): after the path's new words comes the rest of
+  // the course in course order, so the review never runs dry. Theme words still wait for their theme.
+  if (source.kind === 'all') return [...withCourseRest(studyWords(words, lessons, p, state, reach), words, lessons.filter(isCourseLesson)), ...custom]
   if (source.kind === 'mine') return custom
-  const picked = lessons.filter((l) => (source.kind === 'unit' ? l.unit === source.unit : l.id === source.lessonId))
+  let picked: Lesson[]
+  if (source.kind === 'lessons') {
+    const named = lessonsOfPart(lessonsPart(source.lessonIds), lessons)
+    if ('problem' in named) throw new Error(`The word review cannot use these lessons: ${named.problem}`)
+    picked = named.lessons
+  } else picked = lessons.filter((l) => (source.kind === 'unit' ? l.unit === source.unit : l.id === source.lessonId))
   const ids = new Set(picked.flatMap((l) => l.words ?? []))
   return words.filter((w) => ids.has(w.id))
 }
@@ -169,13 +226,19 @@ export function unitWordsLeft(unit: number, lessons: CourseLesson[], state: Revi
   return { total: ids.size, left }
 }
 
-/** How a source is saved per device: "all", "mine", "unit:2" or "lesson:u2-03-plural". */
+/** How a source is saved per device: "all", "mine", "unit:2", "lesson:u2-03-plural" or "lessons:u2-01-a,u2-02-b". */
 export function sourceKey(s: WordSource): string {
   if (s.kind === 'all' || s.kind === 'mine') return s.kind
-  return s.kind === 'unit' ? `unit:${s.unit}` : `lesson:${s.lessonId}`
+  if (s.kind === 'unit') return `unit:${s.unit}`
+  if (s.kind === 'lesson') return `lesson:${s.lessonId}`
+  return `lessons:${lessonsPart(s.lessonIds)}`
 }
 
-/** A saved source. One whose unit or lesson (with words) no longer exists becomes "all", with a note to show. `lessons` are all lessons, course and theme. */
+/**
+ * A saved source. One whose unit or lesson (with words) no longer exists becomes "all", with a note
+ * to show; so does a list of lessons with an empty part, a repeat or an unknown id, and the note
+ * names the problem. `lessons` are all lessons, course and theme.
+ */
 export function parseSourceKey(key: string, lessons: Lesson[]): { source: WordSource; note: string | null } {
   if (key === 'all') return { source: { kind: 'all' }, note: null }
   if (key === 'mine') return { source: { kind: 'mine' }, note: null }
@@ -184,6 +247,12 @@ export function parseSourceKey(key: string, lessons: Lesson[]): { source: WordSo
   if (unit && usable.some((l) => l.unit === Number(unit[1]))) return { source: { kind: 'unit', unit: Number(unit[1]) }, note: null }
   const lesson = /^lesson:(.+)$/.exec(key)
   if (lesson && usable.some((l) => l.id === lesson[1])) return { source: { kind: 'lesson', lessonId: lesson[1] }, note: null }
+  const several = /^lessons:(.*)$/.exec(key)
+  if (several) {
+    const named = lessonsOfPart(several[1], usable)
+    if ('problem' in named) return { source: { kind: 'all' }, note: `Your last pick ("${key}") cannot be used: ${named.problem} The review uses all words.` }
+    return { source: { kind: 'lessons', lessonIds: named.lessons.map((l) => l.id) }, note: null }
+  }
   return { source: { kind: 'all' }, note: `Your last pick ("${key}") no longer exists, so the review uses all words.` }
 }
 
@@ -191,8 +260,19 @@ export function sourceLabel(s: WordSource, lessons: Lesson[]): string {
   if (s.kind === 'all') return 'all words'
   if (s.kind === 'mine') return 'my words'
   if (s.kind === 'unit') return `Unit ${s.unit}`
-  const l = lessons.find((x) => x.id === s.lessonId)
-  if (!l) throw new Error(`No lesson "${s.lessonId}" for the word review`)
+  const find = (id: string) => {
+    const l = lessons.find((x) => x.id === id)
+    if (!l) throw new Error(`No lesson "${id}" for the word review`)
+    return l
+  }
+  if (s.kind === 'lessons') {
+    const names = s.lessonIds.map((id) => {
+      const l = find(id)
+      return isThemeLesson(l) ? l.theme.title : `${l.unit}.${l.order}`
+    })
+    return `${names.length} lessons: ${names.join(', ')}`
+  }
+  const l = find(s.lessonId)
   return isThemeLesson(l) ? `Theme: ${l.theme.title}` : `${l.unit}.${l.order} ${l.title}`
 }
 

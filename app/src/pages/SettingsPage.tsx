@@ -66,7 +66,7 @@ export function SettingsPage() {
       <section className="card stack">
         <h2>Words</h2>
         <label className="field">
-          <span className="label">New words per day</span>
+          <span className="label">New words per day in the daily mix</span>
           <input
             type="number"
             min={0}
@@ -78,6 +78,10 @@ export function SettingsPage() {
             }}
           />
         </label>
+        <p className="muted small">
+          The daily mix brings new words (at most 5 per mix) only while you have learned fewer than this many new words that day. Words, Review has
+          no limit: it brings new words for as long as you keep going.
+        </p>
       </section>
 
       <section className="card stack">

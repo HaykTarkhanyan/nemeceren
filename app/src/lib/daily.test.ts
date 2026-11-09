@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import type { CourseLesson, ReviewState, WordSet } from '../content/schema.ts'
-import { dueNow, introduced, matchRounds, MIN_PICK_WORDS, mixFinished, mixNewWords, mixSteps, pickGameWords, pickItems, wordKind } from './daily.ts'
+import { dueNow, freshOrder, introduced, matchRounds, mixFinished, mixNewWords, mixSteps, pickGameWords, wordKind } from './daily.ts'
 import { emptyLessonProgress, markLessonDone, pathNewWords, startLesson } from './plan.ts'
 import type { PathReach } from './plan.ts'
 import { introducedCard, Rating, review } from './srs.ts'
@@ -49,7 +49,7 @@ describe('wordKind', () => {
 describe('pickGameWords', () => {
   it('never returns two words with the same German or the same English', () => {
     const words = [w('a', 'die Bank', 'bank'), w('b', 'die Bank', 'bench'), w('c', 'Bank', 'bench'), w('d', 'gehen', 'to go')]
-    const out = pickGameWords(words, learned(['a', 'b', 'c', 'd']), 4, zero)
+    const out = pickGameWords(words, learned(['a', 'b', 'c', 'd']), 4, 'learned-first', zero)
     const de = out.map((x) => x.de.toLowerCase())
     const en = out.map((x) => x.en)
     expect(new Set(de).size).toBe(de.length)
@@ -59,50 +59,57 @@ describe('pickGameWords', () => {
 
   it('treats case and punctuation as the same answer', () => {
     const words = [w('a', 'Hallo', 'hi!'), w('b', 'Servus', 'Hi')]
-    expect(pickGameWords(words, learned(['a', 'b']), 2, zero)).toHaveLength(1)
+    expect(pickGameWords(words, learned(['a', 'b']), 2, 'learned-first', zero)).toHaveLength(1)
   })
 
-  it('only uses learned words', () => {
-    const out = pickGameWords([w('a'), w('b'), w('c')], learned(['a', 'c']), 5, zero)
-    expect(out.map((x) => x.id).sort()).toEqual(['a', 'c'])
+  it('from Home: learned words first, then fills up with words not learned yet, in path order', () => {
+    const out = pickGameWords([w('a'), w('b'), w('c')], learned(['a', 'c']), 5, 'learned-first', zero)
+    expect(out.slice(0, 2).map((x) => x.id).sort()).toEqual(['a', 'c'])
+    expect(out.map((x) => x.id)[2]).toBe('b')
+    // With nothing learned, a round still fills: from the first words of the path.
+    const path = ['p1', 'p2', 'p3', 'p4', 'p5', 'p6', 'p7', 'p8'].map((id) => w(id))
+    const fresh = pickGameWords(path, learned([]), 3, 'learned-first', Math.random).map((x) => x.id)
+    expect(fresh).toHaveLength(3)
+    for (const id of fresh) expect(['p1', 'p2', 'p3', 'p4', 'p5', 'p6']).toContain(id)
+    expect([...fresh].sort()).toEqual(fresh)
+  })
+
+  it('from map tiles: any word, learned or not', () => {
+    const words = ['a', 'b', 'c', 'd'].map((id) => w(id))
+    expect(pickGameWords(words, learned([]), 4, 'any', zero).map((x) => x.id).sort()).toEqual(['a', 'b', 'c', 'd'])
+  })
+})
+
+describe('freshOrder (words not learned yet, in a round)', () => {
+  it('draws `slots` from the first 2 x slots, keeps path order, then the rest in order', () => {
+    const ids = ['a', 'b', 'c', 'd', 'e', 'f']
+    for (let k = 0; k < 10; k++) {
+      const out = freshOrder(ids.map((id) => w(id)), 2).map((x) => x.id)
+      expect([...out].sort()).toEqual(ids)
+      expect(['a', 'b', 'c', 'd']).toContain(out[0])
+      expect(['a', 'b', 'c', 'd']).toContain(out[1])
+      expect(out[0] < out[1]).toBe(true)
+      const rest = out.slice(2)
+      expect([...rest].sort()).toEqual(rest)
+    }
+    // No slots (enough learned words): the order given.
+    expect(freshOrder(ids.map((id) => w(id)), 0).map((x) => x.id)).toEqual(ids)
   })
 })
 
 describe('matchRounds', () => {
   it('splits into rounds without repeating a word and drops a round that is too small', () => {
     const ids = ['a', 'b', 'c', 'd', 'e', 'f', 'g']
-    const rounds = matchRounds(ids.map((id) => w(id)), learned(ids), 2, 5, zero)
+    const rounds = matchRounds(ids.map((id) => w(id)), learned(ids), 2, 5, 'learned-first', zero)
     // 7 words: one round of 5, and the second round (2 words) is below MIN_PAIRS.
     expect(rounds).toHaveLength(1)
     expect(rounds[0]).toHaveLength(5)
   })
-})
 
-describe('pickItems', () => {
-  it('needs at least four learned words', () => {
-    const ids = ['a', 'b', 'c']
-    expect(pickItems(ids.map((id) => w(id)), learned(ids), 3, zero)).toEqual([])
-    expect(MIN_PICK_WORDS).toBe(4)
-  })
-
-  it('alternates meaning and spelling, has the answer once among distinct options', () => {
+  it('plays on words not learned yet too', () => {
     const ids = ['a', 'b', 'c', 'd', 'e']
-    const items = pickItems(ids.map((id) => w(id)), learned(ids), 4, zero)
-    expect(items.map((i) => i.ask)).toEqual(['meaning', 'spelling', 'meaning', 'spelling'])
-    for (const it of items) {
-      expect(it.options.filter((o) => o === it.answer)).toHaveLength(1)
-      expect(new Set(it.options).size).toBe(it.options.length)
-      expect(it.options.length).toBe(4)
-      expect(it.answer).toBe(it.ask === 'meaning' ? it.word.en : it.word.de)
-    }
-  })
-
-  it('prefers wrong options of the same kind', () => {
-    const words = [w('n1', 'der Tisch', 'table'), w('n2', 'die Lampe', 'lamp'), w('n3', 'das Bett', 'bed'), w('n4', 'der Stuhl', 'chair'), w('v1', 'gehen', 'to go')]
-    const items = pickItems(words, learned(words.map((x) => x.id)), 1, zero)
-    const target = items[0]
-    if (target.word.id === 'v1') return // a verb target has no other verbs; nothing to check
-    expect(target.options).not.toContain(target.ask === 'meaning' ? 'to go' : 'gehen')
+    expect(matchRounds(ids.map((id) => w(id)), learned([]), 1, 5, 'learned-first', zero)[0]).toHaveLength(5)
+    expect(matchRounds(ids.map((id) => w(id)), learned([]), 1, 5, 'any', zero)[0]).toHaveLength(5)
   })
 })
 

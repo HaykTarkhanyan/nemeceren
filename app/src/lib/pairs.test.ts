@@ -59,9 +59,27 @@ describe('which answers count', () => {
 })
 
 describe('the questions of a round', () => {
-  it('asks only in a direction whose prompt word is learned', () => {
-    const items = pairItems({ pairs: PAIRS, words: WORDS, inScope: everywhere, state: learned(['langsam']), n: 8, rand: zero })
-    expect(items.map((i) => [i.prompt.id, i.answer.id, i.kind, i.bothLearned])).toEqual([['langsam', 'schnell', 'opposite', false]])
+  it('from Home: a learned prompt comes first, and pairs with no learned word fill the round', () => {
+    const one = pairItems({ pairs: PAIRS, words: WORDS, inScope: everywhere, state: learned(['langsam']), n: 1, rand: zero })
+    expect(one.map((i) => [i.prompt.id, i.answer.id, i.kind, i.bothLearned])).toEqual([['langsam', 'schnell', 'opposite', false]])
+    const full = pairItems({ pairs: PAIRS, words: WORDS, inScope: everywhere, state: learned(['langsam']), n: 8, rand: zero })
+    expect(full).toHaveLength(8)
+    expect(full.map((i) => [i.prompt.id, i.answer.id])).toContainEqual(['langsam', 'schnell'])
+  })
+
+  it('from Home with nothing learned: the prompts that come first on the path', () => {
+    const order = ['jung', 'neu', 'alt', 'teuer', 'billig']
+    const place = (id: string) => (order.includes(id) ? order.indexOf(id) : Number.POSITIVE_INFINITY)
+    for (let k = 0; k < 10; k++) {
+      const [item] = pairItems({ pairs: PAIRS, words: WORDS, inScope: everywhere, state: learned([]), n: 1, place })
+      // jung -> alt and neu -> alt are the first two askable questions; one of them is drawn.
+      expect(['jung', 'neu']).toContain(item.prompt.id)
+    }
+  })
+
+  it('from map tiles: any pair of the scope, learned or not', () => {
+    const items = pairItems({ pairs: PAIRS, words: WORDS, inScope: (id) => id === 'langsam' || id === 'teuer', state: learned([]), n: 8, pick: 'any', rand: zero })
+    expect(items.map((i) => [i.prompt.id, i.answer.id].sort().join('-')).sort()).toEqual(['billig-teuer', 'langsam-schnell'])
   })
 
   it('puts pairs with both words learned first, and asks each pair only once (never both ways)', () => {
@@ -79,8 +97,9 @@ describe('the questions of a round', () => {
 
   it('asks a word once per task: alt is asked for one of its two opposites, with both accepted', () => {
     const items = pairItems({ pairs: PAIRS, words: WORDS, inScope: everywhere, state: learned(['alt']), n: 8, rand: zero })
-    expect(items).toHaveLength(1)
-    expect(items[0].accepted.map((x) => x.id).sort()).toEqual(['jung', 'neu'])
+    const alt = items.filter((i) => i.prompt.id === 'alt')
+    expect(alt).toHaveLength(1)
+    expect(alt[0].accepted.map((x) => x.id).sort()).toEqual(['jung', 'neu'])
   })
 
   it('keeps the pair note', () => {

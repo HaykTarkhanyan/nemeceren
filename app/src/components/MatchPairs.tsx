@@ -1,11 +1,12 @@
-// Match pairs (the daily mode): tap a German word and its meaning. A right pair locks, a wrong one
-// flashes. Tapping a German word reads it aloud. Practice only: every matched pair is logged with
-// practice: true and the FSRS schedule stays as it is (lib/reviewEntries.ts, DECISIONS.md #25).
+// Match pairs (the daily mode): tap a German word and its meaning. A right pair stays matched, a wrong one
+// flashes. Tapping a German word reads it aloud. Practice only: every matched pair of a word with a
+// card is logged with practice: true and the FSRS schedule stays as it is; a word not learned yet
+// is not logged (lib/reviewEntries.ts logsPractice, DECISIONS.md #25).
 import { useEffect, useMemo, useState } from 'react'
 import type { ReviewState } from '../content/schema.ts'
 import type { GameWord } from '../lib/daily.ts'
 import { messageOf } from '../lib/errors.ts'
-import { practiceEntry } from '../lib/reviewEntries.ts'
+import { logsPractice, practiceEntry } from '../lib/reviewEntries.ts'
 import { shuffle } from '../lib/shuffle.ts'
 import { speak } from '../lib/speech.ts'
 import { Rating } from '../lib/srs.ts'
@@ -76,6 +77,7 @@ function Round({ words, state, label, onDone }: { words: GameWord[]; state: Revi
   }, [done])
 
   function log(word: GameWord, first: boolean, ms: number): boolean {
+    if (!logsPractice(state, word.id)) return true
     try {
       recordPractice(
         practiceEntry({

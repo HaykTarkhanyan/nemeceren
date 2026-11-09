@@ -1,22 +1,23 @@
 // The light daily mode (design: _knowledge/2026-11-06_light-daily-mode-design.md, DECISIONS.md #77):
 // "#/daily" runs the daily mix (a match-pairs warm-up, due word reviews, a few new words, your
-// mistakes), "#/daily/<game>" runs one game on its own: match, listen, and the practice games of
+// mistakes), "#/daily/<game>" runs one game on its own: match, and the practice games of
 // _knowledge/2026-11-07_practice-games-design.md (speak, sentences, articles, gaps, build) and
 // opposites and synonyms (pairs, content/pairs.json), each
 // also on the words of one lesson or several ("#/daily/<game>/<lesson id>[,<lesson id>...]", from
-// the Words map). The games are practice and never change the review schedule; the reviews and new
-// words inside the mix are normal reviews.
+// the Words map). From Home a game takes learned words first and fills up with the next words on
+// the path; from the map it takes any word of the lessons (lib/daily.ts RoundPick). The games are
+// practice and never change the review schedule; the reviews and new words inside the mix are
+// normal reviews. Listen and pick was removed (Hayk, 2026-11-09: too easy).
 import { useEffect, useRef, useState } from 'react'
 import { content } from '../content/load.ts'
 import type { ReviewState, WordSet } from '../content/schema.ts'
 import { ArticleDrill } from '../components/ArticleDrill.tsx'
 import { BuildSentence } from '../components/BuildSentence.tsx'
+import { PRACTICE_NOTE } from '../components/GameFrame.tsx'
 import type { GameBack } from '../components/GameFrame.tsx'
-import { GapFill, unitOfWord } from '../components/GapFill.tsx'
+import { GapFill } from '../components/GapFill.tsx'
 import { PairsGame } from '../components/PairsGame.tsx'
 import { SpeakSentences, SpeakWords } from '../components/SpeakGames.tsx'
-import { ListenPick } from '../components/ListenPick.tsx'
-import type { PickStats } from '../components/ListenPick.tsx'
 import { MatchPairs } from '../components/MatchPairs.tsx'
 import type { MatchStats } from '../components/MatchPairs.tsx'
 import { MistakesSession } from '../components/MistakesSession.tsx'
@@ -25,22 +26,21 @@ import { ReviewRun } from '../components/ReviewRun.tsx'
 import type { RunStats } from '../components/ReviewRun.tsx'
 import { practiceWord } from '../lib/customWords.ts'
 import type { StudyWord } from '../lib/customWords.ts'
-import { dueNow, introduced, matchRounds, MIN_PAIRS, MIN_PICK_WORDS, MIX, MIX_STEP_LABEL, mixFinished, mixNewWords, mixSteps, pickItems } from '../lib/daily.ts'
-import type { MixStep } from '../lib/daily.ts'
+import { dueNow, introduced, matchRounds, MIN_PAIRS, MIX, MIX_STEP_LABEL, mixFinished, mixNewWords, mixSteps } from '../lib/daily.ts'
+import type { MixStep, RoundPick } from '../lib/daily.ts'
 import { deriveMistakes, MISTAKE_SESSION_MAX } from '../lib/mistakes.ts'
 import type { Mistake } from '../lib/mistakes.ts'
-import { nextLesson, reachedUnit, wordsForSource } from '../lib/plan.ts'
+import { lessonsOfPart, nextLesson, withCourseRest, wordsForSource } from '../lib/plan.ts'
 import type { ProgressView } from '../lib/storage.ts'
 import { link } from '../lib/router.ts'
 import { useSettings } from '../lib/settings.ts'
-import { NO_VOICE_HELP, useSpeech } from '../lib/speech.ts'
 import type { SpeechInfo } from '../lib/speech.ts'
 import type { Settings } from '../lib/settings.ts'
 import { counts } from '../lib/srs.ts'
 import { messageOf, reportError } from '../lib/errors.ts'
 import { reachOf } from '../lib/goalView.ts'
 import { recordDailyMixDone, requestFlush, useProgress } from '../lib/storage.ts'
-import { lessonsOfPart, unionWordIds } from '../lib/vocabMap.ts'
+import { unionWordIds } from '../lib/vocabMap.ts'
 
 /** The word set the mix takes new words from, or null (the next lessons). An unknown saved id is an error to show. */
 export function activeSet(settings: Settings): { set: WordSet | null; problem: string | null } {
@@ -60,6 +60,11 @@ export function studyPool(progress: ProgressView): StudyWord[] {
     progress.reviewState,
     reachOf(progress),
   )
+}
+
+/** The words of a practice game started from Home, in the order it takes them: the study pool, then the rest of the course in course order (lib/plan.ts withCourseRest). */
+export function homeGameWords(progress: ProgressView): StudyWord[] {
+  return withCourseRest(studyPool(progress), content.words, content.lessons)
 }
 
 /** Mistakes from tests and lesson exercises (DECISIONS.md #81): the due ones, and how many changed since. */
@@ -134,9 +139,8 @@ export function mixSummary(plan: MixPlan): string {
 /** The practice games of #/daily/<game> (design: _knowledge/2026-11-07_practice-games-design.md); each can take the words of one lesson or several: #/daily/<game>/<lesson id>[,<lesson id>...]. */
 export const PRACTICE_GAMES = ['speak', 'sentences', 'articles', 'gaps', 'build', 'pairs'] as const
 export type PracticeGameName = (typeof PRACTICE_GAMES)[number]
-export const GAME_LABEL: Record<PracticeGameName | 'match' | 'listen', string> = {
+export const GAME_LABEL: Record<PracticeGameName | 'match', string> = {
   match: 'Match pairs',
-  listen: 'Listen and pick',
   speak: 'Say the words',
   sentences: 'Say the sentence',
   articles: 'der, die, das',
@@ -149,7 +153,17 @@ export const GAME_LABEL: Record<PracticeGameName | 'match' | 'listen', string> =
 export function DailyPage({ sub, lessons }: { sub?: string; lessons?: string }) {
   if (sub === undefined) return <Mix />
   if (sub === 'match') return <MatchOnly lessons={lessons} />
-  if (sub === 'listen') return <ListenOnly lessons={lessons} />
+  if (sub === 'listen') {
+    // An old link or shortcut: the game was removed (Hayk, 2026-11-09: too easy).
+    return (
+      <div className="card stack">
+        <p>Listen and pick was removed: it was too easy.</p>
+        <p>
+          <a href={link('daily')}>Daily mix</a>
+        </p>
+      </div>
+    )
+  }
   if (sub === 'mistakes') return <MistakesOnly />
   const game = PRACTICE_GAMES.find((g) => g === sub)
   if (game) return <PracticeGame game={game} lessons={lessons} />
@@ -160,36 +174,35 @@ export function DailyPage({ sub, lessons }: { sub?: string; lessons?: string }) 
   )
 }
 
-interface GameScope {
-  /** The words the game asks about (it takes the learned ones). */
+export interface GameScope {
+  /** The words the game asks about, in path order from Home. */
   words: StudyWord[]
-  /** All words, for distractors. */
+  /** Words for distractors (fill the gap, build the sentence): the scope's words and the rest. */
   pool: StudyWord[]
+  /** Learned words first (from Home) or any word of the lessons (from the map). */
+  pick: RoundPick
   back: GameBack
 }
 
 /**
- * What a game plays with: all words, or the words of one lesson or several (tiles on the Words
- * map). "Say the words" keeps to the highest unit the path reaches and earlier (design part 2);
- * Hayk's own words and theme words have no unit and always count.
+ * What a game plays with (Hayk, 2026-11-09: "dont lock anything"). From Home: every word in path
+ * order (homeGameWords), learned ones taken first, so a round is always full; no unit cap. From one
+ * lesson or several (tiles on the Words map): all words of those lessons, learned or not.
  */
-export function gameScope(progress: ProgressView, game: string, lessons: string | undefined): GameScope | { problem: string } {
-  const pool = studyPool(progress)
-  if (lessons === undefined) {
-    const unit = reachedUnit(content.lessons, reachOf(progress))
-    const words = game === 'speak' ? pool.filter((w) => (unitOfWord(w.id) ?? Number.NEGATIVE_INFINITY) <= unit) : pool
-    return { words, pool, back: { href: link(), lessons: 0 } }
-  }
+export function gameScope(progress: ProgressView, lessons: string | undefined): GameScope | { problem: string } {
+  const home = homeGameWords(progress)
+  if (lessons === undefined) return { words: home, pool: home, pick: 'learned-first', back: { href: link(), lessons: 0 } }
   const named = lessonsOfPart(lessons, content.allLessons)
   if ('problem' in named) return named
   const ids = new Set(unionWordIds(named.lessons))
-  return { words: content.words.filter((w) => ids.has(w.id)), pool, back: { href: link('words', 'map'), lessons: named.lessons.length } }
+  const words = content.words.filter((w) => ids.has(w.id))
+  return { words, pool: [...words, ...home.filter((w) => !ids.has(w.id))], pick: 'any', back: { href: link('words', 'map'), lessons: named.lessons.length } }
 }
 
 function PracticeGame({ game, lessons }: { game: PracticeGameName; lessons: string | undefined }) {
   const progress = useProgress()
   const [run, setRun] = useState(0)
-  const scope = gameScope(progress, game, lessons)
+  const scope = gameScope(progress, lessons)
   if ('problem' in scope) {
     return (
       <div className="alert error">
@@ -197,7 +210,7 @@ function PracticeGame({ game, lessons }: { game: PracticeGameName; lessons: stri
       </div>
     )
   }
-  const props = { words: scope.words, state: progress.reviewState, back: scope.back, onAgain: () => setRun((r) => r + 1) }
+  const props = { words: scope.words, state: progress.reviewState, back: scope.back, pick: scope.pick, onAgain: () => setRun((r) => r + 1) }
   switch (game) {
     case 'speak':
       return <SpeakWords key={run} {...props} />
@@ -297,8 +310,9 @@ function Mix() {
   )
 }
 
+/** The mix's warm-up stays on learned words: it warms up what is known before the reviews. */
 function Warmup({ pool, state, onDone }: { pool: StudyWord[]; state: ReviewState; onDone: (s: MatchStats) => void }) {
-  const [rounds] = useState(() => matchRounds(pool, state, MIX.warmupRounds, MIX.pairsPerRound))
+  const [rounds] = useState(() => matchRounds(introduced(pool, state), state, MIX.warmupRounds, MIX.pairsPerRound))
   // Skips the warm-up once when there are too few words (also when StrictMode runs effects twice).
   const skipped = useRef(false)
   useEffect(() => {
@@ -360,14 +374,15 @@ function MixEnd({ done, startedAt, nothing }: { done: Done; startedAt: number; n
 function MatchOnly({ lessons }: { lessons?: string }) {
   const progress = useProgress()
   const [run, setRun] = useState(0)
-  const scope = gameScope(progress, 'match', lessons)
+  const scope = gameScope(progress, lessons)
   if ('problem' in scope) return <div className="alert error">{scope.problem}</div>
-  return <MatchGame key={run} pool={scope.words} state={progress.reviewState} onAgain={() => setRun((r) => r + 1)} />
+  return <MatchGame key={run} pool={scope.words} state={progress.reviewState} pick={scope.pick} onAgain={() => setRun((r) => r + 1)} />
 }
 
 /** Match pairs on its own: 3 rounds. Also used by the Words page for a picked list of words. */
-export function MatchGame({ pool, state, onAgain, rounds = 3 }: { pool: StudyWord[]; state: ReviewState; onAgain: () => void; rounds?: number }) {
-  const [plan] = useState(() => matchRounds(pool, state, rounds, MIX.pairsPerRound))
+export function MatchGame(props: { pool: StudyWord[]; state: ReviewState; pick?: RoundPick; onAgain: () => void; rounds?: number }) {
+  const { pool, state, pick = 'learned-first', onAgain, rounds = 3 } = props
+  const [plan] = useState(() => matchRounds(pool, state, rounds, MIX.pairsPerRound, pick))
   const [stats, setStats] = useState<MatchStats | null>(null)
   useEffect(() => {
     if (stats) requestFlush()
@@ -380,7 +395,7 @@ export function MatchGame({ pool, state, onAgain, rounds = 3 }: { pool: StudyWor
           <p>
             Matched {stats.pairs} pairs, {stats.firstTry} on the first try, in {Math.round(stats.ms / 1000)} seconds.
           </p>
-          <p className="muted small">Practice: your review schedule is unchanged.</p>
+          <p className="muted small">{PRACTICE_NOTE}</p>
         </div>
         <GameEndButtons onAgain={onAgain} />
       </div>
@@ -394,51 +409,13 @@ export function MatchGame({ pool, state, onAgain, rounds = 3 }: { pool: StudyWor
   )
 }
 
-function ListenOnly({ lessons }: { lessons?: string }) {
-  const progress = useProgress()
-  const [run, setRun] = useState(0)
-  const scope = gameScope(progress, 'listen', lessons)
-  if ('problem' in scope) return <div className="alert error">{scope.problem}</div>
-  return <ListenGame key={run} pool={scope.words} state={progress.reviewState} onAgain={() => setRun((r) => r + 1)} />
-}
-
-/** Listen and pick on its own: 10 items. Also used by the Words page for a picked list of words. */
-export function ListenGame({ pool, state, onAgain, n = 10 }: { pool: StudyWord[]; state: ReviewState; onAgain: () => void; n?: number }) {
-  const [items] = useState(() => pickItems(pool, state, n))
-  const [stats, setStats] = useState<PickStats | null>(null)
-  const listen = canListen(useSpeech())
-  useEffect(() => {
-    if (stats) requestFlush()
-  }, [stats])
-  if (!listen) return <div className="alert warn">Listen and pick needs a German voice. {NO_VOICE_HELP}</div>
-  if (items.length === 0) return <TooFew need={MIN_PICK_WORDS} />
-  if (stats) {
-    return (
-      <div className="stack">
-        <div className="card">
-          <p>
-            {stats.right} of {stats.total} right.
-          </p>
-          <p className="muted small">Practice: your review schedule is unchanged.</p>
-        </div>
-        <GameEndButtons onAgain={onAgain} />
-      </div>
-    )
-  }
-  return (
-    <div className="stack">
-      <h1>Listen and pick</h1>
-      <ListenPick items={items} state={state} onDone={setStats} />
-    </div>
-  )
-}
-
+/** Too few words with different German and English, learned or not, for Match pairs. */
 function TooFew({ need }: { need: number }) {
   return (
     <div className="card stack">
-      <p>This game needs at least {need} words you have already learned (reviewed at least once).</p>
+      <p>This game needs at least {need} words with different German and English, and there are fewer here.</p>
       <p>
-        <a href={link('words')}>Review words</a> or open the next lesson first.
+        <a href={link('words', 'map')}>Words map</a> or <a href={link()}>Home</a>
       </p>
     </div>
   )

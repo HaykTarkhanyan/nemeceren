@@ -6,6 +6,7 @@ import {
   contentRunway,
   courseTests,
   emptyLessonProgress,
+  lessonsSource,
   lessonStatus,
   listeningWords,
   lockedWordIds,
@@ -15,7 +16,6 @@ import {
   parseSourceKey,
   pathNewWords,
   reachableLessons,
-  reachedUnit,
   runwayText,
   setLastSection,
   sourceKey,
@@ -25,10 +25,12 @@ import {
   studyWords,
   unitWordsLeft,
   weakWords,
+  withCourseRest,
   wordsForSource,
 } from './plan.ts'
 import type { PathReach, WordSource } from './plan.ts'
-import { addExtraNew, counts, emptyState, extraToday, Rating, review } from './srs.ts'
+import { REVIEW_NEW_LIMIT } from './review.ts'
+import { addExtraNew, counts, emptyState, extraToday, nextCard, Rating, review } from './srs.ts'
 import { dailyStats, studyDays } from './stats.ts'
 
 const t0 = new Date(2026, 8, 29, 10, 0, 0)
@@ -137,14 +139,6 @@ describe('new words follow the path (pathNewWords)', () => {
     const fresh = pathNewWords(cards, course, emptyLessonProgress(), learned, at('A', ['B', 'C', 'D']))
     expect(fresh.map((w) => w.id)).toEqual(['e1'])
     expect([...reachableLessons(course, at('A', ['B', 'C', 'D']))]).toEqual(['A', 'B', 'C', 'D', 'E'])
-    expect(reachedUnit(course, at('A', ['B', 'C', 'D']))).toBe(1)
-  })
-
-  it('reachedUnit: the highest unit the path reaches', () => {
-    expect(reachedUnit(lessons, at('A'))).toBe(1)
-    expect(reachedUnit(lessons, at('B'))).toBe(2)
-    expect(reachedUnit(lessons, at('A', ['C']))).toBe(2)
-    expect(reachedUnit(lessons, at(null))).toBe(2)
   })
 
   it('leaves out words that already have a card', () => {
@@ -319,8 +313,9 @@ describe('choosing where the review words come from', () => {
   const reach: PathReach = { at: 'L', started: new Set() }
   const ids = (source: WordSource, s = emptyState(t0)) => wordsForSource(source, words, [], lessons, opened, s, reach).map((w) => w.id)
 
-  it('"all" takes new words in path order: the lesson the path is at and the next, then words in no lesson', () => {
-    expect(ids({ kind: 'all' })).toEqual(['l1', 'l2', 'm1', 'a', 'x'])
+  it('"all" takes new words in path order: the lesson the path is at and the next, then words in no lesson, then the rest of the course', () => {
+    // Then the rest of the course (no locks, 2026-11-09): n1 is in lesson N, past the path.
+    expect(ids({ kind: 'all' })).toEqual(['l1', 'l2', 'm1', 'a', 'x', 'n1'])
   })
 
   it('a lesson takes only its words, opened or not (picking it is the choice to learn them)', () => {
@@ -365,7 +360,7 @@ describe('choosing where the review words come from', () => {
     expect(sourceKey({ kind: 'mine' })).toBe('mine')
     expect(sourceLabel({ kind: 'mine' }, lessons)).toBe('my words')
     expect(wordsForSource({ kind: 'mine' }, words, mine, lessons, opened, emptyState(t0), reach).map((w) => w.id)).toEqual([mine[0].id])
-    expect(wordsForSource({ kind: 'all' }, words, mine, lessons, opened, emptyState(t0), reach).map((w) => w.id)).toEqual(['l1', 'l2', 'm1', 'a', 'x', mine[0].id])
+    expect(wordsForSource({ kind: 'all' }, words, mine, lessons, opened, emptyState(t0), reach).map((w) => w.id)).toEqual(['l1', 'l2', 'm1', 'a', 'x', 'n1', mine[0].id])
     // A unit or a lesson is content only.
     expect(wordsForSource({ kind: 'unit', unit: 1 }, words, mine, lessons, opened, emptyState(t0), reach).map((w) => w.id)).toEqual(['l1', 'l2', 'm1'])
   })
@@ -373,12 +368,82 @@ describe('choosing where the review words come from', () => {
   it('a theme lesson holds its words back until opened, and can be picked like a lesson', () => {
     const all = [...lessons, theme('t-arzt', ['x'])]
     expect(ids({ kind: 'all' })).toContain('x')
-    expect(wordsForSource({ kind: 'all' }, words, [], all, opened, emptyState(t0), reach).map((w) => w.id)).toEqual(['l1', 'l2', 'm1', 'a'])
+    expect(wordsForSource({ kind: 'all' }, words, [], all, opened, emptyState(t0), reach).map((w) => w.id)).toEqual(['l1', 'l2', 'm1', 'a', 'n1'])
     expect(wordsForSource({ kind: 'lesson', lessonId: 't-arzt' }, words, [], all, opened, emptyState(t0), reach).map((w) => w.id)).toEqual(['x'])
     const openedTheme = startLesson(opened, 't-arzt', t0)
-    expect(wordsForSource({ kind: 'all' }, words, [], all, openedTheme, emptyState(t0), reach).map((w) => w.id)).toEqual(['l1', 'l2', 'm1', 'x', 'a'])
+    expect(wordsForSource({ kind: 'all' }, words, [], all, openedTheme, emptyState(t0), reach).map((w) => w.id)).toEqual(['l1', 'l2', 'm1', 'x', 'a', 'n1'])
     expect(parseSourceKey('lesson:t-arzt', all)).toEqual({ source: { kind: 'lesson', lessonId: 't-arzt' }, note: null })
     expect(sourceLabel({ kind: 'lesson', lessonId: 't-arzt' }, all)).toBe('Theme: Topic t-arzt')
+  })
+
+  it('several lessons (ticked map tiles): all their words, learned or new, in words.json order', () => {
+    const all = [...lessons, theme('t-arzt', ['x', 'l1'])]
+    expect(wordsForSource({ kind: 'lessons', lessonIds: ['N', 'L'] }, words, [], all, opened, emptyState(t0), reach).map((w) => w.id)).toEqual(['l1', 'l2', 'n1'])
+    expect(wordsForSource({ kind: 'lessons', lessonIds: ['M', 't-arzt'] }, words, [], all, opened, emptyState(t0), reach).map((w) => w.id)).toEqual(['l1', 'm1', 'x'])
+    // An unknown or empty lesson list is an error, never a smaller pick.
+    expect(() => wordsForSource({ kind: 'lessons', lessonIds: ['L', 'gone'] }, words, [], all, opened, emptyState(t0), reach)).toThrow(/no lesson "gone"/)
+    expect(() => wordsForSource({ kind: 'lessons', lessonIds: [] }, words, [], all, opened, emptyState(t0), reach)).toThrow(/at least one lesson/)
+  })
+
+  it('several lessons are saved as "lessons:<id>,<id>" and read back; a bad list falls back to all words and says why', () => {
+    const all = [...lessons, theme('t-arzt', ['x'])]
+    const s: WordSource = { kind: 'lessons', lessonIds: ['M', 't-arzt'] }
+    expect(sourceKey(s)).toBe('lessons:M,t-arzt')
+    expect(parseSourceKey('lessons:M,t-arzt', all)).toEqual({ source: s, note: null })
+    expect(sourceLabel(s, all)).toBe('2 lessons: 1.2, Topic t-arzt')
+    expect(() => sourceKey({ kind: 'lessons', lessonIds: [] })).toThrow(/at least one lesson/)
+    for (const [key, problem] of [
+      ['lessons:M,gone', 'There is no lesson "gone" to practise.'],
+      ['lessons:M,,N', 'The lesson list "M,,N" has an empty part.'],
+      ['lessons:', 'The lesson list "" has an empty part.'],
+      ['lessons:M,M', 'The lesson list "M,M" names "M" twice.'],
+    ]) {
+      expect(parseSourceKey(key, all)).toEqual({ source: { kind: 'all' }, note: `Your last pick ("${key}") cannot be used: ${problem} The review uses all words.` })
+    }
+    // Saved values from before still parse as they did.
+    expect(parseSourceKey('all', all).source).toEqual({ kind: 'all' })
+    expect(parseSourceKey('unit:1', all).source).toEqual({ kind: 'unit', unit: 1 })
+    expect(parseSourceKey('lesson:M', all).source).toEqual({ kind: 'lesson', lessonId: 'M' })
+  })
+
+  it('a Review these on ticked tiles is a lesson for one tile, "lessons" for several', () => {
+    expect(lessonsSource(['M'])).toEqual({ kind: 'lesson', lessonId: 'M' })
+    expect(lessonsSource(['M', 'N'])).toEqual({ kind: 'lessons', lessonIds: ['M', 'N'] })
+    expect(() => lessonsSource([])).toThrow(/at least one lesson/)
+  })
+})
+
+describe('Words, Review has no daily limit on new words', () => {
+  it('after the due cards it keeps bringing new words in path order, past the old limit of the day', () => {
+    const words = ['a1', 'a2', 'b1', 'b2', 'c1'].map((id) => word(id))
+    const course = [lesson('A', 1, 1, ['a1', 'a2']), lesson('B', 1, 2, ['b1', 'b2']), lesson('C', 1, 3, ['c1'])]
+    const reach: PathReach = { at: 'A', started: new Set() }
+    // 30 new words learned today already (the old daily limit was 10).
+    let s = emptyState(t0)
+    s = { ...s, newToday: { date: s.newToday.date, count: 30 } }
+    const pool = studyWords(words, course, emptyLessonProgress(), s, reach)
+    expect(counts(pool, s, t0, REVIEW_NEW_LIMIT)).toEqual({ due: 0, newLeft: 4 })
+    const order: string[] = []
+    for (let i = 0; i < 4; i++) {
+      const next = nextCard(studyWords(words, course, emptyLessonProgress(), s, reach), s, t0, REVIEW_NEW_LIMIT)
+      if (next.kind !== 'card') throw new Error(`no card after ${order.join(',')}`)
+      expect(next.isNew).toBe(true)
+      order.push(next.word.id)
+      s = review(s, next.word.id, Rating.Good, t0).state
+    }
+    // The path reaches A and B: their words, in course order; C waits for the path (order, not a limit).
+    expect(order).toEqual(['a1', 'a2', 'b1', 'b2'])
+    // With a limit, as the daily mix still has, it would have stopped at once.
+    expect(counts(pool, { ...emptyState(t0), newToday: { date: s.newToday.date, count: 30 } }, t0, 10).newLeft).toBe(0)
+  })
+})
+
+describe('practice games from Home: the path, then the rest of the course (withCourseRest)', () => {
+  it('keeps the pool first, then adds the other course words in course order, each once', () => {
+    const words = ['c1', 'free', 'b1', 'a2', 'a1'].map((id) => word(id))
+    const course = [lesson('B', 1, 2, ['b1', 'a1']), lesson('A', 1, 1, ['a1', 'a2']), lesson('C', 2, 1, ['c1'])]
+    const pool = [word('a1'), word('free')]
+    expect(withCourseRest(pool, words, course).map((w) => w.id)).toEqual(['a1', 'free', 'a2', 'b1', 'c1'])
   })
 })
 

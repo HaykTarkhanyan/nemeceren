@@ -1,13 +1,14 @@
 // The der/die/das speed drill (#/daily/articles; design: _knowledge/2026-11-07_practice-games-design.md,
-// part 3): a learned noun without its article, three big buttons in the article colours, a
-// 60-second round with a streak and the best streak on this device. A wrong noun comes back later
-// in the round. A noun's first answer in a round is logged as practice (recognition), later taps
-// on it are not; the schedule stays as it is.
+// part 3): a noun without its article (learned ones first from Home, lib/games.ts drillNouns), three
+// big buttons in the article colours, a 60-second round with a streak and the best streak on this
+// device. A wrong noun comes back later in the round. A noun's first answer in a round is logged
+// as practice (recognition) if the noun has a card, later taps on it are not; the schedule stays as it is.
 import { useEffect, useRef, useState } from 'react'
 import type { ReviewState } from '../content/schema.ts'
 import type { StudyWord } from '../lib/customWords.ts'
-import { introduced } from '../lib/daily.ts'
-import { articleNouns, articleTap, emptyArticleRound, GAMES, requeue } from '../lib/games.ts'
+import { isLearned } from '../lib/daily.ts'
+import type { RoundPick } from '../lib/daily.ts'
+import { articleTap, drillNouns, emptyArticleRound, GAMES, MIN_NOUNS, requeue } from '../lib/games.ts'
 import type { ArticleNoun, ArticleRound } from '../lib/games.ts'
 import { readBestStreak, writeBestStreak } from '../lib/homeView.ts'
 import type { Article } from '../lib/review.ts'
@@ -22,11 +23,10 @@ import { WordDe } from './ReviewCard.tsx'
 const ARTICLES: Article[] = ['der', 'die', 'das']
 /** The right article stays on screen this long after a wrong tap. */
 const FLASH_MS = 1300
-export const MIN_NOUNS = 3
 
-export function ArticleDrill({ words, state, back, onAgain }: { words: StudyWord[]; state: ReviewState; back: GameBack; onAgain: () => void }) {
+export function ArticleDrill({ words, state, back, pick, onAgain }: { words: StudyWord[]; state: ReviewState; back: GameBack; pick: RoundPick; onAgain: () => void }) {
   const [sound, toggleSound] = useReviewSound()
-  const [nouns] = useState(() => articleNouns(introduced(words, state)))
+  const [nouns] = useState(() => drillNouns(words, state, pick))
   // "Practise these" plays a new round on the nouns that went wrong.
   const [only, setOnly] = useState<ArticleNoun<StudyWord>[] | null>(null)
   const [run, setRun] = useState(0)
@@ -136,13 +136,14 @@ function Drill(props: {
   })
 
   if (started === null) {
+    const fresh = nouns.filter((n) => !isLearned(state, n.word.id)).length
     return (
       <GameFrame {...frame} done={0} target={GAMES.articleSeconds}>
         <section className="card stack game-card center">
           <h2>der, die or das?</h2>
           <p>
-            {GAMES.articleSeconds} seconds. Tap the article of each noun ({nouns.length} noun{nouns.length === 1 ? '' : 's'} you have learned). A wrong one comes back
-            later.
+            {GAMES.articleSeconds} seconds. Tap the article of each noun ({nouns.length} noun{nouns.length === 1 ? '' : 's'}
+            {fresh > 0 ? `, ${fresh} of them not learned yet` : ''}). A wrong one comes back later.
           </p>
           <p className="muted small">Best streak on this device: {best}.</p>
           <button

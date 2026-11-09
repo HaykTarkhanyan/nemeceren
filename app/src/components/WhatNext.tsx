@@ -1,12 +1,10 @@
-// "What next" when the day's reviews are done: more new words, practice of weak words, the next
-// lesson, the next test, listening practice. Every option either works or says plainly why not.
-import { useState } from 'react'
+// "What next" when the reviews are done: new words, practice of weak words, the next lesson, the
+// next test, listening practice. Every option either works or says plainly why not.
 import { content } from '../content/load.ts'
 import type { StudyWord } from '../lib/customWords.ts'
-import { messageOf } from '../lib/errors.ts'
 import { listeningWords, nextLesson, nextTest, weakWords } from '../lib/plan.ts'
 import { link } from '../lib/router.ts'
-import { addExtraNewWords, useProgress } from '../lib/storage.ts'
+import { useProgress } from '../lib/storage.ts'
 
 /** `words` are the words the review uses (all, or the unit or lesson Hayk picked); `allWords` says which. */
 export function WhatNext(props: { words: StudyWord[]; allWords: boolean; onMoreNew: () => void; onPractice: (words: StudyWord[]) => void }) {
@@ -15,18 +13,6 @@ export function WhatNext(props: { words: StudyWord[]; allWords: boolean; onMoreN
   const state = view.reviewState
   const progress = view.lessonProgress
   const data = { results: view.results.map((r) => r.result), log: view.reviewLog }
-  const [error, setError] = useState<string | null>(null)
-
-  function moreNew(n: number) {
-    try {
-      addExtraNewWords(n)
-      onMoreNew()
-    } catch (err) {
-      setError(`Could not add new words: ${messageOf(err)}`)
-    }
-  }
-
-  if (error) return <div className="alert error">{error}</div>
 
   const now = new Date()
   const available = words.filter((w) => !state.cards[w.id]).length
@@ -45,18 +31,16 @@ export function WhatNext(props: { words: StudyWord[]; allWords: boolean; onMoreN
       <h2>What next?</h2>
 
       <div className="option">
-        <strong>Learn more new words today</strong>
+        <strong>Learn new words</strong>
         {available > 0 ? (
           <>
             <span className="muted small">
-              {available} new word{available === 1 ? '' : 's'} ready. This only raises today's limit.
+              {available} new word{available === 1 ? '' : 's'} ready, with no daily limit.
             </span>
             <div className="row">
-              {[5, 10].map((n) => (
-                <button key={n} type="button" className="btn small" onClick={() => moreNew(n)}>
-                  +{Math.min(n, available)} new
-                </button>
-              ))}
+              <button type="button" className="btn small" onClick={onMoreNew}>
+                Review new words
+              </button>
             </div>
           </>
         ) : locked > 0 ? (

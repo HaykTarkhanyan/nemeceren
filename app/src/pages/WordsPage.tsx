@@ -17,7 +17,7 @@ import { VocabMap } from '../components/VocabMap.tsx'
 import { WordForm } from '../components/WordForm.tsx'
 import { WordSetsTab } from '../components/WordSetsTab.tsx'
 import type { PracticeHow } from '../components/WordSetsTab.tsx'
-import { canListen, ListenGame, MatchGame } from './DailyPage.tsx'
+import { canListen, MatchGame } from './DailyPage.tsx'
 import { practiceWord } from '../lib/customWords.ts'
 import type { StudyWord } from '../lib/customWords.ts'
 import { addDays, localDay } from '../lib/dates.ts'
@@ -26,7 +26,7 @@ import { reachOf } from '../lib/goalView.ts'
 import { pickWordSource } from '../lib/wordReview.ts'
 import { lessonStatus, parseSourceKey, sourceKey, sourceLabel, sourceLessons, sourceThemes, wordsForSource } from '../lib/plan.ts'
 import type { WordSource } from '../lib/plan.ts'
-import { dueOnDay, GOAL_ROUND_MIN, pickMode, ROUND_SIZE, roundSummary } from '../lib/review.ts'
+import { dueOnDay, GOAL_ROUND_MIN, pickMode, REVIEW_NEW_LIMIT, ROUND_SIZE, roundSummary } from '../lib/review.ts'
 import type { SessionMode } from '../lib/review.ts'
 import { practiceEntry, scheduledEntry } from '../lib/reviewEntries.ts'
 import type { Typed } from '../lib/reviewEntries.ts'
@@ -72,7 +72,7 @@ function Words({ tab }: { tab: (typeof WORDS_TABS)[number] }) {
   const [form, setForm] = useState<{ editing: CustomWordView | null } | null>(null)
   const [notice, setNotice] = useState<string | null>(null)
   // A game on a picked list of words (All words, Word sets); each start is a fresh run.
-  const [game, setGame] = useState<{ how: 'match' | 'listen'; words: StudyWord[]; run: number } | null>(null)
+  const [game, setGame] = useState<{ how: 'match'; words: StudyWord[]; run: number } | null>(null)
 
   // Where the words come from (all, my words, a unit, a lesson). With "all", words of lessons
   // (course or theme) that are not open yet wait until their lesson is opened.
@@ -80,9 +80,9 @@ function Words({ tab }: { tab: (typeof WORDS_TABS)[number] }) {
   const custom = progress.customWords.map(practiceWord)
   // With "all", new words follow the path (lib/plan.ts pathNewWords), the same rule as the daily mix.
   const words = wordsForSource(source, content.words, custom, content.allLessons, progress.lessonProgress, state, reachOf(progress))
-  // A picked unit, lesson or "my words" brings all its new words at once; only "all" keeps the daily
-  // limit, so 200+ lesson words can't arrive in one day (Hayk, 2026-10-02; DECISIONS.md #66).
-  const newLimit = source.kind === 'all' ? settings.newPerDay : Number.POSITIVE_INFINITY
+  // No daily limit on new words, for any pick (Hayk, 2026-11-09; it was "all" only before, #66):
+  // the review keeps bringing them, round after round, as long as Hayk goes on.
+  const newLimit = REVIEW_NEW_LIMIT
   function pick(key: string) {
     // The page keeps its own pick only when this device could not save it (lib/wordReview.ts).
     const out = pickWordSource(key, (k) => updateSettings({ wordSource: k }))
@@ -133,11 +133,7 @@ function Words({ tab }: { tab: (typeof WORDS_TABS)[number] }) {
             Back to the words
           </button>
         </div>
-        {game.how === 'match' ? (
-          <MatchGame key={game.run} pool={game.words} state={state} onAgain={again} rounds={Math.max(1, Math.ceil(game.words.length / 5))} />
-        ) : (
-          <ListenGame key={game.run} pool={game.words} state={state} onAgain={again} n={Math.min(10, game.words.length)} />
-        )}
+        <MatchGame key={game.run} pool={game.words} state={state} onAgain={again} rounds={Math.max(1, Math.ceil(game.words.length / 5))} />
       </div>
     )
   }
@@ -234,7 +230,7 @@ function Words({ tab }: { tab: (typeof WORDS_TABS)[number] }) {
             </div>
             <div className="stat">
               <div className="stat-num">{c.newLeft}</div>
-              <div className="muted">{source.kind === 'all' ? `new today (limit ${settings.newPerDay})` : 'new in this pick (no daily limit)'}</div>
+              <div className="muted">{source.kind === 'all' ? 'new on the path (no daily limit)' : 'new in this pick (no daily limit)'}</div>
             </div>
             <div className="stat">
               <div className="stat-num">{words.length}</div>
@@ -243,7 +239,7 @@ function Words({ tab }: { tab: (typeof WORDS_TABS)[number] }) {
           </div>
           {c.due === 0 && c.newLeft === 0 && source.kind !== 'all' && (
             <div className="alert warn">
-              <span>Nothing due in {sourceLabel(source, content.allLessons)} and no new words from it today.</span>
+              <span>Nothing due in {sourceLabel(source, content.allLessons)} and no new words left in it.</span>
               <button type="button" className="btn small" onClick={() => pick('all')}>
                 Switch to all words
               </button>
@@ -260,7 +256,7 @@ function Words({ tab }: { tab: (typeof WORDS_TABS)[number] }) {
           {source.kind === 'mine' && words.length === 0 && <p className="muted">You have not added any words yet. Use "Add a word" above.</p>}
           {c.due === 0 && c.newLeft === 0 && (
             <>
-              {source.kind === 'all' && <p>Nothing due and no new words left for today.</p>}
+              {source.kind === 'all' && <p>Nothing due and no new words left on the path for now.</p>}
               {whatNext}
             </>
           )}
@@ -270,7 +266,11 @@ function Words({ tab }: { tab: (typeof WORDS_TABS)[number] }) {
   )
 }
 
-/** Where the words come from: all, my words, one unit, or one lesson (grouped by unit, in course order), or a theme lesson. */
+/**
+ * Where the words come from: all, my words, one unit, or one lesson (grouped by unit, in course
+ * order), or a theme lesson. Several lessons (ticked tiles on the Map) show as one more option
+ * while picked.
+ */
 function SourcePicker({ source, onPick }: { source: WordSource; onPick: (key: string) => void }) {
   const view = useProgress()
   const progress = view.lessonProgress
@@ -279,7 +279,11 @@ function SourcePicker({ source, onPick }: { source: WordSource; onPick: (key: st
   const units = [...new Set(lessons.map((l) => l.unit))]
   const unopened = (l: Lesson) => lessonStatus(progress, l.id) === 'not-started'
   const pickedLessons = [...lessons, ...themes].filter((l) =>
-    source.kind === 'unit' ? l.unit === source.unit : source.kind === 'lesson' && l.id === source.lessonId,
+    source.kind === 'unit'
+      ? l.unit === source.unit
+      : source.kind === 'lesson'
+        ? l.id === source.lessonId
+        : source.kind === 'lessons' && source.lessonIds.includes(l.id),
   )
   const closed = pickedLessons.filter(unopened).length
   return (
@@ -288,6 +292,7 @@ function SourcePicker({ source, onPick }: { source: WordSource; onPick: (key: st
       <select value={sourceKey(source)} onChange={(e) => onPick(e.target.value)}>
         <option value="all">All words (new words follow the path)</option>
         <option value="mine">{`My words (${view.customWords.length})`}</option>
+        {source.kind === 'lessons' && <option value={sourceKey(source)}>{`Map tiles: ${sourceLabel(source, content.allLessons)}`}</option>}
         {units.map((u) => (
           <optgroup key={u} label={`Unit ${u}`}>
             <option value={sourceKey({ kind: 'unit', unit: u })}>{`All of Unit ${u}`}</option>
@@ -550,7 +555,7 @@ function Session(props: {
               pick it up.
             </p>
           ) : (
-            <p>Today's reviews are done.</p>
+            <p>Nothing due and no new words left here.</p>
           )}
         </div>
         {whatNext}

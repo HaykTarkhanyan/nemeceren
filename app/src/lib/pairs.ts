@@ -4,6 +4,8 @@
 // and which word a practice answer is logged for. Practice only: nothing here changes the FSRS
 // schedule (DECISIONS.md #25).
 import type { PairKind, ReviewState, WordPair } from '../content/schema.ts'
+import { freshOrder } from './daily.ts'
+import type { RoundPick } from './daily.ts'
 import { spokenWordRight } from './games.ts'
 import { splitArticle } from './review.ts'
 import { shuffle } from './shuffle.ts'
@@ -14,7 +16,7 @@ import type { Comparison } from './text.ts'
 export const PAIRS = {
   /** Questions in a round. */
   round: 8,
-  /** A round needs at least this many pairs with a learned prompt word. */
+  /** A round needs at least this many pairs. */
   minItems: 3,
 } as const
 
@@ -27,7 +29,7 @@ export interface PairItem<W> {
   /** Every word that counts as right, `answer` first (acceptedIds). */
   accepted: W[]
   note?: string
-  /** Both words are learned; otherwise only the prompt is, and the answer shows a word not learned yet. */
+  /** Both words are learned; otherwise the answer shows at least one word not learned yet. */
   bothLearned: boolean
 }
 
@@ -51,11 +53,13 @@ export function acceptedIds(pairs: readonly WordPair[], prompt: string, kind: Pa
 }
 
 /**
- * Up to n questions. A pair takes part when one of its words is in the game's scope (all words from
- * Home, the ticked lessons' words from the Words map), and is asked in a direction whose prompt
- * word is learned (reviewed at least once). Pairs with both words learned come first: that is real
- * recall. Pairs where only the prompt is learned fill up the round; their answer teaches the other
- * word. Each pair is asked once per round (never both ways), and each word once per task.
+ * Up to n questions. A pair takes part when one of its words is in the game's scope (from Home all
+ * words, from the Words map the ticked lessons' words), asked either way. Each pair is asked once
+ * per round (never both ways), and each word once per task.
+ *   "learned-first" (from Home): pairs with both words learned first (real recall), then those with
+ *   a learned prompt (the answer teaches the other word), then the rest by the prompt's place on the
+ *   path (`place`, its index in the scope's words), drawn as lib/daily.ts freshOrder does.
+ *   "any" (map tiles): at random, learned or not.
  */
 export function pairItems<W extends { id: string }>(input: {
   pairs: readonly WordPair[]
@@ -64,9 +68,12 @@ export function pairItems<W extends { id: string }>(input: {
   inScope: (id: string) => boolean
   state: ReviewState
   n: number
+  pick?: RoundPick
+  /** Where a word comes on the path (lower first); words outside the scope come last. */
+  place?: (id: string) => number
   rand?: () => number
 }): PairItem<W>[] {
-  const { pairs, words, inScope, state, n, rand = Math.random } = input
+  const { pairs, words, inScope, state, n, pick = 'learned-first', place = () => 0, rand = Math.random } = input
   const word = (id: string): W => {
     const w = words.get(id)
     if (!w) throw new Error(`The paired word "${id}" is not a word card`)
@@ -78,19 +85,48 @@ export function pairItems<W extends { id: string }>(input: {
       [pair.a, pair.b],
       [pair.b, pair.a],
     ]
-    return ways.filter(([prompt]) => isLearned(state, prompt)).map(([prompt, answer]) => ({ i, pair, prompt, answer, both: isLearned(state, answer) }))
+    return ways.map(([prompt, answer]) => ({ i, pair, prompt, answer, promptLearned: isLearned(state, prompt), both: isLearned(state, prompt) && isLearned(state, answer) }))
   })
-  const ordered = shuffle(candidates, rand).sort((x, y) => Number(y.both) - Number(x.both))
+  type Candidate = (typeof candidates)[number]
   const usedPairs = new Set<number>()
   const usedPrompts = new Set<string>()
-  const picked: typeof candidates = []
-  for (const c of ordered) {
-    if (picked.length >= n) break
-    const key = `${c.prompt} ${c.pair.kind}`
-    if (usedPairs.has(c.i) || usedPrompts.has(key)) continue
-    usedPairs.add(c.i)
-    usedPrompts.add(key)
-    picked.push(c)
+  const picked: Candidate[] = []
+  /** Takes the candidates in order, skipping a pair or a prompt and task already asked, up to `limit` in all. */
+  function take(list: Candidate[], limit: number) {
+    for (const c of list) {
+      if (picked.length >= limit) break
+      const key = `${c.prompt} ${c.pair.kind}`
+      if (usedPairs.has(c.i) || usedPrompts.has(key)) continue
+      usedPairs.add(c.i)
+      usedPrompts.add(key)
+      picked.push(c)
+    }
+  }
+  if (pick === 'any') take(shuffle(candidates, rand), n)
+  else {
+    const learned = shuffle(
+      candidates.filter((c) => c.promptLearned),
+      rand,
+    ).sort((x, y) => Number(y.both) - Number(x.both))
+    take(learned, n)
+    // The rest in path order; the ones that can still be asked are drawn like new words in a round.
+    const rest = candidates.filter((c) => !c.promptLearned).sort((x, y) => place(x.prompt) - place(y.prompt))
+    const askable: Candidate[] = []
+    const pairsSeen = new Set(usedPairs)
+    const promptsSeen = new Set(usedPrompts)
+    for (const c of rest) {
+      const key = `${c.prompt} ${c.pair.kind}`
+      if (pairsSeen.has(c.i) || promptsSeen.has(key)) continue
+      pairsSeen.add(c.i)
+      promptsSeen.add(key)
+      askable.push(c)
+    }
+    const order = freshOrder(
+      askable.map((c, k) => ({ id: String(k), c })),
+      n - picked.length,
+      rand,
+    ).map((x) => x.c)
+    take(order, n)
   }
   return shuffle(picked, rand).map((c) => ({
     kind: c.pair.kind,

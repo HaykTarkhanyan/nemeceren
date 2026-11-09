@@ -2,23 +2,20 @@
 // A set can be the source of the daily mix's new words, and its learned words can be practised
 // with a game or by typing. Practice never changes the review schedule.
 import { content } from '../content/load.ts'
-import { MIN_PAIRS, MIN_PICK_WORDS } from '../lib/daily.ts'
+import { MIN_PAIRS } from '../lib/daily.ts'
 import { messageOf, reportError } from '../lib/errors.ts'
 import { link } from '../lib/router.ts'
 import { updateSettings, useSettings } from '../lib/settings.ts'
 import { useProgress } from '../lib/storage.ts'
 import { learnedSetWords, practiceIds, PRACTICE_MAX, setProgress } from '../lib/wordSets.ts'
 
-export type PracticeHow = 'match' | 'listen' | 'type'
+export type PracticeHow = 'match' | 'type'
 
 export function PracticeButtons({ ids, onPractice }: { ids: string[]; onPractice: (ids: string[], how: PracticeHow) => void }) {
   return (
     <div className="row">
       <button type="button" className="btn small" disabled={ids.length < MIN_PAIRS} onClick={() => onPractice(ids, 'match')}>
         Match pairs
-      </button>
-      <button type="button" className="btn small" disabled={ids.length < MIN_PICK_WORDS} onClick={() => onPractice(ids, 'listen')}>
-        Listen and pick
       </button>
       <button type="button" className="btn small" disabled={ids.length === 0} onClick={() => onPractice(ids, 'type')}>
         Type the German
@@ -42,8 +39,8 @@ export function WordSetsTab({ onPractice }: { onPractice: (ids: string[], how: P
     <section className="stack">
       <p className="muted">
         Topic word lists, outside the course order. Pick one as the source of new words: the <a href={link('daily')}>daily mix</a> then brings its words
-        (up to 5 a day, within your daily limit of {settings.newPerDay}) instead of the next lesson's. Practice uses the words of a set you have already
-        learned, at most {PRACTICE_MAX} at a time, and does not change your review schedule.
+        (up to 5 a mix, while you have learned fewer than {settings.newPerDay} new words that day; see Settings) instead of the next lesson's. Practice
+        uses the words of a set you have already learned, at most {PRACTICE_MAX} at a time, and does not change your review schedule.
       </p>
       {content.sets.map((s) => {
         const p = setProgress(s, state)

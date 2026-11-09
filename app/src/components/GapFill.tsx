@@ -1,16 +1,17 @@
 // "Fill the gap" (#/daily/gaps; design: _knowledge/2026-11-07_practice-games-design.md, part 4): a
-// learned word's example with the word blanked, its English as the meaning, and 3 options of the
-// same kind and form (lib/games.ts gapItems). Practice, logged as recognition.
+// word's example with the word blanked (learned words first from Home), its English as the meaning,
+// and 3 options of the same kind and form (lib/games.ts gapItems). Practice, logged as recognition
+// for words with a card.
 import { useEffect, useState } from 'react'
 import { content } from '../content/load.ts'
 import { isCourseLesson } from '../content/lessons.ts'
 import type { ReviewState } from '../content/schema.ts'
 import type { StudyWord } from '../lib/customWords.ts'
-import { introduced } from '../lib/daily.ts'
-import { GAMES, gameWords, gapItems } from '../lib/games.ts'
+import { isLearned } from '../lib/daily.ts'
+import type { RoundPick } from '../lib/daily.ts'
+import { GAMES, gapItems, roundOrder } from '../lib/games.ts'
 import type { GapItem } from '../lib/games.ts'
 import { lessonOfWords } from '../lib/review.ts'
-import { shuffle } from '../lib/shuffle.ts'
 import { speak } from '../lib/speech.ts'
 import { useReviewSound } from './FocusBar.tsx'
 import { GameEnd, GameFrame, savePractice, TooFewWords, useEnterKey } from './GameFrame.tsx'
@@ -26,18 +27,21 @@ export function unitOfWord(id: string): number | undefined {
   return l && isCourseLesson(l) ? l.unit : undefined
 }
 
-/** Gap items: the weakest learned words first, then the others, until there are n that work. */
-function makeItems(words: StudyWord[], pool: StudyWord[], state: ReviewState): GapItem<StudyWord>[] {
-  const eligible = introduced(words, state).filter((w) => w.example)
-  const first = gameWords(eligible, state, 2 * GAMES.gaps)
-  const firstIds = new Set(first.map((w) => w.id))
-  const targets = [...shuffle(first), ...shuffle(eligible.filter((w) => !firstIds.has(w.id)))]
-  return gapItems(targets, introduced(pool, state), unitOfWord, GAMES.gaps)
+/** Gap items: words with an example in round order (lib/games.ts roundOrder) until there are n that work; learned distractors first. */
+function makeItems(words: StudyWord[], pool: StudyWord[], state: ReviewState, pick: RoundPick): GapItem<StudyWord>[] {
+  const targets = roundOrder(
+    words.filter((w) => w.example),
+    state,
+    2 * GAMES.gaps,
+    pick,
+  )
+  return gapItems(targets, pool, unitOfWord, GAMES.gaps, Math.random, (id) => isLearned(state, id))
 }
 
-export function GapFill({ words, pool, state, back, onAgain }: { words: StudyWord[]; pool: StudyWord[]; state: ReviewState; back: GameBack; onAgain: () => void }) {
+export function GapFill(props: { words: StudyWord[]; pool: StudyWord[]; state: ReviewState; back: GameBack; pick: RoundPick; onAgain: () => void }) {
+  const { words, pool, state, back, pick, onAgain } = props
   const [sound, toggleSound] = useReviewSound()
-  const [items] = useState(() => makeItems(words, pool, state))
+  const [items] = useState(() => makeItems(words, pool, state, pick))
   const [index, setIndex] = useState(0)
   const [right, setRight] = useState(0)
   const frame = { title: 'Fill the gap', back, sound, onSound: toggleSound }

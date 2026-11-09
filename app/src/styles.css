@@ -1673,10 +1673,6 @@ details > summary {
   background: var(--bg);
 }
 
-.word-row.status-locked {
-  opacity: 0.55;
-}
-
 .word-toggle {
   background: none;
   border: none;
@@ -2829,13 +2825,6 @@ ol.line {
   text-align: left;
   cursor: pointer;
   overflow-wrap: anywhere;
-}
-
-.map-tile.locked {
-  background: var(--surface);
-  color: var(--muted);
-  border-style: dashed;
-  border-color: var(--border);
 }
 
 .map-name {

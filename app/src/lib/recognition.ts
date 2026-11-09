@@ -37,10 +37,26 @@ export function recognitionCtor(): RecognitionCtor | null {
   return w.SpeechRecognition ?? w.webkitSpeechRecognition ?? null
 }
 
+/**
+ * What to do about a blocked mic. The installed app has no address bar, and it uses Chrome's
+ * permission for the site, so it gets the Chrome and Android steps that worked for Hayk (2026-11-08).
+ */
+export function blockedMicMessage(installed = isInstalledApp()): string {
+  return installed
+    ? 'The microphone is blocked. The installed app uses the permission Chrome has for this site: open Chrome, menu > Settings > Site settings > Microphone, and allow hayktarkhanyan.github.io. If it is allowed there, check Android Settings > Apps > Chrome > Permissions > Microphone. Then reopen the app.'
+    : 'The microphone is blocked for this site. Allow it in the browser (the icon next to the address), then try again.'
+}
+
+function isInstalledApp(): boolean {
+  return typeof window !== 'undefined' && typeof window.matchMedia === 'function' && window.matchMedia('(display-mode: standalone)').matches
+}
+
 export const RECOGNITION_ERRORS: Record<string, string> = {
   'no-speech': 'Nothing was heard. Press the mic and say the line.',
   'audio-capture': 'No microphone was found.',
-  'not-allowed': 'The microphone is blocked for this site. Allow it in the browser (the icon next to the address), then try again.',
+  get 'not-allowed'() {
+    return blockedMicMessage()
+  },
   network: 'Speech recognition needs the internet (the browser sends the audio to its recognition service).',
   aborted: 'Stopped.',
 }

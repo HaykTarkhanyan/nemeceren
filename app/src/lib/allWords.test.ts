@@ -1,8 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import type { CourseLesson, CustomWord, ReviewLogEntry, StoredCard, ThemeLesson, Word } from '../content/schema.ts'
-import { buildRows, correctPct, filterRows, matchesSearch, relativeDue, relativePast, sortRows, sourceText, statusCounts, strengthOf, wordStatus } from './allWords.ts'
+import { buildRows, correctPct, filterRows, matchesSearch, relativeDue, relativePast, sortRows, sourceText, STATUS_LABEL, statusCounts, strengthOf, WORD_STATUSES, wordStatus } from './allWords.ts'
 import type { WordRow, WordStatus } from './allWords.ts'
-import { emptyLessonProgress, startLesson } from './plan.ts'
 import { emptyState, introducedCard } from './srs.ts'
 
 const t0 = new Date('2026-09-30T10:00:00')
@@ -21,11 +20,10 @@ const card = (over: Partial<StoredCard> = {}): StoredCard => ({
 })
 
 describe('the status rule', () => {
-  const base = { custom: false, locked: false, lastRating: null }
+  const base = { custom: false, lastRating: null }
 
-  it('covers words without a card: own words are new, locked content waits, the rest is not started', () => {
+  it('covers words without a card: own words are new, content words are not started (nothing is locked)', () => {
     expect(wordStatus({ ...base, card: undefined })).toBe('not-started')
-    expect(wordStatus({ ...base, card: undefined, locked: true })).toBe('locked')
     expect(wordStatus({ ...base, card: undefined, custom: true })).toBe('new')
   })
 
@@ -50,11 +48,10 @@ const word = (id: string, de: string, en: string, added = '2026-09-28'): Word =>
 const lessonBase = { level: 'A1' as const, summary: 's', goals: ['g'], sections: [{ type: 'tip' as const, text: 'x' }] }
 const lessons: CourseLesson[] = [
   { ...lessonBase, id: 'u1-01-a', unit: 1, order: 1, title: 'A', words: ['termin', 'uhr'] },
-  // The path is at lesson A, so A and the next lesson (this one, without words) are reached; B is not.
   { ...lessonBase, id: 'u1-02-x', unit: 1, order: 2, title: 'X', words: [] },
+  // Far along the path, and the theme below never opened: their words are still just "not started".
   { ...lessonBase, id: 'u1-03-b', unit: 1, order: 3, title: 'B', words: ['bruecke'] },
 ]
-const reach = { at: 'u1-01-a', started: new Set<string>() }
 const themes: ThemeLesson[] = [{ ...lessonBase, id: 't-arzt', theme: { kind: 'topic', title: 'Beim Arzt' }, title: 'Arzt', words: ['arzt', 'termin'] }]
 const words = [
   word('termin', 'der Termin', 'appointment'),
@@ -101,8 +98,6 @@ function rows(): WordRow[] {
     custom: [own],
     lessons,
     themes,
-    progress: startLesson(emptyLessonProgress(), 'u1-01-a', t0),
-    reach,
     state,
     log: [
       log('termin', '2026-09-20T10:00:00.000Z', 3),
@@ -126,8 +121,8 @@ describe('rows', () => {
     expect(Object.fromEntries(Object.values(r).map((x) => [x.id, x.status]))).toEqual({
       termin: 'known',
       uhr: 'struggling',
-      bruecke: 'locked',
-      arzt: 'locked',
+      bruecke: 'not-started',
+      arzt: 'not-started',
       hallo: 'not-started',
       [own.id]: 'new',
     })
@@ -140,14 +135,11 @@ describe('rows', () => {
     expect(r[own.id].due).toBe(own.createdAt)
   })
 
-  it('"locked" follows the path: a reached lesson waits among the new words, opened or not', () => {
-    const status = (at: string, started: string[] = []) =>
-      buildRows({ words, custom: [], lessons, themes, progress: emptyLessonProgress(), reach: { at, started: new Set(started) }, state: emptyState(t0), log: [] }).find(
-        (x) => x.id === 'bruecke',
-      )?.status
-    expect(status('u1-01-a')).toBe('locked')
-    expect(status('u1-02-x')).toBe('not-started')
-    expect(status('u1-01-a', ['u1-03-b'])).toBe('not-started')
+  it('has no "locked" status: every content word without a card is "not started", wherever its lesson is', () => {
+    const all = buildRows({ words, custom: [], lessons, themes, state: emptyState(t0), log: [] })
+    expect(all.map((x) => x.status)).toEqual(['not-started', 'not-started', 'not-started', 'not-started', 'not-started'])
+    expect(STATUS_LABEL).not.toHaveProperty('locked')
+    expect(WORD_STATUSES).not.toContain('locked')
   })
 })
 
@@ -159,32 +151,31 @@ describe('search and filters', () => {
     expect(matchesSearch(row, '')).toBe(true)
   })
 
-  it('leaves locked words out of "All", and filters by status and source', () => {
+  it('"All" shows every word, and the filters pick by status and source', () => {
     const all = rows()
     const ids = (f: Parameters<typeof filterRows>[1]) => filterRows(all, f).map((r) => r.id)
-    expect(ids({ query: '', source: 'all', status: 'all' })).toEqual(['termin', 'uhr', 'hallo', own.id])
-    expect(ids({ query: '', source: 'all', status: 'locked' })).toEqual(['bruecke', 'arzt'])
+    expect(ids({ query: '', source: 'all', status: 'all' })).toEqual(['termin', 'uhr', 'bruecke', 'arzt', 'hallo', own.id])
+    expect(ids({ query: '', source: 'all', status: 'not-started' })).toEqual(['bruecke', 'arzt', 'hallo'])
     expect(ids({ query: '', source: 'custom', status: 'all' })).toEqual([own.id])
     expect(ids({ query: '', source: 'bank', status: 'all' })).toEqual(['hallo'])
     // A word listed in two lessons belongs to both.
-    expect(ids({ query: '', source: 'lesson:t-arzt', status: 'all' })).toEqual(['termin'])
-    expect(ids({ query: '', source: 'lesson:t-arzt', status: 'locked' })).toEqual(['arzt'])
+    expect(ids({ query: '', source: 'lesson:t-arzt', status: 'all' })).toEqual(['termin', 'arzt'])
+    expect(ids({ query: '', source: 'lesson:t-arzt', status: 'not-started' })).toEqual(['arzt'])
     expect(ids({ query: 'stau', source: 'all', status: 'all' })).toEqual([own.id])
     expect(() => ids({ query: '', source: 'unit:1', status: 'all' })).toThrow(/Unknown source filter/)
   })
 
-  it('counts each status for the current search and source; "all" without locked', () => {
+  it('counts each status for the current search and source; "all" counts every word', () => {
     expect(statusCounts(rows(), { query: '', source: 'all' })).toEqual({
-      all: 4,
-      'not-started': 1,
+      all: 6,
+      'not-started': 3,
       new: 1,
       learning: 0,
       review: 0,
       known: 1,
       struggling: 1,
-      locked: 2,
     })
-    expect(statusCounts(rows(), { query: 'arzt', source: 'all' })).toMatchObject({ all: 0, locked: 1 })
+    expect(statusCounts(rows(), { query: 'arzt', source: 'all' })).toMatchObject({ all: 1, 'not-started': 1 })
   })
 })
 
@@ -224,6 +215,6 @@ describe('relative dates', () => {
 
 describe('strengthOf (the bar on each row)', () => {
   it('rises from struggling to known; words not in review have none', () => {
-    expect(['locked', 'not-started', 'new', 'struggling', 'learning', 'review', 'known'].map((s) => strengthOf(s as WordStatus))).toEqual([0, 0, 0, 1, 2, 3, 4])
+    expect(['not-started', 'new', 'struggling', 'learning', 'review', 'known'].map((s) => strengthOf(s as WordStatus))).toEqual([0, 0, 1, 2, 3, 4])
   })
 })

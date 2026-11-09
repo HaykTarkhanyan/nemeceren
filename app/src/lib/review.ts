@@ -14,6 +14,12 @@ import type { Comparison } from './text.ts'
 export const ROUND_SIZE = 20
 /** A round that ends with at least this many cards counts for the daily goal (Hayk's Q23, 2026-11-07). */
 export const GOAL_ROUND_MIN = 10
+/**
+ * Words, Review has no daily limit on new words (Hayk, 2026-11-09: "I want to be able to do as many
+ * as I want"): after the due cards it brings new words in path order, round after round. The
+ * setting newPerDay now only limits the daily mix.
+ */
+export const REVIEW_NEW_LIMIT = Number.POSITIVE_INFINITY
 
 /** Hayk chooses the direction per round (Q24); "mixed" picks one for each card. */
 export type SessionMode = ReviewMode | 'mixed'

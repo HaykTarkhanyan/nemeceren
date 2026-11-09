@@ -1,8 +1,9 @@
 // The Words map (#/words/map; design: _knowledge/2026-11-07_practice-games-design.md, part 6): one
 // tile per lesson, grouped by unit under the path's badge, colour and title, theme lessons last.
-// A tile's unit colour gets stronger as its words get stronger (lib/vocabMap.ts). Tapping a tile
-// opens a sheet with its words, "Review these" and the practice games on that lesson's words. In
-// select mode, tapping ticks tiles instead, and a bar plays the games on all their words together.
+// A tile's unit colour gets stronger as its words get stronger (lib/vocabMap.ts). No tile is locked.
+// Tapping a tile opens a sheet with its words, "Review these" and the practice games on all of that
+// lesson's words. In select mode, tapping ticks tiles instead, and a bar reviews them or plays the
+// games on all their words together, learned or not.
 import { useEffect, useMemo, useState } from 'react'
 import type { CSSProperties } from 'react'
 import { content } from '../content/load.ts'
@@ -10,13 +11,12 @@ import { isThemeLesson } from '../content/lessons.ts'
 import type { Lesson } from '../content/schema.ts'
 import { buildRows, STATUS_LABEL, strengthOf } from '../lib/allWords.ts'
 import type { WordRow } from '../lib/allWords.ts'
-import { reachOf } from '../lib/goalView.ts'
 import { englishName, germanName, unitColor, unitTextColor, unitTitle } from '../lib/path.ts'
-import { reachableLessons, sourceKey, sourceLabel } from '../lib/plan.ts'
+import { lessonsPart, lessonsSource, sourceKey, sourceLabel } from '../lib/plan.ts'
 import { link } from '../lib/router.ts'
 import { useProgress } from '../lib/storage.ts'
 import { useVisibleContent } from '../lib/visibleContent.ts'
-import { learnedCount, lessonsPart, lessonTiles, minLearned, tileCount, tileShade, unionWordIds } from '../lib/vocabMap.ts'
+import { canPlay, learnedCount, lessonTiles, tileCount, tileShade, unionWordIds } from '../lib/vocabMap.ts'
 import type { LessonTile } from '../lib/vocabMap.ts'
 import { openWordReview } from '../lib/wordReview.ts'
 import { GAME_LABEL, PRACTICE_GAMES } from '../pages/DailyPage.tsx'
@@ -40,14 +40,12 @@ export function VocabMap() {
         custom: [],
         lessons: content.lessons,
         themes: visible.themes,
-        progress: view.lessonProgress,
-        reach: reachOf(view),
         state: view.reviewState,
         log: view.reviewLog,
       }),
     [view, visible],
   )
-  const groups = lessonTiles({ rows, lessons: content.lessons, themes: visible.themes, reachable: reachableLessons(content.lessons, reachOf(view)), progress: view.lessonProgress })
+  const groups = lessonTiles({ rows, lessons: content.lessons, themes: visible.themes })
   // The ticked lessons in map order, so the game link does not depend on the order of the taps.
   const pickedLessons = picked === null ? [] : groups.flatMap((g) => g.tiles.map((t) => t.lesson)).filter((l) => picked.includes(l.id))
   function tap(t: LessonTile, unit: number | null) {
@@ -78,9 +76,9 @@ export function VocabMap() {
                 <button
                   key={t.lesson.id}
                   type="button"
-                  className={`map-tile${t.locked ? ' locked' : ''}${ticked ? ' ticked' : ''}`}
-                  style={t.locked ? undefined : { background: `color-mix(in srgb, var(--c) ${shade}%, var(--surface))`, color: shade >= 70 ? 'var(--on-c)' : 'var(--text)' }}
-                  aria-label={`${tileName(t)}: ${t.locked ? tileCount(t) : `${t.known} of ${t.total} known`}`}
+                  className={`map-tile${ticked ? ' ticked' : ''}`}
+                  style={{ background: `color-mix(in srgb, var(--c) ${shade}%, var(--surface))`, color: shade >= 70 ? 'var(--on-c)' : 'var(--text)' }}
+                  aria-label={`${tileName(t)}: ${t.known} of ${t.total} known`}
                   aria-pressed={picked === null ? undefined : ticked}
                   onClick={() => tap(t, g.unit)}
                 >
@@ -105,29 +103,51 @@ export function VocabMap() {
   )
 }
 
-/** Select mode's bar, kept at the bottom of the screen: how much is ticked, and the games on all of it. */
+/** Select mode's bar, kept at the bottom of the screen: how much is ticked, a review of all of it, and the games on all of it. */
 function PickBar({ lessons, rows }: { lessons: Lesson[]; rows: WordRow[] }) {
   const ids = unionWordIds(lessons)
   const learned = learnedCount(ids, rows)
+  const lessonIds = lessons.map((l) => l.id)
+  const inLessons = new Set(ids)
   return (
-    <div className="map-pickbar" role="region" aria-label="Practise the ticked tiles">
+    <div className="map-pickbar" role="region" aria-label="Review or practise the ticked tiles">
       <p className="small" aria-live="polite">
         <strong>
-          {lessons.length} tile{lessons.length === 1 ? '' : 's'}, {learned} learned word{learned === 1 ? '' : 's'}
+          {lessons.length} tile{lessons.length === 1 ? '' : 's'}, {ids.length} word{ids.length === 1 ? '' : 's'} ({learned} learned)
         </strong>
-        {lessons.length === 0 ? ' Tap tiles to tick them.' : learned === 0 ? ' None of their words are learned yet; review them first.' : ' Practise them (schedule unchanged):'}
+        {lessons.length === 0 ? ' Tap tiles to tick them.' : ' Review them, or practise them (schedule unchanged):'}
       </p>
-      <GameLinks lessonIds={lessons.map((l) => l.id)} learned={learned} />
+      <div className="daily-activities">
+        <ReviewButton lessonIds={lessonIds} />
+        <GameLinks lessonIds={lessonIds} words={rows.filter((r) => inLessons.has(r.id))} />
+      </div>
     </div>
   )
 }
 
-/** The games on these lessons' words: a link each, or a disabled button while too few of the words are learned for it. */
-function GameLinks({ lessonIds, learned }: { lessonIds: string[]; learned: number }) {
+/** A normal word review (Words, Review) of all the words of these lessons, learned or new; disabled with none ticked. */
+function ReviewButton({ lessonIds, className = 'btn small primary' }: { lessonIds: string[]; className?: string }) {
+  if (lessonIds.length === 0) {
+    return (
+      <button type="button" className={className} disabled>
+        Review these
+      </button>
+    )
+  }
+  const source = lessonsSource(lessonIds)
   return (
-    <div className="daily-activities">
-      {(['match', 'listen', ...PRACTICE_GAMES] as const).map((g) =>
-        lessonIds.length > 0 && learned >= minLearned(g) ? (
+    <button type="button" className={className} onClick={() => openWordReview(sourceKey(source), sourceLabel(source, content.allLessons))}>
+      Review these
+    </button>
+  )
+}
+
+/** The games on these lessons' words, learned or not: a link each, or a disabled button when the words are too few for it (lib/vocabMap.ts canPlay). */
+function GameLinks({ lessonIds, words }: { lessonIds: string[]; words: WordRow[] }) {
+  return (
+    <>
+      {(['match', ...PRACTICE_GAMES] as const).map((g) =>
+        lessonIds.length > 0 && canPlay(g, words, content.pairs) ? (
           <a key={g} className="btn small" href={link('daily', g, lessonsPart(lessonIds))}>
             {GAME_LABEL[g]}
           </a>
@@ -137,7 +157,7 @@ function GameLinks({ lessonIds, learned }: { lessonIds: string[]; learned: numbe
           </button>
         ),
       )}
-    </div>
+    </>
   )
 }
 
@@ -149,7 +169,7 @@ function TileSheet({ tile, unit, rows, onClose }: { tile: LessonTile; unit: numb
   const lesson = tile.lesson
   const ids = new Set(lesson.words ?? [])
   const words = rows.filter((r) => ids.has(r.id))
-  const learned = words.filter((r) => r.status !== 'locked' && r.status !== 'not-started' && r.status !== 'new').length
+  const learned = learnedCount([...ids], rows)
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose()
@@ -168,7 +188,6 @@ function TileSheet({ tile, unit, rows, onClose }: { tile: LessonTile; unit: numb
         </h3>
         <p className="muted small">
           {isThemeLesson(lesson) ? lesson.title : `${lesson.unit}.${lesson.order} ${englishName(lesson.title)}`}. {tile.known} of {tile.total} known, {learned} learned.
-          {tile.locked ? ' The path has not reached this lesson yet.' : ''}
         </p>
         <ul className="map-words">
           {words.map((r) => (
@@ -183,16 +202,15 @@ function TileSheet({ tile, unit, rows, onClose }: { tile: LessonTile; unit: numb
           ))}
         </ul>
         <div className="row">
-          <button type="button" className="btn primary sheet-go" onClick={() => openWordReview(sourceKey({ kind: 'lesson', lessonId: lesson.id }), sourceLabel({ kind: 'lesson', lessonId: lesson.id }, content.allLessons))}>
-            Review these
-          </button>
+          <ReviewButton lessonIds={[lesson.id]} className="btn primary sheet-go" />
           <a className="btn" href={link('lesson', lesson.id)}>
             Open the lesson
           </a>
         </div>
         <h4 className="map-practise">Practise these words (schedule unchanged)</h4>
-        {learned === 0 && <p className="small muted">The games use words you have learned; none of this lesson's yet. Review them first.</p>}
-        <GameLinks lessonIds={[lesson.id]} learned={learned} />
+        <div className="daily-activities">
+          <GameLinks lessonIds={[lesson.id]} words={words} />
+        </div>
         <div className="row sheet-actions">
           <button type="button" className="btn" onClick={onClose}>
             Close

@@ -2,6 +2,26 @@
 
 Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
+## 106. Nothing is locked: practice uses any words, the review has no daily new-word limit, Map tiles can be reviewed together, listen and pick is gone (asked for by Hayk, 2026-11-09)
+
+- **Date:** 2026-11-09 - **Status:** active; revisits #91, #93, #99, #101
+- **Why:** Hayk: "don't lock anything, I want full flexibility". Starting Say the words "it's once again the same goddamn 8 words". About the review: "I want to be able to do as many as I want". Hayk then chose: no daily limit, remove listen and pick everywhere, and a real review of several Map tiles. The cause was that practice games used only learned words (reps > 0), and Say the words was also capped at the units the path reached. With 17 learned words that left about 8.
+  - **Practice pools:**
+    - From Home: learned words first, then the next words on the path (a random draw from the next 2N, shown in path order, so rounds vary), then the rest of the course (`withCourseRest`). There is no unit cap. Round sizes: Say the words 8, Say the sentence 6, Gaps 8, Build 6, Match 3x5, Opposites 8, der/die/das up to 20.
+    - From the Map: all words of the ticked lessons, learned or not, drawn at random.
+    - Game rules still apply (nouns for der/die/das, example sentences for the sentence games).
+    - The daily mix warm-up still uses learned words only.
+  - **Practice logging:** an answer for a word without a card is not logged at all (`logsPractice`). Practice still never creates a card or moves a schedule (#25).
+  - **No locks:** Map tiles show known/total like any tile. All words has no "locked" status: a card-less word is "not started".
+  - **The review:** no daily limit (`REVIEW_NEW_LIMIT` = infinity). With "all words", the due cards come first, then the path's new words, then the rest of the course in course order, so it never runs dry. Theme words still wait for their theme. "Next round" shows whenever words remain. The `newPerDay` setting now only limits new words in the daily mix, and Settings says so.
+  - **Map review:** ticked tiles get "Review these": a normal FSRS round on all their words, with a `lessons:a,b` source. Old saved sources parse as before.
+  - **Listen and pick:** removed from Home, the Map, the Word sets buttons and the code. `#/daily/listen` shows a short note. Listen items in tests stay.
+- **Kept as ordering only:** `pathNewWords` decides which new words come first. The All words and Word sets practice panels still use learned words, because typing practice there logs against a card.
+- **Alternatives rejected:**
+  - **Loading 150 words as seen** (Q46): Hayk chose no limit instead, so the words come through real first reviews.
+  - **A higher daily limit:** still a limit.
+- **What would change this:** Hayk wanting a daily cap back (the setting is still there for the mix), or unlearned words in practice feeling like noise (then learned-first rounds only).
+
 ## 105. Say the words keeps one continuous mic session per round, to cut Android's start/stop beeps (asked for by Hayk, 2026-11-09; answers Q39)
 
 - **Date:** 2026-11-09 - **Status:** active (needs confirming on Hayk's phone)

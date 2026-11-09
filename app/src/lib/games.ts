@@ -4,7 +4,8 @@
 // All of it is practice: nothing here changes the FSRS schedule (DECISIONS.md #25).
 import type { ReviewState } from '../content/schema.ts'
 import { ASK_HEADER } from './askClaude.ts'
-import { introduced, wordKind } from './daily.ts'
+import { freshOrder, introduced, isLearned, wordKind } from './daily.ts'
+import type { RoundPick } from './daily.ts'
 import { splitArticle } from './review.ts'
 import type { Article } from './review.ts'
 import { shuffle } from './shuffle.ts'
@@ -31,7 +32,12 @@ export const GAMES = {
   articleSeconds: 60,
   /** A wrong noun in the der/die/das drill comes back this many places later. */
   articleGap: 3,
+  /** From Home, the drill's nouns are filled up to this many with nouns not learned yet. */
+  articleNouns: 20,
 } as const
+
+/** der/die/das needs at least this many nouns. */
+export const MIN_NOUNS = 3
 
 // ---------- which words ----------
 
@@ -44,14 +50,34 @@ export function weakestFirst<W extends { id: string }>(words: W[], state: Review
   })
 }
 
-/** n learned words for a game: drawn from the 2n weakest, so "Play again" brings some others; weakest first. */
-export function gameWords<W extends { id: string }>(words: W[], state: ReviewState, n: number, rand: () => number = Math.random): W[] {
-  const picked = new Set(
-    shuffle(weakestFirst(words, state).slice(0, 2 * n), rand)
+/**
+ * Every word, in the order a game should try them for a round of n. "learned-first" (from Home): n
+ * learned words drawn from the 2n weakest (weakest first, so "Play again" brings some others), the
+ * other learned words, then words not learned yet in the order given (path order, lib/daily.ts
+ * freshOrder). "any" (from map tiles): all words at random, learned or not.
+ */
+export function roundOrder<W extends { id: string }>(words: W[], state: ReviewState, n: number, pick: RoundPick, rand: () => number = Math.random): W[] {
+  if (pick === 'any') return shuffle(words, rand)
+  const learned = weakestFirst(words, state)
+  const drawn = new Set(
+    shuffle(learned.slice(0, 2 * n), rand)
       .slice(0, n)
       .map((w) => w.id),
   )
-  return weakestFirst(words, state).filter((w) => picked.has(w.id))
+  const fresh = words.filter((w) => !isLearned(state, w.id))
+  return [
+    ...learned.filter((w) => drawn.has(w.id)),
+    ...shuffle(
+      learned.filter((w) => !drawn.has(w.id)),
+      rand,
+    ),
+    ...freshOrder(fresh, n - drawn.size, rand),
+  ]
+}
+
+/** n words for a game (roundOrder): with enough learned words from Home, n of the 2n weakest. */
+export function gameWords<W extends { id: string }>(words: W[], state: ReviewState, n: number, pick: RoundPick = 'learned-first', rand: () => number = Math.random): W[] {
+  return roundOrder(words, state, n, pick, rand).slice(0, n)
 }
 
 // ---------- speaking and typing ----------
@@ -121,6 +147,29 @@ export function articleNouns<W extends { de: string }>(words: W[]): ArticleNoun<
     out.push({ word: w, article, noun: rest })
   }
   return out
+}
+
+/**
+ * The nouns of a der/die/das round. "learned-first" (from Home): every learned noun, filled up to
+ * GAMES.articleNouns with nouns not learned yet in the order given (path order). "any" (map tiles):
+ * every noun of the words. A noun with two articles on its cards is left out (articleNouns).
+ */
+export function drillNouns<W extends { id: string; de: string }>(words: W[], state: ReviewState, pick: RoundPick, rand: () => number = Math.random): ArticleNoun<W>[] {
+  const nouns = articleNouns(words)
+  if (pick === 'any') return nouns
+  const learned = nouns.filter((n) => isLearned(state, n.word.id))
+  const fresh = nouns.filter((n) => !isLearned(state, n.word.id))
+  const slots = GAMES.articleNouns - learned.length
+  const freshIds = new Set(
+    freshOrder(
+      fresh.map((n) => n.word),
+      slots,
+      rand,
+    )
+      .slice(0, Math.max(0, slots))
+      .map((w) => w.id),
+  )
+  return [...learned, ...fresh.filter((n) => freshIds.has(n.word.id))]
 }
 
 /** One 60-second round of the drill so far. */
@@ -291,10 +340,17 @@ export interface GapItem<W> extends Gap {
  * Up to n gap items: one per target card whose example has its word (gapIn). The 2 distractors come
  * from `pool`, of the same kind and in the same form as the answer (a noun as written: same
  * gender, so the article left in the sentence gives no hint; a plural: other plurals; an inflected
- * form: the same ending, taken from the other cards' examples), from the same unit first. A card
- * without 2 such distractors is skipped.
+ * form: the same ending, taken from the other cards' examples): `prefer`red words first (learned
+ * ones), and within those and the rest, the same unit first. A card without 2 such distractors is skipped.
  */
-export function gapItems<W extends GameCard>(targets: W[], pool: W[], unitOf: (id: string) => number | undefined, n: number, rand: () => number = Math.random): GapItem<W>[] {
+export function gapItems<W extends GameCard>(
+  targets: W[],
+  pool: W[],
+  unitOf: (id: string) => number | undefined,
+  n: number,
+  rand: () => number = Math.random,
+  prefer: (id: string) => boolean = () => true,
+): GapItem<W>[] {
   const out: GapItem<W>[] = []
   for (const word of targets) {
     if (out.length >= n) break
@@ -308,17 +364,16 @@ export function gapItems<W extends GameCard>(targets: W[], pool: W[], unitOf: (i
     const fits = pool.filter(
       (c) => c.id !== word.id && gapKind(c) === kind && (kind !== 'noun' || form.kind === 'plural' || splitArticle(c.de).article === gender),
     )
-    const sameUnit = shuffle(
-      fits.filter((c) => unit !== undefined && unitOf(c.id) === unit),
-      rand,
-    )
-    const others = shuffle(
-      fits.filter((c) => unit === undefined || unitOf(c.id) !== unit),
-      rand,
-    )
+    const inUnit = (c: W) => unit !== undefined && unitOf(c.id) === unit
+    const ordered = [
+      fits.filter((c) => prefer(c.id) && inUnit(c)),
+      fits.filter((c) => prefer(c.id) && !inUnit(c)),
+      fits.filter((c) => !prefer(c.id) && inUnit(c)),
+      fits.filter((c) => !prefer(c.id) && !inUnit(c)),
+    ].flatMap((group) => shuffle(group, rand))
     const seen = new Set([gap.answer.toLowerCase()])
     const wrong: string[] = []
-    for (const c of [...sameUnit, ...others]) {
+    for (const c of ordered) {
       if (wrong.length >= 2) break
       const f = sameForm(c, form)
       if (f === null || seen.has(f.toLowerCase())) continue

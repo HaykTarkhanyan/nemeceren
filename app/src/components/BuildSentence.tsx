@@ -1,5 +1,5 @@
 // "Build the sentence", the hard version (#/daily/build; design: _knowledge/2026-11-07_practice-games-design.md,
-// part 5): the English of a learned word's example, and the German built from tiles that include
+// part 5): the English of a word's example (learned words first from Home), and the German built from tiles that include
 // about 3 plausible distractors (another verb form, another article, a word from another
 // sentence), so the set never fits exactly. "Type it instead" swaps the tiles for a text box. A
 // different order may also be right, so a wrong answer offers "Ask Claude about this" (#78).
@@ -8,9 +8,9 @@ import { content } from '../content/load.ts'
 import type { ReviewState } from '../content/schema.ts'
 import type { StudyWord } from '../lib/customWords.ts'
 import { introduced } from '../lib/daily.ts'
-import { askGameText, buildItem, capitalizedWords, checkSentence, checkTiles, GAMES, gameWords, isVerbCard, sentenceWords } from '../lib/games.ts'
+import type { RoundPick } from '../lib/daily.ts'
+import { askGameText, buildItem, capitalizedWords, checkSentence, checkTiles, GAMES, isVerbCard, roundOrder, sentenceWords } from '../lib/games.ts'
 import type { BuildContext, BuildItem } from '../lib/games.ts'
-import { shuffle } from '../lib/shuffle.ts'
 import { speak } from '../lib/speech.ts'
 import type { Comparison } from '../lib/text.ts'
 import { AskClaude } from './AskClaude.tsx'
@@ -26,14 +26,20 @@ import { PlayButtons } from './Speaker.tsx'
 const CAPITALIZED = capitalizedWords([...content.words.flatMap((w) => (w.example ? [w.example.de] : [])), ...content.words.map((w) => w.de)])
 const VERBS = content.words.filter((w) => isVerbCard(w) && w.de.endsWith('en')).map((w) => w.de)
 
-/** Build items from the weakest learned words first, then the others, until there are enough. */
-function makeItems(words: StudyWord[], pool: StudyWord[], state: ReviewState): BuildItem<StudyWord>[] {
-  const eligible = introduced(words, state).filter((w) => w.example)
-  const first = gameWords(eligible, state, 2 * GAMES.build)
-  const firstIds = new Set(first.map((w) => w.id))
-  const others = introduced(pool, state).flatMap((w) => (w.example ? sentenceWords(w.example.de) : []))
+/**
+ * Build items from words with an example in round order (lib/games.ts roundOrder), until there are
+ * enough. The extra tiles from other sentences come from learned words and this round's candidates.
+ */
+function makeItems(words: StudyWord[], pool: StudyWord[], state: ReviewState, pick: RoundPick): BuildItem<StudyWord>[] {
+  const order = roundOrder(
+    words.filter((w) => w.example),
+    state,
+    2 * GAMES.build,
+    pick,
+  )
+  const others = [...introduced(pool, state), ...order.slice(0, 2 * GAMES.build)].flatMap((w) => (w.example ? sentenceWords(w.example.de) : []))
   const out: BuildItem<StudyWord>[] = []
-  for (const w of [...shuffle(first), ...shuffle(eligible.filter((x) => !firstIds.has(x.id)))]) {
+  for (const w of order) {
     if (out.length >= GAMES.build) break
     const ctx: BuildContext = { capitalized: CAPITALIZED, verbs: VERBS, otherWords: others }
     const item = buildItem(w, ctx)
@@ -42,9 +48,10 @@ function makeItems(words: StudyWord[], pool: StudyWord[], state: ReviewState): B
   return out
 }
 
-export function BuildSentence({ words, pool, state, back, onAgain }: { words: StudyWord[]; pool: StudyWord[]; state: ReviewState; back: GameBack; onAgain: () => void }) {
+export function BuildSentence(props: { words: StudyWord[]; pool: StudyWord[]; state: ReviewState; back: GameBack; pick: RoundPick; onAgain: () => void }) {
+  const { words, pool, state, back, pick, onAgain } = props
   const [sound, toggleSound] = useReviewSound()
-  const [items] = useState(() => makeItems(words, pool, state))
+  const [items] = useState(() => makeItems(words, pool, state, pick))
   const [index, setIndex] = useState(0)
   const [right, setRight] = useState(0)
   const [typing, setTyping] = useState(false)

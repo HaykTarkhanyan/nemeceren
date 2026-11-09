@@ -102,9 +102,6 @@ export const DailyCard = memo(function DailyCard({ goal }: { goal: GoalStreak })
             <a className="btn" href={link('daily', 'match')}>
               Match pairs
             </a>
-            <a className="btn" href={link('daily', 'listen')}>
-              Listen and pick
-            </a>
             {PRACTICE_GAMES.map((g) => (
               <a key={g} className="btn" href={link('daily', g)}>
                 {GAME_LABEL[g]}

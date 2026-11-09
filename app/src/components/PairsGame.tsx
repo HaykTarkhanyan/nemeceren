@@ -11,6 +11,7 @@ import type { FormEvent } from 'react'
 import { content } from '../content/load.ts'
 import type { PairKind, ReviewState, Word } from '../content/schema.ts'
 import type { StudyWord } from '../lib/customWords.ts'
+import type { RoundPick } from '../lib/daily.ts'
 import { checkPair, logTarget, PAIRS, pairItems, spokenPair } from '../lib/pairs.ts'
 import type { PairCheck, PairItem } from '../lib/pairs.ts'
 import { useRecognition } from '../lib/recognition.ts'
@@ -36,12 +37,21 @@ const NO_RECOGNITION = 'This browser has no speech recognition (it works in Chro
 
 type Outcome = 'right' | 'wrong' | 'skipped'
 
-export function PairsGame({ words, state, back, onAgain }: { words: StudyWord[]; state: ReviewState; back: GameBack; onAgain: () => void }) {
+export function PairsGame({ words, state, back, pick, onAgain }: { words: StudyWord[]; state: ReviewState; back: GameBack; pick: RoundPick; onAgain: () => void }) {
   const [sound, toggleSound] = useReviewSound()
   const rec = useRecognition()
   const [items] = useState(() => {
-    const ids = new Set(words.map((w) => w.id))
-    return pairItems({ pairs: content.pairs, words: WORD_BY_ID, inScope: (id) => ids.has(id), state, n: PAIRS.round })
+    // The scope's words come in path order from Home, so a word's index is its place on the path.
+    const at = new Map(words.map((w, i) => [w.id, i]))
+    return pairItems({
+      pairs: content.pairs,
+      words: WORD_BY_ID,
+      inScope: (id) => at.has(id),
+      state,
+      n: PAIRS.round,
+      pick,
+      place: (id) => at.get(id) ?? Number.POSITIVE_INFINITY,
+    })
   })
   const [index, setIndex] = useState(0)
   const [outcomes, setOutcomes] = useState<Outcome[]>([])

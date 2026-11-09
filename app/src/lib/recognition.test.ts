@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { makeRecognizer, makeResultRouter, MAX_QUICK_ENDS, QUICK_END_MS, STOP_GRACE_MS } from './recognition.ts'
+import { blockedMicMessage, makeRecognizer, makeResultRouter, MAX_QUICK_ENDS, QUICK_END_MS, RECOGNITION_ERRORS, STOP_GRACE_MS } from './recognition.ts'
 import type { Heard, Recognition, RecognitionAlternative, SessionResult } from './recognition.ts'
 
 /** A stand-in for the browser's SpeechRecognition: the test fires its events by hand. */
@@ -512,5 +512,15 @@ describe('the results of a session go to the word on screen (makeResultRouter)',
     } finally {
       vi.useRealTimers()
     }
+  })
+})
+
+describe('the blocked-mic message (installed app vs browser)', () => {
+  it('gives the installed app the Chrome and Android steps, and the browser the address-bar tip', () => {
+    expect(blockedMicMessage(true)).toMatch(/Site settings > Microphone/)
+    expect(blockedMicMessage(true)).not.toMatch(/next to the address/)
+    expect(blockedMicMessage(false)).toMatch(/next to the address/)
+    // The error table reads it at the time of the error.
+    expect(RECOGNITION_ERRORS['not-allowed']).toBe(blockedMicMessage())
   })
 })

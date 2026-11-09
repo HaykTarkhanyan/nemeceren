@@ -53,3 +53,4 @@ Evidence and sources are in `_knowledge/2026-09-28_llm-tutoring-and-materials.md
 
 - Windows desktop: use `python` (not `python3`) and pass `encoding="utf-8"` explicitly. In the Linux cloud session on the phone, use `python3`.
 - The repo is public, so everything committed is public.
+- Commit and push only after every check passed by its own exit code (`check-content`, `tsc`, `vitest`, `build`): save each `$?` (or `${PIPESTATUS[0]}` after a pipe) and test it. A later command in a chain, such as a `grep` that matches, hides a failure (2026-11-08: a push went out with check-content failing, and CI caught it).

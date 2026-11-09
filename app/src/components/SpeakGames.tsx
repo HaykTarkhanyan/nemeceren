@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from 'react'
 import { TypoDiff } from './TypoDiff.tsx'
 import type { ReviewState } from '../content/schema.ts'
 import type { StudyWord } from '../lib/customWords.ts'
+import type { RoundPick } from '../lib/daily.ts'
 import { checkSentence, GAMES, gameWords, SENTENCE_START, sentenceTry, spokenSentence, spokenWordRight } from '../lib/games.ts'
 import type { SentenceState } from '../lib/games.ts'
 import { makeResultRouter, useRecognition } from '../lib/recognition.ts'
@@ -35,6 +36,8 @@ interface GameProps {
   words: StudyWord[]
   state: ReviewState
   back: GameBack
+  /** Learned words first (from Home) or any word of the ticked lessons (lib/daily.ts RoundPick). */
+  pick: RoundPick
   onAgain: () => void
 }
 
@@ -44,10 +47,10 @@ type WordOutcome = 'said' | 'typed' | 'missed'
 
 const OUTCOME_LABEL: Record<WordOutcome, string> = { said: 'said', typed: 'typed', missed: 'missed' }
 
-export function SpeakWords({ words, state, back, onAgain }: GameProps) {
+export function SpeakWords({ words, state, back, pick, onAgain }: GameProps) {
   const [sound, toggleSound] = useReviewSound()
   const rec = useRecognition()
-  const [queue, setQueue] = useState(() => gameWords(words, state, GAMES.speakWords))
+  const [queue, setQueue] = useState(() => gameWords(words, state, GAMES.speakWords, pick))
   const [firstPass] = useState(queue.length)
   const [index, setIndex] = useState(0)
   const [outcomes, setOutcomes] = useState<ReadonlyMap<string, WordOutcome>>(() => new Map())
@@ -305,7 +308,7 @@ function SpeakWordCard(props: {
 
 // ---------- Say the sentence ----------
 
-export function SpeakSentences({ words, state, back, onAgain }: GameProps) {
+export function SpeakSentences({ words, state, back, pick, onAgain }: GameProps) {
   const [sound, toggleSound] = useReviewSound()
   const rec = useRecognition()
   const [items] = useState(() =>
@@ -313,6 +316,7 @@ export function SpeakSentences({ words, state, back, onAgain }: GameProps) {
       words.filter((w) => w.example?.de && w.example.en),
       state,
       GAMES.sentences,
+      pick,
     ),
   )
   const [index, setIndex] = useState(0)

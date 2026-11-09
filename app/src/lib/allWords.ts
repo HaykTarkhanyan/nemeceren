@@ -1,23 +1,22 @@
 // The "All words" list on the Words page (DECISIONS.md #59), as pure functions: one row per word
-// (content words, locked or not, and Hayk's own words), its status, and the search, filters,
-// counts and sort orders. FSRS state comes from the cards as they are (lib/srs.ts), and "known"
+// (every content word and Hayk's own words), its status, and the search, filters, counts and sort
+// orders. Nothing is locked (Hayk, 2026-11-09): a content word without a card is "not started",
+// wherever its lesson is. FSRS state comes from the cards as they are (lib/srs.ts), and "known"
 // is the Stats page's rule (lib/stats.ts KNOWN_DAYS).
 import { lessonLabel } from '../content/lessons.ts'
-import type { CourseLesson, CustomWord, Lesson, LessonProgress, ReviewLogEntry, ReviewState, StoredCard, ThemeLesson, Word } from '../content/schema.ts'
+import type { CourseLesson, CustomWord, Lesson, ReviewLogEntry, ReviewState, StoredCard, ThemeLesson, Word } from '../content/schema.ts'
 import { practiceWord, withoutArticle } from './customWords.ts'
 import { daysBetween, localDay } from './dates.ts'
-import { pathNewWords } from './plan.ts'
-import type { PathReach } from './plan.ts'
 import { KNOWN_DAYS } from './stats.ts'
 import { foldBare, foldSpelled } from './text.ts'
 
-/** In the order of the filter chips. "locked" is left out of "All" by default. */
-export const WORD_STATUSES = ['not-started', 'new', 'learning', 'review', 'known', 'struggling', 'locked'] as const
+/** In the order of the filter chips. */
+export const WORD_STATUSES = ['not-started', 'new', 'learning', 'review', 'known', 'struggling'] as const
 export type WordStatus = (typeof WORD_STATUSES)[number]
 
 /** How strong a word is, 0-4, for the bar on its row (DECISIONS.md #85): none until it is in review. */
 export function strengthOf(status: WordStatus): number {
-  return { locked: 0, 'not-started': 0, new: 0, struggling: 1, learning: 2, review: 3, known: 4 }[status]
+  return { 'not-started': 0, new: 0, struggling: 1, learning: 2, review: 3, known: 4 }[status]
 }
 
 export const STATUS_LABEL: Record<WordStatus, string> = {
@@ -27,7 +26,6 @@ export const STATUS_LABEL: Record<WordStatus, string> = {
   review: 'review',
   known: 'known',
   struggling: 'struggling',
-  locked: 'locked',
 }
 
 /** Forgotten this often (FSRS lapses) makes a word "struggling". */
@@ -35,16 +33,16 @@ export const STRUGGLING_LAPSES = 2
 
 /**
  * One status per word, first match wins:
- *   no card:  own word -> new (it is introduced right away); content word the path has not reached -> locked; else not started
+ *   no card:  own word -> new (it is introduced right away); content word -> not started
  *   card never reviewed (reps 0, added from the "already in lesson" hint) -> new
  *   lapses >= 2, or the last scheduled review (practice does not count) was graded Again -> struggling
  *   FSRS state Review with an interval of 21 days or more -> known (the Stats page's rule)
  *   FSRS state Review -> review
  *   anything else (Learning, Relearning) -> learning
  */
-export function wordStatus(w: { card: StoredCard | undefined; custom: boolean; locked: boolean; lastRating: number | null }): WordStatus {
+export function wordStatus(w: { card: StoredCard | undefined; custom: boolean; lastRating: number | null }): WordStatus {
   const { card } = w
-  if (!card) return w.custom ? 'new' : w.locked ? 'locked' : 'not-started'
+  if (!card) return w.custom ? 'new' : 'not-started'
   if (card.reps === 0) return 'new'
   if (card.lapses >= STRUGGLING_LAPSES || w.lastRating === 1) return 'struggling'
   if (card.state === 2) return card.scheduled_days >= KNOWN_DAYS ? 'known' : 'review'
@@ -88,16 +86,11 @@ export function buildRows(input: {
   custom: CustomWord[]
   lessons: CourseLesson[]
   themes: ThemeLesson[]
-  progress: LessonProgress
-  /** Where the path is: a content word without a card is "locked" until the path reaches it (lib/plan.ts pathNewWords). */
-  reach: PathReach
   state: ReviewState
   log: ReviewLogEntry[]
 }): WordRow[] {
   const { state } = input
   const allLessons: Lesson[] = [...input.lessons, ...input.themes]
-  const reachable = new Set(pathNewWords(input.words, allLessons, input.progress, state, input.reach).map((w) => w.id))
-  const locked = new Set(input.words.filter((w) => !state.cards[w.id] && !reachable.has(w.id)).map((w) => w.id))
   const lessonsOf = new Map<string, Lesson[]>()
   for (const l of allLessons) {
     for (const id of l.words ?? []) {
@@ -139,7 +132,7 @@ export function buildRows(input: {
       ...(w.example ? { example: w.example } : {}),
       source: lessons.length > 0 ? { kind: 'lesson', lesson: lessons[0] } : { kind: 'bank' },
       lessonIds: lessons.map((l) => l.id),
-      status: wordStatus({ card, custom: false, locked: locked.has(w.id), lastRating: stats.lastRating }),
+      status: wordStatus({ card, custom: false, lastRating: stats.lastRating }),
       due: card?.due ?? null,
       reviews: stats.reviews,
       correct: stats.correct,
@@ -162,7 +155,7 @@ export function buildRows(input: {
       ...(w.example ? { example: w.example } : {}),
       source: { kind: 'custom' },
       lessonIds: [],
-      status: wordStatus({ card, custom: true, locked: false, lastRating: stats.lastRating }),
+      status: wordStatus({ card, custom: true, lastRating: stats.lastRating }),
       due: card?.due ?? c.createdAt,
       reviews: stats.reviews,
       correct: stats.correct,
@@ -179,7 +172,7 @@ export function buildRows(input: {
 
 // ---------- search, filters, counts ----------
 
-/** "All" shows every status but locked; the chips pick one status. */
+/** "All" shows every status; the chips pick one status. */
 export type StatusFilter = 'all' | WordStatus
 /** "all", "custom" (My words), "bank" (content words in no lesson), or "lesson:<id>". */
 export type SourceFilter = string
@@ -204,7 +197,7 @@ export function matchesSource(row: WordRow, source: SourceFilter): boolean {
 }
 
 export function matchesStatus(row: WordRow, status: StatusFilter): boolean {
-  return status === 'all' ? row.status !== 'locked' : row.status === status
+  return status === 'all' || row.status === status
 }
 
 /** Search and source first (the chip counts are taken there), then the status. */
@@ -212,13 +205,13 @@ export function filterRows(rows: WordRow[], f: { query: string; source: SourceFi
   return rows.filter((r) => matchesSearch(r, f.query) && matchesSource(r, f.source) && matchesStatus(r, f.status))
 }
 
-/** The counts on the status chips, for the rows that pass the search and source filter. "all" leaves locked words out, like the filter. */
+/** The counts on the status chips, for the rows that pass the search and source filter. */
 export function statusCounts(rows: WordRow[], f: { query: string; source: SourceFilter }): Record<StatusFilter, number> {
   const out = Object.fromEntries([['all', 0], ...WORD_STATUSES.map((s) => [s, 0])]) as Record<StatusFilter, number>
   for (const r of rows) {
     if (!matchesSearch(r, f.query) || !matchesSource(r, f.source)) continue
     out[r.status] += 1
-    if (r.status !== 'locked') out.all += 1
+    out.all += 1
   }
   return out
 }

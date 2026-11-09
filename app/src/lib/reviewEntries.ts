@@ -45,8 +45,18 @@ export function scheduledEntry(input: {
 }
 
 /**
- * A practice answer: logged with practice: true, the card unchanged. Throws if the word was never
- * introduced, because practice is only for words that have a schedule.
+ * Whether a practice answer to this word is logged: only when the word has a card. The games also
+ * ask words not learned yet (2026-11-09); an answer to one of those is not logged at all, so
+ * practice never creates a card, never moves a schedule and never writes a row that could pass
+ * for a first review (DECISIONS.md #25).
+ */
+export function logsPractice(state: ReviewState, wordId: string): boolean {
+  return state.cards[wordId] !== undefined
+}
+
+/**
+ * A practice answer: logged with practice: true, the card unchanged. Throws if the word has no
+ * card; callers that may hold such a word check logsPractice first.
  */
 export function practiceEntry(input: {
   state: ReviewState

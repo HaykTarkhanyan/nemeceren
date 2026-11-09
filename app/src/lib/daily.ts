@@ -1,6 +1,6 @@
 // The light daily mode (design: _knowledge/2026-11-06_light-daily-mode-design.md), as pure
-// functions: which words the games use, the rounds of match pairs, the items of listen and pick,
-// the new words of the daily mix, and which steps of the mix have something to do.
+// functions: which words the games use, the rounds of match pairs, the new words of the daily mix,
+// and which steps of the mix have something to do.
 // The games are practice: they never change the FSRS schedule (DECISIONS.md #25, #77).
 import { isThemeLesson } from '../content/lessons.ts'
 import type { Lesson, LessonProgress, ReviewState, WordSet } from '../content/schema.ts'
@@ -29,13 +29,39 @@ export const MIX = {
   maxMistakes: 5,
 } as const
 
-/** A game needs at least this many introduced words: 3 pairs, or a pick from 4 options. */
+/** Match pairs needs at least 3 pairs. */
 export const MIN_PAIRS = 3
-export const MIN_PICK_WORDS = 4
 
-/** Words with a card that was reviewed at least once: only those can be practised. */
+/** A word is learned once its card was reviewed at least once. */
+export function isLearned(state: ReviewState, id: string): boolean {
+  return (state.cards[id]?.reps ?? 0) > 0
+}
+
+/** Words with a card that was reviewed at least once. */
 export function introduced<W extends { id: string }>(words: W[], state: ReviewState): W[] {
-  return words.filter((w) => (state.cards[w.id]?.reps ?? 0) > 0)
+  return words.filter((w) => isLearned(state, w.id))
+}
+
+/**
+ * How a practice game picks its words (Hayk, 2026-11-09: "dont lock anything"). From Home
+ * ("learned-first"): the learned words first, then words not learned yet in the order given, which
+ * is path order, so a round is always full. From tiles on the Words map ("any"): any word of the
+ * lessons, learned or not, at random.
+ */
+export type RoundPick = 'learned-first' | 'any'
+
+/**
+ * Words not learned yet, in the order a round takes them: `slots` drawn at random from the first
+ * 2 x slots (so Play again brings some others), then the rest; both kept in the order given (path order).
+ */
+export function freshOrder<W extends { id: string }>(fresh: W[], slots: number, rand: () => number = Math.random): W[] {
+  const n = Math.max(0, slots)
+  const chosen = new Set(
+    shuffle(fresh.slice(0, 2 * n), rand)
+      .slice(0, n)
+      .map((w) => w.id),
+  )
+  return [...fresh.filter((w) => chosen.has(w.id)), ...fresh.filter((w) => !chosen.has(w.id))]
 }
 
 export type WordKind = 'noun' | 'phrase' | 'word'
@@ -56,28 +82,36 @@ function sameKey(s: string): string {
 }
 
 /**
- * Up to n words for a game, with distinct German and distinct English, so every pair or pick has
- * exactly one right answer. Recent and hard words come first: a pool of the most recently reviewed
- * words plus the hardest ones (FSRS difficulty), sampled at random; the rest only fills up.
+ * Up to n words for a game, with distinct German and distinct English, so every pair has exactly
+ * one right answer. "learned-first" (RoundPick): learned words first, recent and hard ones before
+ * the others (a pool of the most recently reviewed words plus the hardest ones by FSRS difficulty,
+ * sampled at random), then words not learned yet in the order given (freshOrder). "any": all words
+ * at random.
  */
-export function pickGameWords<W extends GameWord>(words: W[], state: ReviewState, n: number, rand: () => number = Math.random): W[] {
-  const usable = introduced(words, state)
-  const lastReview = (w: W) => state.cards[w.id].last_review ?? ''
-  const recent = [...usable].sort((a, b) => lastReview(b).localeCompare(lastReview(a))).slice(0, 2 * n)
-  const hard = [...usable].sort((a, b) => state.cards[b.id].difficulty - state.cards[a.id].difficulty).slice(0, n)
-  const poolIds = new Set([...recent, ...hard].map((w) => w.id))
-  const pool = shuffle(
-    usable.filter((w) => poolIds.has(w.id)),
-    rand,
-  )
-  const rest = shuffle(
-    usable.filter((w) => !poolIds.has(w.id)),
-    rand,
-  )
+export function pickGameWords<W extends GameWord>(words: W[], state: ReviewState, n: number, pick: RoundPick = 'learned-first', rand: () => number = Math.random): W[] {
+  let order: W[]
+  if (pick === 'any') order = shuffle(words, rand)
+  else {
+    const usable = introduced(words, state)
+    const lastReview = (w: W) => state.cards[w.id].last_review ?? ''
+    const recent = [...usable].sort((a, b) => lastReview(b).localeCompare(lastReview(a))).slice(0, 2 * n)
+    const hard = [...usable].sort((a, b) => state.cards[b.id].difficulty - state.cards[a.id].difficulty).slice(0, n)
+    const poolIds = new Set([...recent, ...hard].map((w) => w.id))
+    const pool = shuffle(
+      usable.filter((w) => poolIds.has(w.id)),
+      rand,
+    )
+    const rest = shuffle(
+      usable.filter((w) => !poolIds.has(w.id)),
+      rand,
+    )
+    const fresh = words.filter((w) => !isLearned(state, w.id))
+    order = [...pool, ...rest, ...freshOrder(fresh, n - usable.length, rand)]
+  }
   const out: W[] = []
   const de = new Set<string>()
   const en = new Set<string>()
-  for (const w of [...pool, ...rest]) {
+  for (const w of order) {
     if (out.length >= n) break
     const kd = sameKey(w.de)
     const ke = sameKey(w.en)
@@ -90,60 +124,21 @@ export function pickGameWords<W extends GameWord>(words: W[], state: ReviewState
 }
 
 /** Rounds of match pairs: each round has up to `size` words, at least MIN_PAIRS, no word twice in the run. */
-export function matchRounds<W extends GameWord>(words: W[], state: ReviewState, rounds: number, size: number, rand: () => number = Math.random): W[][] {
-  const picked = pickGameWords(words, state, rounds * size, rand)
+export function matchRounds<W extends GameWord>(
+  words: W[],
+  state: ReviewState,
+  rounds: number,
+  size: number,
+  pick: RoundPick = 'learned-first',
+  rand: () => number = Math.random,
+): W[][] {
+  const picked = pickGameWords(words, state, rounds * size, pick, rand)
   const out: W[][] = []
   for (let i = 0; i < rounds; i++) {
     const round = picked.slice(i * size, (i + 1) * size)
     if (round.length >= MIN_PAIRS) out.push(round)
   }
   return out
-}
-
-export type PickAsk = 'meaning' | 'spelling'
-
-export interface PickItem<W extends GameWord = GameWord> {
-  word: W
-  /** "meaning": hear German, pick the English. "spelling": hear German, pick how it is written. */
-  ask: PickAsk
-  /** Shuffled; the right one is `answer`. */
-  options: string[]
-  answer: string
-}
-
-/**
- * Listen-and-pick items: the target words come from pickGameWords, and the asks alternate between
- * meaning and spelling. Wrong options are other introduced words, of the same kind (noun, phrase,
- * word) where there are enough, with texts that differ from the answer and from each other.
- */
-export function pickItems<W extends GameWord>(words: W[], state: ReviewState, n: number, rand: () => number = Math.random): PickItem<W>[] {
-  const usable = introduced(words, state)
-  if (usable.length < MIN_PICK_WORDS) return []
-  const targets = pickGameWords(words, state, n, rand)
-  return targets.map((word, i) => {
-    const ask: PickAsk = i % 2 === 0 ? 'meaning' : 'spelling'
-    const text = (w: W) => (ask === 'meaning' ? w.en : w.de)
-    const kind = wordKind(word.de)
-    const others = usable.filter((w) => w.id !== word.id)
-    const sameKind = shuffle(
-      others.filter((w) => wordKind(w.de) === kind),
-      rand,
-    )
-    const otherKind = shuffle(
-      others.filter((w) => wordKind(w.de) !== kind),
-      rand,
-    )
-    const seen = new Set([sameKey(text(word))])
-    const wrong: string[] = []
-    for (const w of [...sameKind, ...otherKind]) {
-      if (wrong.length >= 3) break
-      const k = sameKey(text(w))
-      if (seen.has(k)) continue
-      seen.add(k)
-      wrong.push(text(w))
-    }
-    return { word, ask, options: shuffle([text(word), ...wrong], rand), answer: text(word) }
-  })
 }
 
 /**

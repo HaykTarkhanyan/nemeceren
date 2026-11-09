@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
 import type { ReviewMode, ReviewState } from '../content/schema.ts'
 import { messageOf, reportError } from '../lib/errors.ts'
-import { practiceEntry } from '../lib/reviewEntries.ts'
+import { logsPractice, practiceEntry } from '../lib/reviewEntries.ts'
 import { link } from '../lib/router.ts'
 import { Rating } from '../lib/srs.ts'
 import { recordPractice, requestFlush } from '../lib/storage.ts'
@@ -43,10 +43,11 @@ export function GameFrame(props: { title: string; done: number; target: number; 
 
 /**
  * Logs one game answer as practice: Good when right, Again when wrong. A failed save is reported
- * (the banner) and the game goes on. Only learned words reach a game, so practiceEntry never throws
- * for a word without a card.
+ * (the banner) and the game goes on. A word without a card (not learned yet) is not logged at all
+ * (lib/reviewEntries.ts logsPractice), so practice never creates a card.
  */
 export function savePractice(input: { state: ReviewState; word: { id: string; de: string }; mode: ReviewMode; right: boolean; text: string; nearMiss?: Comparison['nearMiss']; timeMs: number }): void {
+  if (!logsPractice(input.state, input.word.id)) return
   try {
     recordPractice(
       practiceEntry({
@@ -73,7 +74,7 @@ export function GameEnd({ title, back, onAgain, children }: { title: string; bac
     <div className="stack round-end">
       <h2>{title}</h2>
       {children}
-      <p className="muted small">Practice: your review schedule is unchanged.</p>
+      <p className="muted small">{PRACTICE_NOTE}</p>
       <div className="row actions">
         {back.lessons > 0 ? (
           <a className="btn" href={back.href}>
@@ -97,22 +98,24 @@ export function GameEnd({ title, back, onAgain, children }: { title: string; bac
   )
 }
 
+/** The end of every game: practice leaves the schedule alone and adds no new words to it. */
+export const PRACTICE_NOTE = 'Practice: your review schedule is unchanged, and words you have not learned yet are not added to it.'
+
+/** Learned or not, the words are not enough: the content lacks them (from Home), or the ticked lessons do. */
 export function TooFewWords({ need, what, back }: { need: number; what: string; back: GameBack }) {
   return (
     <div className="card stack">
       <p>
-        This game needs at least {need} {what} you have already learned (reviewed at least once)
-        {back.lessons === 1 ? ' in this lesson' : back.lessons > 1 ? ` in these ${back.lessons} lessons` : ''}.
+        This game needs at least {need} {what}
+        {back.lessons === 1 ? ' in this lesson' : back.lessons > 1 ? ` in these ${back.lessons} lessons` : ' in the course'}, and there are fewer.
       </p>
       <p>
-        <a href={link('words')}>Review words</a>
         {back.lessons > 0 ? (
           <>
-            {' '}
-            or go <a href={back.href}>back to the map</a>.
+            Go <a href={back.href}>back to the map</a> and tick other or more tiles.
           </>
         ) : (
-          ' or open the next lesson first.'
+          <a href={link()}>Home</a>
         )}
       </p>
     </div>
