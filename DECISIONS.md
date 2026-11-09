@@ -2,6 +2,37 @@
 
 Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
+## 110. Every speaking screen keeps one mic session per round, waits for the app's voice before restarting, and reports why the mic restarted (asked for by Hayk, 2026-11-09; extends #105)
+
+- **Date:** 2026-11-09 - **Status:** active (needs confirming on Hayk's phone)
+- **Why:** Hayk still sometimes heard the mic click in Say the words, and chose to put every speaking screen on one session first, then decide on bigger options (Q49).
+  - **One session everywhere:** `useMicSession`, owned by the round, covers Say the sentence, Opposites and synonyms, and Words → Review English-to-German cards (other card types do not listen). Each card takes only results heard after it appeared.
+    - Measured with a fake recognizer, starts per round dropped: sentences 6 to 1, pairs 8 to 1, review 5 to 1 (Say the words was already 1).
+    - If the browser ends a session while no card is listening, it is not restarted until one is.
+  - **The app's voice:**
+    - On Android, the app reading the German (after "I don't know") may take the mic. A session that ends during the voice now restarts once the voice has finished, never in a loop, and those ends do not count toward the three-quick-stops limit.
+    - `audio-capture` during the voice restarts instead of switching to typing. A voice "speaking" for over 8 s counts as stuck.
+    - In a fake modelled on this, the old code restarted 3 times during the voice and switched the mic off; the new code restarts once.
+  - **Diagnostics:** the round end of Say the words, Say the sentence and Opposites shows e.g. "Mic: 1 start, 1 restart (1 after the app's voice)". The reasons: after silence, after the app's voice, after an error code, or no reason. The full stats go to `console.info`. One screenshot from Hayk tells which cause remains.
+- **Alternatives rejected for now:** recording-based recognition (on-device Whisper or a paid cloud API, Q49). Hayk chose to decide after this.
+- **What would change this:** the line showing restarts after silence on most words (Android ends sessions on pauses; then Q49), or restarts after the app's voice continuing (then mute the voice during sessions, or ask).
+
+## 109. Recall games record real reviews: Say the words, Say the sentence, Opposites and Build the sentence (Hayk's choice, 2026-11-09; reverses #25 for these games)
+
+- **Date:** 2026-11-09 - **Status:** active; revisits #25, #92, #104, #106
+- **Why:** Hayk played Say the sentence on an unreviewed lesson and nothing moved on the cards: "it's important for me to see how my study is getting reflected somewhere". Hayk chose "recall games count" over "every game counts" and "a separate practice tally".
+  - **The rule:** in the four games where the German is produced, a right answer records Good and a wrong answer or "I don't know" records Again. Mode production. `gameReview` builds the entry with `scheduledEntry`, the same path as Words → Review, saved through `recordReview`.
+  - **New words:** a word without a card is introduced by its first right answer. A miss on it records nothing.
+  - **One review per word per round:** the first answer counts, so a word shown after a miss cannot introduce itself by copying.
+  - **Which word is reviewed:** Say the sentence reviews the word whose example it is. Opposites reviews the word given (an accepted synonym counts), or on a miss the asked word. Build reviews the sentence's word.
+  - **Stays practice:** Match pairs, der/die/das and Fill the gap (3 options, so recognition). Their schedule never moves.
+  - **Measured:** a fresh guest's round of Say the words moved "due today" from 0 to 7 (7 right of 8). On the old code nothing moved.
+  - **Side effect:** words introduced by games count toward the day's new words. Say the sentence grades Again once the sentence was shown, including after a mic mishearing (a little harsh).
+- **Alternatives rejected:**
+  - **Every game counts:** recognition games would inflate intervals.
+  - **A separate practice tally:** the strength bars would still not move.
+- **What would change this:** intervals growing faster than Hayk really knows the words (then only typed or said single words count, or Good only after two rounds), or the mishearing case feeling unfair (then Show the answer after a miss records nothing).
+
 ## 108. Effects never return a value: the daily mix crash was window.scrollTo returning a Promise (found 2026-11-09)
 
 - **Date:** 2026-11-09 - **Status:** active; closes the crash in #101

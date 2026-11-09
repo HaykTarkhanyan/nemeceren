@@ -115,7 +115,7 @@ function PickBar({ lessons, rows }: { lessons: Lesson[]; rows: WordRow[] }) {
         <strong>
           {lessons.length} tile{lessons.length === 1 ? '' : 's'}, {ids.length} word{ids.length === 1 ? '' : 's'} ({learned} learned)
         </strong>
-        {lessons.length === 0 ? ' Tap tiles to tick them.' : ' Review them, or practise them (schedule unchanged):'}
+        {lessons.length === 0 ? ' Tap tiles to tick them.' : ' Review them, or play a game on them (the saying, building and opposites games count as reviews):'}
       </p>
       <div className="daily-activities">
         <ReviewButton lessonIds={lessonIds} />
@@ -207,7 +207,7 @@ function TileSheet({ tile, unit, rows, onClose }: { tile: LessonTile; unit: numb
             Open the lesson
           </a>
         </div>
-        <h4 className="map-practise">Practise these words (schedule unchanged)</h4>
+        <h4 className="map-practise">Games on these words (the saying, building and opposites games count as reviews)</h4>
         <div className="daily-activities">
           <GameLinks lessonIds={[lesson.id]} words={words} />
         </div>

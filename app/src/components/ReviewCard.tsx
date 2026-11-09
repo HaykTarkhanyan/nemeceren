@@ -1,7 +1,7 @@
 // One word card of a review (flip, type, or listen and type), shared by the Words page and the
 // daily mix. The card only shows the word and collects the grade; saving is the caller's job.
 // On the Words page an English to German card can also be answered by voice (the `speech` prop):
-// the mic of "Say the words" (lib/recognition.ts), hands-free after the first tap.
+// the review's one mic session (lib/recognition.ts useMicSession), hands-free after the first tap.
 import { useEffect, useRef, useState } from 'react'
 import type { FormEvent } from 'react'
 import { content } from '../content/load.ts'
@@ -10,7 +10,7 @@ import type { Lesson, ReviewMode } from '../content/schema.ts'
 import { germanName } from '../lib/path.ts'
 import { lessonOfWords, splitArticle, spokenAnswer, suggestedGrade } from '../lib/review.ts'
 import type { CardAnswer } from '../lib/review.ts'
-import { useRecognition } from '../lib/recognition.ts'
+import type { MicSession, SessionResult } from '../lib/recognition.ts'
 import { link } from '../lib/router.ts'
 import { MicButton } from './GameFrame.tsx'
 import { nearMissText } from './ResultView.tsx'
@@ -62,12 +62,15 @@ function heardWrongText(check: Comparison): string {
   return 'That was not recognised as the word.'
 }
 
-/** Saying the German on English to German cards (the Words page). */
+/**
+ * Saying the German on English to German cards (the Words page). The review owns ONE mic session
+ * (Android clicks at every start and stop of the mic): a tap starts it, and it stays on over the
+ * cards until Close, Type instead, or a blocked mic. Only an English to German card takes its
+ * results, those heard after the card appeared; on other cards nothing is taken, and if the browser
+ * ends the session meanwhile, it starts again only on the next English to German card.
+ */
 export interface CardSpeech {
-  /** The mic was tapped this session: each English to German card starts listening by itself. */
-  handsFree: boolean
-  /** On with a tap on the mic; off with Type instead or a blocked mic. */
-  onHandsFree: (on: boolean) => void
+  mic: MicSession
 }
 
 /** The German word with der/die/das in its colour (blue, red, green), the rest with word popups (plain: no popups). */
@@ -105,14 +108,14 @@ export function Card(props: {
   // Time from showing the card to grading it, for the minutes statistics.
   const [shownAt] = useState(() => performance.now())
   const typingMode = mode !== 'recognition'
-  // Saying the German: the last thing the mic heard (checked like a typed answer), a note when it
-  // heard nothing, and "Show answer" after a wrong one.
-  const rec = useRecognition()
-  const askSpeech = mode === 'production' && speech !== undefined
-  const micOn = askSpeech && rec.supported
-  const autoListen = micOn && speech.handsFree
+  // Saying the German: the last thing the mic heard (checked like a typed answer), and "Show
+  // answer" after a wrong one.
+  const mic = speech?.mic
+  const askSpeech = mode === 'production' && mic !== undefined
+  const micOn = askSpeech && mic.supported
+  const autoListen = micOn && mic.listening
+  const micNote = micOn && mic.ended ? `${mic.ended.message}${mic.ended.blocked ? ' Type the German instead.' : ''}` : null
   const [spoken, setSpoken] = useState<Typed | null>(null)
-  const [micNote, setMicNote] = useState<string | null>(null)
   const [shown, setShown] = useState(false)
   const said = spoken?.check.correct === true
   const byVoice = check === null && (said || shown)
@@ -137,61 +140,36 @@ export function Card(props: {
     if (done && autoSpeak && mode !== 'listening' && !said) speak(word.de)
   }, [done])
 
-  // Hands-free: listen as soon as the card shows, once the app's own voice (the last card's
-  // answer) has finished, so the mic does not hear it. As in "Say the words". The wait ends early
-  // when the learner taps the mic or types first.
-  const autoTimer = useRef<number | null>(null)
-  function stopAutoListen() {
-    if (autoTimer.current !== null) window.clearInterval(autoTimer.current)
-    autoTimer.current = null
-  }
+  // While this English to German card asks (no answer yet, nothing typed), it takes what the
+  // review's mic hears after the card appeared: a live result that is right counts at once (no
+  // Stop, no silence needed), a final one that is not shows what was heard and the mic keeps
+  // listening. `taken` stops a second result before the card shows the answer.
+  const taken = useRef(false)
+  const typedSomething = typed.trim() !== ''
   useEffect(() => {
-    if (!autoListen) return
-    let tries = 0
-    autoTimer.current = window.setInterval(() => {
-      tries += 1
-      if (window.speechSynthesis?.speaking && tries < 20) return
-      stopAutoListen()
-      listen(false)
-    }, 150)
-    return stopAutoListen
-  }, [])
+    if (!micOn || done || typedSomething) return
+    return mic.attach((r: SessionResult) => {
+      if (taken.current) return
+      const s = spokenAnswer(word.de, r.alternatives)
+      if (s.check.correct) taken.current = true
+      if (s.check.correct || r.final) setSpoken(s)
+    })
+  }, [micOn, done, typedSomething])
+  // A blocked mic is already reported (the banner); typing is the way on.
+  useEffect(() => {
+    if (micNote && mic?.ended?.blocked) inputRef.current?.focus()
+  }, [micNote])
 
-  /** The mic stops, and a late result or a pending hands-free start is dropped. */
-  function micOff() {
-    stopAutoListen()
-    rec.cancel()
-  }
-
-  /** Listens for the German; the right word ends the listen at once (no Stop, no silence needed). */
-  function listen(byHand: boolean) {
-    stopAutoListen()
-    if (byHand) speech?.onHandsFree(true)
-    setMicNote(null)
+  /** A tap on the mic: the review's session starts (or starts again) and stays on for the next cards. */
+  function startMic() {
     inputRef.current?.blur()
-    rec.listen(
-      (h) => {
-        if (h.kind === 'none') {
-          // A blocked mic is already reported (the banner); typing is the way on.
-          if (h.blocked) {
-            speech?.onHandsFree(false)
-            setMicNote(`${h.message} Type the German instead.`)
-            inputRef.current?.focus()
-          } else setMicNote(h.message)
-          return
-        }
-        setSpoken(spokenAnswer(word.de, h.alternatives))
-      },
-      { accept: (alternatives) => spokenAnswer(word.de, alternatives).check.correct },
-    )
+    mic?.start()
   }
 
-  /** Type instead: the mic stops (a late result is dropped) and stays off on the next cards. */
+  /** Type instead: the mic stops, and stays off on the next cards until it is tapped again. */
   function typeInstead() {
-    micOff()
-    speech?.onHandsFree(false)
+    mic?.cancel()
     setSpoken(null)
-    setMicNote(null)
     inputRef.current?.focus()
   }
 
@@ -218,10 +196,9 @@ export function Card(props: {
   function onCheck(e: FormEvent) {
     e.preventDefault()
     if (typed.trim() === '') return
-    // A typed answer replaces whatever the mic heard, and a listen still running is dropped.
-    micOff()
+    // A typed answer replaces whatever the mic heard; the card takes nothing more from the mic.
+    taken.current = true
     setSpoken(null)
-    setMicNote(null)
     setCheck(checkWord(typed, word.de))
     inputRef.current?.blur()
   }
@@ -257,9 +234,9 @@ export function Card(props: {
           <p className="word-big">{word.en}</p>
           <p className="muted small">
             {micOn ? 'Say or type the German word.' : 'Type the German word.'} Nouns: include der/die/das.
-            {autoListen && !done ? ' The mic starts by itself on each card.' : ''}
+            {autoListen && !done ? ' The mic stays on for the next cards.' : ''}
           </p>
-          {askSpeech && !rec.supported && !done && (
+          {askSpeech && !mic.supported && !done && (
             <p className="muted small">Saying it needs speech recognition, which this browser does not have (it works in Chrome and Edge).</p>
           )}
         </>
@@ -268,10 +245,10 @@ export function Card(props: {
 
       {micOn && !done && (
         <div className="stack">
-          <MicButton listening={rec.listening} onStart={() => listen(true)} onStop={rec.stop} label={spoken ? 'Try again' : 'Say it'} />
+          <MicButton listening={mic.listening} onStart={startMic} onStop={mic.stop} label={spoken ? 'Try again' : 'Say it'} />
           {spoken && (
             <p className="small warn-text">
-              Heard: "<span lang="de">{spoken.answer}</span>". {heardWrongText(spoken.check)} Try again, type it, or show the answer.
+              Heard: "<span lang="de">{spoken.answer}</span>". {heardWrongText(spoken.check)} {mic.listening ? 'Say it again' : 'Try again'}, type it, or show the answer.
             </p>
           )}
           {micNote && <p className="small warn-text">{micNote}</p>}
@@ -285,7 +262,7 @@ export function Card(props: {
                   type="button"
                   className="btn small"
                   onClick={() => {
-                    micOff()
+                    taken.current = true
                     setShown(true)
                   }}
                 >
@@ -307,9 +284,9 @@ export function Card(props: {
             value={typed}
             readOnly={check !== null}
             onChange={(e) => {
+              // Typing while the mic listens: the typed answer it is, so the card stops taking what
+              // the mic hears (the review's mic stays on for the next cards).
               setTyped(e.target.value)
-              // Typing while the mic listens (or is about to): the typed answer it is, so the mic stops.
-              if (micOn) micOff()
             }}
             autoCapitalize="off"
             autoCorrect="off"

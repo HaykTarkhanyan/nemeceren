@@ -1,7 +1,7 @@
 // The browser's speech recognition (Web Speech API, de-DE, 3 alternatives), for the "listen and
 // repeat" lines (components/SpeakLine.tsx, DECISIONS.md #79) and the speaking games. It is in
 // Chrome and Edge, not in Firefox; the audio goes to the browser's recognition service.
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { messageOf, reportError } from './errors.ts'
 
 // The recognition part of the Web Speech API, which TypeScript's DOM types leave out.
@@ -82,6 +82,64 @@ export const MAX_QUICK_ENDS = 3
 /** Session ends after which the session starts again by itself: a silence, or the browser stopping it. */
 const RESTART_AFTER = new Set(['no-speech', 'aborted'])
 
+/**
+ * The app's own voice (speechSynthesis) during a mic session. On Android it can take the audio and
+ * end the recognition; then the session starts again only once the voice has finished, never in a
+ * loop while it speaks, and such an end does not count as a quick end. An end this soon after the
+ * voice counts as caused by it. A "speaking" longer than VOICE_STUCK_MS is taken as stuck (Chrome can
+ * leave it on), so the mic never waits or goes deaf for good. The voice is checked every
+ * VOICE_POLL_MS, only while a session is on.
+ */
+export const VOICE_TAIL_MS = 1500
+export const VOICE_STUCK_MS = 8000
+const VOICE_POLL_MS = 200
+
+/** A mic error that the app's voice taking the audio may cause: during the voice, it is restarted, not shown. */
+const VOICE_CAN_CAUSE = new Set(['audio-capture'])
+
+/** Why the browser ended a mic session that was still wanted. */
+export type EndReason = 'silence' | 'voice' | 'error' | 'plain'
+
+/** What a recognizer's mic sessions did, for the diagnostics line (micStatsLine) and the console. */
+export interface MicStats {
+  /** Sessions started (a tap on the mic). */
+  starts: number
+  /** Times the app started the session again after the browser ended it. */
+  restarts: number
+  /** The browser's ends of a wanted session, by reason (each is a click on Android). */
+  ends: Record<EndReason, number>
+  /** The error codes of the ends counted as errors (every end's code is in `runs`). */
+  codes: Record<string, number>
+  /** Why a session stopped by itself for good: an error code, or "kept-stopping". */
+  stopped: string[]
+  /** The latest runs (one start of the browser's recognition each): how long, and how it ended. */
+  runs: { ms: number; end: EndReason | 'stop' | 'fatal'; code: string | null }[]
+}
+const MAX_RUNS_KEPT = 40
+
+const END_TEXT: Record<EndReason, string> = { silence: 'after silence', voice: "after the app's voice", error: 'after an error', plain: 'with no reason given' }
+
+/** One short line for the end of a round, e.g. "Mic: 1 start, 3 restarts (2 after silence, 1 after the app's voice)." */
+export function micStatsLine(s: MicStats): string {
+  const n = (count: number, word: string) => `${count} ${word}${count === 1 ? '' : 's'}`
+  const reasons = (Object.keys(END_TEXT) as EndReason[])
+    .filter((r) => s.ends[r] > 0)
+    .map((r) => `${s.ends[r]} ${END_TEXT[r]}${r === 'error' ? ` (${Object.keys(s.codes).join(', ')})` : ''}`)
+  const ended = Object.values(s.ends).reduce((a, b) => a + b, 0)
+  if (ended > s.restarts) reasons.push(`${ended - s.restarts} not restarted`)
+  const restarts = s.restarts === 0 && ended === 0 ? 'no restarts' : `${n(s.restarts, 'restart')} (${reasons.join(', ')})`
+  const stopped = s.stopped.length > 0 ? `; it stopped itself: ${s.stopped.join(', ')}` : ''
+  return `Mic: ${n(s.starts, 'start')}, ${restarts}${stopped}.`
+}
+
+function emptyStats(): MicStats {
+  return { starts: 0, restarts: 0, ends: { silence: 0, voice: 0, error: 0, plain: 0 }, codes: {}, stopped: [], runs: [] }
+}
+
+function defaultSpeaking(): boolean {
+  return typeof window !== 'undefined' && window.speechSynthesis?.speaking === true
+}
+
 const NO_RECOGNITION_MESSAGE = 'This browser has no speech recognition, so type your answers.'
 
 export type Heard =
@@ -110,6 +168,11 @@ export interface SessionResult {
   final: boolean
 }
 
+export interface SessionEnd {
+  message: string
+  blocked: boolean
+}
+
 export interface SessionHandlers {
   /** Each new or changed result, live or final. */
   onResult: (r: SessionResult) => void
@@ -117,7 +180,13 @@ export interface SessionHandlers {
    * The session ended by itself and will not start again: an error, a failed start, or the browser
    * kept ending it right after it started. Already reported; `blocked` means typing is the way on.
    */
-  onEnd: (h: { message: string; blocked: boolean }) => void
+  onEnd: (h: SessionEnd) => void
+  /**
+   * Whether an item on screen takes results now. When the browser ends the session while none does
+   * (an answer is showing, a card without the mic), it starts again only on resumeSession(), so an
+   * idle mic does not click off and on.
+   */
+  wantsResults?: () => boolean
 }
 
 export interface Recognizer {
@@ -137,6 +206,12 @@ export interface Recognizer {
   stopSession: () => void
   /** The index the next new result will get: what has a lower index was heard before now. */
   sessionMark: () => number
+  /** An item wants results again: a session the browser ended meanwhile starts again (once the voice is quiet). */
+  resumeSession: () => void
+  /** The app's own voice is speaking now (and not stuck). */
+  voiceOn: () => boolean
+  /** What the mic sessions of this recognizer did so far (a copy). */
+  stats: () => MicStats
 }
 
 /**
@@ -147,7 +222,13 @@ export interface Recognizer {
  * the hands-free form: one start of the browser's recognition for a whole round of answers, since
  * Android beeps at every start and stop (Hayk, 2026-11-09).
  */
-export function makeRecognizer(getCtor: () => RecognitionCtor | null, onListening: (on: boolean) => void, report: (message: string) => void): Recognizer {
+export function makeRecognizer(
+  getCtor: () => RecognitionCtor | null,
+  onListening: (on: boolean) => void,
+  report: (message: string) => void,
+  /** Whether the app's own voice (speechSynthesis) is speaking. */
+  speaking: () => boolean = defaultSpeaking,
+): Recognizer {
   let current: Recognition | null = null
   let session = 0
   // Finishes the current session now, with what was heard so far (Stop's grace ran out).
@@ -159,6 +240,38 @@ export function makeRecognizer(getCtor: () => RecognitionCtor | null, onListenin
   let heardNow = 0
   // Ends the running mic session gently (stopSession); null when none is running.
   let stopRunning: (() => void) | null = null
+  // Starts an ended session again if it waits for an item (resumeSession); null when none waits.
+  let resumeRunning: (() => void) | null = null
+  const stats = emptyStats()
+
+  // The app's voice: since when it speaks (for "stuck"), and when it was last heard speaking.
+  let voiceSince: number | null = null
+  let voiceLastOn = Number.NEGATIVE_INFINITY
+  let voiceTimer: ReturnType<typeof setInterval> | null = null
+  function voiceOn(): boolean {
+    const t = Date.now()
+    if (!speaking()) {
+      voiceSince = null
+      return false
+    }
+    voiceSince ??= t
+    if (t - voiceSince >= VOICE_STUCK_MS) return false
+    voiceLastOn = t
+    return true
+  }
+  const voiceRecent = () => voiceOn() || Date.now() - voiceLastOn < VOICE_TAIL_MS
+  function watchVoice(on: boolean) {
+    if (on && voiceTimer === null) voiceTimer = setInterval(voiceOn, VOICE_POLL_MS)
+    if (!on && voiceTimer !== null) {
+      clearInterval(voiceTimer)
+      voiceTimer = null
+    }
+  }
+
+  function logRun(run: MicStats['runs'][number]) {
+    stats.runs.push(run)
+    if (stats.runs.length > MAX_RUNS_KEPT) stats.runs.shift()
+  }
 
   function setListening(on: boolean) {
     if (on === isListening) return
@@ -177,6 +290,8 @@ export function makeRecognizer(getCtor: () => RecognitionCtor | null, onListenin
     current = null
     finishCurrent = null
     stopRunning = null
+    resumeRunning = null
+    watchVoice(false)
     closeRun()
     rec?.abort()
   }
@@ -189,14 +304,20 @@ export function makeRecognizer(getCtor: () => RecognitionCtor | null, onListenin
       handlers.onEnd({ message: NO_RECOGNITION_MESSAGE, blocked: true })
       return
     }
+    stats.starts += 1
     let wanted = true
     let quickEnds = 0
+    // The browser ended the last run: the next one starts when an item wants results and the voice is quiet.
+    let waiting = false
+    let waitTimer: ReturnType<typeof setTimeout> | null = null
 
     /** The session is over for good: later events of its recognition are ignored. */
     function over() {
       session += 1
       current = null
       stopRunning = null
+      resumeRunning = null
+      watchVoice(false)
       closeRun()
       setListening(false)
     }
@@ -206,8 +327,23 @@ export function makeRecognizer(getCtor: () => RecognitionCtor | null, onListenin
       handlers.onEnd({ message, blocked })
     }
 
-    function run(Ctor: RecognitionCtor) {
-      const rec = new Ctor()
+    function restartWhenReady() {
+      if (my !== session || !wanted || !waiting || waitTimer !== null) return
+      if (handlers.wantsResults && !handlers.wantsResults()) return
+      if (voiceOn()) {
+        waitTimer = setTimeout(() => {
+          waitTimer = null
+          restartWhenReady()
+        }, VOICE_POLL_MS)
+        return
+      }
+      waiting = false
+      stats.restarts += 1
+      run()
+    }
+
+    function run() {
+      const rec = new Ctor!()
       rec.lang = 'de-DE'
       rec.continuous = true
       rec.interimResults = true
@@ -232,18 +368,40 @@ export function makeRecognizer(getCtor: () => RecognitionCtor | null, onListenin
       rec.onend = () => {
         if (!mine()) return
         closeRun()
+        const ms = Date.now() - startedAt
         // Stopped (stopSession), and the browser ended it within the grace.
-        if (!wanted) return over()
-        if (code !== null && !RESTART_AFTER.has(code)) return fail(RECOGNITION_ERRORS[code] ?? `Speech recognition failed (${code}).`, BLOCKING.has(code))
-        quickEnds = Date.now() - startedAt < QUICK_END_MS ? quickEnds + 1 : 0
-        if (quickEnds >= MAX_QUICK_ENDS) return fail('The microphone kept stopping right after it started, so it was switched off. Tap the mic to try again, or type.', false)
-        run(Ctor)
+        if (!wanted) {
+          logRun({ ms, end: 'stop', code })
+          return over()
+        }
+        const byVoice = voiceRecent()
+        if (code !== null && !RESTART_AFTER.has(code) && !(byVoice && VOICE_CAN_CAUSE.has(code))) {
+          logRun({ ms, end: 'fatal', code })
+          stats.stopped.push(code)
+          return fail(RECOGNITION_ERRORS[code] ?? `Speech recognition failed (${code}).`, BLOCKING.has(code))
+        }
+        const reason: EndReason = byVoice ? 'voice' : code === 'no-speech' ? 'silence' : code !== null ? 'error' : 'plain'
+        logRun({ ms, end: reason, code })
+        stats.ends[reason] += 1
+        if (reason === 'error') stats.codes[code!] = (stats.codes[code!] ?? 0) + 1
+        // An end the app's voice caused has its cause, and the restart waits for the voice: no loop.
+        if (reason !== 'voice') {
+          quickEnds = ms < QUICK_END_MS ? quickEnds + 1 : 0
+          if (quickEnds >= MAX_QUICK_ENDS) {
+            stats.stopped.push('kept-stopping')
+            return fail('The microphone kept stopping right after it started, so it was switched off. Tap the mic to try again, or type.', false)
+          }
+        }
+        current = null
+        waiting = true
+        restartWhenReady()
       }
       current = rec
       try {
         rec.start()
       } catch (err) {
         const message = `Speech recognition did not start: ${messageOf(err)}`
+        stats.stopped.push('start-failed')
         fail(message, true, message)
       }
     }
@@ -253,16 +411,20 @@ export function makeRecognizer(getCtor: () => RecognitionCtor | null, onListenin
       stopRunning = null
       setListening(false)
       const rec = current
-      rec?.stop()
+      // Between runs (waiting) there is nothing to stop.
+      if (rec === null) return over()
+      rec.stop()
       // Some phones accept stop() but never end the session: then the app ends it.
       setTimeout(() => {
         if (my !== session || current !== rec) return
         over()
-        rec?.abort()
+        rec.abort()
       }, STOP_GRACE_MS)
     }
+    resumeRunning = restartWhenReady
     setListening(true)
-    run(Ctor)
+    watchVoice(true)
+    run()
   }
 
   function listen(onDone: (h: Heard) => void, options: ListenOptions = {}) {
@@ -345,6 +507,9 @@ export function makeRecognizer(getCtor: () => RecognitionCtor | null, onListenin
     startSession,
     stopSession: () => stopRunning?.(),
     sessionMark: () => heardBefore + heardNow,
+    resumeSession: () => resumeRunning?.(),
+    voiceOn,
+    stats: () => structuredClone(stats),
   }
 }
 
@@ -355,10 +520,16 @@ export function makeRecognizer(getCtor: () => RecognitionCtor | null, onListenin
  * A result heard, even in part, while the app's own voice was speaking is dropped for good, so the
  * German the app reads out can never count as an answer.
  */
-export function makeResultRouter(isSpeaking: () => boolean): {
+export function makeResultRouter(
+  isSpeaking: () => boolean,
+  /** Called when an item starts taking results (the session may need to start again). */
+  onAttach: () => void = () => {},
+): {
   route: (r: SessionResult) => void
   /** The item on screen takes the results from index `from` on; the returned function lets go. */
   attach: (from: number, take: (r: SessionResult) => void) => () => void
+  /** Whether an item takes results now. */
+  attached: () => boolean
 } {
   let target: { from: number; take: (r: SessionResult) => void } | null = null
   const voiced = new Set<number>()
@@ -371,10 +542,12 @@ export function makeResultRouter(isSpeaking: () => boolean): {
     attach: (from, take) => {
       const mine = { from, take }
       target = mine
+      onAttach()
       return () => {
         if (target === mine) target = null
       }
     },
+    attached: () => target !== null,
   }
 }
 
@@ -384,4 +557,68 @@ export function useRecognition(): Recognizer & { supported: boolean; listening: 
   const [recognizer] = useState(() => makeRecognizer(recognitionCtor, setListening, reportError))
   useEffect(() => () => recognizer.cancel(), [recognizer])
   return { ...recognizer, supported: recognitionCtor() !== null, listening }
+}
+
+/** One mic session for a screen of many items (useMicSession). */
+export interface MicSession {
+  supported: boolean
+  /** The session is on (between two runs of the browser's recognition too). */
+  listening: boolean
+  /** Why the last session stopped by itself (already reported); null after a new start. */
+  ended: SessionEnd | null
+  /** A tap on the mic: starts the session (ending any earlier one). */
+  start: () => void
+  /** Stop: no restart; what is on the way still comes. */
+  stop: () => void
+  /** Type instead, the end of a round: off at once, late results dropped. */
+  cancel: () => void
+  /** The item on screen takes the results heard from now on (stale ones never); returns "let go". */
+  attach: (take: (r: SessionResult) => void) => () => void
+  stats: () => MicStats
+}
+
+/**
+ * One mic session for a whole screen (a game round, a review): a tap starts it, it stays on over the
+ * items, and each item takes only the results heard after it appeared (makeResultRouter). Android
+ * clicks at every start and stop of the mic (Hayk, 2026-11-09), so the screen never starts it per
+ * item. When the browser ends it while no item takes results, it starts again only when one does.
+ * The app going to the background stops it; the screen stops it at the end of a round, on Type
+ * instead, and when it unmounts.
+ */
+export function useMicSession(onEnd?: (h: SessionEnd) => void): MicSession {
+  const rec = useRecognition()
+  const [router] = useState(() => makeResultRouter(rec.voiceOn, rec.resumeSession))
+  const [ended, setEnded] = useState<SessionEnd | null>(null)
+  const onEndRef = useRef(onEnd)
+  useEffect(() => {
+    onEndRef.current = onEnd
+  })
+  const cancel = rec.cancel
+  useEffect(() => {
+    const onHide = () => {
+      if (document.hidden) cancel()
+    }
+    document.addEventListener('visibilitychange', onHide)
+    return () => document.removeEventListener('visibilitychange', onHide)
+  }, [cancel])
+  return {
+    supported: rec.supported,
+    listening: rec.listening,
+    ended,
+    start: () => {
+      setEnded(null)
+      rec.startSession({
+        onResult: router.route,
+        wantsResults: router.attached,
+        onEnd: (h) => {
+          setEnded(h)
+          onEndRef.current?.(h)
+        },
+      })
+    },
+    stop: rec.stopSession,
+    cancel,
+    attach: (take) => router.attach(rec.sessionMark(), take),
+    stats: rec.stats,
+  }
 }

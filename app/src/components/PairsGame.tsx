@@ -2,8 +2,8 @@
 // meaning words, e.g. I practice langsam and schnell"). A German word and the task, "Opposite?" or
 // "Same meaning?"; the learner types the partner word (or says it), never picks it from options.
 // Then both words show with their English, a play button and the pair's note. The pairs are in
-// content/pairs.json, the logic in lib/pairs.ts. Practice: logged with practice: true, so the
-// review schedule never moves (DECISIONS.md #25).
+// content/pairs.json, the logic in lib/pairs.ts. A recall game: each answer is a scheduled review
+// of the word the learner had to produce (Hayk, 2026-11-09; GameFrame.tsx saveGameReview).
 import { useEffect, useRef, useState } from 'react'
 import { closestAnswer } from '../lib/charDiff.ts'
 import { TypoDiff } from './TypoDiff.tsx'
@@ -12,13 +12,13 @@ import { content } from '../content/load.ts'
 import type { PairKind, ReviewState, Word } from '../content/schema.ts'
 import type { StudyWord } from '../lib/customWords.ts'
 import type { RoundPick } from '../lib/daily.ts'
-import { checkPair, logTarget, PAIRS, pairItems, spokenPair } from '../lib/pairs.ts'
+import { checkPair, PAIRS, pairItems, spokenPair } from '../lib/pairs.ts'
 import type { PairCheck, PairItem } from '../lib/pairs.ts'
-import { useRecognition } from '../lib/recognition.ts'
-import type { Heard } from '../lib/recognition.ts'
+import { micStatsLine, useMicSession } from '../lib/recognition.ts'
+import type { MicSession, SessionResult } from '../lib/recognition.ts'
 import { speak } from '../lib/speech.ts'
 import { useReviewSound } from './FocusBar.tsx'
-import { GameEnd, GameFrame, MicButton, savePractice, TooFewWords, useEnterKey } from './GameFrame.tsx'
+import { GameEnd, GameFrame, MicButton, saveGameReview, TooFewWords, useEnterKey, useRoundCounted } from './GameFrame.tsx'
 import type { GameBack } from './GameFrame.tsx'
 import { GlossScope } from './GermanText.tsx'
 import { nearMissText } from './ResultView.tsx'
@@ -39,7 +39,6 @@ type Outcome = 'right' | 'wrong' | 'skipped'
 
 export function PairsGame({ words, state, back, pick, onAgain }: { words: StudyWord[]; state: ReviewState; back: GameBack; pick: RoundPick; onAgain: () => void }) {
   const [sound, toggleSound] = useReviewSound()
-  const rec = useRecognition()
   const [items] = useState(() => {
     // The scope's words come in path order from Home, so a word's index is its place on the path.
     const at = new Map(words.map((w, i) => [w.id, i]))
@@ -55,9 +54,27 @@ export function PairsGame({ words, state, back, pick, onAgain }: { words: StudyW
   })
   const [index, setIndex] = useState(0)
   const [outcomes, setOutcomes] = useState<Outcome[]>([])
-  // Typing first; the mic is optional and stays on for the round once picked.
+  // Typing first; the mic is optional and stays on for the round once picked: the first tap on it
+  // starts ONE mic session for the round (lib/recognition.ts useMicSession; Android clicks at every
+  // start and stop of the mic).
   const [mic, setMic] = useState(false)
   const [note, setNote] = useState<string | null>(null)
+  const session = useMicSession((h) => {
+    if (h.blocked) setMic(false)
+    setNote(h.blocked ? `${h.message} Type your answers instead.` : h.message)
+  })
+  const roundOver = items.length < PAIRS.minItems || index >= items.length
+  const cancelMic = session.cancel
+  useEffect(() => {
+    if (roundOver || !mic) cancelMic()
+  }, [roundOver, mic, cancelMic])
+  const stats = session.stats()
+  const micLine = stats.starts > 0 ? micStatsLine(stats) : null
+  useEffect(() => {
+    if (roundOver && micLine) console.info(micLine, stats)
+  }, [roundOver])
+  // Each produced word's first answer this round is a scheduled review.
+  const counted = useRoundCounted()
   const frame = { title: 'Opposites and synonyms', back, sound, onSound: toggleSound }
 
   if (items.length < PAIRS.minItems) {
@@ -72,7 +89,7 @@ export function PairsGame({ words, state, back, pick, onAgain }: { words: StudyW
     const right = outcomes.filter((o) => o === 'right').length
     return (
       <GameFrame {...frame} done={items.length} target={items.length}>
-        <GameEnd title="Opposites and synonyms: done" back={back} onAgain={onAgain}>
+        <GameEnd title="Opposites and synonyms: done" back={back} onAgain={onAgain} reviews>
           <p>
             {right} of {items.length} right.
           </p>
@@ -88,6 +105,7 @@ export function PairsGame({ words, state, back, pick, onAgain }: { words: StudyW
               ))}
             </ul>
           </GlossScope>
+          {micLine && <p className="muted small mic-stats">{micLine}</p>}
         </GameEnd>
       </GameFrame>
     )
@@ -102,10 +120,11 @@ export function PairsGame({ words, state, back, pick, onAgain }: { words: StudyW
         item={item}
         state={state}
         sound={sound}
-        mic={mic && rec.supported}
-        rec={rec}
+        mic={mic && session.supported}
+        session={session}
+        counted={counted}
         onMic={(on, why) => {
-          if (on && !rec.supported) {
+          if (on && !session.supported) {
             setNote(NO_RECOGNITION)
             return
           }
@@ -125,17 +144,20 @@ function PairCard(props: {
   item: PairItem<Word>
   state: ReviewState
   sound: boolean
+  /** Saying, not typing (picked for the round). */
   mic: boolean
-  rec: ReturnType<typeof useRecognition>
+  /** The round's mic session: a tap starts it, and it stays on for the next words. */
+  session: MicSession
+  /** The words already reviewed this round (saveGameReview). */
+  counted: Set<string>
   onMic: (on: boolean, why: string | null) => void
   onDone: (o: Outcome) => void
 }) {
-  const { item, state, sound, mic, rec, onMic, onDone } = props
+  const { item, state, sound, mic, session, counted, onMic, onDone } = props
   const [shownAt] = useState(() => performance.now())
   const [text, setText] = useState('')
   const [result, setResult] = useState<{ text: string; how: 'typed' | 'said'; check: PairCheck<Word> } | null>(null)
   const [heardWrong, setHeardWrong] = useState<string | null>(null)
-  const [missNote, setMissNote] = useState<string | null>(null)
   const [gaveUp, setGaveUp] = useState(false)
   const input = useRef<HTMLInputElement>(null)
   const revealed = result !== null || gaveUp
@@ -150,45 +172,45 @@ function PairCard(props: {
     if (revealed && sound) speak(item.answer.de)
   }, [revealed])
   useEnterKey(revealed, () => onDone(outcome))
-  // A recognition still running when this card goes is dropped, so it never lands on the next word.
-  const cancel = rec.cancel
-  useEffect(() => () => cancel(), [cancel])
+  // Saying: while the card asks, it checks what the round's mic hears after the card appeared. A
+  // live result that is right counts at once; a final one that is not shows what was heard, and the
+  // mic keeps listening. A word not recognised may be the mic's fault: it is not logged.
+  const taken = useRef(false)
+  useEffect(() => {
+    if (!mic || revealed) return
+    return session.attach((r: SessionResult) => {
+      if (taken.current) return
+      const s = spokenPair(r.alternatives, item.accepted)
+      if (s.word) {
+        taken.current = true
+        answer(s.heard, 'said', { correct: true, nearMiss: null, word: s.word })
+      } else if (r.final) setHeardWrong(s.heard)
+    })
+  }, [mic, revealed])
+
+  /**
+   * A scheduled review of the word the learner had to produce: the accepted word they gave when
+   * right (a synonym that counts too is the word they recalled), the asked answer word when not.
+   */
+  function review(right: boolean, word: Word, given: string | null, check: PairCheck<Word> | null) {
+    const typed = given !== null && check ? { answer: given, check: { correct: check.correct, nearMiss: check.nearMiss } } : null
+    saveGameReview({ state, word, right, typed, timeMs: Math.round(performance.now() - shownAt), counted })
+  }
 
   function answer(given: string, how: 'typed' | 'said', check: PairCheck<Word>) {
     setResult({ text: given, how, check })
-    const word = logTarget(state, check.word)
-    if (word) savePractice({ state, word, mode: 'production', right: check.correct, text: given, nearMiss: check.nearMiss, timeMs: Math.round(performance.now() - shownAt) })
+    review(check.correct, check.correct ? check.word : item.answer, given, check)
+  }
+
+  function dontKnow() {
+    setGaveUp(true)
+    review(false, item.answer, null, null)
   }
 
   function submit(e: FormEvent) {
     e.preventDefault()
     const t = text.trim()
     if (t !== '') answer(t, 'typed', checkPair(t, item.accepted))
-  }
-
-  function listen() {
-    setMissNote(null)
-    setHeardWrong(null)
-    rec.listen(
-      (h: Heard) => {
-        if (h.kind === 'none') {
-          if (h.blocked) onMic(false, `${h.message} Type your answers instead.`)
-          else setMissNote(h.message)
-          return
-        }
-        // A word not recognised may be the mic's fault: it is not logged, and another try or typing stays open.
-        const s = spokenPair(h.alternatives, item.accepted)
-        if (s.word) answer(s.heard, 'said', { correct: true, nearMiss: null, word: s.word })
-        else setHeardWrong(s.heard)
-      },
-      { accept: (alternatives) => spokenPair(alternatives, item.accepted).word !== null },
-    )
-  }
-
-  /** Type instead or I don't know: stop listening first, so a late result is not taken for this word. */
-  function leaveMic(then: () => void) {
-    cancel()
-    then()
   }
 
   const near = nearMissText(result?.check.nearMiss)
@@ -220,12 +242,12 @@ function PairCard(props: {
             />
             <UmlautBar keys="answer" />
             <div className="row actions">
-              {rec.supported && (
+              {session.supported && (
                 <button type="button" className="btn small" onClick={() => onMic(true, null)}>
                   Say it instead
                 </button>
               )}
-              <button type="button" className="btn small" onClick={() => setGaveUp(true)}>
+              <button type="button" className="btn small" onClick={dontKnow}>
                 I don't know
               </button>
               <button type="submit" className="btn primary" disabled={text.trim() === ''}>
@@ -238,18 +260,18 @@ function PairCard(props: {
         {!revealed && mic && (
           <div className="stack">
             <p className="muted small">{TASK_HINT[item.kind].replace('Type', 'Say')}</p>
-            <MicButton listening={rec.listening} onStart={listen} onStop={rec.stop} label={heardWrong ? 'Try again' : 'Say it'} />
+            <MicButton listening={session.listening} onStart={session.start} onStop={session.stop} label={heardWrong ? 'Try again' : 'Say it'} />
             {heardWrong && (
               <p className="small warn-text">
-                Heard: "<span lang="de">{heardWrong}</span>". That was not recognised as a right answer. Try again, type it, or tap I don't know.
+                Heard: "<span lang="de">{heardWrong}</span>". That was not recognised as a right answer. {session.listening ? 'Say it again' : 'Try again'}, type it, or tap I don't know.
               </p>
             )}
-            {missNote && <p className="small warn-text">{missNote}</p>}
+            {session.listening && <p className="muted small">The mic stays on for the next words.</p>}
             <div className="row actions">
-              <button type="button" className="btn small" onClick={() => leaveMic(() => onMic(false, null))}>
+              <button type="button" className="btn small" onClick={() => onMic(false, null)}>
                 Type instead
               </button>
-              <button type="button" className="btn small" onClick={() => leaveMic(() => setGaveUp(true))}>
+              <button type="button" className="btn small" onClick={dontKnow}>
                 I don't know
               </button>
             </div>

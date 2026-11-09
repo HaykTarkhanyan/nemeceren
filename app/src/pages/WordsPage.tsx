@@ -35,6 +35,7 @@ import { updateSettings, useSettings } from '../lib/settings.ts'
 import { counts, LEARN_AHEAD_MS, nextCard, previewIntervals, Rating } from '../lib/srs.ts'
 import type { Grade } from '../lib/srs.ts'
 import { useSpeech } from '../lib/speech.ts'
+import { useMicSession } from '../lib/recognition.ts'
 import { recordPractice, recordReview, recordReviewRoundDone, requestFlush, useProgress } from '../lib/storage.ts'
 import type { CustomWordView } from '../lib/storage.ts'
 import { useVisibleContent } from '../lib/visibleContent.ts'
@@ -446,9 +447,10 @@ function Session(props: {
     return Math.min(ROUND_SIZE, c.due + c.newLeft)
   }
   const [available, setAvailable] = useState(startCounts)
-  // After the first tap on the mic, English to German cards start listening by themselves, until
-  // Close (also across "Next round"), Type instead, or a blocked mic.
-  const [handsFree, setHandsFree] = useState(false)
+  // One mic session for the whole review (ReviewCard CardSpeech): after the first tap, English to
+  // German cards take what the mic hears, until Close (also across "Next round"), Type instead, or
+  // a blocked mic.
+  const mic = useMicSession()
   const recorded = useRef(false)
   const next = nextCard(words, state, now, newLimit)
   const roundOver = round.length > 0 && (round.length >= ROUND_SIZE || next.kind !== 'card')
@@ -571,7 +573,7 @@ function Session(props: {
         intervals={previewIntervals(state, next.word.id, now)}
         disabled={saving}
         autoSpeak={sound}
-        speech={{ handsFree, onHandsFree: setHandsFree }}
+        speech={{ mic }}
         onGrade={(rating, typed, timeMs) => grade(next.word, next.isNew, rating, typed, timeMs)}
       />
     )
@@ -597,8 +599,8 @@ function PracticeSession(props: { mode: SessionMode; words: StudyWord[]; state: 
   const [again, setAgain] = useState(0)
   const [saving, setSaving] = useState(false)
   const [failed, setFailed] = useState<{ entry: ReviewLogEntry; message: string } | null>(null)
-  // The mic as in Session: hands-free after the first tap.
-  const [handsFree, setHandsFree] = useState(false)
+  // The mic as in Session: one session, hands-free after the first tap.
+  const mic = useMicSession()
   const cardMode = useMemo(() => pickMode(mode, listen), [index, mode, listen])
   // The practice round is over: send it.
   const practiceOver = index >= words.length && index > 0
@@ -664,7 +666,7 @@ function PracticeSession(props: { mode: SessionMode; words: StudyWord[]; state: 
         intervals={null}
         disabled={saving}
         autoSpeak={sound}
-        speech={{ handsFree, onHandsFree: setHandsFree }}
+        speech={{ mic }}
         onGrade={(r, typed, ms) => grade(word, r, typed, ms)}
       />
     )

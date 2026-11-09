@@ -1,7 +1,8 @@
 // The light daily mode (design: _knowledge/2026-11-06_light-daily-mode-design.md), as pure
 // functions: which words the games use, the rounds of match pairs, the new words of the daily mix,
 // and which steps of the mix have something to do.
-// The games are practice: they never change the FSRS schedule (DECISIONS.md #25, #77).
+// Match pairs and the recognition games are practice (DECISIONS.md #25, #77); the recall games
+// record scheduled reviews (2026-11-09, lib/reviewEntries.ts gameReview).
 import { isThemeLesson } from '../content/lessons.ts'
 import type { Lesson, LessonProgress, ReviewState, WordSet } from '../content/schema.ts'
 import { pathNewWords } from './plan.ts'

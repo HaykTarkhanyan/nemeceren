@@ -180,12 +180,3 @@ export function spokenPair<W extends { de: string }>(alternatives: string[], acc
   }
   return { word: null, heard: bestAlternative(splitArticle(accepted[0].de).rest, alternatives) }
 }
-
-/**
- * The word an answer is logged for as practice: the word it matched or came closest to, if that word
- * has a review card. A word not learned yet was shown, not recalled, so nothing is logged for it
- * (and practiceEntry refuses a word without a card).
- */
-export function logTarget<W extends { id: string }>(state: ReviewState, word: W): W | null {
-  return state.cards[word.id] ? word : null
-}

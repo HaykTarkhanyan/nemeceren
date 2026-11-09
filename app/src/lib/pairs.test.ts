@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 import { WordPairs } from '../content/schema.ts'
 import type { ReviewState, Word, WordPair } from '../content/schema.ts'
-import { acceptedIds, checkPair, checkPairWord, logTarget, pairItems, spokenPair } from './pairs.ts'
+import { acceptedIds, checkPair, checkPairWord, pairItems, spokenPair } from './pairs.ts'
 import { emptyState, Rating, review } from './srs.ts'
 
 const t0 = new Date(2026, 10, 9, 10, 0, 0)
@@ -157,12 +157,6 @@ describe('checking a spoken answer and what is logged', () => {
     expect(spokenPair(['Schluss'], accepted)).toEqual({ word: accepted[1], heard: 'Schluss' })
     expect(spokenPair(['das Ende'], accepted)).toEqual({ word: accepted[0], heard: 'das Ende' })
     expect(spokenPair(['Anfang'], accepted)).toEqual({ word: null, heard: 'Anfang' })
-  })
-
-  it('logs practice only for a word that has a review card', () => {
-    const state = learned(['schnell'])
-    expect(logTarget(state, w('schnell'))).toEqual(w('schnell'))
-    expect(logTarget(state, w('langsam'))).toBeNull()
   })
 })
 

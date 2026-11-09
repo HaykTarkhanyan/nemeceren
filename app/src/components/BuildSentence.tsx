@@ -3,6 +3,8 @@
 // about 3 plausible distractors (another verb form, another article, a word from another
 // sentence), so the set never fits exactly. "Type it instead" swaps the tiles for a text box. A
 // different order may also be right, so a wrong answer offers "Ask Claude about this" (#78).
+// A recall game: each answer is a scheduled review of the word whose sentence it is (Hayk,
+// 2026-11-09; GameFrame.tsx saveGameReview).
 import { useEffect, useState } from 'react'
 import { content } from '../content/load.ts'
 import type { ReviewState } from '../content/schema.ts'
@@ -15,7 +17,7 @@ import { speak } from '../lib/speech.ts'
 import type { Comparison } from '../lib/text.ts'
 import { AskClaude } from './AskClaude.tsx'
 import { useReviewSound } from './FocusBar.tsx'
-import { GameEnd, GameFrame, savePractice, TooFewWords, TypeAnswer, useEnterKey } from './GameFrame.tsx'
+import { GameEnd, GameFrame, saveGameReview, TooFewWords, TypeAnswer, useEnterKey, useRoundCounted } from './GameFrame.tsx'
 import type { GameBack } from './GameFrame.tsx'
 import { De, GlossScope } from './GermanText.tsx'
 import { nearMissText } from './ResultView.tsx'
@@ -55,6 +57,8 @@ export function BuildSentence(props: { words: StudyWord[]; pool: StudyWord[]; st
   const [index, setIndex] = useState(0)
   const [right, setRight] = useState(0)
   const [typing, setTyping] = useState(false)
+  // Each word's first answer this round is a scheduled review.
+  const counted = useRoundCounted()
   const frame = { title: 'Build the sentence', back, sound, onSound: toggleSound }
   if (items.length === 0) {
     return (
@@ -66,7 +70,7 @@ export function BuildSentence(props: { words: StudyWord[]; pool: StudyWord[]; st
   if (index >= items.length) {
     return (
       <GameFrame {...frame} done={items.length} target={items.length}>
-        <GameEnd title="Build the sentence: done" back={back} onAgain={onAgain}>
+        <GameEnd title="Build the sentence: done" back={back} onAgain={onAgain} reviews>
           <p>
             {right} of {items.length} right.
           </p>
@@ -82,6 +86,7 @@ export function BuildSentence(props: { words: StudyWord[]; pool: StudyWord[]; st
         state={state}
         sound={sound}
         typing={typing}
+        counted={counted}
         onTyping={setTyping}
         onNext={(ok) => {
           if (ok) setRight((r) => r + 1)
@@ -92,8 +97,17 @@ export function BuildSentence(props: { words: StudyWord[]; pool: StudyWord[]; st
   )
 }
 
-function BuildCard(props: { item: BuildItem<StudyWord>; state: ReviewState; sound: boolean; typing: boolean; onTyping: (on: boolean) => void; onNext: (right: boolean) => void }) {
-  const { item, state, sound, typing, onTyping, onNext } = props
+function BuildCard(props: {
+  item: BuildItem<StudyWord>
+  state: ReviewState
+  sound: boolean
+  typing: boolean
+  /** The words already reviewed this round (saveGameReview). */
+  counted: Set<string>
+  onTyping: (on: boolean) => void
+  onNext: (right: boolean) => void
+}) {
+  const { item, state, sound, typing, counted, onTyping, onNext } = props
   const [shownAt] = useState(() => performance.now())
   // Tiles by their place in item.tiles, so two tiles with the same word stay apart.
   const [built, setBuilt] = useState<number[]>([])
@@ -107,7 +121,7 @@ function BuildCard(props: { item: BuildItem<StudyWord>; state: ReviewState; soun
 
   function finish(answer: string, right: boolean, check?: Comparison) {
     setResult({ answer, right, check })
-    savePractice({ state, word: item.word, mode: 'production', right, text: answer, nearMiss: check?.nearMiss, timeMs: Math.round(performance.now() - shownAt) })
+    saveGameReview({ state, word: item.word, right, typed: { answer, check: check ?? { correct: right, nearMiss: null } }, timeMs: Math.round(performance.now() - shownAt), counted })
   }
 
   const builtWords = built.map((i) => item.tiles[i])

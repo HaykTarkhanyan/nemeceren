@@ -1,9 +1,11 @@
-// The log entries of a word review, shared by the Words page, the practice sessions and the daily
-// mix: a scheduled review moves the FSRS schedule; practice (weak words, word sets, the games of
-// the daily mix) is only logged, with practice: true, so the schedule stays as it is (DECISIONS.md #25).
+// The log entries of a word review, shared by the Words page, the practice sessions, the daily mix
+// and the games: a scheduled review moves the FSRS schedule; practice (weak words, word sets, the
+// recognition games) is only logged, with practice: true, so the schedule stays as it is
+// (DECISIONS.md #25). The recall games (Say the words, Say the sentence, Opposites and synonyms,
+// Build the sentence) record scheduled reviews (Hayk, 2026-11-09): gameReview.
 import type { ReviewLogEntry, ReviewMode, ReviewState, StoredCard } from '../content/schema.ts'
 import { localDay } from './dates.ts'
-import { review } from './srs.ts'
+import { Rating, review } from './srs.ts'
 import type { Grade } from './srs.ts'
 import type { Comparison } from './text.ts'
 
@@ -42,6 +44,32 @@ export function scheduledEntry(input: {
     due: out.after.due,
   }
   return { entry, card: out.after }
+}
+
+/**
+ * A recall game's answer as a scheduled review, the same entry as Words > Review makes (production
+ * mode). A word with a card gets Good when right and Again when wrong or "I don't know". A word
+ * without a card is introduced by a right answer (its first review, isNew); a miss on it records
+ * nothing. Only the first answer to a word in a round counts: `counted` (the round's set) gets the
+ * word either way, so a word that comes back later in the round, after its answer was shown,
+ * never stacks a second review or introduces a word it copied. Null when nothing is recorded.
+ */
+export function gameReview(input: {
+  state: ReviewState
+  word: { id: string; de: string }
+  right: boolean
+  /** What was typed or heard and how it compared; null for "I don't know". */
+  typed: Typed | null
+  timeMs: number
+  at: Date
+  counted: Set<string>
+}): { entry: ReviewLogEntry; card: StoredCard } | null {
+  const { state, word, right, typed, timeMs, at, counted } = input
+  if (counted.has(word.id)) return null
+  counted.add(word.id)
+  const card = state.cards[word.id]
+  if (!card && !right) return null
+  return scheduledEntry({ state, word, isNew: !card || card.reps === 0, mode: 'production', rating: right ? Rating.Good : Rating.Again, typed, timeMs, at })
 }
 
 /**

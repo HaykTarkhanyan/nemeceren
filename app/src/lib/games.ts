@@ -1,7 +1,8 @@
 // The practice games (design: _knowledge/2026-11-07_practice-games-design.md), as pure functions:
 // which words a game takes, how a spoken or typed answer is checked, the der/die/das queue, the gap
 // of "Fill the gap" with its options, and the tiles of "Build the sentence" with their distractors.
-// All of it is practice: nothing here changes the FSRS schedule (DECISIONS.md #25).
+// Nothing here changes the FSRS schedule; the recall games record their answers as scheduled
+// reviews (2026-11-09, lib/reviewEntries.ts gameReview), the others as practice (DECISIONS.md #25).
 import type { ReviewState } from '../content/schema.ts'
 import { ASK_HEADER } from './askClaude.ts'
 import { freshOrder, introduced, isLearned, wordKind } from './daily.ts'

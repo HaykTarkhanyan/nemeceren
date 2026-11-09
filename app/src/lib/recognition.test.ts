@@ -1,6 +1,17 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { blockedMicMessage, makeRecognizer, makeResultRouter, MAX_QUICK_ENDS, QUICK_END_MS, RECOGNITION_ERRORS, STOP_GRACE_MS } from './recognition.ts'
-import type { Heard, Recognition, RecognitionAlternative, SessionResult } from './recognition.ts'
+import {
+  blockedMicMessage,
+  makeRecognizer,
+  makeResultRouter,
+  MAX_QUICK_ENDS,
+  micStatsLine,
+  QUICK_END_MS,
+  RECOGNITION_ERRORS,
+  STOP_GRACE_MS,
+  VOICE_STUCK_MS,
+  VOICE_TAIL_MS,
+} from './recognition.ts'
+import type { Heard, MicStats, Recognition, RecognitionAlternative, SessionResult } from './recognition.ts'
 
 /** A stand-in for the browser's SpeechRecognition: the test fires its events by hand. */
 class FakeRecognition implements Recognition {
@@ -232,7 +243,7 @@ class StuckContinuous extends ContinuousRecognition {
   }
 }
 
-function sessionSetup(ctor: new () => Recognition = ContinuousRecognition) {
+function sessionSetup(ctor: new () => Recognition = ContinuousRecognition, speaking: () => boolean = () => false) {
   const listening: boolean[] = []
   const reported: string[] = []
   const results: SessionResult[] = []
@@ -241,6 +252,7 @@ function sessionSetup(ctor: new () => Recognition = ContinuousRecognition) {
     () => ctor,
     (on) => listening.push(on),
     (m) => reported.push(m),
+    speaking,
   )
   const handlers = { onResult: (x: SessionResult) => results.push(x), onEnd: (h: { message: string; blocked: boolean }) => ended.push(h) }
   return { r, listening, reported, results, ended, handlers }
@@ -522,5 +534,176 @@ describe('the blocked-mic message (installed app vs browser)', () => {
     expect(blockedMicMessage(false)).toMatch(/next to the address/)
     // The error table reads it at the time of the error.
     expect(RECOGNITION_ERRORS['not-allowed']).toBe(blockedMicMessage())
+  })
+})
+
+describe("why the mic clicked: each end of a session, its reason, and the app's own voice", () => {
+  beforeEach(() => {
+    ContinuousRecognition.made = []
+    ContinuousRecognition.starts = 0
+    vi.useFakeTimers()
+  })
+  afterEach(() => vi.useRealTimers())
+
+  it('counts the starts and each restart with why the browser ended the session', () => {
+    let speaking = false
+    const s = sessionSetup(ContinuousRecognition, () => speaking)
+    s.r.startSession(s.handlers)
+    vi.advanceTimersByTime(5000)
+    ContinuousRecognition.last.end('no-speech')
+    vi.advanceTimersByTime(5000)
+    ContinuousRecognition.last.end()
+    vi.advanceTimersByTime(5000)
+    ContinuousRecognition.last.end('aborted')
+    vi.advanceTimersByTime(5000)
+    speaking = true
+    ContinuousRecognition.last.end()
+    speaking = false
+    vi.advanceTimersByTime(5000)
+    const st = s.r.stats()
+    expect(st.starts).toBe(1)
+    expect(st.restarts).toBe(4)
+    expect(st.ends).toEqual({ silence: 1, plain: 1, error: 1, voice: 1 })
+    expect(st.codes).toEqual({ aborted: 1 })
+    expect(st.runs.map((r) => r.end)).toEqual(['silence', 'plain', 'error', 'voice'])
+    expect(ContinuousRecognition.starts).toBe(5)
+    expect(s.listening).toEqual([true])
+  })
+
+  it("an end soon after the app's voice stopped counts as caused by it; a later one does not", () => {
+    let speaking = false
+    const s = sessionSetup(ContinuousRecognition, () => speaking)
+    s.r.startSession(s.handlers)
+    vi.advanceTimersByTime(3000)
+    speaking = true
+    vi.advanceTimersByTime(400) // the voice watch sees it
+    speaking = false
+    vi.advanceTimersByTime(VOICE_TAIL_MS - 600)
+    ContinuousRecognition.last.end()
+    vi.advanceTimersByTime(VOICE_TAIL_MS + 3000)
+    ContinuousRecognition.last.end()
+    expect(s.r.stats().runs.map((r) => r.end)).toEqual(['voice', 'plain'])
+  })
+
+  it("ended while the app's voice speaks: it starts again once, after the voice has finished", () => {
+    let speaking = false
+    const s = sessionSetup(ContinuousRecognition, () => speaking)
+    s.r.startSession(s.handlers)
+    vi.advanceTimersByTime(2000)
+    speaking = true
+    ContinuousRecognition.last.end()
+    vi.advanceTimersByTime(1000)
+    expect(ContinuousRecognition.starts).toBe(1)
+    speaking = false
+    vi.advanceTimersByTime(250)
+    expect(ContinuousRecognition.starts).toBe(2)
+    vi.advanceTimersByTime(5000)
+    expect(ContinuousRecognition.starts).toBe(2)
+    expect(s.listening).toEqual([true])
+  })
+
+  it("the app's voice ending it right after each start does not trip the quick-end cap (it waits instead)", () => {
+    let speaking = false
+    const s = sessionSetup(ContinuousRecognition, () => speaking)
+    s.r.startSession(s.handlers)
+    for (let i = 0; i < MAX_QUICK_ENDS + 2; i++) {
+      speaking = true
+      vi.advanceTimersByTime(100)
+      ContinuousRecognition.last.end()
+      vi.advanceTimersByTime(300)
+      speaking = false
+      vi.advanceTimersByTime(250)
+    }
+    expect(s.ended).toEqual([])
+    expect(s.r.stats().ends.voice).toBe(MAX_QUICK_ENDS + 2)
+    expect(ContinuousRecognition.starts).toBe(MAX_QUICK_ENDS + 3)
+  })
+
+  it(`"audio-capture" while the app's voice speaks is taken as the voice taking the audio; without the voice it stops the mic`, () => {
+    let speaking = false
+    const s = sessionSetup(ContinuousRecognition, () => speaking)
+    s.r.startSession(s.handlers)
+    vi.advanceTimersByTime(2000)
+    speaking = true
+    ContinuousRecognition.last.end('audio-capture')
+    speaking = false
+    vi.advanceTimersByTime(250)
+    expect(ContinuousRecognition.starts).toBe(2)
+    expect(s.ended).toEqual([])
+    vi.advanceTimersByTime(VOICE_TAIL_MS + 1000)
+    ContinuousRecognition.last.end('audio-capture')
+    expect(ContinuousRecognition.starts).toBe(2)
+    expect(s.ended).toEqual([{ message: 'No microphone was found.', blocked: true }])
+    expect(s.r.stats().stopped).toEqual(['audio-capture'])
+  })
+
+  it('a voice "speaking" that never stops is taken as stuck: the session starts again anyway', () => {
+    const s = sessionSetup(ContinuousRecognition, () => true)
+    s.r.startSession(s.handlers)
+    vi.advanceTimersByTime(1000)
+    ContinuousRecognition.last.end()
+    expect(ContinuousRecognition.starts).toBe(1)
+    vi.advanceTimersByTime(VOICE_STUCK_MS)
+    expect(ContinuousRecognition.starts).toBe(2)
+  })
+
+  it('ended while no item takes results: no restart (no click) until an item wants results again', () => {
+    let wants = true
+    const s = sessionSetup()
+    s.r.startSession({ ...s.handlers, wantsResults: () => wants })
+    vi.advanceTimersByTime(3000)
+    wants = false
+    ContinuousRecognition.last.end()
+    vi.advanceTimersByTime(30_000)
+    expect(ContinuousRecognition.starts).toBe(1)
+    // Still on for the learner: the next card takes the mic without a tap.
+    expect(s.listening).toEqual([true])
+    wants = true
+    s.r.resumeSession()
+    expect(ContinuousRecognition.starts).toBe(2)
+    // A second resume while it runs changes nothing.
+    s.r.resumeSession()
+    expect(ContinuousRecognition.starts).toBe(2)
+    expect(s.r.stats()).toMatchObject({ restarts: 1, ends: { plain: 1 } })
+  })
+
+  it('Stop while waiting for an item ends it at once, and a later resume does not start it', () => {
+    let wants = false
+    const s = sessionSetup()
+    s.r.startSession({ ...s.handlers, wantsResults: () => wants })
+    vi.advanceTimersByTime(3000)
+    ContinuousRecognition.last.end()
+    s.r.stopSession()
+    expect(s.listening).toEqual([true, false])
+    wants = true
+    s.r.resumeSession()
+    vi.advanceTimersByTime(STOP_GRACE_MS)
+    expect(ContinuousRecognition.starts).toBe(1)
+  })
+
+  it('a router calls back when an item attaches, and says whether one takes results', () => {
+    let attachedCalls = 0
+    const router = makeResultRouter(
+      () => false,
+      () => (attachedCalls += 1),
+    )
+    expect(router.attached()).toBe(false)
+    const leave = router.attach(0, () => {})
+    expect([router.attached(), attachedCalls]).toEqual([true, 1])
+    leave()
+    expect(router.attached()).toBe(false)
+  })
+})
+
+describe('the mic line on the round-end screen (micStatsLine)', () => {
+  const stats = (over: Partial<MicStats>): MicStats => ({ starts: 1, restarts: 0, ends: { silence: 0, voice: 0, error: 0, plain: 0 }, codes: {}, stopped: [], runs: [], ...over })
+
+  it('says each cause in plain words', () => {
+    expect(micStatsLine(stats({}))).toBe('Mic: 1 start, no restarts.')
+    expect(micStatsLine(stats({ restarts: 3, ends: { silence: 2, voice: 1, error: 0, plain: 0 } }))).toBe("Mic: 1 start, 3 restarts (2 after silence, 1 after the app's voice).")
+    expect(micStatsLine(stats({ starts: 2, restarts: 1, ends: { silence: 0, voice: 0, error: 1, plain: 1 }, codes: { aborted: 1 } }))).toBe(
+      'Mic: 2 starts, 1 restart (1 after an error (aborted), 1 with no reason given, 1 not restarted).',
+    )
+    expect(micStatsLine(stats({ stopped: ['network'] }))).toBe('Mic: 1 start, no restarts; it stopped itself: network.')
   })
 })

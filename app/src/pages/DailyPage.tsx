@@ -5,8 +5,9 @@
 // opposites and synonyms (pairs, content/pairs.json), each
 // also on the words of one lesson or several ("#/daily/<game>/<lesson id>[,<lesson id>...]", from
 // the Words map). From Home a game takes learned words first and fills up with the next words on
-// the path; from the map it takes any word of the lessons (lib/daily.ts RoundPick). The games are
-// practice and never change the review schedule; the reviews and new words inside the mix are
+// the path; from the map it takes any word of the lessons (lib/daily.ts RoundPick). The recall
+// games (speak, sentences, pairs, build) record normal reviews (DECISIONS.md #109); match, articles
+// and gaps are practice and never change the schedule. The reviews and new words inside the mix are
 // normal reviews. Listen and pick was removed (Hayk, 2026-11-09: too easy).
 import { useEffect, useRef, useState } from 'react'
 import { content } from '../content/load.ts'
