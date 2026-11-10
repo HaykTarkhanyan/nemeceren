@@ -641,7 +641,7 @@
     ],
     "zu": [
       {"lemma": "zu", "pos": "preposition", "level": "A1", "gloss": ["to; at"], "note": "zu Hause = at home"},
-      {"lemma": "zu", "pos": "adverb", "level": "A1", "gloss": ["too"], "note": "zu spät = too late"},
+      {"lemma": "zu", "pos": "adverb", "level": "A1", "gloss": ["too", "closed (informal)"], "note": "zu spät = too late; Der Laden ist zu. = The shop is closed."},
       {"lemma": "zu", "pos": "particle", "level": "A1", "gloss": ["separable part of a verb"], "note": "zuhören: Hör zu! Hören Sie zu! = Listen!"}
     ],
     "anrufe": [
