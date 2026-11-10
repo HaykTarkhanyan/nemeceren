@@ -2,6 +2,18 @@
 
 Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
+## 111. Words in no lesson (the word bank) come after the whole course, not right after the path's words (2026-11-10)
+
+- **Date:** 2026-11-10 - **Status:** active; revisits #91, #106
+- **Why:** The word bank is about to grow: Everyday verbs (#100), the pairs' extra cards (#104), the Read page's words, and about 85 "A1 gaps" cards from the Goethe A1 audit. Until now `pathNewWords` put these right after the path's reached words. So Hayk's review (no daily limit, #106) would have jumped to 85+ unrelated words before finishing Unit 1, and the daily mix would have brought them as "new words".
+  - **The order now:** `pathNewWords` holds only course words of reached lessons and opened themes. `withCourseRest` gives the full order: introduced words, path words, the rest of the course, then the word bank.
+  - **Where it applies:** the review's "all words" and the Home games. Learning bank words early is the job of a word set (sets as the mix's source, or picking the set) and of the Read page's "add new words".
+  - **A leak avoided:** `homeGameWords` now passes all lessons, so unopened theme words (e.g. Elya's Russian-meaning cards) are never treated as bank words.
+- **Alternatives rejected:**
+  - **Putting the A1 gap words into course lessons:** a lesson's words should be taught in its text, and published lessons are append-only.
+  - **Keeping bank words right after the path:** they would crowd out the course.
+- **What would change this:** Hayk wanting the A1 gaps before the A2 units (then a set, or move them into a lesson that teaches them).
+
 ## 110. Every speaking screen keeps one mic session per round, waits for the app's voice before restarting, and reports why the mic restarted (asked for by Hayk, 2026-11-09; extends #105)
 
 - **Date:** 2026-11-09 - **Status:** active (needs confirming on Hayk's phone)

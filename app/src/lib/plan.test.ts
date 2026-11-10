@@ -113,11 +113,12 @@ describe('new words follow the path (pathNewWords)', () => {
   const ids = (reach: PathReach, p = emptyLessonProgress(), s = emptyState(t0)) => pathNewWords(words, all, p, s, reach).map((w) => w.id)
 
   it('comes in course order: unit, lesson, then the position in the lesson', () => {
-    expect(ids(at(null))).toEqual(['a1', 'a2', 'shared', 'b1', 'c1', 'free'])
+    // 'free' is in no lesson: a word-bank word, not a path word (DECISIONS.md #111).
+    expect(ids(at(null))).toEqual(['a1', 'a2', 'shared', 'b1', 'c1'])
   })
 
   it('reaches only the lesson the path is at and the next one (pre-learning)', () => {
-    expect(ids(at('A'))).toEqual(['a1', 'a2', 'shared', 'b1', 'free'])
+    expect(ids(at('A'))).toEqual(['a1', 'a2', 'shared', 'b1'])
     expect([...reachableLessons(lessons, at('A'))]).toEqual(['A', 'B'])
     expect([...reachableLessons(lessons, at('B'))]).toEqual(['A', 'B', 'C'])
   })
@@ -128,7 +129,7 @@ describe('new words follow the path (pathNewWords)', () => {
   })
 
   it('also reaches a lesson with a station done ahead of the path', () => {
-    expect(ids(at('A', ['C']))).toEqual(['a1', 'a2', 'shared', 'b1', 'c1', 'free'])
+    expect(ids(at('A', ['C']))).toEqual(['a1', 'a2', 'shared', 'b1', 'c1'])
   })
 
   it('failed test, then 3 lessons done -> new words from the lesson after the last started one', () => {
@@ -143,17 +144,23 @@ describe('new words follow the path (pathNewWords)', () => {
 
   it('leaves out words that already have a card', () => {
     const s = review(emptyState(t0), 'a1', Rating.Good, t0).state
-    expect(ids(at('A'), emptyLessonProgress(), s)).toEqual(['a2', 'shared', 'b1', 'free'])
+    expect(ids(at('A'), emptyLessonProgress(), s)).toEqual(['a2', 'shared', 'b1'])
   })
 
   it('puts the words of an opened theme lesson after the course words; an unopened theme waits', () => {
     const opened = startLesson(emptyLessonProgress(), 'T', t0)
-    expect(ids(at('A'), opened)).toEqual(['a1', 'a2', 'shared', 'b1', 't1', 'free'])
+    expect(ids(at('A'), opened)).toEqual(['a1', 'a2', 'shared', 'b1', 't1'])
     expect(ids(at('A'))).not.toContain('t1')
   })
 
   it('a lesson id the course does not have is an error', () => {
     expect(() => ids(at('gone'))).toThrow(/gone/)
+  })
+
+  it('word-bank words come after the whole course in the full order, and unopened theme words never (DECISIONS.md #111)', () => {
+    const full = withCourseRest(pathNewWords(words, all, emptyLessonProgress(), emptyState(t0), at('A')), words, all).map((w) => w.id)
+    expect(full).toEqual(['a1', 'a2', 'shared', 'b1', 'c1', 'free'])
+    expect(full).not.toContain('t1')
   })
 })
 
@@ -175,7 +182,7 @@ describe('the review words for "all" (studyWords)', () => {
 
   it('is every introduced word, then the new words in path order', () => {
     const s = review(emptyState(t0), 'free2', Rating.Good, t0).state
-    expect(studyWords([...words, word('n1')], lessons, emptyLessonProgress(), s, reach).map((w) => w.id)).toEqual(['free2', 'l1', 'l2', 'free1'])
+    expect(studyWords([...words, word('n1')], lessons, emptyLessonProgress(), s, reach).map((w) => w.id)).toEqual(['free2', 'l1', 'l2'])
     expect([...lockedWordIds(lessons, emptyLessonProgress())].sort()).toEqual(['l1', 'l2', 'n1'])
   })
 
@@ -313,9 +320,9 @@ describe('choosing where the review words come from', () => {
   const reach: PathReach = { at: 'L', started: new Set() }
   const ids = (source: WordSource, s = emptyState(t0)) => wordsForSource(source, words, [], lessons, opened, s, reach).map((w) => w.id)
 
-  it('"all" takes new words in path order: the lesson the path is at and the next, then words in no lesson, then the rest of the course', () => {
+  it('"all" takes new words in path order: the lesson the path is at and the next, then the rest of the course, then words in no lesson (the word bank)', () => {
     // Then the rest of the course (no locks, 2026-11-09): n1 is in lesson N, past the path.
-    expect(ids({ kind: 'all' })).toEqual(['l1', 'l2', 'm1', 'a', 'x', 'n1'])
+    expect(ids({ kind: 'all' })).toEqual(['l1', 'l2', 'm1', 'n1', 'a', 'x'])
   })
 
   it('a lesson takes only its words, opened or not (picking it is the choice to learn them)', () => {
@@ -360,7 +367,7 @@ describe('choosing where the review words come from', () => {
     expect(sourceKey({ kind: 'mine' })).toBe('mine')
     expect(sourceLabel({ kind: 'mine' }, lessons)).toBe('my words')
     expect(wordsForSource({ kind: 'mine' }, words, mine, lessons, opened, emptyState(t0), reach).map((w) => w.id)).toEqual([mine[0].id])
-    expect(wordsForSource({ kind: 'all' }, words, mine, lessons, opened, emptyState(t0), reach).map((w) => w.id)).toEqual(['l1', 'l2', 'm1', 'a', 'x', 'n1', mine[0].id])
+    expect(wordsForSource({ kind: 'all' }, words, mine, lessons, opened, emptyState(t0), reach).map((w) => w.id)).toEqual(['l1', 'l2', 'm1', 'n1', 'a', 'x', mine[0].id])
     // A unit or a lesson is content only.
     expect(wordsForSource({ kind: 'unit', unit: 1 }, words, mine, lessons, opened, emptyState(t0), reach).map((w) => w.id)).toEqual(['l1', 'l2', 'm1'])
   })
@@ -368,10 +375,10 @@ describe('choosing where the review words come from', () => {
   it('a theme lesson holds its words back until opened, and can be picked like a lesson', () => {
     const all = [...lessons, theme('t-arzt', ['x'])]
     expect(ids({ kind: 'all' })).toContain('x')
-    expect(wordsForSource({ kind: 'all' }, words, [], all, opened, emptyState(t0), reach).map((w) => w.id)).toEqual(['l1', 'l2', 'm1', 'a', 'n1'])
+    expect(wordsForSource({ kind: 'all' }, words, [], all, opened, emptyState(t0), reach).map((w) => w.id)).toEqual(['l1', 'l2', 'm1', 'n1', 'a'])
     expect(wordsForSource({ kind: 'lesson', lessonId: 't-arzt' }, words, [], all, opened, emptyState(t0), reach).map((w) => w.id)).toEqual(['x'])
     const openedTheme = startLesson(opened, 't-arzt', t0)
-    expect(wordsForSource({ kind: 'all' }, words, [], all, openedTheme, emptyState(t0), reach).map((w) => w.id)).toEqual(['l1', 'l2', 'm1', 'x', 'a', 'n1'])
+    expect(wordsForSource({ kind: 'all' }, words, [], all, openedTheme, emptyState(t0), reach).map((w) => w.id)).toEqual(['l1', 'l2', 'm1', 'x', 'n1', 'a'])
     expect(parseSourceKey('lesson:t-arzt', all)).toEqual({ source: { kind: 'lesson', lessonId: 't-arzt' }, note: null })
     expect(sourceLabel({ kind: 'lesson', lessonId: 't-arzt' }, all)).toBe('Theme: Topic t-arzt')
   })

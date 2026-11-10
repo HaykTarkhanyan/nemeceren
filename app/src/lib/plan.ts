@@ -87,8 +87,10 @@ export function reachableLessons(lessons: CourseLesson[], reach: PathReach): Set
 /**
  * The one rule for new words, used by the Words page ("all") and the daily mix: content words with
  * no card yet, in course order (unit, lesson, then the word's place in the lesson's `words`) from
- * the reachable lessons; then the words of opened theme lessons; then words in no lesson. A word in
- * two lessons comes at its first place. `lessons` are all lessons, course and theme.
+ * the reachable lessons; then the words of opened theme lessons. A word in two lessons comes at its
+ * first place. `lessons` are all lessons, course and theme. Words in no lesson (the word bank: word
+ * sets, readings, the A1 gaps) are not path words: they come after the whole course (withCourseRest),
+ * or earlier when a set is picked (DECISIONS.md #111).
  */
 export function pathNewWords<W extends { id: string }>(words: W[], lessons: Lesson[], p: LessonProgress, state: ReviewState, reach: PathReach): W[] {
   const byId = new Map(words.map((w) => [w.id, w]))
@@ -97,8 +99,6 @@ export function pathNewWords<W extends { id: string }>(words: W[], lessons: Less
   const order: string[] = []
   for (const l of course) if (reached.has(l.id)) order.push(...(l.words ?? []))
   for (const l of lessons) if (isThemeLesson(l) && lessonStatus(p, l.id) !== 'not-started') order.push(...(l.words ?? []))
-  const inLessons = new Set(lessons.flatMap((l) => l.words ?? []))
-  order.push(...words.filter((w) => !inLessons.has(w.id)).map((w) => w.id))
   const seen = new Set<string>()
   const out: W[] = []
   for (const id of order) {
@@ -119,22 +119,28 @@ export function studyWords<W extends { id: string }>(words: W[], lessons: Lesson
 }
 
 /**
- * The words of a practice game started from Home (2026-11-09, no locks): `pool` (the review's words:
- * introduced words, the path's new words, own words), then every other word of the course lessons
- * in course order, so a round is always full. The games take learned words first and then fill up
- * from the front (lib/games.ts roundOrder). Order only: the review still takes new words from pathNewWords.
+ * The full order of words (2026-11-09, no locks): `pool` (introduced words, the path's new words, own
+ * words), then every other word of the course lessons in course order, then the word bank (words in
+ * no lesson), so the course always comes first and a round is always full (DECISIONS.md #111).
+ * `lessons` are all lessons: theme words are never added here, they wait for their theme.
  */
-export function withCourseRest<W extends { id: string }>(pool: W[], words: W[], lessons: CourseLesson[]): W[] {
+export function withCourseRest<W extends { id: string }>(pool: W[], words: W[], lessons: Lesson[]): W[] {
   const byId = new Map(words.map((w) => [w.id, w]))
   const seen = new Set(pool.map((w) => w.id))
   const rest: W[] = []
-  for (const l of [...lessons].sort(byCourseOrder)) {
+  for (const l of lessons.filter(isCourseLesson).sort(byCourseOrder)) {
     for (const id of l.words ?? []) {
       const w = byId.get(id)
       if (!w || seen.has(id)) continue
       seen.add(id)
       rest.push(w)
     }
+  }
+  const inLessons = new Set(lessons.flatMap((l) => l.words ?? []))
+  for (const w of words) {
+    if (inLessons.has(w.id) || seen.has(w.id)) continue
+    seen.add(w.id)
+    rest.push(w)
   }
   return [...pool, ...rest]
 }
@@ -207,7 +213,7 @@ export function wordsForSource(
 ): StudyWord[] {
   // No locks (Hayk, 2026-11-09: "as many as I want"): after the path's new words comes the rest of
   // the course in course order, so the review never runs dry. Theme words still wait for their theme.
-  if (source.kind === 'all') return [...withCourseRest(studyWords(words, lessons, p, state, reach), words, lessons.filter(isCourseLesson)), ...custom]
+  if (source.kind === 'all') return [...withCourseRest(studyWords(words, lessons, p, state, reach), words, lessons), ...custom]
   if (source.kind === 'mine') return custom
   let picked: Lesson[]
   if (source.kind === 'lessons') {
