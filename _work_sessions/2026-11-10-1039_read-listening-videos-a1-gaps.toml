@@ -1,27 +1,60 @@
-title = "Read page, listening tests, video notes, A1 gaps, skippable writing (5 parallel agents in worktrees)"
+title = "Read page, listening tests, video notes, A1 gaps, skippable writing (5 parallel agents in worktrees), then a full proofread (3 reviewers)"
 date = "2026-11-10"
 time = "10:39"
-areas = ["app/src", "app/scripts", "content/readings.json", "content/tests", "content/lessons", "content/words.json", "content/sets.json", "content/glossary*.json", "content/README.md", "backend/scripts/progress.py", "DECISIONS.md"]
+areas = ["app/src", "app/scripts", "content/readings.json", "content/tests", "content/lessons", "content/words.json", "content/sets.json", "content/glossary*.json", "content/README.md", "backend/scripts/progress.py", "DECISIONS.md", "_learnings", "_work_sessions"]
 done = [
   "Interview (AskUserQuestion): Read page = stories at my level + funny facts + everyday mini texts, with audio/popups, quick questions, add-new-words, translation toggle, own menu page, ~20 texts; listening = tests per unit.",
-  "A1 audit (scratchpad a1_audit.py): 539 of 683 Goethe A1 lemmas have their own card, 24 more are inside phrase cards, 26 are grammar words, 94 looked like gaps (about 84% covered; yesterday's 69% was strict string matching).",
-  "Word-bank words (in no lesson) now come after the whole course; word sets can say afterUnit; the A1 gaps use 7. homeGameWords passes all lessons so unopened theme words (Elya's) never leak (#111).",
-  "Agent A: Skip (needs Claude) on write items; skipped/blank writes left out of the attempt; position-based consumers fixed; progress.py validate_review checks saved indexes (#112).",
-  "Agent E: 91 A1 gap cards + the 'A1 gaps' set (afterUnit 7).",
+  "A1 audit (scratchpad a1_audit.py): 539 of 683 Goethe A1 lemmas have their own card, 24 more are inside phrase cards, 26 are grammar words, 94 looked like gaps. That is about 84% covered; the night before's 69% was strict string matching.",
+  "Word-bank words (in no lesson) come after the whole course; word sets can say afterUnit, and the A1 gaps use 7. homeGameWords passes all lessons, so unopened theme words (Elya's Russian-meaning cards) never leak (#111).",
+  "Agent A: Skip (needs Claude) on write items; skipped and blank writes are left out of the attempt; position-based consumers fixed; progress.py validate_review checks saved indexes, tested with a gap (#112).",
+  "Agent E: 91 A1 gap cards and the 'A1 gaps' set (afterUnit 7).",
   "Agent C: 8 listening tests (u0-u7-hoeren, 81 items), speed: natural (rate 1), two voices for dialogue lines, kept off the Home path (161 stations unchanged) (#113).",
   "Agent B: Read page (#/read), content/readings.json with 20 texts (8 stories, 6 everyday, 6 facts, Units 0-3), r-<id> attempts as read status, reading-only words wait for 'Add' (#114).",
-  "Agent D: 'Read instead' notes for 129 captioned lesson videos (points, phrases with audio and popups, extra), video rows UI, 49 + 32 glossary fixes (#115).",
-  "Merges: words.json (5 duplicate ids between A1 gaps and readings, same meanings, kept the A1 cards), glossary.json three-way per key (2 same-meaning clashes kept ours), glossary.generated regenerated, german.ts and check-taught combined. Final: check-content OK, 43 tests, 1180 words, 3578 glossary entries, 626 vitest, build 0.",
-  "kachayt tasks for today added the night before (A1 audit, listening, video notes, skippable writing, stories interview).",
+  "Agent D: 'Read instead' notes for 129 captioned lesson videos (points, phrases with audio and popups, extra), a video-row UI, and 49 + 32 glossary fixes (#115).",
+  "Merges: words.json had 5 duplicate ids between the A1 gaps and the readings, with the same meanings, so the A1 cards were kept. glossary.json was merged three-way per key (2 same-meaning clashes kept ours); glossary.generated was regenerated each time; german.ts and check-taught were combined.",
+  "Quick review on request: sampled readings, listening and video notes; merge code consistent; nothing blocking.",
+  "Full proofread (3 reviewer agents in worktrees, ids and item order frozen).",
+  "Proofread, listening: 81 items, 9 fixes, e.g. a teacher counting herself in 'wir zwoelf Studenten', a voicemail about printing an unsent text, an implied answer, number-as-word notes on dictations.",
+  "Proofread, readings and cards: 20 texts, 12 fixed; 91 cards, 4 fixed. The Oktoberfest visitor claim was false (2016: 5.6 million) and its source was broken, so muenchen.de is the source now. 'Brot' also fit the Broetchen gap. Six questions were missing valid answers. Lena was a colleague, a wife and a sister at once. Kindergarten: an institute, not a school.",
+  "Proofread, video notes: 132 notes, 61 lines in 43 notes (the commit message says 41; a recount of changed notes gives 43). Wrong rules: du always -st, keine before any noun, Schmerzen always plural, irregular verbs change the vowel. Nebenkosten incl. electricity. 'Sprechen Sie Deutsch? - kein Englisch'. A2 marks added to match the course.",
+  "Glossary: 'englisch' curated (Wiktionary said 'English, rare').",
+  "Final state: check-content OK, 43 tests with 500 items, 1180 words, 3579 glossary entries + 39 ignored, 626 vitest, build 0. Live checks: Read (20 cards), video notes, the u3 listening test, 0 console errors.",
+  "kachayt: the five tasks of 10 Nov are marked done.",
 ]
 pending = [
-  "Hayk to play Say the words on the phone and send the 'Mic:' line from the end screen (restart reasons) - decides on Q49 (recording-based recognition).",
-  "Mark the five kachayt tasks of 10 Nov done after Hayk confirms.",
-  "Optional: 'Reading: <title>' as the source in All words; Oktoberfest 2026 dates in the Read page go stale next year.",
+  "Hayk to play Say the words on the phone and send the 'Mic:' line from the end screen (restart reasons): it decides Q49 (recording-based recognition).",
+  "Left as is after the proofread, for Hayk: Armenian alphabet 38 vs 39 letters; the Bogen card's plural 'die Boegen' (southern) vs standard 'die Bogen'; a video's 'Universitaet = Hochschule' claim; A2 grammar in passing phrases of a few video notes is not marked.",
+  "The Oktoberfest reading names the 2026 festival: refresh its numbers next year.",
+  "Optional: 'Reading: <title>' as the source in All words; more readings for Units 4+.",
 ]
 next = """
-Live-check Read, listening tests and video notes on the phone; then Units 11+ or more readings for Units 4+.
+Hayk tries the Read page, the listening tests and the video notes on the phone. Then the Mic line decides on the beeps; after that, Units 11+ or more readings.
 """
+files = [
+  "content/readings.json (new)",
+  "content/tests/u0-hoeren.json .. u7-hoeren.json (new)",
+  "content/lessons/*.json (videos[].notes in 53 lessons)",
+  "content/words.json, content/sets.json, content/glossary.json, content/glossary.generated.json, content/README.md",
+  "app/src/pages/ReadPage.tsx, app/src/lib/readings.ts, app/src/content/readings.ts, app/src/components/VideoList.tsx (new)",
+  "app/src/content/schema.ts, german.ts, validate.ts, load.ts; app/src/lib/plan.ts, grading.ts, mistakes.ts, speech.ts; app/src/pages/DailyPage.tsx, WordsPage.tsx, TestPage.tsx, HomePage.tsx, LessonsPage.tsx; app/src/components/ResultView.tsx, InlineExercise.tsx, Chrome.tsx",
+  "app/scripts/check-content.ts, content-files.ts, build-glossary.ts, non_essential/check-taught.ts",
+  "backend/scripts/progress.py (validate_review)",
+  "DECISIONS.md (#111-#115)",
+  "_learnings/2026-11-10-1500_agents-in-worktrees-need-node-modules-and-glossary-cache.md",
+]
+commits = [
+  "0b066e8 word bank after the course",
+  "b8f9f56 + bb23fe7 + 617fe2f skippable writing tasks",
+  "f2472fc + 0198426 + c2a60eb A1 gaps, afterUnit 7",
+  "6958ed4 + 459a52c + 8e003d8 listening tests",
+  "d4aaa98 + 19a9d57 + 42c4df3 Read page",
+  "83835b2 + 105ab7b + 65091c3 video notes",
+  "e47739e session log and learning (first version of this file)",
+  "168da21 listening proofread",
+  "dea304f + f8da401 readings and A1 card proofread",
+  "e4c7844 glossary 'englisch'",
+  "f00efb2 + e9ffa32 video-notes proofread",
+]
 notes = """
-Agents in isolated worktrees need a node_modules junction (removed before finishing) and the glossary cache (.cache/kaikki, git-ignored) or `npm run glossary` refetches ~3000 words from kaikki.org (~40 min). Check worktrees for leftover junctions before removing them.
+Agents in isolated worktrees need a node_modules junction (removed before finishing) and the glossary cache (.cache/kaikki, git-ignored), or `npm run glossary` refetches ~3000 words from kaikki.org (~40 min). Check worktrees for leftover junctions before removing them. All worktrees and agent branches were removed at the end; only main remains. The 'modified' glossary.generated.json in git status is line endings only (autocrlf), no content change.
 """
