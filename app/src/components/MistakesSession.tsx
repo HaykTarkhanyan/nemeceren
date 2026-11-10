@@ -1,6 +1,7 @@
 // A Mistakes replay session (DECISIONS.md #81): the due mistakes one by one, each in its original
 // form. Every check is saved at once as a one-item attempt (content/lessons.ts redoTestId), so an
-// interrupted session keeps what was done. Write items wait for Claude's review like any writing.
+// interrupted session keeps what was done. Write items never come here (lib/mistakes.ts); a
+// translation that is not near a reference waits for Claude's review.
 import { useEffect, useRef, useState } from 'react'
 import type { Result } from '../content/schema.ts'
 import { lessonLabel, redoTestId } from '../content/lessons.ts'
@@ -19,7 +20,7 @@ import { ResultView } from './ResultView.tsx'
 export interface MistakeStats {
   right: number
   wrong: number
-  /** Write items waiting for Claude. */
+  /** Answers waiting for Claude (translations). */
   pending: number
 }
 

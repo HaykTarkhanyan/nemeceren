@@ -687,6 +687,19 @@ export const Review = z.strictObject({
 
 const Count = z.number().int().nonnegative()
 
+/** Item indices as runs, for messages: [0, 1, 2, 4] is "0-2, 4". */
+function indexRanges(indices: number[]): string {
+  const runs: string[] = []
+  const sorted = [...indices].sort((a, b) => a - b)
+  for (let i = 0; i < sorted.length; ) {
+    let j = i
+    while (j + 1 < sorted.length && sorted[j + 1] === sorted[j] + 1) j++
+    runs.push(j > i ? `${sorted[i]}-${sorted[j]}` : `${sorted[i]}`)
+    i = j + 1
+  }
+  return runs.length > 0 ? runs.join(', ') : 'none'
+}
+
 export const Result = z
   .strictObject({
     version: z.literal(1),
@@ -711,12 +724,14 @@ export const Result = z
       ctx.addIssue({ code: 'custom', path: ['section'], message: 'lessonId and section go together: set both or neither' })
     }
     const seen = new Set<number>()
+    // Item indices, not positions: left-out write items leave gaps (lib/grading.ts isLeftOut).
+    const indices = new Set(r.items.map((it) => it.index))
     r.review?.items.forEach((ri, i) => {
-      if (ri.index >= r.items.length) {
+      if (!indices.has(ri.index)) {
         ctx.addIssue({
           code: 'custom',
           path: ['review', 'items', i, 'index'],
-          message: `index ${ri.index} is out of range (this result has items 0-${r.items.length - 1})`,
+          message: `index ${ri.index} is out of range (this result has items ${indexRanges([...indices])})`,
         })
       }
       if (seen.has(ri.index)) {

@@ -34,6 +34,8 @@ function Attempt({ test, onRestart }: { test: Test; onRestart: () => void }) {
   const [layouts] = useState(() => test.items.map(initialLayout))
   const [answers, setAnswers] = useState<AnswerValue[]>(() => test.items.map(initialAnswer))
   const [hints, setHints] = useState<boolean[]>(() => test.items.map(() => false))
+  // Write items skipped with "Skip (needs Claude)": left out of the attempt (grading.ts isLeftOut).
+  const [skipped, setSkipped] = useState<boolean[]>(() => test.items.map(() => false))
   const [index, setIndex] = useState(0)
   const [result, setResult] = useState<Result | null>(null)
   const [save, setSave] = useState<SaveStatus | null>(null)
@@ -58,6 +60,16 @@ function Attempt({ test, onRestart }: { test: Test; onRestart: () => void }) {
 
   function setAnswer(value: AnswerValue) {
     setAnswers((prev) => prev.map((a, i) => (i === index ? value : a)))
+    // Typing into a skipped write item takes it back in.
+    if (skipped[index]) setSkipped((prev) => prev.map((s, i) => (i === index ? false : s)))
+  }
+
+  /** "Skip (needs Claude)" on a write item: moves on like Next (or submits on the last item). */
+  function skip() {
+    const next = skipped.map((s, i) => (i === index ? true : s))
+    setSkipped(next)
+    if (last) submit(next)
+    else goTo(index + 1)
   }
 
   // Keys (lib/keys.ts): 1-9 choose, Space plays (Shift+Space while typing), Enter = Next.
@@ -100,11 +112,11 @@ function Attempt({ test, onRestart }: { test: Test; onRestart: () => void }) {
     }
   }
 
-  function submit() {
-    const unanswered = answers.flatMap((a, i) => (isBlank(a) ? [i + 1] : []))
+  function submit(skippedNow: boolean[] = skipped) {
+    const unanswered = answers.flatMap((a, i) => (isBlank(a) && !skippedNow[i] ? [i + 1] : []))
     if (unanswered.length > 0 && !window.confirm(`Not answered yet: ${unanswered.join(', ')}. Submit anyway?`)) return
     leaveItem()
-    const items = resultItems(test.items, answers, times.current, hints, plays.current)
+    const items = resultItems(test.items, answers, times.current, hints, plays.current, skippedNow)
     const submitted = new Date()
     const r: Result = {
       version: 1,
@@ -150,9 +162,9 @@ function Attempt({ test, onRestart }: { test: Test; onRestart: () => void }) {
             <button
               key={i}
               type="button"
-              className={`dot ${i === index ? 'current' : ''} ${isBlank(answers[i]) ? '' : 'answered'}`}
+              className={`dot ${i === index ? 'current' : ''} ${skipped[i] ? 'skipped' : isBlank(answers[i]) ? '' : 'answered'}`}
               onClick={() => goTo(i)}
-              aria-label={`Go to item ${i + 1}`}
+              aria-label={`Go to item ${i + 1}${skipped[i] ? ' (skipped)' : ''}`}
             >
               {i + 1}
             </button>
@@ -175,6 +187,7 @@ function Attempt({ test, onRestart }: { test: Test; onRestart: () => void }) {
           }}
           numbered
         />
+        {skipped[index] && <p className="small muted">Skipped (needs Claude): not saved or scored. Type an answer to include it after all.</p>}
         {item.hint && (
           <div className="hint">
             {hints[index] ? (
@@ -191,6 +204,14 @@ function Attempt({ test, onRestart }: { test: Test; onRestart: () => void }) {
       </section>
       </GlossScope>
 
+      {/* Only Claude can grade writing; on the phone it can be skipped (Hayk, 2026-11-10). */}
+      {item.type === 'write' && (
+        <div className="row actions">
+          <button type="button" className="btn" onClick={skip}>
+            Skip (needs Claude)
+          </button>
+        </div>
+      )}
       <div className="row between">
         <button type="button" className="btn" disabled={index === 0} onClick={() => goTo(index - 1)}>
           Back
@@ -199,7 +220,7 @@ function Attempt({ test, onRestart }: { test: Test; onRestart: () => void }) {
           {index + 1} / {test.items.length}
         </span>
         {last ? (
-          <button type="button" className="btn primary" onClick={submit}>
+          <button type="button" className="btn primary" onClick={() => submit()}>
             Submit test
           </button>
         ) : (

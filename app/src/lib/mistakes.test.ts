@@ -103,17 +103,34 @@ describe('deriveMistakes', () => {
     expect(deriveMistakes(results, [rewritten], [lesson], at('2026-11-08'))).toMatchObject({ active: [], changed: 1 })
   })
 
-  it("waits for Claude's grade on a write item, and uses the review's verdict", () => {
+  it('never lists a write item, even one Claude graded wrong (only Claude can grade it)', () => {
     const write: Item = { type: 'write', prompt: 'Schreib über dich.' }
     const wtest: Test = { ...test, id: 'u1-t3-w', items: [write] }
     const pending = attempt('u1-t3-w', '2026-11-07', ['pending'], [write])
-    expect(deriveMistakes([pending], [wtest], [lesson], at('2026-11-08')).active).toEqual([])
     const graded = { ...pending, review: { gradedAt: new Date().toISOString(), summary: 's', items: [{ index: 0, correct: false, correction: 'Ich heiße Eva.' }] } }
-    const out = deriveMistakes([graded], [wtest], [lesson], at('2026-11-08'))
-    expect(out.due[0].correction).toBe('Ich heiße Eva.')
-    // A rewritten answer waiting for Claude: not due again the same day, back the next day, not fixed.
-    const rewrite = redo('u1-t3-w', 0, '2026-11-08', 'pending', write)
-    expect(deriveMistakes([graded, rewrite], [wtest], [lesson], at('2026-11-08')).due).toEqual([])
-    expect(deriveMistakes([graded, rewrite], [wtest], [lesson], at('2026-11-09')).due[0].rightDays).toBe(0)
+    expect(deriveMistakes([graded], [wtest], [lesson], at('2026-11-08'))).toMatchObject({ active: [], changed: 0 })
+  })
+
+  it("waits for Claude's grade on a translation, and uses the review's verdict and correction", () => {
+    const tr: Item = { type: 'translate', direction: 'en-de', text: 'My name is Eva.', references: ['Ich heiße Eva.'] }
+    const ttest: Test = { ...test, id: 'u1-t3-t', items: [tr] }
+    const pending = attempt('u1-t3-t', '2026-11-07', ['pending'], [tr])
+    expect(deriveMistakes([pending], [ttest], [lesson], at('2026-11-08')).active).toEqual([])
+    const graded = { ...pending, review: { gradedAt: new Date().toISOString(), summary: 's', items: [{ index: 0, correct: false, correction: 'Ich heiße Eva.' }] } }
+    expect(deriveMistakes([graded], [ttest], [lesson], at('2026-11-08')).due[0].correction).toBe('Ich heiße Eva.')
+    // A redone answer waiting for Claude: not due again the same day, back the next day, not fixed.
+    const again = redo('u1-t3-t', 0, '2026-11-08', 'pending', tr)
+    expect(deriveMistakes([graded, again], [ttest], [lesson], at('2026-11-08')).due).toEqual([])
+    expect(deriveMistakes([graded, again], [ttest], [lesson], at('2026-11-09')).due[0].rightDays).toBe(0)
+  })
+
+  it('keys items by their index when a skipped write item left a gap in the attempt', () => {
+    const write: Item = { type: 'write', prompt: 'Schreib über dich.' }
+    const wtest: Test = { ...test, items: [gap, write, mc] }
+    const base = attempt('u1-t1-x', '2026-11-07', ['correct', 'wrong'], [gap, mc])
+    const gapped: Result = { ...base, items: [base.items[0], { ...base.items[1], index: 2 }] }
+    const out = deriveMistakes([gapped], [wtest], [lesson], at('2026-11-08'))
+    expect(out.due.map((m) => m.key)).toEqual(['u1-t1-x#2'])
+    expect(out.due[0].item).toBe(mc)
   })
 })

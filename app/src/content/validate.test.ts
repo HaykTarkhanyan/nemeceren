@@ -145,7 +145,22 @@ describe('result review validation', () => {
     const p = problemsOf(() =>
       parseResult('r.json', { ...result, review: { gradedAt: '2026-09-28T12:00:00Z', summary: 's', items: [{ index: 3, correct: true }] } }),
     )
-    expect(p).toEqual(['r.json: review.items[0].index: index 3 is out of range (this result has items 0-0)'])
+    expect(p).toEqual(['r.json: review.items[0].index: index 3 is out of range (this result has items 0)'])
+  })
+
+  it('takes review indices of a result whose skipped write items were left out', () => {
+    const item = result.items[0]
+    const gapped = {
+      ...result,
+      score: { correct: 0, wrong: 0, pending: 2, total: 2 },
+      items: [item, { ...item, index: 3 }],
+    }
+    const r = parseResult('r.json', { ...gapped, review: { gradedAt: '2026-09-28T12:00:00Z', summary: 's', items: [{ index: 3, correct: true }] } })
+    expect(r.review?.items[0].index).toBe(3)
+    const p = problemsOf(() =>
+      parseResult('r.json', { ...gapped, review: { gradedAt: '2026-09-28T12:00:00Z', summary: 's', items: [{ index: 1, correct: true }] } }),
+    )
+    expect(p).toEqual(['r.json: review.items[0].index: index 1 is out of range (this result has items 0, 3)'])
   })
 })
 
