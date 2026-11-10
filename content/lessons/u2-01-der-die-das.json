@@ -12,8 +12,46 @@
   ],
   "nicosWeg": [{ "title": "Nicos Weg A1, chapter 5: Things (Was ist das?, Wem gehört das?)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }],
   "videos": [
-    {"id": "b2feLAJX9gI", "title": "der, die, das", "minutes": 8},
-    {"id": "y-aMTFMffDA", "title": "The nominative", "minutes": 6}
+    {"id": "b2feLAJX9gI", "title": "der, die, das", "minutes": 8, "notes": {
+      "points": [
+        "The subject of a sentence is in the nominative case, and it decides the verb's ending: [[Sabine ist ledig.]], [[Das Haus ist groß.]]",
+        "To find the subject, ask [[Wer?]] (who) for a person and [[Was?]] (what) for a thing.",
+        "Every noun has an article in front of it and starts with a capital letter, names and ordinary nouns alike.",
+        "German has three kinds of article: definite ([[der]], [[die]], [[das]]: the), indefinite ([[ein]], [[eine]]: a) and negative ([[kein]], [[keine]]: no, not a). This video is about the definite ones.",
+        "[[der]] is masculine ([[der Mann]]), [[die]] feminine ([[die Frau]]), [[das]] neuter ([[das Baby]]). Whether the noun is a person or a thing makes no difference.",
+        "In the plural the article is always [[die]], whatever the gender: [[die Männer]], [[die Frauen]], [[die Babys]].",
+        "Memory trick: der ends in r, die in e, das in s, like the pronouns that replace them: [[er]], [[sie]], [[es]]."
+      ],
+      "phrases": [
+        {"de": "Sabine ist ledig.", "en": "Sabine is single."},
+        {"de": "Das Haus ist groß.", "en": "The house is big."},
+        {"de": "Wer ist das? Das ist Peter.", "en": "Who is that? That's Peter."},
+        {"de": "Was ist das? Das ist ein Haus.", "en": "What is that? That's a house."},
+        {"de": "Die Frau trinkt Wein.", "en": "The woman is drinking wine."},
+        {"de": "Das Baby ist süß.", "en": "The baby is sweet."},
+        {"de": "der Mann, die Männer", "en": "the man, the men"},
+        {"de": "die Frau, die Frauen", "en": "the woman, the women"},
+        {"de": "das Baby, die Babys", "en": "the baby, the babies"}
+      ]
+    }},
+    {"id": "y-aMTFMffDA", "title": "The nominative", "minutes": 6, "notes": {
+      "points": [
+        "The subject is in the nominative, and the verb is conjugated to match it.",
+        "Find it with a question: [[Wer?]] for a person, [[Was?]] for a thing. In [[Der Bus ist groß.]], what is big? [[der Bus]]: that is the nominative.",
+        "The subject can be a noun or a pronoun, singular or plural.",
+        "A few verbs take only the nominative, never an object: [[sein]], [[werden]] (to become) and [[bleiben]] (to stay).",
+        "Jobs after these verbs come without an article: [[Ich bin Ingenieur.]], [[Sie wird Ärztin.]] [[werden]] is also used for turning an age: [[Ich werde dreißig.]]"
+      ],
+      "phrases": [
+        {"de": "Sabine ist ledig.", "en": "Sabine is single."},
+        {"de": "Der Bus ist groß.", "en": "The bus is big."},
+        {"de": "Ich bin Ingenieur.", "en": "I'm an engineer."},
+        {"de": "Sie wird Ärztin.", "en": "She's going to be a doctor."},
+        {"de": "Ich werde dreißig.", "en": "I'm turning thirty."},
+        {"de": "Er bleibt zu Hause.", "en": "He's staying at home."}
+      ],
+      "extra": "The verbs [[werden]] (to become) and [[bleiben]] (to stay), which take only the nominative."
+    }}
   ],
   "words": ["tisch", "stuhl", "computer", "laptop", "handy", "buch", "stift", "heft", "tasche", "lampe", "fenster", "tuer", "schluessel", "uhr"],
   "sections": [

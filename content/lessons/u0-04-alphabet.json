@@ -12,7 +12,26 @@
   ],
   "nicosWeg": [{ "title": "Nicos Weg A1: Welcome to A1 (Von A bis Z)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }],
   "videos": [
-    {"id": "HCytWm3RC9g", "title": "The alphabet", "minutes": 11}
+    {"id": "HCytWm3RC9g", "title": "The alphabet", "minutes": 11, "notes": {
+      "points": [
+        "German has the 26 letters of English, said differently, plus **ä**, **ö**, **ü** (the two dots are the umlaut) and **ß**: 30 in all.",
+        "The video gives a word for each letter, from [[Apfel]] and [[Banane]] to [[Zebra]]. Saying the letter with its word helps you remember both.",
+        "Letters that trip up English speakers: **J** sounds like English y ([[Joghurt]]), **V** like f ([[Vogel]]), **W** like English v ([[Wolke]]), **Z** like ts ([[Zebra]]).",
+        "**ä** sounds like the e in 'bed': [[Bär]] (bear).",
+        "**ß** (eszett) is a sharp double s: [[Fuß]] (foot). No word starts with it."
+      ],
+      "phrases": [
+        {"de": "das Alphabet", "en": "the alphabet"},
+        {"de": "der Apfel", "en": "the apple"},
+        {"de": "der Igel", "en": "the hedgehog"},
+        {"de": "der Joghurt", "en": "the yoghurt (J sounds like y)"},
+        {"de": "der Vogel", "en": "the bird (V sounds like f)"},
+        {"de": "die Wolke", "en": "the cloud (W sounds like v)"},
+        {"de": "das Zebra", "en": "the zebra (Z sounds like ts)"},
+        {"de": "der Bär", "en": "the bear"},
+        {"de": "der Fuß", "en": "the foot"}
+      ]
+    }}
   ],
   "words": ["buchstabieren", "name", "buchstabe"],
   "tests": ["u0-t2-ueberleben-alphabet"],

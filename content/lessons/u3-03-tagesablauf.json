@@ -14,9 +14,72 @@
     { "title": "Nicos Weg A1, chapter 7: Days and times (Tageszeiten, Emmas Wochenende)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
   ],
   "videos": [
-    {"id": "le-mSvX_Ekk", "title": "Separable verbs", "minutes": 11},
-    {"id": "L7-SK1cA1kQ", "title": "Daily routine", "minutes": 12},
-    {"id": "2NVX508SlkY", "title": "25 separable verbs", "minutes": 12}
+    {"id": "le-mSvX_Ekk", "title": "Separable verbs", "minutes": 11, "notes": {
+      "points": [
+        "A separable verb ([[ein trennbares Verb]]) is a normal verb with a prefix, and the prefix changes the meaning: [[stehen]] (to stand), [[aufstehen]] (to get up); [[gehen]] (to go), [[losgehen]] (to set off).",
+        "In a statement the verb part is conjugated and stands in second place; the prefix goes to the very end: [[Ich stehe um sechs Uhr auf.]]",
+        "The same in a W-question ([[Wann stehst du auf?]]). In a yes/no question the verb comes first and the prefix still goes last: [[Kommst du mit?]]",
+        "With a modal verb the modal is conjugated in second place, and the separable verb waits at the end in one piece, unconjugated: [[Ich muss um sechs Uhr aufstehen.]]",
+        "The verb part is conjugated as usual, irregular ones included: [[anfangen]], [[es fängt an]]; [[fernsehen]], [[er sieht fern]]; [[einladen]], [[sie lädt ein]].",
+        "Everyday ones from the video: [[mitkommen]], [[mitbringen]], [[ankommen]], [[anrufen]], [[anfangen]], [[fernsehen]], [[einladen]]."
+      ],
+      "phrases": [
+        {"de": "Ich stehe um sechs Uhr auf.", "en": "I get up at six."},
+        {"de": "Wann stehst du auf?", "en": "When do you get up?"},
+        {"de": "Kommst du mit?", "en": "Are you coming along?"},
+        {"de": "Bringst du bitte Milch mit?", "en": "Will you bring some milk, please?"},
+        {"de": "Ich muss um sechs Uhr aufstehen.", "en": "I have to get up at six."},
+        {"de": "Der Film fängt um acht an.", "en": "The film starts at eight."},
+        {"de": "Sie lädt uns ein.", "en": "She's inviting us."},
+        {"de": "Wir sehen fern.", "en": "We're watching TV."}
+      ]
+    }},
+    {"id": "L7-SK1cA1kQ", "title": "Daily routine", "minutes": 12, "notes": {
+      "points": [
+        "The video tells a whole day in German: [[der Tagesablauf]], the daily routine.",
+        "Start with the time and keep the verb second: [[Um sieben Uhr dusche ich.]] Link the steps with [[dann]] and [[danach]] (after that).",
+        "Separable verbs keep coming up: [[aufstehen]], [[aufwachen]], [[vorbereiten]], [[anfangen]], [[zurückfahren]], [[zubereiten]], [[fernsehen]], [[einschlafen]].",
+        "Meals: [[frühstücken]], [[zu Mittag essen]], [[zu Abend essen]]. Don't double it: 'Zum Mittag esse ich zu Mittag' is wrong.",
+        "Getting there: [[Ich laufe zur Uni.]], [[Ich fahre mit dem Bus zur Arbeit.]], [[Ich fahre mit der Bahn zur Schule.]]",
+        "Getting ready: [[Ich putze mir die Zähne.]], [[Ich wasche mich.]], [[Ich ziehe mich an.]] (get dressed); at night [[Ich ziehe mich aus.]]"
+      ],
+      "phrases": [
+        {"de": "Der Wecker klingelt um sechs Uhr.", "en": "The alarm goes off at six."},
+        {"de": "Ich gehe ins Badezimmer und putze mir die Zähne.", "en": "I go to the bathroom and brush my teeth."},
+        {"de": "Um sieben Uhr dusche ich und ziehe mich an.", "en": "At seven I shower and get dressed."},
+        {"de": "Ich bereite das Frühstück vor.", "en": "I make breakfast."},
+        {"de": "Um Viertel vor acht fahre ich mit dem Bus zur Arbeit.", "en": "At a quarter to eight I take the bus to work."},
+        {"de": "Um dreizehn Uhr ist Mittagspause.", "en": "At 1 pm there's the lunch break."},
+        {"de": "Um sechzehn Uhr mache ich eine Kaffeepause.", "en": "At 4 pm I have a coffee break."},
+        {"de": "Um zwanzig Uhr esse ich zu Abend.", "en": "At 8 pm I have dinner."},
+        {"de": "Danach sehe ich fern.", "en": "After that I watch TV."},
+        {"de": "Um halb elf gehe ich ins Bett und schlafe ein.", "en": "At half past ten I go to bed and fall asleep."}
+      ],
+      "extra": "Getting ready ([[sich anziehen]], [[sich waschen]], [[sich die Zähne putzen]]), which the lesson leaves out."
+    }},
+    {"id": "2NVX508SlkY", "title": "25 separable verbs", "minutes": 12, "notes": {
+      "points": [
+        "25 separable verbs, each in a sentence. The verb part stands second and the prefix goes to the end; with a modal verb, the whole verb goes to the end.",
+        "Learn them in opposite pairs: [[anfangen]] / [[aufhören]] (start / stop), [[abfahren]] / [[ankommen]] (leave / arrive), [[einschalten]] / [[ausschalten]] (switch on / off), [[aufmachen]] / [[zumachen]] (open / close), [[einschlafen]] / [[aufwachen]] (fall asleep / wake up).",
+        "Daily life: [[aufstehen]], [[einkaufen]], [[vorbereiten]], [[sauber machen]] (to clean), [[fernsehen]], [[ausgehen]] (go out), [[zurückkommen]].",
+        "With people: [[mitkommen]], [[mitmachen]] (join in), [[abholen]] (pick up), [[anrufen]], [[zuhören]] (listen), [[aufpassen]] (watch out), [[vorschlagen]] (suggest).",
+        "[[aussehen]] (to look) gives a common compliment: [[Heute siehst du wunderschön aus.]]",
+        "Several are irregular in the verb part: [[fahren]], [[fangen]], [[sehen]]: [[er fährt ab]], [[es fängt an]], [[du siehst aus]]."
+      ],
+      "phrases": [
+        {"de": "Ich fahre nach Hause. Kommst du mit?", "en": "I'm going home. Are you coming?"},
+        {"de": "Meine Frau holt das Kind von der Schule ab.", "en": "My wife picks the child up from school."},
+        {"de": "Der Zug fährt um sechzehn Uhr ab.", "en": "The train leaves at 4 pm."},
+        {"de": "Die Prüfung hört um vierzehn Uhr auf.", "en": "The exam ends at 2 pm."},
+        {"de": "Kannst du das Licht einschalten?", "en": "Can you switch the light on?"},
+        {"de": "Es ist warm. Kannst du das Fenster aufmachen?", "en": "It's warm. Can you open the window?"},
+        {"de": "Ich rufe dich heute Abend an.", "en": "I'll call you this evening."},
+        {"de": "Heute siehst du wunderschön aus.", "en": "You look beautiful today."},
+        {"de": "Pass auf! Hier ist es rutschig.", "en": "Watch out! It's slippery here."},
+        {"de": "Wann kommst du aus dem Urlaub zurück?", "en": "When are you coming back from your holiday?"}
+      ],
+      "extra": "Many more separable verbs than the lesson's, for example [[aufhören]], [[einschalten]], [[aufpassen]], [[vorschlagen]], [[mitmachen]]."
+    }}
   ],
   "words": ["aufstehen", "anrufen", "einkaufen", "anfangen", "aufhoeren", "mitkommen", "fernsehen", "abholen", "fruehstuecken", "kochen", "schlafen", "spielen", "pause", "feierabend", "frueh", "zuerst", "dann", "gehen", "nach-hause"],
   "sections": [

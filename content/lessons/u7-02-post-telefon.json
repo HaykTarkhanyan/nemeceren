@@ -11,9 +11,69 @@
     "Understand voicemail and a busy line"
   ],
   "videos": [
-    {"id": "8vLRrKgOkD0", "title": "At the post office", "minutes": 10},
-    {"id": "YhURm1cnQww", "title": "On the phone", "minutes": 10},
-    {"id": "PuuhDb7UHFc", "title": "telefonieren or anrufen?", "minutes": 4}
+    {"id": "8vLRrKgOkD0", "title": "At the post office", "minutes": 10, "notes": {
+      "points": [
+        "Look for the yellow Deutsche Post sign: [[die Post]] or [[die Postfiliale]]. Many are counters inside other shops.",
+        "People: [[der Schalter]] (counter), [[der Briefträger]], [[die Briefträgerin]] (postman, postwoman), [[der Paketbote]] (parcel courier).",
+        "Letters: [[der Brief]], [[der Umschlag]] (envelope), [[die Briefmarke]] (stamp), [[die Postkarte]], [[der Briefkasten]] (post box). Stick on a stamp ([[aufkleben]]) and post it ([[abschicken]]).",
+        "Parcels: [[das Paket]], a small one is [[das Päckchen]]. Fill in a label with [[der Absender]] (sender) and [[der Empfänger]] (recipient).",
+        "A registered letter is [[das Einschreiben]]: [[einen Brief per Einschreiben schicken]]. You get a tracking number ([[die Sendungsnummer]]) to follow it online.",
+        "Collecting stamps is a hobby with its own word: [[Briefmarken sammeln]]."
+      ],
+      "phrases": [
+        {"de": "Ich hätte gern zehn Briefmarken.", "en": "I'd like ten stamps, please."},
+        {"de": "Ich hätte gern eine Briefmarke für einen Brief nach Armenien.", "en": "I'd like a stamp for a letter to Armenia."},
+        {"de": "Ich möchte dieses Paket nach London schicken.", "en": "I'd like to send this parcel to London."},
+        {"de": "Wie viel kostet ein Brief nach London?", "en": "How much is a letter to London?"},
+        {"de": "Ich möchte diesen Brief per Einschreiben schicken.", "en": "I'd like to send this letter by registered mail."},
+        {"de": "Wie lange braucht ein Paket nach London?", "en": "How long does a parcel to London take?"},
+        {"de": "der Absender, der Empfänger", "en": "the sender, the recipient"},
+        {"de": "der Briefkasten", "en": "the post box, the letter box"}
+      ],
+      "extra": "[[das Einschreiben]], [[die Sendungsnummer]], and [[Absender]] and [[Empfänger]] on a parcel label."
+    }},
+    {"id": "YhURm1cnQww", "title": "On the phone", "minutes": 10, "notes": {
+      "points": [
+        "Germans often answer the phone with just their surname: [[Müller.]] A company says its name and yours: [[Firma Müller, Sarah Schmidt am Apparat. Was kann ich für Sie tun?]]",
+        "Say who you are: with friends [[Hallo Max, hier ist Anna.]]; formally [[Guten Tag, mein Name ist Anna Bachmann.]]",
+        "Asking for someone: [[Ist Frau Maier da?]], [[Kann ich bitte mit Frau Maier sprechen?]], [[Könnten Sie mich mit Herrn Maier verbinden?]] (put me through) The answer: [[Einen Moment bitte, ich verbinde Sie.]]",
+        "When they're not there: [[Sie ist in einer Besprechung.]] (in a meeting), [[Er ist auf Geschäftsreise.]] Then: [[Möchten Sie eine Nachricht hinterlassen?]] or [[Kann ich ihr etwas ausrichten?]] (pass on a message)",
+        "Leaving a message: [[Sagen Sie ihr bitte, sie soll mich zurückrufen.]] The reply: [[Ich richte es aus.]]",
+        "Didn't understand? Asking twice is normal: [[Können Sie das bitte wiederholen?]], [[Können Sie das bitte buchstabieren?]], [[Können Sie bitte etwas langsamer sprechen?]]",
+        "Ending the call: [[Vielen Dank für Ihre Hilfe.]], [[Ich wünsche Ihnen einen schönen Tag.]], [[Auf Wiederhören!]] (on the phone, never Auf Wiedersehen)"
+      ],
+      "phrases": [
+        {"de": "Guten Tag, hier ist Anna Bachmann.", "en": "Hello, this is Anna Bachmann."},
+        {"de": "Kann ich bitte mit Frau Maier sprechen?", "en": "Can I speak to Ms Maier, please?"},
+        {"de": "Einen Moment bitte, ich verbinde Sie.", "en": "One moment, please, I'll put you through."},
+        {"de": "Sie ist in einer Besprechung.", "en": "She's in a meeting."},
+        {"de": "Möchten Sie eine Nachricht hinterlassen?", "en": "Would you like to leave a message?"},
+        {"de": "Kann ich ihr etwas ausrichten?", "en": "Can I give her a message?"},
+        {"de": "Sagen Sie ihr bitte, sie soll mich zurückrufen.", "en": "Please tell her to call me back."},
+        {"de": "Können Sie das bitte buchstabieren?", "en": "Could you spell that, please?"},
+        {"de": "Ich wünsche Ihnen einen schönen Tag.", "en": "Have a nice day."},
+        {"de": "Auf Wiederhören!", "en": "Goodbye! (on the phone)"}
+      ],
+      "extra": "Business calls: [[am Apparat]], [[verbinden]], [[ausrichten]], [[eine Nachricht hinterlassen]]."
+    }},
+    {"id": "PuuhDb7UHFc", "title": "telefonieren or anrufen?", "minutes": 4, "notes": {
+      "points": [
+        "[[telefonieren]] is the conversation itself: talking on the phone. It takes [[mit]], not a direct object: [[Ich telefoniere jeden Abend mit meiner Mutter.]]",
+        "[[anrufen]] is the act of calling someone. It is separable and takes the accusative: [[Du kannst mich jederzeit anrufen.]] A company: [[bei der Bank anrufen]].",
+        "Compare: [[Ich habe dich angerufen, aber du warst nicht da.]] (I called) and [[Ich wollte mit dir telefonieren, aber du warst nicht da.]] (I wanted to talk to you).",
+        "In Switzerland [[telefonieren]] can take a dative: [[Ich habe dir telefoniert.]] In Germany that sounds wrong."
+      ],
+      "phrases": [
+        {"de": "Ich telefoniere jeden Abend mit meiner Mutter.", "en": "I talk to my mother on the phone every evening."},
+        {"de": "Wir haben gestern über zwei Stunden telefoniert.", "en": "We talked on the phone for over two hours yesterday."},
+        {"de": "Er telefoniert gerade mit seiner Freundin.", "en": "He's on the phone with his girlfriend."},
+        {"de": "Du kannst mich jederzeit anrufen.", "en": "You can call me any time."},
+        {"de": "Dein Bruder ruft an. Willst du rangehen?", "en": "Your brother is calling. Do you want to answer?"},
+        {"de": "Ich muss bei der Bank anrufen.", "en": "I have to call the bank."},
+        {"de": "Kannst du mich morgen noch mal anrufen?", "en": "Can you call me again tomorrow?"},
+        {"de": "In einer fremden Sprache zu telefonieren ist schwierig.", "en": "Talking on the phone in a foreign language is hard."}
+      ]
+    }}
   ],
   "words": ["post", "brief", "briefmarke", "paket", "absender", "empfaenger", "telefon", "anruf", "anrufbeantworter", "vorwahl", "besetzt", "internet", "foto"],
   "tests": ["u7-t1-formulare-post"],

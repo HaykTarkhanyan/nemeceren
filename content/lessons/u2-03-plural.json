@@ -11,7 +11,28 @@
     "Count things: zwei Stühle, drei Bücher"
   ],
   "videos": [
-    {"id": "vrtiiKzFakI", "title": "Building plurals", "minutes": 7}
+    {"id": "vrtiiKzFakI", "title": "Building plurals", "minutes": 7, "notes": {
+      "points": [
+        "In the plural the article is always [[die]]. The ending is what you have to learn.",
+        "-e or umlaut + -e: [[das Brot]], [[die Brote]]; [[der Tisch]], [[die Tische]]; [[die Hand]], [[die Hände]]; [[der Stuhl]], [[die Stühle]].",
+        "-er or umlaut + -er: [[das Kind]], [[die Kinder]]; [[das Kleid]], [[die Kleider]]; [[das Haus]], [[die Häuser]]; [[das Glas]], [[die Gläser]].",
+        "-s, mostly for international words: [[die Kamera]], [[die Kameras]]; [[das Auto]], [[die Autos]]. -n or -en: [[die Lampe]], [[die Lampen]] (words in -e take -n); [[die Uhr]], [[die Uhren]].",
+        "Umlaut only, or no change at all: [[der Apfel]], [[die Äpfel]]; [[der Mantel]], [[die Mäntel]]; [[das Fenster]], [[die Fenster]]; [[der Koffer]], [[die Koffer]].",
+        "Some nouns exist only in the plural: [[die Eltern]], [[die Leute]] (people). Some have no plural: [[die Zeit]], [[das Geld]].",
+        "Best habit: learn every noun with its article and its plural: [[der Tisch]], [[die Tische]]."
+      ],
+      "phrases": [
+        {"de": "der Tisch, die Tische", "en": "the table, the tables"},
+        {"de": "der Stuhl, die Stühle", "en": "the chair, the chairs"},
+        {"de": "das Glas, die Gläser", "en": "the glass, the glasses"},
+        {"de": "die Kamera, die Kameras", "en": "the camera, the cameras"},
+        {"de": "die Uhr, die Uhren", "en": "the clock, the clocks"},
+        {"de": "der Apfel, die Äpfel", "en": "the apple, the apples"},
+        {"de": "das Fenster, die Fenster", "en": "the window, the windows"},
+        {"de": "die Eltern", "en": "the parents (plural only)"}
+      ],
+      "extra": "Nouns with only a plural ([[die Eltern]], [[die Leute]]) and with no plural ([[die Zeit]], [[das Geld]])."
+    }}
   ],
   "words": ["ding", "viele"],
   "sections": [

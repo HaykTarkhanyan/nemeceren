@@ -14,10 +14,84 @@
     { "title": "Nicos Weg A1, chapter 14: Clothing (Mein Lieblingspulli, Das passt gut!)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
   ],
   "videos": [
-    {"id": "WCiRvSS8BHw", "title": "Clothes", "minutes": 10},
-    {"id": "trzgP5-zy84", "title": "Buying clothes", "minutes": 10},
-    {"id": "VI3VNRWKHiw", "title": "welch-", "minutes": 11},
-    {"id": "w_LJT0FZTYE", "title": "dies-", "minutes": 10}
+    {"id": "WCiRvSS8BHw", "title": "Clothes", "minutes": 10, "notes": {
+      "points": [
+        "[[die Kleidung]] (clothes) is singular. Learn each item with its article and plural.",
+        "Tops and dresses: [[das T-Shirt]], [[das Hemd]] (shirt), [[die Bluse]], [[der Pullover]], [[das Kleid]] (dress), [[der Rock]] (skirt), [[der Anzug]] (suit).",
+        "Trousers: [[die Hose]] is one pair of trousers, [[die Hosen]] several pairs. [[die Jeans]] stays the same; [[die Shorts]] is plural only.",
+        "Outdoors: [[die Jacke]], [[der Mantel]] (coat), [[der Schal]] (scarf), [[die Mütze]] (woolly hat), [[der Hut]] (hat), [[die Kappe]] (cap), [[der Handschuh]] (glove, literally 'hand shoe').",
+        "Feet: [[der Schuh]], [[der Stiefel]] (boot), [[die Socke]], [[die Badelatschen]] (pool sliders).",
+        "Extras: [[der Gürtel]] (belt), [[die Krawatte]] (tie), [[die Fliege]] (bow tie, also a fly), [[der Bikini]], [[die Badehose]] (swimming trunks)."
+      ],
+      "phrases": [
+        {"de": "das Hemd, die Hemden", "en": "the shirt, the shirts"},
+        {"de": "die Hose, die Hosen", "en": "the trousers (one pair, several pairs)"},
+        {"de": "der Rock, die Röcke", "en": "the skirt, the skirts"},
+        {"de": "der Mantel, die Mäntel", "en": "the coat, the coats"},
+        {"de": "die Mütze, die Mützen", "en": "the woolly hat, the hats"},
+        {"de": "der Handschuh, die Handschuhe", "en": "the glove, the gloves"},
+        {"de": "der Stiefel, die Stiefel", "en": "the boot, the boots"},
+        {"de": "der Gürtel", "en": "the belt"}
+      ],
+      "extra": "More clothes than the lesson's table: [[Anzug]], [[Gürtel]], [[Krawatte]], [[Badehose]], [[Fliege]]."
+    }},
+    {"id": "trzgP5-zy84", "title": "Buying clothes", "minutes": 10, "notes": {
+      "points": [
+        "In a department store ([[das Kaufhaus]]) the clothes are in sections ([[die Abteilung]]): [[die Damenabteilung]], [[die Herrenabteilung]], [[die Kinderabteilung]]. You try things on ([[anprobieren]]) in [[die Umkleidekabine]].",
+        "The shop assistant opens: [[Guten Tag, kann ich Ihnen helfen?]] You say what you want, in the accusative: [[Ich suche eine Hose.]], [[Ich brauche einen Mantel für meinen Vater.]]",
+        "They show you something: [[Wie gefällt Ihnen diese hier?]] Your answer: [[Diese gefällt mir gut.]] or [[Die Farbe gefällt mir leider nicht. Haben Sie eine andere?]]",
+        "Size: [[Welche Größe haben Sie?]] - [[Ich trage Größe 38.]] Then: [[Möchten Sie sie anprobieren?]], [[Wo ist die Umkleidekabine?]]",
+        "After trying it on: [[Sie passt gut.]] or [[Sie ist zu klein. Haben Sie eine Nummer größer?]]",
+        "Match the pronoun to the item: [[die Hose]] is [[sie]], [[der Pullover]] [[er]], [[das Hemd]] [[es]], plural [[die Schuhe]] [[sie]], with [[gefallen]] in the plural: [[Sie gefallen mir.]]"
+      ],
+      "phrases": [
+        {"de": "Ich suche eine Hose für eine Party.", "en": "I'm looking for trousers for a party."},
+        {"de": "Wie gefällt Ihnen diese hier?", "en": "How do you like this one?"},
+        {"de": "Die Farbe gefällt mir leider nicht.", "en": "Unfortunately I don't like the colour."},
+        {"de": "Welche Größe haben Sie?", "en": "What size are you?"},
+        {"de": "Kann ich sie anprobieren?", "en": "Can I try them on?"},
+        {"de": "Wo ist die Umkleidekabine?", "en": "Where's the fitting room?"},
+        {"de": "Sie ist zu klein. Haben Sie eine Nummer größer?", "en": "It's too small. Do you have a size bigger?"},
+        {"de": "Die Hose steht Ihnen gut.", "en": "The trousers suit you."},
+        {"de": "Gut, ich nehme die Hose. Was kostet sie?", "en": "Good, I'll take the trousers. How much are they?"}
+      ],
+      "extra": "[[eine Nummer größer]] or [[kleiner]], [[die Umkleidekabine]], and [[Das steht Ihnen gut.]]"
+    }},
+    {"id": "VI3VNRWKHiw", "title": "welch-", "minutes": 11, "notes": {
+      "points": [
+        "[[welcher]], [[welche]], [[welches]] mean which: you ask about one particular thing out of several.",
+        "The ending copies the definite article: [[der]] gives [[welcher]], [[die]] [[welche]], [[das]] [[welches]], plural [[die]] [[welche]].",
+        "It changes with the case like the article: accusative [[den]] gives [[welchen]] ([[Welchen Hut findest du schick?]]); dative [[dem]] gives [[welchem]], [[der]] gives [[welcher]], plural [[den]] gives [[welchen]].",
+        "The answer uses the definite article: [[Welches Buch ist interessant?]] - [[Das blaue.]] (The colour ending comes at A2; learn these answers as chunks.)"
+      ],
+      "phrases": [
+        {"de": "Welcher Hut ist schick? Der schwarze.", "en": "Which hat is smart? The black one."},
+        {"de": "Welchen Hut findest du schick?", "en": "Which hat do you think is smart?"},
+        {"de": "Welche Frau ist deine Kollegin?", "en": "Which woman is your colleague?"},
+        {"de": "Mit welcher Frau hast du gesprochen?", "en": "Which woman did you talk to?"},
+        {"de": "Welches Buch ist interessant? Das blaue.", "en": "Which book is interesting? The blue one."},
+        {"de": "In welchem Haus wohnst du?", "en": "Which house do you live in?"},
+        {"de": "Welche Blumen kaufen wir? Die gelben.", "en": "Which flowers shall we buy? The yellow ones."}
+      ]
+    }},
+    {"id": "w_LJT0FZTYE", "title": "dies-", "minutes": 10, "notes": {
+      "points": [
+        "[[dieser]], [[diese]], [[dieses]] mean this: you point at one particular thing. [[Ich finde dieses Kleid schön.]] sounds more pointed than [[das Kleid]].",
+        "Like [[welch-]], the ending copies the definite article: [[der]] gives [[dieser]], [[die]] [[diese]], [[das]] [[dieses]], plural [[diese]].",
+        "Accusative masculine: [[diesen]] ([[Wie finden Sie diesen Pullover?]]). Dative: [[diesem]] (masculine and neuter), [[dieser]] (feminine), [[diesen]] (plural, and the noun adds -n).",
+        "Without a noun it means 'this one': [[Diese gefällt mir.]]"
+      ],
+      "phrases": [
+        {"de": "Was kostet dieser Pullover?", "en": "How much is this jumper?"},
+        {"de": "Wie finden Sie diesen Pullover?", "en": "What do you think of this jumper?"},
+        {"de": "Diese Bluse ist wunderschön.", "en": "This blouse is beautiful."},
+        {"de": "Was passt zu dieser Bluse?", "en": "What goes with this blouse?"},
+        {"de": "Dieses Auto gefällt mir.", "en": "I like this car."},
+        {"de": "Willst du mit diesem Auto fahren?", "en": "Do you want to drive this car?"},
+        {"de": "Was kosten diese Schuhe?", "en": "How much are these shoes?"},
+        {"de": "In diesen Schuhen siehst du elegant aus.", "en": "You look elegant in these shoes."}
+      ]
+    }}
   ],
   "words": ["kleidung", "jacke", "hose", "hemd", "kleid", "pullover", "t-shirt", "schuh", "mantel", "anziehen", "ausziehen", "tragen", "groesse", "farbe", "gelb", "grau", "braun", "haar", "aussehen", "kurz", "lang"],
   "sections": [

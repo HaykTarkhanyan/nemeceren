@@ -16,8 +16,45 @@
     { "title": "Nicos Weg A1, chapter 8: Appointments (Wie spät ist es?)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
   ],
   "videos": [
-    {"id": "MQhR0AMNr_U", "title": "Official time", "minutes": 10},
-    {"id": "svbe7Q0FJlI", "title": "Everyday time", "minutes": 10}
+    {"id": "MQhR0AMNr_U", "title": "Official time", "minutes": 10, "notes": {
+      "points": [
+        "[[die Uhr]], [[die Uhren]] is both a clock and a watch.",
+        "Two ways to tell the time: the 24-hour clock is the official way (radio, airports, stations, appointments); the 12-hour clock is the everyday way with friends and family.",
+        "To ask: [[Wie spät ist es?]] or [[Wie viel Uhr ist es?]]",
+        "With the hour, say [[ein Uhr]], not 'eins Uhr'. Then [[zwei Uhr]], up to [[zwölf Uhr]], and on to [[dreizehn Uhr]], [[vierundzwanzig Uhr]].",
+        "Officially you read out the hour, then [[Uhr]], then the minutes: 15:45 is [[fünfzehn Uhr fünfundvierzig]]."
+      ],
+      "phrases": [
+        {"de": "Wie spät ist es?", "en": "What time is it?"},
+        {"de": "Wie viel Uhr ist es?", "en": "What time is it?"},
+        {"de": "Es ist ein Uhr.", "en": "It's one o'clock."},
+        {"de": "Es ist dreizehn Uhr.", "en": "It's 13:00."},
+        {"de": "Es ist neun Uhr zehn.", "en": "It's 9:10."},
+        {"de": "Es ist fünfzehn Uhr fünfundvierzig.", "en": "It's 15:45."},
+        {"de": "Es ist elf Uhr siebenundfünfzig.", "en": "It's 11:57."}
+      ]
+    }},
+    {"id": "svbe7Q0FJlI", "title": "Everyday time", "minutes": 10, "notes": {
+      "points": [
+        "The everyday time is rounded and uses the 12-hour clock, whether the clock shows 18:00 or 6:00: [[Es ist sechs.]] or [[Es ist sechs Uhr.]]",
+        "There is no am or pm: add [[morgens]], [[mittags]], [[nachmittags]], [[abends]] or [[nachts]] if it isn't clear. 12 at night is [[Mitternacht]].",
+        "[[nach]] = past, [[vor]] = to, [[Viertel]] = a quarter: [[fünf nach drei]], [[Viertel nach drei]], [[zwanzig vor vier]], [[Viertel vor vier]].",
+        "[[halb]] points to the next hour: [[halb zwei]] is 1:30. Around the half hour: [[fünf vor halb zwei]] (1:25), [[fünf nach halb zwei]] (1:35).",
+        "1 to 5 minutes from a full hour: [[kurz vor acht]], [[kurz nach acht]]. Just before: [[gleich acht]] or [[fast acht]].",
+        "In the east and south you may hear [[viertel drei]] (2:15) and [[dreiviertel drei]] (2:45). Many Germans elsewhere don't know them."
+      ],
+      "phrases": [
+        {"de": "Es ist Viertel nach drei.", "en": "It's a quarter past three."},
+        {"de": "Es ist zwanzig vor vier.", "en": "It's twenty to four."},
+        {"de": "Es ist halb zwei.", "en": "It's half past one."},
+        {"de": "Es ist fünf nach halb zwei.", "en": "It's 1:35."},
+        {"de": "Es ist kurz nach acht.", "en": "It's just after eight."},
+        {"de": "Es ist gleich acht.", "en": "It's almost eight."},
+        {"de": "Es ist Viertel vor neun.", "en": "It's a quarter to nine."},
+        {"de": "Es ist kurz vor halb elf.", "en": "It's just before half past ten."}
+      ],
+      "extra": "[[kurz vor]], [[kurz nach]], [[gleich]] and [[fast]] for times close to the hour, and the half-hour forms [[fünf vor halb]], [[fünf nach halb]]."
+    }}
   ],
   "words": ["wie-spaet-ist-es", "halb", "viertel", "vor", "nach", "um", "wann", "minute", "stunde", "jetzt", "spaet"],
   "sections": [

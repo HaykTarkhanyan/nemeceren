@@ -15,7 +15,29 @@
     { "title": "Nicos Weg A1, chapter 10: Orientation (Im Büro): objects in the office", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
   ],
   "videos": [
-    { "id": "GG5HjY1Fe2M", "title": "Computer and internet", "minutes": 10 }
+    { "id": "GG5HjY1Fe2M", "title": "Computer and internet", "minutes": 10, "notes": {
+      "points": [
+        "Hardware: [[der Computer]] or [[der Rechner]], [[der Laptop]], [[der Bildschirm]] or [[der Monitor]], [[die Tastatur]] (keyboard), [[die Taste]] (key), [[die Maus]], [[der Drucker]] (printer), [[die Festplatte]] (hard drive), [[der USB-Stick]], [[der Lautsprecher]] (speaker), [[der Kopfhörer]] (headphones).",
+        "The computer: [[einschalten]] or [[hochfahren]] (switch on, boot), [[ausschalten]] or [[herunterfahren]] (switch off, shut down). [[das Betriebssystem]] is the operating system.",
+        "Files and folders: [[die Datei]] (file), [[der Ordner]] (folder), [[das Programm]], [[das Fenster]] (window). You can [[speichern]] (save), [[löschen]] (delete), [[kopieren]], [[verschieben]] (move), [[herunterladen]] (download) and [[hochladen]] (upload).",
+        "Editing: [[ausschneiden]] (cut), [[kopieren]], [[einfügen]] (paste), [[bearbeiten]] (edit), [[installieren]].",
+        "Internet: [[im Internet surfen]], [[die Suchmaschine]] (search engine), [[die Webseite]], [[der Link]] ([[anklicken]], click), [[sich einloggen]] or [[sich anmelden]] (log in), [[sich abmelden]] (log out).",
+        "Email: [[das E-Mail-Konto]] (email account); an email can be [[beantworten]], [[weiterleiten]] (forward), [[öffnen]], [[löschen]]."
+      ],
+      "phrases": [
+        {"de": "die Tastatur, die Tastaturen", "en": "the keyboard, the keyboards"},
+        {"de": "der Drucker", "en": "the printer"},
+        {"de": "den Computer herunterfahren", "en": "to shut down the computer"},
+        {"de": "eine Datei speichern", "en": "to save a file"},
+        {"de": "eine Datei herunterladen", "en": "to download a file"},
+        {"de": "einen Ordner neu anlegen", "en": "to create a new folder"},
+        {"de": "eine E-Mail weiterleiten", "en": "to forward an email"},
+        {"de": "einen Link anklicken", "en": "to click a link"},
+        {"de": "eine Software installieren", "en": "to install software"},
+        {"de": "ausschneiden, kopieren, einfügen", "en": "cut, copy, paste"}
+      ],
+      "extra": "About 40 computer and internet words: hardware, files, editing, email."
+    } }
   ],
   "words": ["ab", "erledigen", "zeigen", "angebot", "vertrag", "pruefen", "beantworten", "unbedingt", "mitarbeiter", "mitarbeiterin", "ordner", "holen", "abschliessen", "datei", "speichern", "passwort", "aendern", "benutzen"],
   "sections": [

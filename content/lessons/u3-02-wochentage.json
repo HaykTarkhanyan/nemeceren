@@ -16,9 +16,65 @@
     { "title": "Nicos Weg A1, chapter 7: Days and times (Tageszeiten, Am Sonntag koche ich)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
   ],
   "videos": [
-    {"id": "JvltfZXGH1E", "title": "Days of the week", "minutes": 5},
-    {"id": "Qxy6h-lz0xk", "title": "Times of day", "minutes": 5},
-    {"id": "8MzsPJgpR7w", "title": "um, im or am?", "minutes": 10}
+    {"id": "JvltfZXGH1E", "title": "Days of the week", "minutes": 5, "notes": {
+      "points": [
+        "The days: [[Montag]], [[Dienstag]], [[Mittwoch]], [[Donnerstag]], [[Freitag]], [[Samstag]], [[Sonntag]]. All are der. In some regions Saturday is [[Sonnabend]].",
+        "Saturday and Sunday together are [[das Wochenende]], the weekend.",
+        "On a day: [[am Montag]], [[am Freitag]].",
+        "Every Monday: add -s and write it small: [[montags]], [[dienstags]], [[mittwochs]].",
+        "Two everyday phrases: [[Schönes Wochenende!]] and [[Was machst du am Wochenende?]]"
+      ],
+      "phrases": [
+        {"de": "der Montag, der Dienstag, der Mittwoch", "en": "Monday, Tuesday, Wednesday"},
+        {"de": "das Wochenende", "en": "the weekend"},
+        {"de": "am Samstag", "en": "on Saturday"},
+        {"de": "montags", "en": "on Mondays, every Monday"},
+        {"de": "Montags mache ich Sport.", "en": "On Mondays I do sport."},
+        {"de": "Schönes Wochenende!", "en": "Have a nice weekend!"},
+        {"de": "Was machst du am Wochenende?", "en": "What are you doing at the weekend?"},
+        {"de": "Ich gehe ins Kino.", "en": "I'm going to the cinema."}
+      ],
+      "extra": "[[montags]], [[dienstags]] ... for every Monday, Tuesday, and [[Sonnabend]] for Saturday."
+    }},
+    {"id": "Qxy6h-lz0xk", "title": "Times of day", "minutes": 5, "notes": {
+      "points": [
+        "Parts of the day: [[der Morgen]], [[der Vormittag]] (late morning), [[der Mittag]] (noon), [[der Nachmittag]], [[der Abend]], [[die Nacht]], [[die Mitternacht]].",
+        "Two ways to say when: [[am Abend]] or [[abends]], [[am Morgen]] or [[morgens]], [[am Nachmittag]] or [[nachmittags]]. The night is different: [[in der Nacht]] or [[nachts]], and [[um Mitternacht]].",
+        "Start a sentence with the time, and the verb still comes second: [[Am Abend gehe ich einkaufen.]]",
+        "Days and times join into one word: [[Sonntagmorgen]], [[Montagabend]].",
+        "Good wishes work the same way: [[Schönen Abend!]]"
+      ],
+      "phrases": [
+        {"de": "der Vormittag", "en": "the (late) morning"},
+        {"de": "der Nachmittag", "en": "the afternoon"},
+        {"de": "Am Abend gehe ich einkaufen.", "en": "In the evening I go shopping."},
+        {"de": "Abends spiele ich Gitarre.", "en": "In the evenings I play the guitar."},
+        {"de": "In der Nacht schlafe ich.", "en": "At night I sleep."},
+        {"de": "um Mitternacht", "en": "at midnight"},
+        {"de": "am Sonntagmorgen", "en": "on Sunday morning"},
+        {"de": "Schönen Abend!", "en": "Have a nice evening!"}
+      ]
+    }},
+    {"id": "8MzsPJgpR7w", "title": "um, im or am?", "minutes": 10, "notes": {
+      "points": [
+        "[[um]] goes with clock times, official and everyday: [[um neunzehn Uhr]], [[um halb zwölf]]. One part of the day takes it too: [[um Mitternacht]].",
+        "[[am]] (short for [[an dem]]) goes with dates ([[am siebzehnten November]]), days ([[am Sonntag]]), the weekend ([[am Wochenende]]) and parts of the day ([[am Abend]]).",
+        "Exceptions for the parts of the day: [[zu Mittag]] (at lunchtime), [[in der Nacht]], [[um Mitternacht]].",
+        "[[im]] (short for [[in dem]]) goes with months ([[im Januar]]) and seasons ([[im Sommer]]).",
+        "A year has no preposition, or [[im Jahr]]: [[Er ist 2010 in die USA geflogen.]] or [[im Jahr 2010]]. Never 'in 2010', as in English."
+      ],
+      "phrases": [
+        {"de": "Der Unterricht beginnt um vierzehn Uhr.", "en": "The class starts at 2 pm."},
+        {"de": "Die Pizzeria schließt um Mitternacht.", "en": "The pizzeria closes at midnight."},
+        {"de": "Ich habe am siebzehnten November eine Prüfung.", "en": "I have an exam on 17 November."},
+        {"de": "Am Wochenende fahren wir nach München.", "en": "At the weekend we're going to Munich."},
+        {"de": "In der Nacht gab es ein Gewitter.", "en": "There was a thunderstorm in the night."},
+        {"de": "Im Januar ist es in Deutschland sehr kalt.", "en": "In January it's very cold in Germany."},
+        {"de": "Im Sommer fliegen wir nach Japan.", "en": "In summer we're flying to Japan."},
+        {"de": "Der Film beginnt am Abend.", "en": "The film starts in the evening."}
+      ],
+      "extra": "Years: no preposition, or [[im Jahr]] plus the year."
+    }}
   ],
   "words": ["montag", "dienstag", "mittwoch", "donnerstag", "freitag", "samstag", "sonntag", "wochenende", "woche", "tag", "heute", "morgen", "morgen-2", "vormittag", "mittag", "nachmittag", "abend", "nacht", "am", "von", "bis", "geoeffnet", "geschlossen"],
   "tests": ["u3-t1-uhrzeit-tage"],

@@ -16,7 +16,26 @@
     { "title": "Nicos Weg A2, chapter 12: Working world (Berufswahl): denn", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519797" }
   ],
   "videos": [
-    { "id": "DWkaLIghET8", "title": "und, aber, oder, denn, sondern", "minutes": 14 }
+    { "id": "DWkaLIghET8", "title": "und, aber, oder, denn, sondern", "minutes": 14, "notes": {
+      "points": [
+        "Five conjunctions sit at 'position 0': [[und]], [[aber]], [[oder]], [[denn]], [[sondern]]. They join two main clauses without counting as a position, so the verb stays second in both.",
+        "[[und]] (and) and [[oder]] (or): when the subject (and verb) are the same, drop them in the second part: [[Ich esse einen Hamburger und trinke einen Saft.]], [[Ich nehme eine Pizza oder ein Sandwich.]]",
+        "[[aber]] (but) always gets a comma before it: [[Ich möchte eine Smartwatch kaufen, aber sie ist so teuer.]]",
+        "[[sondern]] (but rather) comes after a negative with [[nicht]] or [[kein]], with a comma: [[Das ist kein Buch, sondern eine Schokolade.]], [[Sie kommt nicht heute, sondern morgen.]]",
+        "[[denn]] (because) gives a reason, with a comma, and keeps its subject: [[Ich lerne Deutsch, denn ich will in Deutschland studieren.]]"
+      ],
+      "phrases": [
+        {"de": "Max fährt nach Berlin oder bleibt zu Hause.", "en": "Max is going to Berlin or staying at home."},
+        {"de": "Sprichst du Spanisch oder Französisch?", "en": "Do you speak Spanish or French?"},
+        {"de": "Ich nehme einen Kaffee und ein Sandwich.", "en": "I'll have a coffee and a sandwich."},
+        {"de": "Die Lehrerin ist nett, aber streng.", "en": "The teacher is nice, but strict."},
+        {"de": "Wir bleiben zu Hause, aber Eva geht ins Kino.", "en": "We're staying at home, but Eva is going to the cinema."},
+        {"de": "Ich kaufe das Geschenk nicht für mich, sondern für meine Mutter.", "en": "I'm not buying the present for me but for my mother."},
+        {"de": "Sie arbeitet heute nicht, denn sie ist krank.", "en": "She isn't working today because she's ill."},
+        {"de": "Ich bleibe nicht zu Hause, sondern gehe mit Freunden aus.", "en": "I'm not staying at home; I'm going out with friends."}
+      ],
+      "extra": "The 'position 0' rule for [[und]], [[aber]], [[oder]], [[denn]], [[sondern]]."
+    } }
   ],
   "words": ["denn", "verschlafen", "kalender", "voll", "training", "trainieren", "joggen", "verein", "gitarre", "ueben", "konzert", "mannschaft", "spiel", "besuch", "gerade", "einmal", "pro"],
   "tests": ["u9-t1-weil-denn"],

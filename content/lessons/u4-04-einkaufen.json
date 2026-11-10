@@ -14,10 +14,93 @@
     { "title": "Nicos Weg A1, chapter 12: Food (Mengen und Preise, Was darf es sein?, Sonst noch etwas?)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
   ],
   "videos": [
-    {"id": "B_muZm2XT8M", "title": "In the supermarket", "minutes": 14},
-    {"id": "qW4hWCRdvu0", "title": "Packaging at the supermarket", "minutes": 11},
-    {"id": "T1sXepKN5eQ", "title": "Getting by in a supermarket", "minutes": 7},
-    {"id": "BISRFfjDKfY", "title": "Numbers above 100", "minutes": 12}
+    {"id": "B_muZm2XT8M", "title": "In the supermarket", "minutes": 14, "notes": {
+      "points": [
+        "Words: [[der Supermarkt]], [[die Einkaufsliste]] (shopping list), [[der Einkaufswagen]] (trolley), [[der Einkaufskorb]] (basket), [[die Abteilung]] (section), [[die Kasse]] (checkout), [[der Kassierer]], [[die Kassiererin]], [[der Kunde]], [[die Kundin]], [[der Kassenbon]] or [[der Kassenzettel]] (receipt).",
+        "Going, being, coming back: [[Ich gehe zum Supermarkt.]], [[Ich bin im Supermarkt.]], [[Ich komme vom Supermarkt.]]",
+        "Buying: amount + product, no 'of', and the accusative for masculine words: [[Ich kaufe eine Dose Cola.]], [[Ich möchte einen Becher Joghurt und eine Tafel Schokolade.]]",
+        "Weights and volumes: [[das Kilo]], [[ein halbes Kilo]] (500 g), [[das Gramm]], [[das Pfund]] (500 g, less common); [[der Liter]], [[ein halber Liter]].",
+        "Can't find something? [[Entschuldigen Sie, wo finde ich hier Chips?]] - [[Chips finden Sie beim Knabberzeug.]] Other sections: [[bei den Getränken]], [[bei Obst und Gemüse]], [[bei der Tiefkühlkost]] (frozen food), [[bei den Backwaren]].",
+        "At the checkout: [[Das macht 25,10 Euro.]] - [[Bitte.]] When you leave: [[Einen schönen Tag!]] - [[Danke, ebenso.]] (you too)"
+      ],
+      "phrases": [
+        {"de": "Ich möchte ein Stück Käse kaufen.", "en": "I'd like to buy a piece of cheese."},
+        {"de": "Ich kaufe eine Packung Waschmittel.", "en": "I'm buying a packet of washing powder."},
+        {"de": "Ich kaufe eine Flasche Öl.", "en": "I'm buying a bottle of oil."},
+        {"de": "Ich möchte ein Glas Honig.", "en": "I'd like a jar of honey."},
+        {"de": "Ich möchte ein halbes Kilo Äpfel.", "en": "I'd like half a kilo of apples."},
+        {"de": "Ich kaufe einen Liter Milch.", "en": "I'm buying a litre of milk."},
+        {"de": "Entschuldigen Sie, wo finde ich hier Chips?", "en": "Excuse me, where can I find crisps here?"},
+        {"de": "Das macht 25,10 Euro.", "en": "That's 25.10 euros."},
+        {"de": "Einen schönen Tag! Danke, ebenso.", "en": "Have a nice day! Thanks, you too."}
+      ],
+      "extra": "Supermarket sections ([[Getränke]], [[Tiefkühlkost]], [[Backwaren]]) and [[Danke, ebenso.]]"
+    }},
+    {"id": "qW4hWCRdvu0", "title": "Packaging at the supermarket", "minutes": 11, "notes": {
+      "points": [
+        "[[die Verpackung]] means packaging. Each type goes with typical products, with no 'of' between them: [[eine Dose Cola]].",
+        "[[die Dose]] (can), [[die Flasche]] (bottle), [[das Glas]] (jar), [[die Tube]] (tube), [[der Becher]] (pot, tub), [[die Packung]] (packet, carton), [[die Tafel]] (bar, of chocolate).",
+        "[[der Beutel]] (bag, of rice or coffee), [[die Tüte]] (paper or plastic bag, of sweets or flour), [[das Netz]] (net, of onions or oranges), [[die Schale]] (punnet, of strawberries).",
+        "[[der Kasten]] (crate, of beer or water), [[die Schachtel]] (box, of chocolates), [[der Sechserpack]] (six-pack).",
+        "In a sentence, masculine packaging takes the accusative: [[Ich möchte einen Beutel Reis kaufen.]]",
+        "Supermarket flyers ([[der Prospekt]]) show the offers ([[das Angebot]]) with the packaging: good reading practice."
+      ],
+      "phrases": [
+        {"de": "eine Dose Tomaten", "en": "a can of tomatoes"},
+        {"de": "eine Flasche Wasser", "en": "a bottle of water"},
+        {"de": "ein Glas Marmelade", "en": "a jar of jam"},
+        {"de": "eine Tube Zahnpasta", "en": "a tube of toothpaste"},
+        {"de": "ein Becher Joghurt", "en": "a pot of yoghurt"},
+        {"de": "eine Packung Nudeln", "en": "a packet of pasta"},
+        {"de": "ein Kasten Wasser", "en": "a crate of water"},
+        {"de": "eine Schale Erdbeeren", "en": "a punnet of strawberries"},
+        {"de": "Ich möchte einen Beutel Reis kaufen.", "en": "I'd like to buy a bag of rice."}
+      ],
+      "extra": "About 15 kinds of packaging, with products for each."
+    }},
+    {"id": "T1sXepKN5eQ", "title": "Getting by in a supermarket", "minutes": 7, "notes": {
+      "points": [
+        "Germany's big supermarket chains include Lidl, Aldi, Rewe, Netto, Edeka, Penny and Kaufland.",
+        "Tip 1: you need a coin for the trolley: [[Du brauchst eine Münze für den Einkaufswagen.]]",
+        "Sections: [[Obst und Gemüse]], [[Milchprodukte]], [[Backwaren]] (bread), [[Fleisch und Wurst]], [[Tiefkühlprodukte]] (frozen), [[Getränke]], [[Haushaltswaren]], [[Süßwaren]] (sweets), [[Fertiggerichte]] (ready meals).",
+        "Useful words: [[das Sonderangebot]] (special offer), [[der Kassenzettel]] or [[der Bon]] (receipt), [[bar oder mit Karte zahlen]], [[das Leergut]] (empty bottles to return).",
+        "Tip 2: don't hesitate to ask. Start with [[Entschuldigen Sie bitte]], then your question.",
+        "At the checkout you pack your bags yourself, and you may be asked: [[Sammeln Sie Punkte?]] (loyalty points), [[Bar oder Karte?]], [[Möchten Sie eine Tüte?]] (bags cost extra)."
+      ],
+      "phrases": [
+        {"de": "Wo finde ich das Brot?", "en": "Where can I find the bread?"},
+        {"de": "Das Brot ist dort hinten neben dem Käse.", "en": "The bread is back there next to the cheese."},
+        {"de": "Haben Sie auch Wasser ohne Kohlensäure?", "en": "Do you also have still water?"},
+        {"de": "Kommen Sie mit, ich zeige es Ihnen.", "en": "Come with me, I'll show you."},
+        {"de": "Der Zucker ist im dritten Gang neben dem Mehl.", "en": "The sugar is in the third aisle next to the flour."},
+        {"de": "Kann ich mit Karte zahlen?", "en": "Can I pay by card?"},
+        {"de": "Wie möchten Sie zahlen? Bar oder Karte?", "en": "How would you like to pay? Cash or card?"},
+        {"de": "Möchten Sie eine Tüte?", "en": "Would you like a bag?"},
+        {"de": "Das macht zusammen 18,60 Euro.", "en": "That's 18.60 euros altogether."}
+      ],
+      "extra": "Supermarket habits: a coin for the trolley, packing your own bags, loyalty points, [[Leergut]], and [[Wasser ohne Kohlensäure]] (still water)."
+    }},
+    {"id": "BISRFfjDKfY", "title": "Numbers above 100", "minutes": 12, "notes": {
+      "points": [
+        "Hundreds and thousands are the number plus [[hundert]] or [[tausend]]: [[zweihundert]], [[sechshundert]], [[dreitausend]]. 100 is [[hundert]] or [[einhundert]].",
+        "A number is one word, however long: 634 is [[sechshundertvierunddreißig]] (hundreds, then ones, then tens).",
+        "Germans group thousands with a point, not a comma: 11.000 is [[elftausend]]. The comma is the decimal mark: 2,50 €.",
+        "Big numbers: [[hunderttausend]], [[eine Million]], plural [[zwei Millionen]]; [[eine Milliarde]], plural [[zwei Milliarden]]. Careful: [[Milliarde]] is an English billion.",
+        "Years up to 1999 are said in hundreds: 1995 is [[neunzehnhundertfünfundneunzig]]. From 2000 they are normal numbers: 2017 is [[zweitausendsiebzehn]].",
+        "Your year of birth: [[Ich bin neunzehnhundertneunzig geboren.]] or [[im Jahr 1990]], never 'in 1990'."
+      ],
+      "phrases": [
+        {"de": "hunderteins", "en": "101"},
+        {"de": "hundertelf", "en": "111"},
+        {"de": "sechshundertvierunddreißig", "en": "634"},
+        {"de": "eintausendeinhundertelf", "en": "1,111"},
+        {"de": "dreitausendvierhundertfünfzehn", "en": "3,415"},
+        {"de": "eine Million, zwei Millionen", "en": "one million, two million"},
+        {"de": "neunzehnhundertfünfundneunzig", "en": "1995 (as a year)"},
+        {"de": "Ich bin neunzehnhundertneunzig geboren.", "en": "I was born in 1990."}
+      ],
+      "extra": "Years ([[neunzehnhundert...]]), millions and [[Milliarde]] (billion)."
+    }}
   ],
   "words": ["kilo", "gramm", "liter", "stueck", "euro", "cent", "kosten", "preis", "wie-viel-kostet-das", "supermarkt", "markt", "kasse", "viel", "bezahlen", "bar", "karte", "sonst-noch-etwas", "das-ist-alles", "was-darf-es-sein"],
   "sections": [

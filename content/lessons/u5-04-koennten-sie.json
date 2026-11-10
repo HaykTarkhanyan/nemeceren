@@ -12,8 +12,51 @@
     "Ask for help and say thank you"
   ],
   "videos": [
-    {"id": "iUu4iVadqn0", "title": "25 phrases for beginners", "minutes": 11},
-    {"id": "WKf-mZ3TDks", "title": "25 questions for beginners", "minutes": 11}
+    {"id": "iUu4iVadqn0", "title": "25 phrases for beginners", "minutes": 11, "notes": {
+      "points": [
+        "About you: [[Ich heiße ...]] or [[Mein Name ist ...]] with your full name, [[Ich komme aus ...]], and how long you're staying: [[Ich bin für ein Jahr in Deutschland.]]",
+        "Language trouble: [[Ich lerne Deutsch.]], [[Sprechen Sie Englisch?]] (saves time), [[Verstehen Sie mich?]] (v sounds like f), [[Ich verstehe nicht.]], [[Noch einmal, bitte.]], [[Langsamer, bitte!]]",
+        "Words: [[Was bedeutet das?]], [[Wie sagt man das auf Deutsch?]], [[Wie sagt man das auf Englisch?]]",
+        "Getting help: [[Können Sie mir helfen?]], [[Wo ist die Toilette?]], and if you're lost: [[Ich habe mich verlaufen.]]",
+        "Feelings and needs: [[Es geht mir gut.]], [[Ich bin müde.]], [[Ich habe Hunger.]], [[Ich habe Durst.]] (I'm thirsty)",
+        "Opinions: [[Das gefällt mir.]] or [[Das gefällt mir nicht.]], [[Das ist schön.]], and when shopping [[Das ist zu teuer.]] or [[Das ist billig.]]"
+      ],
+      "phrases": [
+        {"de": "Ich bin für ein Jahr in Deutschland.", "en": "I'm in Germany for a year."},
+        {"de": "Verstehen Sie mich?", "en": "Do you understand me?"},
+        {"de": "Langsamer, bitte!", "en": "Slower, please!"},
+        {"de": "Was bedeutet das?", "en": "What does that mean?"},
+        {"de": "Wie sagt man das auf Deutsch?", "en": "How do you say that in German?"},
+        {"de": "Ich habe mich verlaufen.", "en": "I'm lost."},
+        {"de": "Ich habe Durst.", "en": "I'm thirsty."},
+        {"de": "Das gefällt mir nicht.", "en": "I don't like that."},
+        {"de": "Das ist zu teuer.", "en": "That's too expensive."}
+      ],
+      "extra": "[[Ich habe mich verlaufen.]] (I'm lost), [[Ich habe Durst.]], and [[Das gefällt mir.]]"
+    }},
+    {"id": "WKf-mZ3TDks", "title": "25 questions for beginners", "minutes": 11, "notes": {
+      "points": [
+        "Most questions come in two versions: informal with [[du]] and polite with [[Sie]]: [[Wie heißt du?]], [[Wie heißen Sie?]]; [[Wo wohnst du?]], [[Wo wohnen Sie?]]",
+        "Getting to know someone: name, surname, origin, home, hobbies. [[Wie alt bist du?]] can sound rude when asked straight out, though in many situations it's normal.",
+        "Germans love asking about weekend plans: [[Was machst du am Wochenende?]] And opinions: [[Wie findest du den Film?]]",
+        "Offers and favours: [[Möchtest du einen Kaffee?]], [[Möchtest du etwas essen?]], [[Hast du Zeit?]], [[Kannst du mir helfen?]] Before a question, a polite opener: [[Darf ich etwas fragen?]]",
+        "[[Wie geht's?]] is a real question in Germany: people expect an answer.",
+        "Yes/no questions start with the verb and get [[ja]] or [[nein]]: [[Hast du Hunger?]], [[Bist du müde?]]"
+      ],
+      "phrases": [
+        {"de": "Woher kommen Sie?", "en": "Where are you from? (polite)"},
+        {"de": "Wie spät ist es?", "en": "What time is it?"},
+        {"de": "Was machst du am Wochenende?", "en": "What are you doing at the weekend?"},
+        {"de": "Wie viel kostet das?", "en": "How much does that cost?"},
+        {"de": "Wie findest du den Film?", "en": "What do you think of the film?"},
+        {"de": "Möchtest du etwas trinken?", "en": "Would you like something to drink?"},
+        {"de": "Darf ich etwas fragen?", "en": "May I ask something?"},
+        {"de": "Hast du eine Frage?", "en": "Do you have a question?"},
+        {"de": "Was ist das?", "en": "What is that?"},
+        {"de": "Wo lernen Sie Deutsch?", "en": "Where are you learning German?"}
+      ],
+      "extra": "[[Wie findest du ...?]] for opinions, and [[Darf ich etwas fragen?]] before a question."
+    }}
   ],
   "words": ["koennten-sie", "helfen", "hilfe", "moment", "langsam", "vielen-dank", "bedeuten", "schnell"],
   "tests": ["u5-t2-regeln-bitten"],

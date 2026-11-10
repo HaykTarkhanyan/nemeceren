@@ -14,8 +14,51 @@
     { "title": "Nicos Weg A1, chapter 13: Weather and holiday (Wie war dein Urlaub?)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
   ],
   "videos": [
-    {"id": "ATLnq06AfrA", "title": "Booking a hotel by letter", "minutes": 11},
-    {"id": "CUjRSS7R8Yc", "title": "What did you do on holiday?", "minutes": 11}
+    {"id": "ATLnq06AfrA", "title": "Booking a hotel by letter", "minutes": 11, "notes": {
+      "points": [
+        "This is the A1 exam's letter task (Start Deutsch 1, Writing part 2): a short email booking a room.",
+        "Places and rooms: [[das Hotel]], [[die Pension]] (guest house), [[die Jugendherberge]] (youth hostel); [[das Einzelzimmer]] (EZ, single), [[das Doppelzimmer]] (DZ, double). [[ein Zimmer reservieren]] or [[buchen]].",
+        "Meals: [[mit Frühstück]], [[Halbpension]] (breakfast and one more meal), [[Vollpension]] (all meals).",
+        "The letter: greeting ([[Sehr geehrte Damen und Herren,]]), the text, a closing ([[Mit freundlichen Grüßen]] or [[Viele Grüße]]) and your name.",
+        "What to write: when you arrive ([[Wir kommen am siebzehnten Juli um 18 Uhr an.]]), how long you stay ([[Ich möchte drei Nächte bleiben.]]), which room ([[Ich hätte gern ein Doppelzimmer mit Frühstück.]]), the price ([[Wie viel kostet es pro Nacht?]]).",
+        "Extra wishes: [[Können Sie uns vom Bahnhof abholen?]], [[Sind Haustiere erlaubt?]], [[Haben Sie ein Zimmer mit Meerblick?]], [[Schicken Sie mir bitte Informationen über die Sehenswürdigkeiten.]]"
+      ],
+      "phrases": [
+        {"de": "Sehr geehrte Damen und Herren,", "en": "Dear Sir or Madam,"},
+        {"de": "Ich fahre am vierten Juli nach Stuttgart.", "en": "I'm going to Stuttgart on the fourth of July."},
+        {"de": "Ich hätte gern ein Doppelzimmer mit Frühstück.", "en": "I'd like a double room with breakfast."},
+        {"de": "Wir brauchen drei Doppelzimmer.", "en": "We need three double rooms."},
+        {"de": "Ich bleibe vom siebten bis zum neunten.", "en": "I'm staying from the seventh to the ninth."},
+        {"de": "Wie viel kostet es pro Nacht?", "en": "How much is it per night?"},
+        {"de": "Was kostet ein Extrabett?", "en": "How much is an extra bed?"},
+        {"de": "Können Sie uns gute Hotels empfehlen?", "en": "Can you recommend some good hotels?"},
+        {"de": "Ich bitte um Antwort.", "en": "I look forward to your reply."},
+        {"de": "Mit freundlichen Grüßen", "en": "Yours sincerely"}
+      ],
+      "extra": "The exam letter, [[Halbpension]] and [[Vollpension]], and [[Ich bitte um Antwort.]]"
+    }},
+    {"id": "CUjRSS7R8Yc", "title": "What did you do on holiday?", "minutes": 11, "notes": {
+      "points": [
+        "Holiday is [[der Urlaub]] or [[die Ferien]] (plural). Key verbs: [[reisen]] (ist gereist), [[übernachten]] (hat übernachtet), [[besichtigen]] (hat besichtigt).",
+        "Where you were, with [[war]]: [[Im Urlaub war ich in Spanien.]], [[in der Schweiz]], [[auf einer Insel]], [[an der Ostsee]], [[am Strand]], [[bei meinen Eltern]], [[zu Hause]].",
+        "Where you went: [[Im Urlaub sind wir nach New York geflogen.]] Who with: [[Mit wem warst du unterwegs?]] - [[Ich war mit meiner Familie unterwegs.]] or [[allein]].",
+        "Where you stayed: [[Wo hast du übernachtet?]] - [[im Hotel]], [[bei Freunden]], [[bei einer Gastfamilie]], [[in einer Jugendherberge]], [[in einem Zelt]] (a tent).",
+        "What you did, in the Perfekt: [[Wir haben die Sehenswürdigkeiten besichtigt.]], [[Ich habe mich erholt.]] (I relaxed), [[Wir haben einen Stadtbummel gemacht.]] (a stroll through town)",
+        "The same sentences answer [[Was hast du am Wochenende gemacht?]]"
+      ],
+      "phrases": [
+        {"de": "Was hast du im Urlaub gemacht?", "en": "What did you do on holiday?"},
+        {"de": "In den Ferien bin ich zu Hause geblieben.", "en": "During the holidays I stayed at home."},
+        {"de": "Ich bin mit meiner Familie gereist.", "en": "I travelled with my family."},
+        {"de": "Wir waren an der Ostsee.", "en": "We were at the Baltic Sea."},
+        {"de": "Wir haben in einer Jugendherberge übernachtet.", "en": "We stayed in a youth hostel."},
+        {"de": "Wir haben die Sehenswürdigkeiten besichtigt.", "en": "We saw the sights."},
+        {"de": "Ich habe mich gut erholt.", "en": "I had a good rest."},
+        {"de": "Ich bin viel gewandert und habe die Natur genossen.", "en": "I hiked a lot and enjoyed nature."},
+        {"de": "Ich habe viele interessante Menschen kennengelernt.", "en": "I met lots of interesting people."}
+      ],
+      "extra": "Telling a holiday story in the Perfekt: where, with whom, where you stayed, what you did."
+    }}
   ],
   "words": ["reise", "reisebuero", "hotel", "einzelzimmer", "doppelzimmer", "rezeption", "uebernachten", "gepaeck", "koffer", "flughafen", "flugzeug", "abflug", "ankunft", "abfahrt", "bahnsteig", "durchsage", "taxi", "sehenswuerdigkeit", "besichtigen", "fuehrung", "eintritt", "schwimmbad"],
   "sections": [

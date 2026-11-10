@@ -12,8 +12,47 @@
   ],
   "nicosWeg": [{ "title": "Nicos Weg A1, chapter 4: Around the world (In Europa, Andere Länder)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }],
   "videos": [
-    {"id": "oEqJ3eZB2m0", "title": "Countries and languages", "minutes": 16},
-    {"id": "aHJOUXrzsmg", "title": "Woher kommst du?", "minutes": 6}
+    {"id": "oEqJ3eZB2m0", "title": "Countries and languages", "minutes": 16, "notes": {
+      "points": [
+        "[[das Land]], [[die Länder]] (country, countries) and [[die Sprache]], [[die Sprachen]] (language, languages).",
+        "Many languages end in -isch: [[Spanien]], [[Spanisch]]; [[Polen]], [[Polnisch]]; [[Griechenland]], [[Griechisch]]; [[Georgien]], [[Georgisch]]. Watch [[Frankreich]], [[Französisch]].",
+        "Most countries have no article, but a few do: [[die Schweiz]], [[die Türkei]], [[die Ukraine]], [[der Iran]], and the plurals [[die Niederlande]], [[die USA]], [[die Philippinen]].",
+        "Which language is spoken where: [[In Deutschland spricht man Deutsch.]] With an article: [[In der Türkei spricht man Türkisch.]], [[In den USA spricht man Englisch.]]",
+        "German is the official language in six countries: Germany, Austria, Switzerland, Liechtenstein, Luxembourg and Belgium. Switzerland has four languages: German, French, Italian and Romansh.",
+        "Germany and Austria differ in words: Austrians say [[Paradeiser]] for [[Tomate]] and [[Erdapfel]] for [[Kartoffel]]. Swiss German is hard even for Germans."
+      ],
+      "phrases": [
+        {"de": "das Land, die Länder", "en": "the country, the countries"},
+        {"de": "die Sprache, die Sprachen", "en": "the language, the languages"},
+        {"de": "Frankreich, Französisch", "en": "France, French"},
+        {"de": "Russland, Russisch", "en": "Russia, Russian"},
+        {"de": "die Schweiz", "en": "Switzerland"},
+        {"de": "In Deutschland spricht man Deutsch.", "en": "In Germany they speak German."},
+        {"de": "In der Türkei spricht man Türkisch.", "en": "In Turkey they speak Turkish."},
+        {"de": "In den USA spricht man Englisch.", "en": "In the USA they speak English."},
+        {"de": "Woher kommst du?", "en": "Where are you from? (informal)"}
+      ],
+      "extra": "About 60 more countries and their languages, and [[man]] (one, people) in [[spricht man]]."
+    }},
+    {"id": "aHJOUXrzsmg", "title": "Woher kommst du?", "minutes": 6, "notes": {
+      "points": [
+        "[[Woher kommen Sie?]] (polite) or [[Woher kommst du?]] (informal) asks where someone is from. Answer with [[aus]] plus a country or a city: [[Ich komme aus ...]] or [[Ich bin aus ...]]",
+        "Most countries have no article: [[Ich komme aus Deutschland.]]",
+        "A few countries are feminine and take [[die]]: [[die Türkei]], [[die Ukraine]], [[die Schweiz]], [[die Slowakei]]. After [[aus]], die becomes [[der]]: [[aus der Türkei]].",
+        "A few are masculine and take [[der]]: [[der Irak]], [[der Iran]]. After [[aus]], der becomes [[dem]]: [[aus dem Iran]]. You'll also hear [[aus Iran]] without the article.",
+        "A few are plural: [[die USA]], [[die Philippinen]]. After [[aus]], plural die becomes [[den]]: [[aus den USA]].",
+        "The reason: [[aus]] always takes the dative case, which comes in Unit 6. Until then, learn these as chunks."
+      ],
+      "phrases": [
+        {"de": "Woher kommst du?", "en": "Where are you from? (informal)"},
+        {"de": "Ich komme aus Armenien.", "en": "I'm from Armenia."},
+        {"de": "Ich komme aus der Türkei.", "en": "I'm from Turkey."},
+        {"de": "Sie ist aus der Ukraine.", "en": "She's from Ukraine."},
+        {"de": "Er kommt aus dem Iran.", "en": "He's from Iran."},
+        {"de": "Wir kommen aus den USA.", "en": "We're from the USA."},
+        {"de": "Sie kommen aus den Philippinen.", "en": "They're from the Philippines."}
+      ]
+    }}
   ],
   "words": ["land", "sprache", "sprechen", "lernen", "deutschland", "armenien", "russland", "oesterreich", "schweiz", "deutsch", "englisch", "russisch", "armenisch", "auch", "und", "aber"],
   "tests": ["u1-t1-vorstellen-sprachen"],

@@ -15,8 +15,50 @@
     { "title": "Nicos Weg A1, chapter 15: Family (Meine Familie, Meine Eltern)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
   ],
   "videos": [
-    {"id": "5alTxRuLvdM", "title": "Writing an invitation", "minutes": 10},
-    {"id": "k2vis1VsxXM", "title": "Christmas", "minutes": 13}
+    {"id": "5alTxRuLvdM", "title": "Writing an invitation", "minutes": 10, "notes": {
+      "points": [
+        "[[die Einladung]] is an invitation; [[jemanden einladen]] (separable) is to invite someone. Writing one is an A1 exam task.",
+        "The parts: greeting ([[Lieber Max,]] / [[Liebe Lena,]] or [[Hallo Lena,]]), text, closing ([[Viele Grüße]]) and your name.",
+        "In the text: the reason ([[Ich habe am Samstag Geburtstag.]], [[Wir machen ein Fest.]]), the invitation ([[Ich möchte dich gerne einladen.]]), place and time ([[Die Party beginnt um 18 Uhr.]], [[Wir treffen uns bei uns zu Hause.]]), maybe a request ([[Kannst du einen Salat mitbringen?]]) and [[Hoffentlich hast du Zeit.]]",
+        "Saying yes: [[Vielen Dank für deine Einladung.]], [[Ich komme sehr gerne.]], [[Ich freue mich schon auf Samstag.]], [[Kann ich etwas mitbringen?]], [[Kann meine Freundin auch mitkommen?]]",
+        "Saying no: [[Es tut mir leid, aber ich kann nicht kommen.]], with a reason ([[Am Samstag muss ich arbeiten.]], [[Ich bin am Samstag schon verabredet.]]), then [[Ich wünsche dir viel Spaß.]] and [[Hoffentlich sehen wir uns bald.]]",
+        "End with [[Viele Grüße und bis Samstag]] or [[bis bald]]."
+      ],
+      "phrases": [
+        {"de": "Lieber Peter, ich habe am Samstag Geburtstag und möchte dich gerne einladen.", "en": "Dear Peter, it's my birthday on Saturday and I'd like to invite you."},
+        {"de": "Die Party beginnt um 18 Uhr.", "en": "The party starts at 6 pm."},
+        {"de": "Kannst du vielleicht Bier mitbringen?", "en": "Could you bring some beer?"},
+        {"de": "Hoffentlich hast du Zeit.", "en": "I hope you have time."},
+        {"de": "Vielen Dank für deine Einladung.", "en": "Thank you for your invitation."},
+        {"de": "Ich freue mich schon auf Samstag.", "en": "I'm looking forward to Saturday."},
+        {"de": "Ich bringe gern einen Kuchen mit.", "en": "I'd be happy to bring a cake."},
+        {"de": "Ich bin am Samstag schon verabredet.", "en": "I already have plans on Saturday."},
+        {"de": "Ich wünsche dir viel Spaß auf der Party.", "en": "Have fun at the party."},
+        {"de": "Viele Grüße und bis bald", "en": "Best wishes, see you soon"}
+      ],
+      "extra": "Writing and answering an invitation, as in the A1 exam."
+    }},
+    {"id": "k2vis1VsxXM", "title": "Christmas", "minutes": 13, "notes": {
+      "points": [
+        "[[Weihnachten]] is Christmas; the 24th of December is [[der Heiligabend]], when presents are opened ([[die Bescherung]]).",
+        "Before Christmas: [[der Advent]], with four candles ([[die Kerze]]) on [[der Adventskranz]], lit one Sunday at a time ([[anzünden]]), and [[der Adventskalender]], with a little door ([[das Türchen]]) for each day.",
+        "Baking and food: [[die Plätzchen]] (Christmas biscuits), [[der Lebkuchen]] (gingerbread), and [[der Glühwein]] (mulled wine) at [[der Weihnachtsmarkt]]. In southern Germany and Austria it's [[der Christkindlmarkt]].",
+        "Decorations: [[der Weihnachtsbaum]] (in Austria [[der Christbaum]]), which you decorate ([[schmücken]]) with [[die Weihnachtskugeln]] (baubles) and [[die Lichterkette]] (fairy lights); also [[der Stern]], [[der Engel]] (angel), [[die Krippe]] (nativity scene).",
+        "Who brings presents: in the north [[der Weihnachtsmann]]; in the south and Austria [[das Christkind]].",
+        "Wishes: [[Frohe Weihnachten!]] Also [[das Weihnachtslied]] (carol) and [[die Weihnachtskarte]]."
+      ],
+      "phrases": [
+        {"de": "Am vierundzwanzigsten Dezember ist Heiligabend.", "en": "The 24th of December is Christmas Eve."},
+        {"de": "Am ersten Advent zündet man die erste Kerze an.", "en": "On the first Sunday of Advent you light the first candle."},
+        {"de": "Vor Weihnachten backt man viele Plätzchen.", "en": "Before Christmas people bake lots of biscuits."},
+        {"de": "Vor Weihnachten schmückt man den Weihnachtsbaum.", "en": "Before Christmas you decorate the tree."},
+        {"de": "Auf dem Weihnachtsmarkt kauft man Geschenke.", "en": "At the Christmas market people buy presents."},
+        {"de": "der Glühwein", "en": "mulled wine"},
+        {"de": "Am Heiligabend macht man die Geschenke auf.", "en": "On Christmas Eve people open their presents."},
+        {"de": "Frohe Weihnachten!", "en": "Merry Christmas!"}
+      ],
+      "extra": "Christmas customs and words: [[Advent]], [[Plätzchen]], [[Glühwein]], [[Christkindlmarkt]], [[Bescherung]]."
+    }}
   ],
   "words": ["grosseltern", "grossmutter", "grossvater", "oma", "opa", "ehefrau", "ehemann", "baby", "junge", "maedchen", "leute", "mensch", "partner", "partnerin", "hochzeit", "heiraten", "glueckwunsch", "gratulieren", "herzlich", "willkommen", "einladung", "gast", "fest", "glueck", "gluecklich", "lustig", "lachen", "hund", "lied"],
   "tests": ["u7-t3-reisen-feste"],

@@ -15,9 +15,73 @@
     { "title": "Nicos Weg A1, chapter 17: Health (Geht es dir gut?, Beim Arzt, Gute Besserung!, Nehmen Sie ...)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
   ],
   "videos": [
-    {"id": "NIrQgPq6C8I", "title": "Feeling ill", "minutes": 13},
-    {"id": "Ete-ii0Flkw", "title": "Body parts", "minutes": 14},
-    {"id": "JybuldB6q5M", "title": "At the doctor's", "minutes": 12}
+    {"id": "NIrQgPq6C8I", "title": "Feeling ill", "minutes": 13, "notes": {
+      "points": [
+        "Feeling unwell: [[Ich bin krank.]], [[Ich fühle mich nicht wohl.]], [[Mir geht es nicht gut.]] [[Ich bin krank.]] is the safety net that always works.",
+        "Pains are compounds with [[Schmerzen]], always plural: [[Kopfschmerzen]], [[Rückenschmerzen]] (back), [[Zahnschmerzen]], [[Bauchschmerzen]] (stomach), [[Ohrenschmerzen]], [[Halsschmerzen]] (sore throat).",
+        "Or with [[wehtun]], a separable dative verb: [[Mein Kopf tut weh.]], [[Mir tut der Kopf weh.]] Plural: [[Mir tun die Ohren weh.]]",
+        "Illnesses with [[haben]]: [[Ich habe Fieber.]], [[Ich habe eine Grippe.]] (flu), [[Ich habe eine Erkältung.]] (a cold), [[Ich habe Schnupfen.]] (a runny nose), [[Ich habe Husten.]] (a cough), [[Ich habe Durchfall.]] (diarrhoea).",
+        "Injuries: [[Ich habe mich am Bein verletzt.]] ([[am]] for der and das words, [[an der]] for die words), [[Ich habe mir den Arm gebrochen.]] And [[Mir ist schlecht.]] (I feel sick)",
+        "Advice uses the imperative, and [[viel]] fits almost anything: [[Trink viel Tee und geh schlafen.]] End with [[Gute Besserung!]] (get well soon), which you can say to anyone."
+      ],
+      "phrases": [
+        {"de": "Ich fühle mich nicht wohl.", "en": "I don't feel well."},
+        {"de": "Ich habe Kopfschmerzen und Fieber.", "en": "I have a headache and a temperature."},
+        {"de": "Mir tut der Kopf weh.", "en": "My head hurts."},
+        {"de": "Ich habe eine Erkältung.", "en": "I have a cold."},
+        {"de": "Ich habe Husten.", "en": "I have a cough."},
+        {"de": "Ich habe mich an der Hand verletzt.", "en": "I've hurt my hand."},
+        {"de": "Ich habe mir das Bein gebrochen.", "en": "I've broken my leg."},
+        {"de": "Mir ist schlecht.", "en": "I feel sick."},
+        {"de": "Trink viel Tee und geh schlafen.", "en": "Drink lots of tea and go to bed."},
+        {"de": "Gute Besserung!", "en": "Get well soon!"}
+      ],
+      "extra": "Injuries ([[Ich habe mich verletzt.]], [[Ich habe mir den Arm gebrochen.]]) and giving advice with the imperative."
+    }},
+    {"id": "Ete-ii0Flkw", "title": "Body parts", "minutes": 14, "notes": {
+      "points": [
+        "[[der Körperteil]], plural [[die Körperteile]]: a part of the body. Learn each with its article and plural.",
+        "Head and face: [[der Kopf]], [[das Gesicht]], [[die Haare]], [[die Stirn]] (forehead), [[das Auge]], [[die Augenbraue]], [[die Nase]], [[die Wange]] (cheek), [[der Mund]], [[die Lippe]], [[der Zahn]], [[das Kinn]] (chin), [[das Ohr]], [[der Hals]] (neck, throat), [[der Bart]] (beard).",
+        "Arms and hands: [[die Schulter]], [[der Arm]], [[der Ellenbogen]] (elbow), [[das Handgelenk]] (wrist), [[die Hand]], [[der Finger]], [[der Daumen]] (thumb), [[der Nagel]].",
+        "Body and legs: [[die Brust]] (chest), [[der Bauch]] (belly), [[der Rücken]] (back), [[die Hüfte]] (hip), [[das Bein]], [[das Knie]], [[die Wade]] (calf), [[der Fuß]], [[das Fußgelenk]] (ankle), [[die Ferse]] (heel), [[der Zeh]] (toe).",
+        "Careful with near twins: [[das Kinn]] (chin) and [[das Kind]] (child)."
+      ],
+      "phrases": [
+        {"de": "der Kopf, die Köpfe", "en": "the head, the heads"},
+        {"de": "das Auge, die Augen", "en": "the eye, the eyes"},
+        {"de": "der Zahn, die Zähne", "en": "the tooth, the teeth"},
+        {"de": "die Hand, die Hände", "en": "the hand, the hands"},
+        {"de": "der Fuß, die Füße", "en": "the foot, the feet"},
+        {"de": "das Knie, die Knie", "en": "the knee, the knees"},
+        {"de": "der Rücken", "en": "the back"},
+        {"de": "der Bauch", "en": "the belly"},
+        {"de": "der Hals", "en": "the neck, the throat"}
+      ],
+      "extra": "About 40 body parts with plurals, many more than the lesson's table."
+    }},
+    {"id": "JybuldB6q5M", "title": "At the doctor's", "minutes": 12, "notes": {
+      "points": [
+        "Words: [[der Arzt]], [[die Ärztin]], [[der Patient]], [[die Patientin]], [[die Arztpraxis]] (doctor's practice), [[die Tablette]], [[die Tropfen]] (drops), [[die Salbe]] (ointment), [[das Rezept]] (prescription; also a recipe).",
+        "What the doctor does: [[den Patienten untersuchen]] (examine), [[den Blutdruck messen]] (take blood pressure), [[Medikamente verschreiben]] (prescribe).",
+        "Always make an appointment first, by phone. You'll be asked about your symptoms: [[Was haben Sie für Beschwerden?]] Bring your health insurance card ([[die Versichertenkarte]]).",
+        "At the doctor's: [[Wie kann ich Ihnen helfen?]] or [[Was fehlt Ihnen?]], then [[Seit wann haben Sie die Schmerzen?]] - [[Seit gestern.]]",
+        "During the examination: [[Wo tut es weh?]], [[Machen Sie bitte den Mund auf.]], [[Husten Sie bitte.]]",
+        "The verdict and advice: [[Es ist nichts Schlimmes.]], [[Sie haben eine Grippe.]], [[Ich schreibe Ihnen ein Rezept.]], [[Bleiben Sie im Bett.]] A sick note for work is [[die Arbeitsunfähigkeitsbescheinigung]]. Use [[Sie]] with the doctor."
+      ],
+      "phrases": [
+        {"de": "Ich möchte gern einen Termin.", "en": "I'd like an appointment, please."},
+        {"de": "Was haben Sie für Beschwerden?", "en": "What are your symptoms?"},
+        {"de": "Ich habe Rückenschmerzen und Husten.", "en": "I have back pain and a cough."},
+        {"de": "Können Sie heute Nachmittag kommen?", "en": "Can you come this afternoon?"},
+        {"de": "Bitte bringen Sie Ihre Versichertenkarte mit.", "en": "Please bring your insurance card."},
+        {"de": "Seit wann haben Sie die Schmerzen?", "en": "How long have you had the pain?"},
+        {"de": "Machen Sie bitte den Mund auf.", "en": "Please open your mouth."},
+        {"de": "Ich schreibe Ihnen ein Rezept.", "en": "I'll write you a prescription."},
+        {"de": "Darf ich arbeiten?", "en": "Am I allowed to work?"},
+        {"de": "Vielen Dank, Frau Doktor.", "en": "Thank you very much, doctor."}
+      ],
+      "extra": "Phoning for an appointment, the examination ([[Machen Sie bitte den Mund auf.]]) and the words for medicine: [[Tablette]], [[Tropfen]], [[Salbe]], [[Rezept]]."
+    }}
   ],
   "words": ["krank", "gesund", "kopf", "bauch", "ruecken", "hals", "bein", "arm", "hand", "fuss", "ohr", "zahn", "mund", "auge", "wehtun", "schmerz", "fieber", "arzt", "aerztin", "praxis", "apotheke", "medikament", "tablette", "gute-besserung", "krankenhaus"],
   "sections": [

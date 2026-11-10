@@ -16,7 +16,29 @@
     { "title": "Nicos Weg A1, chapter 8: Appointments (Hast du morgen Zeit?, Zu spät!?)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
   ],
   "videos": [
-    {"id": "bIUOSQZGVZ8", "title": "Making plans", "minutes": 10}
+    {"id": "bIUOSQZGVZ8", "title": "Making plans", "minutes": 10, "notes": {
+      "points": [
+        "[[die Verabredung]] is a plan or date with friends or family; [[der Termin]] is a formal appointment.",
+        "Suggesting: [[Wollen wir ins Kino gehen?]], [[Willst du mit mir in den Park gehen?]], [[Hast du heute Abend Zeit?]], [[Hast du am Freitag Lust auf Tennis?]]",
+        "Saying yes: [[Gute Idee!]], [[Das passt.]], [[Ja, Freitag ist gut. Da habe ich Zeit.]], [[Da habe ich nichts vor.]] (I've nothing planned then)",
+        "Saying no, with a reason: [[Tut mir leid, da kann ich nicht.]], [[Ich habe keine Zeit.]], [[Ich habe viel zu tun.]], [[Ich muss arbeiten.]], [[Da habe ich schon eine Verabredung.]]",
+        "Offering another time: [[Heute geht es leider nicht, aber am Samstag?]], [[Vielleicht nächste Woche?]]",
+        "Fixing time and place: [[Wann und wo treffen wir uns?]] - [[Um sechs bei mir.]] or [[vor dem Kino]]. End with [[Okay, bis dann!]]"
+      ],
+      "phrases": [
+        {"de": "Wollen wir ins Kino gehen?", "en": "Shall we go to the cinema?"},
+        {"de": "Wann denn? Heute Abend?", "en": "When? This evening?"},
+        {"de": "Hast du am Freitag Lust auf Tennis?", "en": "Do you fancy tennis on Friday?"},
+        {"de": "Ja, das passt.", "en": "Yes, that works."},
+        {"de": "Nein, heute kann ich nicht. Ich habe keine Zeit.", "en": "No, I can't today. I don't have time."},
+        {"de": "Da habe ich schon eine Verabredung.", "en": "I already have plans then."},
+        {"de": "Und morgen? Ja, morgen ist gut.", "en": "And tomorrow? Yes, tomorrow is fine."},
+        {"de": "Wann und wo treffen wir uns?", "en": "When and where shall we meet?"},
+        {"de": "Um sechs bei mir.", "en": "At six at my place."},
+        {"de": "Okay, dann bis morgen!", "en": "Okay, see you tomorrow then!"}
+      ],
+      "extra": "[[Hast du Lust auf ...?]] and [[Da habe ich schon eine Verabredung.]]"
+    }}
   ],
   "words": ["termin", "leider", "puenktlich", "lust", "kino", "party", "film", "treffen", "tut-mir-leid", "schade", "frei", "problem", "spaeter", "bis-dann", "das-geht"],
   "tests": ["u3-t3-verabredungen", "u3-t4-checkpoint-0-3"],

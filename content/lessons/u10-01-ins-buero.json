@@ -15,7 +15,23 @@
     { "title": "Nicos Weg A2, chapter 10: How do you live? (Der Umzug): two-case prepositions", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519797" }
   ],
   "videos": [
-    { "id": "_Q5JPibdqOs", "title": "The question word wohin", "minutes": 4 }
+    { "id": "_Q5JPibdqOs", "title": "The question word wohin", "minutes": 4, "notes": {
+      "points": [
+        "[[wohin]] (where to) asks about a destination. It stands first, with the verb second: [[Wohin fährst du im Urlaub?]]",
+        "The answer shows a movement. After [[in]], [[an]], [[auf]], [[unter]] and the other two-way prepositions it takes the accusative: [[in die Türkei]], [[ins Zimmer]], [[an den Strand]], [[unter den Stuhl]].",
+        "Two dative prepositions also answer [[wohin]]: [[nach]] (countries and cities without an article: [[nach Berlin]]) and [[zu]] (people and places: [[zum Bahnhof]], [[zu meiner Oma]])."
+      ],
+      "phrases": [
+        {"de": "Wohin fährst du im Urlaub?", "en": "Where are you going on holiday?"},
+        {"de": "In die Türkei.", "en": "To Turkey."},
+        {"de": "Wohin gehst du?", "en": "Where are you going?"},
+        {"de": "Ich gehe ins Kino.", "en": "I'm going to the cinema."},
+        {"de": "Wir fahren an den Strand.", "en": "We're going to the beach."},
+        {"de": "Wohin legst du die Tasche? Unter den Stuhl.", "en": "Where are you putting the bag? Under the chair."},
+        {"de": "Ich fahre nach Berlin.", "en": "I'm going to Berlin."},
+        {"de": "Ich gehe zum Bahnhof.", "en": "I'm going to the station."}
+      ]
+    } }
   ],
   "words": ["kantine", "keller", "theater", "bibliothek", "rathaus", "kaufhaus", "einkaufszentrum", "fitnessstudio", "disco", "zoo", "wald", "kindergarten", "garage", "werkstatt", "messe", "ausstellung", "naehe", "bett"],
   "sections": [

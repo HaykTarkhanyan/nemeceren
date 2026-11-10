@@ -131,6 +131,20 @@ export function readingGermanFields(r: Reading): { field: string; text: string }
   ]
 }
 
+/** The German in a lesson's "Read instead" video notes: the phrases, and [[German]] spans in the points and the extra line. */
+export function videoNotesGermanFields(lesson: Lesson): { field: string; text: string }[] {
+  return (lesson.videos ?? []).flatMap((v, vi) => {
+    if (v.notes === undefined) return []
+    const at = `videos[${vi}].notes`
+    const spans = (field: string, text: string) => germanSpans(text).map((t, k) => ({ field: `${field} [[German]] #${k + 1}`, text: t }))
+    return [
+      ...v.notes.points.flatMap((p, pi) => spans(`${at}.points[${pi}]`, p)),
+      ...v.notes.phrases.map((p, pi) => ({ field: `${at}.phrases[${pi}].de`, text: p.de })),
+      ...(v.notes.extra === undefined ? [] : spans(`${at}.extra`, v.notes.extra)),
+    ]
+  })
+}
+
 export function germanFields(
   tests: { file: string; test: Test }[],
   words: { file: string; words: Word[] },
@@ -150,6 +164,7 @@ export function germanFields(
     lesson.sections.forEach((block, i) => {
       for (const f of blockGermanFields(block)) out.push({ where: `${file} sections[${i}].${f.field}`, text: f.text })
     })
+    for (const f of videoNotesGermanFields(lesson)) out.push({ where: `${file} ${f.field}`, text: f.text })
   }
   readings.readings.forEach((r, i) => {
     for (const f of readingGermanFields(r)) out.push({ where: `${readings.file} texts[${i}].${f.field}`, text: f.text })

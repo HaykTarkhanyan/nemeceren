@@ -15,10 +15,89 @@
     { "title": "Nicos Weg A1, chapter 14: Clothing (Das passt gut!)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
   ],
   "videos": [
-    {"id": "_EvcUxsmE6k", "title": "mir, dir, Ihnen ...", "minutes": 11},
-    {"id": "uHtdBT1WMyw", "title": "Verbs with the dative", "minutes": 11},
-    {"id": "TKXLeTAe_xk", "title": "ihn or ihm?", "minutes": 11},
-    {"id": "ClJUVsjoDM8", "title": "Saying what you like", "minutes": 4}
+    {"id": "_EvcUxsmE6k", "title": "mir, dir, Ihnen ...", "minutes": 11, "notes": {
+      "points": [
+        "Dative pronouns replace a dative object, often the person who receives something: [[Das ist mein Bruder. Ich gebe ihm das Buch.]]",
+        "The forms: [[ich]] [[mir]], [[du]] [[dir]], [[er]] and [[es]] [[ihm]], [[sie]] (she) [[ihr]], [[wir]] [[uns]], [[ihr]] (you all) [[euch]], [[sie]] (they) [[ihnen]], [[Sie]] [[Ihnen]].",
+        "[[ihm]] stands for both [[er]] and [[es]].",
+        "Polite [[Ihnen]] always has a capital I; [[ihnen]] (to them) is small.",
+        "You hear them all the time: [[Wie geht es dir?]], [[Ich wünsche dir alles Gute.]], [[Ich danke Ihnen.]], [[Kann ich Ihnen helfen?]]"
+      ],
+      "phrases": [
+        {"de": "Ich gebe ihm das Buch.", "en": "I'm giving him the book."},
+        {"de": "Kannst du mir helfen?", "en": "Can you help me?"},
+        {"de": "Ich wünsche dir alles Gute.", "en": "I wish you all the best."},
+        {"de": "Ich danke Ihnen.", "en": "Thank you. (polite)"},
+        {"de": "Ich danke euch.", "en": "Thank you. (to several friends)"},
+        {"de": "Wie geht es Ihnen?", "en": "How are you? (polite)"},
+        {"de": "Ich schenke ihr eine Blume.", "en": "I'm giving her a flower."},
+        {"de": "Das Haus gehört uns.", "en": "The house belongs to us."}
+      ]
+    }},
+    {"id": "uHtdBT1WMyw", "title": "Verbs with the dative", "minutes": 11, "notes": {
+      "points": [
+        "Some verbs take a dative object and no accusative at all: [[Er hilft mir.]] The person is in the dative.",
+        "The everyday ones: [[helfen]], [[danken]], [[antworten]], [[glauben]] (believe), [[gratulieren]], [[vertrauen]] (trust), [[raten]] (advise).",
+        "With the thing as the subject: [[gefallen]] (Der Hut gefällt mir.), [[gehören]] (belong), [[schmecken]] (Die Pizza schmeckt mir.), [[passen]] (fit: Das Kleid passt mir nicht.), [[schaden]] (harm), [[wehtun]] (hurt).",
+        "[[fehlen]] means to be missed: [[Du fehlst mir.]] = I miss you (you are missing to me). Also [[Ich vermisse dich.]]",
+        "[[begegnen]] means to run into someone: [[Ich bin einer Frau begegnet.]] It takes [[sein]] in the Perfekt.",
+        "[[Mein Fuß tut mir weh.]] is the sentence for the doctor."
+      ],
+      "phrases": [
+        {"de": "Warum antwortest du mir nicht?", "en": "Why don't you answer me?"},
+        {"de": "Ich danke dir für die Hilfe.", "en": "Thank you for your help."},
+        {"de": "Du fehlst mir.", "en": "I miss you."},
+        {"de": "Der Hut gefällt mir.", "en": "I like the hat."},
+        {"de": "Ich glaube dir.", "en": "I believe you."},
+        {"de": "Wir gratulieren dir zum Geburtstag.", "en": "Happy birthday from us."},
+        {"de": "Kann ich Ihnen helfen?", "en": "Can I help you?"},
+        {"de": "Dieses Kleid passt mir nicht.", "en": "This dress doesn't fit me."},
+        {"de": "Rauchen schadet der Gesundheit.", "en": "Smoking harms your health."},
+        {"de": "Mein Fuß tut mir weh.", "en": "My foot hurts."}
+      ],
+      "extra": "More dative verbs: [[fehlen]] (Du fehlst mir), [[vertrauen]], [[raten]], [[schaden]], [[begegnen]]."
+    }},
+    {"id": "TKXLeTAe_xk", "title": "ihn or ihm?", "minutes": 11, "notes": {
+      "points": [
+        "Both stand for [[er]]: [[ihn]] is the accusative (direct object), [[ihm]] the dative (indirect object).",
+        "Ask the question: [[Wen?]] gets [[ihn]] ([[Wen liebst du?]] - [[Ich liebe ihn.]]); [[Wem?]] gets [[ihm]] ([[Wem backst du einen Kuchen?]] - [[Ich backe ihm einen Kuchen.]]).",
+        "[[ihn]] after accusative verbs ([[anrufen]], [[lieben]], [[fragen]]) and after accusative prepositions ([[für ihn]], [[ohne ihn]]). It also stands for der things: [[Wo ist mein Kuli? Hast du ihn gesehen?]]",
+        "[[ihm]] after dative verbs ([[helfen]], [[gratulieren]], [[gehören]]) and dative prepositions ([[mit ihm]], [[zu ihm]]).",
+        "With two objects, the person is usually [[ihm]] and the thing is the accusative: [[Wir haben ihm Suppe gekocht.]]"
+      ],
+      "phrases": [
+        {"de": "Das ist Julian. Ich liebe ihn.", "en": "This is Julian. I love him."},
+        {"de": "Ich backe ihm einen Kuchen.", "en": "I'm baking him a cake."},
+        {"de": "Wo ist mein Kuli? Hast du ihn gesehen?", "en": "Where's my pen? Have you seen it?"},
+        {"de": "Mein Bruder ist krank. Kannst du ihn anrufen?", "en": "My brother is ill. Can you call him?"},
+        {"de": "Ich kann für ihn alles tun.", "en": "I can do anything for him."},
+        {"de": "Peter hat Geburtstag. Wir haben ihm gratuliert.", "en": "It's Peter's birthday. We congratulated him."},
+        {"de": "Das Auto gehört ihm.", "en": "The car belongs to him."},
+        {"de": "Mein Opa wohnt in Hamburg. Heute fahre ich zu ihm.", "en": "My grandpa lives in Hamburg. Today I'm going to see him."},
+        {"de": "Ich gehe heute Abend mit ihm ins Kino.", "en": "I'm going to the cinema with him tonight."}
+      ]
+    }},
+    {"id": "ClJUVsjoDM8", "title": "Saying what you like", "minutes": 4, "notes": {
+      "points": [
+        "Liking something: [[Das gefällt mir.]] Replace [[das]] with a thing or a person: [[Das Auto gefällt mir.]], [[Er gefällt mir.]] To someone else: [[Das gefällt dir.]]",
+        "More ways to say it's good: [[Das ist super.]], [[Das war klasse.]], [[Ich finde das toll.]], and about something you did: [[Ich hatte viel Spaß.]] (I had a lot of fun)",
+        "Adverbs make it stronger: [[Das ist ganz toll.]], [[Ich finde das echt klasse.]], [[Das ist wirklich super.]]",
+        "Not liking something: [[Das gefällt mir nicht so gut.]], [[Das gefällt mir nicht.]], and strongest [[Das gefällt mir gar nicht.]]",
+        "Negative opinions: [[Das finde ich schlecht.]], [[Das finde ich langweilig.]] Don't mix the positive and negative adverbs.",
+        "Asking: [[Wie findest du mein Kleid?]], [[Was gefällt dir?]]"
+      ],
+      "phrases": [
+        {"de": "Das gefällt mir.", "en": "I like that."},
+        {"de": "Das Auto gefällt mir.", "en": "I like the car."},
+        {"de": "Ich hatte viel Spaß.", "en": "I had a lot of fun."},
+        {"de": "Ich finde das echt klasse.", "en": "I think it's really great."},
+        {"de": "Wie findest du mein Kleid?", "en": "What do you think of my dress?"},
+        {"de": "Das finde ich schön.", "en": "I think it's nice."},
+        {"de": "Das gefällt mir gar nicht.", "en": "I don't like that at all."},
+        {"de": "Das finde ich langweilig.", "en": "I find that boring."}
+      ],
+      "extra": "Ways to say you like or dislike something: [[gar nicht]], [[echt klasse]], [[Ich hatte viel Spaß.]]"
+    }}
   ],
   "words": ["gefallen", "gehoeren", "passen", "egal", "danken"],
   "sections": [

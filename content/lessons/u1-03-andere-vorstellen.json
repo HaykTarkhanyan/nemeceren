@@ -13,11 +13,103 @@
   ],
   "nicosWeg": [{ "title": "Nicos Weg A1, chapter 1: Meeting people (Das ist Nico, Nico hat ein Problem)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }],
   "videos": [
-    {"id": "zNh1CmEP-B0", "title": "Introducing someone", "minutes": 8},
-    {"id": "KDkQOXcEr4o", "title": "Getting to know someone", "minutes": 10},
-    {"id": "hY4lHC6YZuQ", "title": "Personal pronouns", "minutes": 10},
-    {"id": "xy4a1c7W7k0", "title": "haben and sein", "minutes": 10},
-    {"id": "siLfPrsfRJw", "title": "Sie or sie?", "minutes": 11}
+    {"id": "zNh1CmEP-B0", "title": "Introducing someone", "minutes": 8, "notes": {
+      "points": [
+        "To ask about someone you see: [[Wer ist das?]] (who is that?), then [[Woher kommt er?]], [[Wo wohnt er?]], [[Wie alt ist er?]]",
+        "Talking about one person uses [[er]], [[sie]] or [[es]], and the verb ends in -t: [[er kommt]], [[sie wohnt]], [[sie arbeitet]].",
+        "A child is [[das Kind]], so it is [[es]]: [[Es wohnt in Berlin.]]",
+        "For two or more people, the question becomes [[Wer sind sie?]] and the answer [[Das sind ...]]. Then [[sie]] (they) takes -en: [[Sie kommen aus Italien.]]",
+        "Practice idea from the video: describe a friend, then your parents or a group of friends, with these sentences."
+      ],
+      "phrases": [
+        {"de": "Wer ist das?", "en": "Who is that?"},
+        {"de": "Das ist Charlotte.", "en": "This is Charlotte."},
+        {"de": "Sie kommt aus der Schweiz.", "en": "She's from Switzerland."},
+        {"de": "Sie arbeitet bei Lufthansa.", "en": "She works at Lufthansa."},
+        {"de": "Er wohnt in Frankfurt.", "en": "He lives in Frankfurt."},
+        {"de": "Wie alt ist er?", "en": "How old is he?"},
+        {"de": "Das sind Lena und Aram.", "en": "These are Lena and Aram."},
+        {"de": "Sie kommen aus Italien.", "en": "They're from Italy."},
+        {"de": "Sie wohnen in München.", "en": "They live in Munich."}
+      ]
+    }},
+    {"id": "KDkQOXcEr4o", "title": "Getting to know someone", "minutes": 10, "notes": {
+      "points": [
+        "The video asks the ten questions of a first conversation, each in a polite and an informal version.",
+        "Polite questions use [[Sie]] and a verb ending in -en ([[Wie heißen Sie?]]); informal ones use [[du]] and -st ([[Wie heißt du?]]).",
+        "'Your' changes too: [[Ihr]] (polite) and [[dein]] (informal): [[Wie ist Ihr Familienname?]], [[Was sind deine Hobbys?]]",
+        "[[sprechen]] changes its vowel with du: [[Welche Sprachen sprichst du?]]",
+        "Yes/no questions start with the verb: [[Sind Sie verheiratet?]], [[Haben Sie Kinder?]]",
+        "Saying no: [[nicht]] before an adjective ([[Ich bin nicht verheiratet.]]), [[keine]] before a noun ([[Ich habe keine Kinder.]])."
+      ],
+      "phrases": [
+        {"de": "Wie ist Ihr Familienname?", "en": "What is your surname? (polite)"},
+        {"de": "Wo wohnst du?", "en": "Where do you live? (informal)"},
+        {"de": "Welche Sprachen sprechen Sie?", "en": "Which languages do you speak? (polite)"},
+        {"de": "Was machst du beruflich?", "en": "What do you do for a living? (informal)"},
+        {"de": "Was sind Ihre Hobbys?", "en": "What are your hobbies? (polite)"},
+        {"de": "Bist du verheiratet?", "en": "Are you married? (informal)"},
+        {"de": "Nein, ich bin nicht verheiratet.", "en": "No, I'm not married."},
+        {"de": "Haben Sie Kinder?", "en": "Do you have children? (polite)"},
+        {"de": "Ja, ich habe zwei Kinder.", "en": "Yes, I have two children."}
+      ]
+    }},
+    {"id": "hY4lHC6YZuQ", "title": "Personal pronouns", "minutes": 10, "notes": {
+      "points": [
+        "A personal pronoun replaces a noun, so you don't repeat it. Which one you pick depends on the person (I, you, he/she), singular or plural, and for 'you' on formal or informal.",
+        "First person: [[ich]], plural [[wir]]: [[Ich wohne in New York.]], [[Wir wohnen in New York.]]",
+        "Informal 'you' goes with first names: [[du]] for one person, [[ihr]] for several: [[Max, wo wohnst du?]], [[Lena und Peter, wo wohnt ihr?]]",
+        "Polite 'you' is [[Sie]] for one person and for several, always with a capital S: [[Herr Müller, wo wohnen Sie?]]",
+        "Third person: [[er]] (masculine), [[sie]] (feminine), [[es]] (neuter), plural [[sie]]. They stand for things too: [[Das ist mein Buch. Es ist alt.]] This [[sie]] takes a capital only at the start of a sentence."
+      ],
+      "phrases": [
+        {"de": "Wir wohnen in Berlin.", "en": "We live in Berlin."},
+        {"de": "Max, wo wohnst du?", "en": "Max, where do you live?"},
+        {"de": "Lena und Peter, wo wohnt ihr?", "en": "Lena and Peter, where do you live?"},
+        {"de": "Herr Müller, wo wohnen Sie?", "en": "Mr Müller, where do you live?"},
+        {"de": "Das ist Thomas. Er wohnt in London.", "en": "This is Thomas. He lives in London."},
+        {"de": "Eva wohnt in Paris.", "en": "Eva lives in Paris."},
+        {"de": "Das ist mein Buch. Es ist alt.", "en": "This is my book. It's old."},
+        {"de": "Katrin und Peter wohnen in Hamburg.", "en": "Katrin and Peter live in Hamburg."}
+      ]
+    }},
+    {"id": "xy4a1c7W7k0", "title": "haben and sein", "minutes": 10, "notes": {
+      "points": [
+        "[[haben]] and [[sein]] are the two most important verbs: main verbs now, and later the helpers of the past tense.",
+        "[[haben]]: [[ich habe]], [[du hast]], [[er hat]], [[wir haben]], [[ihr habt]], [[sie haben]]. Its endings are the ones most verbs use; only du and er lose the b.",
+        "[[sein]] has no pattern, so learn it as it is: [[ich bin]], [[du bist]], [[er ist]], [[wir sind]], [[ihr seid]], [[sie sind]].",
+        "When the subject is a name or a noun, conjugate as for the pronoun that could replace it: [[Eva]] is [[sie]], so [[Eva hat eine Tochter.]] [[Meine Eltern]] are [[sie]] (they), so [[Meine Eltern haben einen Hund.]]"
+      ],
+      "phrases": [
+        {"de": "Ich habe ein Auto.", "en": "I have a car."},
+        {"de": "Hast du eine Freundin?", "en": "Do you have a girlfriend?"},
+        {"de": "Habt ihr Kinder?", "en": "Do you (all) have children?"},
+        {"de": "Er hat keine Zeit.", "en": "He has no time."},
+        {"de": "Meine Eltern haben einen Hund.", "en": "My parents have a dog."},
+        {"de": "Wir sind glücklich.", "en": "We're happy."},
+        {"de": "Seid ihr glücklich?", "en": "Are you (all) happy?"},
+        {"de": "Frau Schmidt, sind Sie zu Hause?", "en": "Ms Schmidt, are you at home?"},
+        {"de": "Sabine ist Lehrerin.", "en": "Sabine is a teacher."}
+      ]
+    }},
+    {"id": "siLfPrsfRJw", "title": "Sie or sie?", "minutes": 11, "notes": {
+      "points": [
+        "There are four sie's. With a capital S: polite 'you', for one person or several. With a small s: 'she' and 'they'.",
+        "The verb tells you which: polite [[Sie]] and [[sie]] (they) take -en ([[Sie wohnen]], [[sie wohnen]]); [[sie]] (she) takes -t ([[sie wohnt]]).",
+        "Polite [[Sie]] keeps its capital everywhere in the sentence. [[sie]] (she, they) gets a capital only at the start of a sentence.",
+        "As an object (accusative) they all stay the same: [[Herr Schmidt, ich besuche Sie heute.]], [[Ich besuche sie heute.]] In the dative they change: [[Ihnen]], [[ihr]], [[ihnen]].",
+        "Use [[Sie]] with people you don't know, at offices and with authorities, and to be polite; otherwise [[du]]."
+      ],
+      "phrases": [
+        {"de": "Herr Müller, wo wohnen Sie?", "en": "Mr Müller, where do you live?"},
+        {"de": "Herr und Frau Müller, wo wohnen Sie?", "en": "Mr and Mrs Müller, where do you live?"},
+        {"de": "Das ist Lena. Heute ist sie nicht zu Hause.", "en": "This is Lena. Today she isn't at home."},
+        {"de": "Das ist Mila. Sie ist meine Schwester.", "en": "This is Mila. She's my sister."},
+        {"de": "Das sind Max und Thomas. Morgen schreiben sie einen Test.", "en": "These are Max and Thomas. Tomorrow they're writing a test."},
+        {"de": "Herr Schmidt, ich besuche Sie heute.", "en": "Mr Schmidt, I'll visit you today."},
+        {"de": "Frau Weber, woher kommen Sie?", "en": "Ms Weber, where are you from?"}
+      ]
+    }}
   ],
   "words": ["sein", "das-ist", "freut-mich", "freund", "freundin", "kollege", "kollegin", "herr", "frau", "wer", "nett", "neu", "hier", "alt", "jahr"],
   "sections": [

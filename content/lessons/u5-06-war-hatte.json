@@ -15,7 +15,24 @@
     { "title": "Nicos Weg A1, chapter 8: Appointments (Zu spät!?)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
   ],
   "videos": [
-    {"id": "nmyEEsPEv-k", "title": "war and hatte", "minutes": 8}
+    {"id": "nmyEEsPEv-k", "title": "war and hatte", "minutes": 8, "notes": {
+      "points": [
+        "Past, present, future: [[die Vergangenheit]], [[die Gegenwart]], [[die Zukunft]]. Past time words: [[gestern]], [[vorgestern]] (the day before yesterday), [[letzte Woche]], [[letztes Jahr]], [[vor ein paar Tagen]].",
+        "[[sein]] and [[haben]] use a short past form, the Präteritum: [[war]] and [[hatte]]. It sits in second place, like any conjugated verb.",
+        "[[hatte]]: [[ich hatte]], [[du hattest]], [[er hatte]], [[wir hatten]], [[ihr hattet]], [[sie hatten]].",
+        "[[war]]: [[ich war]], [[du warst]], [[er war]], [[wir waren]], [[ihr wart]], [[sie waren]].",
+        "In the Präteritum, ich and er/sie/es always have the same form."
+      ],
+      "phrases": [
+        {"de": "Letztes Jahr hatte ich kein Auto. Heute habe ich ein Auto.", "en": "Last year I didn't have a car. Now I have one."},
+        {"de": "Vor ein paar Jahren hatten wir kein Geld.", "en": "A few years ago we had no money."},
+        {"de": "Gestern war das Wetter schlecht, heute ist es schön.", "en": "Yesterday the weather was bad; today it's nice."},
+        {"de": "Vorgestern war er müde.", "en": "The day before yesterday he was tired."},
+        {"de": "Letzte Woche waren wir in Berlin.", "en": "Last week we were in Berlin."},
+        {"de": "Gestern hatte Peter Fieber.", "en": "Yesterday Peter had a temperature."},
+        {"de": "Wir hatten einen Hund.", "en": "We had a dog."}
+      ]
+    }}
   ],
   "words": ["wie-war-dein-wochenende", "wetter", "regen", "toll", "super", "langweilig", "interessant", "see", "ausflug", "urlaub", "schlecht"],
   "tests": ["u5-t3-wochenende"],

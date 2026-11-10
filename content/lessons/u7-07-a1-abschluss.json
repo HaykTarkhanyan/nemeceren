@@ -11,12 +11,120 @@
     "Check your level: the A1 final test and the mock exam"
   ],
   "videos": [
-    {"id": "-3TFXzLlJ38", "title": "Test your German (A1)", "minutes": 12},
-    {"id": "nFBOwzDCzrg", "title": "Time adverbs", "minutes": 10},
-    {"id": "e4ZAWf-ogWA", "title": "The question word warum", "minutes": 4},
-    {"id": "e3yKQWhYSio", "title": "sehr or viel?", "minutes": 10},
-    {"id": "S1rzbEyQa0E", "title": "viel or viele?", "minutes": 4},
-    {"id": "qyW_bZZINqI", "title": "wen, wenn or wann?", "minutes": 10}
+    {"id": "-3TFXzLlJ38", "title": "Test your German (A1)", "minutes": 12, "notes": {
+      "points": [
+        "A 20-question multiple-choice quiz on the whole of A1. Answer before the video shows the solution (15 seconds each).",
+        "It checks verb endings ([[Ich heiße Lena.]]), du or Sie ([[Wie geht's? - Gut, und dir?]]), articles and opposites ([[Die Tasche ist teuer.]], not billig), and [[ein]] or [[eine]] ([[Das ist eine Couch.]]).",
+        "Word order: separable verbs ([[Ich kaufe heute ein.]]), modal verbs ([[Max kann gut Englisch.]]), [[um]] with clock times.",
+        "Cases: [[mir]], not mich, with [[gefallen]] ([[Das gefällt mir.]]); [[mit]] + dative ([[mit dem Fahrrad]]); the accusative ([[Wie findest du diesen Pullover?]]).",
+        "Also: [[man]] takes the er/sie/es form, the Perfekt of [[gehen]] takes [[sein]] ([[Ich bin gegangen.]]), and a polite reply at the shop ([[Ich hätte gern ein Kilo Birnen.]])."
+      ],
+      "phrases": [
+        {"de": "Guten Tag, ich heiße Lena.", "en": "Hello, my name is Lena."},
+        {"de": "Wie geht's? Gut, und dir?", "en": "How are you? Fine, and you?"},
+        {"de": "Die Tasche kostet zwanzig Euro.", "en": "The bag costs twenty euros."},
+        {"de": "Ich hätte gern ein Kilo Birnen.", "en": "I'd like a kilo of pears."},
+        {"de": "Max kann gut Englisch.", "en": "Max speaks good English."},
+        {"de": "Das gefällt mir.", "en": "I like that."},
+        {"de": "Ich fahre mit dem Fahrrad.", "en": "I'm going by bike."},
+        {"de": "Ich bin nach Hause gegangen.", "en": "I went home."},
+        {"de": "Wie findest du diesen Pullover?", "en": "What do you think of this jumper?"}
+      ]
+    }},
+    {"id": "nFBOwzDCzrg", "title": "Time adverbs", "minutes": 10, "notes": {
+      "points": [
+        "Time adverbs answer three questions: [[wann?]] (when), [[wie lange?]] (how long) and [[wie oft?]] (how often). They can start a sentence; the verb stays second: [[Manchmal habe ich Kopfschmerzen.]]",
+        "Regular times with -s: [[montags]], [[sonntags]], [[morgens]], [[mittags]], [[abends]], [[nachts]]: [[Er arbeitet gern sonntags.]]",
+        "Past: [[vorgestern]], [[gestern]], [[früher]] (in the past), [[damals]] (back then). Now: [[heute]], [[jetzt]], [[gerade]] (right now), [[sofort]] (at once), [[heutzutage]] (nowadays). Future: [[morgen]], [[übermorgen]], [[bald]], [[später]].",
+        "Careful: [[morgen]] is tomorrow; [[morgens]] is in the morning.",
+        "Order of events: [[vorher]] (before), [[zuerst]], [[dann]], [[danach]], [[später]].",
+        "How often, from most to least: [[immer]], [[meistens]], [[oft]] or [[häufig]], [[manchmal]] or [[ab und zu]], [[selten]], [[fast nie]], [[nie]]."
+      ],
+      "phrases": [
+        {"de": "Abends gehen wir alle spazieren.", "en": "In the evenings we all go for a walk."},
+        {"de": "Früher habe ich kein Gemüse gegessen.", "en": "I used to not eat vegetables."},
+        {"de": "Damals war ich ein kleiner Junge.", "en": "Back then I was a little boy."},
+        {"de": "Sie telefoniert gerade.", "en": "She's on the phone right now."},
+        {"de": "Sie bekommt bald ein Baby.", "en": "She's having a baby soon."},
+        {"de": "Soll ich dich später anrufen?", "en": "Shall I call you later?"},
+        {"de": "Danach gehen wir einkaufen, und später essen wir Eis.", "en": "After that we'll go shopping, and later we'll have ice cream."},
+        {"de": "Er kommt immer zu spät.", "en": "He's always late."},
+        {"de": "Ich liebe meine Arbeit, aber ab und zu brauche ich eine Pause.", "en": "I love my work, but now and then I need a break."},
+        {"de": "Ich habe ihn nie gesehen.", "en": "I've never seen him."}
+      ],
+      "extra": "[[früher]], [[damals]], [[heutzutage]], [[übermorgen]] and the scale from [[immer]] to [[nie]]."
+    }},
+    {"id": "e4ZAWf-ogWA", "title": "The question word warum", "minutes": 4, "notes": {
+      "points": [
+        "[[warum]] (why) asks for a reason. It stands first, with the verb second: [[Warum lernst du Deutsch?]]",
+        "The answer usually comes with [[weil]] or [[denn]] (because), both at A2. For now, answer with a separate sentence.",
+        "Words with the same meaning, used the same way: [[wieso]], [[weshalb]], [[weswegen]]: [[Wieso ist er nicht gekommen?]]"
+      ],
+      "phrases": [
+        {"de": "Warum lernst du Deutsch?", "en": "Why are you learning German?"},
+        {"de": "Wieso ist er nicht gekommen?", "en": "Why didn't he come?"},
+        {"de": "Warum hast du keine Zeit?", "en": "Why don't you have time?"},
+        {"de": "Weshalb kommst du heute so spät?", "en": "Why are you so late today?"},
+        {"de": "Warum kommst du nicht? Ich bin krank.", "en": "Why aren't you coming? I'm ill."}
+      ],
+      "extra": "[[wieso]], [[weshalb]] and [[weswegen]], which mean the same as [[warum]]."
+    }},
+    {"id": "e3yKQWhYSio", "title": "sehr or viel?", "minutes": 10, "notes": {
+      "points": [
+        "[[sehr]] is about quality: 'very' before an adjective: [[Du siehst heute sehr schön aus.]], [[Meine Kollegin ist sehr sympathisch.]]",
+        "[[sehr]] after a verb means 'very much', how strongly you feel: [[Die Pizza schmeckt ihm sehr.]], [[Diese Schuhe gefallen mir sehr.]]",
+        "[[viel]] is about quantity: 'much', 'a lot', after the verb: [[Das Handy kostet nicht viel.]], [[Er redet viel.]]",
+        "[[viel]] also goes before nouns you can't count: [[viel Zeit]], [[viel Geld]], [[viel Glück]].",
+        "They combine: [[sehr viel]] (a great deal), [[so viel]] (so much), [[zu viel]] (too much)."
+      ],
+      "phrases": [
+        {"de": "Diesen Film mag ich sehr.", "en": "I like this film very much."},
+        {"de": "Die Pizza schmeckt ihm sehr.", "en": "He really likes the pizza."},
+        {"de": "Er hat nicht viel gegessen.", "en": "He didn't eat much."},
+        {"de": "Heute habe ich viel Zeit.", "en": "Today I have a lot of time."},
+        {"de": "Auf der Party haben wir sehr viel gegessen.", "en": "We ate a great deal at the party."},
+        {"de": "Er trinkt so viel Kaffee.", "en": "He drinks so much coffee."},
+        {"de": "Die Musik ist sehr laut.", "en": "The music is very loud."},
+        {"de": "Ich wünsche dir viel Glück.", "en": "I wish you good luck."}
+      ]
+    }},
+    {"id": "S1rzbEyQa0E", "title": "viel or viele?", "minutes": 4, "notes": {
+      "points": [
+        "Like much and many in English: [[viel]] with things you can't count (singular), [[viele]] with things you can count (plural).",
+        "[[viel]]: [[Ich habe nicht viel Zeit.]], [[Wie viel Geld hast du?]], [[Iss nicht so viel Fleisch!]]",
+        "[[viele]]: [[Sie hat viele Blusen gekauft.]], [[Wie viele Kinder hast du?]]",
+        "After a dative preposition, [[viele]] becomes [[vielen]]: [[Ich habe mit vielen Leuten Englisch gesprochen.]]"
+      ],
+      "phrases": [
+        {"de": "Ich habe nicht viel Zeit.", "en": "I don't have much time."},
+        {"de": "Wie viel Geld hast du?", "en": "How much money do you have?"},
+        {"de": "Er hat heute viel Arbeit.", "en": "He has a lot of work today."},
+        {"de": "Sie hat viele Blusen gekauft.", "en": "She bought lots of blouses."},
+        {"de": "Ich habe gestern viele Leute kennengelernt.", "en": "I met lots of people yesterday."},
+        {"de": "Hier sind viele Menschen.", "en": "There are a lot of people here."},
+        {"de": "Ich habe mit vielen Leuten Englisch gesprochen.", "en": "I spoke English with lots of people."}
+      ]
+    }},
+    {"id": "qyW_bZZINqI", "title": "wen, wenn or wann?", "minutes": 10, "notes": {
+      "points": [
+        "Say them differently: [[wen]] has a long e, [[wenn]] a short e, [[wann]] an a. A wrong sound changes the meaning.",
+        "[[wen]] (whom) is the accusative of [[wer]] and always asks about a person: [[Wen rufst du an?]] - [[Ich rufe Peter an.]] Also after accusative prepositions: [[Für wen kaufst du ein Geschenk?]]",
+        "[[wann]] (when?) asks about a time: [[Wann kommen Sie?]] Answer with a time ([[um neun]], [[am Abend]]) or a time word ([[jeden Abend]], [[täglich]]).",
+        "[[wenn]] (if, whenever) is not a question word: it sets a condition and sends the verb to the end: [[Wenn ich Hunger habe, esse ich eine Banane.]] (A2)",
+        "In indirect questions the verb also goes last: [[Ich weiß nicht, wann er nach Hause kommt.]]"
+      ],
+      "phrases": [
+        {"de": "Wen rufst du an? Ich rufe Peter an.", "en": "Who are you calling? I'm calling Peter."},
+        {"de": "Für wen kaufst du ein Geschenk?", "en": "Who are you buying a present for?"},
+        {"de": "Wann fährst du nach Berlin?", "en": "When are you going to Berlin?"},
+        {"de": "Wann beginnt der Unterricht?", "en": "When does the class start?"},
+        {"de": "Wenn ich Hunger habe, esse ich eine Banane.", "en": "When I'm hungry, I eat a banana."},
+        {"de": "Kannst du mir helfen, wenn ich etwas nicht verstehe?", "en": "Can you help me if I don't understand something?"},
+        {"de": "Wenn ich krank bin, bleibe ich im Bett.", "en": "When I'm ill, I stay in bed."},
+        {"de": "Ich weiß nicht, wann er nach Hause kommt.", "en": "I don't know when he's coming home."}
+      ],
+      "extra": "[[wenn]] (if, whenever), which sends the verb to the end; it comes properly at A2."
+    }}
   ],
   "words": ["wissen", "warum", "bald", "gleich", "sofort", "mehr", "wenig", "nichts", "einfach", "schwer", "leicht", "kaputt", "reparieren", "ruhig", "moeglich", "fremd", "kennenlernen", "mitnehmen", "verkaufen", "geschaeft", "baeckerei", "polizei", "schule"],
   "tests": ["u7-t4-a1-check"],

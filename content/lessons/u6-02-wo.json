@@ -15,8 +15,45 @@
     { "title": "Nicos Weg A1, chapter 10: Orientation (Im Büro)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
   ],
   "videos": [
-    {"id": "agSVcYQw4_U", "title": "Places in a city", "minutes": 10},
-    {"id": "jKTtQb6qJgY", "title": "W-questions", "minutes": 5}
+    {"id": "agSVcYQw4_U", "title": "Places in a city", "minutes": 10, "notes": {
+      "points": [
+        "Each place comes with what you do there, in the pattern [[Hier kann man ...]] (here you can ...).",
+        "Shopping: [[die Bäckerei]] (bread), [[die Metzgerei]] or [[die Fleischerei]] (butcher's), [[der Supermarkt]], [[der Kiosk]] (newspapers), [[der Blumenladen]], [[der Buchladen]] (bookshop), [[das Geschäft]] (shop), [[die Eisdiele]] (ice-cream parlour).",
+        "Services: [[die Bank]] ([[Geld abheben]], withdraw money), [[die Apotheke]] (pharmacy), [[die Post]], [[das Rathaus]] (town hall: a passport), [[die Polizei]], [[das Krankenhaus]] (hospital), [[das Reisebüro]] (travel agent's).",
+        "Free time: [[der Park]], [[das Kino]], [[das Theater]], [[das Museum]], [[der Zoo]], [[das Stadion]], [[das Schwimmbad]] (swimming pool), [[das Fitnessstudio]], [[die Kneipe]] (pub), [[der Spielplatz]] (playground).",
+        "Careful: [[die Bücherei]] is a library, where you borrow books; [[der Buchladen]] sells them."
+      ],
+      "phrases": [
+        {"de": "In der Bäckerei kann man frisches Brot kaufen.", "en": "At the bakery you can buy fresh bread."},
+        {"de": "In der Bank kann man Geld abheben.", "en": "At the bank you can withdraw money."},
+        {"de": "In der Apotheke kann man Medikamente kaufen.", "en": "At the pharmacy you can buy medicine."},
+        {"de": "Auf der Post kann man Briefe und Pakete abschicken.", "en": "At the post office you can send letters and parcels."},
+        {"de": "Im Hotel kann man übernachten.", "en": "At a hotel you can stay the night."},
+        {"de": "Im Park kann man spazieren gehen.", "en": "In the park you can go for a walk."},
+        {"de": "Im Reisebüro kann man Reisen buchen.", "en": "At a travel agent's you can book trips."},
+        {"de": "Bei der Polizei kann man einen Diebstahl melden.", "en": "At the police you can report a theft."}
+      ],
+      "extra": "About 30 places in a town, and [[Hier kann man ...]] for what you do there."
+    }},
+    {"id": "jKTtQb6qJgY", "title": "W-questions", "minutes": 5, "notes": {
+      "points": [
+        "W-questions start with a question word, and the verb comes second.",
+        "[[was]] (what), [[wer]] (who), [[wen]] (whom: the accusative of wer), [[wann]] (when), [[warum]] (why), [[wie]] (how), [[welche]] (which).",
+        "Places: [[wo]] (where), [[woher]] (where from), [[wohin]] (where to).",
+        "Amounts: [[wie viel]] (how much), [[wie viele]] (how many, with a plural), [[wie oft]] (how often)."
+      ],
+      "phrases": [
+        {"de": "Warum bist du traurig?", "en": "Why are you sad?"},
+        {"de": "Wann heiratet ihr?", "en": "When are you getting married?"},
+        {"de": "Wer spricht gut Deutsch?", "en": "Who speaks German well?"},
+        {"de": "Wen liebst du?", "en": "Who do you love?"},
+        {"de": "Wohin fahrt ihr im Urlaub?", "en": "Where are you going on holiday?"},
+        {"de": "Wie viel kostet ein Fahrrad?", "en": "How much does a bike cost?"},
+        {"de": "Wie viele Kinder hast du?", "en": "How many children do you have?"},
+        {"de": "Wie oft spielst du Fußball?", "en": "How often do you play football?"},
+        {"de": "Welche Sprachen sprichst du?", "en": "Which languages do you speak?"}
+      ]
+    }}
   ],
   "words": ["wohin", "dort", "oben", "unten", "neben", "hinter", "zwischen", "aufzug", "treppe", "stock", "erdgeschoss", "toilette", "eingang", "ausgang"],
   "tests": ["u6-t1-dativ-orte"],

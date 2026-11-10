@@ -405,7 +405,8 @@ function LessonView({ lesson, linked, station }: { lesson: Lesson; linked: numbe
         {lesson.videos && lesson.videos.length > 0 && (
           <div className="stack">
             <p className="small">
-              <strong>Videos</strong> to watch with this lesson (Learn German on YouTube):
+              <strong>Videos</strong> to watch with this lesson (Learn German on YouTube)
+              {lesson.videos.some((v) => v.notes) ? '. No time to watch? Open "Read instead" for the short version.' : ':'}
             </p>
             <VideoList videos={lesson.videos} />
           </div>

@@ -14,11 +14,107 @@
     { "title": "Nicos Weg A1, chapter 10: Orientation (Wo ist der Bahnhof?, Mit Bus und Bahn)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
   ],
   "videos": [
-    {"id": "ywhdo-UQjBM", "title": "Articles in the dative", "minutes": 10},
-    {"id": "jjsrDcw6kfU", "title": "The dative (grammar)", "minutes": 11},
-    {"id": "X6db08GLuHw", "title": "Prepositions with the dative", "minutes": 14},
-    {"id": "-rU7DBOPGXg", "title": "Possessives in the dative", "minutes": 10},
-    {"id": "agOqDL2JYZ0", "title": "aus or von?", "minutes": 10}
+    {"id": "ywhdo-UQjBM", "title": "Articles in the dative", "minutes": 10, "notes": {
+      "points": [
+        "The dative marks the person something is given to or done for: the indirect object. Ask [[Wem?]] (to whom?): [[Die Mutter kauft der Tochter ein Kleid.]]",
+        "Definite articles: [[der]] becomes [[dem]], [[die]] becomes [[der]], [[das]] becomes [[dem]], plural [[die]] becomes [[den]], and the plural noun adds -n: [[den Kindern]].",
+        "Indefinite: [[einem]] (masculine and neuter), [[einer]] (feminine); no plural. Negative: [[keinem]], [[keiner]], [[keinen]] (plural, noun + -n).",
+        "The endings to remember: -em for masculine and neuter, -er for feminine, -en for plural.",
+        "Some verbs always take the dative, even with only one object: [[danken]] and [[helfen]]: [[Ich danke dem Mann.]], [[Ich helfe der Frau.]]"
+      ],
+      "phrases": [
+        {"de": "Die Mutter kauft der Tochter ein Kleid.", "en": "The mother buys the daughter a dress."},
+        {"de": "Ich gebe dem Mann das Buch.", "en": "I give the man the book."},
+        {"de": "Ich schenke der Frau eine Blume.", "en": "I give the woman a flower."},
+        {"de": "Ich bringe dem Kind einen Ball.", "en": "I bring the child a ball."},
+        {"de": "Ich gebe den Kindern Schokolade.", "en": "I give the children chocolate."},
+        {"de": "Wem gibst du das Buch?", "en": "Who are you giving the book to?"},
+        {"de": "Ich danke dem Mann.", "en": "I thank the man."},
+        {"de": "Ich helfe der Frau.", "en": "I help the woman."}
+      ],
+      "extra": "The dative as the indirect object ([[Wem?]]), which the lesson leaves for later; it starts with the prepositions."
+    }},
+    {"id": "jjsrDcw6kfU", "title": "The dative (grammar)", "minutes": 11, "notes": {
+      "points": [
+        "The dative is used in four places. First, the indirect object, usually the person an action is for: [[Die Eltern geben dem Sohn einen Kuli.]] With two objects, the person is usually the dative.",
+        "Second, after the dative prepositions: [[aus]], [[bei]], [[mit]], [[nach]], [[seit]], [[von]], [[zu]], [[gegenüber]]: [[Ich fahre mit dem Auto.]]",
+        "Third, after dative verbs, which need no accusative: [[Das Buch gehört mir.]], [[Wir können Ihnen helfen.]]",
+        "Fourth, with some adjectives, for how you feel: [[Mir ist kalt.]] (I'm cold), [[Mir ist langweilig.]] (I'm bored)",
+        "Pronouns change too: [[ihr]] (to her), as in [[Das ist Eva. Ich schenke ihr eine Schokolade.]]"
+      ],
+      "phrases": [
+        {"de": "Die Eltern geben dem Sohn einen Kuli.", "en": "The parents give their son a pen."},
+        {"de": "Ich gebe meiner Tochter einen Kuss.", "en": "I give my daughter a kiss."},
+        {"de": "Ich spreche mit einem Mann.", "en": "I'm talking to a man."},
+        {"de": "Ich fahre mit dem Auto.", "en": "I'm going by car."},
+        {"de": "Das Buch gehört mir.", "en": "The book belongs to me."},
+        {"de": "Wir können Ihnen helfen.", "en": "We can help you."},
+        {"de": "Mir ist kalt.", "en": "I'm cold."},
+        {"de": "Mir ist langweilig.", "en": "I'm bored."}
+      ],
+      "extra": "[[Mir ist kalt.]] and [[Mir ist langweilig.]] for how you feel."
+    }},
+    {"id": "X6db08GLuHw", "title": "Prepositions with the dative", "minutes": 14, "notes": {
+      "points": [
+        "After a dative preposition the article changes: [[Er kommt nach dem Unterricht.]], [[Ich esse Nudeln mit einer Gabel.]] The main ones: [[von]], [[zu]], [[aus]], [[ab]], [[seit]], [[nach]], [[mit]], [[bei]], [[gegenüber]].",
+        "[[von]]: from a place or person ([[ein Geschenk von meinem Vater]]), from ... to ([[von Montag bis Freitag]]). [[vom]] = [[von dem]]. [[aus]]: out of ([[aus der Flasche]]), a country ([[aus England]]), a material ([[aus Gold]]).",
+        "[[mit]]: with ([[Kaffee mit Zucker]]), by a vehicle ([[mit dem Bus]]), at an age ([[Mit achtzehn darf man Auto fahren.]]).",
+        "[[nach]]: after ([[nach dem Unterricht]]), to a country or city ([[nach Spanien]]), and in times ([[Viertel nach vier]]). [[zu]]: to a person or place ([[zu meinen Eltern]], [[zum Arzt]], [[zur Schule]]).",
+        "[[bei]]: at a company ([[bei BMW]]), near ([[Potsdam liegt bei Berlin.]]), at someone's home ([[bei ihren Eltern]]). [[beim]] = [[bei dem]].",
+        "Time: [[seit]] = since or for, up to now ([[seit drei Jahren]]); [[ab]] = from ... on ([[ab Montag]]). [[gegenüber]] = opposite, and it can come after the noun: [[gegenüber dem Bahnhof]], [[mir gegenüber]]."
+      ],
+      "phrases": [
+        {"de": "Er kommt gerade von der Arbeit.", "en": "He's just coming from work."},
+        {"de": "Ich trinke Kaffee mit Zucker.", "en": "I drink coffee with sugar."},
+        {"de": "Ich fahre jeden Tag mit dem Bus.", "en": "I take the bus every day."},
+        {"de": "Ab nächster Woche habe ich Urlaub.", "en": "From next week I'm on holiday."},
+        {"de": "Wir sind seit drei Jahren verheiratet.", "en": "We've been married for three years."},
+        {"de": "Nach dem Unterricht habe ich immer Hunger.", "en": "After class I'm always hungry."},
+        {"de": "Sie wohnt bei ihren Eltern.", "en": "She lives with her parents."},
+        {"de": "Hast du Zeit zum Lernen?", "en": "Do you have time to study?"},
+        {"de": "Ich wohne gegenüber dem Bahnhof.", "en": "I live opposite the station."}
+      ],
+      "extra": "[[ab]] and [[gegenüber]], and [[zum]] with a verb-noun ([[zum Lernen]])."
+    }},
+    {"id": "-rU7DBOPGXg", "title": "Possessives in the dative", "minutes": 10, "notes": {
+      "points": [
+        "Possessives in the dative work like [[einem]] and [[einer]]: -em for masculine and neuter, -er for feminine, -en for plural.",
+        "The indirect object receives the direct object: in [[Ich gebe meinem Mann einen Kuss.]], my husband gets the kiss.",
+        "All four: [[meinem Mann]], [[meiner Tochter]], [[meinem Baby]], [[meinen Kindern]]. The plural noun adds -n, unless it already ends in -n: [[ihren Nachbarn]].",
+        "It works the same for every possessive: [[seinem Bruder]], [[ihrer Schwester]], [[unserem Vater]], [[unseren Großeltern]].",
+        "[[euer]] loses an e again: [[eurem]], [[eurer]], [[euren]]."
+      ],
+      "phrases": [
+        {"de": "Ich gebe meinem Mann einen Kuss.", "en": "I give my husband a kiss."},
+        {"de": "Ich gebe meiner Tochter einen Kuss.", "en": "I give my daughter a kiss."},
+        {"de": "Ich gebe meinen Kindern einen Kuss.", "en": "I give my children a kiss."},
+        {"de": "Er kauft seinem Bruder eine Schokolade.", "en": "He buys his brother a chocolate bar."},
+        {"de": "Sie bringt ihren Nachbarn das Essen.", "en": "She brings her neighbours the food."},
+        {"de": "Wir kaufen unserer Mutter ein Geschenk.", "en": "We buy our mother a present."},
+        {"de": "Ich kaufe meiner Freundin einen Ring.", "en": "I'm buying my girlfriend a ring."},
+        {"de": "Bringst du deinem Vater ein Buch?", "en": "Are you bringing your father a book?"}
+      ]
+    }},
+    {"id": "agOqDL2JYZ0", "title": "aus or von?", "minutes": 10, "notes": {
+      "points": [
+        "[[aus]] means out of the inside of something; [[von]] means from the outside of it, its surface or near it.",
+        "Out of the school building: [[Sie kommt aus der Schule.]] From near the school (the school bus): [[Sie kommt von der Schule.]] Out of the fridge: [[aus dem Kühlschrank]]; from on top of it: [[vom Kühlschrank]].",
+        "More [[von]]: [[Er kommt gerade von der Arbeit.]], who something is from ([[ein Geschenk von meinem Vater]]), and from ... to ([[von Montag bis Freitag]], [[von Frankfurt bis Paris]]).",
+        "More [[aus]]: countries and cities ([[Er kommt aus Vietnam.]]), materials ([[aus Gold]]), and feelings, without an article ([[aus Liebe]], out of love).",
+        "Some verbs come with them: [[abhängen von]] (depend on), [[sich erholen von]] (recover from), [[bestehen aus]] (consist of)."
+      ],
+      "phrases": [
+        {"de": "Sie nimmt die Karte aus der Tasche.", "en": "She takes the card out of her bag."},
+        {"de": "Er nimmt die Flasche aus dem Kühlschrank.", "en": "He takes the bottle out of the fridge."},
+        {"de": "Er trinkt Bier direkt aus der Flasche.", "en": "He drinks beer straight from the bottle."},
+        {"de": "Hast du schon etwas vom Chef gehört?", "en": "Have you heard anything from the boss yet?"},
+        {"de": "Der Brief ist von meinem Vater.", "en": "The letter is from my father."},
+        {"de": "Sie arbeitet von Montag bis Mittwoch.", "en": "She works from Monday to Wednesday."},
+        {"de": "Er kommt aus Japan.", "en": "He's from Japan."},
+        {"de": "Sie hat ein Haus aus Holz.", "en": "She has a house made of wood."}
+      ],
+      "extra": "The difference between [[aus]] and [[von]], and verbs like [[bestehen aus]]."
+    }}
   ],
   "words": ["mit", "zu", "seit", "geschenk"],
   "sections": [

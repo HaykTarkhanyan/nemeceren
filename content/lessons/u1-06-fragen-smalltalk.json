@@ -13,8 +13,43 @@
   ],
   "nicosWeg": [{ "title": "Nicos Weg A1, chapter 1: Meeting people (Woher kommst du?)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }],
   "videos": [
-    {"id": "n6db5VSUm2o", "title": "Sentence structure, part 1", "minutes": 10},
-    {"id": "ZNc0y2Dy5N8", "title": "Sentence structure, part 2", "minutes": 7}
+    {"id": "n6db5VSUm2o", "title": "Sentence structure, part 1", "minutes": 10, "notes": {
+      "points": [
+        "Every sentence has a subject and a verb, and the subject decides the verb's ending: [[Ich heiße Lena.]]",
+        "In a statement the verb is in second place. The subject stands right before it or right after it: [[Ich wohne in Berlin.]], [[In Berlin wohne ich.]]",
+        "W-questions ([[W-Fragen]]) start with a question word ([[wer]], [[was]], [[wo]], [[woher]], [[wie]]). The verb comes second and the subject after it: [[Woher kommst du?]]",
+        "A question word can be two words long and still count as one place: [[Wie alt bist du?]]",
+        "Yes/no questions ([[Ja/Nein-Fragen]]) are the exception: the verb comes first: [[Haben Sie Kinder?]], [[Wohnst du in München?]]"
+      ],
+      "phrases": [
+        {"de": "Ich bin müde.", "en": "I'm tired."},
+        {"de": "Wo wohnen Sie?", "en": "Where do you live?"},
+        {"de": "Wie heißen Sie?", "en": "What's your name?"},
+        {"de": "Wie ist Ihr Familienname?", "en": "What's your surname?"},
+        {"de": "Sind Sie verheiratet?", "en": "Are you married?"},
+        {"de": "Spielen Sie Fußball?", "en": "Do you play football?"},
+        {"de": "Haben Sie Zeit?", "en": "Do you have time?"},
+        {"de": "Kommst du aus England?", "en": "Are you from England?"},
+        {"de": "Wie alt bist du?", "en": "How old are you?"}
+      ]
+    }},
+    {"id": "ZNc0y2Dy5N8", "title": "Sentence structure, part 2", "minutes": 7, "notes": {
+      "points": [
+        "The pronoun decides the verb's ending: [[ich]] -e, [[du]] -st, [[Sie]] -en.",
+        "The [[Sie]] form is the easiest: it is the same as the infinitive: [[wohnen]], [[Sie wohnen]].",
+        "[[heißen]] already ends in an s sound, so [[du]] adds only -t: [[du heißt]].",
+        "[[sprechen]] is irregular: with [[du]] the e becomes i as well: [[du sprichst]]."
+      ],
+      "phrases": [
+        {"de": "ich wohne, du wohnst, Sie wohnen", "en": "I live, you live, you live (polite)"},
+        {"de": "ich komme, du kommst, Sie kommen", "en": "I come, you come, you come (polite)"},
+        {"de": "ich heiße, du heißt, Sie heißen", "en": "I'm called, you're called, you're called (polite)"},
+        {"de": "ich spreche, du sprichst, Sie sprechen", "en": "I speak, you speak, you speak (polite)"},
+        {"de": "Ich wohne in Paris.", "en": "I live in Paris."},
+        {"de": "Kommen Sie aus Österreich?", "en": "Are you from Austria?"},
+        {"de": "Sprichst du Englisch?", "en": "Do you speak English?"}
+      ]
+    }}
   ],
   "words": ["haben", "frage", "fragen", "antworten", "wiederholen", "verstehen", "kurs", "gern"],
   "tests": ["u1-t3-kontakt-fragen"],

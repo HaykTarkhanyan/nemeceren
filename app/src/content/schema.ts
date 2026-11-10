@@ -242,6 +242,31 @@ export const LessonBlock = z.discriminatedUnion(
   { error: () => `"type" must be one of: ${BLOCK_TYPES.join(', ')}` },
 )
 
+/** One line of lesson text (**bold**, *italic*, [[German]]), no line breaks. */
+const RichLine = RichText.refine((s) => !s.includes('\n'), { message: 'must be one line (no line breaks)' })
+
+/**
+ * "Read instead" notes for a lesson video, condensed from its captions, for reading instead of
+ * watching: what the video teaches, its key German with English, and optionally one line on what it
+ * has beyond the lesson. Shown as a folded "Read instead" next to the video's thumbnail.
+ */
+export const VideoNotes = z.strictObject({
+  /** 3-7 points in English: the rule, the pattern, the tips. */
+  points: z.array(RichLine).min(3).max(7),
+  /** 3-10 key German examples from the video, with English. */
+  phrases: z.array(z.strictObject({ de: Text, en: Text })).min(3).max(10),
+  /** Anything in the video that the lesson doesn't cover. */
+  extra: RichLine.optional(),
+})
+
+/** A YouTube video to watch with a lesson (DECISIONS.md #74): the 11-character video id, a short title, the length. */
+export const LessonVideo = z.strictObject({
+  id: z.string().regex(/^[A-Za-z0-9_-]{11}$/, { message: 'must be a YouTube video id (11 characters)' }),
+  title: Text,
+  minutes: z.number().int().positive(),
+  notes: VideoNotes.optional(),
+})
+
 /** A theme lesson is built from a song, a video, an article, or just a topic (content/themes/). */
 export const THEME_KINDS = ['song', 'video', 'article', 'topic'] as const
 /** Theme lesson ids start with this; course lesson ids never do. */
@@ -295,10 +320,8 @@ export const Lesson = z.strictObject({
   /** Can-do statements, in English. */
   goals: z.array(Text).min(1),
   nicosWeg: z.array(z.strictObject({ title: Text, url: z.url() })).optional(),
-  /** YouTube videos to watch with this lesson (DECISIONS.md #74): the 11-character video id, a short title, the length. */
-  videos: z
-    .array(z.strictObject({ id: z.string().regex(/^[A-Za-z0-9_-]{11}$/, { message: 'must be a YouTube video id (11 characters)' }), title: Text, minutes: z.number().int().positive() }))
-    .optional(),
+  /** YouTube videos to watch with this lesson, with optional "Read instead" notes. */
+  videos: z.array(LessonVideo).optional(),
   /** Word ids from content/words.json that this lesson introduces. */
   words: z.array(Slug).optional(),
   /** Test ids that belong to this lesson. */
@@ -964,6 +987,8 @@ export type CourseLesson = Lesson & { unit: number; order: number; theme?: undef
 /** A theme lesson (content/themes/): it has a theme and no place in the course. */
 export type ThemeLesson = Lesson & { theme: Theme; unit?: undefined; order?: undefined }
 export type LessonBlock = z.infer<typeof LessonBlock>
+export type LessonVideo = z.infer<typeof LessonVideo>
+export type VideoNotes = z.infer<typeof VideoNotes>
 export type Topics = z.infer<typeof Topics>
 export type TopicItem = z.infer<typeof TopicItem>
 export type WordSet = z.infer<typeof WordSet>

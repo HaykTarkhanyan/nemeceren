@@ -14,8 +14,48 @@
     { "title": "Nicos Weg A1, chapter 13: Weather and holiday (Wie wird das Wetter?)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
   ],
   "videos": [
-    {"id": "1Vrk13YeVns", "title": "The weather", "minutes": 10},
-    {"id": "7ukOaQvBHZU", "title": "Weather words", "minutes": 9}
+    {"id": "1Vrk13YeVns", "title": "The weather", "minutes": 10, "notes": {
+      "points": [
+        "The question: [[Wie ist das Wetter?]] Weather is a favourite small-talk topic in Germany, and sunshine counts as good weather: [[Es ist schönes Wetter.]] or [[Es ist schlechtes Wetter.]]",
+        "Sun and warmth: [[Die Sonne scheint.]], [[Es ist sonnig.]], [[Es ist warm.]], [[Es ist heiß.]], [[Es ist schwül.]] (muggy)",
+        "Cold: [[Es ist kühl.]], [[Es ist kalt.]], [[Es friert.]] (it's freezing). The temperature: [[Es sind zwanzig Grad.]]",
+        "Clouds, wind, rain and snow: [[Es ist bewölkt.]], [[Es ist windig.]], [[Es ist stürmisch.]], [[Es regnet.]], [[Es blitzt und donnert.]], [[Es gibt ein Gewitter.]] (a thunderstorm), [[Es ist neblig.]] (foggy), [[Es schneit.]]",
+        "Everyday comments: [[Heute ist es nicht so schön wie gestern.]], [[Heute ist das Wetter traumhaft!]] (dreamlike), [[Wir haben heute super Wetter!]], [[Der Himmel ist klar.]]",
+        "Many weather nouns have an adjective: [[die Sonne]] / [[sonnig]], [[der Regen]] / [[regnerisch]], [[die Wolke]] / [[wolkig]], [[der Wind]] / [[windig]], [[der Sturm]] / [[stürmisch]], [[der Nebel]] / [[neblig]]."
+      ],
+      "phrases": [
+        {"de": "Wie ist das Wetter?", "en": "What's the weather like?"},
+        {"de": "Es ist schönes Wetter.", "en": "The weather is nice."},
+        {"de": "Die Sonne scheint.", "en": "The sun is shining."},
+        {"de": "Es sind zwanzig Grad.", "en": "It's twenty degrees."},
+        {"de": "Es ist bewölkt.", "en": "It's cloudy."},
+        {"de": "Es blitzt und donnert.", "en": "There's thunder and lightning."},
+        {"de": "Heute ist es nicht so schön wie gestern.", "en": "Today isn't as nice as yesterday."},
+        {"de": "Heute ist das Wetter traumhaft!", "en": "The weather is gorgeous today!"},
+        {"de": "Der Himmel ist klar.", "en": "The sky is clear."}
+      ],
+      "extra": "Small talk about the weather: [[traumhaft]], [[schwül]], [[nicht so schön wie gestern]]."
+    }},
+    {"id": "7ukOaQvBHZU", "title": "Weather words", "minutes": 9, "notes": {
+      "points": [
+        "Weather nouns: [[die Sonne]], [[der Regen]], [[der Hagel]] (hail), [[die Wolke]], [[der Wind]], [[der Sturm]] (storm), [[das Gewitter]] (thunderstorm), [[das Unwetter]] (severe weather), [[der Donner]], [[der Blitz]] (lightning), [[der Nebel]] (fog), [[der Schnee]], [[das Eis]], [[der Frost]].",
+        "Temperature nouns: [[die Wärme]] (warmth), [[die Hitze]] (heat), [[die Kälte]] (cold).",
+        "Sentences with [[es]]: [[Es regnet.]], [[Es hagelt.]], [[Es schneit.]], [[Es blitzt.]], [[Es donnert.]] And with a subject: [[Die Sonne scheint.]], [[Der Wind weht.]]",
+        "Adjectives: [[sonnig]], [[wolkig]] or [[bewölkt]] or [[bedeckt]] (overcast), [[windig]], [[stürmisch]], [[regnerisch]], [[neblig]], [[eisig]], [[frostig]].",
+        "Changeable weather: [[Das Wetter ist wechselhaft.]] These words help you follow forecasts on TV and the radio."
+      ],
+      "phrases": [
+        {"de": "Der Wind weht.", "en": "The wind is blowing."},
+        {"de": "Es ist bedeckt.", "en": "It's overcast."},
+        {"de": "Es hagelt.", "en": "It's hailing."},
+        {"de": "Es ist neblig.", "en": "It's foggy."},
+        {"de": "Es ist regnerisch.", "en": "It's rainy."},
+        {"de": "Das Wetter ist wechselhaft.", "en": "The weather is changeable."},
+        {"de": "Wie ist das Wetter heute?", "en": "What's the weather like today?"},
+        {"de": "Heute ist schönes Wetter.", "en": "The weather is nice today."}
+      ],
+      "extra": "[[der Hagel]], [[das Unwetter]], [[Das Wetter ist wechselhaft.]]"
+    }}
   ],
   "words": ["regnen", "schnee", "schneien", "wind", "grad", "kalt", "warm", "heiss", "meer", "berg", "baum", "blume", "garten", "dorf", "draussen", "norden", "sueden", "osten", "westen", "wetter", "sonne"],
   "tests": ["u7-t2-kleidung-wetter"],

@@ -12,8 +12,46 @@
     "Talk about people: kennen, besuchen, einladen"
   ],
   "videos": [
-    {"id": "_pQICJjSB-c", "title": "Pronouns in the accusative", "minutes": 11},
-    {"id": "HLBQveKnADU", "title": "Prepositions with the accusative", "minutes": 11}
+    {"id": "_pQICJjSB-c", "title": "Pronouns in the accusative", "minutes": 11, "notes": {
+      "points": [
+        "A pronoun replaces a noun so you don't repeat it: [[Ich finde Thomas nett.]] becomes [[Ich finde ihn nett.]] As the object it takes the accusative.",
+        "The pronouns that change: [[ich]] [[mich]], [[du]] [[dich]], [[er]] [[ihn]], [[wir]] [[uns]], [[ihr]] [[euch]].",
+        "The ones that stay the same: [[sie]] (she), [[es]], [[sie]] (they) and polite [[Sie]].",
+        "Polite [[Sie]] always has a capital S; [[sie]] (she, they) only at the start of a sentence.",
+        "In letters and cards some people capitalise [[Dich]] and [[Du]] to be polite. It's a style choice, not a rule."
+      ],
+      "phrases": [
+        {"de": "Kennst du mich?", "en": "Do you know me?"},
+        {"de": "Ich kenne dich nicht.", "en": "I don't know you."},
+        {"de": "Herr Schmidt, ich suche Sie.", "en": "Mr Schmidt, I'm looking for you."},
+        {"de": "Das ist Thomas. Ich kenne ihn.", "en": "This is Thomas. I know him."},
+        {"de": "Das ist mein Buch. Ich finde es sehr interessant.", "en": "This is my book. I find it very interesting."},
+        {"de": "Kennst du uns?", "en": "Do you know us?"},
+        {"de": "Ich kenne euch nicht.", "en": "I don't know you (all)."},
+        {"de": "Ich mag dich.", "en": "I like you."},
+        {"de": "Entschuldigen Sie mich bitte.", "en": "Excuse me, please."}
+      ]
+    }},
+    {"id": "HLBQveKnADU", "title": "Prepositions with the accusative", "minutes": 11, "notes": {
+      "points": [
+        "Seven prepositions always take the accusative: [[bis]], [[ohne]], [[für]], [[um]], [[durch]], [[gegen]], [[entlang]]. So [[mein Bruder]] becomes [[meinen Bruder]]: [[Ich kaufe eine Tasche für meinen Bruder.]]",
+        "[[bis]] marks an end point: [[bis sechs Uhr]], [[bis Montag]]. [[ohne]] means without: [[Kaffee ohne Milch]], [[ohne dich]].",
+        "[[für]] means for: [[Die Blumen sind für dich.]] [[um]] is an exact time ([[um neun Uhr]]) or 'around' ([[um den Tisch]]).",
+        "[[durch]] means through: [[durch den Park]]. [[gegen]] means 'at about' for times ([[gegen acht]]), against something ([[gegen die Wand]]), against a team ([[Deutschland gegen Frankreich]]) or against an idea.",
+        "[[entlang]] (along) comes after the noun: [[Wir gehen den Fluss entlang.]]"
+      ],
+      "phrases": [
+        {"de": "Wir arbeiten bis sechs Uhr.", "en": "We work until six."},
+        {"de": "Ich trinke Kaffee ohne Milch.", "en": "I drink coffee without milk."},
+        {"de": "Die Blumen sind für dich.", "en": "The flowers are for you."},
+        {"de": "Wir sitzen um den Tisch.", "en": "We're sitting around the table."},
+        {"de": "Wir gehen durch den Park.", "en": "We're walking through the park."},
+        {"de": "Ich komme gegen acht.", "en": "I'll come at about eight."},
+        {"de": "Heute spielt Deutschland gegen Frankreich.", "en": "Today Germany is playing France."},
+        {"de": "Wir gehen den Fluss entlang.", "en": "We're walking along the river."}
+      ],
+      "extra": "[[bis]], [[um]], [[durch]], [[gegen]] and [[entlang]], beyond the lesson's [[für]] and [[ohne]]."
+    }}
   ],
   "words": ["fuer", "ohne", "kennen", "besuchen", "einladen", "lieben"],
   "sections": [
