@@ -59,7 +59,7 @@
     {
       "type": "listen_mc",
       "instruction": "Part 2, announcement in a language school: read the question, then play. In the exam you hear it once.",
-      "audio": "Wir haben hier eine Tasche und ein Handy. Die Tasche ist blau, und das Handy ist weiß. Ist das Ihre Tasche oder Ihr Handy?",
+      "audio": "Wir haben hier eine Tasche und ein Handy. Die Tasche ist blau, und das Handy ist weiß. Ist das Ihre Tasche? Ist das Ihr Handy?",
       "question": "What colour is the phone?",
       "questionLang": "en",
       "options": ["weiß", "blau", "schwarz"],
@@ -98,7 +98,7 @@
     },
     {
       "type": "dictation",
-      "instruction": "Extra (not in the exam): type what you hear.",
+      "instruction": "Extra (not in the exam): type what you hear. Write the number as a word.",
       "text": "Mein Bruder hat zwei Kinder.",
       "explanation": "Mein Bruder hat zwei Kinder. das Kind, plural die Kinder. er hat: haben is irregular with er/sie/es."
     }

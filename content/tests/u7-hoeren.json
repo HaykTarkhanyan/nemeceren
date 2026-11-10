@@ -88,12 +88,12 @@
     {
       "type": "listen_mc",
       "instruction": "Part 3, phone message: read the question, then play. In the exam you hear it twice.",
-      "audio": "Guten Tag, Frau Becker, hier ist die Rezeption vom Hotel Lindner. Ihr Koffer ist noch hier. Ich bin bis zwanzig Uhr da, aber die Rezeption ist bis zweiundzwanzig Uhr geöffnet.",
+      "audio": "Guten Tag, Frau Becker, hier ist die Rezeption vom Hotel Lindner. Ihr Koffer ist noch hier. Sie können ihn heute noch abholen. Ich bin nur bis zwanzig Uhr da, aber die Rezeption ist bis zweiundzwanzig Uhr geöffnet.",
       "question": "Until when can Frau Becker pick up her suitcase today?",
       "questionLang": "en",
       "options": ["bis 22 Uhr", "bis 20 Uhr", "bis 12 Uhr"],
       "answer": "bis 22 Uhr",
-      "explanation": "die Rezeption ist bis zweiundzwanzig Uhr geöffnet = reception is open until 22:00. The caller is there only until 20:00, but anyone at reception can give her the suitcase."
+      "explanation": "Sie können ihn heute noch abholen = you can still pick it up today, and die Rezeption ist bis zweiundzwanzig Uhr geöffnet = reception is open until 22:00. Ich bin nur bis zwanzig Uhr da: only the caller leaves at 20:00, the reception stays open."
     },
     {
       "type": "listen_mc",
@@ -108,7 +108,7 @@
     {
       "type": "listen_mc",
       "instruction": "Part 3, phone message: read the question, then play. In the exam you hear it twice.",
-      "audio": "Guten Tag, Herr Wagner, hier ist das Reisebüro. Ihre Reise nach Wien ist fertig. Bitte bringen Sie Ihren Pass mit. Das Formular unterschreiben Sie dann hier bei uns.",
+      "audio": "Guten Tag, Herr Wagner, hier ist das Reisebüro. Ihre Reise nach Wien ist gebucht. Bitte bringen Sie Ihren Pass mit. Das Formular unterschreiben Sie dann hier bei uns.",
       "question": "What must Herr Wagner bring?",
       "questionLang": "en",
       "options": ["den Pass", "das Formular", "ein Foto"],

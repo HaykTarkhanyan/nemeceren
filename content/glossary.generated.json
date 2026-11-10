@@ -926,6 +926,7 @@
     "gebracht": [{"lemma":"bringen","pos":"verb","gloss":["to bring"],"form":"past participle","level":"A1"}],
     "gebrochen": [{"lemma":"brechen","pos":"verb","gloss":["to break","to refract","to vomit"],"form":"past participle","level":"B1"}],
     "gebt": [{"lemma":"geben","pos":"verb","gloss":["to give (du gibst, er gibt)"],"form":"ihr form, present; ihr form, imperative","level":"A1"}],
+    "gebucht": [{"lemma":"buchen","pos":"verb","gloss":["to book"],"form":"past participle","level":"A2"}],
     "Geburtsdatum": [{"lemma":"Geburtsdatum","pos":"noun","gloss":["date of birth"],"article":"das","plural":"Geburtsdaten"}],
     "Geburtsjahr": [{"lemma":"Geburtsjahr","pos":"noun","gloss":["year of birth"],"article":"das","plural":"Geburtsjahre","level":"A1"}],
     "Geburtsort": [{"lemma":"Geburtsort","pos":"noun","gloss":["place of birth"],"article":"der","plural":"Geburtsorte","level":"A1"}],

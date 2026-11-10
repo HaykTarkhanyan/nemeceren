@@ -78,12 +78,12 @@
     {
       "type": "listen_mc",
       "instruction": "Part 3, phone message: read the question, then play. In the exam you hear it twice.",
-      "audio": "Hallo Aram, hier ist Katrin. Hast du meine E-Mail gelesen? Ich habe den Text gestern geschrieben, aber ich habe ihn noch nicht geschickt. Kannst du ihn bitte drucken?",
+      "audio": "Hallo Aram, hier ist Katrin. Hast du meine E-Mail gelesen? Ich habe den Text gestern geschrieben und heute geschickt. Kannst du ihn bitte drucken?",
       "question": "What should Aram do?",
       "questionLang": "en",
       "options": ["den Text drucken", "den Text schreiben", "den Text schicken"],
       "answer": "den Text drucken",
-      "explanation": "Kannst du ihn bitte drucken? = Can you print it? Katrin wrote the text yesterday (ich habe den Text gestern geschrieben) but has not sent it yet (noch nicht geschickt)."
+      "explanation": "Kannst du ihn bitte drucken? = Can you print it? Katrin has already done the other two: she wrote the text yesterday (gestern geschrieben) and sent it today (heute geschickt)."
     },
     {
       "type": "listen_mc",
@@ -97,7 +97,7 @@
     },
     {
       "type": "dictation",
-      "instruction": "Extra (not in the exam): type what you hear.",
+      "instruction": "Extra (not in the exam): type what you hear. Write the number as a word.",
       "text": "Ich habe gestern bis sieben gearbeitet.",
       "explanation": "Ich habe gestern bis sieben gearbeitet. The Perfekt: habe in second place, the participle gearbeitet at the end."
     }

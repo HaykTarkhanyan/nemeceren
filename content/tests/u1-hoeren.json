@@ -39,16 +39,16 @@
     {
       "type": "listen_mc",
       "instruction": "Part 2, announcement in a language course: read the question, then play. In the exam you hear it once.",
-      "audio": "Guten Morgen und willkommen! Ich heiße Katrin Wagner und ich bin hier die Lehrerin. Wir sind zwölf Studenten, und wir sprechen zehn Sprachen!",
+      "audio": "Guten Morgen und willkommen! Ich heiße Katrin Wagner und ich bin hier die Lehrerin. Ihr seid zwölf Studenten, und ihr sprecht zehn Sprachen!",
       "question": "How many students are in the course?",
       "questionLang": "en",
       "options": ["12", "10", "20"],
       "answer": "12",
-      "explanation": "Wir sind zwölf Studenten = we are twelve students. zehn (10) is the number of languages: wir sprechen zehn Sprachen."
+      "explanation": "Ihr seid zwölf Studenten = you are twelve students (the teacher says ihr to the group). zehn (10) is the number of languages: ihr sprecht zehn Sprachen."
     },
     {
       "type": "listen_mc",
-      "instruction": "Part 2, announcement on the radio: read the question, then play. In the exam you hear it once.",
+      "instruction": "Part 2, the start of a podcast: read the question, then play. In the exam you hear it once.",
       "audio": "Hallo und willkommen! Ich heiße Max Becker. Ich komme aus Berlin, aber ich wohne und arbeite in München. Ich bin Lehrer von Beruf.",
       "question": "Where does Max live?",
       "questionLang": "en",

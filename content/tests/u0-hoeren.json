@@ -29,12 +29,12 @@
     {
       "type": "listen_mc",
       "instruction": "Part 1, dialogue: read the question, then play. In the exam you hear it twice.",
-      "audio": "Entschuldigung, sprechen Sie Englisch?\nNein. Ich spreche ein bisschen Deutsch.\nAh, ich verstehe. Langsam, bitte!",
+      "audio": "Entschuldigung, sprechen Sie Englisch?\nNein. Ich spreche ein bisschen Deutsch.\nAh, ich verstehe. Ich spreche langsam.",
       "question": "What does the person who answers say?",
       "questionLang": "en",
       "options": ["Ich spreche ein bisschen Deutsch.", "Ich spreche Englisch.", "Ich verstehe nicht."],
       "answer": "Ich spreche ein bisschen Deutsch.",
-      "explanation": "Nein. Ich spreche ein bisschen Deutsch. = No. I speak a little German. The first person then says Ah, ich verstehe (I see), not Ich verstehe nicht (I don't understand)."
+      "explanation": "Nein. Ich spreche ein bisschen Deutsch. = No. I speak a little German. The first person then says Ah, ich verstehe (I see; not Ich verstehe nicht, I don't understand) and Ich spreche langsam (I'll speak slowly)."
     },
     {
       "type": "listen_mc",
