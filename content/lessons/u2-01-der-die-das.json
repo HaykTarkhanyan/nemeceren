@@ -16,9 +16,9 @@
       "points": [
         "The subject of a sentence is in the nominative case, and it decides the verb's ending: [[Sabine ist ledig.]], [[Das Haus ist groß.]]",
         "To find the subject, ask [[Wer?]] (who) for a person and [[Was?]] (what) for a thing.",
-        "Every noun has an article in front of it and starts with a capital letter, names and ordinary nouns alike.",
+        "Every noun starts with a capital letter, names and ordinary nouns alike, and ordinary nouns have an article in front of them.",
         "German has three kinds of article: definite ([[der]], [[die]], [[das]]: the), indefinite ([[ein]], [[eine]]: a) and negative ([[kein]], [[keine]]: no, not a). This video is about the definite ones.",
-        "[[der]] is masculine ([[der Mann]]), [[die]] feminine ([[die Frau]]), [[das]] neuter ([[das Baby]]). Whether the noun is a person or a thing makes no difference.",
+        "[[der]] is masculine ([[der Mann]]), [[die]] feminine ([[die Frau]]), [[das]] neuter ([[das Baby]]). Things have a gender too, not only people: [[das Haus]].",
         "In the plural the article is always [[die]], whatever the gender: [[die Männer]], [[die Frauen]], [[die Babys]].",
         "Memory trick: der ends in r, die in e, das in s, like the pronouns that replace them: [[er]], [[sie]], [[es]]."
       ],
@@ -28,7 +28,7 @@
         {"de": "Wer ist das? Das ist Peter.", "en": "Who is that? That's Peter."},
         {"de": "Was ist das? Das ist ein Haus.", "en": "What is that? That's a house."},
         {"de": "Die Frau trinkt Wein.", "en": "The woman is drinking wine."},
-        {"de": "Das Baby ist süß.", "en": "The baby is sweet."},
+        {"de": "Das Baby ist süß.", "en": "The baby is cute."},
         {"de": "der Mann, die Männer", "en": "the man, the men"},
         {"de": "die Frau, die Frauen", "en": "the woman, the women"},
         {"de": "das Baby, die Babys", "en": "the baby, the babies"}

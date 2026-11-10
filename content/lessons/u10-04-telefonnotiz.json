@@ -17,17 +17,17 @@
   "videos": [
     { "id": "YhURm1cnQww", "title": "On the phone", "minutes": 10, "notes": {
       "points": [
-        "Germans often answer the phone with just their surname: [[Müller.]] A company says its name and yours: [[Firma Müller, Sarah Schmidt am Apparat. Was kann ich für Sie tun?]]",
-        "Say who you are: with friends [[Hallo Max, hier ist Anna.]]; formally [[Guten Tag, mein Name ist Anna Bachmann.]]",
-        "Asking for someone: [[Ist Frau Maier da?]], [[Kann ich bitte mit Frau Maier sprechen?]], [[Könnten Sie mich mit Herrn Maier verbinden?]] (put me through) The answer: [[Einen Moment bitte, ich verbinde Sie.]]",
+        "Germans often answer the phone with just their surname: [[Müller.]] At a company you hear the company's name and the speaker's: [[Firma Müller, Lena Schmidt am Apparat. Was kann ich für Sie tun?]]",
+        "Say who you are: with friends [[Hallo Max, hier ist Eva.]]; formally [[Guten Tag, mein Name ist Eva Becker.]]",
+        "Asking for someone: [[Ist Frau Meier da?]], [[Kann ich bitte mit Frau Meier sprechen?]], [[Könnten Sie mich mit Herrn Meier verbinden?]] (put me through) The answer: [[Einen Moment bitte, ich verbinde Sie.]]",
         "When they're not there: [[Sie ist in einer Besprechung.]] (in a meeting), [[Er ist auf Geschäftsreise.]] Then: [[Möchten Sie eine Nachricht hinterlassen?]] or [[Kann ich ihr etwas ausrichten?]] (pass on a message)",
         "Leaving a message: [[Sagen Sie ihr bitte, sie soll mich zurückrufen.]] The reply: [[Ich richte es aus.]]",
         "Didn't understand? Asking twice is normal: [[Können Sie das bitte wiederholen?]], [[Können Sie das bitte buchstabieren?]], [[Können Sie bitte etwas langsamer sprechen?]]",
-        "Ending the call: [[Vielen Dank für Ihre Hilfe.]], [[Ich wünsche Ihnen einen schönen Tag.]], [[Auf Wiederhören!]] (on the phone, never Auf Wiedersehen)"
+        "Ending the call: [[Vielen Dank für Ihre Hilfe.]], [[Ich wünsche Ihnen einen schönen Tag.]], [[Auf Wiederhören!]] (the phone version of Auf Wiedersehen)"
       ],
       "phrases": [
-        {"de": "Guten Tag, hier ist Anna Bachmann.", "en": "Hello, this is Anna Bachmann."},
-        {"de": "Kann ich bitte mit Frau Maier sprechen?", "en": "Can I speak to Ms Maier, please?"},
+        {"de": "Guten Tag, hier ist Eva Becker.", "en": "Hello, this is Eva Becker."},
+        {"de": "Kann ich bitte mit Frau Meier sprechen?", "en": "Can I speak to Ms Meier, please?"},
         {"de": "Einen Moment bitte, ich verbinde Sie.", "en": "One moment, please, I'll put you through."},
         {"de": "Sie ist in einer Besprechung.", "en": "She's in a meeting."},
         {"de": "Möchten Sie eine Nachricht hinterlassen?", "en": "Would you like to leave a message?"},

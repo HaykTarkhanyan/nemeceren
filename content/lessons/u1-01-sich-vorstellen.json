@@ -23,7 +23,7 @@
         "Hobbies: [[Meine Hobbys sind Fernsehen und Musik hören.]]"
       ],
       "phrases": [
-        {"de": "Mein Name ist Anna Schmidt.", "en": "My name is Anna Schmidt."},
+        {"de": "Mein Name ist Lena Schmidt.", "en": "My name is Lena Schmidt."},
         {"de": "Mein Familienname ist Schmidt.", "en": "My surname is Schmidt."},
         {"de": "Ich wohne in Berlin.", "en": "I live in Berlin."},
         {"de": "Ich kann Deutsch und Englisch.", "en": "I speak German and English."},
@@ -41,7 +41,7 @@
         "A verb describes an action, and the sentence is built around it: [[Ich spiele Fußball.]]",
         "The infinitive, the form in the dictionary, is a stem plus an ending, and the ending is -en or just -n: [[lernen]] is lern + en. Learn every verb in this form.",
         "In a sentence the verb is conjugated: its ending follows the subject. That depends on the person (I, you, he/she) and on singular or plural, so the personal pronouns decide it.",
-        "With [[du]], the ending is always -st: [[du lernst]], [[du kommst]].",
+        "With [[du]], the ending is -st: [[du lernst]], [[du kommst]]. A stem ending in s, ß or z adds only -t: [[du heißt]].",
         "Regular verbs (also called weak verbs) keep their stem: [[lernen]], [[machen]], [[spielen]], [[studieren]], [[arbeiten]].",
         "Irregular verbs (strong verbs) change their stem in some forms, but take the same endings: [[sprechen]], [[du sprichst]]. Others: [[schlafen]], [[essen]], [[nehmen]], [[treffen]]."
       ],
@@ -71,7 +71,7 @@
         {"de": "du tanzt", "en": "you dance"},
         {"de": "du arbeitest", "en": "you work"},
         {"de": "er wartet", "en": "he waits"},
-        {"de": "Anna arbeitet bei Siemens.", "en": "Anna works at Siemens."},
+        {"de": "Lena arbeitet bei Siemens.", "en": "Lena works at Siemens."},
         {"de": "Ich studiere Mathematik.", "en": "I study maths."}
       ]
     }}

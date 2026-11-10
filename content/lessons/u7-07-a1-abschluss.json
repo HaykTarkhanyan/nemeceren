@@ -14,7 +14,7 @@
     {"id": "-3TFXzLlJ38", "title": "Test your German (A1)", "minutes": 12, "notes": {
       "points": [
         "A 20-question multiple-choice quiz on the whole of A1. Answer before the video shows the solution (15 seconds each).",
-        "It checks verb endings ([[Ich heiße Lena.]]), du or Sie ([[Wie geht's? - Gut, und dir?]]), articles and opposites ([[Die Tasche ist teuer.]], not billig), and [[ein]] or [[eine]] ([[Das ist eine Couch.]]).",
+        "It checks verb endings ([[Ich heiße Lena.]]), du or Sie ([[Wie geht's? - Gut, und dir?]]), articles ([[Die Tasche kostet zwanzig Euro.]]), opposites ([[Die Lampe ist teuer.]], the opposite of [[billig]]), and [[ein]] or [[eine]] ([[Das ist eine Couch.]]).",
         "Word order: separable verbs ([[Ich kaufe heute ein.]]), modal verbs ([[Max kann gut Englisch.]]), [[um]] with clock times.",
         "Cases: [[mir]], not mich, with [[gefallen]] ([[Das gefällt mir.]]); [[mit]] + dative ([[mit dem Fahrrad]]); the accusative ([[Wie findest du diesen Pullover?]]).",
         "Also: [[man]] takes the er/sie/es form, the Perfekt of [[gehen]] takes [[sein]] ([[Ich bin gegangen.]]), and a polite reply at the shop ([[Ich hätte gern ein Kilo Birnen.]])."
@@ -42,7 +42,7 @@
       ],
       "phrases": [
         {"de": "Abends gehen wir alle spazieren.", "en": "In the evenings we all go for a walk."},
-        {"de": "Früher habe ich kein Gemüse gegessen.", "en": "I used to not eat vegetables."},
+        {"de": "Früher habe ich kein Gemüse gegessen.", "en": "I didn't use to eat vegetables."},
         {"de": "Damals war ich ein kleiner Junge.", "en": "Back then I was a little boy."},
         {"de": "Sie telefoniert gerade.", "en": "She's on the phone right now."},
         {"de": "Sie bekommt bald ein Baby.", "en": "She's having a baby soon."},
@@ -111,7 +111,7 @@
         "[[wen]] (whom) is the accusative of [[wer]] and always asks about a person: [[Wen rufst du an?]] - [[Ich rufe Peter an.]] Also after accusative prepositions: [[Für wen kaufst du ein Geschenk?]]",
         "[[wann]] (when?) asks about a time: [[Wann kommen Sie?]] Answer with a time ([[um neun]], [[am Abend]]) or a time word ([[jeden Abend]], [[täglich]]).",
         "[[wenn]] (if, whenever) is not a question word: it sets a condition and sends the verb to the end: [[Wenn ich Hunger habe, esse ich eine Banane.]] (A2)",
-        "In indirect questions the verb also goes last: [[Ich weiß nicht, wann er nach Hause kommt.]]"
+        "In indirect questions (A2) the verb also goes last: [[Ich weiß nicht, wann er nach Hause kommt.]]"
       ],
       "phrases": [
         {"de": "Wen rufst du an? Ich rufe Peter an.", "en": "Who are you calling? I'm calling Peter."},

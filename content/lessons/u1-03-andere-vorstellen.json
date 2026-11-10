@@ -40,7 +40,7 @@
         "'Your' changes too: [[Ihr]] (polite) and [[dein]] (informal): [[Wie ist Ihr Familienname?]], [[Was sind deine Hobbys?]]",
         "[[sprechen]] changes its vowel with du: [[Welche Sprachen sprichst du?]]",
         "Yes/no questions start with the verb: [[Sind Sie verheiratet?]], [[Haben Sie Kinder?]]",
-        "Saying no: [[nicht]] before an adjective ([[Ich bin nicht verheiratet.]]), [[keine]] before a noun ([[Ich habe keine Kinder.]])."
+        "Saying no: [[nicht]] before an adjective ([[Ich bin nicht verheiratet.]]), [[keine]] (no, not any) before a noun without an article ([[Ich habe keine Kinder.]])."
       ],
       "phrases": [
         {"de": "Wie ist Ihr Familienname?", "en": "What is your surname? (polite)"},
