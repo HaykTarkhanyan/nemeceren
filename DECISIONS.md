@@ -2,6 +2,20 @@
 
 Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
+## 113. Mock-exam-style listening tests for Units 0-7 at natural speed, off the Home path (asked for by Hayk, 2026-11-10)
+
+- **Date:** 2026-11-10 - **Status:** active
+- **Why:** Hayk asked for "real-speed listening practice: announcements, phone messages, short dialogues" and chose tests per unit with instant feedback. This followed the A1 coverage question: listening was the weakest skill (robot voice, single slow sentences).
+  - **The tests:** `content/tests/u0-hoeren.json` to `u7-hoeren.json`, 81 items, all graded at once. They follow the Goethe structure: Part 1 dialogues, Part 2 announcements, Part 3 phone messages, with distractors spoken in the audio. Each uses only words and grammar taught up to its unit (check-taught).
+  - **Speed:** Play used `settings.rate`, 0.85 by default, which is slower than natural. An optional test field `"speed": "natural"` plays at rate 1, and Slow stays at 0.7. The global default is unchanged.
+  - **Dialogues:** a line break in `listen_mc` audio means the other speaker, read with the second German voice.
+  - **The Home path:** a test becomes a path station only with a `lesson`, and a `unit` reorders "Next test". So these tests have neither. They sit under "Other tests" on Home, now listed in course order. Checked: 161 stations, same ids, before and after.
+- **Alternatives rejected:**
+  - **Setting `unit`:** Listening 0 would have jumped to the front of "Next test" for every learner.
+  - **Raising the global rate to 1:** it would change everyone's lessons and reviews.
+  - **A new dialogue item type:** the line break was enough.
+- **What would change this:** Hayk wanting them on the path (then attach them to the unit's last lesson as test stations), or a male voice for dialogues (the voice picker takes the next German voice; on this PC both are female).
+
 ## 112. Writing tasks (graded only by Claude) can be skipped; skipped and blank ones are left out of the saved attempt (asked for by Hayk, 2026-11-10)
 
 - **Date:** 2026-11-10 - **Status:** active; revisits #103
