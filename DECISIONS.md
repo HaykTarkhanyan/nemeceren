@@ -2,6 +2,28 @@
 
 Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
+## 114. A "Read" page with short texts: stories, everyday texts and facts, with audio, popups, a translation toggle, instant questions and "add new words" (asked for by Hayk, 2026-11-10)
+
+- **Date:** 2026-11-10 - **Status:** active; revisits #98 (10 nav links)
+- **Why:** Hayk asked for a section for short stories and facts. In the interview Hayk chose:
+  - **Content:** stories at their level, funny or surprising facts, and everyday mini texts.
+  - **Features:** audio with word popups, quick check questions, saving new words, a translation toggle.
+  - **Placement:** a new menu page with about 20 texts.
+- **What was built:**
+  - **The file:** `content/readings.json` (one file, like extras.json) holds 20 texts: 8 stories, 6 everyday (chats, an email, an ad, a menu, a notice) and 6 facts, for Units 0-3.
+  - **Each text:** sentences `{de, en, speaker?}`; `words` offered as new words; 2-4 questions (mc, gap or order only, so instant); `sources` required for facts. The facts were checked against Britannica, DWDS, muenchen.de and ZDF.
+  - **The page:** `#/read`, after Themes in the menu. Popups are on in the text and off in the questions until checked. Play per sentence and "Play all". The translations are hidden by default.
+  - **Read status:** an attempt saved as `r-<id>`, so nothing new on the backend. check-content reserves the prefix. Reading questions are not replayed in Mistakes.
+  - **New words:** 21 cards (16 new after the merge; 5 were already A1 gaps). Words that only a reading lists wait for its "Add N new words" button (`readingOnlyWords`), so they never enter the review on their own. Words also in a word set follow the set (#111).
+- **Alternatives rejected:**
+  - **A tab inside Extras:** Hayk chose a menu page.
+  - **One file per text:** 20 short items read best side by side, and check-content sees all ids at once.
+  - **Free-text questions:** they would wait for Claude (#103, #112).
+- **What would change this:**
+  - More texts or Units 4+ (then group by unit).
+  - The Oktoberfest dates (2026) going stale.
+  - A "Reading: <title>" source in All words, if Hayk wants to see where a word came from.
+
 ## 113. Mock-exam-style listening tests for Units 0-7 at natural speed, off the Home path (asked for by Hayk, 2026-11-10)
 
 - **Date:** 2026-11-10 - **Status:** active
