@@ -186,7 +186,7 @@ def _is_text(v: Any) -> bool:
     return isinstance(v, str) and v.strip() != ""
 
 
-def validate_review(review: Any, item_count: int) -> dict[str, Any]:
+def validate_review(review: Any, item_indexes: set[int]) -> dict[str, Any]:
     """Return the review in canonical key order, or raise ReviewError listing every problem."""
     if not isinstance(review, dict):
         raise ReviewError("The review must be a JSON object with summary and items.")
@@ -230,8 +230,9 @@ def validate_review(review: Any, item_count: int) -> dict[str, Any]:
         index = it.get("index")
         if type(index) is not int or index < 0:
             problems.append(f"{where}.index must be a whole number >= 0; got {index!r}")
-        elif index >= item_count:
-            problems.append(f"{where}.index {index} is out of range (this attempt has items 0-{item_count - 1})")
+        elif index not in item_indexes:
+            # Saved items keep their test index; skipped writing tasks leave gaps (DECISIONS.md #112).
+            problems.append(f"{where}.index {index} is not an item of this attempt (its items: {sorted(item_indexes)})")
         elif index in seen:
             problems.append(f"{where}.index {index} is reviewed twice")
         else:
@@ -497,7 +498,7 @@ def write_review(conn: psycopg.Connection, user_id: str, attempt_id: str, review
     attempt = fetch_attempt(conn, user_id, attempt_id)
     if attempt["review"] is not None and not replace:
         raise RuntimeError(f"Attempt {attempt_id} already has a review (graded {attempt['review'].get('gradedAt')}). Pass --replace to overwrite it.")
-    clean = validate_review(review, len(attempt["items"]))
+    clean = validate_review(review, {it["index"] for it in attempt["items"]})
     reviewed = {it["index"] for it in clean["items"]}
     unreviewed_pending = [it["index"] for it in attempt["items"] if it.get("status") == "pending" and it["index"] not in reviewed]
     if unreviewed_pending:

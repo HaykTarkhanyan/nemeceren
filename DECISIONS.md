@@ -2,6 +2,21 @@
 
 Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
+## 112. Writing tasks (graded only by Claude) can be skipped; skipped and blank ones are left out of the saved attempt (asked for by Hayk, 2026-11-10)
+
+- **Date:** 2026-11-10 - **Status:** active; revisits #103
+- **Why:** Hayk: "make the parts where there is reliance on Claude skippable. I used to study on PC, now I'm mostly mobile." Every `write` item in tests and lesson exercises gets "Skip (needs Claude)".
+  - **What is saved:** a skipped or blank write is not saved at all. It counts neither wrong nor pending. Saved items keep their test `index`, so attempts can have gaps.
+  - **No backend change:** the API accepts any subset of items.
+  - **Fixed along the way:** places that matched by position: review verdicts (`finalStatus`), mistakes keys, the review-schema index check, and `progress.py validate_review` (now checks the saved indexes, so a later item can still be graded).
+  - **Mistakes replay** no longer lists write items.
+  - **The result page** says "N writing task(s) skipped (needs Claude)".
+  - **Translations** stay as they are (graded at once when they match or nearly match, #103).
+- **Alternatives rejected:**
+  - **A new status "skipped":** it would need a backend schema change and redeploy.
+  - **Removing write items from content:** they stay for PC sessions with Claude.
+- **What would change this:** Hayk wanting write items gone entirely, or back in Mistakes replay.
+
 ## 111. Words in no lesson (the word bank) come after the whole course, not right after the path's words (2026-11-10)
 
 - **Date:** 2026-11-10 - **Status:** active; revisits #91, #106
