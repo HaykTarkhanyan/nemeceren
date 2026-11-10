@@ -898,6 +898,244 @@
         }
       ],
       "sources": ["https://www.zdfheute.de/panorama/karneval-elfter-elfter-mainz-koeln-duesseldorf-100.html", "https://www.smart-rechner.de/feiertage/infothek/karneval.php", "https://www.dwds.de/wb/Fasching"]
+    },
+    {
+      "id": "staeffele",
+      "kind": "fact",
+      "title": "Die Stäffele",
+      "titleEn": "Stuttgart's stairways (die Stäffele)",
+      "level": "A1",
+      "unit": 3,
+      "sentences": [
+        { "de": "Stuttgart hat viele Hügel.", "en": "Stuttgart has a lot of hills." },
+        { "de": "Und es hat sehr viele Treppen: mehr als 400!", "en": "And it has very many stairways: more than 400!" },
+        { "de": "Wie viele genau? Das weiß niemand.", "en": "How many exactly? Nobody knows." },
+        { "de": "Auf Schwäbisch heißen die Treppen \"Stäffele\".", "en": "In Swabian, the stairways are called \"Stäffele\"." },
+        { "de": "Früher waren hier viele Weinberge. Heute sind hier Häuser.", "en": "There used to be lots of vineyards here. Today there are houses." },
+        { "de": "Treppe hoch, Treppe runter: Das macht fit!", "en": "Up the stairs, down the stairs: that keeps you fit!" },
+        { "de": "Und oben ist die Aussicht schön.", "en": "And at the top the view is lovely." },
+        { "de": "Das \"-le\" in \"Stäffele\" ist typisch schwäbisch.", "en": "The \"-le\" in \"Stäffele\" is typically Swabian." },
+        { "de": "Es macht Wörter klein: das Haus, das Häusle.", "en": "It makes words small: das Haus (house), das Häusle (little house)." },
+        { "de": "Auch die Spätzle haben ein \"-le\". Spätzle sind Nudeln.", "en": "Spätzle have a \"-le\" too. Spätzle are noodles." },
+        { "de": "In Stuttgart hört man auch \"Grüß Gott!\". Das heißt \"Hallo\".", "en": "In Stuttgart you also hear \"Grüß Gott!\". It means \"hello\"." },
+        { "de": "Und \"Tschüss\"? Das ist auf Schwäbisch \"Ade!\".", "en": "And \"bye\"? In Swabian that's \"Ade!\"." }
+      ],
+      "words": ["huegel", "treppe", "genau", "niemand", "fit", "oben", "aussicht", "typisch", "gruess-gott", "ade"],
+      "questions": [
+        {
+          "type": "mc",
+          "question": "How many outdoor stairways does Stuttgart have?",
+          "questionLang": "en",
+          "options": ["mehr als 400", "genau 40", "ungefähr 100"],
+          "answer": "mehr als 400",
+          "explanation": "Es gibt mehr als 400 Treppen, but the exact number is unknown: Das weiß niemand."
+        },
+        {
+          "type": "mc",
+          "question": "What does the Swabian ending -le do?",
+          "questionLang": "en",
+          "options": ["Es macht Wörter klein.", "Es macht Wörter alt.", "Es macht Wörter lang."],
+          "answer": "Es macht Wörter klein.",
+          "explanation": "-le is the Swabian form of -chen: das Häusle = das Häuschen, a little house. Spätzle literally means 'little sparrows'."
+        },
+        {
+          "type": "gap",
+          "text": "Und \"Tschüss\"? Das ist auf Schwäbisch \"___!\".",
+          "answers": [["Ade"]],
+          "caseSensitive": false,
+          "explanation": "Ade = bye, popular in Swabia. The hello you also hear there is Grüß Gott."
+        }
+      ],
+      "sources": ["https://www.stuttgart.de/tourismus/sehenswuerdigkeiten/staeffele", "https://en.wikipedia.org/wiki/Swabian_German", "https://en.wikipedia.org/wiki/Sp%C3%A4tzle", "https://de.wiktionary.org/wiki/ade", "https://de.wiktionary.org/wiki/gr%C3%BC%C3%9F_Gott"]
+    },
+    {
+      "id": "sprechtest",
+      "kind": "fact",
+      "title": "Der Sprechtest",
+      "titleEn": "The talk test",
+      "level": "A1",
+      "unit": 3,
+      "sentences": [
+        { "de": "Laufe ich zu schnell oder zu langsam?", "en": "Am I running too fast or too slow?" },
+        { "de": "Für den Puls gibt es fünf Zonen.", "en": "For your heart rate there are five zones." },
+        { "de": "Zone 1 ist sehr locker, Zone 5 ist das Maximum.", "en": "Zone 1 is very easy, Zone 5 is all-out." },
+        { "de": "Du hast keine Uhr? Kein Problem. Der Sprechtest ist einfach.", "en": "You don't have a watch? No problem. The talk test is simple." },
+        { "de": "Du läufst und du kannst noch sprechen, aber nicht singen?", "en": "You're running and you can still talk, but not sing?" },
+        { "de": "Dann bist du ungefähr in Zone 2. Das ist locker.", "en": "Then you're roughly in Zone 2. That's easy." },
+        { "de": "Du kannst nur drei oder vier Wörter sagen?", "en": "You can only say three or four words?" },
+        { "de": "Dann ist es schon anstrengend.", "en": "Then it's already hard." },
+        { "de": "In Zone 5 kannst du nicht mehr sprechen. Du atmest nur noch.", "en": "In Zone 5 you can't talk any more. You're only breathing." },
+        { "de": "Lena läuft mit Max. Sie sagt: \"Ich kann noch sprechen!\"", "en": "Lena is running with Max. She says: \"I can still talk!\"" },
+        { "de": "Max sagt nur: \"Puh! Pause!\"", "en": "Max just says: \"Phew! Break!\"" },
+        { "de": "Der Test ist nicht genau, aber er hilft.", "en": "The test isn't exact, but it helps." }
+      ],
+      "words": ["laufen", "schnell", "puls", "zone", "locker", "anstrengend", "atmen", "nur", "genau", "singen", "ungefaehr"],
+      "questions": [
+        {
+          "type": "mc",
+          "question": "You can talk, but you can't sing. Where are you, roughly?",
+          "questionLang": "en",
+          "options": ["in Zone 2", "in Zone 4", "in Zone 5"],
+          "answer": "in Zone 2",
+          "explanation": "Du kannst noch sprechen, aber nicht singen: dann bist du ungefähr in Zone 2. In Zone 5 you can't talk at all."
+        },
+        {
+          "type": "gap",
+          "text": "In Zone 5 ___ du nicht mehr sprechen.",
+          "answers": [["kannst"]],
+          "explanation": "können: ich kann, du kannst. The second verb, sprechen, goes to the end."
+        },
+        {
+          "type": "order",
+          "prompt": "I can still talk.",
+          "tiles": ["ich", "kann", "noch", "sprechen"],
+          "answers": ["Ich kann noch sprechen", "Noch kann ich sprechen"],
+          "explanation": "kann in second place, sprechen at the end: the verb bracket of Unit 3."
+        }
+      ],
+      "sources": ["https://www.cdc.gov/physical-activity-basics/measuring/index.html", "https://health.clevelandclinic.org/exercise-heart-rate-zones-explained"]
+    },
+    {
+      "id": "wochenende-in-stuttgart",
+      "kind": "story",
+      "title": "Ein Wochenende in Stuttgart",
+      "titleEn": "A weekend in Stuttgart",
+      "level": "A1",
+      "unit": 3,
+      "sentences": [
+        { "de": "Max besucht am Wochenende Lena in Stuttgart.", "en": "Max is visiting Lena in Stuttgart at the weekend." },
+        { "de": "Am Samstag stehen sie früh auf und laufen am Neckar.", "en": "On Saturday they get up early and go running by the Neckar." },
+        { "de": "Der Neckar ist ein Fluss. Sie laufen zehn Kilometer.", "en": "The Neckar is a river. They run ten kilometres." },
+        { "de": "Am Nachmittag fahren sie zum Fernsehturm.", "en": "In the afternoon they go to the TV tower." },
+        { "de": "Der Turm ist über 200 Meter hoch und von 1956.", "en": "The tower is over 200 metres tall and dates from 1956." },
+        { "de": "Das Wetter ist gut. Von oben sehen sie sehr weit.", "en": "The weather is good. From the top they can see very far." },
+        { "de": "Am Sonntag gehen sie im Killesbergpark spazieren.", "en": "On Sunday they go for a walk in Killesberg Park." },
+        { "de": "Dort ist ein Turm mit 348 Stufen.", "en": "There's a tower there with 348 steps." },
+        { "de": "Lena läuft schnell hoch. Max sagt: \"Puh, ich brauche eine Pause!\"", "en": "Lena runs up quickly. Max says: \"Phew, I need a break!\"" },
+        { "de": "Am Abend essen sie Maultaschen.", "en": "In the evening they eat Maultaschen." },
+        { "de": "Maultaschen sind typisch schwäbisch. Innen sind Fleisch und Spinat.", "en": "Maultaschen are typically Swabian. Inside there's meat and spinach." },
+        { "de": "Am Montag fährt Max nach Hause. Er sagt: \"Ade, Stuttgart!\"", "en": "On Monday Max goes home. He says: \"Bye, Stuttgart!\"" }
+      ],
+      "words": ["besuchen", "laufen", "fluss", "kilometer", "fahren", "turm", "wetter", "oben", "stufe", "spazieren-gehen", "typisch", "ade"],
+      "questions": [
+        {
+          "type": "mc",
+          "question": "What do Max and Lena do on Saturday morning?",
+          "questionLang": "en",
+          "options": ["Sie laufen am Neckar.", "Sie essen Maultaschen.", "Sie fahren zum Fernsehturm."],
+          "answer": "Sie laufen am Neckar.",
+          "explanation": "Am Samstag stehen sie früh auf und laufen am Neckar. The TV tower comes in the afternoon, the Maultaschen on Sunday evening."
+        },
+        {
+          "type": "mc",
+          "question": "How many steps does the tower in Killesberg Park have?",
+          "questionLang": "en",
+          "options": ["348", "384", "438"],
+          "answer": "348",
+          "explanation": "dreihundertachtundvierzig: drei-hundert, then acht-und-vierzig, with the ones before the tens."
+        },
+        {
+          "type": "order",
+          "prompt": "I need a break.",
+          "tiles": ["ich", "brauche", "eine", "Pause"],
+          "answers": ["Ich brauche eine Pause", "Eine Pause brauche ich"],
+          "explanation": "brauchen + eine (feminine, like Pause): the verb in second place."
+        }
+      ],
+      "sources": ["https://www.stuttgart.de/tourismus/sehenswuerdigkeiten/flusserlebnis-am-neckar", "https://www.stuttgart.de/tourismus/sehenswuerdigkeiten/fernsehturm-stuttgart.php", "https://www.stuttgart.de/tourismus/sehenswuerdigkeiten/killesbergturm", "https://www.zdfheute.de/ratgeber/maultaschen-alte-schwaebische-kueche-ursprung-100.html"]
+    },
+    {
+      "id": "lateralus",
+      "kind": "fact",
+      "title": "Eins, eins, zwei, drei, fünf",
+      "titleEn": "Numbers in a song: \"Lateralus\" by Tool",
+      "level": "A1",
+      "unit": 1,
+      "sentences": [
+        { "de": "Tool ist eine Band aus den USA.", "en": "Tool is a band from the USA." },
+        { "de": "Ein Lied von Tool heißt \"Lateralus\". Es ist von 2001.", "en": "One of Tool's songs is called \"Lateralus\". It's from 2001." },
+        { "de": "Das Lied ist Musik und Mathe.", "en": "The song is music and maths." },
+        { "de": "Hier sind die Zahlen: eins, eins, zwei, drei, fünf, acht, dreizehn.", "en": "Here are the numbers: one, one, two, three, five, eight, thirteen." },
+        { "de": "Eins plus eins ist zwei. Eins plus zwei ist drei.", "en": "One plus one is two. One plus two is three." },
+        { "de": "Zwei plus drei ist fünf. Und drei plus fünf? Acht!", "en": "Two plus three is five. And three plus five? Eight!" },
+        { "de": "Das sind die Fibonacci-Zahlen.", "en": "These are the Fibonacci numbers." },
+        { "de": "Wo sind die Zahlen? In den Silben!", "en": "Where are the numbers? In the syllables!" },
+        { "de": "Der Sänger singt zuerst eine Silbe, dann eine, dann zwei, dann drei, dann fünf, dann acht.", "en": "The singer first sings one syllable, then one, then two, then three, then five, then eight." },
+        { "de": "Später singt er auch dreizehn Silben.", "en": "Later he also sings thirteen syllables." }
+      ],
+      "words": ["band", "lied", "zahl", "silbe", "singen", "zuerst", "dann", "spaeter"],
+      "questions": [
+        {
+          "type": "gap",
+          "instruction": "Complete the series.",
+          "text": "Eins, eins, zwei, drei, fünf, acht, ___",
+          "answers": [["dreizehn", "13"]],
+          "explanation": "Each number is the two before it added up: fünf plus acht ist dreizehn (13)."
+        },
+        {
+          "type": "mc",
+          "question": "Where are the numbers hidden in the song?",
+          "questionLang": "en",
+          "options": ["in den Silben", "im Titel", "in den Farben"],
+          "answer": "in den Silben",
+          "explanation": "In den Silben: the singer sings one syllable, then one, then two, three, five, eight."
+        },
+        {
+          "type": "mc",
+          "question": "When is the song from?",
+          "questionLang": "en",
+          "options": ["von 2001", "von 2010", "von 1990"],
+          "answer": "von 2001",
+          "explanation": "Es ist von 2001. Say the year as zweitausendeins."
+        }
+      ],
+      "sources": ["https://en.wikipedia.org/wiki/Lateralus_(song)", "https://en.wikipedia.org/wiki/Tool_(band)", "https://faroutmagazine.co.uk/tool-song-maynard-james-keenan-sorely-regrets/"]
+    },
+    {
+      "id": "zwei-sprachen",
+      "kind": "fact",
+      "title": "Ein Album, zwei Sprachen",
+      "titleEn": "One album, two languages (Opeth)",
+      "level": "A1",
+      "unit": 1,
+      "sentences": [
+        { "de": "Opeth ist eine Band aus Schweden.", "en": "Opeth is a band from Sweden." },
+        { "de": "Die Band kommt aus Stockholm.", "en": "The band is from Stockholm." },
+        { "de": "Das Album \"In Cauda Venenum\" ist von 2019.", "en": "The album \"In Cauda Venenum\" is from 2019." },
+        { "de": "Das Album hat zwei Versionen: Schwedisch und Englisch.", "en": "The album has two versions: Swedish and English." },
+        { "de": "Die Band singt die Lieder zweimal: einmal auf Schwedisch, einmal auf Englisch.", "en": "The band sings the songs twice: once in Swedish, once in English." },
+        { "de": "Welche Version ist das Original?", "en": "Which version is the original?" },
+        { "de": "Der Sänger Mikael Åkerfeldt sagt: Das Original ist Schwedisch.", "en": "The singer, Mikael Åkerfeldt, says: the original is the Swedish one." },
+        { "de": "In Schweden spricht man Schwedisch.", "en": "In Sweden people speak Swedish." },
+        { "de": "Aber viele Fans sprechen kein Schwedisch.", "en": "But many fans don't speak Swedish." },
+        { "de": "Deshalb hat das Album auch eine Version auf Englisch.", "en": "That's why the album also has an English version." },
+        { "de": "Und du? Welche Sprachen sprichst du?", "en": "And you? Which languages do you speak?" }
+      ],
+      "words": ["band", "sprache", "schwedisch", "englisch", "singen", "lied", "deshalb"],
+      "questions": [
+        {
+          "type": "mc",
+          "question": "Which version does the singer call the original?",
+          "questionLang": "en",
+          "options": ["Schwedisch", "Englisch", "Deutsch"],
+          "answer": "Schwedisch",
+          "explanation": "Der Sänger sagt: Das Original ist Schwedisch. The English version came later, for fans who don't speak Swedish."
+        },
+        {
+          "type": "gap",
+          "text": "In Schweden spricht man ___.",
+          "answers": [["Schwedisch"]],
+          "explanation": "Languages are written with a capital: Schwedisch, Englisch, Deutsch. spricht man = people speak."
+        },
+        {
+          "type": "order",
+          "prompt": "The band sings in English.",
+          "tiles": ["die", "Band", "singt", "auf", "Englisch"],
+          "answers": ["Die Band singt auf Englisch", "Auf Englisch singt die Band"],
+          "explanation": "The verb singt is always in second place. auf Englisch = in English."
+        }
+      ],
+      "sources": ["https://blabbermouth.net/news/opeths-mikael-akerfeldt-couldnt-stop-writing-for-in-cauda-venenum-album", "https://en.wikipedia.org/wiki/In_Cauda_Venenum", "https://en.wikipedia.org/wiki/Opeth"]
     }
   ]
 }

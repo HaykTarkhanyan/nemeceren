@@ -22,6 +22,7 @@ import { SpeakSentences, SpeakWords } from '../components/SpeakGames.tsx'
 import { MatchPairs } from '../components/MatchPairs.tsx'
 import type { MatchStats } from '../components/MatchPairs.tsx'
 import { MistakesSession } from '../components/MistakesSession.tsx'
+import { ZoneMeter, ZoneSummary } from '../components/ZoneMeter.tsx'
 import type { MistakeStats } from '../components/MistakesSession.tsx'
 import { ReviewRun } from '../components/ReviewRun.tsx'
 import type { RunStats } from '../components/ReviewRun.tsx'
@@ -43,6 +44,11 @@ import { messageOf, reportError } from '../lib/errors.ts'
 import { reachOf } from '../lib/goalView.ts'
 import { recordDailyMixDone, requestFlush, useProgress } from '../lib/storage.ts'
 import { unionWordIds } from '../lib/vocabMap.ts'
+import { cardioFan } from '../lib/eggs.ts'
+import { useSession } from '../lib/session.ts'
+import { emailOf } from '../lib/visibleContent.ts'
+import { answerZones, startZones, zoneTimes } from '../lib/zones.ts'
+import type { ZoneState } from '../lib/zones.ts'
 
 /** The word set the mix takes new words from, or null (the next lessons). An unknown saved id is an error to show. */
 export function activeSet(settings: Settings): { set: WordSet | null; problem: string | null } {
@@ -254,6 +260,10 @@ function Mix() {
   const current = stopped ? undefined : plan.steps[step]
   const pool = studyPool(progress)
   const recorded = useRef(false)
+  // The zone meter, only for the learners in lib/eggs.ts (DECISIONS.md #116).
+  const zonesOn = cardioFan(emailOf(useSession())) !== null
+  const [zones, setZones] = useState(() => startZones(Date.now()))
+  const onAnswer = zonesOn ? (ok: boolean) => setZones((z) => answerZones(z, ok, Date.now())) : undefined
 
   useEffect(() => {
     if (current !== undefined) return
@@ -274,7 +284,7 @@ function Mix() {
     setStep((s) => s + 1)
   }
 
-  if (current === undefined) return <MixEnd done={done} startedAt={startedAt} nothing={plan.steps.length === 0} />
+  if (current === undefined) return <MixEnd done={done} startedAt={startedAt} nothing={plan.steps.length === 0} zones={zonesOn ? zones : null} />
 
   return (
     <div className="stack">
@@ -286,8 +296,9 @@ function Mix() {
           Stop
         </button>
       </div>
+      {zonesOn && <ZoneMeter run={zones.run} />}
       {plan.setProblem && <div className="alert warn">{plan.setProblem}</div>}
-      {current === 'warmup' && <Warmup pool={pool} state={state} onDone={(s) => finish({ warmup: s })} />}
+      {current === 'warmup' && <Warmup pool={pool} state={state} onDone={(s) => finish({ warmup: s })} onAnswer={onAnswer} />}
       {current === 'reviews' && (
         <ReviewRun
           words={pool.filter((w) => state.cards[w.id])}
@@ -297,6 +308,7 @@ function Mix() {
           maxCards={MIX.maxReviews}
           maxNew={Number.POSITIVE_INFINITY}
           onDone={(s) => finish({ reviews: s })}
+          onAnswer={onAnswer}
         />
       )}
       {current === 'new' && (
@@ -310,16 +322,17 @@ function Mix() {
             maxCards={MIX.maxNewCards}
             maxNew={MIX.maxNew}
             onDone={(s) => finish({ fresh: s })}
+            onAnswer={onAnswer}
           />
         </>
       )}
-      {current === 'mistakes' && <MistakesSession mistakes={plan.mistakes} onDone={(s) => finish({ mistakes: s })} />}
+      {current === 'mistakes' && <MistakesSession mistakes={plan.mistakes} onDone={(s) => finish({ mistakes: s })} onAnswer={onAnswer} />}
     </div>
   )
 }
 
 /** The mix's warm-up stays on learned words: it warms up what is known before the reviews. */
-function Warmup({ pool, state, onDone }: { pool: StudyWord[]; state: ReviewState; onDone: (s: MatchStats) => void }) {
+function Warmup({ pool, state, onDone, onAnswer }: { pool: StudyWord[]; state: ReviewState; onDone: (s: MatchStats) => void; onAnswer?: (ok: boolean) => void }) {
   const [rounds] = useState(() => matchRounds(introduced(pool, state), state, MIX.warmupRounds, MIX.pairsPerRound))
   // Skips the warm-up once when there are too few words (also when StrictMode runs effects twice).
   const skipped = useRef(false)
@@ -329,11 +342,12 @@ function Warmup({ pool, state, onDone }: { pool: StudyWord[]; state: ReviewState
     onDone({ pairs: 0, firstTry: 0, ms: 0 })
   }, [])
   if (rounds.length === 0) return null
-  return <MatchPairs rounds={rounds} state={state} onDone={onDone} />
+  return <MatchPairs rounds={rounds} state={state} onDone={onDone} onAnswer={onAnswer} />
 }
 
-function MixEnd({ done, startedAt, nothing }: { done: Done; startedAt: number; nothing: boolean }) {
+function MixEnd({ done, startedAt, nothing, zones }: { done: Done; startedAt: number; nothing: boolean; zones: ZoneState | null }) {
   const progress = useProgress()
+  const [zoneEnd] = useState(() => (zones === null ? null : { times: zoneTimes(zones, Date.now()), top: zones.top }))
   const lesson = nextLesson(content.lessons, progress.lessonProgress)
   const minutes = Math.max(1, Math.round((Date.now() - startedAt) / 60000))
   const lines: string[] = []
@@ -365,6 +379,7 @@ function MixEnd({ done, startedAt, nothing }: { done: Done; startedAt: number; n
           )}
         </div>
       )}
+      {zoneEnd && !nothing && lines.length > 0 && <ZoneSummary times={zoneEnd.times} top={zoneEnd.top} />}
       <div className="row">
         {lesson && (
           <a className="btn primary" href={link('lesson', lesson.lesson.id)}>

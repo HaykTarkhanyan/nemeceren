@@ -1,5 +1,5 @@
 {
-  "ignore": ["Hayk", "Charlotte", "Eva", "Meier", "Müller", "Schmidt", "Thomas", "Weber", "Aram", "Tarkhanyan", "Goethestraße", "Siemens", "Berlin", "Marienplatz", "Moosach", "Berger", "Hoffmann", "Lindner", "Krause", "Sabine", "Peter", "Becker", "Schulz", "Wagner", "Petrowa", "Mila", "Max", "Katrin", "Lena", "Rosenstraße", "Ent", "Entschul", "Mesrop", "Maschtoz", "Mimi", "phone", "cell", "New", "York"],
+  "ignore": ["Hayk", "Charlotte", "Eva", "Meier", "Müller", "Schmidt", "Thomas", "Weber", "Aram", "Tarkhanyan", "Goethestraße", "Siemens", "Berlin", "Marienplatz", "Moosach", "Berger", "Hoffmann", "Lindner", "Krause", "Sabine", "Peter", "Becker", "Schulz", "Wagner", "Petrowa", "Mila", "Max", "Katrin", "Lena", "Rosenstraße", "Ent", "Entschul", "Mesrop", "Maschtoz", "Mimi", "phone", "cell", "New", "York", "Tool", "Lateralus", "Opeth", "Cauda", "Venenum", "Mikael", "Åkerfeldt"],
   "entries": {
     "englisch": [
       {"lemma": "englisch", "pos": "adjective", "level": "A1", "gloss": ["English"], "note": "Das Wort klingt englisch. = The word sounds English. The language is Englisch, with a capital."}
@@ -431,7 +431,7 @@
       {"lemma": "Wiedersehen", "pos": "phrase", "level": "A1", "gloss": ["Auf Wiedersehen = goodbye (polite)"], "note": "Literally 'until we see each other again'."}
     ],
     "Grüß": [
-      {"lemma": "grüßen", "pos": "phrase", "level": "A1", "gloss": ["Grüß Gott = hello (Bavaria and Austria, polite)"], "note": "Literally 'may God greet you'. Heard in shops and offices in Munich."}
+      {"lemma": "grüßen", "pos": "phrase", "level": "A1", "gloss": ["Grüß Gott = hello (southern Germany and Austria, polite)"], "note": "Literally 'may God greet you'. Heard in shops and offices in Munich."}
     ],
     "Bach": [
       {"lemma": "Bach", "pos": "noun", "article": "der", "plural": "Bäche", "gloss": ["brook, stream"], "note": "Also the composer Johann Sebastian Bach."}
@@ -1939,6 +1939,65 @@
     ],
     "Arbeitsunfähigkeitsbescheinigung": [
       {"lemma": "Arbeitsunfähigkeitsbescheinigung", "pos": "noun", "article": "die", "gloss": ["doctor's sick note (for your employer)"], "note": "Often just called die AU or die Krankschreibung."}
+    ],
+    "Herz": [
+      {"lemma": "Herz", "pos": "noun", "article": "das", "plural": "Herzen", "level": "B1", "gloss": ["heart"]}
+    ],
+    "Herzen": [
+      {"lemma": "Herz", "pos": "noun", "article": "das", "plural": "Herzen", "form": "plural", "level": "B1", "gloss": ["hearts"]}
+    ],
+    "Band": [
+      {"lemma": "Band", "pos": "noun", "article": "die", "plural": "Bands", "level": "A2", "gloss": ["band (music)"], "note": "das Band (plural Bänder) is a ribbon or tape."}
+    ],
+    "Lieblingsband": [
+      {"lemma": "Lieblingsband", "pos": "noun", "article": "die", "plural": "Lieblingsbands", "gloss": ["favourite band"]}
+    ],
+    "Ade": [
+      {"lemma": "ade", "pos": "interjection", "level": "B1", "gloss": ["bye (Swabia and the southwest)"], "note": "Swabian for Tschüss. It comes from French adieu."}
+    ],
+    "Häusle": [
+      {"lemma": "Häusle", "pos": "noun", "article": "das", "gloss": ["little house (Swabian)"], "note": "Swabian for das Häuschen: Haus + -le."}
+    ],
+    "Spätzle": [
+      {"lemma": "Spätzle", "pos": "noun", "gloss": ["Spätzle: soft egg noodles from Swabia"], "note": "Plural only: die Spätzle. Literally 'little sparrows' (Spatz + -le)."}
+    ],
+    "Stäffele": [
+      {"lemma": "Stäffele", "pos": "noun", "article": "das", "plural": "Stäffele", "gloss": ["outdoor stairway (Swabian)"], "note": "Stuttgart's public stairways. Staffel (stairs) + the Swabian ending -le."}
+    ],
+    "le": [
+      {"lemma": "-le", "pos": "other", "gloss": ["Swabian ending for 'little' (= -chen)"], "note": "das Häusle = das Häuschen, a little house."}
+    ],
+    "Meter": [
+      {"lemma": "Meter", "pos": "noun", "article": "der", "plural": "Meter", "level": "A1", "gloss": ["metre"], "note": "200 Meter = 200 metres. Also das Meter."}
+    ],
+    "Killesbergpark": [
+      {"lemma": "Killesbergpark", "pos": "name", "gloss": ["Killesberg Park, a large park in Stuttgart"], "note": "Officially: Höhenpark Killesberg."}
+    ],
+    "Neckar": [
+      {"lemma": "Neckar", "pos": "name", "gloss": ["the Neckar, the river through Stuttgart"], "note": "der Neckar: am Neckar = by the Neckar."}
+    ],
+    "Maultaschen": [
+      {"lemma": "Maultasche", "pos": "noun", "article": "die", "plural": "Maultaschen", "form": "plural", "gloss": ["Maultaschen: Swabian pasta pockets with a filling"], "note": "Usually filled with meat and spinach."}
+    ],
+    "Fibonacci-Zahlen": [
+      {"lemma": "Fibonacci-Zahl", "pos": "noun", "article": "die", "plural": "Fibonacci-Zahlen", "form": "plural", "gloss": ["Fibonacci numbers"], "note": "1, 1, 2, 3, 5, 8, 13: each number is the two before it added up."}
+    ],
+    "Lauftreff": [
+      {"lemma": "Lauftreff", "pos": "noun", "article": "der", "plural": "Lauftreffs", "gloss": ["running group (meets regularly)"]}
+    ],
+    "Sprechtest": [
+      {"lemma": "Sprechtest", "pos": "noun", "article": "der", "plural": "Sprechtests", "gloss": ["talk test (can you still talk while doing sport?)"]}
+    ],
+    "Atme": [
+      {"lemma": "atmen", "pos": "verb", "form": "du imperative", "level": "B1", "gloss": ["breathe!"], "note": "Atme ruhig! = Breathe calmly! The du imperative: Unit 5."}
+    ],
+    "Laufen": [
+      {"lemma": "Laufen", "pos": "noun", "article": "das", "gloss": ["running"], "note": "The verb used as a noun: beim Laufen = while running."},
+      {"lemma": "laufen", "pos": "verb", "level": "A1", "gloss": ["to run; to walk"]}
+    ],
+    "stehen": [
+      {"lemma": "stehen", "pos": "verb", "level": "A1", "gloss": ["to stand"]},
+      {"lemma": "aufstehen", "pos": "verb", "form": "wir and sie/Sie form, present", "level": "A1", "gloss": ["to get up"], "note": "Separable: Sie stehen früh auf."}
     ]
   }
 }

@@ -2,6 +2,7 @@
 // level bar, the daily card (goal, streak, daily mix), a one-time notice about the new goal, the
 // milestone card, then the course as U-Bahn lines. Tapping a station opens its sheet.
 import { useEffect, useState } from 'react'
+import { CardioGreeting } from '../components/CardioGreeting.tsx'
 import { PathLines } from '../components/PathLines.tsx'
 import { StationSheet } from '../components/StationSheet.tsx'
 import { content } from '../content/load.ts'
@@ -44,6 +45,8 @@ export function HomePage({ scrollToCurrent = false }: { scrollToCurrent?: boolea
           <span>{pct}%</span>
         </p>
       )}
+
+      <CardioGreeting today={today} />
 
       <DailyCard goal={goal} />
 

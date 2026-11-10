@@ -1,0 +1,214 @@
+{
+  "id": "t-ausdauer",
+  "theme": {
+    "kind": "topic",
+    "title": "Ausdauer: Laufen, Rad fahren, Schwimmen",
+    "variety": "standard German"
+  },
+  "level": "A1",
+  "title": "Cardio and your heart rate (Ausdauer)",
+  "summary": "Say which endurance sports you do, read your heart rate aloud with numbers above 100, and follow a short scene at a running group.",
+  "goals": [
+    "Say which endurance sports you do and how often",
+    "Read heart-rate numbers above 100 aloud and name the zone",
+    "Say how a run feels: easy, hard, sweaty, out of breath",
+    "Follow a short scene at a running group and ask for a break"
+  ],
+  "words": ["ausdauer", "laufen", "joggen", "rad-fahren", "schwimmen", "laufband", "treppe", "puls", "herz", "zone", "langsam", "schnell", "locker", "anstrengend", "schwitzen", "atmen", "pause"],
+  "sections": [
+    {
+      "id": "about",
+      "type": "explanation",
+      "title": "About this topic",
+      "text": "[[Die Ausdauer]] is endurance: what English calls cardio. Running, cycling, swimming, the treadmill at the gym and the stairs at the U-Bahn station all count.\n\nThis lesson gives you:\n- the words for these sports and for how a run feels;\n- the numbers above 100, so you can say your heart rate ([[der Puls]]);\n- a short scene at a [[Lauftreff]], a group that meets regularly to run together."
+    },
+    {
+      "id": "sports",
+      "type": "examples",
+      "title": "What do you do?",
+      "items": [
+        { "de": "Ich laufe gern.", "en": "I like running.", "note": "laufen = to run (also: to walk). er läuft, with ä." },
+        { "de": "Ich jogge jeden Morgen.", "en": "I jog every morning.", "note": "joggen is running at a relaxed pace. jeden Morgen = every morning." },
+        { "de": "Am Wochenende fahre ich Rad.", "en": "At the weekend I go cycling.", "note": "Rad fahren works like a separable verb: fahre in second place, Rad at the end." },
+        { "de": "Ich schwimme zweimal pro Woche.", "en": "I swim twice a week.", "note": "zweimal = twice, pro Woche = per week." },
+        { "de": "Im Fitnessstudio laufe ich auf dem Laufband.", "en": "At the gym I run on the treadmill." },
+        { "de": "Ich nehme die Treppe, nicht den Aufzug.", "en": "I take the stairs, not the lift.", "note": "An example sentence from the Goethe word list: cardio in everyday life." }
+      ]
+    },
+    {
+      "type": "comparison",
+      "text": "[[der Puls]] is the same word as Russian пульс. German uses it for your heart rate too: [[Mein Puls ist 135.]]"
+    },
+    {
+      "id": "zones",
+      "type": "explanation",
+      "title": "The five zones",
+      "text": "Sports watches and trainers split effort into **five zones** by share of your maximum heart rate: **Zone 1** is very easy, **Zone 2** is easy (you can still talk), and **Zone 5** is all-out. Treat it as a rule of thumb, not a medical measurement.\n\nSay the zone with the number after it: [[Zone 2]] is [[Zone zwei]]. The table below is for someone whose maximum is 200."
+    },
+    {
+      "id": "zone-table",
+      "type": "table",
+      "title": "Zones for a maximum of 200",
+      "columns": [{ "header": "Zone", "de": "words" }, { "header": "Heart rate" }, { "header": "How it feels", "de": "words" }, { "header": "English" }],
+      "rows": [
+        ["Zone 1", "100-120", "sehr locker", "very easy"],
+        ["Zone 2", "120-140", "locker: Ich kann noch sprechen.", "easy: I can still talk."],
+        ["Zone 3", "140-160", "ein bisschen anstrengend", "a bit hard"],
+        ["Zone 4", "160-180", "sehr anstrengend", "very hard"],
+        ["Zone 5", "180-200", "Ich kann nicht mehr sprechen.", "I can't talk any more."]
+      ]
+    },
+    {
+      "id": "hundert",
+      "type": "explanation",
+      "title": "Numbers above 100",
+      "text": "Say [[hundert]] and then the number you already know, all in one word: 135 is [[hundert]] + [[fünfunddreißig]]. As below 100, the ones come before the tens: 172 is [[hundert]] + [[zweiundsiebzig]].\n\nYou may also hear [[einhundert]] at the start. Both are correct."
+    },
+    {
+      "id": "puls",
+      "type": "examples",
+      "title": "Say your heart rate",
+      "items": [
+        { "de": "Mein Puls ist 135. Das ist Zone 2.", "en": "My heart rate is 135. That's Zone 2.", "note": "hundertfünfunddreißig" },
+        { "de": "Jetzt ist mein Puls 172. Das ist Zone 4.", "en": "Now my heart rate is 172. That's Zone 4.", "note": "hundertzweiundsiebzig. After jetzt the verb comes second: Jetzt ist mein Puls ..." },
+        { "de": "Wie hoch ist dein Puls?", "en": "How high is your heart rate?" },
+        { "de": "Mein Puls ist zu hoch. Ich laufe langsam.", "en": "My heart rate is too high. I'll run slowly." },
+        { "de": "Das Herz schlägt schnell.", "en": "The heart is beating fast.", "note": "schlagen = to beat; es schlägt, with ä." }
+      ]
+    },
+    {
+      "id": "lauftreff",
+      "type": "dialogue",
+      "title": "At the running group",
+      "lines": [
+        { "speaker": "Lena", "de": "Hallo! Bist du neu hier?", "en": "Hi! Are you new here?" },
+        { "speaker": "Max", "de": "Ja, ich heiße Max. Ich laufe nicht so schnell.", "en": "Yes, I'm Max. I don't run very fast." },
+        { "speaker": "Lena", "de": "Kein Problem. Heute laufen wir locker, fünf Kilometer.", "en": "No problem. Today we're running at an easy pace, five kilometres." },
+        { "speaker": "Katrin", "de": "Und wie schnell genau?", "en": "And how fast exactly?" },
+        { "speaker": "Lena", "de": "In Zone 2. Wir können noch sprechen.", "en": "In Zone 2. We can still talk." },
+        { "speaker": "Max", "de": "Puh, ich schwitze!", "en": "Phew, I'm sweating!" },
+        { "speaker": "Lena", "de": "Wie ist dein Puls?", "en": "What's your heart rate?" },
+        { "speaker": "Max", "de": "Mein Puls ist 135.", "en": "My heart rate is 135." },
+        { "speaker": "Lena", "de": "Gut, das ist ungefähr Zone 2. Und jetzt die Treppe!", "en": "Good, that's roughly Zone 2. And now the stairs!" },
+        { "speaker": "Katrin", "de": "Oh nein! Die Treppe ist so lang!", "en": "Oh no! The stairs are so long!" },
+        { "speaker": "Max", "de": "Ich kann nicht mehr. Ich brauche eine Pause.", "en": "I can't go on. I need a break." },
+        { "speaker": "Lena", "de": "Okay, eine Minute Pause. Atme ruhig.", "en": "Okay, a one-minute break. Breathe calmly." },
+        { "speaker": "Max", "de": "Danke! Wann ist der Lauftreff wieder?", "en": "Thanks! When is the running group on again?" },
+        { "speaker": "Lena", "de": "Jeden Dienstag und Donnerstag um sieben.", "en": "Every Tuesday and Thursday at seven." }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "The scene",
+      "items": [
+        {
+          "type": "mc",
+          "question": "Why does Max need a break?",
+          "questionLang": "en",
+          "options": ["Er kann nicht mehr.", "Er hat keine Zeit.", "Er ist krank."],
+          "answer": "Er kann nicht mehr.",
+          "explanation": "Ich kann nicht mehr = I can't go on (I'm exhausted). A useful chunk for any sport."
+        },
+        {
+          "type": "mc",
+          "question": "When does the running group meet?",
+          "questionLang": "en",
+          "options": ["am Dienstag und am Donnerstag", "am Montag und am Mittwoch", "am Samstag und am Sonntag"],
+          "answer": "am Dienstag und am Donnerstag",
+          "explanation": "Jeden Dienstag und Donnerstag um sieben: every Tuesday and Thursday at seven."
+        },
+        {
+          "type": "gap",
+          "instruction": "Complete: 'I can't go on.'",
+          "text": "Ich ___ nicht mehr.",
+          "answers": [["kann"]],
+          "explanation": "können, ich form: ich kann. Ich kann nicht mehr works without a second verb."
+        }
+      ]
+    },
+    {
+      "id": "words",
+      "type": "table",
+      "title": "Words worth keeping",
+      "columns": [{ "header": "German", "de": "words" }, { "header": "English" }],
+      "rows": [
+        ["die Ausdauer", "endurance, stamina"],
+        ["laufen, joggen", "to run, to jog"],
+        ["Rad fahren", "to cycle (ich fahre Rad)"],
+        ["schwimmen", "to swim"],
+        ["das Laufband", "treadmill"],
+        ["die Treppe", "stairs"],
+        ["der Puls", "pulse, heart rate"],
+        ["das Herz", "heart"],
+        ["die Zone", "zone"],
+        ["langsam, schnell", "slow, fast"],
+        ["locker", "easy, relaxed (pace)"],
+        ["anstrengend", "tiring, hard"],
+        ["schwitzen", "to sweat"],
+        ["atmen", "to breathe"],
+        ["die Pause", "break"]
+      ]
+    },
+    {
+      "type": "tip",
+      "title": "No watch? Talk.",
+      "text": "If you can still talk but not sing, you are roughly in Zone 2. If you can only say a few words, it is already hard. The Read page has a short text about this: [[Der Sprechtest]]."
+    },
+    {
+      "type": "audio",
+      "title": "Say these aloud",
+      "items": [
+        { "de": "Ich laufe gern.", "en": "I like running." },
+        { "de": "Am Wochenende fahre ich Rad.", "en": "At the weekend I go cycling." },
+        { "de": "Mein Puls ist 135.", "en": "My heart rate is 135." },
+        { "de": "Ich kann noch sprechen.", "en": "I can still talk." },
+        { "de": "Ich kann nicht mehr.", "en": "I can't go on." },
+        { "de": "Ich brauche eine Pause.", "en": "I need a break." }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "Check yourself",
+      "items": [
+        {
+          "type": "listen_mc",
+          "audio": "Mein Puls ist 145.",
+          "question": "What is the heart rate?",
+          "questionLang": "en",
+          "options": ["145", "154", "135"],
+          "answer": "145",
+          "explanation": "hundertfünfundvierzig: hundert, then fünfundvierzig, with the ones before the tens."
+        },
+        {
+          "type": "gap",
+          "instruction": "Use the zone table (maximum 200). Write the number as a digit or a word.",
+          "text": "Mein Puls ist 170. Das ist Zone ___.",
+          "answers": [["4", "vier"]],
+          "explanation": "160-180 is Zone 4 for a maximum of 200: sehr anstrengend."
+        },
+        {
+          "type": "order",
+          "prompt": "At the weekend I go cycling.",
+          "tiles": ["am", "Wochenende", "fahre", "ich", "Rad"],
+          "answers": ["Am Wochenende fahre ich Rad", "Ich fahre am Wochenende Rad", "Rad fahre ich am Wochenende"],
+          "explanation": "The verb fahre is always in second place, and Rad usually goes to the end, like the second part of a separable verb."
+        },
+        {
+          "type": "mc",
+          "question": "Which sentence means 'I'm sweating'?",
+          "questionLang": "en",
+          "options": ["Ich schwitze.", "Ich schwimme.", "Ich atme."],
+          "answer": "Ich schwitze.",
+          "explanation": "schwitzen = to sweat. schwimmen = to swim, atmen = to breathe."
+        },
+        {
+          "type": "translate",
+          "direction": "en-de",
+          "text": "I take the stairs.",
+          "references": ["Ich nehme die Treppe."],
+          "explanation": "nehmen, ich form: ich nehme. die Treppe stays die Treppe after the verb (feminine)."
+        }
+      ]
+    }
+  ]
+}

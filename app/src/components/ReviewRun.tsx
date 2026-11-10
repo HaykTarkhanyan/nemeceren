@@ -28,8 +28,10 @@ export function ReviewRun(props: {
   maxCards: number
   maxNew: number
   onDone: (s: RunStats) => void
+  /** Called after each saved grade: false for Again (the zone meter, DECISIONS.md #116). */
+  onAnswer?: (ok: boolean) => void
 }) {
-  const { words, mode, state, newLimit, maxCards, maxNew, onDone } = props
+  const { words, mode, state, newLimit, maxCards, maxNew, onDone, onAnswer } = props
   const [now, setNow] = useState(() => new Date())
   const [stats, setStats] = useState<RunStats>({ cards: 0, fresh: 0, again: 0 })
   const [saving, setSaving] = useState(false)
@@ -52,6 +54,7 @@ export function ReviewRun(props: {
       setFailed(null)
       setStats((s) => ({ cards: s.cards + 1, fresh: s.fresh + (entry.isNew ? 1 : 0), again: s.again + (entry.rating === Rating.Again ? 1 : 0) }))
       setNow(new Date())
+      onAnswer?.(entry.rating !== Rating.Again)
     } catch (err) {
       setFailed({ entry, card, message: messageOf(err) })
     } finally {

@@ -2,6 +2,29 @@
 
 Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
+## 116. Cardio easter eggs for Anahit (a Home greeting and a zone meter in the daily mix), plus cardio, Stuttgart and music texts for everyone (asked for by Hayk, 2026-11-10)
+
+- **Date:** 2026-11-10 - **Status:** active
+- **Why:** Hayk: Anahit "is into cardio ... add zone 1-2-3 style stuff for her, some easter eggs here and there", she lives in Stuttgart and likes stand-up, Opeth and Tool; "don't overdo". From the suggestions Hayk picked the Ausdauer lesson, four readings (Stäffele, Sprechtest, a Stuttgart weekend) plus a Tool and an Opeth reading, the greeting and the zone meter.
+- **What was built:**
+  - **Greeting** (`components/CardioGreeting.tsx`, `lib/eggs.ts`): on Home, "Grüß Gott, Anahit!" and one of six short A1 cardio lines, the same all day and the next one tomorrow, with the English below.
+  - **Zone meter** (`lib/zones.ts`, `components/ZoneMeter.tsx`): in the daily mix, right answers in a row climb from Zone 1 to Zone 5, and a miss drops one zone (in Zone 1: back to 0). The zones start after 3, 5, 8 and 13 right answers, Fibonacci numbers as a quiet nod to Tool's "Lateralus". Right means a correct match-pairs pair, a review grade other than Again, or a right Mistakes answer; answers waiting for Claude don't count. The end screen shows "Gut gelaufen!" (it went well; literally "well run"), the highest zone, and the time in each zone as bars, like a sports watch. The colours run grey, blue, green, flag orange and flag red, in both themes.
+  - **Who sees them:** the eggs are keyed by sign-in email, like `onlyFor` (#95): Anahit, plus the test account for browser checks. Everyone else, guests included, sees nothing new.
+  - **The texts are for everyone:** the repo is public, so limiting Stuttgart texts to Anahit's login would show publicly where she lives (Hayk's choice). Nothing in the content names her.
+  - **The texts** (written by an agent, checked by the main session):
+    - the theme lesson `t-ausdauer` (cardio words, numbers above 100 as heart rates, the zones for a maximum of 200, a running-group scene);
+    - five readings: `staeffele` (Stuttgart's 400+ stairways, the Swabian -le, Grüß Gott, Ade), `sprechtest` (the talk test), `wochenende-in-stuttgart` (the Neckar, the TV tower, the Killesberg tower's 348 steps, Maultaschen), `lateralus` (the Fibonacci syllables, numbers practice) and `zwei-sprachen` (Opeth's 2019 album in Swedish and English);
+    - 19 new cards. Most are B1 theme words; that's fine for a theme lesson.
+  - **Facts:** every fact has a source in the reading's `sources`. Claims that couldn't be confirmed were left out: the Lateralus time signatures, the exact TV tower height (216.6 m vs "a good 217 m", so "over 200 m"), the total length of the Stäffele (20 vs 30 km), and "full sentences in Zone 2" (the sources say talk but not sing).
+  - **One existing card changed:** `gruess-gott` now says "southern Germany and Austria" instead of "Bavaria and Austria", to match the Stäffele text and lesson 0.2.
+- **Checked:** unit tests for the zone rules, the time per zone and the daily line. In the dev server (390 px), with the eggs switched on for a guest in the working copy only: the greeting on Home; the meter going Zone 1 > Zone 2 after three Goods and back to Zone 1 on Again; the end screen in light and dark.
+- **Alternatives rejected:**
+  - **The meter for everyone:** Hayk asked for it for Anahit.
+  - **A miss resets to Zone 1:** too harsh for a learner, and a real heart rate doesn't drop like that either.
+  - **Even zone steps (every 3 answers):** they work just as well, but the Fibonacci steps are the easter egg.
+  - **A joke of the day and a Mark Twain reading:** suggested, not picked.
+- **What would change this:** Anahit finding the meter distracting (then a switch in Settings), or more learners asking for their own eggs (then a per-learner settings table instead of emails in code).
+
 ## 115. Every lesson video has "Read instead" notes: what it teaches, key phrases with audio and popups, condensed from the transcript (asked for by Hayk, 2026-11-10)
 
 - **Date:** 2026-11-10 - **Status:** active; revisits #74

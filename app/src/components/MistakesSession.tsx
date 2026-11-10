@@ -24,7 +24,7 @@ export interface MistakeStats {
   pending: number
 }
 
-export function MistakesSession({ mistakes, onDone }: { mistakes: Mistake[]; onDone: (s: MistakeStats) => void }) {
+export function MistakesSession({ mistakes, onDone, onAnswer }: { mistakes: Mistake[]; onDone: (s: MistakeStats) => void; onAnswer?: (ok: boolean) => void }) {
   const [index, setIndex] = useState(0)
   const [stats, setStats] = useState<MistakeStats>({ right: 0, wrong: 0, pending: 0 })
   const m = mistakes[index]
@@ -37,6 +37,7 @@ export function MistakesSession({ mistakes, onDone }: { mistakes: Mistake[]; onD
       onNext={(status) => {
         const field = status === 'correct' ? 'right' : status === 'wrong' ? 'wrong' : 'pending'
         const next = { ...stats, [field]: stats[field] + 1 }
+        if (status !== 'pending') onAnswer?.(status === 'correct')
         if (index + 1 < mistakes.length) {
           setStats(next)
           setIndex(index + 1)

@@ -21,7 +21,7 @@ export interface MatchStats {
 
 type Side = 'de' | 'en'
 
-export function MatchPairs({ rounds, state, onDone }: { rounds: GameWord[][]; state: ReviewState; onDone: (s: MatchStats) => void }) {
+export function MatchPairs({ rounds, state, onDone, onAnswer }: { rounds: GameWord[][]; state: ReviewState; onDone: (s: MatchStats) => void; onAnswer?: (ok: boolean) => void }) {
   const [round, setRound] = useState(0)
   const [total, setTotal] = useState<MatchStats>({ pairs: 0, firstTry: 0, ms: 0 })
   const words = rounds[round]
@@ -31,6 +31,7 @@ export function MatchPairs({ rounds, state, onDone }: { rounds: GameWord[][]; st
       key={round}
       words={words}
       state={state}
+      onAnswer={onAnswer}
       label={`Round ${round + 1} of ${rounds.length}`}
       onDone={(s) => {
         const sum = { pairs: total.pairs + s.pairs, firstTry: total.firstTry + s.firstTry, ms: total.ms + s.ms }
@@ -43,7 +44,7 @@ export function MatchPairs({ rounds, state, onDone }: { rounds: GameWord[][]; st
   )
 }
 
-function Round({ words, state, label, onDone }: { words: GameWord[]; state: ReviewState; label: string; onDone: (s: MatchStats) => void }) {
+function Round({ words, state, label, onDone, onAnswer }: { words: GameWord[]; state: ReviewState; label: string; onDone: (s: MatchStats) => void; onAnswer?: (ok: boolean) => void }) {
   const left = useMemo(() => shuffle(words), [words])
   const right = useMemo(() => shuffle(words), [words])
   const [startedAt] = useState(() => performance.now())
@@ -118,11 +119,13 @@ function Round({ words, state, label, onDone }: { words: GameWord[]; state: Revi
       if (log(word, !missed.has(de), Math.round(now - lastAt))) {
         setMatched((m) => new Set([...m, de]))
         setLastAt(now)
+        onAnswer?.(true)
       }
     } else {
       // The word picked first is the one being matched: that one counts as missed.
       setMissed((m) => new Set([...m, picked.id]))
       setFlash({ de, en })
+      onAnswer?.(false)
     }
   }
 

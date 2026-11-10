@@ -17,6 +17,12 @@
   /* Chart series: Armenian flag blue and red. */
   --chart-a: #0033a0;
   --chart-b: #d90012;
+  /* Heart-rate zones (zone meter, DECISIONS.md #116): grey, blue, green, then flag orange and red. */
+  --zone-1: #7b8594;
+  --zone-2: #2f6fd0;
+  --zone-3: #1f8a45;
+  --zone-4: #f2a800;
+  --zone-5: #d90012;
   --radius: 10px;
   color-scheme: light;
 }
@@ -41,6 +47,11 @@
   /* Lighter tints of the flag colors, readable on the dark background. */
   --chart-a: #7d9ef0;
   --chart-b: #ff6b73;
+  --zone-1: #9aa4b1;
+  --zone-2: #5b9bf0;
+  --zone-3: #6fd08e;
+  --zone-4: #f1c35b;
+  --zone-5: #ff6b73;
   color-scheme: dark;
 }
 
@@ -3105,4 +3116,91 @@ ol.line {
   background: var(--border);
   border-radius: 3px;
   opacity: 0.5;
+}
+
+/* Cardio easter eggs (DECISIONS.md #116): the Home greeting and the zone meter in the daily mix. */
+.greeting-card p {
+  margin: 0;
+}
+
+.greeting-card p + p {
+  margin-top: 4px;
+}
+
+.zone-meter {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.zone-bars {
+  display: inline-flex;
+  gap: 3px;
+}
+
+.zone-bars i {
+  display: block;
+  width: 18px;
+  height: 8px;
+  border-radius: 3px;
+  background: var(--border);
+}
+
+.zone-1 { --zone: var(--zone-1); }
+.zone-2 { --zone: var(--zone-2); }
+.zone-3 { --zone: var(--zone-3); }
+.zone-4 { --zone: var(--zone-4); }
+.zone-5 { --zone: var(--zone-5); }
+
+.zone-bars i.on {
+  background: var(--zone);
+}
+
+/* The label keeps the text colour: orange text on white would be hard to read. */
+.zone-label {
+  display: inline-block;
+  animation: zone-beat 0.6s ease-out;
+}
+
+@keyframes zone-beat {
+  0% { transform: scale(1); }
+  30% { transform: scale(1.25); }
+  100% { transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .zone-label {
+    animation: none;
+  }
+}
+
+.zone-chart {
+  display: grid;
+  gap: 6px;
+}
+
+.zone-row {
+  display: grid;
+  grid-template-columns: 4.5em 1fr 3.5em;
+  align-items: center;
+  gap: 8px;
+}
+
+.zone-track {
+  height: 12px;
+  border-radius: 4px;
+  background: var(--border);
+  overflow: hidden;
+}
+
+.zone-track i {
+  display: block;
+  height: 100%;
+  background: var(--zone);
+}
+
+.zone-time {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
 }

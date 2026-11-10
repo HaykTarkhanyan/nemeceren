@@ -88,7 +88,7 @@ describe('check-content and the readings', () => {
   const readingsFile = (texts: unknown[]) => ({ file: 'content/readings.json', text: JSON.stringify({ texts }) })
   const problemsOf = (input: Partial<Parameters<typeof checkAllContent>[0]>) => checkAllContent({ ...base, ...input }).problems.filter((p) => !p.startsWith('content/topics.json'))
 
-  it('accepts the real content/readings.json: 20 texts, 8 stories, 6 everyday, 6 facts, Units 0-3', () => {
+  it('accepts the real content/readings.json: 25 texts, 9 stories, 6 everyday, 10 facts, Units 0-3', () => {
     const lessons = fs.readdirSync(path.join(repoRoot, 'content/lessons')).map((n) => ({ file: `content/lessons/${n}`, text: text(`content/lessons/${n}`) }))
     const themes = fs.readdirSync(path.join(repoRoot, 'content/themes')).map((n) => ({ file: `content/themes/${n}`, text: text(`content/themes/${n}`) }))
     const tests = fs.readdirSync(path.join(repoRoot, 'content/tests')).map((n) => ({ file: `content/tests/${n}`, text: text(`content/tests/${n}`) }))
@@ -102,8 +102,8 @@ describe('check-content and the readings', () => {
       readings: { file: 'content/readings.json', text: text('content/readings.json') },
     })
     expect(out.problems).toEqual([])
-    expect(out.readings).toHaveLength(20)
-    expect(readingsCountText(out.readings)).toBe('Read page: 20 texts (stories 8, facts 6, everyday 6; unit 0: 3, unit 1: 4, unit 2: 7, unit 3: 6).')
+    expect(out.readings).toHaveLength(25)
+    expect(readingsCountText(out.readings)).toBe('Read page: 25 texts (stories 9, facts 10, everyday 6; unit 0: 3, unit 1: 6, unit 2: 7, unit 3: 9).')
     // Every attempt id is new: no test or lesson exercise is saved under it.
     const taken = new Set(out.tests.map((t) => t.id))
     for (const r of out.readings) expect(taken.has(readingTestId(r.id))).toBe(false)
