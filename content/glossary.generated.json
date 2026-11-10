@@ -679,7 +679,6 @@
     "Endung": [{"lemma":"Endung","pos":"noun","gloss":["ending","ending, desinence, termination"],"article":"die","plural":"Endungen"}],
     "Engel": [{"lemma":"Engel","pos":"noun","gloss":["angel"],"article":"der","plural":"Engel"},{"lemma":"Engel","pos":"name","gloss":["a surname transferred from the given name"]}],
     "England": [{"lemma":"England","pos":"name","gloss":["England"]}],
-    "englisch": [{"lemma":"englisch","pos":"adjective","gloss":["English","rare"]}],
     "Englisch": [{"lemma":"Englisch","pos":"name","gloss":["English (the language)"],"level":"A1"}],
     "englischen": [{"lemma":"englisch","pos":"adjective","gloss":["English","rare"],"form":"genitive masculine neuter singular; dative/genitive singular"}],
     "englisches": [{"lemma":"englisch","pos":"adjective","gloss":["English","rare"],"form":"nominative/accusative neuter singular"}],

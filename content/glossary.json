@@ -1,6 +1,9 @@
 {
   "ignore": ["Hayk", "Charlotte", "Eva", "Meier", "Müller", "Schmidt", "Thomas", "Weber", "Aram", "Tarkhanyan", "Goethestraße", "Siemens", "Berlin", "Marienplatz", "Moosach", "Berger", "Hoffmann", "Lindner", "Krause", "Sabine", "Peter", "Becker", "Schulz", "Wagner", "Petrowa", "Mila", "Max", "Katrin", "Lena", "Rosenstraße", "Ent", "Entschul", "Mesrop", "Maschtoz", "Mimi", "phone", "cell", "New", "York"],
   "entries": {
+    "englisch": [
+      {"lemma": "englisch", "pos": "adjective", "level": "A1", "gloss": ["English"], "note": "Das Wort klingt englisch. = The word sounds English. The language is Englisch, with a capital."}
+    ],
     "Verkehr": [
       {"lemma": "Verkehr", "pos": "noun", "article": "der", "level": "A2", "gloss": ["traffic"]}
     ],
