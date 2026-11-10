@@ -37,6 +37,7 @@ import { link } from '../lib/router.ts'
 import { useSettings } from '../lib/settings.ts'
 import type { SpeechInfo } from '../lib/speech.ts'
 import type { Settings } from '../lib/settings.ts'
+import { withoutWaitingReadingWords } from '../lib/readings.ts'
 import { counts } from '../lib/srs.ts'
 import { messageOf, reportError } from '../lib/errors.ts'
 import { reachOf } from '../lib/goalView.ts'
@@ -50,22 +51,28 @@ export function activeSet(settings: Settings): { set: WordSet | null; problem: s
   return set ? { set, problem: null } : { set: null, problem: `The word set "${settings.activeSet}" no longer exists, so new words come from the next lessons.` }
 }
 
+/** The word bank for new words: words only a reading lists wait for its "Add N new words" button (lib/readings.ts). */
+export function bankWords(state: ReviewState) {
+  return withoutWaitingReadingWords(content.words, content.readingOnlyWords, state.cards)
+}
+
 /** All words the reviews may use (new words follow the path), plus Hayk's own words. */
 export function studyPool(progress: ProgressView): StudyWord[] {
   return wordsForSource(
     { kind: 'all' },
-    content.words,
+    bankWords(progress.reviewState),
     progress.customWords.map(practiceWord),
     content.allLessons,
     progress.lessonProgress,
     progress.reviewState,
     reachOf(progress),
+    content.sets,
   )
 }
 
 /** The words of a practice game started from Home, in the order it takes them: the study pool, then the rest of the course, then the word bank (lib/plan.ts withCourseRest; all lessons, so unopened theme words stay out). */
 export function homeGameWords(progress: ProgressView): StudyWord[] {
-  return withCourseRest(studyPool(progress), content.words, content.allLessons, content.sets)
+  return withCourseRest(studyPool(progress), bankWords(progress.reviewState), content.allLessons, content.sets)
 }
 
 /** Mistakes from tests and lesson exercises (DECISIONS.md #81): the due ones, and how many changed since. */
@@ -99,7 +106,7 @@ export function mixPlan(progress: ProgressView, settings: Settings, now: Date): 
   const state = progress.reviewState
   const pool = studyPool(progress)
   const { set, problem } = activeSet(settings)
-  const fresh = mixNewWords({ words: content.words, lessons: content.allLessons, progress: progress.lessonProgress, state, set, reach: reachOf(progress) })
+  const fresh = mixNewWords({ words: bankWords(state), lessons: content.allLessons, progress: progress.lessonProgress, state, set, reach: reachOf(progress) })
   const newLeft = counts(fresh.words, state, now, settings.newPerDay).newLeft
   const newCount = Math.min(newLeft, fresh.words.length, MIX.maxNew)
   const due = Math.min(

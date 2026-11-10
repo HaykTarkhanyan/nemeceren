@@ -1,5 +1,6 @@
 import { content } from '../content/load.ts'
 import { itemsForResult } from '../content/lessons.ts'
+import { readingItemsFor } from '../content/readings.ts'
 import { ResultView } from '../components/ResultView.tsx'
 import { finalScore } from '../lib/grading.ts'
 import { link } from '../lib/router.ts'
@@ -61,7 +62,7 @@ export function ResultDetailPage({ id }: { id: string }) {
         {new Date(result.submittedAt).toLocaleString()} - attempt {id}
         {pendingAttemptIds.includes(id) ? ' (not synced yet)' : ''}
       </p>
-      <ResultView result={result} items={itemsForResult(result, content.tests, content.allLessons)} />
+      <ResultView result={result} items={itemsForResult(result, content.tests, content.allLessons) ?? readingItemsFor(result.testId, content.readings)} />
     </div>
   )
 }

@@ -1,5 +1,5 @@
 {
-  "ignore": ["Hayk", "Charlotte", "Eva", "Meier", "Müller", "Schmidt", "Thomas", "Weber", "Aram", "Tarkhanyan", "Goethestraße", "Siemens", "Berlin", "Marienplatz", "Moosach", "Berger", "Hoffmann", "Lindner", "Krause", "Sabine", "Peter", "Becker", "Schulz", "Wagner", "Petrowa", "Mila", "Max", "Katrin", "Lena", "Rosenstraße"],
+  "ignore": ["Hayk", "Charlotte", "Eva", "Meier", "Müller", "Schmidt", "Thomas", "Weber", "Aram", "Tarkhanyan", "Goethestraße", "Siemens", "Berlin", "Marienplatz", "Moosach", "Berger", "Hoffmann", "Lindner", "Krause", "Sabine", "Peter", "Becker", "Schulz", "Wagner", "Petrowa", "Mila", "Max", "Katrin", "Lena", "Rosenstraße", "Ent", "Entschul", "Mesrop", "Maschtoz", "Mimi", "phone", "cell"],
   "entries": {
     "Verkehr": [
       {"lemma": "Verkehr", "pos": "noun", "article": "der", "level": "A2", "gloss": ["traffic"]}
@@ -1574,7 +1574,7 @@
       {"lemma": "scheiße", "pos": "adjective", "gloss": ["shitty, lousy (vulgar)"], "note": "Vulgar. Das ist scheiße. = That's lousy."}
     ],
     "weiter": [
-      {"lemma": "weiter", "pos": "adverb", "gloss": ["further, on"], "note": "Ich weiß nicht mehr weiter. = I don't know what to do any more (weiterwissen)."}
+      {"lemma": "weiter", "pos": "adverb", "gloss": ["further, on"], "note": "Ich suche weiter. = I'll keep looking. Ich weiß nicht mehr weiter. = I don't know what to do any more (weiterwissen)."}
     ],
     "Bank": [
       {"lemma": "Bank", "pos": "noun", "article": "die", "plural": "Banken", "level": "A1", "gloss": ["bank (for money)"]},
@@ -1663,6 +1663,42 @@
     ],
     "bring": [
       {"lemma": "mitbringen", "pos": "verb", "form": "du form, imperative", "level": "A1", "gloss": ["to bring (along)"], "note": "Separable: Bring bitte Musik mit! Without mit: bringen, to bring."}
+    ],
+    "Ent-schul-di-gung": [
+      {"lemma": "Entschuldigung", "pos": "interjection", "level": "A1", "gloss": ["Excuse me! Sorry!"], "note": "Said slowly, syllable by syllable."}
+    ],
+    "ö": [
+      {"lemma": "ö", "pos": "noun", "article": "das", "gloss": ["the letter ö (o umlaut)"]}
+    ],
+    "ü": [
+      {"lemma": "ü", "pos": "noun", "article": "das", "gloss": ["the letter ü (u umlaut)"]}
+    ],
+    "Diener": [
+      {"lemma": "Diener", "pos": "noun", "article": "der", "plural": "Diener", "gloss": ["servant"]}
+    ],
+    "Deutschen": [
+      {"lemma": "Deutsche", "pos": "noun", "form": "plural", "gloss": ["Germans (the people)"], "note": "die Deutschen = the Germans"}
+    ],
+    "handy": [
+      {"lemma": "handy", "pos": "adjective", "gloss": ["(English) practical, useful"], "note": "English, not German. The German word is das Handy, the mobile phone."}
+    ],
+    "Wiesn": [
+      {"lemma": "Wiesn", "pos": "noun", "article": "die", "gloss": ["the Oktoberfest (Munich word)"], "note": "Bavarian for Wiese (meadow): the festival is on the Theresienwiese."}
+    ],
+    "vierundzwanzigsten": [
+      {"lemma": "vierundzwanzigste", "pos": "numeral", "form": "with -en (after dem, vom, am ...)", "gloss": ["twenty-fourth"], "note": "vom vierundzwanzigsten Dezember = from 24 December"}
+    ],
+    "Elfte": [
+      {"lemma": "Elfte", "pos": "noun", "article": "der", "gloss": ["the eleventh (of the month); here: November"], "note": "der elfte Elfte = 11 November (11.11.)"}
+    ],
+    "Karnevalsparty": [
+      {"lemma": "Karnevalsparty", "pos": "noun", "article": "die", "plural": "Karnevalspartys", "gloss": ["carnival party"]}
+    ],
+    "Karnevale": [
+      {"lemma": "Karneval", "pos": "noun", "article": "der", "form": "plural", "level": "B1", "gloss": ["carnivals"]}
+    ],
+    "Fasching": [
+      {"lemma": "Fasching", "pos": "noun", "article": "der", "level": "B1", "gloss": ["carnival (in Bavaria and Austria)"], "note": "In Cologne and Mainz: der Karneval."}
     ]
   }
 }

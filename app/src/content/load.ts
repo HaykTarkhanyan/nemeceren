@@ -4,9 +4,11 @@
 // them instead of rendering, so a bad file can never silently disappear.
 import extrasText from '../../../content/extras.json?raw'
 import pairsText from '../../../content/pairs.json?raw'
+import readingsText from '../../../content/readings.json?raw'
 import setsText from '../../../content/sets.json?raw'
 import topicsText from '../../../content/topics.json?raw'
 import wordsText from '../../../content/words.json?raw'
+import { readingOnlyWordIds } from '../lib/readings.ts'
 import { byCourseOrder } from './lessons.ts'
 import type { Lesson, Test } from './schema.ts'
 import { checkAllContent } from './validate.ts'
@@ -43,6 +45,7 @@ const checked = checkAllContent({
   extras: { file: 'content/extras.json', text: extrasText },
   sets: { file: 'content/sets.json', text: setsText },
   pairs: { file: 'content/pairs.json', text: pairsText },
+  readings: { file: 'content/readings.json', text: readingsText },
 })
 
 const newestFirst = (a: Test, b: Test) => b.created.localeCompare(a.created) || b.id.localeCompare(a.id)
@@ -66,5 +69,9 @@ export const content = {
   sets: checked.sets,
   /** Opposites and synonyms for the "Opposites and synonyms" game (content/pairs.json). */
   pairs: checked.pairs,
+  /** Short texts for the Read page (content/readings.json), in file order. */
+  readings: checked.readings,
+  /** Words only readings list: they wait for their reading's "Add N new words" button (lib/readings.ts). */
+  readingOnlyWords: readingOnlyWordIds(checked.readings, [...checked.lessons, ...checked.themes], checked.sets),
   problems: checked.problems,
 }

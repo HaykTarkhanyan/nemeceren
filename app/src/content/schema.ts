@@ -452,6 +452,67 @@ export const Extras = z.strictObject({ items: z.array(ExtraItem).min(1) }).super
   })
 })
 
+// ---------- Readings (content/readings.json): short texts on the Read page ----------
+
+export const READING_KINDS = ['story', 'fact', 'everyday'] as const
+
+/** Reading questions get instant feedback, so only the auto-graded types (no translate, write or audio items). */
+export const READING_QUESTION_TYPES = ['mc', 'gap', 'order'] as const
+
+export const ReadingQuestion = z.discriminatedUnion('type', [McItem, GapItem, OrderItem], {
+  error: () => `a reading question is graded at once, so "type" must be one of: ${READING_QUESTION_TYPES.join(', ')}`,
+})
+
+/** One sentence (or a short line of a chat, menu or notice) with its English translation. */
+export const ReadingSentence = z.strictObject({
+  de: Text,
+  en: Text,
+  /** Who writes or says it, in a chat or a dialogue: either every sentence of a text has a speaker, or none. */
+  speaker: Text.optional(),
+})
+
+export const Reading = z
+  .strictObject({
+    id: Slug,
+    kind: z.enum(READING_KINDS),
+    /** German title. */
+    title: Text,
+    /** English title. */
+    titleEn: Text,
+    level: Level,
+    /** The course unit the text is written for: built from the words taught up to its end, plus a few new ones. */
+    unit: Unit,
+    sentences: z.array(ReadingSentence).min(3).max(20),
+    /** Word ids from content/words.json offered as the text's new words ("Add N new words to review"). */
+    words: z.array(Slug).min(1).optional(),
+    questions: z.array(ReadingQuestion).min(2).max(4),
+    /** Where a fact was checked (https URLs); every fact has one or more. */
+    sources: z.array(z.url()).min(1).optional(),
+  })
+  .superRefine((r, ctx) => {
+    const speakers = r.sentences.filter((s) => s.speaker !== undefined).length
+    if (speakers > 0 && speakers < r.sentences.length) {
+      ctx.addIssue({ code: 'custom', path: ['sentences'], message: `${speakers} of ${r.sentences.length} sentences have a speaker: give every sentence a speaker (a chat or a dialogue) or none` })
+    }
+    if (r.kind === 'fact' && r.sources === undefined) ctx.addIssue({ code: 'custom', path: ['sources'], message: 'a fact needs sources: where it was checked' })
+    r.sources?.forEach((u, i) => {
+      if (!u.startsWith('https://')) ctx.addIssue({ code: 'custom', path: ['sources', i], message: 'must start with https://' })
+    })
+    const seen = new Set<string>()
+    r.words?.forEach((w, i) => {
+      if (seen.has(w)) ctx.addIssue({ code: 'custom', path: ['words', i], message: `"${w}" is already listed` })
+      seen.add(w)
+    })
+  })
+
+export const Readings = z.strictObject({ texts: z.array(Reading).min(1) }).superRefine((x, ctx) => {
+  const seen = new Set<string>()
+  x.texts.forEach((r, i) => {
+    if (seen.has(r.id)) ctx.addIssue({ code: 'custom', path: ['texts', i, 'id'], message: `duplicate reading id "${r.id}"` })
+    seen.add(r.id)
+  })
+})
+
 // ---------- Notes (written by Hayk in the app, feedback by Claude; stored in Neon) ----------
 
 export const NOTE_MAX_CHARS = 5000
@@ -912,6 +973,11 @@ export type PairKind = WordPair['kind']
 export type ExtraItem = z.infer<typeof ExtraItem>
 export type ExtraType = ExtraItem['type']
 export type Extras = z.infer<typeof Extras>
+export type Reading = z.infer<typeof Reading>
+export type ReadingKind = Reading['kind']
+export type ReadingQuestion = z.infer<typeof ReadingQuestion>
+export type ReadingSentence = z.infer<typeof ReadingSentence>
+export type Readings = z.infer<typeof Readings>
 export type NoteEdit = z.infer<typeof NoteEdit>
 export type NoteFeedback = z.infer<typeof NoteFeedback>
 export type WordCheck = z.infer<typeof WordCheck>

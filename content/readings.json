@@ -1,0 +1,903 @@
+{
+  "texts": [
+    {
+      "id": "falsche-nummer",
+      "kind": "story",
+      "title": "Falsche Nummer",
+      "titleEn": "Wrong number",
+      "level": "A1",
+      "unit": 0,
+      "sentences": [
+        { "speaker": "Max", "de": "Hallo, Lena! Wie geht's?", "en": "Hi, Lena! How are you?" },
+        { "speaker": "Frau Krause", "de": "Wie bitte?", "en": "Sorry?" },
+        { "speaker": "Max", "de": "Hallo, Lena! Wie geht's?", "en": "Hi, Lena! How are you?" },
+        { "speaker": "Frau Krause", "de": "Langsam, bitte. Ich verstehe nicht.", "en": "Slowly, please. I don't understand." },
+        { "speaker": "Max", "de": "Lena? Null, eins, sieben, zwei, drei, vier?", "en": "Lena? Zero, one, seven, two, three, four?" },
+        { "speaker": "Frau Krause", "de": "Nein. Null, eins, sieben, zwei, drei, fünf.", "en": "No. Zero, one, seven, two, three, five." },
+        { "speaker": "Frau Krause", "de": "Ich bin nicht Lena. Mein Name ist Krause.", "en": "I'm not Lena. My name is Krause." },
+        { "speaker": "Max", "de": "Oh! Falsche Nummer! Entschuldigung!", "en": "Oh! Wrong number! Sorry!" },
+        { "speaker": "Frau Krause", "de": "Kein Problem. Gute Nacht!", "en": "No problem. Good night!" },
+        { "speaker": "Max", "de": "Gute Nacht, Frau Krause!", "en": "Good night, Mrs Krause!" }
+      ],
+      "words": ["falsch", "nummer", "frau", "kein", "problem"],
+      "questions": [
+        {
+          "type": "mc",
+          "question": "Who answers the phone?",
+          "questionLang": "en",
+          "options": ["Frau Krause", "Lena", "Max"],
+          "answer": "Frau Krause",
+          "explanation": "She says: Ich bin nicht Lena. Mein Name ist Krause. Max has the wrong number."
+        },
+        {
+          "type": "mc",
+          "question": "What is Mrs Krause's number?",
+          "questionLang": "en",
+          "options": ["null, eins, sieben, zwei, drei, fünf", "null, eins, sieben, zwei, drei, vier", "null, eins, sieben, zwei, drei, neun"],
+          "answer": "null, eins, sieben, zwei, drei, fünf",
+          "explanation": "Max calls ... vier (4), but her number ends in fünf (5)."
+        },
+        {
+          "type": "gap",
+          "text": "Langsam, ___. Ich verstehe nicht.",
+          "answers": [["bitte"]],
+          "explanation": "Langsam, bitte = slowly, please. One of the survival phrases from Unit 0."
+        }
+      ]
+    },
+    {
+      "id": "vierzehn-buchstaben",
+      "kind": "everyday",
+      "title": "Vierzehn Buchstaben",
+      "titleEn": "Fourteen letters (a WhatsApp chat)",
+      "level": "A1",
+      "unit": 0,
+      "sentences": [
+        { "speaker": "Lena", "de": "Hallo, Max! Wie geht's?", "en": "Hi, Max! How are you?" },
+        { "speaker": "Max", "de": "Es geht. Und dir?", "en": "So-so. And you?" },
+        { "speaker": "Lena", "de": "Sehr gut, danke!", "en": "Very well, thanks!" },
+        { "speaker": "Max", "de": "Lena, was heißt \"sorry\" auf Deutsch?", "en": "Lena, what is \"sorry\" in German?" },
+        { "speaker": "Lena", "de": "Entschuldigung!", "en": "Entschuldigung! (sorry)" },
+        { "speaker": "Max", "de": "Wie bitte? Noch einmal, bitte!", "en": "Pardon? Once more, please!" },
+        { "speaker": "Lena", "de": "Ent-schul-di-gung. Das Wort hat vierzehn Buchstaben.", "en": "En-tschul-di-gung. The word has fourteen letters." },
+        { "speaker": "Max", "de": "Vierzehn Buchstaben? Langsam, bitte!", "en": "Fourteen letters? Slowly, please!" },
+        { "speaker": "Max", "de": "Danke, Lena! Ent ... Entschul ... Tschüss!", "en": "Thanks, Lena! En... Entschul... Bye!" }
+      ],
+      "words": ["wort", "sehr"],
+      "questions": [
+        {
+          "type": "mc",
+          "question": "How is Max?",
+          "questionLang": "en",
+          "options": ["Es geht.", "Sehr gut, danke!", "Gut, danke."],
+          "answer": "Es geht.",
+          "explanation": "Es geht = so-so, okay. Lena is the one who is very well (sehr gut)."
+        },
+        {
+          "type": "mc",
+          "question": "How many letters does \"Entschuldigung\" have?",
+          "questionLang": "en",
+          "options": ["vierzehn", "vierzig", "sechzehn"],
+          "answer": "vierzehn",
+          "explanation": "vierzehn = 14 (vier + zehn). vierzig is 40, sechzehn is 16."
+        },
+        {
+          "type": "order",
+          "prompt": "What is \"sorry\" in German?",
+          "tiles": ["was", "heißt", "sorry", "auf", "Deutsch"],
+          "answers": ["Was heißt sorry auf Deutsch"],
+          "explanation": "Was heißt ... auf Deutsch? = What is ... in German? The question word comes first, then the verb."
+        }
+      ]
+    },
+    {
+      "id": "drei-alphabete",
+      "kind": "fact",
+      "title": "Drei Alphabete",
+      "titleEn": "Three alphabets",
+      "level": "A1",
+      "unit": 0,
+      "sentences": [
+        { "de": "Das deutsche Alphabet hat 26 Buchstaben.", "en": "The German alphabet has 26 letters." },
+        { "de": "Plus ä, ö, ü und ß.", "en": "Plus ä, ö, ü and ß." },
+        { "de": "Das russische Alphabet hat 33 Buchstaben.", "en": "The Russian alphabet has 33 letters." },
+        { "de": "Und das armenische Alphabet?", "en": "And the Armenian alphabet?" },
+        { "de": "Es hat 38 Buchstaben!", "en": "It has 38 letters!" },
+        { "de": "Es ist sehr alt, aus dem Jahr 405.", "en": "It is very old, from the year 405." },
+        { "de": "Das Alphabet ist von Mesrop Maschtoz.", "en": "The alphabet is by Mesrop Mashtots." },
+        { "de": "Und das Wort \"Hallo\"? Es hat fünf Buchstaben.", "en": "And the word \"Hallo\"? It has five letters." }
+      ],
+      "words": ["alphabet", "alt", "jahr", "wort"],
+      "questions": [
+        {
+          "type": "mc",
+          "question": "How many letters does the Armenian alphabet have?",
+          "questionLang": "en",
+          "options": ["achtunddreißig", "dreiunddreißig", "sechsundzwanzig"],
+          "answer": "achtunddreißig",
+          "explanation": "38 = achtunddreißig: the ones come first (acht), then und, then the tens (dreißig)."
+        },
+        {
+          "type": "gap",
+          "text": "Das russische Alphabet hat ___ Buchstaben.",
+          "answers": [["33", "dreiunddreißig"]],
+          "explanation": "33 = dreiunddreißig (drei + und + dreißig)."
+        },
+        {
+          "type": "mc",
+          "question": "How old is the Armenian alphabet?",
+          "questionLang": "en",
+          "options": ["aus dem Jahr 405", "aus dem Jahr 1405", "aus dem Jahr 45"],
+          "answer": "aus dem Jahr 405",
+          "explanation": "Es ist sehr alt, aus dem Jahr 405: Mesrop Mashtots made it around 405."
+        }
+      ],
+      "sources": ["https://www.britannica.com/topic/Armenian-alphabet", "https://en.wikipedia.org/wiki/Armenian_alphabet"]
+    },
+    {
+      "id": "der-neue-kollege",
+      "kind": "story",
+      "title": "Der neue Kollege",
+      "titleEn": "The new colleague",
+      "level": "A1",
+      "unit": 1,
+      "sentences": [
+        { "de": "Aram ist neu in der Firma.", "en": "Aram is new at the company." },
+        { "de": "Er ist Entwickler.", "en": "He is a developer." },
+        { "de": "Seine Kollegin heißt Mila.", "en": "His colleague's name is Mila." },
+        { "de": "Mila ist sehr nett. Sie kommt aus Russland.", "en": "Mila is very nice. She comes from Russia." },
+        { "de": "Aram fragt: \"Sprichst du Russisch?\"", "en": "Aram asks: \"Do you speak Russian?\"" },
+        { "de": "\"Ja, natürlich!\", sagt Mila.", "en": "\"Yes, of course!\" says Mila." },
+        { "de": "Aram und Mila sprechen Russisch.", "en": "Aram and Mila speak Russian." },
+        { "de": "Sie sprechen und sprechen und sprechen.", "en": "They talk and talk and talk." },
+        { "de": "Dann kommt der Chef, Herr Becker.", "en": "Then the boss, Mr Becker, comes in." },
+        { "de": "Herr Becker spricht kein Russisch.", "en": "Mr Becker doesn't speak Russian." },
+        { "de": "Er sagt: \"Bitte Deutsch! Wir sind in Deutschland!\"", "en": "He says: \"German, please! We're in Germany!\"" },
+        { "de": "Aram und Mila lachen.", "en": "Aram and Mila laugh." },
+        { "de": "Dann sprechen sie Deutsch. Langsam.", "en": "Then they speak German. Slowly." }
+      ],
+      "words": ["chef", "sagen", "natuerlich", "kein", "dann", "lachen"],
+      "questions": [
+        {
+          "type": "mc",
+          "question": "Where does Mila come from?",
+          "questionLang": "en",
+          "options": ["aus Russland", "aus Armenien", "aus Deutschland"],
+          "answer": "aus Russland",
+          "explanation": "Sie kommt aus Russland. That is why Aram asks: Sprichst du Russisch?"
+        },
+        {
+          "type": "mc",
+          "question": "Why does Mr Becker say \"Bitte Deutsch!\"?",
+          "questionLang": "en",
+          "options": ["Er spricht kein Russisch.", "Er spricht kein Deutsch.", "Er ist neu in der Firma."],
+          "answer": "Er spricht kein Russisch.",
+          "explanation": "Herr Becker spricht kein Russisch, so he cannot follow Aram and Mila."
+        },
+        {
+          "type": "order",
+          "prompt": "Do you speak Russian? (to a friend)",
+          "tiles": ["sprichst", "du", "Russisch"],
+          "answers": ["Sprichst du Russisch"],
+          "explanation": "A yes/no question starts with the verb. With du, sprechen changes e to i: du sprichst."
+        }
+      ]
+    },
+    {
+      "id": "der-erste-tag",
+      "kind": "story",
+      "title": "Der erste Tag",
+      "titleEn": "The first day",
+      "level": "A1",
+      "unit": 1,
+      "sentences": [
+        { "de": "Aram ist neu im Kurs.", "en": "Aram is new in the course." },
+        { "de": "Ein Mann sagt: \"Guten Morgen! Wie heißen Sie?\"", "en": "A man says: \"Good morning! What's your name?\"" },
+        { "de": "\"Ich heiße Aram. Sind Sie der Lehrer?\"", "en": "\"My name is Aram. Are you the teacher?\"" },
+        { "de": "\"Nein, ich bin Student. Ich heiße Peter.\"", "en": "\"No, I'm a student. My name is Peter.\"" },
+        { "de": "Dann kommt eine Frau.", "en": "Then a woman comes in." },
+        { "de": "\"Hallo! Ich bin Eva. Ich komme aus Österreich.\"", "en": "\"Hello! I'm Eva. I come from Austria.\"" },
+        { "de": "Peter fragt: \"Sind Sie die Lehrerin?\"", "en": "Peter asks: \"Are you the teacher?\"" },
+        { "de": "\"Nein, ich bin auch Studentin. Ich lerne Englisch.\"", "en": "\"No, I'm a student too. I'm learning English.\"" },
+        { "de": "\"Englisch?\", fragt Aram. \"Das ist ein Deutschkurs!\"", "en": "\"English?\" asks Aram. \"This is a German course!\"" },
+        { "de": "Eva lacht: \"Nein! Das ist der Englischkurs. Der Deutschkurs ist in Zimmer zwölf.\"", "en": "Eva laughs: \"No! This is the English course. The German course is in room twelve.\"" },
+        { "de": "Aram und Peter sagen: \"Oh! Entschuldigung! Tschüss!\"", "en": "Aram and Peter say: \"Oh! Sorry! Bye!\"" }
+      ],
+      "words": ["erste", "sagen", "mann", "dann", "lachen", "zimmer"],
+      "questions": [
+        {
+          "type": "mc",
+          "question": "Who is Peter?",
+          "questionLang": "en",
+          "options": ["ein Student", "der Lehrer", "ein Kollege"],
+          "answer": "ein Student",
+          "explanation": "Peter says: Nein, ich bin Student."
+        },
+        {
+          "type": "mc",
+          "question": "Which course is in this room?",
+          "questionLang": "en",
+          "options": ["der Englischkurs", "der Deutschkurs", "kein Kurs"],
+          "answer": "der Englischkurs",
+          "explanation": "Eva: Das ist der Englischkurs. Der Deutschkurs ist in Zimmer zwölf."
+        },
+        {
+          "type": "gap",
+          "text": "Ich ___ aus Österreich.",
+          "answers": [["komme"]],
+          "explanation": "kommen with ich: ich komme. Eva says: Ich komme aus Österreich."
+        }
+      ]
+    },
+    {
+      "id": "email-an-den-kurs",
+      "kind": "everyday",
+      "title": "Eine E-Mail an den Kurs",
+      "titleEn": "An email to the course",
+      "level": "A1",
+      "unit": 1,
+      "sentences": [
+        { "de": "Hallo zusammen,", "en": "Hi everyone," },
+        { "de": "ich heiße Mila Petrowa und ich bin neu im Kurs.", "en": "my name is Mila Petrowa and I'm new in the course." },
+        { "de": "Ich komme aus Russland, aus Moskau.", "en": "I come from Russia, from Moscow." },
+        { "de": "Ich wohne jetzt in München.", "en": "I live in Munich now." },
+        { "de": "Ich arbeite als Lehrerin.", "en": "I work as a teacher." },
+        { "de": "Ich spreche Russisch, Englisch und ein bisschen Deutsch.", "en": "I speak Russian, English and a little German." },
+        { "de": "Ich lerne gern Deutsch, aber Deutsch ist schwer!", "en": "I like learning German, but German is hard!" },
+        { "de": "Ich habe eine Frage: Wer möchte zusammen lernen?", "en": "I have a question: who would like to study together?" },
+        { "de": "Viele Grüße, Mila", "en": "Best wishes, Mila" }
+      ],
+      "words": ["e-mail", "jetzt", "schwer", "moechten", "gruss"],
+      "questions": [
+        {
+          "type": "mc",
+          "question": "What is Mila's job?",
+          "questionLang": "en",
+          "options": ["Lehrerin", "Studentin", "Entwicklerin"],
+          "answer": "Lehrerin",
+          "explanation": "Ich arbeite als Lehrerin = I work as a teacher."
+        },
+        {
+          "type": "mc",
+          "question": "What does Mila find hard?",
+          "questionLang": "en",
+          "options": ["Deutsch", "Englisch", "Russisch"],
+          "answer": "Deutsch",
+          "explanation": "Ich lerne gern Deutsch, aber Deutsch ist schwer! schwer = hard, difficult."
+        },
+        {
+          "type": "gap",
+          "text": "Ich ___ Russisch, Englisch und ein bisschen Deutsch.",
+          "answers": [["spreche"]],
+          "explanation": "sprechen with ich: ich spreche (the e to i change is only for du and er/sie/es)."
+        }
+      ]
+    },
+    {
+      "id": "servus",
+      "kind": "fact",
+      "title": "Servus!",
+      "titleEn": "Servus: hello and goodbye in one word",
+      "level": "A1",
+      "unit": 1,
+      "sentences": [
+        { "de": "In München sagt man oft \"Servus!\".", "en": "In Munich people often say \"Servus!\"." },
+        { "de": "Man sagt es auch in Österreich.", "en": "People say it in Austria too." },
+        { "de": "\"Servus\" heißt \"Hallo\", aber auch \"Tschüss\".", "en": "\"Servus\" means \"hello\", but also \"bye\"." },
+        { "de": "Das Wort ist sehr alt.", "en": "The word is very old." },
+        { "de": "Es kommt aus dem Lateinischen.", "en": "It comes from Latin." },
+        { "de": "Auf Latein heißt \"servus\": Diener.", "en": "In Latin, \"servus\" means servant." },
+        { "de": "\"Servus!\" bedeutet also eigentlich: \"Ich bin Ihr Diener!\"", "en": "So \"Servus!\" really means: \"I am your servant!\"" },
+        { "de": "Heute sagen das Freunde und Kollegen.", "en": "Today friends and colleagues say it." }
+      ],
+      "words": ["man", "oft", "sagen", "bedeuten", "eigentlich", "also"],
+      "questions": [
+        {
+          "type": "mc",
+          "question": "What does \"Servus\" mean today?",
+          "questionLang": "en",
+          "options": ["Hallo und Tschüss", "Danke und Bitte", "Ja und Nein"],
+          "answer": "Hallo und Tschüss",
+          "explanation": "\"Servus\" heißt \"Hallo\", aber auch \"Tschüss\": you can say it when you meet and when you leave."
+        },
+        {
+          "type": "mc",
+          "question": "Where does the word come from?",
+          "questionLang": "en",
+          "options": ["aus dem Lateinischen", "aus dem Englischen", "aus dem Russischen"],
+          "answer": "aus dem Lateinischen",
+          "explanation": "Es kommt aus dem Lateinischen: Latin servus = servant."
+        },
+        {
+          "type": "gap",
+          "text": "In München ___ man oft \"Servus!\".",
+          "answers": [["sagt"]],
+          "explanation": "man = people, one. It takes the er/sie/es form: man sagt."
+        }
+      ],
+      "sources": ["https://www.dwds.de/wb/servus"]
+    },
+    {
+      "id": "wo-ist-der-schluessel",
+      "kind": "story",
+      "title": "Wo ist der Schlüssel?",
+      "titleEn": "Where is the key?",
+      "level": "A1",
+      "unit": 2,
+      "sentences": [
+        { "de": "Lena hat keine Zeit.", "en": "Lena has no time." },
+        { "de": "Aber wo ist der Schlüssel?", "en": "But where is the key?" },
+        { "de": "Ist er in der Tasche? Nein.", "en": "Is it in the bag? No." },
+        { "de": "Ist er auf dem Tisch? Nein.", "en": "Is it on the table? No." },
+        { "de": "Ist er in der Küche? Auch nicht.", "en": "Is it in the kitchen? Not there either." },
+        { "de": "Lena sucht im Bad und im Schlafzimmer.", "en": "Lena looks in the bathroom and in the bedroom." },
+        { "de": "Kein Schlüssel!", "en": "No key!" },
+        { "de": "Sie fragt ihren Mann: \"Hast du meinen Schlüssel?\"", "en": "She asks her husband: \"Do you have my key?\"" },
+        { "de": "\"Nein\", sagt er. \"Aber die Tür ist offen.\"", "en": "\"No,\" he says. \"But the door is open.\"" },
+        { "de": "Der Schlüssel ist in der Tür!", "en": "The key is in the door!" },
+        { "de": "Lena lacht: \"Das ist praktisch!\"", "en": "Lena laughs: \"That's handy!\"" }
+      ],
+      "words": ["suchen", "offen", "lachen", "sagen"],
+      "questions": [
+        {
+          "type": "mc",
+          "question": "Where is the key?",
+          "questionLang": "en",
+          "options": ["in der Tür", "in der Tasche", "in der Küche"],
+          "answer": "in der Tür",
+          "explanation": "Der Schlüssel ist in der Tür! It was in the door all the time."
+        },
+        {
+          "type": "gap",
+          "text": "Lena hat ___ Zeit.",
+          "answers": [["keine"]],
+          "explanation": "die Zeit, so: keine Zeit (no time)."
+        },
+        {
+          "type": "order",
+          "prompt": "Where is the key?",
+          "tiles": ["wo", "ist", "der", "Schlüssel"],
+          "answers": ["Wo ist der Schlüssel"],
+          "explanation": "A W-question: question word, verb, then the rest."
+        }
+      ]
+    },
+    {
+      "id": "meine-familie",
+      "kind": "story",
+      "title": "Meine Familie",
+      "titleEn": "My family",
+      "level": "A1",
+      "unit": 2,
+      "sentences": [
+        { "de": "Hallo! Ich bin Max, und das ist meine Familie.", "en": "Hi! I'm Max, and this is my family." },
+        { "de": "Das ist mein Vater. Er heißt Thomas und ist Lehrer.", "en": "This is my father. His name is Thomas and he is a teacher." },
+        { "de": "Das ist meine Mutter, Sabine. Sie arbeitet bei Siemens.", "en": "This is my mother, Sabine. She works at Siemens." },
+        { "de": "Ich habe eine Schwester. Sie heißt Lena und ist sechzehn.", "en": "I have a sister. Her name is Lena and she is sixteen." },
+        { "de": "Und das ist Mimi.", "en": "And this is Mimi." },
+        { "de": "Mimi ist klein und schwarz.", "en": "Mimi is small and black." },
+        { "de": "Sie schläft viel und isst viel.", "en": "She sleeps a lot and eats a lot." },
+        { "de": "Sie hat keinen Job und kein Geld.", "en": "She has no job and no money." },
+        { "de": "Aber alle lieben Mimi.", "en": "But everyone loves Mimi." },
+        { "de": "Mimi ist unsere Katze.", "en": "Mimi is our cat." }
+      ],
+      "words": ["katze", "alle", "lieben", "schlafen", "essen", "viel"],
+      "questions": [
+        {
+          "type": "mc",
+          "question": "Who is Mimi?",
+          "questionLang": "en",
+          "options": ["die Katze", "die Schwester", "die Mutter"],
+          "answer": "die Katze",
+          "explanation": "Mimi ist unsere Katze. No job, no money, but everyone loves her."
+        },
+        {
+          "type": "mc",
+          "question": "What is Max's father's job?",
+          "questionLang": "en",
+          "options": ["Er ist Lehrer.", "Er arbeitet bei Siemens.", "Er ist Student."],
+          "answer": "Er ist Lehrer.",
+          "explanation": "Er heißt Thomas und ist Lehrer. The mother works at Siemens."
+        },
+        {
+          "type": "gap",
+          "text": "Das ist ___ Mutter.",
+          "answers": [["meine"]],
+          "explanation": "die Mutter, so: meine Mutter (mein gets -e with a die-word)."
+        }
+      ]
+    },
+    {
+      "id": "eine-super-wohnung",
+      "kind": "story",
+      "title": "Eine super Wohnung",
+      "titleEn": "A great flat",
+      "level": "A1",
+      "unit": 2,
+      "sentences": [
+        { "de": "Peter sucht eine Wohnung in München.", "en": "Peter is looking for a flat in Munich." },
+        { "de": "Die Mieten sind sehr hoch.", "en": "The rents are very high." },
+        { "de": "Dann findet er eine Anzeige: \"Wohnung, hell, mit Balkon, nur 400 Euro!\"", "en": "Then he finds an ad: \"Flat, bright, with balcony, only 400 euros!\"" },
+        { "de": "Peter ruft den Vermieter an.", "en": "Peter calls the landlord." },
+        { "de": "\"Ist die Wohnung noch frei?\" - \"Ja, kommen Sie!\"", "en": "\"Is the flat still available?\" - \"Yes, come and see!\"" },
+        { "de": "Die Wohnung ist wirklich hell, und sie hat einen Balkon.", "en": "The flat really is bright, and it has a balcony." },
+        { "de": "\"Und wo ist das Schlafzimmer?\", fragt Peter.", "en": "\"And where is the bedroom?\" asks Peter." },
+        { "de": "\"Hier!\", sagt der Vermieter. \"Das ist das Schlafzimmer, das Wohnzimmer und die Küche.\"", "en": "\"Here!\" says the landlord. \"This is the bedroom, the living room and the kitchen.\"" },
+        { "de": "Die Wohnung hat nur ein Zimmer: neun Quadratmeter.", "en": "The flat has only one room: nine square metres." },
+        { "de": "Und das Bad? Das Bad ist auf dem Balkon.", "en": "And the bathroom? The bathroom is on the balcony." },
+        { "de": "Peter sagt: \"Danke. Ich suche weiter.\"", "en": "Peter says: \"Thanks. I'll keep looking.\"" }
+      ],
+      "words": ["anzeige", "nur", "weiter", "super", "suchen", "finden", "wirklich", "anrufen"],
+      "questions": [
+        {
+          "type": "mc",
+          "question": "How many rooms does the flat have?",
+          "questionLang": "en",
+          "options": ["ein Zimmer", "zwei Zimmer", "drei Zimmer"],
+          "answer": "ein Zimmer",
+          "explanation": "Die Wohnung hat nur ein Zimmer: bedroom, living room and kitchen in one."
+        },
+        {
+          "type": "mc",
+          "question": "Where is the bathroom?",
+          "questionLang": "en",
+          "options": ["auf dem Balkon", "in der Küche", "im Schlafzimmer"],
+          "answer": "auf dem Balkon",
+          "explanation": "Das Bad ist auf dem Balkon. That is why Peter keeps looking."
+        },
+        {
+          "type": "gap",
+          "text": "Die Mieten sind sehr ___.",
+          "answers": [["hoch"]],
+          "explanation": "hoch = high. Die Miete ist hoch: the rent is high."
+        }
+      ]
+    },
+    {
+      "id": "wohnung-zu-vermieten",
+      "kind": "everyday",
+      "title": "Wohnung zu vermieten",
+      "titleEn": "Flat for rent (an ad)",
+      "level": "A1",
+      "unit": 2,
+      "sentences": [
+        { "de": "Schöne Wohnung in Moosach zu vermieten", "en": "Nice flat for rent in Moosach" },
+        { "de": "Die Wohnung hat zwei Zimmer, eine Küche und ein Bad.", "en": "The flat has two rooms, a kitchen and a bathroom." },
+        { "de": "Sie hat 55 Quadratmeter und einen Balkon.", "en": "It is 55 square metres and has a balcony." },
+        { "de": "Die Küche ist neu, mit Herd und Kühlschrank.", "en": "The kitchen is new, with a stove and a fridge." },
+        { "de": "Das Wohnzimmer ist groß und hell.", "en": "The living room is big and bright." },
+        { "de": "Das Schlafzimmer ist klein, aber ruhig.", "en": "The bedroom is small but quiet." },
+        { "de": "Die Miete ist 1100 Euro im Monat.", "en": "The rent is 1,100 euros a month." },
+        { "de": "Die Wohnung ist jetzt frei.", "en": "The flat is available now." },
+        { "de": "Bitte keine Hunde und keine Katzen.", "en": "No dogs and no cats, please." },
+        { "de": "Kontakt: Frau Krause, Telefon 089 12 34 56", "en": "Contact: Mrs Krause, phone 089 12 34 56" }
+      ],
+      "words": ["vermieten", "ruhig", "monat", "jetzt", "hund", "katze", "telefon"],
+      "questions": [
+        {
+          "type": "mc",
+          "question": "How much is the rent?",
+          "questionLang": "en",
+          "options": ["1100 Euro im Monat", "550 Euro im Monat", "110 Euro im Monat"],
+          "answer": "1100 Euro im Monat",
+          "explanation": "Die Miete ist 1100 Euro im Monat (eintausendeinhundert Euro, or elfhundert Euro)."
+        },
+        {
+          "type": "mc",
+          "question": "Are pets allowed?",
+          "questionLang": "en",
+          "options": ["Nein, keine Hunde und keine Katzen.", "Ja, Hunde und Katzen.", "Nur Katzen."],
+          "answer": "Nein, keine Hunde und keine Katzen.",
+          "explanation": "Bitte keine Hunde und keine Katzen. Mimi the cat cannot live here."
+        },
+        {
+          "type": "gap",
+          "text": "Das Schlafzimmer ist klein, aber ___.",
+          "answers": [["ruhig"]],
+          "explanation": "ruhig = quiet. A common word in flat ads."
+        }
+      ]
+    },
+    {
+      "id": "speisekarte",
+      "kind": "everyday",
+      "title": "Die Speisekarte",
+      "titleEn": "The menu (a café)",
+      "level": "A1",
+      "unit": 2,
+      "sentences": [
+        { "de": "Willkommen im Café Mila!", "en": "Welcome to Café Mila!" },
+        { "de": "Kaffee: zwei Euro achtzig", "en": "Coffee: two euros eighty" },
+        { "de": "Tee: zwei Euro fünfzig", "en": "Tea: two euros fifty" },
+        { "de": "Wasser: ein Euro neunzig", "en": "Water: one euro ninety" },
+        { "de": "Apfelkuchen: drei Euro neunzig", "en": "Apple cake: three euros ninety" },
+        { "de": "Brötchen mit Käse: vier Euro zwanzig", "en": "Bread roll with cheese: four euros twenty" },
+        { "de": "Heute: Kaffee und Kuchen für nur sechs Euro!", "en": "Today: coffee and cake for only six euros!" },
+        { "de": "Wir haben kein WLAN. Bitte sprechen Sie miteinander!", "en": "We have no Wi-Fi. Please talk to each other!" }
+      ],
+      "words": ["speisekarte", "cafe", "tee", "kuchen", "kaese", "broetchen", "wlan", "nur", "fuer"],
+      "questions": [
+        {
+          "type": "mc",
+          "question": "How much is a tea?",
+          "questionLang": "en",
+          "options": ["zwei Euro fünfzig", "zwei Euro achtzig", "ein Euro neunzig"],
+          "answer": "zwei Euro fünfzig",
+          "explanation": "Tee: zwei Euro fünfzig (2.50 euros). The coffee is zwei Euro achtzig."
+        },
+        {
+          "type": "mc",
+          "question": "What doesn't the café have?",
+          "questionLang": "en",
+          "options": ["WLAN", "Kaffee", "Kuchen"],
+          "answer": "WLAN",
+          "explanation": "Wir haben kein WLAN. Bitte sprechen Sie miteinander!"
+        },
+        {
+          "type": "gap",
+          "text": "Ich habe Hunger. Ich brauche ein ___ mit Käse.",
+          "answers": [["Brötchen"]],
+          "explanation": "das Brötchen, so: ein Brötchen. On the menu: Brötchen mit Käse, vier Euro zwanzig."
+        }
+      ]
+    },
+    {
+      "id": "das-handy",
+      "kind": "fact",
+      "title": "Das Handy",
+      "titleEn": "\"Handy\": a German word",
+      "level": "A1",
+      "unit": 2,
+      "sentences": [
+        { "de": "Das Wort \"Handy\" klingt englisch.", "en": "The word \"Handy\" sounds English." },
+        { "de": "Aber in England sagt niemand \"Handy\".", "en": "But nobody in England says \"Handy\"." },
+        { "de": "Dort sagt man \"mobile phone\" oder \"mobile\".", "en": "There people say \"mobile phone\" or \"mobile\"." },
+        { "de": "In Amerika sagt man \"cell phone\".", "en": "In America people say \"cell phone\"." },
+        { "de": "\"Handy\" ist also ein deutsches Wort.", "en": "So \"Handy\" is a German word." },
+        { "de": "Auf Englisch ist \"handy\" ein Adjektiv. Es heißt \"praktisch\".", "en": "In English, \"handy\" is an adjective. It means \"practical\"." },
+        { "de": "Und das passt: Ein Handy ist sehr praktisch!", "en": "And that fits: a mobile phone is very practical!" },
+        { "de": "Die Deutschen sagen \"Handy\" seit ungefähr 1990.", "en": "Germans have been saying \"Handy\" since about 1990." }
+      ],
+      "words": ["klingen", "niemand", "dort", "oder", "also", "passen", "ungefaehr", "seit"],
+      "questions": [
+        {
+          "type": "mc",
+          "question": "Is \"Handy\" an English word for a phone?",
+          "questionLang": "en",
+          "options": ["Nein, es ist ein deutsches Wort.", "Ja, in England sagt man Handy.", "Ja, in Amerika sagt man Handy."],
+          "answer": "Nein, es ist ein deutsches Wort.",
+          "explanation": "\"Handy\" ist also ein deutsches Wort: it only sounds English."
+        },
+        {
+          "type": "mc",
+          "question": "What does English \"handy\" mean?",
+          "questionLang": "en",
+          "options": ["praktisch", "klein", "teuer"],
+          "answer": "praktisch",
+          "explanation": "Es heißt \"praktisch\": useful, practical."
+        },
+        {
+          "type": "order",
+          "prompt": "The word sounds English.",
+          "tiles": ["das", "Wort", "klingt", "englisch"],
+          "answers": ["Das Wort klingt englisch"],
+          "explanation": "klingen = to sound. Das Wort klingt englisch: subject, verb, then the rest."
+        }
+      ],
+      "sources": ["https://www.dwds.de/wb/Handy"]
+    },
+    {
+      "id": "kindergarten",
+      "kind": "fact",
+      "title": "Der Kindergarten",
+      "titleEn": "Kindergarten",
+      "level": "A1",
+      "unit": 2,
+      "sentences": [
+        { "de": "\"Kindergarten\" ist ein deutsches Wort.", "en": "\"Kindergarten\" is a German word." },
+        { "de": "Es heißt: ein Garten für Kinder.", "en": "It means: a garden for children." },
+        { "de": "Heute ist \"Kindergarten\" auch ein englisches Wort.", "en": "Today \"kindergarten\" is an English word too." },
+        { "de": "Die Idee ist von Friedrich Fröbel.", "en": "The idea comes from Friedrich Fröbel." },
+        { "de": "Fröbel ist Lehrer. Er lebt von 1782 bis 1852.", "en": "Fröbel was a teacher. He lived from 1782 to 1852." },
+        { "de": "1840 nennt er seine Schule für kleine Kinder \"Kindergarten\".", "en": "In 1840 he named his school for small children \"Kindergarten\"." },
+        { "de": "Die Schule ist in Thüringen.", "en": "The school was in Thuringia." },
+        { "de": "Die Kinder spielen, singen und arbeiten im Garten.", "en": "The children played, sang and worked in the garden." },
+        { "de": "Heute gibt es Kindergärten in vielen Ländern.", "en": "Today there are kindergartens in many countries." }
+      ],
+      "words": ["kindergarten", "garten", "fuer", "schule", "leben-2", "spielen", "singen", "idee", "es-gibt"],
+      "questions": [
+        {
+          "type": "mc",
+          "question": "What does \"Kindergarten\" mean?",
+          "questionLang": "en",
+          "options": ["ein Garten für Kinder", "ein Kind im Garten", "eine Schule für Lehrer"],
+          "answer": "ein Garten für Kinder",
+          "explanation": "Kinder + Garten: ein Garten für Kinder, a garden for children."
+        },
+        {
+          "type": "mc",
+          "question": "When did Fröbel give his school the name \"Kindergarten\"?",
+          "questionLang": "en",
+          "options": ["1840", "1782", "1990"],
+          "answer": "1840",
+          "explanation": "1840 nennt er seine Schule \"Kindergarten\". 1782 is the year he was born."
+        },
+        {
+          "type": "gap",
+          "text": "Die Kinder ___, singen und arbeiten im Garten.",
+          "answers": [["spielen"]],
+          "explanation": "spielen = to play. With die Kinder (they) the verb ends in -en."
+        }
+      ],
+      "sources": ["https://en.wikipedia.org/wiki/Friedrich_Fr%C3%B6bel"]
+    },
+    {
+      "id": "der-wecker",
+      "kind": "story",
+      "title": "Der Wecker",
+      "titleEn": "The alarm clock",
+      "level": "A1",
+      "unit": 3,
+      "sentences": [
+        { "de": "Der Wecker klingelt. Es ist sechs Uhr.", "en": "The alarm clock rings. It's six o'clock." },
+        { "de": "Max steht schnell auf.", "en": "Max gets up quickly." },
+        { "de": "Er frühstückt: ein Kaffee, ein Brötchen.", "en": "He has breakfast: a coffee, a bread roll." },
+        { "de": "Um halb sieben geht er aus dem Haus.", "en": "At half past six he leaves the house." },
+        { "de": "Die Straße ist leer.", "en": "The street is empty." },
+        { "de": "Kein Bus, keine Autos, keine Leute.", "en": "No bus, no cars, no people." },
+        { "de": "Um sieben ist er im Büro. Aber das Büro ist geschlossen.", "en": "At seven he is at the office. But the office is closed." },
+        { "de": "Max ruft seine Kollegin Lena an.", "en": "Max calls his colleague Lena." },
+        { "de": "Lena sagt: \"Max, es ist sieben Uhr! Heute ist Sonntag!\"", "en": "Lena says: \"Max, it's seven o'clock! Today is Sunday!\"" },
+        { "de": "Max geht nach Hause und schläft bis zwölf.", "en": "Max goes home and sleeps until twelve." }
+      ],
+      "words": ["wecker", "klingeln", "schnell", "broetchen", "leer", "buero", "bus", "auto", "leute"],
+      "questions": [
+        {
+          "type": "mc",
+          "question": "Why is the office closed?",
+          "questionLang": "en",
+          "options": ["Heute ist Sonntag.", "Max ist zu spät.", "Lena ist krank."],
+          "answer": "Heute ist Sonntag.",
+          "explanation": "Lena: Heute ist Sonntag! Max got up for work on a Sunday."
+        },
+        {
+          "type": "mc",
+          "question": "When does Max leave the house?",
+          "questionLang": "en",
+          "options": ["um halb sieben", "um sechs Uhr", "um sieben Uhr"],
+          "answer": "um halb sieben",
+          "explanation": "Um halb sieben geht er aus dem Haus. halb sieben = 6:30 (half on the way to seven)."
+        },
+        {
+          "type": "order",
+          "prompt": "Max gets up quickly.",
+          "tiles": ["Max", "steht", "schnell", "auf"],
+          "answers": ["Max steht schnell auf", "Schnell steht Max auf"],
+          "explanation": "aufstehen is separable: the verb in second place, auf at the end."
+        }
+      ]
+    },
+    {
+      "id": "kein-geburtstag",
+      "kind": "story",
+      "title": "Kein Geburtstag?",
+      "titleEn": "No birthday?",
+      "level": "A1",
+      "unit": 3,
+      "sentences": [
+        { "de": "Heute ist der zwölfte März. Aram hat Geburtstag.", "en": "Today is the twelfth of March. It's Aram's birthday." },
+        { "de": "Am Morgen ruft niemand an.", "en": "In the morning nobody calls." },
+        { "de": "Im Büro sagen die Kollegen nichts.", "en": "At the office the colleagues say nothing." },
+        { "de": "Aram ist ein bisschen traurig.", "en": "Aram is a little sad." },
+        { "de": "Um fünf hat er Feierabend. Er geht nach Hause.", "en": "At five he finishes work. He goes home." },
+        { "de": "Er macht die Tür auf. Die Wohnung ist dunkel.", "en": "He opens the door. The flat is dark." },
+        { "de": "Dann geht das Licht an.", "en": "Then the light comes on." },
+        { "de": "\"Überraschung!\" Da sind seine Freunde und Kollegen.", "en": "\"Surprise!\" There are his friends and colleagues." },
+        { "de": "Alle rufen: \"Alles Gute zum Geburtstag!\"", "en": "Everyone shouts: \"Happy birthday!\"" },
+        { "de": "Seine Mutter ist auch da. Sie kommt aus Jerewan!", "en": "His mother is there too. She has come from Yerevan!" },
+        { "de": "Aram lacht. Was für ein Tag!", "en": "Aram laughs. What a day!" }
+      ],
+      "words": ["ueberraschung", "niemand", "nichts", "traurig", "buero", "aufmachen", "licht", "da", "rufen", "alle", "lachen"],
+      "questions": [
+        {
+          "type": "mc",
+          "question": "When is Aram's birthday?",
+          "questionLang": "en",
+          "options": ["am zwölften März", "am dritten Oktober", "am ersten Mai"],
+          "answer": "am zwölften März",
+          "explanation": "Heute ist der zwölfte März. Aram hat Geburtstag. With am: am zwölften März."
+        },
+        {
+          "type": "mc",
+          "question": "Why is Aram sad?",
+          "questionLang": "en",
+          "options": ["Niemand ruft an.", "Er muss lange arbeiten.", "Er hat kein Geld."],
+          "answer": "Niemand ruft an.",
+          "explanation": "Am Morgen ruft niemand an, and the colleagues say nothing. It is all part of the surprise."
+        },
+        {
+          "type": "gap",
+          "text": "Um fünf ___ er Feierabend.",
+          "answers": [["hat"]],
+          "explanation": "Feierabend haben = to finish work for the day: er hat Feierabend."
+        }
+      ]
+    },
+    {
+      "id": "oeffnungszeiten",
+      "kind": "everyday",
+      "title": "Öffnungszeiten",
+      "titleEn": "Opening hours (a notice)",
+      "level": "A1",
+      "unit": 3,
+      "sentences": [
+        { "de": "Bäckerei Müller: Öffnungszeiten", "en": "Müller bakery: opening hours" },
+        { "de": "Montag bis Freitag: 6 bis 18 Uhr", "en": "Monday to Friday: 6 am to 6 pm" },
+        { "de": "Samstag: 7 bis 13 Uhr", "en": "Saturday: 7 am to 1 pm" },
+        { "de": "Sonntag: 8 bis 11 Uhr", "en": "Sunday: 8 to 11 am" },
+        { "de": "Am Feiertag geschlossen.", "en": "Closed on public holidays." },
+        { "de": "Achtung! Vom vierundzwanzigsten Dezember bis zum ersten Januar machen wir Urlaub.", "en": "Attention! From 24 December to 1 January we are on holiday." },
+        { "de": "Am zweiten Januar sind wir wieder da.", "en": "On 2 January we are back." },
+        { "de": "Wir wünschen Ihnen schöne Feiertage!", "en": "We wish you happy holidays!" },
+        { "de": "Ihre Bäckerei Müller", "en": "Your Müller bakery" }
+      ],
+      "words": ["baeckerei", "achtung", "urlaub", "wieder", "da", "wuenschen"],
+      "questions": [
+        {
+          "type": "mc",
+          "question": "When does the bakery open on Saturday?",
+          "questionLang": "en",
+          "options": ["um sieben Uhr", "um sechs Uhr", "um acht Uhr"],
+          "answer": "um sieben Uhr",
+          "explanation": "Samstag: 7 bis 13 Uhr. At six it opens Monday to Friday, at eight on Sunday."
+        },
+        {
+          "type": "mc",
+          "question": "Is the bakery open on 30 December?",
+          "questionLang": "en",
+          "options": ["Nein, die Bäckerei macht Urlaub.", "Ja, von sieben bis dreizehn Uhr.", "Ja, nur am Morgen."],
+          "answer": "Nein, die Bäckerei macht Urlaub.",
+          "explanation": "Vom vierundzwanzigsten Dezember bis zum ersten Januar machen wir Urlaub. 30 December is in between."
+        },
+        {
+          "type": "gap",
+          "text": "Am Feiertag ist die Bäckerei ___.",
+          "answers": [["geschlossen"]],
+          "explanation": "geschlossen = closed, geöffnet = open. Am Feiertag geschlossen."
+        }
+      ]
+    },
+    {
+      "id": "party-am-samstag",
+      "kind": "everyday",
+      "title": "Party am Samstag",
+      "titleEn": "A party on Saturday (a chat)",
+      "level": "A1",
+      "unit": 3,
+      "sentences": [
+        { "speaker": "Lena", "de": "Hallo Max! Ich mache am Samstag eine Party. Hast du Zeit?", "en": "Hi Max! I'm having a party on Saturday. Are you free?" },
+        { "speaker": "Max", "de": "Super! Wann fängt die Party an?", "en": "Great! When does the party start?" },
+        { "speaker": "Lena", "de": "Um acht Uhr.", "en": "At eight." },
+        { "speaker": "Max", "de": "Um acht kann ich leider nicht. Ich muss bis neun arbeiten.", "en": "Unfortunately I can't at eight. I have to work until nine." },
+        { "speaker": "Max", "de": "Geht es auch um halb zehn?", "en": "Is half past nine okay too?" },
+        { "speaker": "Lena", "de": "Ja, kein Problem! Die Party geht bis zwei.", "en": "Yes, no problem! The party goes on until two." },
+        { "speaker": "Max", "de": "Gut! Ich bringe einen Kuchen mit.", "en": "Good! I'll bring a cake." },
+        { "speaker": "Lena", "de": "Super, danke! Bis Samstag!", "en": "Great, thanks! See you on Saturday!" },
+        { "speaker": "Max", "de": "Und noch eine Frage: Wie ist deine Adresse?", "en": "And one more question: what's your address?" },
+        { "speaker": "Lena", "de": "Goethestraße 12. Bis dann!", "en": "Goethestraße 12. See you!" }
+      ],
+      "words": ["mitbringen", "kuchen"],
+      "questions": [
+        {
+          "type": "mc",
+          "question": "When does the party start?",
+          "questionLang": "en",
+          "options": ["um acht Uhr", "um halb zehn", "um neun Uhr"],
+          "answer": "um acht Uhr",
+          "explanation": "Lena: Um acht Uhr. Max comes at halb zehn (9:30), after work."
+        },
+        {
+          "type": "mc",
+          "question": "Why does Max come later?",
+          "questionLang": "en",
+          "options": ["Er muss bis neun arbeiten.", "Er hat keine Lust.", "Er kauft einen Kuchen."],
+          "answer": "Er muss bis neun arbeiten.",
+          "explanation": "Ich muss bis neun arbeiten. müssen sends the second verb (arbeiten) to the end."
+        },
+        {
+          "type": "order",
+          "prompt": "Unfortunately I can't at eight.",
+          "tiles": ["um", "acht", "kann", "ich", "leider", "nicht"],
+          "answers": ["Um acht kann ich leider nicht", "Ich kann um acht leider nicht", "Leider kann ich um acht nicht"],
+          "explanation": "The verb (kann) is always in second place, whatever comes first: Um acht kann ich ..., Ich kann ..., Leider kann ich ..."
+        }
+      ]
+    },
+    {
+      "id": "oktoberfest",
+      "kind": "fact",
+      "title": "Das Oktoberfest",
+      "titleEn": "Oktoberfest",
+      "level": "A1",
+      "unit": 3,
+      "sentences": [
+        { "de": "Das Oktoberfest in München ist sehr groß.", "en": "Oktoberfest in Munich is very big." },
+        { "de": "Jedes Jahr kommen über sechs Millionen Menschen.", "en": "Every year more than six million people come." },
+        { "de": "Aber Achtung: Das Oktoberfest fängt im September an!", "en": "But careful: Oktoberfest starts in September!" },
+        { "de": "2026 ist es vom neunzehnten September bis zum vierten Oktober.", "en": "In 2026 it runs from 19 September to 4 October." },
+        { "de": "Warum im September? Das Wetter ist besser.", "en": "Why September? The weather is better." },
+        { "de": "Das erste Oktoberfest war im Oktober 1810.", "en": "The first Oktoberfest was in October 1810." },
+        { "de": "In München sagt man oft einfach \"die Wiesn\".", "en": "In Munich people often just say \"die Wiesn\"." }
+      ],
+      "words": ["mensch", "achtung", "wetter", "warum", "besser", "einfach", "oft"],
+      "questions": [
+        {
+          "type": "mc",
+          "question": "When does Oktoberfest start?",
+          "questionLang": "en",
+          "options": ["im September", "im Oktober", "im August"],
+          "answer": "im September",
+          "explanation": "Das Oktoberfest fängt im September an, and it ends in early October."
+        },
+        {
+          "type": "mc",
+          "question": "What do people in Munich often call it?",
+          "questionLang": "en",
+          "options": ["die Wiesn", "das Fest", "die Party"],
+          "answer": "die Wiesn",
+          "explanation": "die Wiesn: the festival takes place on a big meadow, the Theresienwiese."
+        },
+        {
+          "type": "gap",
+          "text": "Das Oktoberfest fängt im September ___.",
+          "answers": [["an"]],
+          "explanation": "anfangen is separable: Das Oktoberfest fängt im September an."
+        }
+      ],
+      "sources": ["https://www.muenchen.de/veranstaltungen/oktoberfest", "https://www.history.com/articles/oktoberfest-history-date"]
+    },
+    {
+      "id": "elfter-elfter",
+      "kind": "fact",
+      "title": "Der elfte Elfte",
+      "titleEn": "The eleventh of the eleventh",
+      "level": "A1",
+      "unit": 3,
+      "sentences": [
+        { "de": "Am elften November um elf Uhr elf fängt in Köln der Karneval an.", "en": "On 11 November at 11:11, carnival starts in Cologne." },
+        { "de": "Auch in Mainz und Düsseldorf feiern die Leute.", "en": "People celebrate in Mainz and Düsseldorf too." },
+        { "de": "Viele tragen Kostüme und singen.", "en": "Many wear costumes and sing." },
+        { "de": "Aber der elfte November ist kein Feiertag.", "en": "But 11 November is not a public holiday." },
+        { "de": "Viele Leute müssen also arbeiten.", "en": "So many people have to work." },
+        { "de": "Die große Karnevalsparty kommt erst im Februar oder März.", "en": "The big carnival party only comes in February or March." },
+        { "de": "In München heißt der Karneval \"Fasching\".", "en": "In Munich, carnival is called \"Fasching\"." }
+      ],
+      "words": ["karneval", "feiern", "leute", "tragen", "singen", "erst", "oder", "also"],
+      "questions": [
+        {
+          "type": "mc",
+          "question": "When does carnival start in Cologne?",
+          "questionLang": "en",
+          "options": ["am elften November um elf Uhr elf", "am ersten Januar um elf Uhr", "am elften Februar um zwölf Uhr"],
+          "answer": "am elften November um elf Uhr elf",
+          "explanation": "Am elften November um elf Uhr elf: 11.11. at 11:11."
+        },
+        {
+          "type": "mc",
+          "question": "What is carnival called in Munich?",
+          "questionLang": "en",
+          "options": ["Fasching", "Oktoberfest", "Feiertag"],
+          "answer": "Fasching",
+          "explanation": "In München heißt der Karneval \"Fasching\"."
+        },
+        {
+          "type": "gap",
+          "text": "Am elften November ___ in Köln der Karneval an.",
+          "answers": [["fängt"]],
+          "explanation": "anfangen is separable and changes a to ä: es fängt ... an."
+        }
+      ],
+      "sources": ["https://www.zdfheute.de/panorama/karneval-elfter-elfter-mainz-koeln-duesseldorf-100.html"]
+    }
+  ]
+}

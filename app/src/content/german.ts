@@ -2,7 +2,7 @@
 // Used by the glossary generator, check-content (every German word needs an entry)
 // and the word popups, so all three agree on what a "word" is.
 import { germanSpans } from './richtext.ts'
-import type { Item, Lesson, LessonBlock, Test, Word } from './schema.ts'
+import type { Item, Lesson, LessonBlock, Reading, Test, Word } from './schema.ts'
 
 /** A run of letters, optionally joined by hyphens or apostrophes: "E-Mail", "geht's". */
 const WORD = /\p{L}+(?:[-'\u2019]\p{L}+)*/gu
@@ -122,10 +122,20 @@ export function blockGermanFields(block: LessonBlock): { field: string; text: st
   }
 }
 
+/** The German parts of a reading (content/readings.json): the title, every sentence, the questions as test items. */
+export function readingGermanFields(r: Reading): { field: string; text: string }[] {
+  return [
+    { field: 'title', text: r.title },
+    ...r.sentences.map((s, i) => ({ field: `sentences[${i}].de`, text: s.de })),
+    ...r.questions.flatMap((item, i) => itemGermanFields(item).map((f) => ({ field: `questions[${i}].${f.field}`, text: f.text }))),
+  ]
+}
+
 export function germanFields(
   tests: { file: string; test: Test }[],
   words: { file: string; words: Word[] },
   lessons: { file: string; lesson: Lesson }[],
+  readings: { file: string; readings: Reading[] } = { file: 'content/readings.json', readings: [] },
 ): GermanField[] {
   const out: GermanField[] = []
   for (const { file, test } of tests) {
@@ -141,5 +151,8 @@ export function germanFields(
       for (const f of blockGermanFields(block)) out.push({ where: `${file} sections[${i}].${f.field}`, text: f.text })
     })
   }
+  readings.readings.forEach((r, i) => {
+    for (const f of readingGermanFields(r)) out.push({ where: `${readings.file} texts[${i}].${f.field}`, text: f.text })
+  })
   return out
 }

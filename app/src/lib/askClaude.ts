@@ -3,14 +3,17 @@
 // item in content/, and it carries the question, the answer, the right answer and the result.
 // Claude answers it by explaining right away (CLAUDE.md "How to teach").
 import { parseRedoTestId } from '../content/lessons.ts'
+import { readingIdOf } from '../content/readings.ts'
 import type { Result, ResultItem, Review } from '../content/schema.ts'
 
 /** The first line of every block; CLAUDE.md names it, so Claude recognizes a pasted item. */
 export const ASK_HEADER = 'Question about a nemeceren item'
 
-/** Where the item comes from: "test u1-t2-..." or "lesson u1-01-..., exercise u1-01-...-ex2". */
+/** Where the item comes from: "test u1-t2-...", "lesson u1-01-..., exercise u1-01-...-ex2" or "reading falsche-nummer (content/readings.json)". */
 export function itemSource(result: Pick<Result, 'testId' | 'lessonId'>): string {
-  return result.lessonId ? `lesson ${result.lessonId}, exercise ${result.testId}` : `test ${result.testId}`
+  if (result.lessonId) return `lesson ${result.lessonId}, exercise ${result.testId}`
+  const reading = readingIdOf(result.testId)
+  return reading !== null ? `reading ${reading} (content/readings.json)` : `test ${result.testId}`
 }
 
 /**

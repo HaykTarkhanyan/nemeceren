@@ -10,7 +10,7 @@ import { pathNewWords } from '../lib/plan.ts'
 import { scheduledEntry } from '../lib/reviewEntries.ts'
 import { Rating } from '../lib/srs.ts'
 import { createProgressStore } from '../lib/storage.ts'
-import { DailyPage, GAME_LABEL, gameScope, homeGameWords } from './DailyPage.tsx'
+import { bankWords, DailyPage, GAME_LABEL, gameScope, homeGameWords } from './DailyPage.tsx'
 
 const now = new Date('2026-11-09T10:00:00.000Z')
 
@@ -50,8 +50,8 @@ describe('practice games from Home', () => {
     expect(scope.pick).toBe('learned-first')
     const ids = new Set(scope.words.map((w) => w.id))
     for (const id of courseWordIds) expect(ids.has(id), id).toBe(true)
-    // The front of the list is the review's own new words, in path order.
-    const path = pathNewWords(content.words, content.allLessons, view.lessonProgress, view.reviewState, reachOf(view)).map((w) => w.id)
+    // The front of the list is the review's own new words, in path order (words only a reading lists wait for its button).
+    const path = pathNewWords(bankWords(view.reviewState), content.allLessons, view.lessonProgress, view.reviewState, reachOf(view)).map((w) => w.id)
     expect(scope.words.slice(0, path.length).map((w) => w.id)).toEqual(path)
     // Say the words: 8 words, drawn from the first 16 on the path.
     const round = gameWords(scope.words, view.reviewState, GAMES.speakWords, scope.pick).map((w) => w.id)

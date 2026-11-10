@@ -3,7 +3,8 @@
 //   content/tests/a1-01.json: items[3].answers[0]: "..." does not use exactly the tiles [...]
 import type { z } from 'zod'
 import { exerciseSections, exerciseTestId, isCourseLesson, isThemeLesson, MISTAKE_PREFIX, REDO_ID_MAX, redoTestId, sectionIndex } from './lessons.ts'
-import { CuratedGlossary, Extras, GeneratedGlossary, Lesson, LessonProgress, Result, ReviewLogEntry, ReviewState, Test, Topics, WordList, WordPairs, WordSets } from './schema.ts'
+import { READING_PREFIX, readingTestId } from './readings.ts'
+import { CuratedGlossary, Extras, GeneratedGlossary, Lesson, LessonProgress, Readings, Result, ReviewLogEntry, ReviewState, Test, Topics, WordList, WordPairs, WordSets } from './schema.ts'
 import type {
   CourseLesson,
   CuratedGlossary as CuratedGlossaryT,
@@ -11,6 +12,7 @@ import type {
   GeneratedGlossary as GeneratedGlossaryT,
   Lesson as LessonT,
   LessonProgress as LessonProgressT,
+  Reading as ReadingT,
   Result as ResultT,
   ReviewLogEntry as ReviewLogEntryT,
   ReviewState as ReviewStateT,
@@ -92,6 +94,10 @@ export function parseExtras(file: string, data: unknown): ExtrasT {
   return parseWith(Extras, file, data)
 }
 
+export function parseReadings(file: string, data: unknown): ReadingT[] {
+  return parseWith(Readings, file, data).texts
+}
+
 export function parseWordSets(file: string, data: unknown): WordSetT[] {
   return parseWith(WordSets, file, data).sets
 }
@@ -158,6 +164,8 @@ export function checkAllContent(input: {
   sets?: RawFile
   /** content/pairs.json; tests that are not about word pairs leave it out. */
   pairs?: RawFile
+  /** content/readings.json; tests that are not about readings leave it out. */
+  readings?: RawFile
 }): {
   tests: TestT[]
   words: WordT[]
@@ -167,6 +175,7 @@ export function checkAllContent(input: {
   extras: ExtrasT
   sets: WordSetT[]
   pairs: WordPairT[]
+  readings: ReadingT[]
   problems: string[]
 } {
   const problems: string[] = []
@@ -221,9 +230,39 @@ export function checkAllContent(input: {
     })
     problems.push(...pairReferences(pairsFile.file, pairs, words, themes))
   }
+  let readings: ReadingT[] = []
+  const readingsFile = input.readings
+  if (readingsFile) {
+    collect(() => {
+      readings = parseReadings(readingsFile.file, parseJsonText(readingsFile.file, readingsFile.text))
+    })
+    problems.push(...readingReferences(readingsFile.file, readings, words, themes))
+  }
   problems.push(...crossReferences(tests, words, lessons, themes))
   problems.push(...topicReferences(input.topics.file, topics, [...lessons, ...themes]))
-  return { tests, words, lessons, themes, topics, extras, sets, pairs, problems }
+  return { tests, words, lessons, themes, topics, extras, sets, pairs, readings, problems }
+}
+
+/**
+ * Every new word of a reading exists in content/words.json and belongs to no lesson for some learners
+ * only (its meaning may not be in English, DECISIONS.md #95), and every reading's attempt id
+ * ("r-<id>") fits the API's 100-character test id. Test and lesson ids never start with "r-"
+ * (crossReferences), so an attempt id cannot clash with a test or a lesson exercise.
+ */
+function readingReferences(file: string, readings: ReadingT[], words: WordT[], themes: ThemeLesson[]): string[] {
+  const ids = new Set(words.map((w) => w.id))
+  const limitedOwner = new Map<string, string>()
+  for (const l of themes) if (l.onlyFor !== undefined) for (const id of l.words ?? []) limitedOwner.set(id, l.id)
+  const problems: string[] = []
+  readings.forEach((r, ri) => {
+    const testId = readingTestId(r.id)
+    if (testId.length > REDO_ID_MAX) problems.push(`${file}: texts[${ri}].id: too long: its attempts are saved as "${testId}", over ${REDO_ID_MAX} characters`)
+    r.words?.forEach((id, wi) => {
+      if (!ids.has(id)) problems.push(`${file}: texts[${ri}].words[${wi}]: no word with id "${id}" in content/words.json`)
+      else if (limitedOwner.has(id)) problems.push(`${file}: texts[${ri}].words[${wi}]: "${id}" belongs to ${limitedOwner.get(id)}, which only some learners see (its meaning may not be in English)`)
+    })
+  })
+  return problems
 }
 
 /** Every word of a word set exists in content/words.json. */
@@ -283,6 +322,9 @@ function crossReferences(tests: TestT[], words: WordT[], lessons: CourseLesson[]
   // Mistakes replay saves its redos under "m-<source id>-i<n>" (DECISIONS.md #81).
   for (const t of tests) if (t.id.startsWith(MISTAKE_PREFIX)) problems.push(`content/tests/${t.id}.json: id: "${MISTAKE_PREFIX}" is kept for Mistakes replay; a test id may not start with it`)
   for (const l of all) if (l.id.startsWith(MISTAKE_PREFIX)) problems.push(`${l.id}: id: "${MISTAKE_PREFIX}" is kept for Mistakes replay; a lesson id may not start with it`)
+  // Reading questions are saved under "r-<reading id>" (content/readings.ts).
+  for (const t of tests) if (t.id.startsWith(READING_PREFIX)) problems.push(`content/tests/${t.id}.json: id: "${READING_PREFIX}" is kept for reading questions; a test id may not start with it`)
+  for (const l of all) if (l.id.startsWith(READING_PREFIX)) problems.push(`${l.id}: id: "${READING_PREFIX}" is kept for reading questions; a lesson id may not start with it`)
   // A redo's testId must fit the API's 100-character id (backend/src/schema.ts Slug), or its sync is refused.
   const tooLong = (source: string, items: number) => redoTestId(source, Math.max(0, items - 1)).length > REDO_ID_MAX
   for (const t of tests) if (tooLong(t.id, t.items.length)) problems.push(`content/tests/${t.id}.json: id: too long for Mistakes replay ("${redoTestId(t.id, t.items.length - 1)}" is over ${REDO_ID_MAX} characters)`)

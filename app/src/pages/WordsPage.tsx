@@ -17,7 +17,7 @@ import { VocabMap } from '../components/VocabMap.tsx'
 import { WordForm } from '../components/WordForm.tsx'
 import { WordSetsTab } from '../components/WordSetsTab.tsx'
 import type { PracticeHow } from '../components/WordSetsTab.tsx'
-import { canListen, MatchGame } from './DailyPage.tsx'
+import { bankWords, canListen, MatchGame } from './DailyPage.tsx'
 import { practiceWord } from '../lib/customWords.ts'
 import type { StudyWord } from '../lib/customWords.ts'
 import { addDays, localDay } from '../lib/dates.ts'
@@ -79,8 +79,10 @@ function Words({ tab }: { tab: (typeof WORDS_TABS)[number] }) {
   // (course or theme) that are not open yet wait until their lesson is opened.
   const { source, note } = parseSourceKey(picked ?? settings.wordSource, content.allLessons)
   const custom = progress.customWords.map(practiceWord)
-  // With "all", new words follow the path (lib/plan.ts pathNewWords), the same rule as the daily mix.
-  const words = wordsForSource(source, content.words, custom, content.allLessons, progress.lessonProgress, state, reachOf(progress), content.sets)
+  // With "all", new words follow the path (lib/plan.ts pathNewWords), the same rule as the daily mix;
+  // words only a reading lists wait for its "Add N new words" button (bankWords), and word sets with
+  // afterUnit place their words after that unit (DECISIONS.md #111).
+  const words = wordsForSource(source, bankWords(state), custom, content.allLessons, progress.lessonProgress, state, reachOf(progress), content.sets)
   // No daily limit on new words, for any pick (Hayk, 2026-11-09; it was "all" only before, #66):
   // the review keeps bringing them, round after round, as long as Hayk goes on.
   const newLimit = REVIEW_NEW_LIMIT
