@@ -508,7 +508,8 @@
     ],
     "an": [
       {"lemma": "an", "pos": "preposition", "level": "A1", "gloss": ["at, on (a side)", "to (Wohin?)"], "note": "am Montag; Wo?: am See. Wohin? + accusative: an den See, ans Meer."},
-      {"lemma": "an", "pos": "particle", "gloss": ["separable part of a verb"], "note": "anrufen: Ich rufe dich an. anfangen: Der Kurs fängt um neun an."}
+      {"lemma": "an", "pos": "particle", "gloss": ["separable part of a verb"], "note": "anrufen: Ich rufe dich an. anfangen: Der Kurs fängt um neun an."},
+      {"lemma": "an", "pos": "adverb", "gloss": ["on (switched on)"], "note": "Das Licht ist an. = The light is on. The opposite is aus."}
     ],
     "mit": [
       {"lemma": "mit", "pos": "preposition", "level": "A1", "gloss": ["with"]},
@@ -1574,6 +1575,76 @@
     ],
     "weiter": [
       {"lemma": "weiter", "pos": "adverb", "gloss": ["further, on"], "note": "Ich weiß nicht mehr weiter. = I don't know what to do any more (weiterwissen)."}
+    ],
+    "Bank": [
+      {"lemma": "Bank", "pos": "noun", "article": "die", "plural": "Banken", "level": "A1", "gloss": ["bank (for money)"]},
+      {"lemma": "Bank", "pos": "noun", "article": "die", "plural": "Bänke", "level": "A1", "gloss": ["bench"]}
+    ],
+    "Banken": [
+      {"lemma": "Bank", "pos": "noun", "article": "die", "form": "plural", "level": "A1", "gloss": ["bank (for money)"], "note": "A bench is also die Bank, but its plural is die Bänke."}
+    ],
+    "Fahrer": [
+      {"lemma": "Fahrer", "pos": "noun", "article": "der", "plural": "Fahrer", "level": "A1", "gloss": ["driver (male)"]}
+    ],
+    "Anreden": [
+      {"lemma": "Anrede", "pos": "noun", "article": "die", "form": "plural", "level": "A1", "gloss": ["form of address; greeting (at the start of a letter)"]}
+    ],
+    "frites": [
+      {"lemma": "Pommes frites", "pos": "noun", "article": "die", "level": "A1", "gloss": ["chips, French fries (plural)"], "note": "Usually just Pommes."}
+    ],
+    "Vollpension": [
+      {"lemma": "Vollpension", "pos": "noun", "article": "die", "gloss": ["full board (hotel: all meals)"]}
+    ],
+    "freuen": [
+      {"lemma": "freuen", "pos": "verb", "level": "A1", "gloss": ["to be glad (sich freuen)", "to look forward to (sich freuen auf)"]}
+    ],
+    "freue": [
+      {"lemma": "freuen", "pos": "verb", "form": "ich form, present", "level": "A1", "gloss": ["to be glad (sich freuen)", "to look forward to (sich freuen auf)"], "note": "Ich freue mich auf den Urlaub. = I'm looking forward to the holiday."}
+    ],
+    "kümmern": [
+      {"lemma": "kümmern", "pos": "verb", "level": "A1", "gloss": ["to take care of, to look after (sich kümmern um)"]}
+    ],
+    "kümmere": [
+      {"lemma": "kümmern", "pos": "verb", "form": "ich form, present", "level": "A1", "gloss": ["to take care of, to look after (sich kümmern um)"], "note": "Ich kümmere mich um die Kinder."}
+    ],
+    "besser": [
+      {"lemma": "gut", "pos": "adjective", "form": "comparative", "level": "A1", "gloss": ["better"], "note": "gut, besser, am besten"}
+    ],
+    "Duschen": [
+      {"lemma": "Dusche", "pos": "noun", "article": "die", "form": "plural", "level": "A1", "gloss": ["shower"]}
+    ],
+    "Mieten": [
+      {"lemma": "Miete", "pos": "noun", "article": "die", "form": "plural", "level": "A1", "gloss": ["rent"]}
+    ],
+    "Beamte": [
+      {"lemma": "Beamte", "pos": "noun", "article": "der", "plural": "Beamten", "level": "A1", "gloss": ["civil servant, official"], "note": "Ends like an adjective: der Beamte, ein Beamter, die Beamten; a woman: die Beamtin."}
+    ],
+    "Beamten": [
+      {"lemma": "Beamte", "pos": "noun", "article": "der", "form": "plural, or singular after den, dem, des", "level": "A1", "gloss": ["civil servant, official"]}
+    ],
+    "Bekannte": [
+      {"lemma": "Bekannte", "pos": "noun", "article": "der", "plural": "Bekannten", "level": "A1", "gloss": ["acquaintance"], "note": "Ends like an adjective: der Bekannte, ein Bekannter, die Bekannten; a woman: die Bekannte."}
+    ],
+    "Bekannten": [
+      {"lemma": "Bekannte", "pos": "noun", "article": "der", "form": "plural, or singular after den, dem, des", "level": "A1", "gloss": ["acquaintance"]}
+    ],
+    "Erwachsene": [
+      {"lemma": "Erwachsene", "pos": "noun", "article": "der", "plural": "Erwachsenen", "level": "A1", "gloss": ["adult"], "note": "Ends like an adjective: der Erwachsene, ein Erwachsener, die Erwachsenen; a woman: die Erwachsene."}
+    ],
+    "Erwachsenen": [
+      {"lemma": "Erwachsene", "pos": "noun", "article": "der", "form": "plural, or singular after den, dem, des", "level": "A1", "gloss": ["adult"]}
+    ],
+    "Jugendliche": [
+      {"lemma": "Jugendliche", "pos": "noun", "article": "der", "plural": "Jugendlichen", "level": "A1", "gloss": ["teenager, young person"], "note": "Ends like an adjective: der Jugendliche, ein Jugendlicher, die Jugendlichen; a girl: die Jugendliche."}
+    ],
+    "Jugendlichen": [
+      {"lemma": "Jugendliche", "pos": "noun", "article": "der", "form": "plural, or singular after den, dem, des", "level": "A1", "gloss": ["teenager, young person"]}
+    ],
+    "Verwandte": [
+      {"lemma": "Verwandte", "pos": "noun", "article": "der", "plural": "Verwandten", "level": "A1", "gloss": ["relative"], "note": "Ends like an adjective: der Verwandte, ein Verwandter, die Verwandten; a woman: die Verwandte."}
+    ],
+    "Verwandten": [
+      {"lemma": "Verwandte", "pos": "noun", "article": "der", "form": "plural, or singular after den, dem, des", "level": "A1", "gloss": ["relative"]}
     ]
   }
 }
