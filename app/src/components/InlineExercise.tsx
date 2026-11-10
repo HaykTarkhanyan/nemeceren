@@ -4,7 +4,7 @@ import { useRef, useState } from 'react'
 import type { Item, Level, Result } from '../content/schema.ts'
 import { localDay } from '../lib/dates.ts'
 import { messageOf } from '../lib/errors.ts'
-import { instructionFor, isBlank, resultItems, scoreOf } from '../lib/grading.ts'
+import { instructionFor, isBlank, isLeftOut, resultItems, scoreOf } from '../lib/grading.ts'
 import type { AnswerValue } from '../lib/grading.ts'
 import { saveResult } from '../lib/storage.ts'
 import { GlossScope } from './GermanText.tsx'
@@ -33,6 +33,8 @@ function Attempt(props: { items: Item[]; meta: ExerciseMeta; onRetry: () => void
   const [layouts] = useState(() => items.map(initialLayout))
   const [answers, setAnswers] = useState<AnswerValue[]>(() => items.map(initialAnswer))
   const [hints, setHints] = useState<boolean[]>(() => items.map(() => false))
+  // Write items skipped with "Skip (needs Claude)": left out of the result (grading.ts isLeftOut).
+  const [skipped, setSkipped] = useState<boolean[]>(() => items.map(() => false))
   const [result, setResult] = useState<Result | null>(null)
   const [save, setSave] = useState<SaveStatus | null>(null)
   const [notice, setNotice] = useState<string | null>(null)
@@ -62,15 +64,20 @@ function Attempt(props: { items: Item[]; meta: ExerciseMeta; onRetry: () => void
     }
   }
 
+  function setSkip(i: number, value: boolean) {
+    setNotice(null)
+    setSkipped((prev) => prev.map((s, k) => (k === i ? value : s)))
+  }
+
   function check() {
-    const unanswered = answers.flatMap((a, i) => (isBlank(a) ? [i + 1] : []))
-    if (unanswered.length === items.length) {
+    if (items.every((it, i) => isBlank(answers[i]) || isLeftOut(it, answers[i], skipped[i]))) {
       setNotice('Answer at least one item first.')
       return
     }
+    const unanswered = answers.flatMap((a, i) => (isBlank(a) && !skipped[i] ? [i + 1] : []))
     if (unanswered.length > 0 && !window.confirm(`Not answered yet: ${unanswered.join(', ')}. Check anyway?`)) return
     settle()
-    const graded = resultItems(items, answers, times.current, hints, plays.current)
+    const graded = resultItems(items, answers, times.current, hints, plays.current, skipped)
     const submitted = new Date()
     const r: Result = {
       version: 1,
@@ -111,30 +118,49 @@ function Attempt(props: { items: Item[]; meta: ExerciseMeta; onRetry: () => void
         {items.map((item, i) => (
           <li key={i} className="exercise-item" onFocusCapture={() => touch(i)} onPointerDownCapture={() => touch(i)}>
             <p className="instruction">{instructionFor(item)}</p>
-            <ItemInput
-              item={item}
-              layout={layouts[i]}
-              answer={answers[i]}
-              onChange={(v) => {
-                setNotice(null)
-                setAnswers((prev) => prev.map((a, k) => (k === i ? v : a)))
-              }}
-              onPlay={() => {
-                plays.current[i] += 1
-              }}
-            />
-            {item.hint && (
-              <div className="hint">
-                {hints[i] ? (
-                  <p>
-                    <span className="label">Hint</span> {item.hint}
-                  </p>
-                ) : (
-                  <button type="button" className="btn small" onClick={() => setHints((h) => h.map((v, k) => (k === i ? true : v)))}>
-                    Show hint
-                  </button>
-                )}
+            {skipped[i] ? (
+              <div className="row between">
+                <span className="small muted">Skipped (needs Claude): not saved or scored.</span>
+                <button type="button" className="btn small" onClick={() => setSkip(i, false)}>
+                  Answer it after all
+                </button>
               </div>
+            ) : (
+              <>
+                <ItemInput
+                  item={item}
+                  layout={layouts[i]}
+                  answer={answers[i]}
+                  onChange={(v) => {
+                    setNotice(null)
+                    setAnswers((prev) => prev.map((a, k) => (k === i ? v : a)))
+                  }}
+                  onPlay={() => {
+                    plays.current[i] += 1
+                  }}
+                />
+                {item.hint && (
+                  <div className="hint">
+                    {hints[i] ? (
+                      <p>
+                        <span className="label">Hint</span> {item.hint}
+                      </p>
+                    ) : (
+                      <button type="button" className="btn small" onClick={() => setHints((h) => h.map((v, k) => (k === i ? true : v)))}>
+                        Show hint
+                      </button>
+                    )}
+                  </div>
+                )}
+                {/* Only Claude can grade writing; on the phone it can be skipped (Hayk, 2026-11-10). */}
+                {item.type === 'write' && (
+                  <div className="row actions">
+                    <button type="button" className="btn" onClick={() => setSkip(i, true)}>
+                      Skip (needs Claude)
+                    </button>
+                  </div>
+                )}
+              </>
             )}
           </li>
         ))}

@@ -215,12 +215,32 @@ export function answerForResult(a: AnswerValue): string | string[] | null {
   return typeof a === 'string' ? a.trim() : a
 }
 
-/** Grade every item and build the per-item records of a result file (tests and lesson exercises alike). */
-export function resultItems(items: Item[], answers: AnswerValue[], timesMs: number[], hints: boolean[], plays: number[]): ResultItem[] {
-  return items.map((it, i) => {
+/**
+ * A write item only Claude can grade, skipped with "Skip (needs Claude)" or left blank: it is left
+ * out of the saved attempt, so it is neither wrong nor pending and does not count in the score
+ * (Hayk studies mostly on the phone, without Claude, 2026-11-10).
+ */
+export function isLeftOut(item: Item, answer: AnswerValue, skipped: boolean): boolean {
+  return item.type === 'write' && (skipped || isBlank(answer))
+}
+
+/** How many write items an attempt left out: the result's items, against the items it was made from. */
+export function leftOutWrites(result: Result, items: Item[] | undefined): number {
+  if (!items) return 0
+  const saved = new Set(result.items.map((ri) => ri.index))
+  return items.filter((it, i) => it.type === 'write' && !saved.has(i)).length
+}
+
+/**
+ * Grade every item and build the per-item records of a result file (tests and lesson exercises alike).
+ * Left-out write items (isLeftOut) are not in it; the others keep their index in the test or exercise.
+ */
+export function resultItems(items: Item[], answers: AnswerValue[], timesMs: number[], hints: boolean[], plays: number[], skipped: boolean[] = []): ResultItem[] {
+  return items.flatMap((it, i): ResultItem[] => {
+    if (isLeftOut(it, answers[i], skipped[i] === true)) return []
     const g = gradeItem(it, answers[i])
     const audio = it.type === 'dictation' || it.type === 'listen_mc'
-    return {
+    const ri: ResultItem = {
       index: i,
       type: it.type,
       question: describeItem(it),
@@ -234,6 +254,7 @@ export function resultItems(items: Item[], answers: AnswerValue[], timesMs: numb
       hintUsed: hints[i],
       ...(audio ? { plays: plays[i] } : {}),
     }
+    return [ri]
   })
 }
 
@@ -242,15 +263,18 @@ export function scoreOf(items: ResultItem[]): Result['score'] {
   return { correct: count('correct'), wrong: count('wrong'), pending: count('pending'), total: items.length }
 }
 
-/** Status after Claude's review: a review verdict overrides the auto-grade. */
-export function finalStatus(result: Result, index: number): ItemStatus {
-  const r = result.review?.items.find((ri) => ri.index === index)
+/**
+ * Status of one of the result's items after Claude's review: a review verdict overrides the auto-grade.
+ * Review verdicts name the item's index, which is not its position when write items were left out.
+ */
+export function finalStatus(result: Result, item: ResultItem): ItemStatus {
+  const r = result.review?.items.find((ri) => ri.index === item.index)
   if (r) return r.correct ? 'correct' : 'wrong'
-  return result.items[index].status
+  return item.status
 }
 
 export function finalScore(result: Result): Result['score'] {
-  const statuses = result.items.map((_, i) => finalStatus(result, i))
+  const statuses = result.items.map((ri) => finalStatus(result, ri))
   const count = (s: ItemStatus) => statuses.filter((x) => x === s).length
   return { correct: count('correct'), wrong: count('wrong'), pending: count('pending'), total: statuses.length }
 }

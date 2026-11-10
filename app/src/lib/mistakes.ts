@@ -2,8 +2,9 @@
 // lesson exercise (from MISTAKES_SINCE on) comes back the next day, until it was answered right on
 // two different days after its last wrong answer. Redos are ordinary one-item attempts
 // (content/lessons.ts redoTestId), so they sync and Claude sees them like any attempt. A right
-// answer in a later attempt of the whole test counts as well. Write items count once Claude has
-// graded them.
+// answer in a later attempt of the whole test counts as well. Write items never come back: only
+// Claude can grade them, and Hayk studies mostly on the phone (2026-11-10). Translations Claude
+// graded wrong do.
 import { findSource, parseRedoTestId } from '../content/lessons.ts'
 import type { MistakeSource } from '../content/lessons.ts'
 import type { Item, Lesson, Result, Test } from '../content/schema.ts'
@@ -30,14 +31,14 @@ export interface Mistake {
   rightDays: number
   /** Comes back today: the last answer was on an earlier day. */
   due: boolean
-  /** Claude's correction of the last wrong answer, if there is one (write items). */
+  /** Claude's correction of the last wrong answer, if there is one (translations Claude graded). */
   correction?: string
 }
 
 interface Event {
   at: number
   day: string
-  /** pending: a rewritten write item waiting for Claude. It moves the next showing to tomorrow, but neither fixes nor reopens the mistake. */
+  /** pending: a redone translation waiting for Claude. It moves the next showing to tomorrow, but neither fixes nor reopens the mistake. */
   status: 'correct' | 'wrong' | 'pending'
   question: string
   correction?: string
@@ -57,14 +58,16 @@ function answerEvents(results: Result[]): Map<string, Event[]> {
     if (!r.localDay || r.localDay < MISTAKES_SINCE || NOT_REPLAYED.has(r.testId)) continue
     const at = Date.parse(r.submittedAt)
     const redo = parseRedoTestId(r.testId)
-    r.items.forEach((ri, i) => {
-      const status = finalStatus(r, i)
+    for (const ri of r.items) {
+      if (ri.type === 'write') continue
+      const status = finalStatus(r, ri)
       // A first attempt still waiting for Claude is not a mistake yet; a pending redo still counts as shown today.
-      if (status === 'pending' && !redo) return
-      const correction = r.review?.items.find((x) => x.index === i)?.correction
-      const key = redo ? `${redo.sourceId}#${redo.index}` : `${r.testId}#${i}`
+      if (status === 'pending' && !redo) continue
+      const correction = r.review?.items.find((x) => x.index === ri.index)?.correction
+      // ri.index, not the position: left-out write items leave gaps (grading.ts isLeftOut).
+      const key = redo ? `${redo.sourceId}#${redo.index}` : `${r.testId}#${ri.index}`
       push(key, { at, day: r.localDay as string, status, question: ri.question, ...(correction ? { correction } : {}) })
-    })
+    }
   }
   return out
 }

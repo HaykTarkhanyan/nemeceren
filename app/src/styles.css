@@ -546,6 +546,12 @@ textarea.text {
   color: var(--pending);
 }
 
+/* A write item skipped with "Skip (needs Claude)". */
+.dot.skipped {
+  border-style: dashed;
+  text-decoration: line-through;
+}
+
 .dot.current {
   border: 2px solid var(--accent);
   color: var(--text);

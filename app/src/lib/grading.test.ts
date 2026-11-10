@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import type { Item, Result } from '../content/schema.ts'
-import { diffWords, finalScore, gradeItem, testStatus } from './grading.ts'
+import { diffWords, finalScore, gradeItem, leftOutWrites, resultItems, scoreOf, testStatus } from './grading.ts'
 
 const gap: Item = { type: 'gap', text: 'Ich ___ Hayk und ich ___ aus Armenien.', answers: [['heiße'], ['komme']] }
 
@@ -179,5 +179,56 @@ describe('testStatus', () => {
   it('is tried below 80%, counts pending answers as not correct, and flags them as waiting', () => {
     const s = testStatus([attempt(['correct', 'correct', 'correct', 'pending', 'wrong'], '2026-10-02')])
     expect(s).toMatchObject({ kind: 'tried', bestPercent: 60, waiting: 1 })
+  })
+})
+
+describe('write items left out (skipped or blank: only Claude can grade them)', () => {
+  const mc: Item = { type: 'mc', question: 'Wie heißen Sie?', options: ['Ich heiße Eva.', 'Gut, danke.'], answer: 'Ich heiße Eva.' }
+  const write: Item = { type: 'write', prompt: 'Schreib über dich.' }
+  const items: Item[] = [mc, write, mc, write, write]
+  const answers = ['Ich heiße Eva.', 'Ich heiße Hayk.', 'Ich heiße Eva.', '', 'Ich wohne in München.']
+  const build = (skipped: boolean[]) => resultItems(items, answers, [1, 2, 3, 4, 5], items.map(() => false), items.map(() => 0), skipped)
+  const asResult = (ri: ReturnType<typeof build>): Result => ({
+    version: 1,
+    testId: 't',
+    testTitle: 'T',
+    level: 'A1',
+    mode: 'web',
+    startedAt: '2026-11-10T10:00:00.000Z',
+    localDay: '2026-11-10',
+    submittedAt: '2026-11-10T10:05:00.000Z',
+    score: scoreOf(ri),
+    items: ri,
+  })
+
+  it('leaves out skipped and blank write items, and the rest keep their index', () => {
+    const ri = build([false, false, false, false, true])
+    // Item 3 is blank, item 4 skipped although it has text; item 1 was written, so it waits for Claude.
+    expect(ri.map((x) => [x.index, x.type, x.status])).toEqual([
+      [0, 'mc', 'correct'],
+      [1, 'write', 'pending'],
+      [2, 'mc', 'correct'],
+    ])
+    expect(ri.map((x) => x.timeMs)).toEqual([1, 2, 3])
+    expect(scoreOf(ri)).toEqual({ correct: 2, wrong: 0, pending: 1, total: 3 })
+    expect(leftOutWrites(asResult(ri), items)).toBe(2)
+  })
+
+  it('without a skip list, a blank write is still left out (not wrong)', () => {
+    const ri = resultItems([mc, write], ['Ich heiße Eva.', '  '], [1, 1], [false, false], [0, 0])
+    expect(ri.map((x) => x.index)).toEqual([0])
+  })
+
+  it('passes a test with every write skipped and the auto-graded items right', () => {
+    const ri = build([false, true, false, true, true])
+    expect(scoreOf(ri)).toEqual({ correct: 2, wrong: 0, pending: 0, total: 2 })
+    expect(testStatus([asResult(ri)])).toMatchObject({ kind: 'passed', bestPercent: 100, waiting: 0 })
+  })
+
+  it("matches Claude's review verdicts by index, not position, when items are missing", () => {
+    const ri = build([false, true, false, true, false])
+    expect(ri.map((x) => x.index)).toEqual([0, 2, 4])
+    const reviewed: Result = { ...asResult(ri), review: { gradedAt: '2026-11-10T12:00:00Z', summary: 's', items: [{ index: 4, correct: true }] } }
+    expect(finalScore(reviewed)).toEqual({ correct: 3, wrong: 0, pending: 0, total: 3 })
   })
 })

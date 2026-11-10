@@ -4,7 +4,7 @@ import { TypoDiff } from './TypoDiff.tsx'
 import { closestAnswer } from '../lib/charDiff.ts'
 import { GAP_MARKER } from '../content/schema.ts'
 import { askClaudeText, askSource } from '../lib/askClaude.ts'
-import { finalScore, finalStatus } from '../lib/grading.ts'
+import { finalScore, finalStatus, leftOutWrites } from '../lib/grading.ts'
 import { AskClaude } from './AskClaude.tsx'
 import { De, GermanText, GlossScope } from './GermanText.tsx'
 
@@ -203,12 +203,21 @@ export function ScoreLine({ result }: { result: Result }) {
   )
 }
 
-/** items: the exercise items the result was made from, if they still exist (for explanations). */
+/**
+ * items: the exercise items the result was made from, if they still exist (for explanations, and to
+ * count the write items that were left out). Result items are matched to them by index, not position.
+ */
 export function ResultView({ result, items }: { result: Result; items: Item[] | undefined }) {
+  const skipped = leftOutWrites(result, items)
   return (
     <GlossScope surface={{ kind: 'test-item', submitted: true }}>
     <div className="stack">
       <ScoreLine result={result} />
+      {skipped > 0 && (
+        <p className="muted small">
+          {skipped} writing task{skipped === 1 ? '' : 's'} skipped (needs Claude), not counted in the score.
+        </p>
+      )}
       {result.review && (
         <div className="card claude-summary">
           <span className="label">Claude's review, {new Date(result.review.gradedAt).toLocaleString()}</span>
@@ -223,7 +232,7 @@ export function ResultView({ result, items }: { result: Result; items: Item[] | 
             key={ri.index}
             ask={askSource(result, ri)}
             ri={ri}
-            status={finalStatus(result, ri.index)}
+            status={finalStatus(result, ri)}
             item={item}
             review={result.review?.items.find((r) => r.index === ri.index)}
           />
