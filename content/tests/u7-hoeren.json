@@ -1,0 +1,129 @@
+{
+  "id": "u7-hoeren",
+  "title": "Listening, Unit 7: A1 mock exam",
+  "level": "A1",
+  "created": "2026-11-10",
+  "description": "A1 listening over Units 0-7 at natural speed, in three parts like the Goethe A1 exam: short dialogues, announcements, phone messages.",
+  "speed": "natural",
+  "items": [
+    {
+      "type": "listen_mc",
+      "instruction": "Part 1, dialogue in a shop: read the question, then play. In the exam you hear it twice.",
+      "audio": "Ich suche eine Jacke, Größe achtunddreißig.\nDie Jacke haben wir in Blau und in Schwarz. In Rot haben wir sie leider nicht mehr.\nDann nehme ich sie in Blau.",
+      "question": "Which colour does the customer take?",
+      "questionLang": "en",
+      "options": ["blau", "schwarz", "rot"],
+      "answer": "blau",
+      "explanation": "Dann nehme ich sie in Blau = then I'll take it in blue. Black is there too, red is sold out (nicht mehr = no longer)."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 1, dialogue at a hotel: read the question, then play. In the exam you hear it twice.",
+      "audio": "Guten Abend. Haben Sie noch ein Doppelzimmer frei?\nFür wie viele Nächte?\nFür zwei Nächte.\nJa. Eine Nacht kostet neunzig Euro. Das Frühstück kostet zwölf Euro.",
+      "question": "How much is one night?",
+      "questionLang": "en",
+      "options": ["90 €", "12 €", "180 €"],
+      "answer": "90 €",
+      "explanation": "Eine Nacht kostet neunzig Euro = one night costs 90 €. Breakfast is zwölf Euro (12 €). Two nights would be 180 €, but the question asks about one."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 1, dialogue: read the question, then play. In the exam you hear it twice.",
+      "audio": "Sabine, herzlichen Glückwunsch! Wann ist die Hochzeit?\nAm zwölften Juni. Am Abend feiern wir im Garten. Kommst du?\nJa, sehr gern!",
+      "question": "When is the wedding?",
+      "questionLang": "en",
+      "options": ["am 12. Juni", "am 12. Juli", "am 20. Juni"],
+      "answer": "am 12. Juni",
+      "explanation": "Am zwölften Juni = on 12 June. Juni and Juli sound alike; speakers often say Juno and Julei to keep them apart."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 1, dialogue at the post office: read the question, then play. In the exam you hear it twice.",
+      "audio": "Ein Paket nach Armenien, bitte.\nWie schwer ist es? Ah, drei Kilo. Bis zwei Kilo kostet es vierunddreißig Euro, und bis fünf Kilo achtundvierzig Euro.\nGut, danke.",
+      "question": "How much does the parcel cost?",
+      "questionLang": "en",
+      "options": ["48 €", "34 €", "43 €"],
+      "answer": "48 €",
+      "explanation": "The parcel weighs drei Kilo, so the price up to five kilos applies: achtundvierzig Euro (48 €). vierunddreißig (34 €) is for up to two kilos."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 2, announcement at the airport: read the question, then play. In the exam you hear it once.",
+      "audio": "Das Flugzeug nach Wien hat Verspätung. Abflug ist jetzt um dreizehn Uhr dreißig, nicht um zwölf Uhr zehn. Bitte kommen Sie zum Ausgang fünfzehn.",
+      "question": "When does the plane to Vienna leave now?",
+      "questionLang": "en",
+      "options": ["13:30", "12:10", "15:00"],
+      "answer": "13:30",
+      "explanation": "Abflug ist jetzt um dreizehn Uhr dreißig = departure is now at 13:30. zwölf Uhr zehn (12:10) was the old time, and fünfzehn is the gate (Ausgang)."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 2, announcement at the station: richtig oder falsch? Read the sentence, then play. In the exam you hear it once.",
+      "audio": "Der Zug nach Berlin kommt heute zwanzig Minuten später. Abfahrt ist um neun Uhr fünfzig von Bahnsteig vier.",
+      "question": "Der Zug nach Berlin hat Verspätung.",
+      "options": ["Richtig", "Falsch"],
+      "answer": "Richtig",
+      "explanation": "Der Zug kommt heute zwanzig Minuten später = the train is 20 minutes late, so it has a delay (Verspätung): richtig."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 2, weather on the radio: read the question, then play. In the exam you hear it once.",
+      "audio": "Und jetzt das Wetter für morgen: Im Süden scheint die Sonne, bis fünfundzwanzig Grad. Im Norden regnet es, nur fünfzehn Grad.",
+      "question": "What will the weather be like in the north tomorrow?",
+      "questionLang": "en",
+      "options": ["Regen, 15 Grad", "Sonne, 25 Grad", "Regen, 25 Grad"],
+      "answer": "Regen, 15 Grad",
+      "explanation": "Im Norden regnet es, nur fünfzehn Grad = rain in the north, only 15 degrees. The sun and 25 degrees are im Süden (in the south)."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 2, announcement in a department store: read the question, then play. In the exam you hear it once.",
+      "audio": "Liebe Kunden, heute kosten die Mäntel nur neunundvierzig Euro! Sie finden die Mäntel im ersten Stock. Schuhe finden Sie im Erdgeschoss.",
+      "question": "Where are the coats?",
+      "questionLang": "en",
+      "options": ["im ersten Stock", "im Erdgeschoss", "im zweiten Stock"],
+      "answer": "im ersten Stock",
+      "explanation": "Sie finden die Mäntel im ersten Stock = on the first floor. The shoes are im Erdgeschoss (on the ground floor)."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 3, phone message: read the question, then play. In the exam you hear it twice.",
+      "audio": "Guten Tag, Frau Becker, hier ist die Rezeption vom Hotel Lindner. Ihr Koffer ist noch hier. Ich bin bis zwanzig Uhr da, aber die Rezeption ist bis zweiundzwanzig Uhr geöffnet.",
+      "question": "Until when can Frau Becker pick up her suitcase today?",
+      "questionLang": "en",
+      "options": ["bis 22 Uhr", "bis 20 Uhr", "bis 12 Uhr"],
+      "answer": "bis 22 Uhr",
+      "explanation": "die Rezeption ist bis zweiundzwanzig Uhr geöffnet = reception is open until 22:00. The caller is there only until 20:00, but anyone at reception can give her the suitcase."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 3, phone message: read the question, then play. In the exam you hear it twice.",
+      "audio": "Hallo Aram, hier ist Sabine. Am Samstag habe ich Geburtstag, und ich mache ein Fest im Garten. Kommst du? Es beginnt um vier. Bring bitte keinen Kuchen mit, Kuchen haben wir schon. Aber vielleicht Musik?",
+      "question": "What should Aram bring?",
+      "questionLang": "en",
+      "options": ["Musik", "Kuchen", "Blumen"],
+      "answer": "Musik",
+      "explanation": "Bring bitte keinen Kuchen mit, Kuchen haben wir schon. Aber vielleicht Musik? = don't bring cake, we have some; maybe music? mitbringen is separable: Bring ... mit."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 3, phone message: read the question, then play. In the exam you hear it twice.",
+      "audio": "Guten Tag, Herr Wagner, hier ist das Reisebüro. Ihre Reise nach Wien ist fertig. Bitte bringen Sie Ihren Pass mit. Das Formular unterschreiben Sie dann hier bei uns.",
+      "question": "What must Herr Wagner bring?",
+      "questionLang": "en",
+      "options": ["den Pass", "das Formular", "ein Foto"],
+      "answer": "den Pass",
+      "explanation": "Bitte bringen Sie Ihren Pass mit = please bring your passport. The form he signs at the travel agency: Das Formular unterschreiben Sie dann hier bei uns."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 3, phone message: read the question, then play. In the exam you hear it twice.",
+      "audio": "Hallo Lena, hier ist Mila. Morgen wandern wir in den Bergen. Es ist kalt, nur fünf Grad, aber es regnet nicht. Zieh bitte eine Jacke und einen Pullover an!",
+      "question": "What will the weather be like tomorrow?",
+      "questionLang": "en",
+      "options": ["kalt, aber kein Regen", "kalt und Regen", "warm und Sonne"],
+      "answer": "kalt, aber kein Regen",
+      "explanation": "Es ist kalt, nur fünf Grad, aber es regnet nicht = cold, only 5 degrees, but no rain. Zieh ... an: anziehen (to put on) is separable."
+    }
+  ]
+}

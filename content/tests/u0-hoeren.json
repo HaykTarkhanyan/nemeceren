@@ -1,0 +1,96 @@
+{
+  "id": "u0-hoeren",
+  "title": "Listening, Unit 0: greetings and numbers",
+  "level": "A1",
+  "created": "2026-11-10",
+  "description": "Unit 0 listening at natural speed, in three parts like the Goethe A1 exam: short dialogues, announcements, phone messages.",
+  "speed": "natural",
+  "items": [
+    {
+      "type": "listen_mc",
+      "instruction": "Part 1, dialogue: read the question, then play. In the exam you hear it twice.",
+      "audio": "Ein Kaffee und ein Tee, bitte.\nGern. Der Kaffee kostet drei Euro zwanzig, der Tee zwei Euro fünfzig.\nDanke!",
+      "question": "How much is the tea?",
+      "questionLang": "en",
+      "options": ["2,50 €", "3,20 €", "2,20 €"],
+      "answer": "2,50 €",
+      "explanation": "zwei Euro fünfzig = 2,50 €. The coffee is drei Euro zwanzig (3,20 €). In prices the cents come after the word Euro."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 1, dialogue: read the question, then play. In the exam you hear it twice.",
+      "audio": "Guten Tag! Wie geht es Ihnen?\nSehr gut, danke. Und Ihnen?\nAuch gut, danke.",
+      "question": "Do these two people say du or Sie to each other?",
+      "questionLang": "en",
+      "options": ["Sie", "du"],
+      "answer": "Sie",
+      "explanation": "Wie geht es Ihnen? and Und Ihnen? are the Sie forms. Friends say Wie geht es dir? (or Wie geht's?) and Und dir?"
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 1, dialogue: read the question, then play. In the exam you hear it twice.",
+      "audio": "Entschuldigung, sprechen Sie Englisch?\nNein. Ich spreche ein bisschen Deutsch.\nAh, ich verstehe. Langsam, bitte!",
+      "question": "What does the person who answers say?",
+      "questionLang": "en",
+      "options": ["Ich spreche ein bisschen Deutsch.", "Ich spreche Englisch.", "Ich verstehe nicht."],
+      "answer": "Ich spreche ein bisschen Deutsch.",
+      "explanation": "Nein. Ich spreche ein bisschen Deutsch. = No. I speak a little German. The first person then says Ah, ich verstehe (I see), not Ich verstehe nicht (I don't understand)."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 2, announcement at a market stall: read the question, then play. In the exam you hear it once.",
+      "audio": "Kaffee: vier Euro neunundneunzig! Tee: drei Euro zehn! Wasser: ein Euro zwanzig!",
+      "question": "How much is the water?",
+      "questionLang": "en",
+      "options": ["1,20 €", "3,10 €", "4,99 €"],
+      "answer": "1,20 €",
+      "explanation": "ein Euro zwanzig = 1,20 €. Coffee is vier Euro neunundneunzig (4,99 €: neun-und-neunzig, the ones before the tens), tea drei Euro zehn (3,10 €)."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 2, a phone menu: read the question, then play. In the exam you hear it once.",
+      "audio": "Guten Tag! Deutsch: bitte eins. Englisch: bitte zwei. Noch einmal: bitte neun.",
+      "question": "You did not understand and want to hear the menu again. Which number do you press?",
+      "questionLang": "en",
+      "options": ["9", "1", "2"],
+      "answer": "9",
+      "explanation": "Noch einmal = once more, again: bitte neun (press 9). Eins is German, zwei is English."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 3, phone message: read the question, then play. In the exam you hear it twice.",
+      "audio": "Hallo, Aram! Ich bin Eva. Null, eins, sieben, sechs, vier, zwo, acht. Noch einmal: null, eins, sieben, sechs, vier, zwo, acht. Tschüss!",
+      "question": "Which number does Eva leave?",
+      "questionLang": "en",
+      "options": ["0176 428", "0176 438", "0167 428"],
+      "answer": "0176 428",
+      "explanation": "Phone numbers are read digit by digit: null, eins, sieben, sechs = 0176. On the phone zwo means zwei (2), so it doesn't sound like drei (3)."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 3, phone message: read the question, then play. In the exam you hear it twice.",
+      "audio": "Guten Morgen, ich bin Thomas. Das Buch kostet zwanzig Euro, nicht zwölf. Zwanzig Euro! Auf Wiedersehen!",
+      "question": "How much does the book cost?",
+      "questionLang": "en",
+      "options": ["20 €", "12 €", "2 €"],
+      "answer": "20 €",
+      "explanation": "zwanzig = 20 and zwölf = 12 sound alike at speed. Thomas corrects it: zwanzig Euro, nicht zwölf (not twelve)."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 3, phone message: read the question, then play. In the exam you hear it twice.",
+      "audio": "Hallo, Lena! Wie geht's? Ich bin in München, nicht in Wien. Tschüss!",
+      "question": "Where is the caller?",
+      "questionLang": "en",
+      "options": ["in München", "in Wien", "in Berlin"],
+      "answer": "in München",
+      "explanation": "Ich bin in München, nicht in Wien = I'm in Munich, not in Vienna. Listen for the word after nicht: that is the wrong one."
+    },
+    {
+      "type": "dictation",
+      "instruction": "Extra (not in the exam): type what you hear.",
+      "text": "Was heißt das auf Deutsch?",
+      "explanation": "Was heißt das auf Deutsch? = What is that in German? heißt is written with ß, and Deutsch with a capital D."
+    }
+  ]
+}

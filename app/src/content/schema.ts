@@ -162,6 +162,8 @@ export const Test = z.strictObject({
   /** Course order for "next test": unit, then the lesson's order. */
   unit: Unit.optional(),
   lesson: Slug.optional(),
+  /** "natural": Play reads this test's audio at natural speaking speed (rate 1) instead of the speed setting; Slow stays. For listening tests. */
+  speed: z.literal('natural').optional(),
   items: z.array(Item).min(1),
 })
 

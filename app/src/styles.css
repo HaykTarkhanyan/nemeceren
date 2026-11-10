@@ -746,6 +746,11 @@ textarea.text {
   white-space: pre-wrap;
 }
 
+/* A dialogue's transcript keeps one turn per line. */
+.audio-text {
+  white-space: pre-line;
+}
+
 mark.fill {
   padding: 1px 6px;
   border-radius: 4px;

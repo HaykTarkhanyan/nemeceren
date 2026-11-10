@@ -100,7 +100,7 @@ function QuestionText({ ri, item }: { ri: ResultItem; item: Item | null }) {
     const english = item?.type === 'listen_mc' && item.questionLang === 'en'
     return (
       <>
-        {english ? m[1] : <GermanText text={m[1]} />} <span className="muted">[audio: <GermanText text={m[2]} />]</span>
+        {english ? m[1] : <GermanText text={m[1]} />} <span className="muted audio-text">[audio: <GermanText text={m[2]} />]</span>
       </>
     )
   }

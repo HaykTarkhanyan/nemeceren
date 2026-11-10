@@ -1,0 +1,106 @@
+{
+  "id": "u4-hoeren",
+  "title": "Listening, Unit 4: café, shop and free time",
+  "level": "A1",
+  "created": "2026-11-10",
+  "description": "Unit 4 listening at natural speed, in three parts like the Goethe A1 exam: short dialogues, announcements, phone messages.",
+  "speed": "natural",
+  "items": [
+    {
+      "type": "listen_mc",
+      "instruction": "Part 1, dialogue: read the question, then play. In the exam you hear it twice.",
+      "audio": "Was möchten Sie?\nIch hätte gern einen Tee und ein Stück Kuchen.\nKuchen haben wir heute leider nicht. Wir haben Brötchen.\nGut, dann ein Brötchen, bitte.",
+      "question": "What does the guest order in the end?",
+      "questionLang": "en",
+      "options": ["einen Tee und ein Brötchen", "einen Tee und ein Stück Kuchen", "einen Kaffee und ein Brötchen"],
+      "answer": "einen Tee und ein Brötchen",
+      "explanation": "There is no cake today (Kuchen haben wir heute leider nicht), so the guest takes a bread roll: dann ein Brötchen, bitte. The tea stays."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 1, dialogue: read the question, then play. In the exam you hear it twice.",
+      "audio": "Was darf es sein?\nEin Kilo Äpfel und ein Kilo Tomaten, bitte. Was kostet das?\nDie Äpfel kosten zwei Euro zehn, und die Tomaten drei Euro vierzig. Das macht fünf Euro fünfzig.",
+      "question": "How much do the tomatoes cost?",
+      "questionLang": "en",
+      "options": ["3,40 €", "2,10 €", "5,50 €"],
+      "answer": "3,40 €",
+      "explanation": "die Tomaten drei Euro vierzig = 3,40 €. The apples are 2,10 €, and Das macht fünf Euro fünfzig is the total (5,50 €)."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 1, dialogue: read the question, then play. In the exam you hear it twice.",
+      "audio": "Mila, was machst du gern am Wochenende?\nIch schwimme gern, und ich tanze gern. Aber am liebsten wandere ich.\nIch auch!",
+      "question": "What does Mila like doing most?",
+      "questionLang": "en",
+      "options": ["wandern", "schwimmen", "tanzen"],
+      "answer": "wandern",
+      "explanation": "gern = like to, am liebsten = like most of all. Mila swims and dances gern, but am liebsten wandere ich: hiking is her favourite."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 2, announcement in a supermarket: read the question, then play. In the exam you hear it once.",
+      "audio": "Heute im Supermarkt: Bananen, das Kilo nur ein Euro neunundzwanzig! Und Käse: hundert Gramm nur neunundneunzig Cent.",
+      "question": "How much is a kilo of bananas?",
+      "questionLang": "en",
+      "options": ["1,29 €", "0,99 €", "1,92 €"],
+      "answer": "1,29 €",
+      "explanation": "das Kilo nur ein Euro neunundzwanzig = 1,29 € a kilo. neun-und-zwanzig is 29: ones first, then the tens. 0,99 € is for 100 grams of cheese."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 2, announcement in a canteen: read the question, then play. In the exam you hear it once.",
+      "audio": "Heute empfehlen wir Fisch mit Kartoffeln und Salat für zwölf Euro. Fleisch mit Reis und Gemüse kostet vierzehn Euro.",
+      "question": "What comes with the fish?",
+      "questionLang": "en",
+      "options": ["Kartoffeln und Salat", "Reis und Gemüse", "Kartoffeln und Gemüse"],
+      "answer": "Kartoffeln und Salat",
+      "explanation": "Fisch mit Kartoffeln und Salat = fish with potatoes and salad (12 €). The meat comes with rice and vegetables: Fleisch mit Reis und Gemüse (14 €)."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 2, announcement in a supermarket: read the question, then play. In the exam you hear it once.",
+      "audio": "Kasse drei ist jetzt geschlossen. Kasse fünf ist jetzt geöffnet. Sie können auch mit Karte bezahlen.",
+      "question": "Which checkout is open now?",
+      "questionLang": "en",
+      "options": ["Kasse 5", "Kasse 3", "Kasse 4"],
+      "answer": "Kasse 5",
+      "explanation": "Kasse fünf ist jetzt geöffnet = checkout 5 is open now. Kasse drei ist jetzt geschlossen (closed). mit Karte bezahlen = pay by card."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 3, phone message: read the question, then play. In the exam you hear it twice.",
+      "audio": "Hallo Lena, hier ist Max. Ich gehe am Freitag ins Restaurant. Kommst du mit? Wir zahlen nicht getrennt: Ich lade dich ein!",
+      "question": "Who pays?",
+      "questionLang": "en",
+      "options": ["Max lädt Lena ein.", "Lena lädt Max ein.", "Sie zahlen getrennt."],
+      "answer": "Max lädt Lena ein.",
+      "explanation": "Ich lade dich ein = I'm inviting you, I'm paying. Wir zahlen nicht getrennt = we are not paying separately."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 3, phone message: read the question, then play. In the exam you hear it twice.",
+      "audio": "Hallo Aram, hier ist Eva. Kannst du bitte einkaufen? Wir brauchen Milch, Eier und Brot. Butter haben wir noch.",
+      "question": "What do they NOT need?",
+      "questionLang": "en",
+      "options": ["Butter", "Milch", "Brot"],
+      "answer": "Butter",
+      "explanation": "Butter haben wir noch = we still have butter. They need milk, eggs and bread: Wir brauchen Milch, Eier und Brot."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 3, phone message: read the question, then play. In the exam you hear it twice.",
+      "audio": "Hallo Mila, hier ist Peter. Ich koche am Samstag für euch. Ich mache Fisch mit Reis, und für dich Gemüse. Du isst keinen Fisch, oder?",
+      "question": "What does Peter cook for Mila?",
+      "questionLang": "en",
+      "options": ["Gemüse", "Fisch mit Reis", "Fleisch"],
+      "answer": "Gemüse",
+      "explanation": "für dich Gemüse = vegetables for you. Mila doesn't eat fish: Du isst keinen Fisch. für takes the accusative: für dich, für euch."
+    },
+    {
+      "type": "dictation",
+      "instruction": "Extra (not in the exam): type what you hear.",
+      "text": "Ich nehme die Suppe und einen Salat.",
+      "explanation": "Ich nehme die Suppe und einen Salat. nehmen takes the accusative: die Suppe stays die, der Salat becomes einen Salat."
+    }
+  ]
+}

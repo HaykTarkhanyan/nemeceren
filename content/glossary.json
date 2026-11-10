@@ -1574,6 +1574,24 @@
     ],
     "weiter": [
       {"lemma": "weiter", "pos": "adverb", "gloss": ["further, on"], "note": "Ich weiß nicht mehr weiter. = I don't know what to do any more (weiterwissen)."}
+    ],
+    "Blau": [
+      {"lemma": "Blau", "pos": "noun", "article": "das", "level": "A1", "gloss": ["blue (the colour)"], "note": "The colour as a noun: in Blau = in blue."}
+    ],
+    "Rot": [
+      {"lemma": "Rot", "pos": "noun", "article": "das", "level": "A1", "gloss": ["red (the colour)"], "note": "The colour as a noun: in Rot = in red."}
+    ],
+    "Schwarz": [
+      {"lemma": "Schwarz", "pos": "noun", "article": "das", "level": "A1", "gloss": ["black (the colour)"], "note": "The colour as a noun: in Schwarz = in black."}
+    ],
+    "steigst": [
+      {"lemma": "einsteigen / umsteigen / aussteigen", "pos": "verb", "form": "du form, present", "level": "A1", "gloss": ["get on / change / get off"], "note": "Separable: Du steigst an der dritten Haltestelle aus. = You get off at the third stop."}
+    ],
+    "zieh": [
+      {"lemma": "anziehen", "pos": "verb", "form": "du form, imperative", "level": "A1", "gloss": ["to put on (clothes)"], "note": "Separable: Zieh bitte eine Jacke an! = Please put a jacket on!"}
+    ],
+    "bring": [
+      {"lemma": "mitbringen", "pos": "verb", "form": "du form, imperative", "level": "A1", "gloss": ["to bring (along)"], "note": "Separable: Bring bitte Musik mit! Without mit: bringen, to bring."}
     ]
   }
 }

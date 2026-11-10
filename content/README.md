@@ -42,8 +42,11 @@ General rules:
 | `created` | yes | newest tests are listed first |
 | `description` | no | |
 | `unit` | no | syllabus unit (0-6, see `SYLLABUS.md`). Used for "next test": tests run in unit order, then lesson order, then oldest first; tests with no unit come last |
-| `lesson` | no | id of the lesson this test belongs to (its unit is used when `unit` is left out; if both are set they must agree) |
+| `lesson` | no | id of the lesson this test belongs to (its unit is used when `unit` is left out; if both are set they must agree). **Only a test with a `lesson` becomes a station on the Home path**, right after that lesson's steps. A test with no `lesson` is listed under "Other tests" on Home (in course order) instead, so adding one never puts an undone station behind learners |
+| `speed` | no | `"natural"`: the Play button reads this test's audio at natural speaking speed (rate 1) whatever the speed setting is (default 0.85); Slow stays. For listening tests |
 | `items` | yes | at least 1 item, any mix of the types below |
+
+**Listening tests** (`u<N>-hoeren`, Hayk's request of 2026-11-10 for real-speed listening): one per unit, mock-exam style in three parts like Goethe A1 Hören (Teil 1 short dialogues, Teil 2 announcements, Teil 3 phone messages), mostly `listen_mc`, with `"speed": "natural"` and no `unit` or `lesson`, so they stay off the path and "next test" takes them after the course tests. Each item's `instruction` names its part. Check them with `npx tsx scripts/non_essential/check-taught.ts <N> u<N>-hoeren` from `app/`.
 
 Every item may also have these optional keys:
 
@@ -152,6 +155,7 @@ Items are graded after the whole test is submitted. Hayk sees per-item feedback,
 ```
 - `audio` is spoken, never shown before submitting. Same `options`/`answer`/`questionLang` rules as `mc`.
 - Spell out abbreviations in `audio` ("Doktor", not "Dr.") so every voice reads them the same.
+- **A dialogue goes one turn per line** (`\n` between turns): the lines are read with two alternating voices, like a `dialogue` block, and the transcript after submitting keeps the line breaks. So keep a one-speaker text (an announcement, a voicemail) on one line. Two speakers only: a third would get the first voice again.
 
 ## Lessons
 

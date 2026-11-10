@@ -76,7 +76,7 @@ export function dialogueVoice(voices: SpeechSynthesisVoice[], voiceURI: string |
  * Read dialogue lines one after another, each speaker with their own voice. Problems are reported
  * visibly; returns false if nothing could be played.
  */
-export function speakLines(lines: { text: string; speaker: number }[]): boolean {
+export function speakLines(lines: { text: string; speaker: number }[], rate?: number): boolean {
   if (!supported) {
     reportError('This browser does not support speech synthesis (Web Speech API), so German audio cannot play.')
     return false
@@ -93,7 +93,7 @@ export function speakLines(lines: { text: string; speaker: number }[]): boolean 
     u.voice = voice
     u.lang = voice.lang
     u.pitch = pitch
-    u.rate = getSettings().rate
+    u.rate = rate ?? getSettings().rate
     u.onerror = (e) => {
       if (e.error === 'interrupted' || e.error === 'canceled') return
       reportError(`Speech failed (${e.error}) while reading: "${line.text}"`)
@@ -101,6 +101,29 @@ export function speakLines(lines: { text: string; speaker: number }[]): boolean 
     speechSynthesis.speak(u)
   }
   return true
+}
+
+/** Play in a test with `"speed": "natural"`: natural speaking speed (the speed setting is 0.85 by default). */
+export const NATURAL_RATE = 1
+/** The Slow button. */
+export const SLOW_RATE = 0.7
+
+/**
+ * The turns of listening audio (listen_mc, dictation): each line is one turn, read by the next voice
+ * in turn, so a dialogue written one turn per line gets two voices. Text without a line break is one turn.
+ */
+export function audioTurns(text: string): { text: string; speaker: number }[] {
+  return text
+    .split('\n')
+    .map((t) => t.trim())
+    .filter((t) => t !== '')
+    .map((t, i) => ({ text: t, speaker: i % 2 }))
+}
+
+/** Speak listening audio: one voice, or alternating voices for a dialogue (see audioTurns). */
+export function speakAudio(text: string, rate?: number): boolean {
+  const turns = audioTurns(text)
+  return turns.length > 1 ? speakLines(turns, rate) : speak(text, rate)
 }
 
 /** Stop anything being read aloud. */

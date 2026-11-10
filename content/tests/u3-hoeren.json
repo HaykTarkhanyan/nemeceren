@@ -1,0 +1,106 @@
+{
+  "id": "u3-hoeren",
+  "title": "Listening, Unit 3: times and plans",
+  "level": "A1",
+  "created": "2026-11-10",
+  "description": "Unit 3 listening at natural speed, in three parts like the Goethe A1 exam: short dialogues, announcements, phone messages.",
+  "speed": "natural",
+  "items": [
+    {
+      "type": "listen_mc",
+      "instruction": "Part 1, dialogue: read the question, then play. In the exam you hear it twice.",
+      "audio": "Aram, wann ist der Deutschkurs?\nAm Dienstag und am Donnerstag.\nUnd wann fängt er an?\nUm halb sieben. Er hört um acht auf.",
+      "question": "When does the course start?",
+      "questionLang": "en",
+      "options": ["um 6:30", "um 7:30", "um 8:00"],
+      "answer": "um 6:30",
+      "explanation": "halb sieben = 6:30: halb counts toward the next hour, like Russian половина седьмого. The course ends um acht (8:00): Er hört um acht auf."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 1, dialogue: read the question, then play. In the exam you hear it twice.",
+      "audio": "Hast du am Samstag Zeit? Wir gehen ins Kino.\nAm Samstag kann ich leider nicht, ich muss arbeiten. Aber am Sonntag habe ich Zeit.\nGut, dann gehen wir am Sonntag!",
+      "question": "When do they go to the cinema?",
+      "questionLang": "en",
+      "options": ["am Sonntag", "am Samstag", "am Freitag"],
+      "answer": "am Sonntag",
+      "explanation": "Am Samstag kann ich leider nicht, ich muss arbeiten. Aber am Sonntag habe ich Zeit. So: dann gehen wir am Sonntag. leider nicht = unfortunately not."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 1, dialogue: read the question, then play. In the exam you hear it twice.",
+      "audio": "Lena, wann hast du Geburtstag?\nAm dritten Mai. Und du, Max?\nAm ersten Oktober.",
+      "question": "When is Max's birthday?",
+      "questionLang": "en",
+      "options": ["am 1. Oktober", "am 3. Mai", "am 3. Oktober"],
+      "answer": "am 1. Oktober",
+      "explanation": "Max: am ersten Oktober = on 1 October. Lena's birthday is am dritten Mai (3 May). Dates use am + the ordinal with -en: am ersten, am dritten."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 2, recorded announcement of an office: read the question, then play. In the exam you hear it once.",
+      "audio": "Guten Tag! Wir haben von Montag bis Freitag von acht bis achtzehn Uhr geöffnet, und am Samstag von neun bis dreizehn Uhr. Am Sonntag haben wir geschlossen.",
+      "question": "When does it close on Saturday?",
+      "questionLang": "en",
+      "options": ["um 13 Uhr", "um 18 Uhr", "um 9 Uhr"],
+      "answer": "um 13 Uhr",
+      "explanation": "am Samstag von neun bis dreizehn Uhr = Saturday 9:00 to 13:00. Official times use the 24-hour clock: dreizehn Uhr = 13:00 (1 pm). achtzehn Uhr is the weekday closing time."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 2, on the radio: read the question, then play. In the exam you hear it once.",
+      "audio": "Guten Morgen, München! Es ist Viertel nach sieben. Heute ist Montag, der dritte März.",
+      "question": "What time is it?",
+      "questionLang": "en",
+      "options": ["7:15", "6:45", "7:45"],
+      "answer": "7:15",
+      "explanation": "Viertel nach sieben = a quarter past seven, 7:15. Viertel vor sieben would be 6:45."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 2, announcement in a language course: read the question, then play. In the exam you hear it once.",
+      "audio": "Am Montag fängt der Kurs um zehn Uhr an, nicht um neun. Und am Freitag haben wir keinen Kurs, das ist ein Feiertag.",
+      "question": "When does the course start on Monday?",
+      "questionLang": "en",
+      "options": ["um 10 Uhr", "um 9 Uhr", "um 11 Uhr"],
+      "answer": "um 10 Uhr",
+      "explanation": "Am Montag fängt der Kurs um zehn Uhr an, nicht um neun. anfangen is separable: fängt ... an. On Friday there is no class because it is a public holiday (ein Feiertag)."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 3, phone message: read the question, then play. In the exam you hear it twice.",
+      "audio": "Hallo Aram, hier ist Eva. Wir treffen uns morgen um halb acht, nicht um sieben. Ich hole dich ab. Bis dann!",
+      "question": "What time do they meet tomorrow?",
+      "questionLang": "en",
+      "options": ["7:30", "7:00", "8:30"],
+      "answer": "7:30",
+      "explanation": "um halb acht = 7:30 (half way to eight). Eva says nicht um sieben: the old time was 7:00. Ich hole dich ab = I'll pick you up."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 3, phone message: read the question, then play. In the exam you hear it twice.",
+      "audio": "Guten Tag, Frau Krause, hier ist Thomas Becker. Am Mittwoch kann ich leider nicht kommen. Geht es am Donnerstag um zehn? Können Sie mich bitte anrufen? Danke!",
+      "question": "When does Herr Becker want to come?",
+      "questionLang": "en",
+      "options": ["am Donnerstag um 10", "am Mittwoch um 10", "am Dienstag um 10"],
+      "answer": "am Donnerstag um 10",
+      "explanation": "Am Mittwoch kann ich leider nicht kommen. Geht es am Donnerstag um zehn? = Does Thursday at ten work? Mittwoch is the day he can't make."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 3, phone message: read the question, then play. In the exam you hear it twice.",
+      "audio": "Hallo Max, hier ist Lena. Kommst du am Freitag mit? Wir gehen ins Kino. Der Film fängt um Viertel nach acht an, aber wir treffen uns schon um halb acht.",
+      "question": "When does the film start?",
+      "questionLang": "en",
+      "options": ["8:15", "7:30", "7:45"],
+      "answer": "8:15",
+      "explanation": "Der Film fängt um Viertel nach acht an = 8:15. They meet earlier, um halb acht (7:30)."
+    },
+    {
+      "type": "dictation",
+      "instruction": "Extra (not in the exam): type what you hear.",
+      "text": "Ich rufe dich morgen an.",
+      "explanation": "Ich rufe dich morgen an. anrufen is separable: rufe in second place, an at the very end. morgen = tomorrow (small m)."
+    }
+  ]
+}

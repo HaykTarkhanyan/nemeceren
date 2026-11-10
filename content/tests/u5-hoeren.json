@@ -1,0 +1,105 @@
+{
+  "id": "u5-hoeren",
+  "title": "Listening, Unit 5: work and class",
+  "level": "A1",
+  "created": "2026-11-10",
+  "description": "Unit 5 listening at natural speed, in three parts like the Goethe A1 exam: short dialogues, announcements, phone messages.",
+  "speed": "natural",
+  "items": [
+    {
+      "type": "listen_mc",
+      "instruction": "Part 1, dialogue: read the question, then play. In the exam you hear it twice.",
+      "audio": "Könnten Sie bitte heute noch die E-Mail schicken?\nJa, klar. Soll ich auch den Text drucken?\nNein, das ist nicht so wichtig. Drucken Sie ihn morgen.",
+      "question": "What should the person do today?",
+      "questionLang": "en",
+      "options": ["die E-Mail schicken", "den Text drucken", "den Kunden anrufen"],
+      "answer": "die E-Mail schicken",
+      "explanation": "Könnten Sie bitte heute noch die E-Mail schicken? = Could you send the email today? The text can wait: Drucken Sie ihn morgen (print it tomorrow)."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 1, dialogue: read the question, then play. In the exam you hear it twice.",
+      "audio": "Wie war dein Wochenende, Aram?\nNicht so toll. Am Samstag habe ich gearbeitet, und am Sonntag war ich sehr müde.\nUnd was hast du am Sonntag gemacht?\nIch habe nur geschlafen und ferngesehen.",
+      "question": "What did Aram do on Sunday?",
+      "questionLang": "en",
+      "options": ["geschlafen und ferngesehen", "gearbeitet", "die Eltern besucht"],
+      "answer": "geschlafen und ferngesehen",
+      "explanation": "Ich habe nur geschlafen und ferngesehen = I only slept and watched TV. He worked on Saturday: Am Samstag habe ich gearbeitet. ferngesehen: the ge- goes inside a separable verb."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 1, dialogue in class: read the question, then play. In the exam you hear it twice.",
+      "audio": "Lesen Sie bitte den Text auf Seite dreiundzwanzig.\nEntschuldigung, auf Seite zweiunddreißig?\nNein, dreiundzwanzig. Und dann kreuzen Sie an: richtig oder falsch.",
+      "question": "Which page should they read?",
+      "questionLang": "en",
+      "options": ["Seite 23", "Seite 32", "Seite 13"],
+      "answer": "Seite 23",
+      "explanation": "dreiundzwanzig = 23 (drei-und-zwanzig). The student mishears zweiunddreißig (32), and the teacher repeats: Nein, dreiundzwanzig."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 2, announcement in a language school: read the question, then play. In the exam you hear it once.",
+      "audio": "Die Prüfung ist am Freitag um neun Uhr in Raum drei. Bitte kommen Sie pünktlich und bringen Sie einen Stift mit. Handys sind verboten.",
+      "question": "Where is the exam?",
+      "questionLang": "en",
+      "options": ["in Raum 3", "in Raum 9", "in Raum 13"],
+      "answer": "in Raum 3",
+      "explanation": "in Raum drei = in room 3. neun is the time: um neun Uhr. bringen Sie einen Stift mit = bring a pen (mitbringen is separable)."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 2, announcement at work: richtig oder falsch? Read the sentence, then play. In the exam you hear it once.",
+      "audio": "Liebe Kolleginnen und Kollegen, unsere Chefin hat heute Geburtstag! Wir feiern um drei Uhr in Raum fünf. Es gibt Kaffee und Kuchen.",
+      "question": "Die Party ist um fünf Uhr.",
+      "options": ["Richtig", "Falsch"],
+      "answer": "Falsch",
+      "explanation": "Wir feiern um drei Uhr in Raum fünf: the party is at three o'clock, in room five. fünf is the room, not the time, so the sentence is falsch."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 2, announcement in class: read the question, then play. In the exam you hear it once.",
+      "audio": "Morgen ist kein Unterricht. Bitte machen Sie die Hausaufgaben: Lesen Sie die Texte auf Seite vierzig, und schreiben Sie fünf Sätze.",
+      "question": "What is the homework?",
+      "questionLang": "en",
+      "options": ["Texte lesen und Sätze schreiben", "Texte lesen und Wörter lernen", "Sätze lesen und Texte schreiben"],
+      "answer": "Texte lesen und Sätze schreiben",
+      "explanation": "Lesen Sie die Texte auf Seite vierzig, und schreiben Sie fünf Sätze: read the texts on page 40 and write five sentences. Lesen Sie, schreiben Sie: the Sie imperative puts the verb first."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 3, phone message: read the question, then play. In the exam you hear it twice.",
+      "audio": "Guten Morgen, hier ist Frau Schmidt. Könnten Sie mich bitte heute vor zwölf Uhr anrufen? Nach zwölf habe ich einen Termin. Es ist wichtig. Danke!",
+      "question": "When should you call Frau Schmidt?",
+      "questionLang": "en",
+      "options": ["vor 12 Uhr", "nach 12 Uhr", "um 12 Uhr"],
+      "answer": "vor 12 Uhr",
+      "explanation": "heute vor zwölf Uhr = today before twelve. Nach zwölf habe ich einen Termin: after twelve she has an appointment."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 3, phone message: read the question, then play. In the exam you hear it twice.",
+      "audio": "Hallo Aram, hier ist Katrin. Hast du meine E-Mail gelesen? Ich habe den Text gestern geschrieben, aber ich habe ihn noch nicht geschickt. Kannst du ihn bitte drucken?",
+      "question": "What should Aram do?",
+      "questionLang": "en",
+      "options": ["den Text drucken", "den Text schreiben", "den Text schicken"],
+      "answer": "den Text drucken",
+      "explanation": "Kannst du ihn bitte drucken? = Can you print it? Katrin wrote the text yesterday (ich habe den Text gestern geschrieben) but has not sent it yet (noch nicht geschickt)."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 3, phone message: read the question, then play. In the exam you hear it twice.",
+      "audio": "Hallo Lena, hier ist Mila. Ich war am Wochenende in Salzburg. Das Wetter war leider schlecht, aber die Stadt war toll! Und wie war dein Wochenende? Ruf mich an!",
+      "question": "How was the weather in Salzburg?",
+      "questionLang": "en",
+      "options": ["schlecht", "toll", "super"],
+      "answer": "schlecht",
+      "explanation": "Das Wetter war leider schlecht, aber die Stadt war toll: bad weather, great city. war = was, the past of sein."
+    },
+    {
+      "type": "dictation",
+      "instruction": "Extra (not in the exam): type what you hear.",
+      "text": "Ich habe gestern bis sieben gearbeitet.",
+      "explanation": "Ich habe gestern bis sieben gearbeitet. The Perfekt: habe in second place, the participle gearbeitet at the end."
+    }
+  ]
+}

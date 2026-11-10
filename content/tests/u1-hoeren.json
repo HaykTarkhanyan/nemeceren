@@ -1,0 +1,106 @@
+{
+  "id": "u1-hoeren",
+  "title": "Listening, Unit 1: meeting people",
+  "level": "A1",
+  "created": "2026-11-10",
+  "description": "Unit 1 listening at natural speed, in three parts like the Goethe A1 exam: short dialogues, announcements, phone messages.",
+  "speed": "natural",
+  "items": [
+    {
+      "type": "listen_mc",
+      "instruction": "Part 1, dialogue: read the question, then play. In the exam you hear it twice.",
+      "audio": "Hallo, ich bin Aram. Wie heißt du?\nIch heiße Lena. Ich komme aus Österreich. Und du?\nIch komme aus Armenien, aber ich wohne hier in München.",
+      "question": "Where does Lena come from?",
+      "questionLang": "en",
+      "options": ["aus Österreich", "aus Armenien", "aus Deutschland"],
+      "answer": "aus Österreich",
+      "explanation": "Ich komme aus Österreich = I come from Austria. Aram comes from Armenia (aus Armenien) and lives in Munich (Ich wohne hier in München). Woher? is answered with aus."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 1, dialogue: read the question, then play. In the exam you hear it twice.",
+      "audio": "Freut mich, Frau Weber. Was machen Sie hier bei Siemens?\nIch bin Entwicklerin. Und Sie?\nIch bin Student. Ich studiere Informatik.",
+      "question": "What is Frau Weber's job?",
+      "questionLang": "en",
+      "options": ["Entwicklerin", "Studentin", "Lehrerin"],
+      "answer": "Entwicklerin",
+      "explanation": "Ich bin Entwicklerin = I am a developer (a woman: -in). The other person is a student: Ich bin Student. Jobs come without ein: Ich bin Lehrerin."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 1, dialogue: read the question, then play. In the exam you hear it twice.",
+      "audio": "Mila, sprichst du Russisch?\nJa, Russisch und Armenisch. Und du, Peter?\nIch spreche Englisch und ein bisschen Deutsch.",
+      "question": "Which languages does Mila speak?",
+      "questionLang": "en",
+      "options": ["Russisch und Armenisch", "Englisch und Deutsch", "Russisch und Deutsch"],
+      "answer": "Russisch und Armenisch",
+      "explanation": "Mila answers: Ja, Russisch und Armenisch. Peter speaks English and a little German. du sprichst: sprechen changes e to i with du and er/sie."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 2, announcement in a language course: read the question, then play. In the exam you hear it once.",
+      "audio": "Guten Morgen und willkommen! Ich heiße Katrin Wagner und ich bin hier die Lehrerin. Wir sind zwölf Studenten, und wir sprechen zehn Sprachen!",
+      "question": "How many students are in the course?",
+      "questionLang": "en",
+      "options": ["12", "10", "20"],
+      "answer": "12",
+      "explanation": "Wir sind zwölf Studenten = we are twelve students. zehn (10) is the number of languages: wir sprechen zehn Sprachen."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 2, announcement on the radio: read the question, then play. In the exam you hear it once.",
+      "audio": "Hallo und willkommen! Ich heiße Max Becker. Ich komme aus Berlin, aber ich wohne und arbeite in München. Ich bin Lehrer von Beruf.",
+      "question": "Where does Max live?",
+      "questionLang": "en",
+      "options": ["in München", "in Berlin", "in Wien"],
+      "answer": "in München",
+      "explanation": "Ich komme aus Berlin (where he is from), aber ich wohne und arbeite in München (where he lives and works). kommen aus = come from, wohnen in = live in."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 2, announcement at work: read the question, then play. In the exam you hear it once.",
+      "audio": "Liebe Kolleginnen und Kollegen! Das ist Herr Schulz, er ist neu hier. Er kommt aus der Schweiz, aber er wohnt in Deutschland. Er ist Entwickler.",
+      "question": "Where does Herr Schulz come from?",
+      "questionLang": "en",
+      "options": ["aus der Schweiz", "aus Deutschland", "aus Österreich"],
+      "answer": "aus der Schweiz",
+      "explanation": "Er kommt aus der Schweiz = he comes from Switzerland. die Schweiz keeps its article: aus der Schweiz. He lives in Germany: er wohnt in Deutschland."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 3, phone message: read the question, then play. In the exam you hear it twice.",
+      "audio": "Hallo Aram, hier ist Lena. Ich habe eine Frage: Wie ist deine Adresse? Meine Handynummer ist null, eins, sechs, zwo, vier, fünf, neun, drei. Danke!",
+      "question": "What does Lena want to know?",
+      "questionLang": "en",
+      "options": ["die Adresse", "die Handynummer", "die E-Mail-Adresse"],
+      "answer": "die Adresse",
+      "explanation": "Wie ist deine Adresse? = What is your address? Lena gives her own mobile number (Meine Handynummer ist ...) so Aram can answer."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 3, phone message: read the question, then play. In the exam you hear it twice.",
+      "audio": "Guten Tag, hier ist Thomas Müller. Meine Adresse ist Goethestraße achtundzwanzig in München. Noch einmal: Goethestraße achtundzwanzig.",
+      "question": "What is the house number?",
+      "questionLang": "en",
+      "options": ["28", "82", "18"],
+      "answer": "28",
+      "explanation": "achtundzwanzig = 28: German says the ones first, then und, then the tens (acht-und-zwanzig, eight-and-twenty)."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 3, phone message: read the question, then play. In the exam you hear it twice.",
+      "audio": "Hallo Peter, hier ist Mila. Wir lernen heute zusammen Deutsch, oder? Meine Adresse ist neu: Rosenstraße fünfzehn, nicht Hauptstraße fünfzig. Tschüss!",
+      "question": "What is Mila's new address?",
+      "questionLang": "en",
+      "options": ["Rosenstraße 15", "Rosenstraße 50", "Hauptstraße 50"],
+      "answer": "Rosenstraße 15",
+      "explanation": "Meine Adresse ist neu: Rosenstraße fünfzehn (15), nicht Hauptstraße fünfzig (the old one). fünfzehn (15) and fünfzig (50) sound alike: -zehn is the teens, -zig the tens."
+    },
+    {
+      "type": "dictation",
+      "instruction": "Extra (not in the exam): type what you hear.",
+      "text": "Was sind Sie von Beruf?",
+      "explanation": "Was sind Sie von Beruf? = What do you do (for a living)? Sie (polite you) and Beruf (a noun) have capital letters."
+    }
+  ]
+}

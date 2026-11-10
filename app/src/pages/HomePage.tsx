@@ -10,6 +10,7 @@ import { MAX_FREEZES } from '../lib/goal.ts'
 import { useGoal } from '../lib/goalView.ts'
 import { markMilestoneSeen, markNoticeSeen, milestoneSeen, noticeSeen } from '../lib/homeView.ts'
 import { levelProgress } from '../lib/path.ts'
+import { courseTests } from '../lib/plan.ts'
 import type { Station } from '../lib/path.ts'
 import { link } from '../lib/router.ts'
 import { DailyCard } from './DailyCard.tsx'
@@ -20,7 +21,11 @@ export function HomePage({ scrollToCurrent = false }: { scrollToCurrent?: boolea
   const [noticeHidden, setNoticeHidden] = useState(noticeSeen)
   const [milestoneHidden, setMilestoneHidden] = useState(false)
   const level = levelProgress(stations, path.done, content.lessons, content.tests)
-  const otherTests = content.tests.filter((t) => t.lesson === undefined)
+  // Tests with no lesson are not stations (lib/path.ts courseStations): listed here in course order.
+  const otherTests = courseTests(
+    content.tests.filter((t) => t.lesson === undefined),
+    content.lessons,
+  )
   const pct = level && level.total > 0 ? Math.round((100 * level.done) / level.total) : 0
   // Home opens at the top (Hayk's Q11); "Back to the line" (#/line) scrolls to the station instead.
   useEffect(() => {

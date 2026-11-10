@@ -1,0 +1,106 @@
+{
+  "id": "u2-hoeren",
+  "title": "Listening, Unit 2: family, flat and things",
+  "level": "A1",
+  "created": "2026-11-10",
+  "description": "Unit 2 listening at natural speed, in three parts like the Goethe A1 exam: short dialogues, announcements, phone messages.",
+  "speed": "natural",
+  "items": [
+    {
+      "type": "listen_mc",
+      "instruction": "Part 1, dialogue: read the question, then play. In the exam you hear it twice.",
+      "audio": "Eva, hast du Geschwister?\nJa, ich habe zwei Schwestern und einen Bruder. Und du, Aram?\nIch habe einen Bruder.",
+      "question": "How many sisters does Eva have?",
+      "questionLang": "en",
+      "options": ["zwei", "eine", "drei"],
+      "answer": "zwei",
+      "explanation": "zwei Schwestern = two sisters (die Schwester, plural die Schwestern). einen Bruder: haben + einen for a der-word. Aram has one brother."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 1, dialogue: read the question, then play. In the exam you hear it twice.",
+      "audio": "Wie ist deine Wohnung?\nSie ist schön. Ich habe zwei Zimmer, eine Küche und ein Bad.\nUnd die Zimmer?\nDas Wohnzimmer ist groß und hell, aber das Schlafzimmer ist sehr klein.",
+      "question": "Which room is small?",
+      "questionLang": "en",
+      "options": ["das Schlafzimmer", "das Wohnzimmer", "die Küche"],
+      "answer": "das Schlafzimmer",
+      "explanation": "Das Wohnzimmer ist groß und hell, aber das Schlafzimmer ist sehr klein. aber (but) is where the contrast comes."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 1, dialogue: read the question, then play. In the exam you hear it twice.",
+      "audio": "Lena, brauchst du einen Stift?\nNein danke, ich habe einen Kugelschreiber. Aber ich brauche ein Heft.\nHier, bitte.",
+      "question": "What does Lena need?",
+      "questionLang": "en",
+      "options": ["ein Heft", "einen Stift", "einen Kugelschreiber"],
+      "answer": "ein Heft",
+      "explanation": "Aber ich brauche ein Heft = but I need a notebook. She already has a pen: ich habe einen Kugelschreiber. das Heft stays ein after brauchen; der-words take einen."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 2, announcement in a shop: read the question, then play. In the exam you hear it once.",
+      "audio": "Laptops, Handys und Ladegeräte! Das Handy kostet heute neunundneunzig Euro. Und der Laptop kostet nicht dreihundert Euro, er kostet zweihundert!",
+      "question": "How much is the laptop today?",
+      "questionLang": "en",
+      "options": ["200 €", "300 €", "99 €"],
+      "answer": "200 €",
+      "explanation": "Der Laptop kostet nicht dreihundert Euro, er kostet zweihundert = not 300 but 200 euros. The phone is neunundneunzig Euro (99 €)."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 2, a flat advert on the radio: read the question, then play. In the exam you hear it once.",
+      "audio": "Wohnung in Moosach: zwei Zimmer, Küche und Bad, fünfundfünfzig Quadratmeter. Die Wohnung hat leider keinen Balkon, aber sie ist sehr hell.",
+      "question": "What does the flat not have?",
+      "questionLang": "en",
+      "options": ["einen Balkon", "eine Küche", "ein Bad"],
+      "answer": "einen Balkon",
+      "explanation": "Die Wohnung hat leider keinen Balkon = unfortunately the flat has no balcony. kein becomes keinen for a der-word after haben (der Balkon)."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 2, announcement in a language school: read the question, then play. In the exam you hear it once.",
+      "audio": "Wir haben hier eine Tasche und ein Handy. Die Tasche ist blau, und das Handy ist weiß. Ist das Ihre Tasche oder Ihr Handy?",
+      "question": "What colour is the phone?",
+      "questionLang": "en",
+      "options": ["weiß", "blau", "schwarz"],
+      "answer": "weiß",
+      "explanation": "Das Handy ist weiß (white). The bag is blue: Die Tasche ist blau. Ihre Tasche, Ihr Handy: Ihr gets -e before a die-word."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 3, phone message: read the question, then play. In the exam you hear it twice.",
+      "audio": "Guten Tag, Frau Krause, hier ist Becker, Ihr Vermieter. Die Küche hat einen Herd, aber leider keinen Kühlschrank. Brauchen Sie einen Kühlschrank? Ich habe einen.",
+      "question": "What is missing in the kitchen?",
+      "questionLang": "en",
+      "options": ["ein Kühlschrank", "ein Herd", "ein Tisch"],
+      "answer": "ein Kühlschrank",
+      "explanation": "Die Küche hat einen Herd, aber leider keinen Kühlschrank: there is a stove but no fridge. keinen = no, not a, for a der-word after haben."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 3, phone message: read the question, then play. In the exam you hear it twice.",
+      "audio": "Hallo Eva, hier ist Sabine. Meine Eltern sind hier in München! Aber mein Bruder ist in Berlin. Tschüss!",
+      "question": "Who is in Berlin?",
+      "questionLang": "en",
+      "options": ["ihr Bruder", "ihre Eltern", "ihre Schwester"],
+      "answer": "ihr Bruder",
+      "explanation": "Meine Eltern sind hier in München, aber mein Bruder ist in Berlin. Talking about Sabine's family: ihr Bruder (her brother), ihre Eltern (her parents)."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 3, phone message: read the question, then play. In the exam you hear it twice.",
+      "audio": "Hallo Thomas, hier ist Lena. Ich brauche heute einen Laptop. Mein Handy und ein Ladegerät habe ich, aber ich habe keinen Laptop. Hast du einen?",
+      "question": "What does Lena need?",
+      "questionLang": "en",
+      "options": ["einen Laptop", "ein Ladegerät", "ein Handy"],
+      "answer": "einen Laptop",
+      "explanation": "Ich brauche heute einen Laptop. She has her phone and a charger (Mein Handy und ein Ladegerät habe ich), but no laptop (keinen Laptop)."
+    },
+    {
+      "type": "dictation",
+      "instruction": "Extra (not in the exam): type what you hear.",
+      "text": "Mein Bruder hat zwei Kinder.",
+      "explanation": "Mein Bruder hat zwei Kinder. das Kind, plural die Kinder. er hat: haben is irregular with er/sie/es."
+    }
+  ]
+}
