@@ -13,9 +13,70 @@
   ],
   "nicosWeg": [{ "title": "Nicos Weg A1, chapter 9: Working life (Ich bin Lehrerin, Mein Beruf)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }],
   "videos": [
-    {"id": "UE-n8Mu1PpU", "title": "Jobs", "minutes": 7},
-    {"id": "GTkX7tpnvj4", "title": "Subjects: Was studierst du?", "minutes": 10},
-    {"id": "mEwpDTTyfEY", "title": "No article", "minutes": 8}
+    {"id": "UE-n8Mu1PpU", "title": "Jobs", "minutes": 7, "notes": {
+      "points": [
+        "Every job has a masculine form with [[der]] and a feminine form with [[die]]. Mostly the feminine adds -in: [[der Lehrer]], [[die Lehrerin]].",
+        "Some get an umlaut as well: [[der Arzt]], [[die Ärztin]] (doctor); [[der Koch]], [[die Köchin]] (cook).",
+        "Jobs from English keep their English sound and still add -in: [[der Manager]], [[die Managerin]].",
+        "The video's list: [[Pilot]], [[Architekt]], [[Programmierer]], [[Fotograf]], [[Polizist]], [[Journalist]], [[Sänger]] (singer), [[Tänzer]] (dancer), [[Buchhalter]] (accountant), [[Dolmetscher]] (interpreter), all with -in for women.",
+        "To ask: [[Was sind Sie von Beruf?]] The answer has no article: [[Ich bin Lehrer.]]"
+      ],
+      "phrases": [
+        {"de": "der Lehrer, die Lehrerin", "en": "the teacher (man, woman)"},
+        {"de": "der Arzt, die Ärztin", "en": "the doctor (man, woman)"},
+        {"de": "der Koch, die Köchin", "en": "the cook (man, woman)"},
+        {"de": "der Programmierer, die Programmiererin", "en": "the programmer (man, woman)"},
+        {"de": "der Polizist, die Polizistin", "en": "the police officer (man, woman)"},
+        {"de": "der Dolmetscher, die Dolmetscherin", "en": "the interpreter (man, woman)"},
+        {"de": "Was sind Sie von Beruf?", "en": "What do you do for a living? (polite)"},
+        {"de": "Ich bin Architektin.", "en": "I'm an architect. (a woman)"}
+      ]
+    }},
+    {"id": "GTkX7tpnvj4", "title": "Subjects: Was studierst du?", "minutes": 10, "notes": {
+      "points": [
+        "[[das Studienfach]], plural [[die Studienfächer]]: a subject at university.",
+        "Humanities ([[die Geisteswissenschaften]]): [[Kunst]], [[Theater]], [[Geschichte]] (history, and also 'story'), [[Philosophie]], [[Musikwissenschaft]], modern languages.",
+        "Natural sciences ([[die Naturwissenschaften]]): [[Biologie]], [[Physik]], [[Geologie]], [[Informatik]] (computer science), [[Medizin]], [[Zahnmedizin]] (dentistry).",
+        "Social sciences and more: [[Soziologie]], [[Archäologie]], [[Medienwissenschaft]], [[Wirtschaftswissenschaften]] (economics), [[Jura]] (law), [[Architektur]], [[Geografie]].",
+        "What you study: [[Was studierst du?]] (polite [[Was studieren Sie?]]) - [[Ich studiere Architektur.]] For later: [[Was willst du studieren?]] - [[Ich will Medizin studieren.]] or [[Ich möchte Medizin studieren.]]",
+        "Where: [[Wo studierst du?]] - [[an der Universität Berlin]]. [[die Universität]] and [[die Hochschule]] mean the same; a university of applied sciences is [[die Fachhochschule]].",
+        "All in one sentence: [[Ich studiere Informatik an der Universität Bonn.]]"
+      ],
+      "phrases": [
+        {"de": "Was studierst du?", "en": "What are you studying?"},
+        {"de": "Ich studiere Architektur.", "en": "I'm studying architecture."},
+        {"de": "Was wollen Sie studieren?", "en": "What do you want to study? (polite)"},
+        {"de": "Ich möchte Medizin studieren.", "en": "I'd like to study medicine."},
+        {"de": "Wo studieren Sie?", "en": "Where do you study? (polite)"},
+        {"de": "Ich studiere an der Fachhochschule Berlin.", "en": "I study at the University of Applied Sciences Berlin."},
+        {"de": "Ich studiere Informatik an der Universität Bonn.", "en": "I study computer science at the University of Bonn."},
+        {"de": "die Geschichte", "en": "history; story"}
+      ],
+      "extra": "Words for university subjects, and [[an der Universität]] for where you study."
+    }},
+    {"id": "mEwpDTTyfEY", "title": "No article", "minutes": 8, "notes": {
+      "points": [
+        "Every noun has an article, but in some places German leaves it out. Jobs are only one case.",
+        "Names, nationalities and jobs: [[Guten Morgen, Frau Schmidt.]], [[Sie ist Japanerin.]], [[Ich bin Architektin.]]",
+        "Plurals in general, and things you can't count: [[Ich liebe Tiere.]], [[Hast du Geld?]], [[Er hat Angst.]] (he's afraid)",
+        "Materials: [[Die Kette ist aus Gold.]], [[Der Pullover ist aus Wolle.]]",
+        "Illnesses: [[Eva hat Fieber.]] (Eva has a temperature)",
+        "After an amount: [[ein Kilo Äpfel]]. And headlines and adverts often drop articles too.",
+        "Most countries and all cities: [[Ich komme aus Deutschland.]], [[Sabine fährt nach München.]] A few countries keep theirs: [[die Schweiz]], [[die Türkei]]."
+      ],
+      "phrases": [
+        {"de": "Ich liebe Tiere.", "en": "I love animals."},
+        {"de": "Was machst du heute, Max?", "en": "What are you doing today, Max?"},
+        {"de": "Sie ist Japanerin.", "en": "She's Japanese."},
+        {"de": "Er hat Angst vor Hunden.", "en": "He's afraid of dogs."},
+        {"de": "Hast du Geld?", "en": "Do you have (any) money?"},
+        {"de": "Die Kette ist aus Gold.", "en": "The necklace is made of gold."},
+        {"de": "Eva hat Fieber.", "en": "Eva has a temperature."},
+        {"de": "Ich hätte gern ein Kilo Äpfel.", "en": "I'd like a kilo of apples."},
+        {"de": "Sabine fährt nach München.", "en": "Sabine is going to Munich."}
+      ],
+      "extra": "The other cases without an article: plurals, money and feelings, materials, illnesses, amounts, cities."
+    }}
   ],
   "words": ["beruf", "arbeiten", "als", "bei", "firma", "job", "arbeit", "entwickler", "entwicklerin", "student", "studentin", "studieren", "informatik", "lehrer", "lehrerin", "machen", "was", "was-sind-sie-von-beruf"],
   "tests": ["u1-t2-leute-beruf"],

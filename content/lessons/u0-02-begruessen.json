@@ -12,8 +12,51 @@
   ],
   "nicosWeg": [{ "title": "Nicos Weg A1: Welcome to A1 (Hallo! and Tschüss!)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }],
   "videos": [
-    {"id": "RuGmc662HDg", "title": "Greetings", "minutes": 10},
-    {"id": "iWyOKwIf_94", "title": "Wie geht's?", "minutes": 6}
+    {"id": "RuGmc662HDg", "title": "Greetings", "minutes": 10, "notes": {
+      "points": [
+        "[[Hallo]] is the everyday greeting. Say it with a German a (hah-lo), not like English 'hello'. Many people also just say 'Hi'.",
+        "[[Guten Tag]] is the polite greeting and works at any time of day.",
+        "Time-of-day greetings: [[Guten Morgen]] in the morning, [[Guten Abend]] in the evening (even late), [[Gute Nacht]] only before going to bed.",
+        "In the south: [[Grüß Gott]] (Bavaria and Austria), and [[Grüß dich]] to a friend. [[Servus]] means both hi and bye. The video says Servus comes from Switzerland; it is really Latin and typical of Bavaria and Austria.",
+        "Goodbye: [[Tschüss]] (informal, all over Germany; some say [[Ciao]]), [[Auf Wiedersehen]] (polite), and on the phone [[Auf Wiederhören]], because you hear the person rather than see them.",
+        "With friends: [[Bis bald]] (see you soon), [[Bis später]] (see you later), [[Bis dann]] (see you then)."
+      ],
+      "phrases": [
+        {"de": "Hallo!", "en": "Hello! Hi!"},
+        {"de": "Guten Tag!", "en": "Good day! Hello! (polite)"},
+        {"de": "Guten Abend!", "en": "Good evening!"},
+        {"de": "Gute Nacht!", "en": "Good night! (before bed)"},
+        {"de": "Grüß Gott!", "en": "Hello! (southern Germany, Austria)"},
+        {"de": "Grüß dich!", "en": "Hi! (to one friend)"},
+        {"de": "Auf Wiedersehen!", "en": "Goodbye! (polite)"},
+        {"de": "Auf Wiederhören!", "en": "Goodbye! (on the phone)"},
+        {"de": "Bis bald!", "en": "See you soon!"},
+        {"de": "Bis später!", "en": "See you later!"}
+      ],
+      "extra": "Greeting manners: look the person in the eye, and in formal situations shake hands firmly."
+    }},
+    {"id": "iWyOKwIf_94", "title": "Wie geht's?", "minutes": 6, "notes": {
+      "points": [
+        "Three ways to ask: [[Wie geht es Ihnen?]] (polite), [[Wie geht es dir?]] (informal) and the short [[Wie geht's?]] (informal).",
+        "Answer with [[Mir geht es ...]] plus a word, or with the word alone: [[Gut, danke.]]",
+        "Positive answers: [[gut]], [[sehr gut]], [[prima]], [[toll]], [[super]], [[wunderbar]], [[ausgezeichnet]] (excellent), [[fantastisch]].",
+        "[[Es geht.]] means so-so: not good, not bad.",
+        "Negative answers: [[nicht gut]], [[schlecht]] (bad), [[sehr schlecht]], and the strongest, [[miserabel]] and [[furchtbar]] (terrible). A reason: [[Ich bin müde.]] or [[Ich bin krank.]]",
+        "Ask back with [[Und Ihnen?]] or [[Und dir?]], matching the question. If you're fine too: [[Auch gut, danke.]]"
+      ],
+      "phrases": [
+        {"de": "Wie geht es Ihnen?", "en": "How are you? (polite)"},
+        {"de": "Wie geht's?", "en": "How's it going?"},
+        {"de": "Mir geht es sehr gut, danke.", "en": "I'm very well, thanks."},
+        {"de": "Es geht.", "en": "So-so."},
+        {"de": "Mir geht es nicht gut.", "en": "I'm not well."},
+        {"de": "Ich bin müde.", "en": "I'm tired."},
+        {"de": "Ich bin krank.", "en": "I'm ill."},
+        {"de": "Auch gut, danke.", "en": "Fine too, thanks."},
+        {"de": "Guten Tag, Frau Schmidt! Wie geht es Ihnen?", "en": "Hello, Ms Schmidt! How are you?"}
+      ],
+      "extra": "A longer list of answers, from [[ausgezeichnet]] down to [[furchtbar]], and the reasons [[müde]] and [[krank]]."
+    }}
   ],
   "words": ["hallo", "guten-morgen", "guten-tag", "guten-abend", "gute-nacht", "tschuess", "auf-wiedersehen", "servus", "gruess-gott", "wie-gehts", "wie-geht-es-ihnen", "gut"],
   "tests": ["u0-t1-laute-gruesse"],

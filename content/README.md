@@ -182,7 +182,7 @@ Items are graded after the whole test is submitted. Hayk sees per-item feedback,
 | `title`, `summary` | yes | shown in the list and at the top |
 | `goals` | yes | 1 or more can-do statements in English |
 | `nicosWeg` | no | links: `{ "title", "url" }` |
-| `videos` | no | YouTube videos to watch with the lesson (DECISIONS.md #74): `{ "id", "title", "minutes" }`, where `id` is the 11-character video id (`watch?v=<id>`). Shown as click-to-play thumbnails in the lesson's top card. The source playlists and the local captions are in `reference/README.md`. |
+| `videos` | no | YouTube videos to watch with the lesson (DECISIONS.md #74): `{ "id", "title", "minutes" }`, where `id` is the 11-character video id (`watch?v=<id>`). Shown as click-to-play thumbnails in the lesson's top card. The source playlists and the local captions are in `reference/README.md`. A video may also have `notes`, see [Video notes](#video-notes-read-instead). |
 | `words` | no | ids from `words.json` that this lesson introduces (see below) |
 | `tests` | no | ids of tests that belong to the lesson (linked at the end of the lesson) |
 | `stations` | no | where the lesson's stations on the Home path start, after the first: section indices, strictly increasing, at most 2 (so at most 3 stations), each below the number of sections. Leave it out and the app splits the lesson by itself (about 5.5 sections per station, 1-3 stations). Set it only when the automatic cut separates an explanation from its examples or leaves a lone "Check yourself": `npx tsx scripts/non_essential/print-stations.ts` from `app/` shows every cut. Example: `[4, 8]` on 11 sections gives stations [0-4), [4-8), [8-11). |
@@ -267,7 +267,30 @@ Each check is saved like a test attempt (see `progress/README.md`) with the test
 
 Inserting or removing a section in the middle makes old results show other questions. Rows added to a table and lines added to `examples` or `audio` are safe. (Learned 2026-11-08 extending Elya's lessons, `_learnings/2026-11-08-1800_append-only-published-lessons.md`.)
 
-The glossary covers all German in lessons: `[[...]]` in the text blocks, `examples`, `audio` and `dialogue` sentences, table cells in `"words"` columns, and the German fields of exercise items.
+The glossary covers all German in lessons: `[[...]]` in the text blocks, `examples`, `audio` and `dialogue` sentences, table cells in `"words"` columns, the German fields of exercise items, and the video notes (their `phrases` and the `[[...]]` in `points` and `extra`).
+
+### Video notes ("Read instead")
+
+A lesson video can carry `notes`: the video's content in short, for reading instead of watching. The lesson's top card shows them under the video's title as a "Read instead" fold-out, closed by default. Write them from the video's captions (`reference/youtube/`, see `reference/README.md`); a video without captions gets no notes.
+
+```json
+{"id": "RuGmc662HDg", "title": "Greetings", "minutes": 10, "notes": {
+  "points": ["[[Guten Tag]] is the polite greeting and works at any time of day.", "...", "..."],
+  "phrases": [{"de": "Bis bald!", "en": "See you soon!"}, {"de": "...", "en": "..."}, {"de": "...", "en": "..."}],
+  "extra": "Greeting manners: look the person in the eye, and in formal situations shake hands firmly."
+}}
+```
+
+| key | required | notes |
+|---|---|---|
+| `points` | yes | 3-7 points in English: the rule, the pattern, the tips. One line each in the lesson text format (`**bold**`, `[[German]]`, no line breaks); shown as a bullet list. |
+| `phrases` | yes | 3-10 key German examples from the video: `{ "de", "en" }`. Each gets a speaker button and word popups. |
+| `extra` | no | one line on what the video has that the lesson doesn't cover; shown as "Also in the video: ...". |
+
+- Condense the video into what a learner needs: never paste the transcript, and complement the lesson rather than repeat its explanation word for word.
+- Auto-captions mishear German. Fix the German from context and check it like any lesson German (gender, plural, level); correct the video where it is wrong.
+- Names in the phrases: use ones on the glossary `ignore` list (Eva, Lena, Max, Peter, Thomas, Schmidt, Müller ...) rather than adding new ones.
+- A video listed in two lessons carries the same notes in both.
 
 ### Stories: the last lesson of each unit
 

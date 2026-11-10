@@ -13,9 +13,71 @@
   ],
   "nicosWeg": [{ "title": "Nicos Weg A1, chapter 6: Living (So wohne ich, Meine Wohnung)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }],
   "videos": [
-    {"id": "qSWIYTpxzIs", "title": "My house", "minutes": 8},
-    {"id": "a1DA6ezLbgs", "title": "Furniture", "minutes": 11},
-    {"id": "JphfVvja3Bs", "title": "Flat hunting", "minutes": 10}
+    {"id": "qSWIYTpxzIs", "title": "My house", "minutes": 8, "notes": {
+      "points": [
+        "[[das Haus]], [[die Häuser]]; [[die Wohnung]], [[die Wohnungen]] (flat); [[das Zimmer]], [[die Zimmer]] (room).",
+        "Rooms are compounds with -zimmer: [[das Schlafzimmer]] (bedroom), [[das Kinderzimmer]], [[das Arbeitszimmer]] (study), [[das Wohnzimmer]] (living room), [[das Esszimmer]] (dining room), [[das Badezimmer]]. All are das, and the plural looks the same.",
+        "More: [[die Küche]] (kitchen), [[die Toilette]], [[der Garten]] (garden), [[die Terrasse]], [[der Balkon]], [[die Garage]].",
+        "Where you live: [[Ich wohne in einer Großstadt.]], [[in einer Kleinstadt]] (a small town) or [[auf dem Land]] (in the country).",
+        "Describing it: [[Meine Wohnung ist klein.]] [[Meine Wohnung hat zwei Schlafzimmer.]] Then list the rooms: [[ein Wohnzimmer, eine Küche, ein Badezimmer und einen Garten]]."
+      ],
+      "phrases": [
+        {"de": "die Wohnung, die Wohnungen", "en": "the flat, the flats"},
+        {"de": "das Schlafzimmer", "en": "the bedroom"},
+        {"de": "das Arbeitszimmer", "en": "the study"},
+        {"de": "der Garten, die Gärten", "en": "the garden, the gardens"},
+        {"de": "Ich wohne in einer Großstadt.", "en": "I live in a city."},
+        {"de": "Ich wohne auf dem Land.", "en": "I live in the country."},
+        {"de": "Mein Haus ist klein.", "en": "My house is small."},
+        {"de": "Mein Haus hat zwei Schlafzimmer, ein Wohnzimmer, eine Küche und eine Terrasse.", "en": "My house has two bedrooms, a living room, a kitchen and a terrace."},
+        {"de": "Und wie ist deine Wohnung?", "en": "And what is your flat like?"}
+      ],
+      "extra": "[[in einer Großstadt]], [[in einer Kleinstadt]] and [[auf dem Land]] for where you live."
+    }},
+    {"id": "a1DA6ezLbgs", "title": "Furniture", "minutes": 11, "notes": {
+      "points": [
+        "[[die Möbel]] means furniture. Learn each piece with its article and plural.",
+        "Sitting and sleeping: [[das Sofa]] or [[die Couch]], [[der Sessel]] (armchair), [[der Stuhl]], [[der Hocker]] (stool), [[die Sitzbank]] (bench), [[das Bett]].",
+        "Tables, lamps and storage: [[der Tisch]], [[der Schreibtisch]] (desk), [[der Nachttisch]] (bedside table), [[die Tischlampe]], [[die Stehlampe]] (floor lamp), [[der Schrank]] (cupboard), [[der Kleiderschrank]] (wardrobe), [[das Regal]] (shelf), [[das Bücherregal]], [[die Kommode]] (chest of drawers).",
+        "And the rest: [[der Teppich]] (carpet), [[der Spiegel]] (mirror), [[der Vorhang]] (curtain), [[die Vase]], [[die Uhr]].",
+        "Many are compounds, and the last part gives the article: [[der Tisch]] + [[die Lampe]] = [[die Tischlampe]].",
+        "Careful: [[der Nachttisch]] (double t) is the bedside table, but [[der Nachtisch]] is dessert."
+      ],
+      "phrases": [
+        {"de": "das Sofa, die Sofas", "en": "the sofa, the sofas"},
+        {"de": "der Stuhl, die Stühle", "en": "the chair, the chairs"},
+        {"de": "das Bett, die Betten", "en": "the bed, the beds"},
+        {"de": "der Schrank, die Schränke", "en": "the cupboard, the cupboards"},
+        {"de": "das Regal, die Regale", "en": "the shelf, the shelves"},
+        {"de": "der Spiegel, die Spiegel", "en": "the mirror, the mirrors"},
+        {"de": "der Vorhang, die Vorhänge", "en": "the curtain, the curtains"},
+        {"de": "Was hast du in deinem Zimmer?", "en": "What do you have in your room?"},
+        {"de": "Ich habe ein Bett, eine Couch, zwei Stühle und einen Schreibtisch.", "en": "I have a bed, a couch, two chairs and a desk."}
+      ],
+      "extra": "About 20 furniture words, and [[der Nachttisch]] versus [[der Nachtisch]] (dessert)."
+    }},
+    {"id": "JphfVvja3Bs", "title": "Flat hunting", "minutes": 10, "notes": {
+      "points": [
+        "Flat hunting is [[die Wohnungssuche]]: [[eine Wohnung suchen]]. A shared flat is [[die Wohngemeinschaft]], short [[WG]]. Moving is [[der Umzug]]: [[Nächste Woche ziehe ich um.]]",
+        "People: [[der Vermieter]] rents the flat out ([[vermieten]]), [[der Mieter]] rents it ([[mieten]]), and [[der Makler]] is the estate agent.",
+        "Money: [[die Miete]] (rent), [[die Kaltmiete]] (rent without heating and other costs), [[die Nebenkosten]] (electricity, heating, water: [[Strom]], [[Heizung]], [[Wasser]]), [[die Kaution]] (deposit, often two months' rent).",
+        "Where to look: ads ([[die Anzeige]], [[das Inserat]]) online, in the paper, at an estate agent's, on notice boards in supermarkets or at the university, or through friends.",
+        "Ad shorthand: [[ZKB]] = [[Zimmer, Küche, Bad]], so 3 ZKB means a living room and two bedrooms. Also EG ([[Erdgeschoss]], ground floor), OG ([[Obergeschoss]], upper floor), DG ([[Dachgeschoss]], attic floor), EBK ([[Einbauküche]], fitted kitchen), NK ([[Nebenkosten]]), [[Altbau]] or [[Neubau]] (old or new building), [[frei ab]] (available from).",
+        "To view a flat: [[besichtigen]]. On the phone: [[Ist die Wohnung noch frei?]], [[Wann kann ich die Wohnung besichtigen?]]"
+      ],
+      "phrases": [
+        {"de": "Nächste Woche ziehe ich um.", "en": "I'm moving next week."},
+        {"de": "Die Miete ist ziemlich hoch.", "en": "The rent is quite high."},
+        {"de": "Zusätzlich zur Miete müssen Sie Nebenkosten zahlen.", "en": "On top of the rent, you have to pay utilities."},
+        {"de": "Wie hoch ist die Kaution?", "en": "How much is the deposit?"},
+        {"de": "Ich finde Ihre Wohnung interessant. Ist sie noch frei?", "en": "I'm interested in your flat. Is it still available?"},
+        {"de": "Wann kann ich die Wohnung besichtigen?", "en": "When can I view the flat?"},
+        {"de": "Gibt es einen Besichtigungstermin?", "en": "Is there a viewing appointment?"},
+        {"de": "Hat die Wohnung einen Balkon?", "en": "Does the flat have a balcony?"},
+        {"de": "Vielen Dank für die Auskunft.", "en": "Thank you for the information."}
+      ],
+      "extra": "The whole flat-hunting vocabulary: [[Kaution]], [[Nebenkosten]], [[Makler]], [[WG]], the shorthand in ads, and a phone call to book a viewing."
+    }}
   ],
   "words": ["wohnung", "zimmer", "kueche", "bad", "schlafzimmer", "wohnzimmer", "balkon", "haus", "miete", "hoch", "hell", "dunkel", "moebel", "schrank", "sofa", "kuehlschrank", "herd", "dusche", "bild", "vermieter", "quadratmeter"],
   "sections": [

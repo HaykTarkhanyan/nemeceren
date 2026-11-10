@@ -15,7 +15,28 @@
     { "title": "Nicos Weg A1, chapter 3: In company (Eine Pizza bitte!, Zahlen bitte!)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
   ],
   "videos": [
-    {"id": "jJiE4Rfcl9w", "title": "Ordering in a café or restaurant", "minutes": 9}
+    {"id": "jJiE4Rfcl9w", "title": "Ordering in a café or restaurant", "minutes": 9, "notes": {
+      "points": [
+        "Words: [[der Kellner]], [[die Kellnerin]] (waiter, waitress), [[der Gast]], [[die Gäste]], [[die Speisekarte]] (the menu), [[das Menü]] (a set meal), [[bestellen]] (to order).",
+        "Arriving: [[Wir möchten einen Tisch für zwei Personen.]] - [[Haben Sie reserviert?]] - [[Ja, auf den Namen Müller.]] Then: [[Bitte nehmen Sie Platz.]]",
+        "The waiter may ask in many ways: [[Was möchten Sie trinken?]], [[Was darf es sein?]], [[Was hätten Sie gern?]] Answer with [[Ich hätte gern ...]], [[Ich nehme ...]] or [[Ich möchte ...]]",
+        "During the meal: [[Noch einen Wunsch?]], [[Guten Appetit!]], [[Schmeckt es Ihnen?]]",
+        "Paying: [[Wir möchten zahlen, bitte.]] - [[Zusammen oder getrennt?]] Give a tip ([[das Trinkgeld]]) by rounding up and saying [[Stimmt so.]] (keep the change).",
+        "In a café it's faster: [[Zum Hiertrinken oder zum Mitnehmen?]] (to have here or to take away)"
+      ],
+      "phrases": [
+        {"de": "Wir möchten einen Tisch für zwei Personen.", "en": "We'd like a table for two."},
+        {"de": "Nein, wir haben nicht reserviert.", "en": "No, we haven't booked."},
+        {"de": "Bitte nehmen Sie Platz. Hier ist die Speisekarte.", "en": "Please take a seat. Here is the menu."},
+        {"de": "Was hätten Sie gern zum Trinken?", "en": "What would you like to drink?"},
+        {"de": "Ich nehme einen Hamburger.", "en": "I'll have a hamburger."},
+        {"de": "Schmeckt es Ihnen?", "en": "Are you enjoying your meal?"},
+        {"de": "Das macht zusammen 55 Euro.", "en": "That's 55 euros altogether."},
+        {"de": "Stimmt so.", "en": "Keep the change."},
+        {"de": "Einen großen Cappuccino, bitte. Zum Mitnehmen.", "en": "A large cappuccino, please. To take away."}
+      ],
+      "extra": "[[Stimmt so.]] for the tip, and [[zum Mitnehmen]] in a café."
+    }}
   ],
   "words": ["restaurant", "speisekarte", "rechnung", "bestellen", "zahlen", "empfehlen", "zusammen-oder-getrennt", "stimmt-so", "guten-appetit", "prost", "platz", "scharf"],
   "tests": ["u4-t3-restaurant"],

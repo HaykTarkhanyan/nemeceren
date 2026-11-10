@@ -1,5 +1,5 @@
 {
-  "ignore": ["Hayk", "Charlotte", "Eva", "Meier", "Müller", "Schmidt", "Thomas", "Weber", "Aram", "Tarkhanyan", "Goethestraße", "Siemens", "Berlin", "Marienplatz", "Moosach", "Berger", "Hoffmann", "Lindner", "Krause", "Sabine", "Peter", "Becker", "Schulz", "Wagner", "Petrowa", "Mila", "Max", "Katrin", "Lena", "Rosenstraße"],
+  "ignore": ["Hayk", "Charlotte", "Eva", "Meier", "Müller", "Schmidt", "Thomas", "Weber", "Aram", "Tarkhanyan", "Goethestraße", "Siemens", "Berlin", "Marienplatz", "Moosach", "Berger", "Hoffmann", "Lindner", "Krause", "Sabine", "Peter", "Becker", "Schulz", "Wagner", "Petrowa", "Mila", "Max", "Katrin", "Lena", "Rosenstraße", "New", "York"],
   "entries": {
     "Verkehr": [
       {"lemma": "Verkehr", "pos": "noun", "article": "der", "level": "A2", "gloss": ["traffic"]}
@@ -1574,6 +1574,249 @@
     ],
     "weiter": [
       {"lemma": "weiter", "pos": "adverb", "gloss": ["further, on"], "note": "Ich weiß nicht mehr weiter. = I don't know what to do any more (weiterwissen)."}
+    ],
+    "Joghurt": [
+      {"lemma": "Joghurt", "pos": "noun", "article": "der", "plural": "Joghurts", "gloss": ["yoghurt"], "note": "Also das Joghurt, especially in Austria."}
+    ],
+    "USA": [
+      {"lemma": "USA", "pos": "name", "gloss": ["the USA"], "note": "Plural with the article: die USA, in den USA, aus den USA."}
+    ],
+    "Studienfach": [
+      {"lemma": "Studienfach", "pos": "noun", "article": "das", "plural": "Studienfächer", "gloss": ["subject (at university)"]}
+    ],
+    "Studienfächer": [
+      {"lemma": "Studienfach", "pos": "noun", "article": "das", "plural": "Studienfächer", "form": "plural", "gloss": ["subjects (at university)"]}
+    ],
+    "Anmeldeformular": [
+      {"lemma": "Anmeldeformular", "pos": "noun", "article": "das", "plural": "Anmeldeformulare", "gloss": ["registration form"]}
+    ],
+    "Kursbeginn": [
+      {"lemma": "Kursbeginn", "pos": "noun", "article": "der", "gloss": ["start of the course"]}
+    ],
+    "Nein-Fragen": [
+      {"lemma": "Ja/Nein-Frage", "pos": "noun", "article": "die", "plural": "Ja/Nein-Fragen", "form": "plural", "gloss": ["yes/no questions"]}
+    ],
+    "E-Mail-Konto": [
+      {"lemma": "E-Mail-Konto", "pos": "noun", "article": "das", "plural": "E-Mail-Konten", "gloss": ["email account"]}
+    ],
+    "babyrosa": [
+      {"lemma": "babyrosa", "pos": "adjective", "gloss": ["baby pink"]}
+    ],
+    "Sitzbank": [
+      {"lemma": "Sitzbank", "pos": "noun", "article": "die", "plural": "Sitzbänke", "gloss": ["bench (to sit on)"]}
+    ],
+    "Tischlampe": [
+      {"lemma": "Tischlampe", "pos": "noun", "article": "die", "plural": "Tischlampen", "gloss": ["table lamp, desk lamp"]}
+    ],
+    "WG": [
+      {"lemma": "WG", "pos": "noun", "article": "die", "plural": "WGs", "gloss": ["shared flat"], "note": "Short for Wohngemeinschaft."}
+    ],
+    "ZKB": [
+      {"lemma": "ZKB", "pos": "other", "gloss": ["rooms, kitchen, bathroom (in flat ads)"], "note": "Short for Zimmer, Küche, Bad: 3 ZKB = three rooms plus kitchen and bathroom."}
+    ],
+    "Besichtigungstermin": [
+      {"lemma": "Besichtigungstermin", "pos": "noun", "article": "der", "plural": "Besichtigungstermine", "gloss": ["viewing appointment"]}
+    ],
+    "Ordinalzahlen": [
+      {"lemma": "Ordinalzahl", "pos": "noun", "article": "die", "plural": "Ordinalzahlen", "form": "plural", "gloss": ["ordinal numbers (first, second ...)"]}
+    ],
+    "läufst": [
+      {"lemma": "laufen", "pos": "verb", "form": "du form, present", "level": "A1", "gloss": ["to run", "to walk"]}
+    ],
+    "läuft": [
+      {"lemma": "laufen", "pos": "verb", "form": "er/sie/es form, present", "level": "A1", "gloss": ["to run", "to walk"], "note": "Also: Was läuft im Kino? = What's on at the cinema?"}
+    ],
+    "Croissant": [
+      {"lemma": "Croissant", "pos": "noun", "article": "das", "plural": "Croissants", "gloss": ["croissant"]}
+    ],
+    "Tiefkühlprodukte": [
+      {"lemma": "Tiefkühlprodukt", "pos": "noun", "article": "das", "plural": "Tiefkühlprodukte", "form": "plural", "gloss": ["frozen foods"]}
+    ],
+    "sechshundertvierunddreißig": [
+      {"lemma": "sechshundertvierunddreißig", "pos": "numeral", "gloss": ["634"]}
+    ],
+    "elftausend": [
+      {"lemma": "elftausend", "pos": "numeral", "gloss": ["11,000"]}
+    ],
+    "neunzehnhundertfünfundneunzig": [
+      {"lemma": "neunzehnhundertfünfundneunzig", "pos": "numeral", "gloss": ["1995 (as a year)"]}
+    ],
+    "zweitausendsiebzehn": [
+      {"lemma": "zweitausendsiebzehn", "pos": "numeral", "gloss": ["2017"]}
+    ],
+    "neunzehnhundertneunzig": [
+      {"lemma": "neunzehnhundertneunzig", "pos": "numeral", "gloss": ["1990 (as a year)"]}
+    ],
+    "neunzehnhundert": [
+      {"lemma": "neunzehnhundert", "pos": "numeral", "gloss": ["nineteen hundred (in years)"]}
+    ],
+    "hundertelf": [
+      {"lemma": "hundertelf", "pos": "numeral", "gloss": ["111"]}
+    ],
+    "eintausendeinhundertelf": [
+      {"lemma": "eintausendeinhundertelf", "pos": "numeral", "gloss": ["1,111"]}
+    ],
+    "dreitausendvierhundertfünfzehn": [
+      {"lemma": "dreitausendvierhundertfünfzehn", "pos": "numeral", "gloss": ["3,415"]}
+    ],
+    "Skifahren": [
+      {"lemma": "Skifahren", "pos": "noun", "article": "das", "gloss": ["skiing"], "note": "Ski is said 'shee'."}
+    ],
+    "Hiertrinken": [
+      {"lemma": "Hiertrinken", "pos": "noun", "article": "das", "gloss": ["drinking it here (in a café)"], "note": "Zum Hiertrinken oder zum Mitnehmen? = To have here or to take away?"}
+    ],
+    "LKW": [
+      {"lemma": "LKW", "pos": "noun", "article": "der", "plural": "LKWs", "gloss": ["lorry, truck"], "note": "Short for Lastkraftwagen."}
+    ],
+    "Feuerwehrauto": [
+      {"lemma": "Feuerwehrauto", "pos": "noun", "article": "das", "plural": "Feuerwehrautos", "gloss": ["fire engine"]}
+    ],
+    "Wohnwägen": [
+      {"lemma": "Wohnwagen", "pos": "noun", "article": "der", "plural": "Wohnwagen", "form": "plural (Austria, Bavaria)", "gloss": ["caravans"], "note": "Standard plural: die Wohnwagen."}
+    ],
+    "Krankenwägen": [
+      {"lemma": "Krankenwagen", "pos": "noun", "article": "der", "plural": "Krankenwagen", "form": "plural (Austria, Bavaria)", "gloss": ["ambulances"], "note": "Standard plural: die Krankenwagen."}
+    ],
+    "IC": [
+      {"lemma": "IC", "pos": "noun", "article": "der", "plural": "ICs", "gloss": ["InterCity train"], "note": "Short for Intercity, a long-distance train."}
+    ],
+    "Sparangebot": [
+      {"lemma": "Sparangebot", "pos": "noun", "article": "das", "plural": "Sparangebote", "gloss": ["saver offer, cheap fare"]}
+    ],
+    "Sitzplatzreservierung": [
+      {"lemma": "Sitzplatzreservierung", "pos": "noun", "article": "die", "plural": "Sitzplatzreservierungen", "gloss": ["seat reservation"]}
+    ],
+    "Taxistand": [
+      {"lemma": "Taxistand", "pos": "noun", "article": "der", "plural": "Taxistände", "gloss": ["taxi rank"]}
+    ],
+    "Ellenbogen": [
+      {"lemma": "Ellenbogen", "pos": "noun", "article": "der", "plural": "Ellenbogen", "gloss": ["elbow"]}
+    ],
+    "Fußgelenk": [
+      {"lemma": "Fußgelenk", "pos": "noun", "article": "das", "plural": "Fußgelenke", "gloss": ["ankle"]}
+    ],
+    "Versichertenkarte": [
+      {"lemma": "Versichertenkarte", "pos": "noun", "article": "die", "plural": "Versichertenkarten", "gloss": ["health insurance card"], "note": "Also called die Gesundheitskarte."}
+    ],
+    "Postfiliale": [
+      {"lemma": "Postfiliale", "pos": "noun", "article": "die", "plural": "Postfilialen", "gloss": ["post office (branch)"]}
+    ],
+    "rangehen": [
+      {"lemma": "rangehen", "pos": "verb", "gloss": ["to answer (the phone)"], "note": "Spoken, separable: Willst du rangehen? = Do you want to get it?"}
+    ],
+    "Damenabteilung": [
+      {"lemma": "Damenabteilung", "pos": "noun", "article": "die", "plural": "Damenabteilungen", "gloss": ["women's department (in a store)"]}
+    ],
+    "Herrenabteilung": [
+      {"lemma": "Herrenabteilung", "pos": "noun", "article": "die", "plural": "Herrenabteilungen", "gloss": ["men's department (in a store)"]}
+    ],
+    "Kinderabteilung": [
+      {"lemma": "Kinderabteilung", "pos": "noun", "article": "die", "plural": "Kinderabteilungen", "gloss": ["children's department (in a store)"]}
+    ],
+    "Vollpension": [
+      {"lemma": "Vollpension", "pos": "noun", "article": "die", "gloss": ["full board (all meals)"]}
+    ],
+    "Extrabett": [
+      {"lemma": "Extrabett", "pos": "noun", "article": "das", "plural": "Extrabetten", "gloss": ["extra bed"]}
+    ],
+    "vierundzwanzigsten": [
+      {"lemma": "vierundzwanzigste", "pos": "numeral", "form": "after am, dem, den", "gloss": ["twenty-fourth"], "note": "am vierundzwanzigsten Dezember = on the 24th of December"}
+    ],
+    "Kuli": [
+      {"lemma": "Kuli", "pos": "noun", "article": "der", "plural": "Kulis", "gloss": ["ballpoint pen"], "note": "Short for Kugelschreiber."}
+    ],
+    "Eis": [
+      {"lemma": "Eis", "pos": "noun", "article": "das", "gloss": ["ice cream", "ice"]}
+    ],
+    "Gefallen": [
+      {"lemma": "Gefallen", "pos": "noun", "article": "der", "gloss": ["favour"], "note": "Kannst du mir einen Gefallen tun? = Can you do me a favour?"}
+    ],
+    "Japanerin": [
+      {"lemma": "Japanerin", "pos": "noun", "article": "die", "plural": "Japanerinnen", "gloss": ["Japanese woman"]}
+    ],
+    "Briefträgerin": [
+      {"lemma": "Briefträgerin", "pos": "noun", "article": "die", "plural": "Briefträgerinnen", "gloss": ["postwoman"]}
+    ],
+    "Managerin": [
+      {"lemma": "Managerin", "pos": "noun", "article": "die", "plural": "Managerinnen", "gloss": ["manager (a woman)"]}
+    ],
+    "Tänzer": [
+      {"lemma": "Tänzer", "pos": "noun", "article": "der", "plural": "Tänzer", "gloss": ["dancer"]}
+    ],
+    "Golf": [
+      {"lemma": "Golf", "pos": "noun", "article": "das", "gloss": ["golf (the sport)"], "note": "der Golf = gulf"}
+    ],
+    "Gang": [
+      {"lemma": "Gang", "pos": "noun", "article": "der", "plural": "Gänge", "gloss": ["aisle, corridor", "gear", "course (of a meal)"]}
+    ],
+    "Gras": [
+      {"lemma": "Gras", "pos": "noun", "article": "das", "plural": "Gräser", "gloss": ["grass"]}
+    ],
+    "Griechisch": [
+      {"lemma": "Griechisch", "pos": "noun", "article": "das", "gloss": ["Greek (the language)"]}
+    ],
+    "Spanisch": [
+      {"lemma": "Spanisch", "pos": "noun", "article": "das", "gloss": ["Spanish (the language)"]}
+    ],
+    "Polen": [
+      {"lemma": "Polen", "pos": "name", "gloss": ["Poland"], "note": "die Polen also means the Poles (the people)."}
+    ],
+    "Melone": [
+      {"lemma": "Melone", "pos": "noun", "article": "die", "plural": "Melonen", "gloss": ["melon"]}
+    ],
+    "Pflaume": [
+      {"lemma": "Pflaume", "pos": "noun", "article": "die", "plural": "Pflaumen", "gloss": ["plum"]}
+    ],
+    "Zwetschge": [
+      {"lemma": "Zwetschge", "pos": "noun", "article": "die", "plural": "Zwetschgen", "gloss": ["plum (southern Germany, Austria)"]}
+    ],
+    "Brokkoli": [
+      {"lemma": "Brokkoli", "pos": "noun", "article": "der", "gloss": ["broccoli"]}
+    ],
+    "Mais": [
+      {"lemma": "Mais", "pos": "noun", "article": "der", "gloss": ["corn, maize"]}
+    ],
+    "Tüte": [
+      {"lemma": "Tüte", "pos": "noun", "article": "die", "plural": "Tüten", "gloss": ["bag (paper or plastic)"]}
+    ],
+    "gekochte": [
+      {"lemma": "gekocht", "pos": "adjective", "form": "with an ending", "gloss": ["boiled, cooked"], "note": "das gekochte Ei = the boiled egg"}
+    ],
+    "Leergut": [
+      {"lemma": "Leergut", "pos": "noun", "article": "das", "gloss": ["empty bottles (returned for the deposit)"]}
+    ],
+    "Badelatschen": [
+      {"lemma": "Badelatsche", "pos": "noun", "article": "die", "plural": "Badelatschen", "form": "plural", "gloss": ["pool sliders, flip-flops"]}
+    ],
+    "Umkleidekabine": [
+      {"lemma": "Umkleidekabine", "pos": "noun", "article": "die", "plural": "Umkleidekabinen", "gloss": ["fitting room, changing room"]}
+    ],
+    "Türchen": [
+      {"lemma": "Türchen", "pos": "noun", "article": "das", "plural": "Türchen", "gloss": ["little door (in an Advent calendar)"]}
+    ],
+    "ziemlich": [
+      {"lemma": "ziemlich", "pos": "adverb", "gloss": ["quite, rather, fairly"], "note": "Die Miete ist ziemlich hoch. = The rent is quite high."}
+    ],
+    "Schale": [
+      {"lemma": "Schale", "pos": "noun", "article": "die", "plural": "Schalen", "gloss": ["bowl; punnet", "peel, skin"]}
+    ],
+    "Tafel": [
+      {"lemma": "Tafel", "pos": "noun", "article": "die", "plural": "Tafeln", "gloss": ["bar (of chocolate)", "board, blackboard"]}
+    ],
+    "Hinfahrt": [
+      {"lemma": "Hinfahrt", "pos": "noun", "article": "die", "plural": "Hinfahrten", "gloss": ["outward journey"], "note": "Nur Hinfahrt = one way only"}
+    ],
+    "Lebkuchen": [
+      {"lemma": "Lebkuchen", "pos": "noun", "article": "der", "plural": "Lebkuchen", "gloss": ["gingerbread"]}
+    ],
+    "Abends": [
+      {"lemma": "abends", "pos": "adverb", "level": "A1", "gloss": ["in the evening(s)"]}
+    ],
+    "Mitnehmen": [
+      {"lemma": "Mitnehmen", "pos": "noun", "article": "das", "gloss": ["taking away"], "note": "zum Mitnehmen = to take away"}
+    ],
+    "Arbeitsunfähigkeitsbescheinigung": [
+      {"lemma": "Arbeitsunfähigkeitsbescheinigung", "pos": "noun", "article": "die", "gloss": ["doctor's sick note (for your employer)"], "note": "Often just called die AU or die Krankschreibung."}
     ]
   }
 }

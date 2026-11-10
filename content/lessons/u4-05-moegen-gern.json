@@ -14,9 +14,58 @@
     { "title": "Nicos Weg A1, chapter 11: Eating and leisure (Ich mag (nicht)!, Was macht dir Spaß?)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
   ],
   "videos": [
-    {"id": "Tu3DLeS5kAE", "title": "mögen", "minutes": 5},
-    {"id": "dVb_VwVYehs", "title": "Hobbies", "minutes": 6},
-    {"id": "YYG-JyberyU", "title": "Sports", "minutes": 6}
+    {"id": "Tu3DLeS5kAE", "title": "mögen", "minutes": 5, "notes": {
+      "points": [
+        "[[mögen]] (to like) can work like a modal verb: conjugated second (first in a yes/no question), the other verb at the end: [[Was magst du essen?]]",
+        "Usually it stands alone with a thing: [[Ich mag Pizza.]]",
+        "With an activity you'll hear [[Ich mag tanzen.]], but [[Ich tanze gern.]] is more common.",
+        "Conjugation: [[ich mag]], [[du magst]], [[er mag]], [[wir mögen]], [[ihr mögt]], [[sie mögen]]. The ich form changes its vowel; er/sie/es is the same as ich."
+      ],
+      "phrases": [
+        {"de": "Ich mag Pizza.", "en": "I like pizza."},
+        {"de": "Was magst du essen?", "en": "What do you like to eat?"},
+        {"de": "Magst du Schokolade?", "en": "Do you like chocolate?"},
+        {"de": "Sabine mag Musik.", "en": "Sabine likes music."},
+        {"de": "Wir mögen Tiere.", "en": "We like animals."},
+        {"de": "Ich mag tanzen.", "en": "I like dancing."}
+      ]
+    }},
+    {"id": "dVb_VwVYehs", "title": "Hobbies", "minutes": 6, "notes": {
+      "points": [
+        "Hobbies at home: [[fernsehen]], [[lesen]], [[kochen]], [[malen]] (paint), [[basteln]] (do crafts), [[Musik hören]], [[am Computer spielen]], [[Karten spielen]].",
+        "Going out: [[essen gehen]], [[ins Kino gehen]], [[ins Fitnessstudio gehen]] (go to the gym), [[einkaufen]], [[tanzen]].",
+        "Outdoors: [[laufen]] (run), [[wandern]] (hike), [[Ski fahren]]. Ski is said 'shee'.",
+        "As a hobby the verb becomes a noun with a capital letter: [[Mein Hobby ist Kochen.]], [[Meine Hobbys sind Lesen und Musik hören.]]"
+      ],
+      "phrases": [
+        {"de": "Mein Hobby ist Kochen.", "en": "My hobby is cooking."},
+        {"de": "Meine Hobbys sind Lesen und Musik hören.", "en": "My hobbies are reading and listening to music."},
+        {"de": "essen gehen", "en": "to go out to eat"},
+        {"de": "ins Fitnessstudio gehen", "en": "to go to the gym"},
+        {"de": "wandern", "en": "to hike"},
+        {"de": "basteln", "en": "to do crafts"},
+        {"de": "Ski fahren", "en": "to ski"}
+      ]
+    }},
+    {"id": "YYG-JyberyU", "title": "Sports", "minutes": 6, "notes": {
+      "points": [
+        "[[der Sport]] is sport; a kind of sport is [[die Sportart]].",
+        "Ball games: [[Fußball]] (ß sounds like ss), [[Basketball]], [[Tennis]], [[Tischtennis]] (table tennis), [[Golf]], American Football.",
+        "Others: [[Schwimmen]] (sch sounds like sh), [[Radfahren]] (cycling), [[Boxen]], [[Gymnastik]], [[Surfen]], [[Eiskunstlauf]] (figure skating), [[Autorennen]] (motor racing), [[Yoga]].",
+        "Winter: [[Skifahren]], said 'shee'.",
+        "Long words are easier in parts: Tisch-tennis, Eis-kunst-lauf.",
+        "Your favourite: [[Mein Lieblingssport ist Fußball.]]"
+      ],
+      "phrases": [
+        {"de": "der Sport", "en": "sport"},
+        {"de": "Schwimmen", "en": "swimming"},
+        {"de": "Radfahren", "en": "cycling"},
+        {"de": "Tischtennis", "en": "table tennis"},
+        {"de": "Skifahren", "en": "skiing"},
+        {"de": "Mein Lieblingssport ist Fußball.", "en": "My favourite sport is football."},
+        {"de": "Mein Lieblingssport ist Schwimmen.", "en": "My favourite sport is swimming."}
+      ]
+    }}
   ],
   "words": ["moegen", "lieber", "am-liebsten", "schmecken", "hobby", "freizeit", "sport", "fussball", "schwimmen", "tanzen", "reisen", "wandern", "musik", "hoeren", "oft", "immer", "nie", "manchmal"],
   "tests": ["u4-t2-essen-freizeit"],

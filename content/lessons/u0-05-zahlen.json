@@ -12,8 +12,45 @@
   ],
   "nicosWeg": [{ "title": "Nicos Weg A1, chapter 2: Contact details (Zahlen von 1 bis 100)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }],
   "videos": [
-    {"id": "d54ioeKA-jc", "title": "Numbers 0-20", "minutes": 10},
-    {"id": "IaerX0Y6wmE", "title": "Numbers 21-100", "minutes": 11}
+    {"id": "d54ioeKA-jc", "title": "Numbers 0-20", "minutes": 10, "notes": {
+      "points": [
+        "[[die Zahl]] means number; the plural is [[die Zahlen]].",
+        "Sound tips from the numbers: **z** is ts ([[zwei]], [[zehn]]), **v** is f ([[vier]]), **eu** is oi ([[neun]]), **s** before a vowel is a buzzing z ([[sechs]], [[sieben]]), and **s** at the end is a hissing s ([[eins]]).",
+        "13 to 19 are the number plus [[zehn]]: [[dreizehn]], [[vierzehn]]. Two get shorter: [[sechzehn]] (sechs loses its s) and [[siebzehn]] (sieben loses -en).",
+        "In [[zwanzig]], the ending -ig sounds like 'ich'. In the south, Munich included, you'll often hear a hard -ik.",
+        "Asking for a mobile number: [[Wie ist Ihre Handynummer?]] (polite) or [[Wie ist deine Handynummer?]]. The answer is read digit by digit."
+      ],
+      "phrases": [
+        {"de": "die Zahl, die Zahlen", "en": "the number, the numbers"},
+        {"de": "zwölf", "en": "twelve"},
+        {"de": "dreizehn, vierzehn, fünfzehn", "en": "thirteen, fourteen, fifteen"},
+        {"de": "sechzehn", "en": "sixteen"},
+        {"de": "siebzehn", "en": "seventeen"},
+        {"de": "zwanzig", "en": "twenty"},
+        {"de": "Wie ist deine Handynummer?", "en": "What's your mobile number? (informal)"},
+        {"de": "Meine Handynummer ist null, eins, sieben, sechs ...", "en": "My mobile number is 0176 ..."}
+      ]
+    }},
+    {"id": "IaerX0Y6wmE", "title": "Numbers 21-100", "minutes": 11, "notes": {
+      "points": [
+        "From 21 on, German says the ones first, then the tens, joined with [[und]], in one word: [[einundzwanzig]] (eins loses its s), [[zweiundzwanzig]], [[dreiundzwanzig]].",
+        "The tens end in -zig: [[vierzig]], [[fünfzig]], [[achtzig]], [[neunzig]]. Odd ones out: [[dreißig]] ends in -ßig, and [[sechzig]] and [[siebzig]] get shorter, like 16 and 17.",
+        "100 is [[hundert]] or [[einhundert]].",
+        "Reading tip: say the right-hand digit first. 45 is [[fünfundvierzig]], 87 is [[siebenundachtzig]], 99 is [[neunundneunzig]].",
+        "Age: [[Wie alt sind Sie?]] (polite) or [[Wie alt bist du?]] The answer: [[Ich bin fünfundzwanzig Jahre alt.]] The video warns that asking an adult's age is a bit rude in Germany."
+      ],
+      "phrases": [
+        {"de": "einundzwanzig", "en": "21"},
+        {"de": "dreißig", "en": "30"},
+        {"de": "sechzig, siebzig", "en": "60, 70"},
+        {"de": "fünfundvierzig", "en": "45"},
+        {"de": "siebenundachtzig", "en": "87"},
+        {"de": "hundert", "en": "100"},
+        {"de": "Wie alt bist du?", "en": "How old are you? (informal)"},
+        {"de": "Ich bin fünfundzwanzig Jahre alt.", "en": "I'm 25 years old."}
+      ],
+      "extra": "Saying your age, which comes back in Unit 1, lesson 3."
+    }}
   ],
   "words": ["null", "eins", "zwei", "drei", "vier", "fuenf", "sechs", "sieben", "acht", "neun", "zehn", "elf", "zwoelf", "dreizehn", "sechzehn", "siebzehn", "zwanzig", "einundzwanzig", "dreissig", "vierzig", "fuenfzig", "sechzig", "siebzig", "achtzig", "neunzig", "hundert"],
   "tests": ["u0-t3-zahlen"],

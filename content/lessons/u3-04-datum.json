@@ -15,9 +15,62 @@
     { "title": "Nicos Weg A1, chapter 8: Appointments (Hast du morgen Zeit?)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
   ],
   "videos": [
-    {"id": "c22lkyqCllE", "title": "Months", "minutes": 5},
-    {"id": "l_KjteqzRqE", "title": "Ordinal numbers", "minutes": 12},
-    {"id": "hwtEl1tJFA0", "title": "Seasons", "minutes": 4}
+    {"id": "c22lkyqCllE", "title": "Months", "minutes": 5, "notes": {
+      "points": [
+        "[[der Monat]], plural [[die Monate]]. All months are der.",
+        "Most are spelled as in English but sound German: [[Januar]] starts with a y sound, [[April]] with 'ah', [[August]] with 'ow', and [[Juni]] and [[Juli]] start with 'yoo'.",
+        "[[März]] has an ä, so it sounds like 'mairts'.",
+        "In a month: [[im Januar]], [[im Mai]].",
+        "Your birthday month: [[Ich habe im Januar Geburtstag.]]"
+      ],
+      "phrases": [
+        {"de": "der Monat, die Monate", "en": "the month, the months"},
+        {"de": "Januar, Februar, März", "en": "January, February, March"},
+        {"de": "April, Mai, Juni", "en": "April, May, June"},
+        {"de": "Juli, August, September", "en": "July, August, September"},
+        {"de": "Oktober, November, Dezember", "en": "October, November, December"},
+        {"de": "Ich habe im Januar Geburtstag.", "en": "My birthday is in January."}
+      ]
+    }},
+    {"id": "l_KjteqzRqE", "title": "Ordinal numbers", "minutes": 12, "notes": {
+      "points": [
+        "Ordinal numbers ([[die Ordinalzahlen]]) are first, second, third. Written in figures they get a dot: 1. = [[erste]].",
+        "Up to 19, add -te: [[vierte]], [[fünfte]], [[zehnte]], [[neunzehnte]]. Exceptions: [[erste]], [[dritte]], [[siebte]] (not siebente), and [[achte]] gets only -e.",
+        "From 20, add -ste: [[zwanzigste]], [[einundzwanzigste]], [[dreißigste]], [[hundertste]], [[tausendste]].",
+        "They take the article of the noun: [[der erste Juli]], [[das erste Kind]], [[die erste Liebe]].",
+        "With dates after [[am]], the ending is -ten or -sten: [[am ersten April]], [[am zwanzigsten Mai]].",
+        "Uses: today's date, birthdays, and order: [[Das dritte Haus von links ist mein Haus.]]"
+      ],
+      "phrases": [
+        {"de": "der erste, der zweite, der dritte", "en": "the first, the second, the third"},
+        {"de": "der siebte, der achte", "en": "the seventh, the eighth"},
+        {"de": "der zwanzigste", "en": "the twentieth"},
+        {"de": "Heute ist der sechste April.", "en": "Today is the sixth of April."},
+        {"de": "Sie kommt am sechsten April.", "en": "She's coming on the sixth of April."},
+        {"de": "Ich habe am sechsten April Geburtstag.", "en": "My birthday is on the sixth of April."},
+        {"de": "die erste Liebe", "en": "first love"},
+        {"de": "Das dritte Haus von links ist mein Haus.", "en": "The third house from the left is mine."}
+      ]
+    }},
+    {"id": "hwtEl1tJFA0", "title": "Seasons", "minutes": 4, "notes": {
+      "points": [
+        "[[die Jahreszeit]], plural [[die Jahreszeiten]]: [[Ein Jahr hat vier Jahreszeiten.]]",
+        "[[der Frühling]] (spring), [[der Sommer]], [[der Herbst]] (autumn), [[der Winter]]. All are der.",
+        "In a season: [[im Frühling]], [[im Sommer]], [[im Herbst]], [[im Winter]].",
+        "Each season in a sentence: [[Im Frühling ist es warm.]], [[Im Sommer ist es heiß.]], [[Im Herbst ist es kühl.]], [[Im Winter ist es kalt.]]",
+        "Your favourite: [[Welche Jahreszeit magst du?]] - [[Ich mag den Winter.]] (der Winter becomes den Winter after mögen)"
+      ],
+      "phrases": [
+        {"de": "Ein Jahr hat vier Jahreszeiten.", "en": "A year has four seasons."},
+        {"de": "Im Frühling ist es warm. Die Blumen blühen.", "en": "In spring it's warm. The flowers are blooming."},
+        {"de": "Im Sommer ist es heiß. Alles ist grün.", "en": "In summer it's hot. Everything is green."},
+        {"de": "Im Herbst ist es kühl. Es regnet oft.", "en": "In autumn it's cool. It often rains."},
+        {"de": "Im Winter ist es kalt. Es gibt Schnee.", "en": "In winter it's cold. There's snow."},
+        {"de": "Welche Jahreszeit magst du?", "en": "Which season do you like?"},
+        {"de": "Ich mag den Winter.", "en": "I like winter."}
+      ],
+      "extra": "A sentence on the weather in each season: [[Es regnet oft.]], [[Es gibt Schnee.]]"
+    }}
   ],
   "words": ["januar", "februar", "maerz", "april", "mai", "juni", "juli", "august", "september", "oktober", "november", "dezember", "monat", "datum", "geburtstag", "erste", "dritte", "fruehling", "sommer", "herbst", "winter", "geboren", "feiertag", "alles-gute-zum-geburtstag"],
   "tests": ["u3-t2-tagesablauf-datum"],

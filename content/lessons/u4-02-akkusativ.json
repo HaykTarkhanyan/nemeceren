@@ -14,10 +14,84 @@
     { "title": "Nicos Weg A1, chapter 11: Eating and leisure (Lebensmittel)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
   ],
   "videos": [
-    {"id": "p4whuXE_f94", "title": "The accusative", "minutes": 13},
-    {"id": "0V8IyLsLrNk", "title": "The accusative (grammar)", "minutes": 11},
-    {"id": "6w-HrxZcIBU", "title": "Possessives in the accusative", "minutes": 9},
-    {"id": "fowbbnb3MjQ", "title": "25 verbs with an accusative object", "minutes": 11}
+    {"id": "p4whuXE_f94", "title": "The accusative", "minutes": 13, "notes": {
+      "points": [
+        "A sentence has a subject (nominative). Many also have an object: the person or thing the action is done to. That object is in the accusative.",
+        "Ask [[Wen?]] (whom) for a person and [[Was?]] (what) for a thing: [[Wen liebt Lena?]] - [[Lena liebt einen Mann.]]",
+        "Only masculine articles change: [[der]] becomes [[den]], [[ein]] becomes [[einen]], [[kein]] becomes [[keinen]].",
+        "Feminine, neuter and plural stay as they are: [[die]], [[das]], [[eine]], [[ein]], [[keine]].",
+        "The object can also come first, and the verb stays second: [[Den Apfel esse ich.]]",
+        "Compare: [[Das ist ein Apfel.]] (subject, nominative) but [[Ich esse einen Apfel.]] (object, accusative)."
+      ],
+      "phrases": [
+        {"de": "Ich esse einen Apfel.", "en": "I'm eating an apple."},
+        {"de": "Wir haben ein Baby.", "en": "We have a baby."},
+        {"de": "Ich frage den Lehrer.", "en": "I'm asking the teacher."},
+        {"de": "Ich kaufe das Kleid. Das Kleid ist elegant.", "en": "I'm buying the dress. The dress is elegant."},
+        {"de": "Ich kaufe die Schuhe.", "en": "I'm buying the shoes."},
+        {"de": "Hast du einen Bruder? Nein, ich habe keinen Bruder.", "en": "Do you have a brother? No, I don't have a brother."},
+        {"de": "Den Apfel esse ich.", "en": "The apple, I'll eat."}
+      ]
+    }},
+    {"id": "0V8IyLsLrNk", "title": "The accusative (grammar)", "minutes": 11, "notes": {
+      "points": [
+        "The accusative is used in four places. First, the direct object: [[Ich esse einen Apfel.]], [[Ich liebe meine Familie.]]",
+        "Second, after the accusative prepositions [[bis]], [[durch]], [[für]], [[gegen]], [[ohne]], [[um]] and [[entlang]]: [[Ich kaufe eine Tasche für meinen Bruder.]]",
+        "Third, in time phrases without a preposition: [[jeden Tag]], [[jeden Abend]], [[jede Woche]], [[letzten Sommer]], [[den ganzen Abend]].",
+        "Fourth, after most verbs: [[haben]], [[möchten]], [[nehmen]], [[sehen]], [[bestellen]], [[trinken]], [[essen]].",
+        "Only masculine changes: [[den]], [[einen]], [[keinen]], and the possessives [[meinen]], [[deinen]], [[seinen]], [[ihren]], [[unseren]], [[euren]], [[Ihren]].",
+        "Personal pronouns change too: [[mich]], [[dich]], [[ihn]], [[uns]], [[euch]]."
+      ],
+      "phrases": [
+        {"de": "Ich liebe meine Familie.", "en": "I love my family."},
+        {"de": "Ich kaufe eine Tasche für meinen Bruder.", "en": "I'm buying a bag for my brother."},
+        {"de": "Ich trinke jeden Tag einen Kaffee.", "en": "I drink a coffee every day."},
+        {"de": "Letzten Sommer war ich in Italien.", "en": "Last summer I was in Italy."},
+        {"de": "Ich möchte einen Kaffee.", "en": "I'd like a coffee."},
+        {"de": "Ich habe einen Hund.", "en": "I have a dog."},
+        {"de": "Ich nehme eine Pizza.", "en": "I'll have a pizza."}
+      ],
+      "extra": "Time phrases in the accusative ([[jeden Tag]], [[letzten Sommer]]) and the accusative prepositions."
+    }},
+    {"id": "6w-HrxZcIBU", "title": "Possessives in the accusative", "minutes": 9, "notes": {
+      "points": [
+        "Possessives in the accusative follow [[ein]]: only masculine nouns change, and they add -en: [[Ich liebe meinen Mann.]]",
+        "Neuter, feminine and plural stay as they were: [[mein Auto]], [[meine Katze]], [[meine Kinder]].",
+        "The masculine forms: [[meinen]], [[deinen]], [[seinen]], [[ihren]], [[unseren]], [[euren]], [[Ihren]].",
+        "[[euer]] loses an e: [[euren]], not 'eueren'.",
+        "Check with the noun's article: [[der Freund]] gives [[ihren Freund]], but [[die Eltern]] gives [[seine Eltern]]."
+      ],
+      "phrases": [
+        {"de": "Ich liebe meinen Mann.", "en": "I love my husband."},
+        {"de": "Ich liebe mein Auto.", "en": "I love my car."},
+        {"de": "Er besucht seine Schwester.", "en": "He's visiting his sister."},
+        {"de": "Sie sucht ihren Freund.", "en": "She's looking for her boyfriend."},
+        {"de": "Max liebt seine Eltern.", "en": "Max loves his parents."},
+        {"de": "Wir besuchen unseren Opa.", "en": "We're visiting our grandpa."},
+        {"de": "Habt ihr euren Hund dabei?", "en": "Do you have your dog with you?"}
+      ]
+    }},
+    {"id": "fowbbnb3MjQ", "title": "25 verbs with an accusative object", "minutes": 11, "notes": {
+      "points": [
+        "Many verbs only make sense with an object in the accusative (transitive verbs): [[Lena trinkt einen Apfelsaft.]] Ask [[Was?]] for a thing and [[Wen?]] for a person.",
+        "Verbs from the video: [[trinken]], [[besuchen]], [[vergessen]], [[beantworten]], [[lieben]], [[verstehen]], [[suchen]], [[hören]], [[kennen]], [[sehen]], [[mögen]], [[bauen]], [[stören]] (disturb).",
+        "[[beantworten]] takes the accusative ([[Ich beantworte meine E-Mails.]]), but [[antworten]] without be- takes the dative.",
+        "[[mögen]] is not only a modal verb: [[Meine Schwester mag Schokolade.]]",
+        "These verbs form the Perfekt with [[haben]] (Unit 5)."
+      ],
+      "phrases": [
+        {"de": "Lena trinkt einen Apfelsaft.", "en": "Lena is drinking an apple juice."},
+        {"de": "Max besucht seine Tante.", "en": "Max is visiting his aunt."},
+        {"de": "Bitte vergiss deinen Regenschirm nicht!", "en": "Please don't forget your umbrella!"},
+        {"de": "Ich beantworte meine E-Mails.", "en": "I'm answering my emails."},
+        {"de": "Ich suche meine Brille.", "en": "I'm looking for my glasses."},
+        {"de": "Ich höre Musik.", "en": "I'm listening to music."},
+        {"de": "Kennst du die Freundin von Peter?", "en": "Do you know Peter's girlfriend?"},
+        {"de": "Meine Schwester mag Schokolade.", "en": "My sister likes chocolate."},
+        {"de": "Ich baue eine Sandburg mit meinen Kindern.", "en": "I'm building a sandcastle with my children."}
+      ],
+      "extra": "[[beantworten]] (accusative) versus [[antworten]] (dative)."
+    }}
   ],
   "words": ["nehmen", "kaufen", "suchen", "finden", "es-gibt", "bekommen"],
   "tests": ["u4-t1-cafe-akkusativ"],

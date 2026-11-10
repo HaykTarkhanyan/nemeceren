@@ -16,9 +16,59 @@
     { "title": "Nicos Weg A1, chapter 15: Family (Mein Bruder)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
   ],
   "videos": [
-    {"id": "YqDCHriUgdA", "title": "dürfen", "minutes": 6},
-    {"id": "Uxu4FkeCyBw", "title": "sollen", "minutes": 5},
-    {"id": "d94yydrhCLQ", "title": "können or dürfen?", "minutes": 10}
+    {"id": "YqDCHriUgdA", "title": "dürfen", "minutes": 6, "notes": {
+      "points": [
+        "[[dürfen]] (to be allowed to, may) works like every modal verb: conjugated second (first in a yes/no question), the other verb at the end.",
+        "Permission: [[Sie dürfen hier parken.]] Prohibition, with [[nicht]]: [[Sie dürfen hier nicht parken.]]",
+        "Asking for permission: [[Darf ich hier fotografieren?]], [[Wann darf ich nach Hause gehen?]]",
+        "Alone, when it's clear: [[Darf ich?]], [[Du darfst das nicht.]]",
+        "Conjugation: [[ich darf]], [[du darfst]], [[er darf]], [[wir dürfen]], [[ihr dürft]], [[sie dürfen]]. No umlaut in the singular."
+      ],
+      "phrases": [
+        {"de": "Sie dürfen hier parken.", "en": "You may park here."},
+        {"de": "Sie dürfen hier nicht parken.", "en": "You mustn't park here."},
+        {"de": "Darf ich hier fotografieren?", "en": "May I take photos here?"},
+        {"de": "Wann darf ich nach Hause gehen?", "en": "When may I go home?"},
+        {"de": "Du darfst das nicht.", "en": "You're not allowed to do that."},
+        {"de": "Hier dürfen wir nicht tanzen.", "en": "We're not allowed to dance here."}
+      ]
+    }},
+    {"id": "Uxu4FkeCyBw", "title": "sollen", "minutes": 5, "notes": {
+      "points": [
+        "[[sollen]] (should, to be supposed to) follows the modal pattern: conjugated second (first in a yes/no question), the other verb at the end.",
+        "Its main use: advice or an instruction that comes from someone else: [[Der Arzt sagt, ich soll Medikamente nehmen.]]",
+        "Asking what someone wants you to do: [[Wann sollen wir kommen?]], [[Soll ich das Fenster aufmachen?]]",
+        "Conjugation: [[ich soll]], [[du sollst]], [[er soll]], [[wir sollen]], [[ihr sollt]], [[sie sollen]]. ich and er are the same."
+      ],
+      "phrases": [
+        {"de": "Der Arzt sagt, ich soll Medikamente nehmen.", "en": "The doctor says I should take medicine."},
+        {"de": "Wann sollen wir kommen?", "en": "When should we come?"},
+        {"de": "Soll ich das Fenster aufmachen?", "en": "Shall I open the window?"},
+        {"de": "Du sollst mehr Wasser trinken.", "en": "You should drink more water."},
+        {"de": "Ihr sollt leise sein.", "en": "You're supposed to be quiet."}
+      ]
+    }},
+    {"id": "d94yydrhCLQ", "title": "können or dürfen?", "minutes": 10, "notes": {
+      "points": [
+        "[[können]] is about ability and possibility; [[dürfen]] about permission and prohibition.",
+        "[[können]]: abilities of people, animals and things ([[Lena kann Klavier spielen.]], [[Ich kann nicht singen.]]), possibility ([[Heute kann es regnen.]]), polite requests ([[Kannst du mir helfen?]], even politer [[Könntest du mir helfen?]]).",
+        "[[dürfen]]: what the rules allow or forbid: [[Hier dürfen Sie parken.]], [[Man darf nicht bei Rot über die Straße gehen.]]",
+        "Asking permission: [[Darf ich nach Hause gehen?]] In everyday speech people often say [[Kann ich nach Hause gehen?]] Both are fine for [[Kann ich dein Telefon benutzen?]] / [[Darf ich dein Telefon benutzen?]]",
+        "Sometimes the meaning differs: [[Kann man hier telefonieren?]] asks whether it's possible (is there a phone or a signal?); [[Darf man hier telefonieren?]] asks whether it's allowed (in a hospital, a class, a meeting)."
+      ],
+      "phrases": [
+        {"de": "Lena kann Klavier spielen.", "en": "Lena can play the piano."},
+        {"de": "Er kann kochen, aber sie nicht.", "en": "He can cook, but she can't."},
+        {"de": "Heute kann es regnen.", "en": "It may rain today."},
+        {"de": "Könntest du mir helfen?", "en": "Could you help me?"},
+        {"de": "Hier dürfen Sie nicht parken.", "en": "You mustn't park here."},
+        {"de": "Man darf nicht bei Rot über die Straße gehen.", "en": "You mustn't cross the road on red."},
+        {"de": "Ohne Führerschein darf man nicht Auto fahren.", "en": "You can't drive without a licence."},
+        {"de": "Im Unterricht darf man keine Handys benutzen.", "en": "You're not allowed to use phones in class."},
+        {"de": "Kannst du mir einen Gefallen tun?", "en": "Can you do me a favour?"}
+      ],
+      "extra": "[[Kann man ...?]] (is it possible?) versus [[Darf man ...?]] (is it allowed?)."
+    }}
   ],
   "words": ["duerfen", "sollen", "man", "rauchen", "verboten", "leise"],
   "sections": [

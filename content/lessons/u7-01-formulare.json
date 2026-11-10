@@ -15,7 +15,29 @@
     { "title": "Nicos Weg A1, chapter 2: Contact details", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
   ],
   "videos": [
-    {"id": "ZdBp66rzA0o", "title": "Filling in a form", "minutes": 11}
+    {"id": "ZdBp66rzA0o", "title": "Filling in a form", "minutes": 11, "notes": {
+      "points": [
+        "[[das Formular]] is a form, and you fill it in: [[ein Formular ausfüllen]]. A registration form is [[das Anmeldeformular]]. On a form the words come without articles.",
+        "Name: [[Name]], [[Familienname]] or [[Nachname]] (surname), [[Vorname]] (first name). Address: [[Straße]], [[Hausnummer]], [[Postleitzahl]] (PLZ, postcode), [[Wohnort]] (town), [[Land]].",
+        "Contact and origin: [[E-Mail-Adresse]], [[Telefonnummer]], [[Handynummer]], [[Muttersprache]] (first language), [[Staatsangehörigkeit]] (nationality).",
+        "Personal details: [[Alter]] (age), [[Geburtsdatum]] (date of birth, written day.month.year), [[Geburtsort]], [[Geschlecht]] ([[männlich]], [[weiblich]]), [[Beruf]], [[Familienstand]] ([[ledig]], [[verheiratet]], [[verwitwet]] widowed, [[geschieden]] divorced), [[Anzahl der Kinder]].",
+        "Travel and course forms: [[Reiseziel]] (destination), [[Abreise]] or [[Abflug]] (departure), [[Anreise]] or [[Ankunft]] (arrival), [[Prüfungstermin]] (exam date), [[Kursbeginn]] (course start).",
+        "At the end: [[Ort, Datum, Unterschrift]] (place, date, signature).",
+        "In the A1 exam (Start Deutsch 1, Writing part 1) you read a short text and fill in a form for someone else, for example a hotel booking for your sister."
+      ],
+      "phrases": [
+        {"de": "Bitte füllen Sie das Formular aus.", "en": "Please fill in the form."},
+        {"de": "der Vorname, der Nachname", "en": "the first name, the surname"},
+        {"de": "Goethestraße 10, 12345 Berlin", "en": "street and number, postcode and town"},
+        {"de": "die Postleitzahl", "en": "the postcode"},
+        {"de": "die Staatsangehörigkeit", "en": "the nationality"},
+        {"de": "das Geburtsdatum", "en": "the date of birth"},
+        {"de": "der Familienstand: ledig, verheiratet, geschieden", "en": "marital status: single, married, divorced"},
+        {"de": "die Anreise, die Abreise", "en": "arrival, departure (at a hotel)"},
+        {"de": "Ort, Datum, Unterschrift", "en": "place, date, signature"}
+      ],
+      "extra": "The A1 exam's form task, and form words for travel and courses: [[Reiseziel]], [[Anreise]], [[Abreise]], [[Prüfungstermin]]."
+    }}
   ],
   "words": ["formular", "ausfuellen", "unterschreiben", "unterschrift", "familienname", "familienstand", "geburtsort", "geburtsjahr", "alter", "maennlich", "weiblich", "ausweis", "pass", "anmeldung", "anmelden", "auslaender", "ausland", "heimat", "information", "auskunft", "beispiel", "ort"],
   "sections": [

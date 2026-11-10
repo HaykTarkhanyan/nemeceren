@@ -13,11 +13,101 @@
   ],
   "nicosWeg": [{ "title": "Nicos Weg A1, chapter 5: Things (Ich habe kein ..., Das Auto ist rot)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }],
   "videos": [
-    {"id": "4M6PN4yfwgI", "title": "ein, eine", "minutes": 7},
-    {"id": "LULFzldtkyk", "title": "kein, keine", "minutes": 6},
-    {"id": "HySduWqqPcU", "title": "kein or nicht?", "minutes": 12},
-    {"id": "PARun113NuA", "title": "Adjectives and opposites", "minutes": 10},
-    {"id": "SHGzSotC70g", "title": "Colours", "minutes": 9}
+    {"id": "4M6PN4yfwgI", "title": "ein, eine", "minutes": 7, "notes": {
+      "points": [
+        "The definite article ([[der]]) means one particular thing: 'the'. The indefinite article ([[ein]]) means any one, often mentioned for the first time: 'a', 'an'.",
+        "The pairs: [[der]] goes with [[ein]], [[die]] with [[eine]], [[das]] with [[ein]]. Masculine and neuter look the same.",
+        "In the plural there is no indefinite article, just the noun: [[Das sind Blumen.]] (like English 'these are flowers').",
+        "So you can only pick the right indefinite article if you know the noun's der, die or das: learn every noun with it.",
+        "The video's quiz: [[die Tasche]] gives [[eine Tasche]], [[das Buch]] [[ein Buch]], [[der Elefant]] [[ein Elefant]]."
+      ],
+      "phrases": [
+        {"de": "Das ist ein Mann. Der Mann heißt Max.", "en": "This is a man. The man is called Max."},
+        {"de": "Das ist eine Frau. Die Frau ist Lehrerin.", "en": "This is a woman. The woman is a teacher."},
+        {"de": "Das ist ein Kind.", "en": "This is a child."},
+        {"de": "Die Blumen sind schön.", "en": "The flowers are beautiful."},
+        {"de": "eine Tasche", "en": "a bag"},
+        {"de": "ein Buch", "en": "a book"},
+        {"de": "ein Elefant", "en": "an elephant"}
+      ]
+    }},
+    {"id": "LULFzldtkyk", "title": "kein, keine", "minutes": 6, "notes": {
+      "points": [
+        "[[kein]] means 'not a' or 'no'. It replaces [[ein]] and works just like it.",
+        "Masculine and neuter: [[kein]]. Feminine: [[keine]]. Plural: [[keine]].",
+        "The plural has no [[ein]], but it does have [[keine]]: [[Das sind keine Stühle.]]",
+        "A typical exchange: [[Ist das ein Kuli?]] - [[Nein, das ist kein Kuli. Das ist ein Bleistift.]]",
+        "As with ein, you need the noun's article first: [[der Kuli]], so [[kein Kuli]]; [[die Blume]], so [[keine Blume]]."
+      ],
+      "phrases": [
+        {"de": "Ist das ein Kuli?", "en": "Is that a pen?"},
+        {"de": "Nein, das ist kein Kuli. Das ist ein Bleistift.", "en": "No, that's not a pen. It's a pencil."},
+        {"de": "Das ist keine Blume.", "en": "That's not a flower."},
+        {"de": "Das ist kein Buch.", "en": "That's not a book."},
+        {"de": "Das sind keine Stühle.", "en": "Those aren't chairs."},
+        {"de": "ein, kein; eine, keine", "en": "a, not a (masculine and neuter; feminine)"}
+      ]
+    }},
+    {"id": "HySduWqqPcU", "title": "kein or nicht?", "minutes": 12, "notes": {
+      "points": [
+        "[[kein]] negates a noun that would have [[ein]], or no article at all: [[Das ist keine Banane.]], [[Ich bin kein Deutscher.]]",
+        "[[nicht]] negates nouns with [[der]], [[die]], [[das]] or [[mein]], names, adjectives, actions and parts of a sentence: [[Das ist nicht mein Auto.]], [[Ich heiße nicht Peter.]], [[Ich arbeite nicht bei BMW.]]",
+        "[[nicht]] stands right before the part it negates: [[Ich bin nicht alt.]], [[Ich kann nicht kochen.]], [[Sie arbeitet nicht gern.]]",
+        "To negate the whole sentence, [[nicht]] goes to the end: [[Heute spielt er nicht.]], [[Heute arbeite ich nicht.]]",
+        "The video's quiz: [[Heißt du Peter?]] - [[Nein, ich heiße nicht Peter.]] [[Hast du Kinder?]] - [[Nein, ich habe keine Kinder.]]"
+      ],
+      "phrases": [
+        {"de": "Ist das eine Banane? Nein, das ist keine Banane.", "en": "Is that a banana? No, it isn't a banana."},
+        {"de": "Sind Sie Deutscher? Nein, ich bin kein Deutscher.", "en": "Are you German? No, I'm not German."},
+        {"de": "Ist das dein Auto? Nein, das ist nicht mein Auto.", "en": "Is that your car? No, it isn't my car."},
+        {"de": "Mein Handy ist nicht neu.", "en": "My phone isn't new."},
+        {"de": "Ich kann nicht Auto fahren.", "en": "I can't drive."},
+        {"de": "Ich arbeite nicht bei BMW.", "en": "I don't work at BMW."},
+        {"de": "Sie arbeitet nicht gern.", "en": "She doesn't like working."},
+        {"de": "Heute arbeite ich nicht.", "en": "I'm not working today."}
+      ],
+      "extra": "Where [[nicht]] goes: before a single word, or at the end for the whole sentence."
+    }},
+    {"id": "PARun113NuA", "title": "Adjectives and opposites", "minutes": 10, "notes": {
+      "points": [
+        "Learn adjectives in pairs of opposites: you remember both at once.",
+        "Size and speed: [[groß]] / [[klein]], [[lang]] / [[kurz]], [[langsam]] / [[schnell]], [[dick]] / [[dünn]] (fat, thick / thin).",
+        "People: [[glücklich]] / [[traurig]] (happy / sad), [[reich]] / [[arm]] (rich / poor), [[intelligent]] / [[doof]] (clever / stupid; doof is casual).",
+        "Quality and price: [[gut]] / [[schlecht]], [[leicht]] / [[schwer]] (light, easy / heavy, hard), [[teuer]] / [[billig]] (expensive / cheap).",
+        "[[alt]] has two opposites: [[jung]] for people and [[neu]] for things.",
+        "The pattern for comparing two things: [[Ein Elefant ist groß, aber eine Maus ist klein.]]"
+      ],
+      "phrases": [
+        {"de": "Ein Elefant ist groß, aber eine Maus ist klein.", "en": "An elephant is big, but a mouse is small."},
+        {"de": "Max ist glücklich, aber Thomas ist traurig.", "en": "Max is happy, but Thomas is sad."},
+        {"de": "Der Mann ist reich.", "en": "The man is rich."},
+        {"de": "Ein Fuchs ist intelligent.", "en": "A fox is clever."},
+        {"de": "Mein Opa ist alt, aber mein Auto ist neu.", "en": "My grandpa is old, but my car is new."},
+        {"de": "teuer, billig", "en": "expensive, cheap"},
+        {"de": "leicht, schwer", "en": "light or easy, heavy or hard"}
+      ]
+    }},
+    {"id": "SHGzSotC70g", "title": "Colours", "minutes": 9, "notes": {
+      "points": [
+        "[[die Farbe]], plural [[die Farben]]. Each colour comes with a sentence: [[Der Apfel ist rot.]], [[Die Sonne ist gelb.]], [[Das Meer ist blau.]], [[Das Gras ist grün.]]",
+        "More colours: [[schwarz]], [[weiß]], [[braun]], [[orange]], [[lila]] (purple), [[rosa]] (pink).",
+        "[[hell-]] makes a colour lighter, [[dunkel-]] darker: [[hellblau]], [[dunkelgrün]].",
+        "Some colours have their own fixed prefixes: [[feuerrot]] (fire red), [[knallrot]] (bright red), [[grasgrün]], [[mausgrau]] (mouse grey), [[schneeweiß]] (snow white), [[zitronengelb]] (lemon yellow), [[babyrosa]].",
+        "Talking about colours you like: [[Meine Lieblingsfarbe ist Grün.]], [[Grün gefällt mir.]], [[Ich mag Grün.]] A colour that suits you: [[Blau steht mir.]]"
+      ],
+      "phrases": [
+        {"de": "Die Milch ist weiß.", "en": "The milk is white."},
+        {"de": "Die Schokolade ist braun.", "en": "The chocolate is brown."},
+        {"de": "Die Trauben sind lila.", "en": "The grapes are purple."},
+        {"de": "Der Himmel ist hellblau.", "en": "The sky is light blue."},
+        {"de": "Das Kleid ist dunkelgrün.", "en": "The dress is dark green."},
+        {"de": "Meine Lieblingsfarbe ist Grün.", "en": "My favourite colour is green."},
+        {"de": "Grün gefällt mir.", "en": "I like green."},
+        {"de": "Blau steht mir.", "en": "Blue suits me."},
+        {"de": "Welche ist deine Lieblingsfarbe?", "en": "Which is your favourite colour?"}
+      ],
+      "extra": "[[hell-]] and [[dunkel-]], the fixed colour words like [[schneeweiß]], and [[Blau steht mir.]]"
+    }}
   ],
   "words": ["was-ist-das", "kein", "nicht", "gross", "klein", "teuer", "billig", "schoen", "praktisch", "rot", "blau", "gruen", "schwarz", "weiss"],
   "tests": ["u2-t1-artikel"],

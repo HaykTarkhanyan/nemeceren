@@ -12,9 +12,69 @@
   ],
   "nicosWeg": [{ "title": "Nicos Weg A1 (course overview)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }],
   "videos": [
-    {"id": "RElBVZ1Wke0", "title": "Introducing yourself", "minutes": 10},
-    {"id": "07WCBZRchY0", "title": "What a verb is: stem and ending", "minutes": 10},
-    {"id": "IowuDehrLFk", "title": "Regular verbs", "minutes": 15}
+    {"id": "RElBVZ1Wke0", "title": "Introducing yourself", "minutes": 10, "notes": {
+      "points": [
+        "Three ways to give your name: [[Ich heiße ...]], [[Ich bin ...]] (relaxed, among friends) and [[Mein Name ist ...]] (more formal). Your surname: [[Mein Familienname ist ...]]",
+        "Long words get easier when you split them: Familien-name.",
+        "Origin, home and languages: [[Ich komme aus ...]], [[Ich wohne in ...]], [[Ich spreche Deutsch und Englisch.]] You can also say [[Ich kann Deutsch und Englisch.]]",
+        "Age: [[Ich bin dreiundzwanzig Jahre alt.]] or just [[Ich bin dreiundzwanzig.]]",
+        "Jobs have a male and a female form, and there is no 'a' before them: [[Ich bin Student.]], [[Ich bin Studentin.]], [[Schüler]] / [[Schülerin]] (school pupil), [[Lehrer]] / [[Lehrerin]].",
+        "Family: [[Ich bin ledig.]] (single), [[Ich bin verheiratet.]] (married), [[Ich habe ein Kind.]], [[Ich habe zwei Kinder.]], [[Ich habe keine Kinder.]]",
+        "Hobbies: [[Meine Hobbys sind Fernsehen und Musik hören.]]"
+      ],
+      "phrases": [
+        {"de": "Mein Name ist Anna Schmidt.", "en": "My name is Anna Schmidt."},
+        {"de": "Mein Familienname ist Schmidt.", "en": "My surname is Schmidt."},
+        {"de": "Ich wohne in Berlin.", "en": "I live in Berlin."},
+        {"de": "Ich kann Deutsch und Englisch.", "en": "I speak German and English."},
+        {"de": "Ich bin dreiundzwanzig Jahre alt.", "en": "I'm 23 years old."},
+        {"de": "Ich bin Lehrerin.", "en": "I'm a teacher. (a woman)"},
+        {"de": "Ich bin verheiratet.", "en": "I'm married."},
+        {"de": "Ich habe zwei Kinder.", "en": "I have two children."},
+        {"de": "Ich habe keine Kinder.", "en": "I don't have any children."},
+        {"de": "Meine Hobbys sind Fernsehen und Musik hören.", "en": "My hobbies are watching TV and listening to music."}
+      ],
+      "extra": "Family status, children and hobbies ([[ledig]], [[verheiratet]], [[Kinder]], [[Hobbys]]), which forms often ask about."
+    }},
+    {"id": "07WCBZRchY0", "title": "What a verb is: stem and ending", "minutes": 10, "notes": {
+      "points": [
+        "A verb describes an action, and the sentence is built around it: [[Ich spiele Fußball.]]",
+        "The infinitive, the form in the dictionary, is a stem plus an ending, and the ending is -en or just -n: [[lernen]] is lern + en. Learn every verb in this form.",
+        "In a sentence the verb is conjugated: its ending follows the subject. That depends on the person (I, you, he/she) and on singular or plural, so the personal pronouns decide it.",
+        "With [[du]], the ending is always -st: [[du lernst]], [[du kommst]].",
+        "Regular verbs (also called weak verbs) keep their stem: [[lernen]], [[machen]], [[spielen]], [[studieren]], [[arbeiten]].",
+        "Irregular verbs (strong verbs) change their stem in some forms, but take the same endings: [[sprechen]], [[du sprichst]]. Others: [[schlafen]], [[essen]], [[nehmen]], [[treffen]]."
+      ],
+      "phrases": [
+        {"de": "Ich spiele Fußball.", "en": "I play football."},
+        {"de": "lernen", "en": "to learn (stem lern-, ending -en)"},
+        {"de": "du lernst", "en": "you learn (the stem stays)"},
+        {"de": "sprechen", "en": "to speak"},
+        {"de": "du sprichst", "en": "you speak (the stem changes: e to i)"},
+        {"de": "lernen, machen, spielen, studieren, arbeiten", "en": "regular verbs: to learn, do, play, study, work"},
+        {"de": "schlafen, essen, nehmen, treffen", "en": "irregular verbs: to sleep, eat, take, meet"}
+      ]
+    }},
+    {"id": "IowuDehrLFk", "title": "Regular verbs", "minutes": 15, "notes": {
+      "points": [
+        "In the present tense, a regular verb keeps its stem and adds an ending: [[ich]] -e, [[du]] -st, [[er]]/[[sie]]/[[es]] -t, [[wir]] -en, [[ihr]] -t, [[sie]]/[[Sie]] -en.",
+        "Three forms look like the infinitive, because they take -en: [[wir]], [[sie]] (they) and [[Sie]] (polite you).",
+        "The video practises [[wohnen]], [[spielen]], [[studieren]], [[hören]], [[telefonieren]], [[fragen]] and [[sagen]].",
+        "Stem ending in s, ß or z: [[du]] adds only -t, because the s is already there: [[du reist]], [[du tanzt]].",
+        "Stem ending in d or t: add an extra e, so you can pronounce it: [[du arbeitest]], [[er arbeitet]], [[ihr arbeitet]]. Same with [[warten]] and [[antworten]]."
+      ],
+      "phrases": [
+        {"de": "ich wohne, du wohnst, er wohnt", "en": "I live, you live, he lives"},
+        {"de": "wir spielen, ihr spielt, sie spielen", "en": "we play, you (all) play, they play"},
+        {"de": "Sie telefonieren.", "en": "You're on the phone. (polite)"},
+        {"de": "du reist", "en": "you travel"},
+        {"de": "du tanzt", "en": "you dance"},
+        {"de": "du arbeitest", "en": "you work"},
+        {"de": "er wartet", "en": "he waits"},
+        {"de": "Anna arbeitet bei Siemens.", "en": "Anna works at Siemens."},
+        {"de": "Ich studiere Mathematik.", "en": "I study maths."}
+      ]
+    }}
   ],
   "words": ["heissen", "kommen", "wohnen", "vorname", "nachname", "wie", "woher", "wo", "aus", "in"],
   "sections": [

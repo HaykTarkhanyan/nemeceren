@@ -15,10 +15,92 @@
     { "title": "Nicos Weg A1, chapter 13: Weather and holiday (Wie war dein Urlaub?, Der Ausflug)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
   ],
   "videos": [
-    {"id": "qX4aVgbD6YY", "title": "Perfekt, part 1", "minutes": 11},
-    {"id": "4XXtiNfuwhY", "title": "Perfekt, part 2", "minutes": 13},
-    {"id": "PqboPq6pSUU", "title": "Perfekt, part 3", "minutes": 12},
-    {"id": "SYUbBeAB2CU", "title": "25 verbs with sein in the Perfekt", "minutes": 10}
+    {"id": "qX4aVgbD6YY", "title": "Perfekt, part 1", "minutes": 11, "notes": {
+      "points": [
+        "German has three past forms: the Perfekt (spoken German, and informal letters), the Präteritum (mostly written; you know [[war]] and [[hatte]]) and the Plusquamperfekt (later).",
+        "The Perfekt has two parts: [[haben]] or [[sein]], conjugated, in second place, and the participle (Partizip II) at the very end: [[Ich habe einen Salat gegessen.]]",
+        "From present to past: [[Wir fahren nach Paris.]] becomes [[Wir sind letzte Woche nach Paris gefahren.]]; [[Sie studiert Philosophie.]] becomes [[Sie hat Philosophie studiert.]]",
+        "Questions keep the bracket: [[Was hast du gestern gemacht?]] In a yes/no question the helper comes first: [[Hast du gestern etwas gegessen?]]",
+        "Separable verbs put ge- inside: [[Lena hat ihren Freund angerufen.]]",
+        "Modal verbs use their Präteritum instead: [[Ich war krank. Ich musste zum Arzt gehen.]] Learn each participle with its helper: [[essen, hat gegessen]], [[fahren, ist gefahren]]."
+      ],
+      "phrases": [
+        {"de": "Ich habe einen Salat gegessen.", "en": "I ate a salad."},
+        {"de": "Er hat mit seinem Hund gespielt.", "en": "He played with his dog."},
+        {"de": "Wir sind letzte Woche nach Paris gefahren.", "en": "We went to Paris last week."},
+        {"de": "Was hast du gestern gemacht?", "en": "What did you do yesterday?"},
+        {"de": "Hast du deine Hausaufgaben gemacht?", "en": "Have you done your homework?"},
+        {"de": "Ich habe nur drei Stunden geschlafen.", "en": "I only slept for three hours."},
+        {"de": "Am Freitag sind wir ins Kino gegangen.", "en": "On Friday we went to the cinema."},
+        {"de": "Ich musste zum Arzt gehen.", "en": "I had to go to the doctor."}
+      ],
+      "extra": "Modal verbs in the past ([[musste]]), which use the Präteritum, not the Perfekt."
+    }},
+    {"id": "4XXtiNfuwhY", "title": "Perfekt, part 2", "minutes": 13, "notes": {
+      "points": [
+        "Most verbs take [[haben]]: [[Er hat ein neues Auto gekauft.]], [[Es hat wieder geregnet.]]",
+        "[[sein]] goes with verbs of moving from one place to another: [[fliegen]], [[gehen]], [[fahren]], [[kommen]], [[laufen]], [[reisen]], [[schwimmen]], [[springen]], [[wandern]].",
+        "[[sein]] also goes with a change of state: [[sterben]] (die), [[einschlafen]], [[aufwachen]], [[aufstehen]], [[wachsen]] (grow).",
+        "And with a few verbs to learn by heart: [[bleiben]], [[sein]], [[passieren]] (happen), [[werden]].",
+        "Some verbs take either: [[Ich bin nach Köln gefahren.]] (movement to a place) but [[Ich habe mein neues Auto gefahren.]] (no destination).",
+        "The change of state isn't always obvious, so learn each verb with its helper."
+      ],
+      "phrases": [
+        {"de": "Sabine hat heute viel Kaffee getrunken.", "en": "Sabine drank a lot of coffee today."},
+        {"de": "Meine Eltern sind gestern nach London geflogen.", "en": "My parents flew to London yesterday."},
+        {"de": "Lena ist im Unterricht eingeschlafen.", "en": "Lena fell asleep in class."},
+        {"de": "Ich bin letzte Woche in Spanien geblieben.", "en": "I stayed in Spain last week."},
+        {"de": "Was ist passiert?", "en": "What happened?"},
+        {"de": "Oma ist heute siebzig geworden.", "en": "Grandma turned seventy today."},
+        {"de": "Eva hat mir viel geholfen.", "en": "Eva helped me a lot."},
+        {"de": "Heute bin ich spät aufgestanden.", "en": "I got up late today."}
+      ],
+      "extra": "[[fahren]] with either helper, and [[sein]] with [[bleiben]], [[passieren]] and [[werden]]."
+    }},
+    {"id": "PqboPq6pSUU", "title": "Perfekt, part 3", "minutes": 12, "notes": {
+      "points": [
+        "Regular verbs: ge- + stem + -t: [[machen]], [[gemacht]]; [[spielen]], [[gespielt]]; [[lernen]], [[gelernt]]. A stem in -t or -d takes -et: [[gearbeitet]].",
+        "Verbs in -ieren have no ge-: [[studieren]], [[studiert]]; [[fotografieren]], [[fotografiert]].",
+        "Irregular verbs: ge- + stem, often with a new vowel, + -en: [[schreiben]], [[geschrieben]]; [[finden]], [[gefunden]]; [[kommen]], [[gekommen]].",
+        "A few mixed verbs change the vowel but end in -t: [[denken]], [[gedacht]]; [[bringen]], [[gebracht]].",
+        "Separable verbs put ge- after the prefix: [[eingekauft]], [[aufgestanden]], [[zugemacht]], [[mitgekommen]], [[ferngesehen]], [[angefangen]].",
+        "Inseparable verbs (be-, er-, ver-, ge- ...) get no ge-: [[erklärt]], [[verstanden]], [[bekommen]], [[gefallen]], [[erzählt]], [[entschieden]]."
+      ],
+      "phrases": [
+        {"de": "Ich habe gestern lange gekocht.", "en": "I cooked for a long time yesterday."},
+        {"de": "Ich habe auch am Sonntag gearbeitet.", "en": "I worked on Sunday too."},
+        {"de": "Wie lange hast du die Touristen fotografiert?", "en": "How long did you photograph the tourists?"},
+        {"de": "Wir haben den Film sehr langweilig gefunden.", "en": "We found the film very boring."},
+        {"de": "Er ist spät nach Hause gekommen.", "en": "He came home late."},
+        {"de": "Hast du gestern viel eingekauft?", "en": "Did you do a lot of shopping yesterday?"},
+        {"de": "Meine Lehrerin hat das Thema gut erklärt.", "en": "My teacher explained the topic well."},
+        {"de": "Ich habe heute alles verstanden.", "en": "I understood everything today."}
+      ],
+      "extra": "Mixed verbs like [[gedacht]] and [[gebracht]]."
+    }},
+    {"id": "SYUbBeAB2CU", "title": "25 verbs with sein in the Perfekt", "minutes": 10, "notes": {
+      "points": [
+        "25 verbs with [[sein]] in the Perfekt, each in a sentence. They show a change of place or a change of state, or belong to the few exceptions.",
+        "Movement: [[kommen]], [[fahren]], [[fliegen]], [[gehen]], [[laufen]], [[rennen]] (run), [[schwimmen]], [[springen]], [[wandern]], [[reisen]], [[klettern]] (climb), [[steigen]] (rise, climb), [[fallen]].",
+        "Their separable versions take [[sein]] too: [[mitkommen]], [[losfahren]], [[abfliegen]], [[mitgehen]], [[zurückkommen]], [[auswandern]] (emigrate).",
+        "Change of state: [[aufstehen]], [[aufwachen]], [[einschlafen]], [[sterben]], [[wachsen]], [[werden]].",
+        "Exceptions: [[sein]], [[bleiben]], [[passieren]], [[begegnen]] (to meet by chance).",
+        "Careful: [[fallen]] has the participle [[gefallen]] with [[sein]] (Die Äpfel sind vom Baum gefallen), but [[gefallen]] (to please) takes [[haben]]."
+      ],
+      "phrases": [
+        {"de": "Ich bin heute um sechs Uhr aufgestanden.", "en": "I got up at six today."},
+        {"de": "Wann bist du nach Hause gekommen?", "en": "When did you get home?"},
+        {"de": "Lena ist gestern zu Hause geblieben.", "en": "Lena stayed at home yesterday."},
+        {"de": "Ich bin mit dem Zug nach Stuttgart gefahren.", "en": "I went to Stuttgart by train."},
+        {"de": "Wo bist du denn gewesen?", "en": "Where have you been?"},
+        {"de": "Es ist heute ziemlich kalt geworden.", "en": "It's got quite cold today."},
+        {"de": "Die Äpfel sind vom Baum gefallen.", "en": "The apples fell from the tree."},
+        {"de": "Was ist mit deinem Auto passiert?", "en": "What happened to your car?"},
+        {"de": "Am Wochenende sind wir in den Bergen gewandert.", "en": "At the weekend we went hiking in the mountains."},
+        {"de": "Gestern ist die Temperatur um einige Grad gestiegen.", "en": "Yesterday the temperature rose by a few degrees."}
+      ],
+      "extra": "More [[sein]] verbs than the lesson's table: [[klettern]], [[rennen]], [[steigen]], [[auswandern]], [[begegnen]]."
+    }}
   ],
   "words": ["gestern", "schon", "noch-nicht", "lange", "erzaehlen", "feiern", "grillen", "mitbringen", "fliegen", "zug", "muede"],
   "sections": [

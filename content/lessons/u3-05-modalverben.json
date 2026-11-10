@@ -15,11 +15,96 @@
     { "title": "Nicos Weg A1, chapter 8: Appointments (Wann spielen wir?)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
   ],
   "videos": [
-    {"id": "M6K-1PKNtHE", "title": "können", "minutes": 7},
-    {"id": "NzXpp6zwInk", "title": "müssen", "minutes": 7},
-    {"id": "Xqia6Ac_Tug", "title": "wollen", "minutes": 6},
-    {"id": "cx7tUfhhs44", "title": "können or müssen?", "minutes": 10},
-    {"id": "SkEBKVWh94Y", "title": "Verbs that don't split", "minutes": 12}
+    {"id": "M6K-1PKNtHE", "title": "können", "minutes": 7, "notes": {
+      "points": [
+        "[[können]] (can) is conjugated in second place, and the other verb goes to the end, unconjugated. In a yes/no question the modal comes first: [[Können Sie mir helfen?]]",
+        "Four uses: ability ([[Sie kann gut tanzen.]]), possibility, polite requests ([[Können Sie mir helfen?]]) and permission ([[Du kannst jetzt gehen.]]).",
+        "When the meaning is clear, [[können]] can stand alone: [[Ich kann gut Englisch.]] (I speak English well)",
+        "Conjugation: [[ich kann]], [[du kannst]], [[er kann]], [[wir können]], [[ihr könnt]], [[sie können]]. The umlaut disappears in the singular.",
+        "As with every modal verb, the ich and er/sie/es forms are the same and have no ending."
+      ],
+      "phrases": [
+        {"de": "Sie kann gut tanzen.", "en": "She can dance well."},
+        {"de": "Wann kannst du kommen?", "en": "When can you come?"},
+        {"de": "Können Sie mir helfen?", "en": "Can you help me?"},
+        {"de": "Du kannst jetzt gehen.", "en": "You can go now."},
+        {"de": "Ich kann gut Englisch.", "en": "I speak English well."},
+        {"de": "Wir können morgen kommen.", "en": "We can come tomorrow."}
+      ]
+    }},
+    {"id": "NzXpp6zwInk", "title": "müssen", "minutes": 7, "notes": {
+      "points": [
+        "[[müssen]] (must, have to) works like every modal verb: conjugated in second place (first in a yes/no question), the other verb at the end.",
+        "Main use: necessity. [[Ich muss heute lernen.]] (I have an exam.)",
+        "It can also give an order, but only from someone in charge, such as parents or a boss: [[Du musst sofort ins Bett!]]",
+        "Alone, when it's clear what you mean: [[Ich muss nach Hause.]], [[Ich muss jetzt los.]]",
+        "Conjugation: [[ich muss]], [[du musst]], [[er muss]], [[wir müssen]], [[ihr müsst]], [[sie müssen]]. No umlaut in ich, du, er."
+      ],
+      "phrases": [
+        {"de": "Ich muss heute lernen.", "en": "I have to study today."},
+        {"de": "Müssen Sie morgen arbeiten?", "en": "Do you have to work tomorrow?"},
+        {"de": "Du musst sofort ins Bett!", "en": "You have to go to bed right now!"},
+        {"de": "Ich muss nach Hause.", "en": "I have to go home."},
+        {"de": "Ihr müsst mir zuhören.", "en": "You (all) have to listen to me."},
+        {"de": "Er muss viel arbeiten.", "en": "He has to work a lot."}
+      ]
+    }},
+    {"id": "Xqia6Ac_Tug", "title": "wollen", "minutes": 6, "notes": {
+      "points": [
+        "[[wollen]] (to want) follows the modal pattern: conjugated in second place (first in a yes/no question), the other verb at the end.",
+        "Uses: a wish ([[Ich will Pilot werden.]]) and being willing to do something ([[Ich will dir helfen.]]).",
+        "Alone, when it's clear: [[Ich will Kaffee.]] It sounds blunt when ordering; [[Ich möchte ...]] is politer.",
+        "Conjugation: [[ich will]], [[du willst]], [[er will]], [[wir wollen]], [[ihr wollt]], [[sie wollen]]."
+      ],
+      "phrases": [
+        {"de": "Ich will Pilot werden.", "en": "I want to become a pilot."},
+        {"de": "Was willst du heute machen?", "en": "What do you want to do today?"},
+        {"de": "Willst du mitkommen?", "en": "Do you want to come along?"},
+        {"de": "Ich will Kaffee.", "en": "I want coffee."},
+        {"de": "Wir wollen heute Abend ins Kino gehen.", "en": "We want to go to the cinema tonight."},
+        {"de": "Er will eine Hose kaufen.", "en": "He wants to buy some trousers."}
+      ]
+    }},
+    {"id": "cx7tUfhhs44", "title": "können or müssen?", "minutes": 10, "notes": {
+      "points": [
+        "[[können]] is about what is possible; [[müssen]] about what is necessary: [[Heute kann ich nicht lernen. Ich bin krank.]] versus [[Heute muss ich lernen. Ich habe morgen einen Test.]]",
+        "[[können]]: ability ([[Max kann gut singen.]]), possibility ([[Heute kann es schneien.]]), polite requests ([[Können Sie mir helfen?]]), and permission from parents or teachers ([[Du kannst jetzt schreiben.]]).",
+        "[[müssen]]: necessity ([[Ich muss morgen arbeiten.]]), orders from parents ([[Du musst sofort ins Bett!]]) and duties in society, at work or in a family ([[Wir müssen einander respektieren.]]).",
+        "The situation decides: [[Ich kann morgen arbeiten.]] means you're free to; [[Ich muss morgen arbeiten.]] means you have no choice.",
+        "Negated: [[Morgen ist Sonntag, ich muss nicht arbeiten.]] means you don't have to, not that you mustn't."
+      ],
+      "phrases": [
+        {"de": "Max kann nicht gut singen.", "en": "Max can't sing well."},
+        {"de": "Heute kann es schneien.", "en": "It may snow today."},
+        {"de": "Kannst du mir heute helfen?", "en": "Can you help me today?"},
+        {"de": "Tut mir leid, ich kann nicht. Ich muss lernen.", "en": "Sorry, I can't. I have to study."},
+        {"de": "Ohne Brille kann ich nicht lesen.", "en": "I can't read without glasses."},
+        {"de": "Mein Auto ist kaputt. Deshalb muss ich heute mit dem Bus fahren.", "en": "My car is broken. So I have to take the bus today."},
+        {"de": "Morgen ist Sonntag, ich muss nicht arbeiten.", "en": "Tomorrow is Sunday, I don't have to work."},
+        {"de": "Wir müssen einander respektieren.", "en": "We have to respect each other."}
+      ]
+    }},
+    {"id": "SkEBKVWh94Y", "title": "Verbs that don't split", "minutes": 12, "notes": {
+      "points": [
+        "Some prefixes never split off: [[verstehen]] stays in one piece, but [[aufstehen]] splits: [[Ich verstehe.]] but [[Ich stehe auf.]]",
+        "You can hear the difference: separable verbs are stressed on the prefix (AUFstehen), inseparable ones on the verb (verSTEHen).",
+        "They behave like normal verbs: [[Er versteht mich gut.]], [[Verstehst du mich?]], and with a modal verb they go to the end: [[Ich kann dich verstehen.]]",
+        "The prefixes that never split: be-, emp-, ent-, er-, ge-, miss-, ver-, zer-. Examples: [[bekommen]] (to get), [[bezahlen]], [[empfehlen]] (recommend), [[entdecken]] (discover), [[erzählen]] (tell), [[erkennen]] (recognise), [[gehören]], [[gefallen]], [[missverstehen]], [[verkaufen]], [[verlieren]] (lose), [[zerstören]] (destroy).",
+        "Watch out: [[bekommen]] means to get or receive, not 'become'."
+      ],
+      "phrases": [
+        {"de": "Warum verstehst du mich nicht?", "en": "Why don't you understand me?"},
+        {"de": "Wir bekommen bald eine neue Lehrerin.", "en": "We're getting a new teacher soon."},
+        {"de": "Kannst du bitte heute bezahlen? Ich habe kein Geld.", "en": "Can you pay today, please? I have no money."},
+        {"de": "Was empfehlen Sie mir heute?", "en": "What do you recommend today?"},
+        {"de": "Mein Großvater erzählt interessante Geschichten.", "en": "My grandfather tells interesting stories."},
+        {"de": "Kannst du mich auf diesem Foto erkennen?", "en": "Can you recognise me in this photo?"},
+        {"de": "Die Uhr gehört mir.", "en": "The watch belongs to me."},
+        {"de": "Er verkauft sein altes Haus.", "en": "He's selling his old house."},
+        {"de": "Wenn ich Schach spiele, verliere ich immer.", "en": "When I play chess, I always lose."}
+      ],
+      "extra": "Verbs with prefixes that never split ([[verstehen]], [[bezahlen]], [[erzählen]] ...), and how to hear the difference by the stress."
+    }}
   ],
   "words": ["koennen", "wollen", "muessen", "vielleicht", "noch", "bleiben", "zu-hause", "zusammen"],
   "sections": [

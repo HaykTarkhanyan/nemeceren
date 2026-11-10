@@ -14,7 +14,30 @@
     { "title": "Nicos Weg A2, Welcome to A2!: Biographical information (Lebenslinien)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519797" }
   ],
   "videos": [
-    {"id": "pEundIQVwmU", "title": "The Perfekt and its participles", "minutes": 25}
+    {"id": "pEundIQVwmU", "title": "The Perfekt and its participles", "minutes": 25, "notes": {
+      "points": [
+        "This 25-minute video puts the three Perfekt lessons of Unit 5 together: the sentence, the helper verb, the participle.",
+        "The sentence: [[haben]] or [[sein]] in second place, the participle at the end: [[Ich habe einen Salat gegessen.]] In a yes/no question the helper comes first: [[Hast du gestern etwas gegessen?]]",
+        "Most verbs take [[haben]]. [[sein]] goes with a change of place ([[fliegen]], [[gehen]], [[fahren]], [[kommen]], [[laufen]], [[wandern]]), a change of state ([[sterben]], [[einschlafen]], [[aufwachen]]) and [[bleiben]], [[sein]], [[passieren]], [[werden]].",
+        "[[fahren]] can take either: [[Ich bin nach Köln gefahren.]] but [[Ich habe mein neues Auto gefahren.]]",
+        "Participles: regular ge- ... -t ([[gemacht]], [[gearbeitet]]), -ieren with no ge- ([[studiert]]), irregular ge- ... -en, often with a new vowel ([[geschrieben]], [[gefunden]]), mixed ([[gedacht]]).",
+        "Separable verbs put ge- after the prefix ([[eingekauft]], [[aufgestanden]]); inseparable ones have no ge- ([[erklärt]], [[verstanden]], [[bekommen]]).",
+        "Learn every verb with its helper and participle: [[essen, hat gegessen]], [[fahren, ist gefahren]]."
+      ],
+      "phrases": [
+        {"de": "Was hast du gestern gemacht?", "en": "What did you do yesterday?"},
+        {"de": "Lena hat ihren Freund angerufen.", "en": "Lena called her boyfriend."},
+        {"de": "Es hat wieder geregnet.", "en": "It rained again."},
+        {"de": "Meine Eltern sind gestern nach London geflogen.", "en": "My parents flew to London yesterday."},
+        {"de": "Letzte Woche ist sein Vater gestorben.", "en": "His father died last week."},
+        {"de": "Oma ist heute siebzig geworden.", "en": "Grandma turned seventy today."},
+        {"de": "Ich habe mein neues Auto gefahren.", "en": "I drove my new car."},
+        {"de": "Ich habe die neuen Wörter schon gelernt.", "en": "I've already learned the new words."},
+        {"de": "Eva hat mir einen Brief geschrieben.", "en": "Eva wrote me a letter."},
+        {"de": "Hast du gestern viel eingekauft?", "en": "Did you do a lot of shopping yesterday?"}
+      ],
+      "extra": "The whole Perfekt in one place, including [[sterben]] and [[werden]] with [[sein]]."
+    }}
   ],
   "words": ["vorgestern", "damals", "frueher", "letzte-woche", "letztes-jahr", "vor-zwei-tagen", "geben", "laufen", "liegen", "sitzen", "stehen", "singen", "waschen", "gewinnen", "denken"],
   "stations": [5, 10],

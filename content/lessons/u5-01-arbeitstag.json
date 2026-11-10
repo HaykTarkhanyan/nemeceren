@@ -14,7 +14,26 @@
     { "title": "Nicos Weg A1, chapter 9: Working life (Ich bin Lehrerin, Mein Beruf)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
   ],
   "videos": [
-    {"id": "2ik1TpPuW5w", "title": "25 useful verbs", "minutes": 10}
+    {"id": "2ik1TpPuW5w", "title": "25 useful verbs", "minutes": 10, "notes": {
+      "points": [
+        "25 everyday verbs, each with a sentence. Before you use one, conjugate it for the subject.",
+        "The basics: [[haben]], [[sein]], [[essen]], [[trinken]], [[schlafen]], [[duschen]], [[kochen]], [[sitzen]].",
+        "German has one verb for eating breakfast: [[frühstücken]]: [[Ich frühstücke um sieben.]]",
+        "Separable verbs split, with the prefix at the end: [[aufstehen]], [[fernsehen]]: [[Ich stehe um sechs Uhr auf.]]",
+        "With a modal verb, the main verb goes to the end: [[Ich möchte nach Berlin fahren.]]",
+        "Also in the list: [[fahren]], [[telefonieren]], [[spielen]], [[machen]], [[fragen]], [[hören]], [[lesen]], [[sprechen]]."
+      ],
+      "phrases": [
+        {"de": "Ich frühstücke um sieben.", "en": "I have breakfast at seven."},
+        {"de": "Ich stehe um sechs Uhr auf.", "en": "I get up at six."},
+        {"de": "Trinkst du gern Tee?", "en": "Do you like drinking tea?"},
+        {"de": "Ich möchte nach Berlin fahren.", "en": "I'd like to go to Berlin."},
+        {"de": "Nimmst du Zucker?", "en": "Do you take sugar?"},
+        {"de": "Hörst du gern Musik?", "en": "Do you like listening to music?"},
+        {"de": "Sie liest gern Bücher.", "en": "She likes reading books."},
+        {"de": "Sprechen Sie bitte lauter!", "en": "Please speak louder!"}
+      ]
+    }}
   ],
   "words": ["chef", "chefin", "buero", "aufgabe", "e-mail", "telefonieren", "kunde", "kundin", "team", "projekt", "fertig", "wichtig", "schicken", "drucken", "drucker", "beginnen"],
   "sections": [

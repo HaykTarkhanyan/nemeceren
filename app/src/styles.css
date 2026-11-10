@@ -1167,13 +1167,93 @@ details > summary {
 }
 
 .lesson-videos {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
 
+/* Thumbnail on the left, title and "Read instead" next to it. On a phone the notes open below both;
+   a started player takes the whole width. */
 .video {
-  margin: 0;
+  display: grid;
+  grid-template-columns: 176px minmax(0, 1fr);
+  grid-template-rows: auto 1fr;
+  column-gap: 12px;
+  row-gap: 4px;
+  align-items: start;
+}
+
+.video-media {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+}
+
+.video-caption {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.video-notes {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+@media (max-width: 520px) {
+  .video {
+    grid-template-columns: 128px minmax(0, 1fr);
+  }
+  .video-media {
+    grid-row: 1;
+  }
+  .video-notes {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+}
+
+.video.playing .video-media {
+  grid-column: 1 / -1;
+  grid-row: 1;
+}
+
+.video.playing .video-caption {
+  grid-column: 1 / -1;
+  grid-row: 2;
+}
+
+.video.playing .video-notes {
+  grid-column: 1 / -1;
+  grid-row: 3;
+}
+
+.video-notes > summary {
+  color: var(--accent);
+  font-size: 0.9rem;
+}
+
+.video-notes[open] > summary {
+  margin-bottom: 8px;
+}
+
+.video-notes-label {
+  margin: 0 0 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.video-phrases {
+  list-style: none;
+  margin: 0 0 8px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.video-phrases li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
 }
 
 .video-thumb,
@@ -1208,10 +1288,6 @@ details > summary {
   font-size: 2.5rem;
   color: #fff;
   text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
-}
-
-.video figcaption {
-  margin-top: 4px;
 }
 
 .badge.word-learning {

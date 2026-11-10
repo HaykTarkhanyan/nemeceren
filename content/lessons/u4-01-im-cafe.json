@@ -15,7 +15,23 @@
     { "title": "Nicos Weg A1, chapter 3: In company (Was trinkst du?, Eine Pizza bitte!)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
   ],
   "videos": [
-    {"id": "aS5ZdypKsZE", "title": "möchten", "minutes": 6}
+    {"id": "aS5ZdypKsZE", "title": "möchten", "minutes": 6, "notes": {
+      "points": [
+        "[[möchten]] (would like) is used like a modal verb: it is conjugated in second place, and the other verb goes to the end: [[Max möchte eine Pizza bestellen.]]",
+        "In a W-question it stays second ([[Was möchtest du trinken?]]); in a yes/no question it comes first ([[Möchten Sie einen Kaffee?]]).",
+        "When the meaning is clear, it stands alone: [[Ich möchte eine Cola.]]",
+        "Uses: a wish, ordering in a café or restaurant, and buying something in a shop.",
+        "Conjugation: [[ich möchte]], [[du möchtest]], [[er möchte]], [[wir möchten]], [[ihr möchtet]], [[sie möchten]]. As with all modal verbs, ich and er have the same form."
+      ],
+      "phrases": [
+        {"de": "Ich möchte eine Cola.", "en": "I'd like a cola."},
+        {"de": "Was möchtest du trinken?", "en": "What would you like to drink?"},
+        {"de": "Möchten Sie einen Kaffee?", "en": "Would you like a coffee?"},
+        {"de": "Ich möchte nach Berlin fahren.", "en": "I'd like to go to Berlin."},
+        {"de": "Wir möchten bestellen.", "en": "We'd like to order."},
+        {"de": "Ich möchte ein Kilo Äpfel.", "en": "I'd like a kilo of apples."}
+      ]
+    }}
   ],
   "words": ["moechten", "ich-haette-gern", "cafe", "tee", "saft", "milch", "zucker", "wein", "bier", "glas", "flasche", "tasse", "kuchen", "sehr", "trinken"],
   "sections": [

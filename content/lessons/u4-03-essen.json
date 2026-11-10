@@ -15,11 +15,107 @@
     { "title": "Nicos Weg A1, chapter 3: In company (Eine Pizza bitte!)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
   ],
   "videos": [
-    {"id": "15hmmpt15ag", "title": "Irregular verbs (vowel change)", "minutes": 13},
-    {"id": "nef5kSqmpes", "title": "25 everyday foods", "minutes": 10},
-    {"id": "WMf4M4BBJlQ", "title": "Breakfast", "minutes": 11},
-    {"id": "XSAt7PWzLIo", "title": "Fruit", "minutes": 11},
-    {"id": "J6nUgKkTnIY", "title": "Vegetables", "minutes": 11}
+    {"id": "15hmmpt15ag", "title": "Irregular verbs (vowel change)", "minutes": 13, "notes": {
+      "points": [
+        "Irregular (strong) verbs change the vowel of their stem in the present, but only with [[du]] and [[er]]/[[sie]]/[[es]]. The endings are the regular ones.",
+        "e becomes i: [[sprechen]], [[du sprichst]]; [[treffen]], [[du triffst]]; [[essen]], [[du isst]]. [[nehmen]] changes more: [[du nimmst]], [[er nimmt]].",
+        "e becomes ie: [[lesen]], [[du liest]]; [[sehen]], [[du siehst]].",
+        "a becomes ä, and au becomes äu: [[fahren]], [[du fährst]]; [[waschen]], [[du wäschst]]; [[laufen]], [[du läufst]].",
+        "[[wissen]] is special: it changes with [[ich]] too: [[ich weiß]], [[du weißt]], [[er weiß]].",
+        "Not every verb with these vowels is irregular: [[lernen]] stays [[du lernst]]. Learn the irregular ones one by one."
+      ],
+      "phrases": [
+        {"de": "Er fährt nach Berlin.", "en": "He's going to Berlin."},
+        {"de": "Du nimmst den Bus.", "en": "You take the bus."},
+        {"de": "Sie trifft ihre Freundin.", "en": "She's meeting her friend."},
+        {"de": "Er liest ein Buch.", "en": "He's reading a book."},
+        {"de": "Siehst du das?", "en": "Do you see that?"},
+        {"de": "Sie läuft jeden Morgen.", "en": "She runs every morning."},
+        {"de": "Er wäscht das Auto.", "en": "He's washing the car."},
+        {"de": "Ich weiß es nicht.", "en": "I don't know."}
+      ],
+      "extra": "[[laufen]], [[waschen]], [[treffen]], [[sehen]] and [[wissen]], beyond the lesson's four verbs."
+    }},
+    {"id": "nef5kSqmpes", "title": "25 everyday foods", "minutes": 10, "notes": {
+      "points": [
+        "[[die Lebensmittel]] (food, groceries) is plural.",
+        "Some foods have no plural: [[das Wasser]], [[die Milch]], [[die Butter]], [[das Eis]] (ice cream), [[der Reis]], [[der Zucker]]. [[die Pommes]] (chips) has no singular.",
+        "Some have two articles: [[das Sandwich]] or [[der Sandwich]], [[die Cola]] or [[das Cola]] (the south says das), [[der Joghurt]] or [[das Joghurt]].",
+        "[[die Pizza]] has two plurals: [[die Pizzas]] or [[die Pizzen]].",
+        "The rest: [[der Kuchen]], [[das Brot]], [[der Apfel]], [[die Banane]], [[der Käse]], [[die Karotte]], [[der Salat]], [[die Wurst]], [[der Kaffee]], [[der Tee]], [[die Kartoffel]], [[das Ei]], [[die Tomate]]."
+      ],
+      "phrases": [
+        {"de": "die Lebensmittel", "en": "food, groceries"},
+        {"de": "das Brot, die Brote", "en": "the bread, the loaves"},
+        {"de": "die Wurst, die Würste", "en": "the sausage, the sausages"},
+        {"de": "das Ei, die Eier", "en": "the egg, the eggs"},
+        {"de": "die Kartoffel, die Kartoffeln", "en": "the potato, the potatoes"},
+        {"de": "die Pizza, die Pizzas", "en": "the pizza, the pizzas"},
+        {"de": "die Pommes", "en": "chips, French fries"},
+        {"de": "das Eis", "en": "the ice cream"}
+      ]
+    }},
+    {"id": "WMf4M4BBJlQ", "title": "Breakfast", "minutes": 11, "notes": {
+      "points": [
+        "[[das Frühstück]] is breakfast, and [[frühstücken]] the verb.",
+        "Drinks: [[der Kaffee]], [[der Tee]], [[die Milch]], [[der Saft]] ([[der Apfelsaft]], [[der Orangensaft]]), [[der Smoothie]].",
+        "Rolls depend on the region: [[das Brötchen]] in most of Germany, [[die Semmel]] in Bavaria and Austria, [[die Schrippe]] in Berlin. A pretzel is [[die Brezel]], in Bavaria [[die Breze]].",
+        "On the table: [[das Brot]], [[der Toast]], [[das Croissant]], [[das Müsli]], [[der Joghurt]], [[die Butter]], [[die Marmelade]] (jam), [[der Honig]], [[der Käse]], [[die Wurst]], [[der Schinken]] (ham), [[der Speck]] (bacon), [[das Obst]].",
+        "Eggs: [[das Spiegelei]] (fried), [[das Rührei]] (scrambled), [[das gekochte Ei]] (boiled).",
+        "Talking about it: [[Zum Frühstück esse ich eine Banane und trinke einen Kaffee.]]"
+      ],
+      "phrases": [
+        {"de": "das Frühstück", "en": "breakfast"},
+        {"de": "die Semmel, die Semmeln", "en": "the bread roll, the rolls (Bavaria)"},
+        {"de": "die Marmelade", "en": "the jam"},
+        {"de": "das Spiegelei", "en": "the fried egg"},
+        {"de": "das Rührei", "en": "the scrambled eggs"},
+        {"de": "der Orangensaft", "en": "the orange juice"},
+        {"de": "Zum Frühstück esse ich eine Banane und trinke einen Kaffee.", "en": "For breakfast I eat a banana and drink a coffee."},
+        {"de": "Zum Frühstück esse ich eine Scheibe Brot mit Käse.", "en": "For breakfast I eat a slice of bread with cheese."}
+      ],
+      "extra": "Regional words for rolls ([[Semmel]], [[Schrippe]]), the three kinds of egg, and [[Zum Frühstück ...]]."
+    }},
+    {"id": "XSAt7PWzLIo", "title": "Fruit", "minutes": 11, "notes": {
+      "points": [
+        "[[das Obst]] (fruit) is a collective noun: singular, with das.",
+        "Common fruit: [[der Apfel]], [[die Banane]], [[die Birne]] (pear), [[die Orange]], [[die Kirsche]] (cherry), [[die Traube]] (grape), [[die Pflaume]] (plum), [[der Pfirsich]] (peach), [[die Aprikose]] (apricot).",
+        "Berries: [[die Erdbeere]] (strawberry), [[die Himbeere]] (raspberry), [[die Brombeere]] (blackberry), [[die Heidelbeere]] or [[die Blaubeere]] (blueberry).",
+        "More: [[die Melone]], [[die Wassermelone]], [[die Ananas]], [[die Kiwi]], [[die Feige]] (fig), [[der Granatapfel]] (pomegranate), [[die Avocado]], [[die Grapefruit]].",
+        "Regional words: in the north [[die Apfelsine]] for orange; in the south and Austria [[die Zwetschge]] for plum; in Austria [[die Marille]] for apricot."
+      ],
+      "phrases": [
+        {"de": "das Obst", "en": "fruit"},
+        {"de": "der Apfel, die Äpfel", "en": "the apple, the apples"},
+        {"de": "die Birne, die Birnen", "en": "the pear, the pears"},
+        {"de": "die Erdbeere, die Erdbeeren", "en": "the strawberry, the strawberries"},
+        {"de": "die Kirsche, die Kirschen", "en": "the cherry, the cherries"},
+        {"de": "der Pfirsich, die Pfirsiche", "en": "the peach, the peaches"},
+        {"de": "die Zwetschge", "en": "the plum (southern Germany)"},
+        {"de": "der Granatapfel", "en": "the pomegranate"}
+      ],
+      "extra": "About 25 fruit names, with the regional variants."
+    }},
+    {"id": "J6nUgKkTnIY", "title": "Vegetables", "minutes": 11, "notes": {
+      "points": [
+        "[[das Gemüse]] (vegetables) is a collective noun: singular, with das.",
+        "Basics: [[die Karotte]] or [[die Möhre]] (carrot), [[die Zwiebel]] (onion), [[die Kartoffel]], [[die Tomate]], [[die Gurke]] (cucumber), [[die Paprika]] (pepper), [[der Salat]] (lettuce).",
+        "More: [[die Bohne]] (bean), [[die Erbse]] (pea), [[der Mais]] (corn), [[der Kürbis]] (pumpkin), [[der Kohl]] (cabbage), [[der Blumenkohl]] (cauliflower), [[der Rosenkohl]] (Brussels sprouts), [[der Brokkoli]], [[der Spinat]], [[der Spargel]] (asparagus), [[die Zucchini]], [[die Aubergine]], [[der Knoblauch]] (garlic), [[der Ingwer]] (ginger), [[der Lauch]] (leek).",
+        "No plural: [[der Mais]], [[der Knoblauch]], [[der Spinat]], [[der Ingwer]].",
+        "Austria and southern Germany: [[der Erdapfel]] for potato; Austria also [[die Melanzani]] for aubergine."
+      ],
+      "phrases": [
+        {"de": "das Gemüse", "en": "vegetables"},
+        {"de": "die Zwiebel, die Zwiebeln", "en": "the onion, the onions"},
+        {"de": "die Gurke, die Gurken", "en": "the cucumber, the cucumbers"},
+        {"de": "die Bohne, die Bohnen", "en": "the bean, the beans"},
+        {"de": "der Blumenkohl", "en": "the cauliflower"},
+        {"de": "der Knoblauch", "en": "the garlic"},
+        {"de": "der Spargel", "en": "the asparagus"},
+        {"de": "der Kürbis", "en": "the pumpkin"}
+      ],
+      "extra": "About 30 vegetable names, with the Austrian and southern variants."
+    }}
   ],
   "words": ["essen", "essen-2", "fruehstueck", "brot", "broetchen", "semmel", "butter", "ei", "kaese", "wurst", "fleisch", "fisch", "gemuese", "obst", "apfel", "banane", "tomate", "kartoffel", "reis", "salat", "suppe", "lesen", "sehen", "fahren"],
   "sections": [

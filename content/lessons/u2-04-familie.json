@@ -16,9 +16,64 @@
     { "title": "Nicos Weg A1, chapter 6: Living (Unser Haus: possessives)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
   ],
   "videos": [
-    {"id": "VuCqbaBXiQs", "title": "The family", "minutes": 7},
-    {"id": "sBUR0Q9ZTN4", "title": "Possessives: mein, dein ...", "minutes": 14},
-    {"id": "3d1CabCbVNM", "title": "ihr or Ihr?", "minutes": 10}
+    {"id": "VuCqbaBXiQs", "title": "The family", "minutes": 7, "notes": {
+      "points": [
+        "Parents: [[der Vater]], [[die Mutter]], together [[die Eltern]] (plural, so [[meine Eltern]]).",
+        "Siblings: [[der Bruder]], [[die Schwester]], together [[die Geschwister]] (brothers and sisters).",
+        "Grandparents: [[der Großvater]] or [[Opa]], [[die Großmutter]] or [[Oma]], together [[die Großeltern]].",
+        "More family: [[der Onkel]], [[die Tante]], [[der Cousin]] (male cousin), [[die Cousine]] (female cousin).",
+        "[[mein]] goes with der words, [[meine]] with die words and plurals: [[mein Vater]], [[meine Mutter]], [[meine Eltern]].",
+        "[[Meine Familie ist groß.]] or [[Meine Familie ist klein.]] To ask: [[Wie groß ist deine Familie?]]"
+      ],
+      "phrases": [
+        {"de": "Das ist meine Familie.", "en": "This is my family."},
+        {"de": "Das sind meine Eltern.", "en": "These are my parents."},
+        {"de": "Das sind meine Geschwister.", "en": "These are my brothers and sisters."},
+        {"de": "Das ist mein Großvater. Er ist mein Opa.", "en": "This is my grandfather. He's my grandpa."},
+        {"de": "Das sind meine Großeltern.", "en": "These are my grandparents."},
+        {"de": "Das ist meine Cousine.", "en": "This is my cousin. (a woman)"},
+        {"de": "Meine Familie ist klein.", "en": "My family is small."},
+        {"de": "Wie groß ist deine Familie?", "en": "How big is your family?"}
+      ]
+    }},
+    {"id": "sBUR0Q9ZTN4", "title": "Possessives: mein, dein ...", "minutes": 14, "notes": {
+      "points": [
+        "Each personal pronoun has its possessive: [[ich]] [[mein]], [[du]] [[dein]], [[er]] and [[es]] [[sein]], [[sie]] (she) [[ihr]], [[wir]] [[unser]], [[ihr]] (you all) [[euer]], [[sie]] (they) [[ihr]], [[Sie]] [[Ihr]].",
+        "Two steps: first pick by the owner (my, your, his ...), then the ending by the thing owned.",
+        "With der and das nouns there is no ending: [[mein Fernseher]], [[mein Auto]]. With die nouns and plurals, add -e: [[meine Katze]], [[meine Bücher]].",
+        "[[euer]] drops an e when it gets the ending: [[euer Auto]], but [[eure Katze]].",
+        "Polite [[Ihr]] has a capital I, whether you speak to one person or several. [[ihr]] for 'her' and 'their' is small."
+      ],
+      "phrases": [
+        {"de": "Das ist mein Fernseher.", "en": "This is my TV."},
+        {"de": "Das ist deine Katze.", "en": "This is your cat."},
+        {"de": "Das ist Peter. Das ist sein Auto.", "en": "This is Peter. This is his car."},
+        {"de": "Das ist Lena. Das ist ihr Auto.", "en": "This is Lena. This is her car."},
+        {"de": "Das ist unser Haus.", "en": "This is our house."},
+        {"de": "Das ist eure Katze.", "en": "This is your cat. (you all)"},
+        {"de": "Herr Müller, ist das Ihr Auto?", "en": "Mr Müller, is this your car?"},
+        {"de": "Sie wohnen in Deutschland. Das ist ihr Haus.", "en": "They live in Germany. This is their house."}
+      ]
+    }},
+    {"id": "3d1CabCbVNM", "title": "ihr or Ihr?", "minutes": 10, "notes": {
+      "points": [
+        "[[Ihr]] with a capital I is only one thing: the polite 'your', for [[Sie]]: [[Wie ist Ihr Familienname?]]",
+        "Small [[ihr]] has four jobs. First, 'you' for two or more people you say du to: [[Kinder, habt ihr Hunger?]]",
+        "Second and third, 'her' and 'their': [[Das ist Eva. Das ist ihr Haus.]], [[Das sind meine Eltern. Das ist ihr Haus.]]",
+        "Fourth, 'to her', the dative of [[sie]] (she): [[Ich gebe ihr eine Blume.]] The dative comes in Unit 6.",
+        "In a letter or message to someone you know, you may capitalise the informal 'you': [[Habt Ihr am Wochenende Zeit?]] It's optional."
+      ],
+      "phrases": [
+        {"de": "Wie ist Ihr Familienname?", "en": "What is your surname? (polite)"},
+        {"de": "Herr Müller, ist das Ihr Auto?", "en": "Mr Müller, is that your car?"},
+        {"de": "Max und Lena, habt ihr am Wochenende Zeit?", "en": "Max and Lena, are you free at the weekend?"},
+        {"de": "Das ist meine Schwester. Das ist ihr Buch.", "en": "This is my sister. This is her book."},
+        {"de": "Das sind unsere Nachbarn. Das ist ihr Sohn.", "en": "These are our neighbours. This is their son."},
+        {"de": "Ich gebe ihr eine Blume.", "en": "I'm giving her a flower."},
+        {"de": "Meine Oma wohnt in Berlin. Ich fahre heute zu ihr.", "en": "My grandma lives in Berlin. I'm going to see her today."}
+      ],
+      "extra": "[[ihr]] as 'to her' (dative), which the lesson leaves for Unit 6."
+    }}
   ],
   "words": ["familie", "eltern", "vater", "mutter", "bruder", "schwester", "sohn", "tochter", "kind", "geschwister", "mann", "verheiratet", "ledig", "mein", "dein", "unser", "onkel", "tante", "cousin", "cousine"],
   "tests": ["u2-t2-plural-familie"],

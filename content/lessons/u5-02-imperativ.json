@@ -14,7 +14,28 @@
     { "title": "Nicos Weg A1, chapter 16: Sports and exercise (Ist das gesund?)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
   ],
   "videos": [
-    {"id": "2b44fRJYg5Y", "title": "The imperative", "minutes": 12}
+    {"id": "2b44fRJYg5Y", "title": "The imperative", "minutes": 12, "notes": {
+      "points": [
+        "The imperative gives requests, commands and advice. The verb comes first, and in writing it often ends with an exclamation mark.",
+        "Requests take [[bitte]]: [[Hilf mir bitte!]] Commands need a firm voice, and [[doch]] adds emphasis: [[Komm doch her!]] Advice: [[Fahr vorsichtig!]]",
+        "du form: drop [[du]] and the -st: [[du kommst]] becomes [[Komm!]], [[du lernst]] [[Lern!]]. Verbs that add an umlaut lose it: [[du fährst]] becomes [[Fahr!]]",
+        "Stems in -d or -t keep their e: [[Arbeite!]], [[Rede!]] Verbs that change e to i or ie keep the change: [[Iss!]], [[Lies!]], [[Gib!]] Separable verbs put the prefix at the end: [[Mach mit!]]",
+        "ihr form: just drop [[ihr]]: [[Kommt!]], [[Lernt!]] Sie form: swap the verb and [[Sie]]: [[Kommen Sie!]], [[Fahren Sie!]]",
+        "Learn these three by heart: [[sein]]: [[Sei!]], [[Seid!]], [[Seien Sie!]]; [[haben]]: [[Hab!]], [[Habt!]], [[Haben Sie!]]; [[werden]]: [[Werde!]], [[Werdet!]], [[Werden Sie!]]"
+      ],
+      "phrases": [
+        {"de": "Hilf mir bitte!", "en": "Help me, please!"},
+        {"de": "Komm doch her!", "en": "Come here!"},
+        {"de": "Fahr vorsichtig!", "en": "Drive carefully!"},
+        {"de": "Iss dein Gemüse!", "en": "Eat your vegetables!"},
+        {"de": "Mach bitte die Tür zu!", "en": "Close the door, please!"},
+        {"de": "Hört mir bitte zu!", "en": "Listen to me, please! (you all)"},
+        {"de": "Kommen Sie bitte herein!", "en": "Please come in!"},
+        {"de": "Sei ruhig!", "en": "Be quiet!"},
+        {"de": "Hab Geduld!", "en": "Be patient!"}
+      ],
+      "extra": "The imperatives of [[sein]], [[haben]] and [[werden]], and [[doch]] for emphasis."
+    }}
   ],
   "words": ["hausaufgabe", "pruefung", "raum", "seite", "wort", "satz", "text", "antwort", "richtig", "falsch", "fehler", "papier", "oeffnen", "schliessen", "ankreuzen", "erklaeren", "sagen", "bringen", "zuhoeren", "unterricht", "mal"],
   "tests": ["u5-t1-arbeit-imperativ"],

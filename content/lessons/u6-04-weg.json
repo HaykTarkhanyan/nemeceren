@@ -14,8 +14,48 @@
     { "title": "Nicos Weg A1, chapter 10: Orientation (Wo ist der Bahnhof?, An der Ampel links)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
   ],
   "videos": [
-    {"id": "JsH6DAh0Pqw", "title": "Asking the way", "minutes": 9},
-    {"id": "IIxYnEntMP0", "title": "zu, zum or zur?", "minutes": 10}
+    {"id": "JsH6DAh0Pqw", "title": "Asking the way", "minutes": 9, "notes": {
+      "points": [
+        "The three key words: [[links]] (left), [[rechts]] (right), [[geradeaus]] (straight on).",
+        "Directions use the imperative: [[Gehen Sie geradeaus.]], [[Gehen Sie die erste Straße links.]], [[Biegen Sie an der Ampel rechts ab.]] (turn right at the lights)",
+        "Passing something: [[an ... vorbei]], with [[an der]] for die words and [[am]] for der and das words: [[Gehen Sie an der Kirche vorbei.]], [[am Rathaus vorbei]]. Along a street: [[die Straße entlang]].",
+        "Where something is: [[gegenüber]] (opposite), [[neben]] (next to), [[an der Ecke]] (on the corner), [[ganz in der Nähe]] (very close).",
+        "Asking: [[Wie komme ich zum Bahnhof?]] ([[zum]] for der and das places) or [[zur Apotheke]] ([[zur]] for die places). Also [[Wie weit ist es zum Rathaus?]] and [[Wo finde ich hier eine Apotheke?]]",
+        "Thank with [[Danke]] or [[Vielen Dank]]; the answer is [[Bitte]]. If you don't know: [[Es tut mir leid, das weiß ich leider auch nicht.]]"
+      ],
+      "phrases": [
+        {"de": "Entschuldigen Sie, wie komme ich zum Bahnhof?", "en": "Excuse me, how do I get to the station?"},
+        {"de": "Gehen Sie geradeaus und dann die erste Straße links.", "en": "Go straight on, then take the first street on the left."},
+        {"de": "Gehen Sie an der Kirche vorbei.", "en": "Go past the church."},
+        {"de": "Wie weit ist es zum Rathaus?", "en": "How far is it to the town hall?"},
+        {"de": "Das ist ganz in der Nähe.", "en": "It's very close."},
+        {"de": "Sie können zu Fuß gehen. Das sind zehn Minuten.", "en": "You can walk. It's ten minutes."},
+        {"de": "Das Restaurant ist gegenüber der Kirche.", "en": "The restaurant is opposite the church."},
+        {"de": "Da nehmen Sie am besten den Bus oder die U-Bahn.", "en": "It's best to take the bus or the underground."},
+        {"de": "Es tut mir leid, das weiß ich leider auch nicht.", "en": "Sorry, I don't know either."}
+      ]
+    }},
+    {"id": "IIxYnEntMP0", "title": "zu, zum or zur?", "minutes": 10, "notes": {
+      "points": [
+        "[[zu]] takes the dative, so its article changes: [[zu dem]] becomes [[zum]] (der and das words), [[zu der]] becomes [[zur]] (die words).",
+        "Plain [[zu]], with no article: people's names ([[zu Peter]]), possessives ([[zu meinen Eltern]]), pronouns ([[zu dir]]), and fixed phrases ([[zu Hause]], [[zu Fuß]]).",
+        "Holidays without an article take plain zu: [[zu Weihnachten]], [[zu Ostern]]. With an article: [[zum Geburtstag]], [[zur Hochzeit]] (wedding).",
+        "[[zum]]: [[zum Arzt]], [[zum Bahnhof]], and with a verb used as a noun: [[zum Essen]], [[zum Lernen]], [[zum Schwimmen]].",
+        "[[zur]]: [[zur Schule]], [[zur Bank]], [[zur Ärztin]].",
+        "Know the article first, then pick zum or zur."
+      ],
+      "phrases": [
+        {"de": "Ich gehe zu Peter.", "en": "I'm going to Peter's."},
+        {"de": "Wir fahren zu meinen Eltern.", "en": "We're going to my parents'."},
+        {"de": "Ich gehe heute zum Arzt.", "en": "I'm going to the doctor today."},
+        {"de": "Sie geht zur Schule.", "en": "She goes to school."},
+        {"de": "Ich gehe zur Bank.", "en": "I'm going to the bank."},
+        {"de": "Zu Weihnachten fahren wir nach Hause.", "en": "At Christmas we're going home."},
+        {"de": "Alles Gute zum Geburtstag!", "en": "Happy birthday!"},
+        {"de": "Sie gehen zum Frühstück ins Café.", "en": "They're going to the café for breakfast."}
+      ],
+      "extra": "[[zu Weihnachten]] versus [[zum Geburtstag]], and [[zum]] with a verb-noun ([[zum Essen]])."
+    }}
   ],
   "words": ["links", "rechts", "geradeaus", "weit", "ecke", "ampel", "kreuzung", "in-der-naehe", "weg", "kilometer", "wie-komme-ich-zum", "entschuldigen"],
   "tests": ["u6-t2-verkehr-weg"],

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { blockGermanFields } from './german.ts'
+import { blockGermanFields, germanFields, videoNotesGermanFields } from './german.ts'
 import { exerciseSections, exerciseTestId, itemsForResult } from './lessons.ts'
 import type { Lesson, LessonBlock, Result } from './schema.ts'
 import { checkAllContent, ContentError, parseLesson, parseResult } from './validate.ts'
@@ -67,6 +67,29 @@ describe('lesson validation', () => {
     expect(ok.videos).toEqual([{ id: 'RElBVZ1Wke0', title: 'Introducing yourself', minutes: 10 }])
     const p = problemsOf(() => parseLesson('content/lessons/u1-01-x.json', { ...base, videos: [{ id: 'https://youtu.be/RElBVZ1Wke0', title: 'T', minutes: 10 }], sections }))
     expect(p).toEqual(['content/lessons/u1-01-x.json: videos[0].id: must be a YouTube video id (11 characters)'])
+  })
+
+  it('accepts "Read instead" notes on a video and checks their shape', () => {
+    const sections = [{ type: 'tip', text: 't' }]
+    const video = { id: 'RElBVZ1Wke0', title: 'Introducing yourself', minutes: 10 }
+    const notes = {
+      points: ['Say [[Ich heiße ...]] or [[Ich bin ...]].', 'Jobs take no article: [[Ich bin Lehrer.]]', '**Hobbies** come last.'],
+      phrases: [{ de: 'Ich wohne in Berlin.', en: 'I live in Berlin.' }, { de: 'Ich bin verheiratet.', en: "I'm married." }, { de: 'Ich habe zwei Kinder.', en: 'I have two children.' }],
+      extra: 'Family status: [[ledig]], [[verheiratet]].',
+    }
+    const ok = parseLesson('content/lessons/u1-01-x.json', { ...base, videos: [{ ...video, notes }], sections })
+    expect(ok.videos?.[0].notes).toEqual(notes)
+    const without = parseLesson('content/lessons/u1-01-x.json', { ...base, videos: [video], sections })
+    expect(without.videos?.[0].notes).toBeUndefined()
+
+    const bad = (n: object) => problemsOf(() => parseLesson('content/lessons/u1-01-x.json', { ...base, videos: [{ ...video, notes: n }], sections }))
+    expect(bad({ ...notes, points: notes.points.slice(0, 2) })).toEqual(['content/lessons/u1-01-x.json: videos[0].notes.points: Too small: expected array to have >=3 items'])
+    expect(bad({ ...notes, points: Array(8).fill('p') })).toEqual(['content/lessons/u1-01-x.json: videos[0].notes.points: Too big: expected array to have <=7 items'])
+    expect(bad({ ...notes, phrases: notes.phrases.slice(0, 2) })).toEqual(['content/lessons/u1-01-x.json: videos[0].notes.phrases: Too small: expected array to have >=3 items'])
+    expect(bad({ ...notes, points: ['one\ntwo', 'b', 'c'] })).toEqual(['content/lessons/u1-01-x.json: videos[0].notes.points[0]: must be one line (no line breaks)'])
+    expect(bad({ ...notes, extra: 'an **open bold' })[0]).toMatch(/^content\/lessons\/u1-01-x\.json: videos\[0\]\.notes\.extra: "\*\*" without a closing/)
+    expect(bad({ ...notes, phrases: [{ de: 'Hallo' }, ...notes.phrases] })).toEqual(['content/lessons/u1-01-x.json: videos[0].notes.phrases[0].en: Invalid input: expected string, received undefined'])
+    expect(bad({ ...notes, summary: 'x' })).toEqual(['content/lessons/u1-01-x.json: videos[0].notes: Unrecognized key: "summary"'])
   })
 
   it('accepts a dialogue block and rejects a line without its translation', () => {
@@ -138,6 +161,46 @@ describe('lesson German fields and exercises', () => {
 
   it('takes German from [[...]], "words" columns, exercise items and audio, not from "sound" columns', () => {
     expect(lesson.sections.flatMap((b) => blockGermanFields(b).map((f) => f.text))).toEqual(['Hallo', 'Tschüss', 'mein', 'ja', 'nein', 'Guten Tag', 'Danke'])
+  })
+
+  it('takes German from video notes: the phrases and [[...]] in the points and the extra line, not the English', () => {
+    const withNotes: Lesson = {
+      ...lesson,
+      videos: [
+        { id: 'RElBVZ1Wke0', title: 'No notes', minutes: 10 },
+        {
+          id: 'IowuDehrLFk',
+          title: 'Regular verbs',
+          minutes: 15,
+          notes: {
+            points: ['Say [[ich wohne]].', 'No German here.', 'Both **[[du wohnst]]** and [[er wohnt]].'],
+            phrases: [{ de: 'Wir wohnen hier.', en: 'We live here.' }, { de: 'Ihr wohnt dort.', en: 'You live there.' }, { de: 'Sie wohnen da.', en: 'They live there.' }],
+            extra: 'Also [[du reist]].',
+          },
+        },
+      ],
+    }
+    expect(videoNotesGermanFields(withNotes)).toEqual([
+      { field: 'videos[1].notes.points[0] [[German]] #1', text: 'ich wohne' },
+      { field: 'videos[1].notes.points[2] [[German]] #1', text: 'du wohnst' },
+      { field: 'videos[1].notes.points[2] [[German]] #2', text: 'er wohnt' },
+      { field: 'videos[1].notes.phrases[0].de', text: 'Wir wohnen hier.' },
+      { field: 'videos[1].notes.phrases[1].de', text: 'Ihr wohnt dort.' },
+      { field: 'videos[1].notes.phrases[2].de', text: 'Sie wohnen da.' },
+      { field: 'videos[1].notes.extra [[German]] #1', text: 'du reist' },
+    ])
+    // germanFields (the glossary generator and check-content) includes them after the sections.
+    const all = germanFields([], { file: 'content/words.json', words: [] }, [{ file: 'content/lessons/u1-01-x.json', lesson: withNotes }])
+    expect(all.slice(-7).map((f) => f.where)).toEqual([
+      'content/lessons/u1-01-x.json videos[1].notes.points[0] [[German]] #1',
+      'content/lessons/u1-01-x.json videos[1].notes.points[2] [[German]] #1',
+      'content/lessons/u1-01-x.json videos[1].notes.points[2] [[German]] #2',
+      'content/lessons/u1-01-x.json videos[1].notes.phrases[0].de',
+      'content/lessons/u1-01-x.json videos[1].notes.phrases[1].de',
+      'content/lessons/u1-01-x.json videos[1].notes.phrases[2].de',
+      'content/lessons/u1-01-x.json videos[1].notes.extra [[German]] #1',
+    ])
+    expect(all.map((f) => f.text)).toEqual(['Hallo', 'Tschüss', 'mein', 'ja', 'nein', 'Guten Tag', 'Danke', 'ich wohne', 'du wohnst', 'er wohnt', 'Wir wohnen hier.', 'Ihr wohnt dort.', 'Sie wohnen da.', 'du reist'])
   })
 
   it('numbers exercises and finds the items behind a saved result', () => {

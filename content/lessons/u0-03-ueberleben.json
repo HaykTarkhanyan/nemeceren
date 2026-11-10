@@ -13,8 +13,49 @@
   ],
   "nicosWeg": [{ "title": "Nicos Weg A1 (course overview)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }],
   "videos": [
-    {"id": "S8ukFF6SdGk", "title": "Common phrases", "minutes": 11},
-    {"id": "GADqvorP45M", "title": "25 words for beginners", "minutes": 10}
+    {"id": "S8ukFF6SdGk", "title": "Common phrases", "minutes": 11, "notes": {
+      "points": [
+        "Thanks: [[Danke]], [[Danke schön]], and when you're really grateful [[Vielen Dank]] (the v sounds like f). The answer is [[Bitte]] or [[Bitte schön]].",
+        "[[Bitte]] also means please. [[Entschuldigen Sie bitte]] is the polite 'excuse me', [[Entschuldigung]] the everyday one. To apologise: [[Entschuldigung]] or [[Es tut mir leid.]] (a long u in tut).",
+        "Didn't catch it? [[Wie bitte?]] with a rising voice, or just [[Bitte?]] More explicit: [[Noch einmal, bitte.]] or [[Bitte wiederholen Sie.]]",
+        "Languages: [[Sprechen Sie Deutsch?]] - [[Ich spreche kein Englisch.]] or [[Ich spreche etwas Deutsch.]] (a little).",
+        "Not knowing: [[Ich weiß nicht.]] (ß sounds like ss) or the casual [[Keine Ahnung.]] (no idea).",
+        "Also handy: [[Kein Problem.]], [[Einen Moment, bitte.]], and the three key words [[ja]], [[nein]] and [[vielleicht]] (maybe; v sounds like f)."
+      ],
+      "phrases": [
+        {"de": "Vielen Dank!", "en": "Thank you very much!"},
+        {"de": "Entschuldigen Sie bitte.", "en": "Excuse me, please. (polite)"},
+        {"de": "Es tut mir leid.", "en": "I'm sorry."},
+        {"de": "Wie bitte?", "en": "Pardon? Sorry?"},
+        {"de": "Sprechen Sie Englisch?", "en": "Do you speak English?"},
+        {"de": "Ich spreche etwas Deutsch.", "en": "I speak a little German."},
+        {"de": "Ich weiß nicht.", "en": "I don't know."},
+        {"de": "Keine Ahnung.", "en": "No idea."},
+        {"de": "Kein Problem.", "en": "No problem."},
+        {"de": "Einen Moment, bitte.", "en": "One moment, please."}
+      ],
+      "extra": "[[Keine Ahnung]] and [[Kein Problem]] are casual: fine with friends and colleagues."
+    }},
+    {"id": "GADqvorP45M", "title": "25 words for beginners", "minutes": 10, "notes": {
+      "points": [
+        "Polite basics: [[Entschuldigung]] (excuse me, sorry; more formal [[Entschuldigen Sie]]), [[danke]], [[danke schön]], [[vielen Dank]], and [[bitte]] (you're welcome, and please).",
+        "Time words: [[heute]] (today), [[gestern]] (yesterday), [[morgen]] (tomorrow), [[manchmal]] (sometimes), [[später]] (later), [[gleich]] (in a moment).",
+        "Every noun has an article, [[der]], [[die]] or [[das]], and a capital letter: [[das Wasser]], [[das Auto]], [[das Haus]], [[das Handy]] (mobile phone), [[das Geld]] (money), [[der Abend]], [[der Hunger]].",
+        "Hunger is something you have: [[Ich habe Hunger.]] (I'm hungry).",
+        "[[Das ist mein ...]] says what's yours: [[Das ist mein Auto.]] An adjective can stand after [[ist]]: [[Das ist gut.]], [[Das ist schön.]] (that's nice).",
+        "Two verbs, [[essen]] (to eat) and [[trinken]] (to drink). Verbs change their ending for each person: [[ich esse]], [[ich trinke]]."
+      ],
+      "phrases": [
+        {"de": "Ich habe Hunger.", "en": "I'm hungry."},
+        {"de": "Ich komme gleich.", "en": "I'm coming in a moment."},
+        {"de": "Ich komme später.", "en": "I'm coming later."},
+        {"de": "heute Abend", "en": "this evening"},
+        {"de": "Das ist alles.", "en": "That's all."},
+        {"de": "Das ist mein Handy.", "en": "This is my mobile phone."},
+        {"de": "Das ist schön.", "en": "That's nice."},
+        {"de": "Ich esse und trinke.", "en": "I eat and drink."}
+      ]
+    }}
   ],
   "words": ["danke", "bitte", "ja", "nein", "entschuldigung", "wie-bitte", "noch-einmal-bitte", "langsam-bitte", "ich-verstehe-nicht", "ich-verstehe", "was-heisst-das", "sprechen-sie-englisch", "ich-spreche-ein-bisschen-deutsch"],
   "sections": [

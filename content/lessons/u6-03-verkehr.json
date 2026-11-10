@@ -14,9 +14,71 @@
     { "title": "Nicos Weg A1, chapter 10: Orientation (Mit Bus und Bahn)", "url": "https://learngerman.dw.com/en/nicos-weg/c-36519789" }
   ],
   "videos": [
-    {"id": "zMAaMpmLqs0", "title": "Means of transport", "minutes": 10},
-    {"id": "1_WSkHySOqs", "title": "Buying a train ticket", "minutes": 10},
-    {"id": "L9fzpvT3Ops", "title": "Taking a taxi", "minutes": 10}
+    {"id": "zMAaMpmLqs0", "title": "Means of transport", "minutes": 10, "notes": {
+      "points": [
+        "[[das Verkehrsmittel]], plural [[die Verkehrsmittel]]: a means of transport.",
+        "On the road: [[das Auto]], [[der Bus]], [[der Reisebus]] (coach), [[das Taxi]], [[das Fahrrad]], [[das Motorrad]], [[der Roller]] (scooter), [[der LKW]] (lorry, short for [[Lastkraftwagen]]), [[der Wohnwagen]] (caravan), [[der Geländewagen]] (SUV).",
+        "On rails: [[der Zug]], [[die Straßenbahn]] (tram), [[die U-Bahn]] (underground).",
+        "On water and in the air: [[das Schiff]], [[das Boot]], [[die Fähre]] (ferry), [[das Segelboot]], [[das Kanu]], [[das Flugzeug]], [[der Hubschrauber]] (helicopter).",
+        "Emergency: [[der Krankenwagen]] (ambulance), [[das Feuerwehrauto]], [[das Polizeiauto]].",
+        "Regional plurals: in Austria and Bavaria you may hear [[die Wohnwägen]] and [[die Krankenwägen]]."
+      ],
+      "phrases": [
+        {"de": "das Fahrrad, die Fahrräder", "en": "the bike, the bikes"},
+        {"de": "der Zug, die Züge", "en": "the train, the trains"},
+        {"de": "die Straßenbahn", "en": "the tram"},
+        {"de": "die U-Bahn", "en": "the underground"},
+        {"de": "das Flugzeug, die Flugzeuge", "en": "the plane, the planes"},
+        {"de": "die Fähre", "en": "the ferry"},
+        {"de": "der Krankenwagen", "en": "the ambulance"},
+        {"de": "der Hubschrauber", "en": "the helicopter"}
+      ]
+    }},
+    {"id": "1_WSkHySOqs", "title": "Buying a train ticket", "minutes": 10, "notes": {
+      "points": [
+        "Words: [[der Zug]], [[der Hauptbahnhof]] (main station, Hbf), [[der Wagen]] (carriage), [[die Fahrkarte]] or [[der Fahrschein]] or [[das Ticket]], [[der Fahrkartenautomat]] (ticket machine), [[der Schalter]] (ticket counter), [[der Fahrplan]] (timetable).",
+        "On the platform: [[das Gleis]] (track, platform number), [[der Bahnsteig]] (platform), [[die Abfahrt]] (departure), [[die Ankunft]] (arrival), [[die Verspätung]] (delay): [[Der IC 219 hat 30 Minuten Verspätung.]] You'll hear that often in Germany.",
+        "Reading a timetable: when it leaves and arrives, whether you have to change ([[umsteigen]]), how long it takes, the price (a saver fare is [[das Sparangebot]]), and which platform.",
+        "Buy tickets at the counter, at a machine, in an app or online.",
+        "At the counter you'll be asked [[Einfach oder hin und zurück?]] (single or return) and [[Wann wollen Sie fahren?]] A seat reservation ([[die Sitzplatzreservierung]]) costs extra.",
+        "When you get your ticket: [[Gute Reise!]] (have a good trip)"
+      ],
+      "phrases": [
+        {"de": "Ich brauche eine Fahrkarte nach München, bitte.", "en": "I need a ticket to Munich, please."},
+        {"de": "Einfach oder hin und zurück?", "en": "Single or return?"},
+        {"de": "Nur Hinfahrt, bitte.", "en": "Just one way, please."},
+        {"de": "Mit dem nächsten Zug.", "en": "On the next train."},
+        {"de": "Auf welchem Gleis fährt der Zug ab?", "en": "Which platform does the train leave from?"},
+        {"de": "Muss ich umsteigen?", "en": "Do I have to change?"},
+        {"de": "Wann kommt der Zug in München an?", "en": "When does the train arrive in Munich?"},
+        {"de": "Wie lange dauert die Fahrt?", "en": "How long does the journey take?"},
+        {"de": "Der Zug hat dreißig Minuten Verspätung.", "en": "The train is thirty minutes late."},
+        {"de": "Gute Reise!", "en": "Have a good trip!"}
+      ],
+      "extra": "Buying a long-distance ticket: [[einfach]] or [[hin und zurück]], [[Sitzplatzreservierung]], reading a timetable."
+    }},
+    {"id": "L9fzpvT3Ops", "title": "Taking a taxi", "minutes": 10, "notes": {
+      "points": [
+        "Words: [[das Taxi]], [[der Taxistand]] (taxi rank, at stations, airports, hotels), [[der Taxifahrer]], [[das Taxameter]] (meter), [[die Quittung]] (receipt). German taxis are usually cream-coloured, with a yellow and black sign.",
+        "Ordering by phone: say when and where: [[Ich brauche bitte ein Taxi für morgen um acht Uhr in die Goethestraße 10.]] For right away: [[Ich brauche sofort ein Taxi zum Flughafen.]]",
+        "On the street: [[Entschuldigen Sie, sind Sie frei?]], [[Können Sie mich zum Bahnhof bringen?]], or politer [[Würden Sie mich bitte zum Flughafen bringen?]]",
+        "In the taxi: [[Wohin möchten Sie?]] - [[Zum Flughafen, bitte.]] Then: [[Ist das Taxameter an?]], [[Wie lange dauert die Fahrt?]], [[Ich habe es eilig.]] (I'm in a hurry)",
+        "Stopping: [[Halten Sie bitte hier.]], or on the way [[Können Sie bitte an einer Bank halten?]]",
+        "Paying: [[Wie viel kostet das?]], [[Kann ich mit Karte zahlen?]], [[Kann ich bitte eine Quittung haben?]] Tip by rounding up to the next euro ([[Stimmt so.]]); on long trips 5 to 10 percent. Nights, Sundays and holidays can cost extra."
+      ],
+      "phrases": [
+        {"de": "Ich brauche bitte ein Taxi für morgen um acht Uhr.", "en": "I need a taxi for tomorrow at eight, please."},
+        {"de": "Das Taxi ist in zehn Minuten da.", "en": "The taxi will be there in ten minutes."},
+        {"de": "Entschuldigen Sie, sind Sie frei?", "en": "Excuse me, are you free?"},
+        {"de": "Können Sie mich zum Bahnhof bringen?", "en": "Can you take me to the station?"},
+        {"de": "Wie lange dauert die Fahrt zum Flughafen?", "en": "How long does it take to the airport?"},
+        {"de": "Ich habe es eilig.", "en": "I'm in a hurry."},
+        {"de": "Halten Sie bitte hier.", "en": "Please stop here."},
+        {"de": "Kann ich bitte eine Quittung haben?", "en": "Can I have a receipt, please?"},
+        {"de": "Stimmt so.", "en": "Keep the change."}
+      ],
+      "extra": "Taking a taxi, which the lesson doesn't cover: ordering one, the meter, the receipt, tipping."
+    }}
   ],
   "words": ["bus", "u-bahn", "s-bahn", "strassenbahn", "haltestelle", "bahnhof", "hauptbahnhof", "fahrkarte", "gleis", "abfahren", "ankommen", "umsteigen", "einsteigen", "aussteigen", "auto", "fahrrad", "zu-fuss", "verspaetung", "richtung"],
   "sections": [
