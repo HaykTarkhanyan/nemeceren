@@ -1,0 +1,27 @@
+title = "Read page, listening tests, video notes, A1 gaps, skippable writing (5 parallel agents in worktrees)"
+date = "2026-11-10"
+time = "10:39"
+areas = ["app/src", "app/scripts", "content/readings.json", "content/tests", "content/lessons", "content/words.json", "content/sets.json", "content/glossary*.json", "content/README.md", "backend/scripts/progress.py", "DECISIONS.md"]
+done = [
+  "Interview (AskUserQuestion): Read page = stories at my level + funny facts + everyday mini texts, with audio/popups, quick questions, add-new-words, translation toggle, own menu page, ~20 texts; listening = tests per unit.",
+  "A1 audit (scratchpad a1_audit.py): 539 of 683 Goethe A1 lemmas have their own card, 24 more are inside phrase cards, 26 are grammar words, 94 looked like gaps (about 84% covered; yesterday's 69% was strict string matching).",
+  "Word-bank words (in no lesson) now come after the whole course; word sets can say afterUnit; the A1 gaps use 7. homeGameWords passes all lessons so unopened theme words (Elya's) never leak (#111).",
+  "Agent A: Skip (needs Claude) on write items; skipped/blank writes left out of the attempt; position-based consumers fixed; progress.py validate_review checks saved indexes (#112).",
+  "Agent E: 91 A1 gap cards + the 'A1 gaps' set (afterUnit 7).",
+  "Agent C: 8 listening tests (u0-u7-hoeren, 81 items), speed: natural (rate 1), two voices for dialogue lines, kept off the Home path (161 stations unchanged) (#113).",
+  "Agent B: Read page (#/read), content/readings.json with 20 texts (8 stories, 6 everyday, 6 facts, Units 0-3), r-<id> attempts as read status, reading-only words wait for 'Add' (#114).",
+  "Agent D: 'Read instead' notes for 129 captioned lesson videos (points, phrases with audio and popups, extra), video rows UI, 49 + 32 glossary fixes (#115).",
+  "Merges: words.json (5 duplicate ids between A1 gaps and readings, same meanings, kept the A1 cards), glossary.json three-way per key (2 same-meaning clashes kept ours), glossary.generated regenerated, german.ts and check-taught combined. Final: check-content OK, 43 tests, 1180 words, 3578 glossary entries, 626 vitest, build 0.",
+  "kachayt tasks for today added the night before (A1 audit, listening, video notes, skippable writing, stories interview).",
+]
+pending = [
+  "Hayk to play Say the words on the phone and send the 'Mic:' line from the end screen (restart reasons) - decides on Q49 (recording-based recognition).",
+  "Mark the five kachayt tasks of 10 Nov done after Hayk confirms.",
+  "Optional: 'Reading: <title>' as the source in All words; Oktoberfest 2026 dates in the Read page go stale next year.",
+]
+next = """
+Live-check Read, listening tests and video notes on the phone; then Units 11+ or more readings for Units 4+.
+"""
+notes = """
+Agents in isolated worktrees need a node_modules junction (removed before finishing) and the glossary cache (.cache/kaikki, git-ignored) or `npm run glossary` refetches ~3000 words from kaikki.org (~40 min). Check worktrees for leftover junctions before removing them.
+"""
