@@ -1,4 +1,4 @@
-import { speak } from '../lib/speech.ts'
+import { SLOW_RATE, speak, speakAudio } from '../lib/speech.ts'
 
 export function SpeakerIcon() {
   return (
@@ -18,17 +18,20 @@ export function Speaker({ text, rate, label = 'Listen' }: { text: string; rate?:
   )
 }
 
-/** Big play buttons for listening exercises (normal speed from settings, and slow). */
-export function PlayButtons({ text, onPlay }: { text: string; onPlay?: () => void }) {
-  const play = (rate?: number) => {
-    if (speak(text, rate)) onPlay?.()
+/**
+ * Big play buttons for listening exercises: Play at `rate` (default: the speed setting) and Slow.
+ * A text with line breaks is a dialogue, one turn per line, read with alternating voices.
+ */
+export function PlayButtons({ text, rate, onPlay }: { text: string; rate?: number; onPlay?: () => void }) {
+  const play = (r?: number) => {
+    if (speakAudio(text, r)) onPlay?.()
   }
   return (
     <div className="row">
-      <button type="button" className="btn primary" onClick={() => play()}>
+      <button type="button" className="btn primary" onClick={() => play(rate)}>
         <SpeakerIcon /> Play
       </button>
-      <button type="button" className="btn" onClick={() => play(0.7)}>
+      <button type="button" className="btn" onClick={() => play(SLOW_RATE)}>
         Slow
       </button>
     </div>

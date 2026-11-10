@@ -126,6 +126,15 @@ describe('stations from the course', () => {
     expect(st.at(-1)?.id).toBe(`end-${units.at(-1)}`)
   })
 
+  it('a test with no lesson is not a station, even with a unit (the listening tests stay off the path)', () => {
+    const lessons = [lesson('a', 0, 1, 3)]
+    const st = courseStations(lessons, [test('t1', 'a'), test('loose', 'a', { lesson: undefined, unit: 0, speed: 'natural' })])
+    expect(st.map((s) => s.id)).toEqual(['a#0', 't1', 'end-0'])
+    const real = courseStations(content.lessons, content.tests)
+    const offPath = content.tests.filter((t) => t.lesson === undefined).map((t) => t.id)
+    expect(real.filter((s) => s.testId !== undefined && offPath.includes(s.testId))).toEqual([])
+  })
+
   it('story lessons become story stations', () => {
     const story = content.lessons.find((l) => l.id === 'u1-07-geschichte-im-kurs')!
     expect(isStoryLesson(story)).toBe(true)

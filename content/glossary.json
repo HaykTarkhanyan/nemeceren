@@ -373,34 +373,34 @@
       {"lemma": "Milch", "pos": "noun", "article": "die", "level": "A1", "gloss": ["milk"]}
     ],
     "Welche": [
-      { "lemma": "welcher", "pos": "determiner", "level": "A1", "gloss": ["which"], "note": "Welche Sprachen sprechen Sie? = Which languages do you speak?" }
+      {"lemma": "welcher", "pos": "determiner", "level": "A1", "gloss": ["which"], "note": "Welche Sprachen sprechen Sie? = Which languages do you speak?"}
     ],
     "bedeutet": [
-      { "lemma": "bedeuten", "pos": "verb", "level": "A1", "form": "er/sie/es form, present", "gloss": ["to mean"], "note": "Was bedeutet das? = What does that mean?" }
+      {"lemma": "bedeuten", "pos": "verb", "level": "A1", "form": "er/sie/es form, present", "gloss": ["to mean"], "note": "Was bedeutet das? = What does that mean?"}
     ],
     "Heute": [
-      { "lemma": "heute", "pos": "adverb", "level": "A1", "gloss": ["today"] }
+      {"lemma": "heute", "pos": "adverb", "level": "A1", "gloss": ["today"]}
     ],
     "deine": [
-      { "lemma": "dein", "pos": "determiner", "level": "A1", "form": "feminine and plural", "gloss": ["your (informal)"], "note": "deine Handynummer, deine Adresse" }
+      {"lemma": "dein", "pos": "determiner", "level": "A1", "form": "feminine and plural", "gloss": ["your (informal)"], "note": "deine Handynummer, deine Adresse"}
     ],
     "mich": [
-      { "lemma": "ich", "pos": "pronoun", "level": "A1", "form": "accusative", "gloss": ["me"], "note": "Freut mich! = Nice to meet you! (literally: it pleases me)" }
+      {"lemma": "ich", "pos": "pronoun", "level": "A1", "form": "accusative", "gloss": ["me"], "note": "Freut mich! = Nice to meet you! (literally: it pleases me)"}
     ],
     "Lehrerin": [
-      { "lemma": "Lehrerin", "pos": "noun", "article": "die", "plural": "Lehrerinnen", "level": "A1", "gloss": ["teacher (female)"], "note": "Male: der Lehrer." }
+      {"lemma": "Lehrerin", "pos": "noun", "article": "die", "plural": "Lehrerinnen", "level": "A1", "gloss": ["teacher (female)"], "note": "Male: der Lehrer."}
     ],
     "Lehrerinnen": [
-      { "lemma": "Lehrerin", "pos": "noun", "article": "die", "form": "plural", "level": "A1", "gloss": ["teachers (female)"] }
+      {"lemma": "Lehrerin", "pos": "noun", "article": "die", "form": "plural", "level": "A1", "gloss": ["teachers (female)"]}
     ],
     "Freundinnen": [
-      { "lemma": "Freundin", "pos": "noun", "article": "die", "form": "plural", "level": "A1", "gloss": ["friends (female); girlfriends"] }
+      {"lemma": "Freundin", "pos": "noun", "article": "die", "form": "plural", "level": "A1", "gloss": ["friends (female); girlfriends"]}
     ],
     "Kolleginnen": [
-      { "lemma": "Kollegin", "pos": "noun", "article": "die", "form": "plural", "level": "A1", "gloss": ["colleagues (female)"] }
+      {"lemma": "Kollegin", "pos": "noun", "article": "die", "form": "plural", "level": "A1", "gloss": ["colleagues (female)"]}
     ],
     "Studentinnen": [
-      { "lemma": "Studentin", "pos": "noun", "article": "die", "form": "plural", "level": "A1", "gloss": ["students (female)"] }
+      {"lemma": "Studentin", "pos": "noun", "article": "die", "form": "plural", "level": "A1", "gloss": ["students (female)"]}
     ],
     "der": [
       {"lemma": "der", "pos": "article", "level": "A1", "gloss": ["the (masculine)"], "note": "der Mann, die Frau, das Kind; plural always die."},
@@ -408,30 +408,30 @@
       {"lemma": "der", "pos": "pronoun", "gloss": ["who, that, which; this one, that one"]}
     ],
     "die": [
-      { "lemma": "der", "pos": "article", "level": "A1", "gloss": ["the (feminine, and every plural)"], "note": "die Frau, die Kinder" },
-      { "lemma": "die", "pos": "pronoun", "gloss": ["who, that, which", "this one, that one"] }
+      {"lemma": "der", "pos": "article", "level": "A1", "gloss": ["the (feminine, and every plural)"], "note": "die Frau, die Kinder"},
+      {"lemma": "die", "pos": "pronoun", "gloss": ["who, that, which", "this one, that one"]}
     ],
     "das": [
-      { "lemma": "der", "pos": "article", "level": "A1", "gloss": ["the (neuter)"], "note": "das Kind, das Land" },
-      { "lemma": "das", "pos": "pronoun", "gloss": ["this, that, it", "which, that"] }
+      {"lemma": "der", "pos": "article", "level": "A1", "gloss": ["the (neuter)"], "note": "das Kind, das Land"},
+      {"lemma": "das", "pos": "pronoun", "gloss": ["this, that, it", "which, that"]}
     ],
     "Es": [
-      { "lemma": "es", "pos": "pronoun", "level": "A1", "gloss": ["it"], "note": "Es geht. = So-so. (literally: it goes)" }
+      {"lemma": "es", "pos": "pronoun", "level": "A1", "gloss": ["it"], "note": "Es geht. = So-so. (literally: it goes)"}
     ],
     "Gut": [
-      { "lemma": "gut", "pos": "adjective", "level": "A1", "gloss": ["good, well, fine"], "note": "Gut, danke. = Fine, thanks." }
+      {"lemma": "gut", "pos": "adjective", "level": "A1", "gloss": ["good, well, fine"], "note": "Gut, danke. = Fine, thanks."}
     ],
     "dir": [
       {"lemma": "du", "pos": "pronoun", "form": "dative", "level": "A1", "gloss": ["(to) you"], "note": "Wie geht es dir? Ich helfe dir."}
     ],
     "Wiedersehen": [
-      { "lemma": "Wiedersehen", "pos": "phrase", "level": "A1", "gloss": ["Auf Wiedersehen = goodbye (polite)"], "note": "Literally 'until we see each other again'." }
+      {"lemma": "Wiedersehen", "pos": "phrase", "level": "A1", "gloss": ["Auf Wiedersehen = goodbye (polite)"], "note": "Literally 'until we see each other again'."}
     ],
     "Grüß": [
-      { "lemma": "grüßen", "pos": "phrase", "level": "A1", "gloss": ["Grüß Gott = hello (Bavaria and Austria, polite)"], "note": "Literally 'may God greet you'. Heard in shops and offices in Munich." }
+      {"lemma": "grüßen", "pos": "phrase", "level": "A1", "gloss": ["Grüß Gott = hello (Bavaria and Austria, polite)"], "note": "Literally 'may God greet you'. Heard in shops and offices in Munich."}
     ],
     "Bach": [
-      { "lemma": "Bach", "pos": "noun", "article": "der", "plural": "Bäche", "gloss": ["brook, stream"], "note": "Also the composer Johann Sebastian Bach." }
+      {"lemma": "Bach", "pos": "noun", "article": "der", "plural": "Bäche", "gloss": ["brook, stream"], "note": "Also the composer Johann Sebastian Bach."}
     ],
     "stehe": [
       {"lemma": "aufstehen", "pos": "verb", "form": "ich form, present", "level": "A1", "gloss": ["to get up"], "note": "Separable: Ich stehe um sieben Uhr auf."},
@@ -1645,6 +1645,24 @@
     ],
     "Verwandten": [
       {"lemma": "Verwandte", "pos": "noun", "article": "der", "form": "plural, or singular after den, dem, des", "level": "A1", "gloss": ["relative"]}
+    ],
+    "Blau": [
+      {"lemma": "Blau", "pos": "noun", "article": "das", "level": "A1", "gloss": ["blue (the colour)"], "note": "The colour as a noun: in Blau = in blue."}
+    ],
+    "Rot": [
+      {"lemma": "Rot", "pos": "noun", "article": "das", "level": "A1", "gloss": ["red (the colour)"], "note": "The colour as a noun: in Rot = in red."}
+    ],
+    "Schwarz": [
+      {"lemma": "Schwarz", "pos": "noun", "article": "das", "level": "A1", "gloss": ["black (the colour)"], "note": "The colour as a noun: in Schwarz = in black."}
+    ],
+    "steigst": [
+      {"lemma": "einsteigen / umsteigen / aussteigen", "pos": "verb", "form": "du form, present", "level": "A1", "gloss": ["get on / change / get off"], "note": "Separable: Du steigst an der dritten Haltestelle aus. = You get off at the third stop."}
+    ],
+    "zieh": [
+      {"lemma": "anziehen", "pos": "verb", "form": "du form, imperative", "level": "A1", "gloss": ["to put on (clothes)"], "note": "Separable: Zieh bitte eine Jacke an! = Please put a jacket on!"}
+    ],
+    "bring": [
+      {"lemma": "mitbringen", "pos": "verb", "form": "du form, imperative", "level": "A1", "gloss": ["to bring (along)"], "note": "Separable: Bring bitte Musik mit! Without mit: bringen, to bring."}
     ]
   }
 }

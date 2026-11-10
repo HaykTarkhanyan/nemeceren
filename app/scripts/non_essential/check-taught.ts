@@ -12,14 +12,17 @@
 // of unit N may use everything up to the end of unit N. A word counts as shown if its spelling or
 // its glossary base form appeared before.
 //
-// Run from app/:  npx tsx scripts/non_essential/check-taught.ts <unit>     (about 2 s)
+// Run from app/:  npx tsx scripts/non_essential/check-taught.ts <unit> [test id ...]     (about 2 s)
+// Tests are matched by their `unit`; a test with no unit (a listening test, which stays off the Home
+// path) is checked as unit <unit> when its id is listed after the unit number.
 import { blockGermanFields, itemGermanFields, wordGermanFields, wordTokens } from '../../src/content/german.ts'
 import type { Item } from '../../src/content/schema.ts'
 import { lookup, makeGlossary } from '../../src/glossary/lookup.ts'
 import { readContent, readCuratedGlossary, readGeneratedGlossary } from '../content-files.ts'
 
 const unit = Number(process.argv[2])
-if (!Number.isInteger(unit)) throw new Error('Usage: npx tsx scripts/non_essential/check-taught.ts <unit number>')
+if (!Number.isInteger(unit)) throw new Error('Usage: npx tsx scripts/non_essential/check-taught.ts <unit number> [test id ...]')
+const extraTests = new Set(process.argv.slice(3))
 
 const problems: string[] = []
 const content = readContent(problems)
@@ -88,7 +91,12 @@ for (const lesson of lessons) {
     for (const item of block.items) for (const f of neededFields(item)) for (const t of tokensOf(f.text)) t.keys.forEach((k) => shown.add(k))
   })
 }
-for (const { file, test } of content.tests) if (test.unit === unit) check(file, test.items)
+for (const id of extraTests) {
+  const t = content.tests.find((x) => x.test.id === id)?.test
+  if (!t) throw new Error(`No test with id "${id}" in content/tests/`)
+  if (t.unit !== undefined && t.unit !== unit) throw new Error(`Test "${id}" is in unit ${t.unit}, not ${unit}`)
+}
+for (const { file, test } of content.tests) if (test.unit === unit || extraTests.has(test.id)) check(file, test.items)
 
 console.log(`check-taught: unit ${unit}: ${report.length} word(s) needed before they were shown${report.length ? ':' : '.'}`)
 for (const line of report) console.log(`  - ${line}`)

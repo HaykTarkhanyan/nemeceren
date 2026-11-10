@@ -1,0 +1,105 @@
+{
+  "id": "u6-hoeren",
+  "title": "Listening, Unit 6: getting around and the doctor",
+  "level": "A1",
+  "created": "2026-11-10",
+  "description": "Unit 6 listening at natural speed, in three parts like the Goethe A1 exam: short dialogues, announcements, phone messages.",
+  "speed": "natural",
+  "items": [
+    {
+      "type": "listen_mc",
+      "instruction": "Part 1, dialogue: read the question, then play. In the exam you hear it twice.",
+      "audio": "Entschuldigung, wie komme ich zum Bahnhof?\nGehen Sie geradeaus bis zur Ampel und dann links. Dort sehen Sie einen Supermarkt. Der Bahnhof ist neben dem Supermarkt.\nVielen Dank!",
+      "question": "Where is the station?",
+      "questionLang": "en",
+      "options": ["neben dem Supermarkt", "an der Ampel", "neben der Apotheke"],
+      "answer": "neben dem Supermarkt",
+      "explanation": "Der Bahnhof ist neben dem Supermarkt = next to the supermarket. The traffic light is where you turn left: bis zur Ampel und dann links. neben + dative: dem Supermarkt."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 1, dialogue at the doctor's: read the question, then play. In the exam you hear it twice.",
+      "audio": "Was fehlt Ihnen?\nMir tut der Hals weh, schon seit drei Tagen. Und seit gestern habe ich Fieber.\nIch gebe Ihnen Tabletten. Nehmen Sie sie dreimal am Tag.",
+      "question": "Since when has the patient had a fever?",
+      "questionLang": "en",
+      "options": ["seit gestern", "seit drei Tagen", "seit heute"],
+      "answer": "seit gestern",
+      "explanation": "seit gestern habe ich Fieber = I've had a fever since yesterday. The sore throat is seit drei Tagen (for three days). German uses the present tense with seit."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 1, dialogue in an office building: read the question, then play. In the exam you hear it twice.",
+      "audio": "Entschuldigung, wo ist das Büro von Frau Weber?\nIm dritten Stock. Der Aufzug ist dort, neben der Treppe.\nDanke. Und wo ist hier eine Toilette?\nIm Erdgeschoss, neben dem Eingang.",
+      "question": "Where is the toilet?",
+      "questionLang": "en",
+      "options": ["im Erdgeschoss", "im dritten Stock", "neben der Treppe"],
+      "answer": "im Erdgeschoss",
+      "explanation": "Im Erdgeschoss, neben dem Eingang = on the ground floor, next to the entrance. Frau Weber's office is im dritten Stock, and the lift is neben der Treppe."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 2, announcement at the station: read the question, then play. In the exam you hear it once.",
+      "audio": "Der Zug nach Salzburg fährt heute von Gleis neun ab, nicht von Gleis fünf. Ich wiederhole: Der Zug nach Salzburg fährt heute von Gleis neun.",
+      "question": "Which platform does the train to Salzburg leave from?",
+      "questionLang": "en",
+      "options": ["Gleis 9", "Gleis 5", "Gleis 19"],
+      "answer": "Gleis 9",
+      "explanation": "fährt heute von Gleis neun ab, nicht von Gleis fünf: today platform 9, not 5. Ich wiederhole = I repeat. abfahren is separable: fährt ... ab."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 2, announcement in the U-Bahn: richtig oder falsch? Read the sentence, then play. In the exam you hear it once.",
+      "audio": "Nächster Halt: Marienplatz. Umsteigen zu den S-Bahnen. Ausstieg in Fahrtrichtung links.",
+      "question": "Am Marienplatz steigt man rechts aus.",
+      "options": ["Richtig", "Falsch"],
+      "answer": "Falsch",
+      "explanation": "Ausstieg in Fahrtrichtung links = exit on the left in the direction of travel. So rechts is falsch. Umsteigen zu den S-Bahnen = change here for the S-Bahn trains."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 2, announcement at a tram stop: read the question, then play. In the exam you hear it once.",
+      "audio": "Heute fährt keine Straßenbahn zum Hauptbahnhof. Bitte nehmen Sie den Bus. Er fährt von der Haltestelle neben dem Kino ab.",
+      "question": "How do you get to the main station today?",
+      "questionLang": "en",
+      "options": ["mit dem Bus", "mit der Straßenbahn", "mit der U-Bahn"],
+      "answer": "mit dem Bus",
+      "explanation": "Heute fährt keine Straßenbahn zum Hauptbahnhof. Bitte nehmen Sie den Bus. mit + dative: mit dem Bus, mit der Straßenbahn."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 3, phone message: read the question, then play. In the exam you hear it twice.",
+      "audio": "Guten Tag, hier ist die Praxis Weber. Ihr Termin am Montag um neun geht leider nicht, die Ärztin ist krank. Können Sie am Dienstag um halb elf kommen? Bitte rufen Sie uns an.",
+      "question": "What new time does the practice suggest?",
+      "questionLang": "en",
+      "options": ["Dienstag, 10:30", "Montag, 9:00", "Dienstag, 11:30"],
+      "answer": "Dienstag, 10:30",
+      "explanation": "am Dienstag um halb elf = Tuesday at 10:30 (halb elf is half way to eleven). The old appointment, Montag um neun, doesn't work because the doctor is ill."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 3, phone message: read the question, then play. In the exam you hear it twice.",
+      "audio": "Hallo Frau Schmidt, hier ist Aram. Ich bin leider krank. Mir tut der Bauch sehr weh. Fieber habe ich nicht, aber ich war heute beim Arzt. Ich kann bis Mittwoch nicht kommen.",
+      "question": "What is wrong with Aram?",
+      "questionLang": "en",
+      "options": ["Der Bauch tut weh.", "Der Kopf tut weh.", "Er hat Fieber."],
+      "answer": "Der Bauch tut weh.",
+      "explanation": "Mir tut der Bauch sehr weh = my stomach hurts a lot. Fieber habe ich nicht = I don't have a fever. mir tut ... weh: the body part is the subject, like Russian у меня болит."
+    },
+    {
+      "type": "listen_mc",
+      "instruction": "Part 3, phone message: read the question, then play. In the exam you hear it twice.",
+      "audio": "Hallo Lena, hier ist Max. Die Party ist bei mir, Rosenstraße zwölf. Fahr mit der U-Bahn bis Moosach. Dort nimmst du den Bus und steigst an der dritten Haltestelle aus. Bis Samstag!",
+      "question": "Where does Lena get off the bus?",
+      "questionLang": "en",
+      "options": ["an der dritten Haltestelle", "in Moosach", "an der zweiten Haltestelle"],
+      "answer": "an der dritten Haltestelle",
+      "explanation": "und steigst an der dritten Haltestelle aus = get off at the third stop. Moosach is where she changes from the U-Bahn to the bus."
+    },
+    {
+      "type": "dictation",
+      "instruction": "Extra (not in the exam): type what you hear.",
+      "text": "Wir fahren mit der U-Bahn zum Marienplatz.",
+      "explanation": "Wir fahren mit der U-Bahn zum Marienplatz. mit + dative: die U-Bahn becomes mit der U-Bahn. zum = zu dem."
+    }
+  ]
+}

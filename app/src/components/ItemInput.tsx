@@ -74,11 +74,13 @@ export interface InputProps {
   onPlay: () => void
   /** Number the choices for the 1-9 keys (tests have the key handler; lesson exercises don't). */
   numbered?: boolean
+  /** Speed of the Play button (a test with `"speed": "natural"`); default: the speed setting. */
+  rate?: number
 }
 
 const TEXT_INPUT_PROPS = { autoCapitalize: 'off', autoCorrect: 'off', autoComplete: 'off', spellCheck: false, lang: 'de' } as const
 
-export function ItemInput({ item, layout, answer, onChange, onPlay, numbered = false }: InputProps) {
+export function ItemInput({ item, layout, answer, onChange, onPlay, numbered = false, rate }: InputProps) {
   // The digit keys type umlauts in answer boxes, unless the answer needs digits (lib/keys.ts).
   const keys = itemUmlautScope(item)
   switch (item.type) {
@@ -92,7 +94,7 @@ export function ItemInput({ item, layout, answer, onChange, onPlay, numbered = f
     case 'listen_mc':
       return (
         <>
-          <PlayButtons text={item.audio} onPlay={onPlay} />
+          <PlayButtons text={item.audio} rate={rate} onPlay={onPlay} />
           <p className="question" lang={item.questionLang ?? 'de'}>
             {item.question}
           </p>
@@ -173,7 +175,7 @@ export function ItemInput({ item, layout, answer, onChange, onPlay, numbered = f
     case 'dictation':
       return (
         <>
-          <PlayButtons text={item.text} onPlay={onPlay} />
+          <PlayButtons text={item.text} rate={rate} onPlay={onPlay} />
           <input
             type="text"
             className="text"

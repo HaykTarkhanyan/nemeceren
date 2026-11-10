@@ -13,7 +13,7 @@ import { testKeyAction } from '../lib/keys.ts'
 import type { TestKeyInput } from '../lib/keys.ts'
 import type { AnswerValue } from '../lib/grading.ts'
 import { link } from '../lib/router.ts'
-import { speak } from '../lib/speech.ts'
+import { NATURAL_RATE, speakAudio } from '../lib/speech.ts'
 import { saveResult } from '../lib/storage.ts'
 
 export function TestPage({ id }: { id: string }) {
@@ -75,8 +75,10 @@ function Attempt({ test, onRestart }: { test: Test; onRestart: () => void }) {
   // Keys (lib/keys.ts): 1-9 choose, Space plays (Shift+Space while typing), Enter = Next.
   const audio = item.type === 'listen_mc' ? item.audio : item.type === 'dictation' ? item.text : null
   const options = item.type === 'mc' || item.type === 'listen_mc' ? (layouts[index] ?? item.options) : []
+  // A listening test at natural speed plays at rate 1 whatever the speed setting is; Slow stays.
+  const rate = test.speed === 'natural' ? NATURAL_RATE : undefined
   function play() {
-    if (audio !== null && speak(audio)) plays.current[index] += 1
+    if (audio !== null && speakAudio(audio, rate)) plays.current[index] += 1
   }
   useEffect(() => {
     if (result) return
@@ -170,6 +172,7 @@ function Attempt({ test, onRestart }: { test: Test; onRestart: () => void }) {
             </button>
           ))}
         </div>
+        {rate !== undefined && <p className="small muted">Natural speed: Play reads at normal speaking speed. Slow is there when you need it.</p>}
       </div>
 
       {/* Word popups stay off until the test is submitted (Hayk, 2026-09-29). */}
@@ -186,6 +189,7 @@ function Attempt({ test, onRestart }: { test: Test; onRestart: () => void }) {
             plays.current[index] += 1
           }}
           numbered
+          rate={rate}
         />
         {skipped[index] && <p className="small muted">Skipped (needs Claude): not saved or scored. Type an answer to include it after all.</p>}
         {item.hint && (
