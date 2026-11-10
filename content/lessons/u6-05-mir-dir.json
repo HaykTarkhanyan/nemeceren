@@ -38,7 +38,7 @@
       "points": [
         "Some verbs take a dative object and no accusative at all: [[Er hilft mir.]] The person is in the dative.",
         "The everyday ones: [[helfen]], [[danken]], [[antworten]], [[glauben]] (believe), [[gratulieren]], [[vertrauen]] (trust), [[raten]] (advise).",
-        "With the thing as the subject: [[gefallen]] (Der Hut gefällt mir.), [[gehören]] (belong), [[schmecken]] (Die Pizza schmeckt mir.), [[passen]] (fit: Das Kleid passt mir nicht.), [[schaden]] (harm), [[wehtun]] (hurt).",
+        "With the thing as the subject: [[gefallen]] ([[Der Hut gefällt mir.]]), [[gehören]] (belong), [[schmecken]] ([[Die Pizza schmeckt mir.]]), [[passen]] (fit: [[Das Kleid passt mir nicht.]]), [[schaden]] (harm), [[wehtun]] (hurt).",
         "[[fehlen]] means to be missed: [[Du fehlst mir.]] = I miss you (you are missing to me). Also [[Ich vermisse dich.]]",
         "[[begegnen]] means to run into someone: [[Ich bin einer Frau begegnet.]] It takes [[sein]] in the Perfekt.",
         "[[Mein Fuß tut mir weh.]] is the sentence for the doctor."
@@ -66,7 +66,7 @@
         "With two objects, the person is usually [[ihm]] and the thing is the accusative: [[Wir haben ihm Suppe gekocht.]]"
       ],
       "phrases": [
-        {"de": "Das ist Julian. Ich liebe ihn.", "en": "This is Julian. I love him."},
+        {"de": "Das ist Thomas. Ich liebe ihn.", "en": "This is Thomas. I love him."},
         {"de": "Ich backe ihm einen Kuchen.", "en": "I'm baking him a cake."},
         {"de": "Wo ist mein Kuli? Hast du ihn gesehen?", "en": "Where's my pen? Have you seen it?"},
         {"de": "Mein Bruder ist krank. Kannst du ihn anrufen?", "en": "My brother is ill. Can you call him?"},
@@ -79,11 +79,11 @@
     }},
     {"id": "ClJUVsjoDM8", "title": "Saying what you like", "minutes": 4, "notes": {
       "points": [
-        "Liking something: [[Das gefällt mir.]] Replace [[das]] with a thing or a person: [[Das Auto gefällt mir.]], [[Er gefällt mir.]] To someone else: [[Das gefällt dir.]]",
+        "Liking something: [[Das gefällt mir.]] or [[Das gefällt mir sehr gut.]] Replace [[das]] with a thing or a person: [[Das Auto gefällt mir.]], [[Er gefällt mir.]]",
         "More ways to say it's good: [[Das ist super.]], [[Das war klasse.]], [[Ich finde das toll.]], and about something you did: [[Ich hatte viel Spaß.]] (I had a lot of fun)",
         "Adverbs make it stronger: [[Das ist ganz toll.]], [[Ich finde das echt klasse.]], [[Das ist wirklich super.]]",
         "Not liking something: [[Das gefällt mir nicht so gut.]], [[Das gefällt mir nicht.]], and strongest [[Das gefällt mir gar nicht.]]",
-        "Negative opinions: [[Das finde ich schlecht.]], [[Das finde ich langweilig.]] Don't mix the positive and negative adverbs.",
+        "Negative opinions: [[Das finde ich schlecht.]], [[Das finde ich langweilig.]]",
         "Asking: [[Wie findest du mein Kleid?]], [[Was gefällt dir?]]"
       ],
       "phrases": [

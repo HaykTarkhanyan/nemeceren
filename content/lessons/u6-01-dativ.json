@@ -17,7 +17,7 @@
     {"id": "ywhdo-UQjBM", "title": "Articles in the dative", "minutes": 10, "notes": {
       "points": [
         "The dative marks the person something is given to or done for: the indirect object. Ask [[Wem?]] (to whom?): [[Die Mutter kauft der Tochter ein Kleid.]]",
-        "Definite articles: [[der]] becomes [[dem]], [[die]] becomes [[der]], [[das]] becomes [[dem]], plural [[die]] becomes [[den]], and the plural noun adds -n: [[den Kindern]].",
+        "Definite articles: [[der]] becomes [[dem]], [[die]] becomes [[der]], [[das]] becomes [[dem]], plural [[die]] becomes [[den]], and the plural noun adds -n: [[den Kindern]] (not after -n or -s).",
         "Indefinite: [[einem]] (masculine and neuter), [[einer]] (feminine); no plural. Negative: [[keinem]], [[keiner]], [[keinen]] (plural, noun + -n).",
         "The endings to remember: -em for masculine and neuter, -er for feminine, -en for plural.",
         "Some verbs always take the dative, even with only one object: [[danken]] and [[helfen]]: [[Ich danke dem Mann.]], [[Ich helfe der Frau.]]"
@@ -61,7 +61,7 @@
         "[[mit]]: with ([[Kaffee mit Zucker]]), by a vehicle ([[mit dem Bus]]), at an age ([[Mit achtzehn darf man Auto fahren.]]).",
         "[[nach]]: after ([[nach dem Unterricht]]), to a country or city ([[nach Spanien]]), and in times ([[Viertel nach vier]]). [[zu]]: to a person or place ([[zu meinen Eltern]], [[zum Arzt]], [[zur Schule]]).",
         "[[bei]]: at a company ([[bei BMW]]), near ([[Potsdam liegt bei Berlin.]]), at someone's home ([[bei ihren Eltern]]). [[beim]] = [[bei dem]].",
-        "Time: [[seit]] = since or for, up to now ([[seit drei Jahren]]); [[ab]] = from ... on ([[ab Montag]]). [[gegenüber]] = opposite, and it can come after the noun: [[gegenüber dem Bahnhof]], [[mir gegenüber]]."
+        "Time: [[seit]] = since or for, up to now ([[seit drei Jahren]]); [[ab]] = from ... on ([[ab Montag]]). [[gegenüber]] = opposite: [[gegenüber dem Bahnhof]]; after a pronoun it comes second: [[mir gegenüber]]."
       ],
       "phrases": [
         {"de": "Er kommt gerade von der Arbeit.", "en": "He's just coming from work."},
@@ -80,7 +80,7 @@
       "points": [
         "Possessives in the dative work like [[einem]] and [[einer]]: -em for masculine and neuter, -er for feminine, -en for plural.",
         "The indirect object receives the direct object: in [[Ich gebe meinem Mann einen Kuss.]], my husband gets the kiss.",
-        "All four: [[meinem Mann]], [[meiner Tochter]], [[meinem Baby]], [[meinen Kindern]]. The plural noun adds -n, unless it already ends in -n: [[ihren Nachbarn]].",
+        "All four: [[meinem Mann]], [[meiner Tochter]], [[meinem Baby]], [[meinen Kindern]]. The plural noun adds -n, unless it already ends in -n or -s: [[ihren Nachbarn]].",
         "It works the same for every possessive: [[seinem Bruder]], [[ihrer Schwester]], [[unserem Vater]], [[unseren Großeltern]].",
         "[[euer]] loses an e again: [[eurem]], [[eurer]], [[euren]]."
       ],
@@ -98,10 +98,10 @@
     {"id": "agOqDL2JYZ0", "title": "aus or von?", "minutes": 10, "notes": {
       "points": [
         "[[aus]] means out of the inside of something; [[von]] means from the outside of it, its surface or near it.",
-        "Out of the school building: [[Sie kommt aus der Schule.]] From near the school (the school bus): [[Sie kommt von der Schule.]] Out of the fridge: [[aus dem Kühlschrank]]; from on top of it: [[vom Kühlschrank]].",
+        "Out of the school building: [[Sie kommt aus der Schule.]] From school as a place, for example on the way home: [[Sie kommt von der Schule.]] Out of the fridge: [[aus dem Kühlschrank]]; from on top of it: [[vom Kühlschrank]].",
         "More [[von]]: [[Er kommt gerade von der Arbeit.]], who something is from ([[ein Geschenk von meinem Vater]]), and from ... to ([[von Montag bis Freitag]], [[von Frankfurt bis Paris]]).",
         "More [[aus]]: countries and cities ([[Er kommt aus Vietnam.]]), materials ([[aus Gold]]), and feelings, without an article ([[aus Liebe]], out of love).",
-        "Some verbs come with them: [[abhängen von]] (depend on), [[sich erholen von]] (recover from), [[bestehen aus]] (consist of)."
+        "Some verbs come with them (A2): [[abhängen von]] (depend on), [[sich erholen von]] (recover from), [[bestehen aus]] (consist of)."
       ],
       "phrases": [
         {"de": "Sie nimmt die Karte aus der Tasche.", "en": "She takes the card out of her bag."},

@@ -17,12 +17,12 @@
   "videos": [
     {"id": "qX4aVgbD6YY", "title": "Perfekt, part 1", "minutes": 11, "notes": {
       "points": [
-        "German has three past forms: the Perfekt (spoken German, and informal letters), the Präteritum (mostly written; you know [[war]] and [[hatte]]) and the Plusquamperfekt (later).",
+        "German has three past forms: the Perfekt (spoken German, and informal letters), the Präteritum (mostly written; [[war]] and [[hatte]] come in the next lesson) and the Plusquamperfekt (later).",
         "The Perfekt has two parts: [[haben]] or [[sein]], conjugated, in second place, and the participle (Partizip II) at the very end: [[Ich habe einen Salat gegessen.]]",
         "From present to past: [[Wir fahren nach Paris.]] becomes [[Wir sind letzte Woche nach Paris gefahren.]]; [[Sie studiert Philosophie.]] becomes [[Sie hat Philosophie studiert.]]",
         "Questions keep the bracket: [[Was hast du gestern gemacht?]] In a yes/no question the helper comes first: [[Hast du gestern etwas gegessen?]]",
         "Separable verbs put ge- inside: [[Lena hat ihren Freund angerufen.]]",
-        "Modal verbs use their Präteritum instead: [[Ich war krank. Ich musste zum Arzt gehen.]] Learn each participle with its helper: [[essen, hat gegessen]], [[fahren, ist gefahren]]."
+        "Modal verbs use their Präteritum instead (A2): [[Ich war krank. Ich musste zum Arzt gehen.]] Learn each participle with its helper: [[essen, hat gegessen]], [[fahren, ist gefahren]]."
       ],
       "phrases": [
         {"de": "Ich habe einen Salat gegessen.", "en": "I ate a salad."},
@@ -85,7 +85,7 @@
         "Their separable versions take [[sein]] too: [[mitkommen]], [[losfahren]], [[abfliegen]], [[mitgehen]], [[zurückkommen]], [[auswandern]] (emigrate).",
         "Change of state: [[aufstehen]], [[aufwachen]], [[einschlafen]], [[sterben]], [[wachsen]], [[werden]].",
         "Exceptions: [[sein]], [[bleiben]], [[passieren]], [[begegnen]] (to meet by chance).",
-        "Careful: [[fallen]] has the participle [[gefallen]] with [[sein]] (Die Äpfel sind vom Baum gefallen), but [[gefallen]] (to please) takes [[haben]]."
+        "Careful: [[fallen]] has the participle [[gefallen]] with [[sein]] ([[Die Äpfel sind vom Baum gefallen.]]), but [[gefallen]] (to please) takes [[haben]]."
       ],
       "phrases": [
         {"de": "Ich bin heute um sechs Uhr aufgestanden.", "en": "I got up at six today."},

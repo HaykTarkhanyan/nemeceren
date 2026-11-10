@@ -16,7 +16,7 @@
   "videos": [
     {"id": "ATLnq06AfrA", "title": "Booking a hotel by letter", "minutes": 11, "notes": {
       "points": [
-        "This is the A1 exam's letter task (Start Deutsch 1, Writing part 2): a short email booking a room.",
+        "This is the A1 exam's letter task (Start Deutsch 1, Writing part 2): a short letter or email, here one booking a room.",
         "Places and rooms: [[das Hotel]], [[die Pension]] (guest house), [[die Jugendherberge]] (youth hostel); [[das Einzelzimmer]] (EZ, single), [[das Doppelzimmer]] (DZ, double). [[ein Zimmer reservieren]] or [[buchen]].",
         "Meals: [[mit Frühstück]], [[Halbpension]] (breakfast and one more meal), [[Vollpension]] (all meals).",
         "The letter: greeting ([[Sehr geehrte Damen und Herren,]]), the text, a closing ([[Mit freundlichen Grüßen]] or [[Viele Grüße]]) and your name.",
@@ -32,7 +32,7 @@
         {"de": "Wie viel kostet es pro Nacht?", "en": "How much is it per night?"},
         {"de": "Was kostet ein Extrabett?", "en": "How much is an extra bed?"},
         {"de": "Können Sie uns gute Hotels empfehlen?", "en": "Can you recommend some good hotels?"},
-        {"de": "Ich bitte um Antwort.", "en": "I look forward to your reply."},
+        {"de": "Ich bitte um Antwort.", "en": "Please reply."},
         {"de": "Mit freundlichen Grüßen", "en": "Yours sincerely"}
       ],
       "extra": "The exam letter, [[Halbpension]] and [[Vollpension]], and [[Ich bitte um Antwort.]]"

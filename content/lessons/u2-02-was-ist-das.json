@@ -104,7 +104,7 @@
         {"de": "Meine Lieblingsfarbe ist Grün.", "en": "My favourite colour is green."},
         {"de": "Grün gefällt mir.", "en": "I like green."},
         {"de": "Blau steht mir.", "en": "Blue suits me."},
-        {"de": "Welche ist deine Lieblingsfarbe?", "en": "Which is your favourite colour?"}
+        {"de": "Was ist deine Lieblingsfarbe?", "en": "What's your favourite colour?"}
       ],
       "extra": "[[hell-]] and [[dunkel-]], the fixed colour words like [[schneeweiß]], and [[Blau steht mir.]]"
     }}
