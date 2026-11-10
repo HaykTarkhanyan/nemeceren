@@ -2,6 +2,7 @@
 // If there is no German voice, the app shows a warning and speak() reports an error
 // instead of reading German with an English voice.
 import { useSyncExternalStore } from 'react'
+import { setAudioSession } from './audioSession.ts'
 import { reportError } from './errors.ts'
 import { getSettings } from './settings.ts'
 
@@ -9,7 +10,7 @@ export interface SpeechInfo {
   supported: boolean
   /** True once the browser has had a chance to list its voices. */
   loaded: boolean
-  /** German voices only (de-DE, de-AT, de-CH, ...). */
+  /** German voices only (de-DE, de-AT, de-CH, ...), robotic ones last (rankVoices). */
   voices: SpeechSynthesisVoice[]
 }
 
@@ -21,10 +22,25 @@ function isGerman(v: SpeechSynthesisVoice): boolean {
   return /^de([-_]|$)/i.test(v.lang)
 }
 
+/**
+ * Apple's novelty voices (the "Eloquence" set) sound robotic on purpose, and iPhones list them for
+ * German too, sometimes first (Anahit, 2026-11-11: "the sound is robotic"; DECISIONS.md #117).
+ */
+const ROBOTIC_NAMES = /^(Eddy|Flo|Grandma|Grandpa|Reed|Rocko|Sandy|Shelley)\b/i
+
+export function isRobotic(v: Pick<SpeechSynthesisVoice, 'name' | 'voiceURI'>): boolean {
+  return /eloquence/i.test(v.voiceURI) || ROBOTIC_NAMES.test(v.name)
+}
+
+/** The same voices with the robotic ones last; otherwise the browser's order. */
+export function rankVoices<V extends Pick<SpeechSynthesisVoice, 'name' | 'voiceURI'>>(voices: V[]): V[] {
+  return [...voices.filter((v) => !isRobotic(v)), ...voices.filter(isRobotic)]
+}
+
 function refresh(): void {
   const all = speechSynthesis.getVoices()
   if (all.length === 0) return
-  info = { supported: true, loaded: true, voices: all.filter(isGerman) }
+  info = { supported: true, loaded: true, voices: rankVoices(all.filter(isGerman)) }
   listeners.forEach((l) => l())
 }
 
@@ -51,7 +67,7 @@ export function useSpeech(): SpeechInfo {
   )
 }
 
-/** The saved voice if this device has it, otherwise the first German voice. */
+/** The saved voice if this device has it, otherwise the first German voice (a natural one when the device has one). */
 export function pickVoice(voices: SpeechSynthesisVoice[], voiceURI: string | null): SpeechSynthesisVoice | null {
   return voices.find((v) => v.voiceURI === voiceURI) ?? voices[0] ?? null
 }
@@ -62,12 +78,13 @@ export const NO_VOICE_HELP =
 /**
  * The voice for speaker number `speaker` in a dialogue (0 = the first speaker): the saved voice for
  * the first, another German voice for the next ones if the device has one. With only one German
- * voice, the others get the same voice at a different pitch.
+ * voice, the others get the same voice at a different pitch. A robotic voice (isRobotic) is never
+ * the other speaker of a natural one: the pitch change sounds better.
  */
 export function dialogueVoice(voices: SpeechSynthesisVoice[], voiceURI: string | null, speaker: number): { voice: SpeechSynthesisVoice | null; pitch: number } {
   const main = pickVoice(voices, voiceURI)
   if (speaker === 0 || !main) return { voice: main, pitch: 1 }
-  const others = voices.filter((v) => v.voiceURI !== main.voiceURI)
+  const others = voices.filter((v) => v.voiceURI !== main.voiceURI && (isRobotic(main) || !isRobotic(v)))
   if (others.length > 0) return { voice: others[(speaker - 1) % others.length], pitch: 1 }
   return { voice: main, pitch: speaker % 2 === 1 ? 1.35 : 0.75 }
 }
@@ -86,7 +103,8 @@ export function speakLines(lines: { text: string; speaker: number }[], rate?: nu
     return false
   }
   speechSynthesis.cancel()
-  for (const line of lines) {
+  const turn = startMedia()
+  lines.forEach((line, i) => {
     const { voice, pitch } = dialogueVoice(info.voices, getSettings().voiceURI, line.speaker)
     if (!voice) throw new Error('A German voice disappeared while reading the dialogue')
     const u = new SpeechSynthesisUtterance(line.text)
@@ -94,13 +112,32 @@ export function speakLines(lines: { text: string; speaker: number }[], rate?: nu
     u.lang = voice.lang
     u.pitch = pitch
     u.rate = rate ?? getSettings().rate
+    if (i === lines.length - 1) u.onend = () => endMedia(turn)
     u.onerror = (e) => {
+      endMedia(turn)
       if (e.error === 'interrupted' || e.error === 'canceled') return
       reportError(`Speech failed (${e.error}) while reading: "${line.text}"`)
     }
     speechSynthesis.speak(u)
-  }
+  })
   return true
+}
+
+/**
+ * The audio session around reading aloud (lib/audioSession.ts): "playback" while the app speaks, so
+ * an iPhone in silent mode still plays it, then back to "auto". Each new reading is a new turn; the
+ * end of an older, replaced reading leaves the session alone.
+ */
+let mediaTurn = 0
+
+function startMedia(): number {
+  mediaTurn += 1
+  setAudioSession('playback')
+  return mediaTurn
+}
+
+function endMedia(turn: number): void {
+  if (turn === mediaTurn) setAudioSession('auto')
 }
 
 /** Play in a test with `"speed": "natural"`: natural speaking speed (the speed setting is 0.85 by default). */
@@ -128,7 +165,9 @@ export function speakAudio(text: string, rate?: number): boolean {
 
 /** Stop anything being read aloud. */
 export function stopSpeaking(): void {
-  if (supported) speechSynthesis.cancel()
+  if (!supported) return
+  speechSynthesis.cancel()
+  endMedia(mediaTurn)
 }
 
 /** Speak German text. Problems are reported visibly; returns false if nothing could be played. */
@@ -143,11 +182,14 @@ export function speak(text: string, rate?: number): boolean {
     return false
   }
   speechSynthesis.cancel()
+  const turn = startMedia()
   const u = new SpeechSynthesisUtterance(text)
   u.voice = voice
   u.lang = voice.lang
   u.rate = rate ?? getSettings().rate
+  u.onend = () => endMedia(turn)
   u.onerror = (e) => {
+    endMedia(turn)
     // "interrupted"/"canceled" just mean a newer utterance replaced this one.
     if (e.error === 'interrupted' || e.error === 'canceled') return
     reportError(`Speech failed (${e.error}) while reading: "${text}"`)

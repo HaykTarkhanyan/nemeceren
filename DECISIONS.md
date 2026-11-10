@@ -2,6 +2,21 @@
 
 Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
+## 117. iPhone audio: robotic voices go last, and reading aloud plays in silent mode (Anahit's feedback, approved by Hayk, 2026-11-11)
+
+- **Date:** 2026-11-11 - **Status:** active; not yet tested on an iPhone
+- **Why:** Anahit (iPhone) heard the German audio only in headphones, and found it robotic.
+  - **Headphones only:** iOS Safari plays a page's sound as "ambient" by default, and the silent switch mutes that on the speaker but not in headphones. Since iOS 17 a page can set `navigator.audioSession.type = "playback"` (media, like a video), which plays in silent mode (W3C Audio Session draft; Safari only).
+  - **Robotic:** the app took the first German voice of the device, and dialogues took "another German voice". iPhones list Apple's novelty voices (the Eloquence set: Eddy, Flo, Grandma, Grandpa, Reed, Rocko, Sandy, Shelley) for German too, and reports say Safari sometimes offers only those. The nicer downloadable voices are often not offered to websites.
+- **What changed:**
+  - `lib/speech.ts`: `rankVoices` puts robotic voices (by name or an "eloquence" voice id) last, so the default is a natural voice when the device has one. A natural first speaker never gets a robotic partner in a dialogue: the same voice at another pitch instead. A robotic voice the learner picks in Settings still works, and Settings marks those voices "robotic on purpose".
+  - `lib/audioSession.ts`: the session is "playback" while the app reads aloud and back to "auto" when the reading ends or is stopped, so the mic (speech recognition) and other apps' audio aren't left in media mode. An older, replaced reading doesn't reset the session of a newer one. If the switch fails, the error is reported once. Browsers without the API are unchanged.
+- **Side effect:** on an iPhone, her music pauses while the app speaks ("playback" is exclusive), and iOS may not resume it on its own.
+- **Alternatives rejected:**
+  - **Playing a silent audio clip first:** a widely reported trick, but an undocumented side effect; the Audio Session API is the intended way.
+  - **Recorded or cloud text-to-speech audio:** natural voices everywhere, but a paid service and a fundamental change. Only if the iPhone offers no acceptable German voice at all; that's Hayk's call.
+- **What would change this:** Anahit's answers. If silent mode still mutes it, try the silent-clip trick. If her voice list has only robotic German voices, consider recorded audio. If the mic stops working on her iPhone after the app has spoken, look at the session switch first.
+
 ## 116. Cardio easter eggs for Anahit (a Home greeting and a zone meter in the daily mix), plus cardio, Stuttgart and music texts for everyone (asked for by Hayk, 2026-11-10)
 
 - **Date:** 2026-11-10 - **Status:** active

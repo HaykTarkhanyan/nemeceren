@@ -3,7 +3,7 @@ import { SyncStatusLine } from '../components/SyncStatus.tsx'
 import { reportError } from '../lib/errors.ts'
 import { RATES, updateSettings, useSettings } from '../lib/settings.ts'
 import type { Settings } from '../lib/settings.ts'
-import { pickVoice, speak, useSpeech } from '../lib/speech.ts'
+import { isRobotic, pickVoice, speak, useSpeech } from '../lib/speech.ts'
 import { leaveGuest, useSession } from '../lib/session.ts'
 
 function save(patch: Partial<Settings>): void {
@@ -37,7 +37,7 @@ export function SettingsPage() {
             <select value={active?.voiceURI ?? ''} onChange={(e) => save({ voiceURI: e.target.value })}>
               {speech.voices.map((v) => (
                 <option key={v.voiceURI} value={v.voiceURI}>
-                  {v.name} ({v.lang})
+                  {v.name} ({v.lang}){isRobotic(v) ? ', robotic on purpose' : ''}
                 </option>
               ))}
             </select>
