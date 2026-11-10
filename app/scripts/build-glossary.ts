@@ -138,7 +138,7 @@ if (limitedWords.size === 0 && content.themes.some((t) => t.lesson.onlyFor !== u
 const bankGloss = new Map(content.words.words.filter((w) => !limitedWords.has(w.id)).map((w) => [w.de.replace(/^(der|die|das) /, ''), w.en]))
 const lists = readLearnerLists(content.words.words)
 
-const fields = germanFields(content.tests, content.words, [...content.lessons, ...content.themes])
+const fields = germanFields(content.tests, content.words, [...content.lessons, ...content.themes], content.readings)
 const toResolve: string[] = []
 const add = (w: string) => {
   if (!toResolve.includes(w) && !curated.ignore.includes(w) && !curated.entries[w]) toResolve.push(w)

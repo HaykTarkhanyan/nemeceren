@@ -6,6 +6,7 @@
 // graded them.
 import { findSource, parseRedoTestId } from '../content/lessons.ts'
 import type { MistakeSource } from '../content/lessons.ts'
+import { readingIdOf } from '../content/readings.ts'
 import type { Item, Lesson, Result, Test } from '../content/schema.ts'
 import { localDay } from './dates.ts'
 import { describeItem, finalStatus } from './grading.ts'
@@ -49,12 +50,20 @@ interface Event {
  */
 export const NOT_REPLAYED = new Set(['listening-practice'])
 
+/**
+ * Reading questions ("r-<reading id>", the Read page) are not mistake sources either: a question
+ * about a text means little without the text.
+ */
+export function isReplayed(testId: string): boolean {
+  return !NOT_REPLAYED.has(testId) && readingIdOf(testId) === null
+}
+
 /** Every graded answer per item ("<source id>#<index>"), from attempts and redos since MISTAKES_SINCE. */
 function answerEvents(results: Result[]): Map<string, Event[]> {
   const out = new Map<string, Event[]>()
   const push = (key: string, e: Event) => out.set(key, [...(out.get(key) ?? []), e])
   for (const r of results) {
-    if (!r.localDay || r.localDay < MISTAKES_SINCE || NOT_REPLAYED.has(r.testId)) continue
+    if (!r.localDay || r.localDay < MISTAKES_SINCE || !isReplayed(r.testId)) continue
     const at = Date.parse(r.submittedAt)
     const redo = parseRedoTestId(r.testId)
     r.items.forEach((ri, i) => {

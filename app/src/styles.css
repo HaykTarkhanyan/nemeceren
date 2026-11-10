@@ -141,7 +141,7 @@ main.container {
   border-bottom: 1px solid var(--border);
 }
 
-/* Wider than the page (760 px) so brand, 9 links, sync status, study timer, theme and settings
+/* Wider than the page (760 px) so brand, 10 links, sync status, study timer, theme and settings
    buttons fit on one line from 900 px (DECISIONS.md #48, #54, #63). */
 .header-inner {
   display: flex;
@@ -266,7 +266,7 @@ main.container {
   white-space: nowrap;
 }
 
-/* Below 900 px the nav gets its own row; on a phone it is a 5-column grid (9 links: 2 rows, 5 and 4). */
+/* Below 900 px the nav gets its own row; on a phone it is a 5-column grid (10 links: 2 rows of 5; a guest has 9). */
 @media (max-width: 899px) {
   .nav {
     order: 3;
@@ -2008,6 +2008,44 @@ details > summary {
   .dialogue-line {
     grid-template-columns: 1fr;
   }
+}
+
+/* The Read page (content/readings.json): a text sentence by sentence; a chat or dialogue uses the .dialogue-line look. */
+.reading-lines {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.reading-line {
+  padding: 2px 0;
+}
+
+/* The English of a sentence: plain muted text; tapping it hides it again. */
+.reading-en {
+  padding: 0 0 0 4px;
+  border: none;
+  background: none;
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.875rem;
+  text-align: left;
+}
+
+button.reading-en {
+  cursor: pointer;
+}
+
+.reading-words {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.reading-words li + li {
+  margin-top: 4px;
 }
 
 /* ---------- The path Home (DECISIONS.md #82; look: _knowledge/2026-11-07_path-home-mockup.html) ---------- */

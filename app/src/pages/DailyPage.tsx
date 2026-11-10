@@ -37,6 +37,7 @@ import { link } from '../lib/router.ts'
 import { useSettings } from '../lib/settings.ts'
 import type { SpeechInfo } from '../lib/speech.ts'
 import type { Settings } from '../lib/settings.ts'
+import { withoutWaitingReadingWords } from '../lib/readings.ts'
 import { counts } from '../lib/srs.ts'
 import { messageOf, reportError } from '../lib/errors.ts'
 import { reachOf } from '../lib/goalView.ts'
@@ -50,11 +51,16 @@ export function activeSet(settings: Settings): { set: WordSet | null; problem: s
   return set ? { set, problem: null } : { set: null, problem: `The word set "${settings.activeSet}" no longer exists, so new words come from the next lessons.` }
 }
 
+/** The word bank for new words: words only a reading lists wait for its "Add N new words" button (lib/readings.ts). */
+export function bankWords(state: ReviewState) {
+  return withoutWaitingReadingWords(content.words, content.readingOnlyWords, state.cards)
+}
+
 /** All words the reviews may use (new words follow the path), plus Hayk's own words. */
 export function studyPool(progress: ProgressView): StudyWord[] {
   return wordsForSource(
     { kind: 'all' },
-    content.words,
+    bankWords(progress.reviewState),
     progress.customWords.map(practiceWord),
     content.allLessons,
     progress.lessonProgress,
@@ -99,7 +105,7 @@ export function mixPlan(progress: ProgressView, settings: Settings, now: Date): 
   const state = progress.reviewState
   const pool = studyPool(progress)
   const { set, problem } = activeSet(settings)
-  const fresh = mixNewWords({ words: content.words, lessons: content.allLessons, progress: progress.lessonProgress, state, set, reach: reachOf(progress) })
+  const fresh = mixNewWords({ words: bankWords(state), lessons: content.allLessons, progress: progress.lessonProgress, state, set, reach: reachOf(progress) })
   const newLeft = counts(fresh.words, state, now, settings.newPerDay).newLeft
   const newCount = Math.min(newLeft, fresh.words.length, MIX.maxNew)
   const due = Math.min(

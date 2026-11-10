@@ -10,6 +10,7 @@ import { HomePage } from './pages/HomePage.tsx'
 import { LessonPage, LessonsPage, ThemesPage } from './pages/LessonsPage.tsx'
 import { ListenPage } from './pages/ListenPage.tsx'
 import { NotesPage } from './pages/NotesPage.tsx'
+import { ReadingPage, ReadPage } from './pages/ReadPage.tsx'
 import { ResultDetailPage, ResultsPage } from './pages/ResultsPage.tsx'
 import { SettingsPage } from './pages/SettingsPage.tsx'
 import { StatsPage } from './pages/StatsPage.tsx'
@@ -49,6 +50,8 @@ function Page({ route }: { route: string[] }) {
       return <TopicsPage />
     case 'extras':
       return <ExtrasPage />
+    case 'read':
+      return arg ? <ReadingPage id={arg} /> : <ReadPage />
     case 'notes':
       return <NotesPage />
     case 'listen':

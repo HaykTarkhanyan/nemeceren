@@ -12,8 +12,11 @@
 // of unit N may use everything up to the end of unit N. A word counts as shown if its spelling or
 // its glossary base form appeared before.
 //
+// Readings of the unit (content/readings.json) get their own list at the end: words in the title and
+// the sentences that were neither shown by the end of the unit nor are among the text's new words.
+//
 // Run from app/:  npx tsx scripts/non_essential/check-taught.ts <unit>     (about 2 s)
-import { blockGermanFields, itemGermanFields, wordGermanFields, wordTokens } from '../../src/content/german.ts'
+import { blockGermanFields, itemGermanFields, readingGermanFields, wordGermanFields, wordTokens } from '../../src/content/german.ts'
 import type { Item } from '../../src/content/schema.ts'
 import { lookup, makeGlossary } from '../../src/glossary/lookup.ts'
 import { readContent, readCuratedGlossary, readGeneratedGlossary } from '../content-files.ts'
@@ -92,3 +95,24 @@ for (const { file, test } of content.tests) if (test.unit === unit) check(file, 
 
 console.log(`check-taught: unit ${unit}: ${report.length} word(s) needed before they were shown${report.length ? ':' : '.'}`)
 for (const line of report) console.log(`  - ${line}`)
+
+// Readings written for this unit (content/readings.json): the title and the sentences may use German
+// shown up to the end of the unit, plus the text's own new words (its `words`). The rest is listed.
+const readingReport: string[] = []
+content.readings.readings.forEach((r, ri) => {
+  if (r.unit !== unit) return
+  const own = new Set<string>()
+  for (const id of r.words ?? []) {
+    const w = wordsById.get(id)
+    if (!w) throw new Error(`reading ${r.id} lists word "${id}", which is not in words.json`)
+    for (const t of tokensOf(w.de)) t.keys.forEach((k) => own.add(k))
+  }
+  for (const f of readingGermanFields(r)) {
+    if (f.field.startsWith('questions')) continue
+    for (const t of tokensOf(f.text)) {
+      if (t.keys.length > 0 && !t.keys.some((k) => shown.has(k) || own.has(k))) readingReport.push(`${content.readings.file} texts[${ri}] (${r.id}) ${f.field}: "${t.word}"`)
+    }
+  }
+})
+console.log(`check-taught: unit ${unit} readings: ${readingReport.length} word(s) neither taught by then nor in the text's new words${readingReport.length ? ':' : '.'}`)
+for (const line of readingReport) console.log(`  - ${line}`)

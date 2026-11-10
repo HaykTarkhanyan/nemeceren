@@ -8,6 +8,7 @@ Everything in this folder is written by Claude and read by the app in `app/`. Yo
 - `words.json` - the word bank for spaced repetition.
 - `topics.json` - the Topics page: lesson sections worth revisiting, see [Topics](#topics-topicsjson).
 - `extras.json` - the Extras page: jokes, fun facts and everyday phrases to browse, see [Extras](#extras-page-extrasjson).
+- `readings.json` - the Read page: short texts matched to the course units, with questions, see [Readings](#read-page-readingsjson).
 - `sets.json` - topic word sets for the daily mode (Words page, Word sets tab), see [Word sets](#word-sets-setsjson).
 - `pairs.json` - opposites and synonyms for the "Opposites and synonyms" game, see [Word pairs](#word-pairs-pairsjson).
 - `glossary.json` (written by Claude) and `glossary.generated.json` (written by a script) - the word popups, see [Glossary](#glossary-word-popups).
@@ -369,6 +370,42 @@ The Topics page lists lesson sections worth coming back to, in groups, with the 
 - Jokes need 2 or more lines: every line but the last is the setup, the last is the punchline. The list shows a joke by its first line, never by its title, and the title, the punchline, the breakdown and `explain` appear only after "Show punchline", so the title may give the joke away. Facts and phrases are listed by their title.
 - Every German line gets a speaker button. There are no word popups on this page and extras.json is not checked against the glossary: the breakdown is the gloss, and jokes may use made-up words.
 
+## Read page: `readings.json`
+
+Short texts for Hayk's level (`#/read`, "Read" in the top menu): stories, everyday texts (a chat, an email, a notice, a menu) and fun facts. The list groups them by `unit` and shows each as read or not read; a text counts as read once an attempt at its questions is saved. A text has word popups, a speaker button per sentence and "Play all", an English translation per sentence (hidden until tapped, or "Show all translations"), its questions with instant feedback, and "Add N new words to review".
+
+```json
+{
+  "texts": [
+    {
+      "id": "falsche-nummer",
+      "kind": "story",
+      "title": "Falsche Nummer",
+      "titleEn": "Wrong number",
+      "level": "A1",
+      "unit": 0,
+      "sentences": [{ "speaker": "Max", "de": "Hallo, Lena! Wie geht's?", "en": "Hi, Lena! How are you?" }],
+      "words": ["falsch", "nummer"],
+      "questions": [{ "type": "gap", "text": "Langsam, ___. Ich verstehe nicht.", "answers": [["bitte"]], "explanation": "..." }],
+      "sources": ["https://..."]
+    }
+  ]
+}
+```
+
+| key | required | notes |
+|---|---|---|
+| `id` | yes | kebab-case, unique and stable: the questions are saved as the attempt `r-<id>` (so no test or lesson id may start with `r-`, and `r-<id>` fits in 100 characters; check-content checks both) |
+| `kind` | yes | `story`, `everyday` or `fact` |
+| `title`, `titleEn` | yes | German title (popups, glossary-checked) and English title. For an everyday text say what it is in `titleEn`: "Flat for rent (an ad)" |
+| `level`, `unit` | yes | the unit it is written for: German taught up to the end of that unit (`npx tsx scripts/non_essential/check-taught.ts <unit>` lists the rest), plus the text's new words |
+| `sentences` | yes | 3-20, aim for 5-15 short ones: `{ "de", "en" }`. A chat or a dialogue gives every sentence a `speaker` (shown like a story dialogue, one voice per speaker); a text either has a speaker on every sentence or on none. Whole numbers and years can be digits (55, 1810); write prices with cents and dates in words ("zwei Euro fünfzig", "am dritten Oktober"), since TTS reads "2,50" and "3.10." unreliably |
+| `words` | no | ids from `words.json`: the text's new words, offered with "Add N new words to review" (cards for the ones Hayk does not have yet). Later-unit cards are fine; a new card goes into `words.json` first (tags `["reading", "<text id>"]`). A word that only readings list (no lesson, no word set) waits for that button: it never joins the daily new words by itself |
+| `questions` | yes | 2-4 items of type `mc`, `gap` or `order` only, so the feedback is instant (same rules as test items). English questions get `questionLang: "en"`; options stay German. Give each an `explanation`. Wrong answers are not replayed in Mistakes (a question means little without its text) |
+| `sources` | facts only | 1 or more `https://` links where the fact was checked; shown under the text. Every fact must be true: check it first |
+
+Texts are listed in file order within a unit, so append new ones after the last text of their unit or at the end. The glossary covers `title`, every sentence and the German fields of the questions.
+
 ## Word sets: `sets.json`
 
 Topic word lists outside the course order (DECISIONS.md #77). Hayk can pick one as the source of the daily mix's new words (up to 5 a day, within the daily limit), and practise a set's learned words with match pairs, listen and pick, or typing.
@@ -455,6 +492,7 @@ After a test item is submitted, after a word-review card is revealed, and on the
 | `dictation` | `text` |
 | words.json | `de`, `plural`, `example.de` |
 | lessons and theme lessons | `[[...]]` in explanation, comparison, tip and warning text; `examples` and `audio` sentences (`de`); table cells in `"words"` columns; exercise items as above |
+| readings.json | `title`, every sentence's `de`, the questions as above |
 
 Not German: `title`, `description`, `instruction`, `hint`, `explanation`, every `en` field, and all of `extras.json` (no popups there).
 

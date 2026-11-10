@@ -1,5 +1,5 @@
 // Validates everything Claude writes: content/tests/*.json, content/lessons/*.json, content/themes/*.json,
-// content/words.json, content/topics.json, content/extras.json, content/sets.json, content/pairs.json, the glossary files (content/glossary.json, content/glossary.generated.json)
+// content/words.json, content/topics.json, content/extras.json, content/sets.json, content/pairs.json, content/readings.json, the glossary files (content/glossary.json, content/glossary.generated.json)
 // including that every German word in the content has a glossary entry or is on the ignore list.
 // Then prints how much content there is. Hayk's progress lives in Neon (DECISIONS.md #21), not in
 // files, so what is left FOR HAYK (the runway) is on the app's Stats page, and Claude reads
@@ -9,6 +9,7 @@
 import { germanFields } from '../src/content/german.ts'
 import { glossaryGaps, makeGlossary } from '../src/glossary/lookup.ts'
 import { extrasCountText } from '../src/lib/extras.ts'
+import { readingsCountText } from '../src/lib/readings.ts'
 import { CURATED_GLOSSARY, readContent, readCuratedGlossary, readGeneratedGlossary } from './content-files.ts'
 
 const started = Date.now()
@@ -22,7 +23,7 @@ const generated = readGeneratedGlossary(problems)
 const curated = readCuratedGlossary(problems)
 let gapCount = 0
 if (generated && curated) {
-  const gaps = glossaryGaps(germanFields(content.tests, content.words, [...content.lessons, ...content.themes]), makeGlossary(generated, curated))
+  const gaps = glossaryGaps(germanFields(content.tests, content.words, [...content.lessons, ...content.themes], content.readings), makeGlossary(generated, curated))
   gapCount = gaps.length
   for (const g of gaps) {
     problems.push(
@@ -53,3 +54,4 @@ console.log(
     `\`uv run backend/scripts/progress.py summary\` from the repo root.`,
 )
 console.log(extrasCountText(content.extras.items))
+console.log(readingsCountText(content.readings.readings))
