@@ -2,6 +2,23 @@
 
 Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
+## 115. Every lesson video has "Read instead" notes: what it teaches, key phrases with audio and popups, condensed from the transcript (asked for by Hayk, 2026-11-10)
+
+- **Date:** 2026-11-10 - **Status:** active; revisits #74
+- **Why:** Hayk: "I want the option to not watch the video but still get its full content ... not literally the full transcript, do it the smart way". Each lesson video may carry `notes`:
+  - `points`: 3-7 one-line English points, rich text, so `[[German]]` gets popups and the glossary check;
+  - `phrases`: 3-10 `{de, en}` with speaker buttons and popups;
+  - `extra`: "Also in the video: ...".
+  - **Coverage:** written from the local auto-captions (reference/youtube/, gitignored) for all 129 captioned videos used in lessons (132 entries, three videos in two lessons). The one used video without captions (KYmkPHijIb4, Classroom things) has none.
+  - **Accuracy:** where the captions lost the German (about 10 videos), the examples were rebuilt as standard A1 German from the narration. Where a video was wrong (e.g. Servus "from Switzerland"), the notes correct it. Points above A1 are marked A2.
+  - **UI:** each video is a row, with the thumbnail and title plus a closed "Read instead" disclosure. At 390 px the notes open below at full width.
+  - **Glossary:** the agent added 49 missing entries and 32 overrides of misleading or vulgar Wiktionary senses (Kuli, Eis, Spanisch, Pflaume and others).
+- **Alternatives rejected:**
+  - **The full transcript:** too long, auto-captions are error-prone, and Hayk asked against it.
+  - **Plain-text points:** German in them would get no popups and no glossary check.
+  - **Keeping the thumbnail grid:** the notes were too narrow in a ~220 px column.
+- **What would change this:** Hayk finding the notes thinner than the videos for some lessons (then longer notes there), or new videos (then notes in the same pass).
+
 ## 114. A "Read" page with short texts: stories, everyday texts and facts, with audio, popups, a translation toggle, instant questions and "add new words" (asked for by Hayk, 2026-11-10)
 
 - **Date:** 2026-11-10 - **Status:** active; revisits #98 (10 nav links)
