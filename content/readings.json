@@ -35,7 +35,7 @@
           "questionLang": "en",
           "options": ["null, eins, sieben, zwei, drei, fünf", "null, eins, sieben, zwei, drei, vier", "null, eins, sieben, zwei, drei, neun"],
           "answer": "null, eins, sieben, zwei, drei, fünf",
-          "explanation": "Max calls ... vier (4), but her number ends in fünf (5)."
+          "explanation": "Max asks about ... vier (4), but her number ends in fünf (5)."
         },
         {
           "type": "gap",
@@ -59,9 +59,9 @@
         { "speaker": "Max", "de": "Lena, was heißt \"sorry\" auf Deutsch?", "en": "Lena, what is \"sorry\" in German?" },
         { "speaker": "Lena", "de": "Entschuldigung!", "en": "Entschuldigung! (sorry)" },
         { "speaker": "Max", "de": "Wie bitte? Noch einmal, bitte!", "en": "Pardon? Once more, please!" },
-        { "speaker": "Lena", "de": "Ent-schul-di-gung. Das Wort hat vierzehn Buchstaben.", "en": "En-tschul-di-gung. The word has fourteen letters." },
+        { "speaker": "Lena", "de": "Ent-schul-di-gung. Das Wort hat vierzehn Buchstaben.", "en": "Ent-schul-di-gung. The word has fourteen letters." },
         { "speaker": "Max", "de": "Vierzehn Buchstaben? Langsam, bitte!", "en": "Fourteen letters? Slowly, please!" },
-        { "speaker": "Max", "de": "Danke, Lena! Ent ... Entschul ... Tschüss!", "en": "Thanks, Lena! En... Entschul... Bye!" }
+        { "speaker": "Max", "de": "Danke, Lena! Ent ... Entschul ... Tschüss!", "en": "Thanks, Lena! Ent... Entschul... Bye!" }
       ],
       "words": ["wort", "sehr"],
       "questions": [
@@ -85,7 +85,7 @@
           "type": "order",
           "prompt": "What is \"sorry\" in German?",
           "tiles": ["was", "heißt", "sorry", "auf", "Deutsch"],
-          "answers": ["Was heißt sorry auf Deutsch"],
+          "answers": ["Was heißt sorry auf Deutsch", "Was heißt auf Deutsch sorry"],
           "explanation": "Was heißt ... auf Deutsch? = What is ... in German? The question word comes first, then the verb."
         }
       ]
@@ -125,7 +125,7 @@
         },
         {
           "type": "mc",
-          "question": "How old is the Armenian alphabet?",
+          "question": "When was the Armenian alphabet created?",
           "questionLang": "en",
           "options": ["aus dem Jahr 405", "aus dem Jahr 1405", "aus dem Jahr 45"],
           "answer": "aus dem Jahr 405",
@@ -373,7 +373,7 @@
         { "de": "Hallo! Ich bin Max, und das ist meine Familie.", "en": "Hi! I'm Max, and this is my family." },
         { "de": "Das ist mein Vater. Er heißt Thomas und ist Lehrer.", "en": "This is my father. His name is Thomas and he is a teacher." },
         { "de": "Das ist meine Mutter, Sabine. Sie arbeitet bei Siemens.", "en": "This is my mother, Sabine. She works at Siemens." },
-        { "de": "Ich habe eine Schwester. Sie heißt Lena und ist sechzehn.", "en": "I have a sister. Her name is Lena and she is sixteen." },
+        { "de": "Ich habe eine Schwester. Sie heißt Anna und ist sechzehn.", "en": "I have a sister. Her name is Anna and she is sixteen." },
         { "de": "Und das ist Mimi.", "en": "And this is Mimi." },
         { "de": "Mimi ist klein und schwarz.", "en": "Mimi is small and black." },
         { "de": "Sie schläft viel und isst viel.", "en": "She sleeps a lot and eats a lot." },
@@ -535,9 +535,9 @@
         },
         {
           "type": "gap",
-          "text": "Ich habe Hunger. Ich brauche ein ___ mit Käse.",
+          "text": "___ mit Käse: vier Euro zwanzig",
           "answers": [["Brötchen"]],
-          "explanation": "das Brötchen, so: ein Brötchen. On the menu: Brötchen mit Käse, vier Euro zwanzig."
+          "explanation": "das Brötchen = bread roll. On the menu: Brötchen mit Käse, vier Euro zwanzig."
         }
       ]
     },
@@ -580,7 +580,7 @@
           "type": "order",
           "prompt": "The word sounds English.",
           "tiles": ["das", "Wort", "klingt", "englisch"],
-          "answers": ["Das Wort klingt englisch"],
+          "answers": ["Das Wort klingt englisch", "Englisch klingt das Wort"],
           "explanation": "klingen = to sound. Das Wort klingt englisch: subject, verb, then the rest."
         }
       ],
@@ -599,8 +599,8 @@
         { "de": "Heute ist \"Kindergarten\" auch ein englisches Wort.", "en": "Today \"kindergarten\" is an English word too." },
         { "de": "Die Idee ist von Friedrich Fröbel.", "en": "The idea comes from Friedrich Fröbel." },
         { "de": "Fröbel ist Lehrer. Er lebt von 1782 bis 1852.", "en": "Fröbel was a teacher. He lived from 1782 to 1852." },
-        { "de": "1840 nennt er seine Schule für kleine Kinder \"Kindergarten\".", "en": "In 1840 he named his school for small children \"Kindergarten\"." },
-        { "de": "Die Schule ist in Thüringen.", "en": "The school was in Thuringia." },
+        { "de": "1840 nennt er sein Haus für kleine Kinder \"Kindergarten\".", "en": "In 1840 he named his house for small children \"Kindergarten\"." },
+        { "de": "Das Haus ist in Thüringen.", "en": "The house was in Thuringia." },
         { "de": "Die Kinder spielen, singen und arbeiten im Garten.", "en": "The children played, sang and worked in the garden." },
         { "de": "Heute gibt es Kindergärten in vielen Ländern.", "en": "Today there are kindergartens in many countries." }
       ],
@@ -616,11 +616,11 @@
         },
         {
           "type": "mc",
-          "question": "When did Fröbel give his school the name \"Kindergarten\"?",
+          "question": "When did Fröbel name his house for small children \"Kindergarten\"?",
           "questionLang": "en",
           "options": ["1840", "1782", "1990"],
           "answer": "1840",
-          "explanation": "1840 nennt er seine Schule \"Kindergarten\". 1782 is the year he was born."
+          "explanation": "1840 nennt er sein Haus \"Kindergarten\". 1782 is the year he was born."
         },
         {
           "type": "gap",
@@ -762,7 +762,7 @@
         {
           "type": "gap",
           "text": "Am Feiertag ist die Bäckerei ___.",
-          "answers": [["geschlossen"]],
+          "answers": [["geschlossen", "zu", "nicht offen", "nicht geöffnet"]],
           "explanation": "geschlossen = closed, geöffnet = open. Am Feiertag geschlossen."
         }
       ]
@@ -808,7 +808,7 @@
           "type": "order",
           "prompt": "Unfortunately I can't at eight.",
           "tiles": ["um", "acht", "kann", "ich", "leider", "nicht"],
-          "answers": ["Um acht kann ich leider nicht", "Ich kann um acht leider nicht", "Leider kann ich um acht nicht"],
+          "answers": ["Um acht kann ich leider nicht", "Ich kann um acht leider nicht", "Leider kann ich um acht nicht", "Ich kann leider um acht nicht", "Ich kann leider nicht um acht", "Leider kann ich nicht um acht"],
           "explanation": "The verb (kann) is always in second place, whatever comes first: Um acht kann ich ..., Ich kann ..., Leider kann ich ..."
         }
       ]
@@ -822,14 +822,14 @@
       "unit": 3,
       "sentences": [
         { "de": "Das Oktoberfest in München ist sehr groß.", "en": "Oktoberfest in Munich is very big." },
-        { "de": "Jedes Jahr kommen über sechs Millionen Menschen.", "en": "Every year more than six million people come." },
+        { "de": "Jedes Jahr kommen ungefähr sechs bis sieben Millionen Menschen.", "en": "Every year about six to seven million people come." },
         { "de": "Aber Achtung: Das Oktoberfest fängt im September an!", "en": "But careful: Oktoberfest starts in September!" },
-        { "de": "2026 ist es vom neunzehnten September bis zum vierten Oktober.", "en": "In 2026 it runs from 19 September to 4 October." },
+        { "de": "2026 war es vom neunzehnten September bis zum vierten Oktober.", "en": "In 2026 it ran from 19 September to 4 October." },
         { "de": "Warum im September? Das Wetter ist besser.", "en": "Why September? The weather is better." },
         { "de": "Das erste Oktoberfest war im Oktober 1810.", "en": "The first Oktoberfest was in October 1810." },
         { "de": "In München sagt man oft einfach \"die Wiesn\".", "en": "In Munich people often just say \"die Wiesn\"." }
       ],
-      "words": ["mensch", "achtung", "wetter", "warum", "besser", "einfach", "oft"],
+      "words": ["mensch", "ungefaehr", "achtung", "wetter", "warum", "besser", "einfach", "oft"],
       "questions": [
         {
           "type": "mc",
@@ -854,7 +854,7 @@
           "explanation": "anfangen is separable: Das Oktoberfest fängt im September an."
         }
       ],
-      "sources": ["https://www.muenchen.de/veranstaltungen/oktoberfest", "https://www.history.com/articles/oktoberfest-history-date"]
+      "sources": ["https://www.muenchen.de/veranstaltungen/oktoberfest", "https://www.muenchen.de/veranstaltungen/oktoberfest/geschichte", "https://www.muenchen.de/veranstaltungen/oktoberfest/aktuell/oktoberfest-bilanz-2026"]
     },
     {
       "id": "elfter-elfter",
@@ -897,7 +897,7 @@
           "explanation": "anfangen is separable and changes a to ä: es fängt ... an."
         }
       ],
-      "sources": ["https://www.zdfheute.de/panorama/karneval-elfter-elfter-mainz-koeln-duesseldorf-100.html"]
+      "sources": ["https://www.zdfheute.de/panorama/karneval-elfter-elfter-mainz-koeln-duesseldorf-100.html", "https://www.smart-rechner.de/feiertage/infothek/karneval.php", "https://www.dwds.de/wb/Fasching"]
     }
   ]
 }
