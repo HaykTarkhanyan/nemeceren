@@ -80,7 +80,7 @@ function Words({ tab }: { tab: (typeof WORDS_TABS)[number] }) {
   const { source, note } = parseSourceKey(picked ?? settings.wordSource, content.allLessons)
   const custom = progress.customWords.map(practiceWord)
   // With "all", new words follow the path (lib/plan.ts pathNewWords), the same rule as the daily mix.
-  const words = wordsForSource(source, content.words, custom, content.allLessons, progress.lessonProgress, state, reachOf(progress))
+  const words = wordsForSource(source, content.words, custom, content.allLessons, progress.lessonProgress, state, reachOf(progress), content.sets)
   // No daily limit on new words, for any pick (Hayk, 2026-11-09; it was "all" only before, #66):
   // the review keeps bringing them, round after round, as long as Hayk goes on.
   const newLimit = REVIEW_NEW_LIMIT

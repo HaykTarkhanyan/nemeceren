@@ -162,6 +162,14 @@ describe('new words follow the path (pathNewWords)', () => {
     expect(full).toEqual(['a1', 'a2', 'shared', 'b1', 'c1', 'free'])
     expect(full).not.toContain('t1')
   })
+
+  it('a word set with afterUnit puts its bank words right after that unit (A1 gaps before A2)', () => {
+    const bank = [...words, word('g1'), word('g2')]
+    const sets = [{ afterUnit: 1, words: ['g2', 'g1', 'a1'] }]
+    const full = withCourseRest(pathNewWords(bank, all, emptyLessonProgress(), emptyState(t0), at('A')), bank, all, sets).map((w) => w.id)
+    // Unit 1 = A, B; then the set's bank words in set order (a1 is a lesson word, it keeps its lesson place); then unit 2; then the rest of the bank.
+    expect(full).toEqual(['a1', 'a2', 'shared', 'b1', 'g2', 'g1', 'c1', 'free'])
+  })
 })
 
 describe('unit words before a test (unitWordsLeft)', () => {

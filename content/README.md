@@ -380,6 +380,7 @@ Topic word lists outside the course order (DECISIONS.md #77). Hayk can pick one 
 - `id` is kebab-case and unique; `title` is English; `description` is one English sentence.
 - `words` are ids from `words.json`, 10 or more, each once, in the order they are learned: concrete and frequent words first, phrases later. check-content reports an unknown id.
 - A set may take words from any unit, including units Hayk has not reached: picking the set is the choice to learn them early. A word may be in several sets. New words a set needs go into `words.json` first, like any card.
+- `afterUnit` (optional, a unit number): where the set's words that are in no lesson go in the full word order of the review and the Home games, right after that unit's lessons. The A1 gaps use 7, so they come at the end of A1, before A2. Without it, such words come after the whole course (DECISIONS.md #111).
 
 ## Word pairs: `pairs.json`
 

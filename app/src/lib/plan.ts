@@ -122,26 +122,33 @@ export function studyWords<W extends { id: string }>(words: W[], lessons: Lesson
  * The full order of words (2026-11-09, no locks): `pool` (introduced words, the path's new words, own
  * words), then every other word of the course lessons in course order, then the word bank (words in
  * no lesson), so the course always comes first and a round is always full (DECISIONS.md #111).
- * `lessons` are all lessons: theme words are never added here, they wait for their theme.
+ * `lessons` are all lessons: theme words are never added here, they wait for their theme. A word set
+ * with `afterUnit` puts its bank words right after that unit's lessons (the A1 gaps after Unit 7).
  */
-export function withCourseRest<W extends { id: string }>(pool: W[], words: W[], lessons: Lesson[]): W[] {
+export function withCourseRest<W extends { id: string }>(
+  pool: W[],
+  words: W[],
+  lessons: Lesson[],
+  sets: readonly { afterUnit?: number; words: string[] }[] = [],
+): W[] {
   const byId = new Map(words.map((w) => [w.id, w]))
   const seen = new Set(pool.map((w) => w.id))
-  const rest: W[] = []
-  for (const l of lessons.filter(isCourseLesson).sort(byCourseOrder)) {
-    for (const id of l.words ?? []) {
-      const w = byId.get(id)
-      if (!w || seen.has(id)) continue
-      seen.add(id)
-      rest.push(w)
-    }
-  }
   const inLessons = new Set(lessons.flatMap((l) => l.words ?? []))
-  for (const w of words) {
-    if (inLessons.has(w.id) || seen.has(w.id)) continue
-    seen.add(w.id)
+  const rest: W[] = []
+  const add = (id: string) => {
+    const w = byId.get(id)
+    if (!w || seen.has(id)) return
+    seen.add(id)
     rest.push(w)
   }
+  const course = lessons.filter(isCourseLesson).sort(byCourseOrder)
+  course.forEach((l, i) => {
+    for (const id of l.words ?? []) add(id)
+    const unitEnds = i === course.length - 1 || course[i + 1].unit !== l.unit
+    if (!unitEnds) return
+    for (const s of sets) if (s.afterUnit === l.unit) for (const id of s.words) if (!inLessons.has(id)) add(id)
+  })
+  for (const w of words) if (!inLessons.has(w.id)) add(w.id)
   return [...pool, ...rest]
 }
 
@@ -210,10 +217,11 @@ export function wordsForSource(
   p: LessonProgress,
   state: ReviewState,
   reach: PathReach,
+  sets: readonly { afterUnit?: number; words: string[] }[] = [],
 ): StudyWord[] {
   // No locks (Hayk, 2026-11-09: "as many as I want"): after the path's new words comes the rest of
   // the course in course order, so the review never runs dry. Theme words still wait for their theme.
-  if (source.kind === 'all') return [...withCourseRest(studyWords(words, lessons, p, state, reach), words, lessons), ...custom]
+  if (source.kind === 'all') return [...withCourseRest(studyWords(words, lessons, p, state, reach), words, lessons, sets), ...custom]
   if (source.kind === 'mine') return custom
   let picked: Lesson[]
   if (source.kind === 'lessons') {

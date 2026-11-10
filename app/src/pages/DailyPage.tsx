@@ -65,7 +65,7 @@ export function studyPool(progress: ProgressView): StudyWord[] {
 
 /** The words of a practice game started from Home, in the order it takes them: the study pool, then the rest of the course, then the word bank (lib/plan.ts withCourseRest; all lessons, so unopened theme words stay out). */
 export function homeGameWords(progress: ProgressView): StudyWord[] {
-  return withCourseRest(studyPool(progress), content.words, content.allLessons)
+  return withCourseRest(studyPool(progress), content.words, content.allLessons, content.sets)
 }
 
 /** Mistakes from tests and lesson exercises (DECISIONS.md #81): the due ones, and how many changed since. */

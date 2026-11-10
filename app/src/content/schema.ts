@@ -372,6 +372,11 @@ export const WordSet = z.strictObject({
   description: Text,
   /** Ids of words in content/words.json, in the order they are learned. */
   words: z.array(Slug).min(10),
+  /**
+   * Where the set's words (those in no lesson) go in the full word order: right after this unit's
+   * lessons, e.g. 7 for the A1 gaps, before A2. Leave out: after the whole course (DECISIONS.md #111).
+   */
+  afterUnit: Unit.optional(),
 })
 
 export const WordSets = z.strictObject({ sets: z.array(WordSet).min(1) }).superRefine((x, ctx) => {
