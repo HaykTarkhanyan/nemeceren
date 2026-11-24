@@ -4,8 +4,10 @@
 import { content } from '../content/load.ts'
 import { memo } from 'react'
 import { MIX } from '../lib/daily.ts'
+import { localDay } from '../lib/dates.ts'
 import { messageOf, reportError } from '../lib/errors.ts'
 import { MAX_FREEZES, MILESTONES } from '../lib/goal.ts'
+import { quickTasks, todayCounts } from '../lib/quickTasks.ts'
 import type { GoalStreak } from '../lib/goal.ts'
 import { link } from '../lib/router.ts'
 import { updateSettings, useSettings } from '../lib/settings.ts'
@@ -45,6 +47,7 @@ export const DailyCard = memo(function DailyCard({ goal }: { goal: GoalStreak })
   const plan = mixPlan(progress, settings, now)
   const mistakesDue = currentMistakes(progress, now).due.length
   const due = counts(studyPool(progress), progress.reviewState, now, settings.newPerDay).due
+  const quick = quickTasks({ ...todayCounts(progress.reviewLog, localDay(now)), due, newAvailable: plan.newCount })
   const nextMilestone = MILESTONES.find((m) => m > goal.current)
   function set(patch: Parameters<typeof updateSettings>[0]) {
     try {
@@ -87,6 +90,25 @@ export const DailyCard = memo(function DailyCard({ goal }: { goal: GoalStreak })
           <span className="muted small">Nothing for the daily mix yet. Open the next station below, then come back.</span>
         )}
       </div>
+      {quick.length > 0 && (
+        <div className="quick-tasks">
+          <span className="small muted">Busy day? A quick task:</span>
+          <ul>
+            {quick.map((t) => (
+              <li key={t.id} className={t.done ? 'done' : undefined}>
+                <span className="quick-mark" aria-hidden="true">
+                  {t.done ? '✓' : '○'}
+                </span>
+                {t.done ? <span>{t.label}</span> : <a href={link('daily', t.id)}>{t.label}</a>}
+                <span className="muted small">
+                  {t.done ? 'done' : `~${t.minutes} min`}
+                  {t.doneCount > 0 && !t.done ? `, ${t.doneCount}/${t.target}` : ''}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
       {due > 0 && (
         <p className="small">
           <a href={link('words')}>

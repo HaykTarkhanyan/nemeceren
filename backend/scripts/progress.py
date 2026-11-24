@@ -24,6 +24,7 @@ Run from the repo root (uv installs the pinned dependencies above on first use):
     uv run backend/scripts/progress.py check-word <word-id> ok [--note "..."] [--replace]
     uv run backend/scripts/progress.py check-word <word-id> fix [--de ..] [--en ..] [--plural ..] [--note "..."] [--replace]
     uv run backend/scripts/progress.py self-check                  # offline check of the feedback and word-check validators
+    uv run backend/scripts/progress.py daily-tasks [--kachayt]     # today's quick tasks; --kachayt: sync them to Hayk's kachayt (#119)
 Data commands take --user <email or user id>; the default is NEMECEREN_DEFAULT_USER in .env.local
 (Hayk), else the only allowed user apart from Claude's test account (NEMECEREN_TEST_EMAIL).
 
@@ -58,6 +59,7 @@ import argparse
 import json
 import logging
 import re
+import subprocess
 import sys
 import time
 from datetime import date, datetime, timedelta, timezone
@@ -1101,6 +1103,131 @@ def self_check() -> int:
     return len(ok_cases) + len(bad_cases)
 
 
+
+# ---------- daily quick tasks (DECISIONS.md #119) ----------
+
+# Mirrors QUICK and quickTasks() in app/src/lib/quickTasks.ts: change both together.
+QUICK_REVIEWS = 10
+QUICK_NEW = 3
+QUICK_SECONDS = {"review": 18, "new": 40}
+QUICK_PREFIX = "German quick: "
+QUICK_SECTION = "German"
+APP_URL = "https://hayktarkhanyan.github.io/nemeceren/"
+KACHAYT = Path.home() / "OneDrive" / "Desktop" / "00_notes" / "kachayt" / "scripts" / "kachayt.py"
+
+
+def parse_find_line(raw: str) -> dict[str, str] | None:
+    """A line of `kachayt.py find`, whose fields are separated by two or more spaces:
+    "  2026-11-24  c62ae422  [ ]  German quick: review 10 words (~3 min)  #German  <learn>" (a star may follow the mark)."""
+    bits = re.split(r"\s{2,}", raw.strip())
+    if len(bits) < 4 or not re.fullmatch(r"\d{4}-\d{2}-\d{2}|inbox", bits[0]) or not re.fullmatch(r"[0-9a-f]{8}", bits[1]):
+        return None
+    mark = re.fullmatch(r"\[(.)\]", bits[2])
+    title = next((b for b in bits[3:] if b.startswith(QUICK_PREFIX)), None)
+    if mark is None or title is None:
+        return None
+    return {"day": bits[0], "id": bits[1], "mark": mark.group(1), "title": title}
+
+
+def day_counts(conn: psycopg.Connection, user_id: str, day: date) -> tuple[int, int]:
+    """(scheduled reviews, first reviews of new words) on one local day; practice moves no schedule and is left out."""
+    r = conn.execute(
+        """SELECT count(*) FILTER (WHERE NOT is_new) AS reviewed, count(*) FILTER (WHERE is_new) AS learned
+             FROM review_events WHERE user_id = %s AND local_day = %s AND NOT practice""",
+        (user_id, day),
+    ).fetchone()
+    return int(r["reviewed"]), int(r["learned"])
+
+
+def quick_task_list(reviewed: int, learned: int, due: int) -> list[dict[str, Any]]:
+    """The same tasks as the app's Home card. New words are assumed to be available: which words are left to learn
+    depends on the course in the app, which this script does not load."""
+    def minutes(cards: int, kind: str) -> int:
+        return max(1, round(cards * QUICK_SECONDS[kind] / 60))
+
+    tasks = []
+    review_target = min(QUICK_REVIEWS, reviewed + due)
+    if review_target > 0:
+        what = f"review {review_target} words" if review_target == QUICK_REVIEWS else f"review the {review_target} due word{'' if review_target == 1 else 's'}"
+        tasks.append({"kind": "review", "target": review_target, "done": reviewed >= review_target,
+                      "title": f"{QUICK_PREFIX}{what} (~{minutes(review_target, 'review')} min)", "link": f"{APP_URL}#/daily/review"})
+    tasks.append({"kind": "new", "target": QUICK_NEW, "done": learned >= QUICK_NEW,
+                  "title": f"{QUICK_PREFIX}learn {QUICK_NEW} new words (~{minutes(QUICK_NEW, 'new')} min)", "link": f"{APP_URL}#/daily/new"})
+    return tasks
+
+
+def quick_kind_and_target(title: str) -> tuple[str, int]:
+    m = re.search(r"review (?:the )?(\d+)", title)
+    if m:
+        return "review", int(m.group(1))
+    m = re.search(r"learn (\d+)", title)
+    if m:
+        return "new", int(m.group(1))
+    raise RuntimeError(f"Not a quick-task title: {title!r}")
+
+
+def kachayt(*args: str) -> str:
+    """Runs the kachayt CLI (Hayk's task platform); fails loudly with its output."""
+    res = subprocess.run(["uv", "run", str(KACHAYT), *args], capture_output=True, text=True, encoding="utf-8")
+    out = (res.stdout or "") + (res.stderr or "")
+    if res.returncode != 0:
+        raise RuntimeError(f"kachayt.py {' '.join(args)} failed (exit {res.returncode}): {out.strip()[-800:]}")
+    return out
+
+
+def cmd_daily_tasks(conn: psycopg.Connection, args: argparse.Namespace) -> None:
+    """Today's quick tasks from the progress. With --kachayt: closes earlier days' quick tasks in kachayt (done if
+    that day's reviews show it, else cancelled, since they are optional), adds today's if missing, and ticks today's
+    that are already done. Safe to run again: nothing is added twice."""
+    if args.kachayt and args.user is not None:
+        raise RuntimeError("--kachayt is for Hayk's own kachayt: leave out --user")
+    user = resolve_user(conn, args.user)
+    uid = user["user_id"]
+    today = date.today()
+    due = int(conn.execute("SELECT count(*) AS n FROM review_cards WHERE user_id = %s AND due <= now()", (uid,)).fetchone()["n"])
+    reviewed, learned = day_counts(conn, uid, today)
+    tasks = quick_task_list(reviewed, learned, due)
+    LOG.info(f"{today}: {due} words due, {reviewed} reviewed and {learned} new learned today")
+    for t in tasks:
+        LOG.info(f"  [{'x' if t['done'] else ' '}] {t['title']}  {t['link']}")
+    if not args.kachayt:
+        return
+
+    found = []
+    for raw in kachayt("find", "--all", "German", "quick:").splitlines():
+        t = parse_find_line(raw)
+        if t is not None:
+            found.append(t)
+    for t in found:
+        if t["mark"] != " " or t["day"] == today.isoformat():
+            continue
+        kind, target = quick_kind_and_target(t["title"])
+        if t["day"] == "inbox":
+            LOG.info(f"  leaving {t['id']} alone: it has no day")
+            continue
+        day = date.fromisoformat(t["day"])
+        r, l = day_counts(conn, uid, day)
+        met = (r if kind == "review" else l) >= target
+        kachayt("done" if met else "cancel", t["id"])
+        LOG.info(f"  {t['day']}: {'done' if met else 'cancelled (not done that day)'}: {t['title']}")
+    today_kinds = {quick_kind_and_target(t["title"])[0]: t for t in found if t["day"] == today.isoformat()}
+    for t in tasks:
+        have = today_kinds.get(t["kind"])
+        if have is None:
+            out = kachayt("add", t["title"], "--date", "today", "--section", QUICK_SECTION, "--kind", "learn",
+                          "--notes", f"{t['link']} (made by nemeceren progress.py daily-tasks, DECISIONS.md #119)")
+            m = re.search(r"\b([0-9a-f]{8})\s+\[ \]", out)
+            if not m:
+                raise RuntimeError(f"Could not read the new task's id from kachayt: {out.strip()[-400:]}")
+            have = {"id": m.group(1), "mark": " ", "title": t["title"]}
+            LOG.info(f"  added: {t['title']}")
+        else:
+            LOG.info(f"  already there today: {have['title']}")
+        if t["done"] and have["mark"] == " ":
+            kachayt("done", have["id"])
+            LOG.info(f"  ticked (done already today): {have['title']}")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Read and grade Hayk's progress in Neon Postgres.")
     sub = parser.add_subparsers(dest="command", required=True)
@@ -1153,6 +1280,9 @@ def main() -> None:
     p.add_argument("--replace", action="store_true", help="overwrite an existing check")
     p.add_argument("--user", default=None)
     sub.add_parser("self-check", help="check the note feedback and word-check validators on built-in cases (no database)")
+    p = sub.add_parser("daily-tasks", help="today's quick tasks (review 10 words, learn 3 new) from the progress (DECISIONS.md #119)")
+    p.add_argument("--kachayt", action="store_true", help="close earlier days' quick tasks in kachayt, add today's, tick done ones (~5-20 s)")
+    p.add_argument("--user", default=None, help="email or user id (default: Hayk); not with --kachayt")
     args = parser.parse_args()
 
     setup_logging("progress")
@@ -1177,6 +1307,7 @@ def main() -> None:
         "note-feedback": cmd_note_feedback,
         "my-words": cmd_my_words,
         "check-word": cmd_check_word,
+        "daily-tasks": cmd_daily_tasks,
     }
     with connect() as conn:
         commands[args.command](conn, args)

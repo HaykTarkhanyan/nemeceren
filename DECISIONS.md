@@ -2,6 +2,23 @@
 
 Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
+## 119. Daily quick tasks for busy days: "review 10 words" and "learn 3 new words", on Home and in kachayt each morning (asked for by Hayk, 2026-11-24)
+
+- **Date:** 2026-11-24 - **Status:** active
+- **Why:** Hayk: "on busy days I don't enter the platform because I'm not going to read new material, but I could quickly review some words or learn a few new ones ... created programmatically ... in my daily routine." Interview: both kachayt and the app (Q71), made from the progress each day (Q72), and the daily goal unchanged (Q73).
+- **What was built:**
+  - **The tasks** (`app/src/lib/quickTasks.ts`): review up to 10 due words (fewer when fewer are due), and learn 3 new words (fewer when fewer are left). A task shows when there is something to do or it was done today, and ticks itself from today's review log (practice left out). Time labels from ~18 s per review and ~40 s per new word.
+  - **Home:** a "Busy day? A quick task:" list in the Daily card; each opens its own short run, `#/daily/review` (due cards only, up to 10) or `#/daily/new` (the daily mix's new words, at most 3, up to 8 cards).
+  - **The goal (Q73, unchanged):** a review round of 10+ cards already counted (#86), so the quick review records one when 10 are graded; new words alone don't count.
+  - **kachayt:** `progress.py daily-tasks --kachayt`, run by the aziz briefing (its step 7c): adds today's "German quick: ..." tasks to the German project with the app link, ticks today's ones that are done, and closes earlier days' ones (done if that day's log shows it, else cancelled, since they are optional). Idempotent: run twice on 2026-11-24, the second run added nothing. It mirrors the app's rule in Python; new words are assumed available there (the course lives in the app).
+- **First run's bug, fixed:** the script first read kachayt's output with single spaces, but its fields are separated by two; one run added a duplicate task, which was deleted. The parser now splits on runs of spaces, tested on real lines.
+- **Alternatives rejected:**
+  - **A fixed daily repeat in kachayt** (`repeat --daily`): no numbers, and it can't tick itself (Q72).
+  - **Counting 3 new words for the streak:** Hayk kept the goal as it is (Q73).
+  - **Ticking the kachayt habit "German":** the kachayt CLI can only read habits; writing them needs a kachayt change.
+  - **A scheduled job (Task Scheduler, a Neon cron):** the aziz briefing already runs every morning, and kachayt and nemeceren are separate Neon projects.
+- **What would change this:** Hayk skipping the quick tasks too (then a push reminder, or smaller ones); the briefing not running on some days (then kachayt shows no German task that day); the habit becoming writable from the CLI.
+
 ## 118. Anyone can sign in with Google and gets their own progress; strangers have daily and row limits, a privacy note and "Delete my account" (asked for by Hayk, 2026-11-24)
 
 - **Date:** 2026-11-24 - **Status:** active; partly supersedes #52. Not yet tried with a real Google sign-in.

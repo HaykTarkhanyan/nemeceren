@@ -18,6 +18,7 @@ uv run backend/scripts/progress.py my-words --unchecked  # Hayk's own words with
 uv run backend/scripts/progress.py check-word <word-id> ok [--note "..."]
 uv run backend/scripts/progress.py check-word <word-id> fix --de "der Stau" [--en "..."] [--plural "die Staus"] [--note "..."]   # --replace overwrites a check
 uv run backend/scripts/progress.py self-check            # offline check of the feedback and word-check validators
+uv run backend/scripts/progress.py daily-tasks [--kachayt] # today's quick tasks; --kachayt syncs them to Hayk's kachayt (aziz step 7c, DECISIONS.md #119)
 ```
 
 Data commands take `--user <email>`. Without it they use `NEMECEREN_DEFAULT_USER` from the gitignored `.env.local` (Hayk), or else the only allowed user apart from Claude's test account, and stop with an error when there are several.

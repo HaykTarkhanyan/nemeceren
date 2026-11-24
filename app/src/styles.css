@@ -3223,3 +3223,35 @@ ol.line {
 .privacy li + li {
   margin-top: 4px;
 }
+
+/* Quick tasks for a busy day on Home (DECISIONS.md #119). */
+.quick-tasks ul {
+  list-style: none;
+  margin: 4px 0 0;
+  padding: 0;
+}
+
+.quick-tasks li {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.quick-tasks li + li {
+  margin-top: 4px;
+}
+
+.quick-tasks .quick-mark {
+  width: 1em;
+  color: var(--muted);
+}
+
+.quick-tasks li.done .quick-mark {
+  color: var(--ok);
+}
+
+.quick-tasks li.done > span:nth-child(2) {
+  color: var(--muted);
+  text-decoration: line-through;
+}

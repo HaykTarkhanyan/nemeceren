@@ -40,9 +40,11 @@ import type { SpeechInfo } from '../lib/speech.ts'
 import type { Settings } from '../lib/settings.ts'
 import { withoutWaitingReadingWords } from '../lib/readings.ts'
 import { counts } from '../lib/srs.ts'
+import { QUICK } from '../lib/quickTasks.ts'
+import { GOAL_ROUND_MIN } from '../lib/review.ts'
 import { messageOf, reportError } from '../lib/errors.ts'
 import { reachOf } from '../lib/goalView.ts'
-import { recordDailyMixDone, requestFlush, useProgress } from '../lib/storage.ts'
+import { recordDailyMixDone, recordReviewRoundDone, requestFlush, useProgress } from '../lib/storage.ts'
 import { unionWordIds } from '../lib/vocabMap.ts'
 import { cardioFan } from '../lib/eggs.ts'
 import { useSession } from '../lib/session.ts'
@@ -179,6 +181,8 @@ export function DailyPage({ sub, lessons }: { sub?: string; lessons?: string }) 
     )
   }
   if (sub === 'mistakes') return <MistakesOnly />
+  if (sub === 'review') return <QuickReview />
+  if (sub === 'new') return <QuickNew />
   const game = PRACTICE_GAMES.find((g) => g === sub)
   if (game) return <PracticeGame game={game} lessons={lessons} />
   return (
@@ -510,6 +514,96 @@ function MistakesOnly() {
           </p>
         </div>
       )}
+    </div>
+  )
+}
+
+/**
+ * "Review 10 words", a quick task from Home (DECISIONS.md #119): due cards only, up to QUICK.reviews. A run of 10+
+ * graded cards counts for the daily goal like a Words-page round (#86); the rule itself is unchanged.
+ */
+function QuickReview() {
+  const progress = useProgress()
+  const settings = useSettings()
+  const state = progress.reviewState
+  const [words] = useState(() => studyPool(progress).filter((w) => state.cards[w.id]))
+  const [stats, setStats] = useState<RunStats | null>(null)
+  if (stats) {
+    const line =
+      stats.cards === 0
+        ? 'Nothing is due right now.'
+        : `Reviewed ${stats.cards} word${stats.cards === 1 ? '' : 's'} (${stats.again} marked Again).${stats.cards >= GOAL_ROUND_MIN ? " That counts for today's goal." : ''}`
+    return <QuickEnd line={line} />
+  }
+  return (
+    <div className="stack">
+      <strong>Quick review: up to {QUICK.reviews} words</strong>
+      <ReviewRun
+        words={words}
+        mode={settings.dailyMode}
+        state={state}
+        newLimit={settings.newPerDay}
+        maxCards={QUICK.reviews}
+        maxNew={0}
+        onDone={(s) => {
+          if (s.cards >= GOAL_ROUND_MIN) {
+            try {
+              recordReviewRoundDone()
+            } catch (err) {
+              reportError(`Could not save the review round for your daily goal: ${messageOf(err)}`)
+            }
+          }
+          requestFlush()
+          setStats(s)
+        }}
+      />
+    </div>
+  )
+}
+
+/** "Learn 3 new words", a quick task from Home (DECISIONS.md #119): the daily mix's new words, at most QUICK.newWords. */
+function QuickNew() {
+  const progress = useProgress()
+  const settings = useSettings()
+  const [plan] = useState(() => mixPlan(progress, settings, new Date()))
+  const [stats, setStats] = useState<RunStats | null>(null)
+  if (stats) {
+    return <QuickEnd line={stats.fresh === 0 ? 'No new words are ready right now.' : `Learned ${stats.fresh} new word${stats.fresh === 1 ? '' : 's'}.`} />
+  }
+  return (
+    <div className="stack">
+      <strong>Quick: {QUICK.newWords} new words</strong>
+      <p className="muted small">New words from {plan.newFrom}. Flip each card, then grade how well you knew it.</p>
+      <ReviewRun
+        words={plan.newWords}
+        mode="recognition"
+        state={progress.reviewState}
+        newLimit={settings.newPerDay}
+        maxCards={QUICK.newCards}
+        maxNew={QUICK.newWords}
+        onDone={(s) => {
+          requestFlush()
+          setStats(s)
+        }}
+      />
+    </div>
+  )
+}
+
+function QuickEnd({ line }: { line: string }) {
+  return (
+    <div className="stack">
+      <div className="card">
+        <p>{line}</p>
+      </div>
+      <div className="row">
+        <a className="btn primary" href={link()}>
+          Home
+        </a>
+        <a className="btn" href={link('daily')}>
+          Daily mix
+        </a>
+      </div>
     </div>
   )
 }
