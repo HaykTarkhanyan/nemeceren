@@ -54,3 +54,11 @@ Evidence and sources are in `_knowledge/2026-09-28_llm-tutoring-and-materials.md
 - Windows desktop: use `python` (not `python3`) and pass `encoding="utf-8"` explicitly. In the Linux cloud session on the phone, use `python3`.
 - The repo is public, so everything committed is public.
 - Commit and push only after every check passed by its own exit code (`check-content`, `tsc`, `vitest`, `build`): save each `$?` (or `${PIPESTATUS[0]}` after a pipe) and test it. A later command in a chain, such as a `grep` that matches, hides a failure (2026-11-08: a push went out with check-content failing, and CI caught it).
+
+## Tasks (kachayt)
+
+Hayk's tasks for this project live in kachayt (their task platform), section **German**: open it with
+`kt` (starts it if needed, http://127.0.0.1:5180). When Hayk asks to add, move, finish or check tasks
+from here, use the global `kachayt` skill and file them under that section, for example
+`uv run ~/OneDrive/Desktop/00_notes/kachayt/scripts/kachayt.py add "..." --section "German"`.
+Project notes: `... kachayt.py note "German"`.

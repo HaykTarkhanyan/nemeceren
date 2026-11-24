@@ -2,6 +2,8 @@
 
 Topics cut from current work so they don't get lost.
 
+- **Open the app with no connection** (Hayk, 18 Nov 2026, parked from the kachayt task "kachayt and nemeceren: work offline, at least partly"; Hayk's Telegram 17 Nov: "i know that full offline will be problematic but at least partly"). Offline changes already queue in the outbox (DECISIONS.md #41, #42), but the service worker caches nothing (#89), so the app only keeps working in a tab that is already open; a cold start offline shows the offline page. Missing part: cache the app files (index.html + the hashed assets, under `/nemeceren/`) and start from the cached state (#41 already stores it). #89's "What would change this" names exactly this ("a precache with a version check"). kachayt does the same thing first (kachayt DECISIONS.md, offline entry, Nov 2026): reuse its service worker approach.
+
 - **Phone sync for the learning platform** (Neon Postgres or GitHub API commits). Deferred 2026-09-28: phone use is occasional and Hayk is fine with phone results not being saved. See DECISIONS.md #4.
 - **der/die/das and verb conjugation drills** fed from `reference/goethe_wortliste.tsv` and `reference/german_nouns.csv`. Not picked for platform v1 (2026-09-28).
 - (Done 2026-10-02 with Unit 6: the curated `den`, `dem`, `mir`, `dir`, `ihm`, `ihr`, `zum`, `im` ... popups now include their dative readings.)
