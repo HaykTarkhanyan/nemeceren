@@ -16,6 +16,7 @@ done = [
   "Daily quick tasks (#119), from Q71 (kachayt and the app), Q72 (made from progress each day), Q73 (goal unchanged): Home's Daily card lists 'Review 10 words' (or the due count) and 'Learn 3 new words' with their own runs #/daily/review and #/daily/new, ticked from today's log; a 10-card quick review records a review round (#86). Guest browser check: both ran and ticked.",
   "kachayt: progress.py daily-tasks --kachayt adds today's 'German quick: ...' tasks to the German project, ticks done ones, closes earlier days' ones (done or cancelled); aziz step 7c runs it every briefing (notes repo 06285dd5). Today's tasks: c62ae422 (review 10) and 1955098b (learn 3).",
   "Final checks before each push: check-content, tsc, vitest (648), build, backend typecheck; all three deploys succeeded.",
+  "After Hayk's first try (stuck at 8/10, 'Nothing is due right now'): the card counted words due by the end of the day while the run took only words due now, and the earliest-due card had reps 0 (5 such were due), which the run treats as new and stopped at. quickPlan now gives the card and the run one list (reviewed words due now; reps-0 cards go to the new-word run). Targets 30 reviews and 10 new words, Review 10 more / Learn 5 more, the new-word run ignores the daily limit; progress.py and aziz 7c updated, today's kachayt tasks renamed. 649 tests; deployed.",
 ]
 pending = [
   "Hayk's first real Google sign-in: does it attach to the existing Gmail account (keeps progress) or create a new empty one? If new, link them.",
@@ -42,6 +43,8 @@ commits = [
   "72660e6 project notes: kachayt tasks section, offline-start idea, Neon Auth sign-up learning",
   "ab8941f daily quick tasks for busy days: on Home and in kachayt each morning",
   "00_notes 06285dd5 aziz: step 7c, German quick tasks from nemeceren into kachayt",
+  "1ae5e5b quick tasks: fix the stuck review, 30 reviews and 10 new words, keep-going buttons",
+  "00_notes: aziz 7c now 30 reviews and 10 new words",
 ]
 notes = """
 Mistakes and fixes this session:
