@@ -4,16 +4,14 @@
 import { content } from '../content/load.ts'
 import { memo } from 'react'
 import { MIX } from '../lib/daily.ts'
-import { localDay } from '../lib/dates.ts'
 import { messageOf, reportError } from '../lib/errors.ts'
 import { MAX_FREEZES, MILESTONES } from '../lib/goal.ts'
-import { quickTasks, todayCounts } from '../lib/quickTasks.ts'
 import type { GoalStreak } from '../lib/goal.ts'
 import { link } from '../lib/router.ts'
 import { updateSettings, useSettings } from '../lib/settings.ts'
 import { counts } from '../lib/srs.ts'
 import { useProgress } from '../lib/storage.ts'
-import { currentMistakes, GAME_LABEL, mixPlan, mixSummary, PRACTICE_GAMES, studyPool } from './DailyPage.tsx'
+import { currentMistakes, GAME_LABEL, mixPlan, mixSummary, PRACTICE_GAMES, quickPlan, studyPool } from './DailyPage.tsx'
 
 const RING_R = 18
 const RING_C = 2 * Math.PI * RING_R
@@ -47,7 +45,7 @@ export const DailyCard = memo(function DailyCard({ goal }: { goal: GoalStreak })
   const plan = mixPlan(progress, settings, now)
   const mistakesDue = currentMistakes(progress, now).due.length
   const due = counts(studyPool(progress), progress.reviewState, now, settings.newPerDay).due
-  const quick = quickTasks({ ...todayCounts(progress.reviewLog, localDay(now)), due, newAvailable: plan.newCount })
+  const quick = quickPlan(progress, plan, now).tasks
   const nextMilestone = MILESTONES.find((m) => m > goal.current)
   function set(patch: Parameters<typeof updateSettings>[0]) {
     try {

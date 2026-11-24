@@ -1,16 +1,22 @@
-// Quick tasks for a busy day (Hayk, 2026-11-24; DECISIONS.md #119): two small things made from the progress, shown on
+// Quick tasks for a busy day (Hayk, 2026-11-24; DECISIONS.md #119): two things made from the progress, shown on
 // Home and sent to kachayt each morning (backend/scripts/progress.py daily-tasks). Each opens a short run of its own
 // (#/daily/review, #/daily/new) and ticks itself once today's log shows it done. The daily goal is unchanged (Q73):
-// the quick review is a review round of up to 10 cards, so 10 of them count like a Words-page round (#86); new words
-// alone don't.
+// a quick review of 10+ cards counts like a Words-page round (#86); new words alone don't. "Due" here means a word
+// already reviewed whose card is due now: what the quick review can show at once. A card never reviewed (reps 0) is a
+// new word, in the new-word task: one at the front of the due list stopped the first quick review at once (Hayk's
+// report, 2026-11-24).
 import type { ReviewLogEntry } from '../content/schema.ts'
 
 export const QUICK = {
-  /** Cards in the quick review; 10 also makes it count for the daily goal (GOAL_ROUND_MIN). */
-  reviews: 10,
-  newWords: 3,
-  /** Cards a quick new-word run may show (new words come back while they are being learned). */
-  newCards: 8,
+  /** Words in the quick review (Hayk, 2026-11-24: 30 instead of 10); 10+ graded also count for the daily goal (GOAL_ROUND_MIN). */
+  reviews: 30,
+  /** New words to learn (Hayk: 10 instead of 3). */
+  newWords: 10,
+  /** "Review 10 more" and "Learn 5 more" after a run. */
+  moreReviews: 10,
+  moreNew: 5,
+  /** A new word comes back while it is being learned: a run may show this many cards per new word. */
+  cardsPerNewWord: 3,
   /** Rough time per card, for the "~3 min" label. */
   secondsPerReview: 18,
   secondsPerNewWord: 40,

@@ -10,6 +10,7 @@
 // and gaps are practice and never change the schedule. The reviews and new words inside the mix are
 // normal reviews. Listen and pick was removed (Hayk, 2026-11-09: too easy).
 import { useEffect, useRef, useState } from 'react'
+import type { ReactNode } from 'react'
 import { content } from '../content/load.ts'
 import type { ReviewState, WordSet } from '../content/schema.ts'
 import { ArticleDrill } from '../components/ArticleDrill.tsx'
@@ -40,7 +41,9 @@ import type { SpeechInfo } from '../lib/speech.ts'
 import type { Settings } from '../lib/settings.ts'
 import { withoutWaitingReadingWords } from '../lib/readings.ts'
 import { counts } from '../lib/srs.ts'
-import { QUICK } from '../lib/quickTasks.ts'
+import { QUICK, quickTasks, todayCounts } from '../lib/quickTasks.ts'
+import type { QuickTask } from '../lib/quickTasks.ts'
+import { localDay } from '../lib/dates.ts'
 import { GOAL_ROUND_MIN } from '../lib/review.ts'
 import { messageOf, reportError } from '../lib/errors.ts'
 import { reachOf } from '../lib/goalView.ts'
@@ -519,31 +522,74 @@ function MistakesOnly() {
 }
 
 /**
- * "Review 10 words", a quick task from Home (DECISIONS.md #119): due cards only, up to QUICK.reviews. A run of 10+
- * graded cards counts for the daily goal like a Words-page round (#86); the rule itself is unchanged.
+ * The quick tasks and the words their runs use (DECISIONS.md #119). The review takes words already reviewed whose card
+ * is due now, the same count the task shows, so a run never opens with "nothing is due" while the card waits. A card
+ * never reviewed (reps 0) is a new word: it comes first in the new-word run, then the daily mix's new words.
+ */
+export function quickPlan(progress: ProgressView, plan: MixPlan, now: Date) {
+  const state = progress.reviewState
+  const pool = studyPool(progress)
+  const reviewWords = pool.filter((w) => (state.cards[w.id]?.reps ?? 0) > 0)
+  const due = reviewWords.filter((w) => Date.parse(state.cards[w.id].due) <= now.getTime()).length
+  const unreviewed = pool.filter((w) => state.cards[w.id]?.reps === 0)
+  const newWords = [...unreviewed, ...plan.newWords.filter((w) => !state.cards[w.id])]
+  const tasks = quickTasks({ ...todayCounts(progress.reviewLog, localDay(now)), due, newAvailable: newWords.length })
+  return { tasks, reviewWords, due, newWords }
+}
+
+/** The first run's size: what is left of the task, or "more" once the task is done. */
+function firstRunSize(task: QuickTask | undefined, more: number): number {
+  return task && !task.done ? task.target - task.doneCount : more
+}
+
+/**
+ * The quick review from Home (DECISIONS.md #119): due words already reviewed, up to what is left of the task, then
+ * "Review 10 more" while words are due. A run of 10+ graded cards counts for the daily goal like a Words-page round
+ * (#86); the rule itself is unchanged.
  */
 function QuickReview() {
   const progress = useProgress()
   const settings = useSettings()
-  const state = progress.reviewState
-  const [words] = useState(() => studyPool(progress).filter((w) => state.cards[w.id]))
+  const [round, setRound] = useState(0)
   const [stats, setStats] = useState<RunStats | null>(null)
+  const now = new Date()
+  const quick = quickPlan(progress, mixPlan(progress, settings, now), now)
+  const [words, setWords] = useState(() => quick.reviewWords)
+  const [size, setSize] = useState(() => firstRunSize(quick.tasks.find((t) => t.id === 'review'), QUICK.moreReviews))
   if (stats) {
     const line =
       stats.cards === 0
         ? 'Nothing is due right now.'
         : `Reviewed ${stats.cards} word${stats.cards === 1 ? '' : 's'} (${stats.again} marked Again).${stats.cards >= GOAL_ROUND_MIN ? " That counts for today's goal." : ''}`
-    return <QuickEnd line={line} />
+    return (
+      <QuickEnd line={line}>
+        {quick.due > 0 && (
+          <button
+            type="button"
+            className="btn primary"
+            onClick={() => {
+              setWords(quick.reviewWords)
+              setSize(Math.min(QUICK.moreReviews, quick.due))
+              setRound(round + 1)
+              setStats(null)
+            }}
+          >
+            Review {Math.min(QUICK.moreReviews, quick.due)} more
+          </button>
+        )}
+      </QuickEnd>
+    )
   }
   return (
     <div className="stack">
-      <strong>Quick review: up to {QUICK.reviews} words</strong>
+      <strong>Quick review: up to {size} words</strong>
       <ReviewRun
+        key={round}
         words={words}
         mode={settings.dailyMode}
-        state={state}
+        state={progress.reviewState}
         newLimit={settings.newPerDay}
-        maxCards={QUICK.reviews}
+        maxCards={size}
         maxNew={0}
         onDone={(s) => {
           if (s.cards >= GOAL_ROUND_MIN) {
@@ -561,26 +607,53 @@ function QuickReview() {
   )
 }
 
-/** "Learn 3 new words", a quick task from Home (DECISIONS.md #119): the daily mix's new words, at most QUICK.newWords. */
+/**
+ * Learning new words from Home (DECISIONS.md #119): cards never reviewed first, then the daily mix's new words, up to
+ * what is left of the task, then "Learn 5 more". Learning here is asked for on purpose, so the daily new-word limit
+ * (Settings) does not cap it.
+ */
 function QuickNew() {
   const progress = useProgress()
   const settings = useSettings()
-  const [plan] = useState(() => mixPlan(progress, settings, new Date()))
+  const [round, setRound] = useState(0)
   const [stats, setStats] = useState<RunStats | null>(null)
+  const now = new Date()
+  const plan = mixPlan(progress, settings, now)
+  const quick = quickPlan(progress, plan, now)
+  const [words, setWords] = useState(() => quick.newWords)
+  const [size, setSize] = useState(() => firstRunSize(quick.tasks.find((t) => t.id === 'new'), QUICK.moreNew))
   if (stats) {
-    return <QuickEnd line={stats.fresh === 0 ? 'No new words are ready right now.' : `Learned ${stats.fresh} new word${stats.fresh === 1 ? '' : 's'}.`} />
+    return (
+      <QuickEnd line={stats.fresh === 0 ? 'No new words are ready right now.' : `Learned ${stats.fresh} new word${stats.fresh === 1 ? '' : 's'}.`}>
+        {quick.newWords.length > 0 && (
+          <button
+            type="button"
+            className="btn primary"
+            onClick={() => {
+              setWords(quick.newWords)
+              setSize(Math.min(QUICK.moreNew, quick.newWords.length))
+              setRound(round + 1)
+              setStats(null)
+            }}
+          >
+            Learn {Math.min(QUICK.moreNew, quick.newWords.length)} more
+          </button>
+        )}
+      </QuickEnd>
+    )
   }
   return (
     <div className="stack">
-      <strong>Quick: {QUICK.newWords} new words</strong>
+      <strong>New words: {size}</strong>
       <p className="muted small">New words from {plan.newFrom}. Flip each card, then grade how well you knew it.</p>
       <ReviewRun
-        words={plan.newWords}
+        key={round}
+        words={words}
         mode="recognition"
         state={progress.reviewState}
-        newLimit={settings.newPerDay}
-        maxCards={QUICK.newCards}
-        maxNew={QUICK.newWords}
+        newLimit={Number.POSITIVE_INFINITY}
+        maxCards={size * QUICK.cardsPerNewWord}
+        maxNew={size}
         onDone={(s) => {
           requestFlush()
           setStats(s)
@@ -590,14 +663,15 @@ function QuickNew() {
   )
 }
 
-function QuickEnd({ line }: { line: string }) {
+function QuickEnd({ line, children }: { line: string; children?: ReactNode }) {
   return (
     <div className="stack">
       <div className="card">
         <p>{line}</p>
       </div>
       <div className="row">
-        <a className="btn primary" href={link()}>
+        {children}
+        <a className={children ? 'btn' : 'btn primary'} href={link()}>
           Home
         </a>
         <a className="btn" href={link('daily')}>

@@ -1107,8 +1107,8 @@ def self_check() -> int:
 # ---------- daily quick tasks (DECISIONS.md #119) ----------
 
 # Mirrors QUICK and quickTasks() in app/src/lib/quickTasks.ts: change both together.
-QUICK_REVIEWS = 10
-QUICK_NEW = 3
+QUICK_REVIEWS = 30  # Hayk, 2026-11-24: 30 and 10 instead of 10 and 3
+QUICK_NEW = 10
 QUICK_SECONDS = {"review": 18, "new": 40}
 QUICK_PREFIX = "German quick: "
 QUICK_SECTION = "German"
@@ -1184,7 +1184,10 @@ def cmd_daily_tasks(conn: psycopg.Connection, args: argparse.Namespace) -> None:
     user = resolve_user(conn, args.user)
     uid = user["user_id"]
     today = date.today()
-    due = int(conn.execute("SELECT count(*) AS n FROM review_cards WHERE user_id = %s AND due <= now()", (uid,)).fetchone()["n"])
+    # Like quickPlan() in the app: words already reviewed (reps > 0) whose card is due now; a never-reviewed card is new.
+    due = int(conn.execute(
+        "SELECT count(*) AS n FROM review_cards WHERE user_id = %s AND due <= now() AND (card->>'reps')::int > 0", (uid,)
+    ).fetchone()["n"])
     reviewed, learned = day_counts(conn, uid, today)
     tasks = quick_task_list(reviewed, learned, due)
     LOG.info(f"{today}: {due} words due, {reviewed} reviewed and {learned} new learned today")
