@@ -167,11 +167,11 @@ describe('start', () => {
     expect(env.store.getStatus().pending).toBe(0)
   })
 
-  it('reports a user that is not on the allowlist as ApiError not_allowed', async () => {
-    const env = setup([() => apiError(403, 'not_allowed')])
+  it('reports a deleted account as ApiError account_deleted (DECISIONS.md #118)', async () => {
+    const env = setup([() => apiError(410, 'account_deleted')])
     const err = await env.store.start({ id: 'u1' }).catch((e: unknown) => e)
     expect(err).toBeInstanceOf(ApiError)
-    expect((err as ApiError).code).toBe('not_allowed')
+    expect((err as ApiError).code).toBe('account_deleted')
   })
 
   it('starts from the offline copy when the server cannot be reached', async () => {
@@ -272,6 +272,26 @@ describe('flush', () => {
     await env.store.flush({ manual: true })
     expect(env.calls).toHaveLength(3)
     expect(env.store.getStatus()).toMatchObject({ phase: 'idle', pending: 0, blocked: false })
+  })
+
+  it('keeps the outbox on a daily limit, says so without an error report, and waits for "Sync now" (#118)', async () => {
+    const env = await started([() => apiError(429, 'rate_limited', { retryAfterSeconds: 3600 }), (c) => okSync(c.body!)])
+    env.store.recordReview(entry(), card())
+    await env.store.flush()
+    expect(env.store.getStatus()).toMatchObject({ phase: 'error', pending: 2, blocked: true })
+    expect(env.store.getStatus().error).toMatch(/^Not synced: rate_limited happened/)
+    expect(env.errors).toEqual([])
+    await env.store.flush()
+    expect(env.calls).toHaveLength(2)
+    await env.store.flush({ manual: true })
+    expect(env.store.getStatus()).toMatchObject({ phase: 'idle', pending: 0 })
+  })
+
+  it('treats a sync of a deleted account like a lost sign-in (#118)', async () => {
+    const env = await started([() => apiError(410, 'account_deleted')])
+    env.store.recordReview(entry(), card())
+    await env.store.flush()
+    expect(env.signedOut()).toBe(1)
   })
 
   it('refreshes an expired token once and retries', async () => {
@@ -762,5 +782,27 @@ describe('path events', () => {
     env.store.startGuest()
     const id = env.store.recordReviewRoundDone()
     expect(env.store.getView().pathEvents.map((e) => [e.id, e.kind, e.lessonId ?? null, e.localDay])).toEqual([[id, 'review-round', null, '2026-09-29']])
+  })
+})
+
+describe('delete my account (DECISIONS.md #118)', () => {
+  it('asks the server, then forgets the outbox and the offline copy on this device', async () => {
+    const storage = new Map<string, string>()
+    const env = await started([() => json(200, { ok: true, rowsDeleted: {} })], { storage })
+    env.store.recordReview(entry(), card())
+    expect([...storage.keys()].sort()).toEqual(['nemeceren.outbox.u1', 'nemeceren.state.u1'])
+    await env.store.deleteAccount()
+    expect(env.calls.at(-1)).toMatchObject({ method: 'DELETE', path: '/v1/account' })
+    expect([...storage.keys()]).toEqual([])
+    expect(env.store.hasView()).toBe(false)
+  })
+
+  it('keeps everything when the server does not confirm', async () => {
+    const storage = new Map<string, string>()
+    const env = await started([() => apiError(500, 'internal')], { storage })
+    env.store.recordReview(entry(), card())
+    await expect(env.store.deleteAccount()).rejects.toThrow(ApiError)
+    expect([...storage.keys()].sort()).toEqual(['nemeceren.outbox.u1', 'nemeceren.state.u1'])
+    expect(env.store.getStatus().pending).toBe(2)
   })
 })

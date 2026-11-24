@@ -19,15 +19,17 @@ Expected runtime: ~15-40 s (a guess: cold starts of the function and the databas
 Two ways to get a user:
   - --test-account signs in as Claude's test account (NEMECEREN_TEST_EMAIL / NEMECEREN_TEST_PASSWORD
     in .env.local, DECISIONS.md #52). It deletes that account's progress rows before and after the
-    run, and takes it off the allowlist for one check, restoring the entry right after (also in
+    run, and takes it off allowed_users for one check, restoring the entry right after (also in
     `finally`). It never creates or deletes auth users and never touches any other account's rows.
   - without it, a throwaway nemeceren-smoke-<random>@example.com user is signed up. That only works
     while sign-up is open, which it is not since 2026-09-29 (#52).
 
 What it checks, stopping loudly at the first unexpected answer:
-  1. health, 404, no token (401), garbage token (401), a foreign Origin (403), CORS preflight;
+  1. health, 404, no token (401, also for DELETE /v1/account), garbage token (401), a foreign Origin (403),
+     CORS preflight (POST and DELETE);
   2. gets a JWT for the user (sign-in or sign-up with email + password);
-  3. the API refuses the user (403) while it is not on the allowlist;
+  3. open sign-up (DECISIONS.md #118): a trusted learner (in allowed_users) is served and not counted;
+     the same account outside allowed_users is served too and counted in api_usage;
   4. sync of reviews (one practice), cards, a test and a lesson exercise, lesson progress and
      extra new words: first upload, the same batch again (idempotent), older cards/lessons and a
      smaller extra (stale, not written), newer ones (written), a reused id with new content (409,
@@ -48,9 +50,9 @@ What it checks, stopping loudly at the first unexpected answer:
      state window (?days=1 and the default 35) and study days from sessions (a deleted one makes none);
   6. writes a Claude review with progress.py's own code and reads everything back through
      GET /v1/state (gzip), comparing every field with what was sent;
-  7. throwaway user: removal from the allowlist takes effect at once. At the end the user's rows
-     and allowlist entry are ALWAYS deleted, and the `neon neon-auth user delete <id>` command for
-     the auth user is printed.
+  7. At the end a throwaway user's rows are ALWAYS deleted, and the `neon neon-auth user delete <id>`
+     command for the auth user is printed. "Delete my account" itself is not run: it would delete the
+     test account's login.
 
 Needs in .env.local at the repo root: DATABASE_URL, NEON_AUTH_BASE_URL and NEON_FUNCTION_API_BASE_URL
 (written by `neon env pull --file ../.env.local` in backend/), and for --test-account the two
@@ -89,7 +91,7 @@ LOG = logging.getLogger("smoke_test")
 APP_ORIGIN = "http://localhost:5173"
 SMOKE_EMAIL_RE = re.compile(r"^nemeceren-smoke-[0-9a-f]{12}@example\.com$")
 # A user's progress rows. The test account keeps its allowlist entry; a throwaway user loses it too.
-DATA_TABLES = ("review_events", "review_cards", "test_attempts", "lesson_progress", "new_word_extras", "notes", "custom_words", "study_sessions", "path_events")
+DATA_TABLES = ("review_events", "review_cards", "test_attempts", "lesson_progress", "new_word_extras", "notes", "custom_words", "study_sessions", "path_events", "api_usage")
 USER_TABLES = (*DATA_TABLES, "allowed_users")
 
 
@@ -235,6 +237,8 @@ def run(api: str, auth: str, conn: Any, ctx: dict[str, Any], test_account: dict[
     check(r.status == 401 and r.error_code() == "unauthorized", "GET /v1/state without a token -> 401", r.text())
     r = request(plain, "GET", f"{api}/v1/state", token="not-a-jwt")
     check(r.status == 401 and r.error_code() == "unauthorized", "garbage token -> 401", r.text())
+    r = request(plain, "DELETE", f"{api}/v1/account")
+    check(r.status == 401 and r.error_code() == "unauthorized", "DELETE /v1/account without a token -> 401", r.text())
     r = request(plain, "GET", f"{api}/v1/state", origin="https://evil.example")
     check(r.status == 403 and r.error_code() == "forbidden_origin", "foreign Origin -> 403 forbidden_origin", r.text())
     r = request(
@@ -247,6 +251,12 @@ def run(api: str, auth: str, conn: Any, ctx: dict[str, Any], test_account: dict[
     check(
         r.status == 204 and r.headers.get("access-control-allow-origin") == APP_ORIGIN,
         "CORS preflight from the app origin -> 204 with Allow-Origin",
+        (r.status, dict(r.headers.items())),
+    )
+    r = request(plain, "OPTIONS", f"{api}/v1/account", origin=APP_ORIGIN, headers={"Access-Control-Request-Method": "DELETE", "Access-Control-Request-Headers": "authorization"})
+    check(
+        r.status == 204 and "DELETE" in (r.headers.get("access-control-allow-methods") or ""),
+        "CORS preflight for DELETE /v1/account -> 204 allowing DELETE",
         (r.status, dict(r.headers.items())),
     )
 
@@ -275,25 +285,30 @@ def run(api: str, auth: str, conn: Any, ctx: dict[str, Any], test_account: dict[
     check(claims.get("sub") == user_id, "JWT sub is the user's id", {k: claims.get(k) for k in ("sub", "iss", "aud")})
     LOG.info(f"    JWT iss {claims.get('iss')}, aud {claims.get('aud')}, expires in {claims['exp'] - time.time():.0f} s")
 
-    # ---- 3. allowlist ----
+    # ---- 3. open sign-up: trusted learners are not counted, everyone else is (DECISIONS.md #118) ----
+    def usage_requests() -> int:
+        row = conn.execute("SELECT requests FROM api_usage WHERE user_id = %s AND day = (now() AT TIME ZONE 'UTC')::date", (user_id,)).fetchone()
+        return 0 if row is None else row["requests"]
+
     if test_account is not None:
         row = conn.execute("SELECT user_id, email, note, added_at FROM allowed_users WHERE user_id = %s", (user_id,)).fetchone()
-        check(row is not None, "the test account is on the allowlist", row)
+        check(row is not None, "the test account is in allowed_users (a trusted learner)", row)
         ctx["allow_row"] = row
+        before = usage_requests()
+        r = request(plain, "GET", f"{api}/v1/state", token=token)
+        check(r.status == 200 and usage_requests() == before, "trusted learner -> GET /v1/state 200, not counted in api_usage", (r.status, before, usage_requests()))
         with conn.transaction():
             conn.execute("DELETE FROM allowed_users WHERE user_id = %s", (user_id,))
         try:
             r = request(plain, "GET", f"{api}/v1/state", token=token)
-            check(r.status == 403 and r.error_code() == "not_allowed", "the test account, off the allowlist for this check -> 403 not_allowed", r.text())
+            check(r.status == 200 and usage_requests() == before + 1, "the test account outside allowed_users -> 200 too, and counted in api_usage", (r.status, before, usage_requests()))
         finally:
             restore_allowlist(conn, row)
     else:
         r = request(plain, "GET", f"{api}/v1/state", token=token)
-        check(r.status == 403 and r.error_code() == "not_allowed", "valid token of a user not on the allowlist -> 403 not_allowed", r.text())
-        with conn.transaction():
-            conn.execute("INSERT INTO allowed_users (user_id, email, note) VALUES (%s, %s, 'smoke test, deleted at the end')", (user_id, email))
+        check(r.status == 200 and usage_requests() == 1, "a new account (not in allowed_users) -> GET /v1/state 200, counted in api_usage", (r.status, usage_requests()))
     r = request(plain, "GET", f"{api}/v1/state", token=token)
-    check(r.status == 200, "allowlisted user -> GET /v1/state 200", r.text())
+    check(r.status == 200, "GET /v1/state 200", r.text())
     s = r.json()
     check(
         s["userId"] == user_id and s["cards"] == {} and s["reviewEvents"] == [] and s["attempts"] == [] and s["studyDays"] == []
@@ -731,7 +746,8 @@ def run(api: str, auth: str, conn: Any, ctx: dict[str, Any], test_account: dict[
 
     # ---- 6. Claude's review, then read everything back ----
     try:
-        progress.validate_review({"summary": "x", "items": [{"index": 3, "correct": True}]}, 3)
+        # The attempt's saved item indexes (a set since DECISIONS.md #112: skipped writing tasks leave gaps).
+        progress.validate_review({"summary": "x", "items": [{"index": 3, "correct": True}]}, {0, 1, 2})
         check(False, "validate_review rejects an index out of range")
     except progress.ReviewError:
         check(True, "validate_review rejects an index out of range")
@@ -783,13 +799,6 @@ def run(api: str, auth: str, conn: Any, ctx: dict[str, Any], test_account: dict[
         "customWords: the ones not deleted, oldest first; the edited one without its old check, the other with Claude's correction",
         s["customWords"],
     )
-
-    # ---- 7. removal from the allowlist takes effect at once (the test account had it in step 3) ----
-    if test_account is None:
-        with conn.transaction():
-            conn.execute("DELETE FROM allowed_users WHERE user_id = %s", (user_id,))
-        r = request(plain, "GET", f"{api}/v1/state", token=token)
-        check(r.status == 403 and r.error_code() == "not_allowed", "after removal from the allowlist -> 403 at once", r.text())
 
 
 def main() -> None:

@@ -2,12 +2,14 @@
 //   GET  /v1/health  no auth, no database (safe to call; does not wake the compute)
 //   GET  /v1/state   auth: everything the app needs on start (?days=35 window for raw reviews)
 //   POST /v1/sync    auth: one batched, idempotent upload of reviews, cards, test attempts, lessons, extras, notes, custom words and study sessions
+//   DELETE /v1/account auth: "Delete my account": this user's progress and login, for good (DECISIONS.md #118)
 // Every other path is a 404. Contract and examples: ../README.md.
 import { Hono } from 'hono'
 import { bodyLimit } from 'hono/body-limit'
 import { compress } from 'hono/compress'
 import { cors } from 'hono/cors'
 import { DatabaseError } from 'pg'
+import { deleteAccount } from './account.ts'
 import { requireUser } from './auth.ts'
 import { ALLOWED_ORIGINS, API_VERSION, isAllowedOrigin, MAX_BODY_BYTES, STATE_DAYS } from './config.ts'
 import { errorResponse, HttpError, zodDetails } from './errors.ts'
@@ -15,6 +17,7 @@ import { SyncBody } from './schema.ts'
 import { loadState } from './state.ts'
 import { applySync } from './sync.ts'
 import type { AppEnv } from './types.ts'
+import { limitUsage } from './usage.ts'
 
 const app = new Hono<AppEnv>()
 
@@ -54,7 +57,7 @@ app.use(
   '*',
   cors({
     origin: [...ALLOWED_ORIGINS],
-    allowMethods: ['GET', 'POST', 'OPTIONS'],
+    allowMethods: ['GET', 'POST', 'DELETE', 'OPTIONS'],
     allowHeaders: ['authorization', 'content-type'],
     exposeHeaders: ['x-request-id'],
     // Browsers cache the preflight (Chrome caps this at 2 hours), so fewer OPTIONS invocations.
@@ -76,7 +79,7 @@ function parseDays(raw: string | undefined): number {
   return n
 }
 
-app.get('/v1/state', requireUser, async (c) => {
+app.get('/v1/state', requireUser, limitUsage, async (c) => {
   const days = parseDays(c.req.query('days'))
   return c.json(await loadState(c.get('userId'), days))
 })
@@ -84,6 +87,7 @@ app.get('/v1/state', requireUser, async (c) => {
 app.post(
   '/v1/sync',
   requireUser,
+  limitUsage,
   bodyLimit({
     maxSize: MAX_BODY_BYTES,
     onError: (c) =>
@@ -104,12 +108,15 @@ app.post(
     if (!parsed.success) {
       throw new HttpError(400, 'invalid_body', 'The sync batch failed validation; nothing was saved.', zodDetails(parsed.error))
     }
-    return c.json(await applySync(c.get('userId'), parsed.data))
+    return c.json(await applySync(c.get('userId'), parsed.data, c.get('trusted')))
   },
 )
 
+// Never rate-limited: leaving must always work.
+app.delete('/v1/account', requireUser, async (c) => c.json(await deleteAccount(c.get('userId'))))
+
 app.notFound((c) =>
-  errorResponse(c, new HttpError(404, 'not_found', `No route for ${c.req.method} ${c.req.path}. Routes: GET /v1/health, GET /v1/state, POST /v1/sync.`)),
+  errorResponse(c, new HttpError(404, 'not_found', `No route for ${c.req.method} ${c.req.path}. Routes: GET /v1/health, GET /v1/state, POST /v1/sync, DELETE /v1/account.`)),
 )
 
 app.onError((err, c) => {

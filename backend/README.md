@@ -7,7 +7,7 @@ GitHub Pages SPA (app/)  --sign in-->  Neon Auth (Managed Better Auth, email + p
         |                                   |
         |  Authorization: Bearer <JWT>      | JWKS (public keys)
         v                                   v
-Neon Function "api" (Hono, src/)  -- verifies the JWT, checks the allowlist, scopes every query by user id
+Neon Function "api" (Hono, src/)  -- verifies the JWT, limits strangers, scopes every query by user id
         |
         v
 Postgres (tables in db/migrations/)  <--  Claude: scripts/progress.py (owner role, from .env.local)
@@ -24,13 +24,15 @@ Postgres (tables in db/migrations/)  <--  Claude: scripts/progress.py (owner rol
 | `neon.ts` | Neon services: `auth: true` and the function `api` (source `src/index.ts`). No function env, so no `--env` file. |
 | `package.json`, `package-lock.json`, `.npmrc` | Function dependencies, exact versions (`save-exact=true`). Local Node 20.20.0 is fine; the function runs on Node 24 at Neon. |
 | `src/index.ts` | Hono app: middleware (request id + log line, origin gate, CORS, gzip), routes, error handling. |
-| `src/auth.ts` | JWT verification (jose, JWKS, EdDSA, issuer and audience) and the allowlist check. |
+| `src/auth.ts` | JWT verification (jose, JWKS, EdDSA, issuer and audience), the account-exists check (410 after "Delete my account") and whether the user is a trusted learner (`allowed_users`). |
+| `src/usage.ts` | Daily limits for accounts outside `allowed_users` (DECISIONS.md #118). |
+| `src/account.ts` | `DELETE /v1/account`: the user's progress and login in one transaction. |
 | `src/schema.ts` | zod schemas of what the app may upload. Mirror of `app/src/content/schema.ts` (see "Keeping the schemas in step"). |
 | `src/sync.ts`, `src/state.ts` | `POST /v1/sync` and `GET /v1/state` SQL. |
 | `src/db.ts`, `src/config.ts`, `src/errors.ts`, `src/types.ts` | pg pool, fixed settings (origins, limits), error format, request context type. |
 | `db/migrations/NNN_*.sql` | Versioned schema. Never edit an applied file; add a new one. |
 | `scripts/migrate.py` | Applies migrations (`status` / `apply`). |
-| `scripts/progress.py` | Claude's tool: list, show and grade test attempts, list notes and write feedback on them, list and check Hayk's own words, list study timer sessions, activity summary (measured and timer minutes), allowlist. |
+| `scripts/progress.py` | Claude's tool: list, show and grade test attempts, list notes and write feedback on them, list and check Hayk's own words, list study timer sessions, activity summary (measured and timer minutes), trusted learners (`allow-user`: no limits). |
 | `scripts/non_essential/smoke_test.py` | End-to-end check of the deployed API, as Claude's test account (`--test-account`) or a throwaway user. |
 
 Scripts are Python run with `uv run` (dependencies pinned inline, PEP 723). They read the repo-root `.env.local` and log to the repo-root `logs/`. Run them from the repo root.
@@ -86,7 +88,7 @@ neon neon-auth domain allow-localhost get                     # must be enabled 
 neon neon-auth config email-password get                      # email + password on; email verification off is fine
 ```
 
-**Hayk's account:** Hayk signs up once (the app's sign-in page, from the wire-up task). Then Claude runs `uv run backend/scripts/progress.py allow-user <hayk's email>`, and sign-up is closed with `neon neon-auth config email-password update --disable-sign-up`. Until then, anyone who finds the auth URL can create an account, but the API answers them 403 (`not_allowed`): the allowlist is the real gate. Sign-up is closed since 2026-09-29 (DECISIONS.md #52), so run the smoke test as Claude's test account: `uv run backend/scripts/non_essential/smoke_test.py --test-account`. It deletes only that account's progress rows, and takes it off the allowlist for one check, restoring the entry right away. Do not reopen sign-up for it.
+**Who can sign in (DECISIONS.md #118, which replaced the allowlist gate of #52):** anyone with Google, through Neon's shared Google credentials (Google's screen names Neon). Password sign-up stays closed (`disable_sign_up`), so name + password logins are only the ones Claude created (Hayk's, the friends', the test account). `allowed_users` now lists the trusted learners: they skip the daily limits and row limits (`src/usage.ts`, `ACCOUNT_ROW_LIMITS` in `src/config.ts`); add one with `uv run backend/scripts/progress.py allow-user <email>`. Everyone else may read and sync 1,000 requests and 24 five-minute windows a day, 48 windows for all of them together (at most ~62 of the 100 free CU-hours a month), and keep at most the rows in `ACCOUNT_ROW_LIMITS`; no new writes above a 400 MB database. Not covered: sign-ins and session checks sent straight to Neon Auth, whose tables live in the same database, so they wake the compute without this API seeing them; watch the monthly CU-hours. `DELETE /v1/account` removes a user's progress and login (Google link, tokens, sessions) in one transaction. Run the smoke test as Claude's test account: `uv run backend/scripts/non_essential/smoke_test.py --test-account`. It deletes only that account's progress rows, and takes it out of `allowed_users` for one check, restoring the entry right away. Do not reopen password sign-up for it.
 
 ## Migrations
 
@@ -166,7 +168,7 @@ CORS: only `https://hayktarkhanyan.github.io` and `http://localhost:5173`. Any o
    fetch(`${API}/v1/state`, { headers: { Authorization: `Bearer ${data.session.token}` } })
    ```
    Not `authClient.token()`: in `@neondatabase/auth` 0.5.0-beta it answers from the SDK's session cache with `{ session, user }` instead of `{ token }` (found by the app's integration check on 2026-09-29; see `app/src/lib/auth.ts` and DECISIONS.md #40).
-2. The function checks the signature (EdDSA, keys from `NEON_AUTH_JWKS_URL`), `iss` and `aud` (= the Auth URL's origin), `exp`, and that `sub` is on the allowlist.
+2. The function checks the signature (EdDSA, keys from `NEON_AUTH_JWKS_URL`), `iss` and `aud` (= the Auth URL's origin), `exp`, and that `sub` is an account that still exists. Accounts outside `allowed_users` go through the daily limits.
 3. The Neon docs disagree on cross-origin cookies: the JWT page says to pass `fetchOptions: { credentials: 'include' }` to `createAuthClient` when the SPA and the Auth URL are on different origins, while the Managed Auth skill says not to put `fetchOptions` on the URL-style config (use an adapter's options instead). Check the installed SDK's types and test on localhost and on Pages.
 
 **Biggest open risk: third-party cookies.** The session lives in a cookie of the Neon Auth host, which is a third party for `hayktarkhanyan.github.io`, and minting a JWT (`/token`) needs that cookie. Measured on 2026-09-29 with throwaway users (deleted afterwards):
@@ -262,6 +264,10 @@ Idempotency, so a retry after a timeout is always safe:
 - For those six, an older or equal value is not written, and when the server has a newer one it comes back in `stale`: adopt it locally.
 - Attempts must not contain `review`, notes must not contain `feedback`, and custom words must not contain `check` (400). Only Claude writes those.
 
+### `DELETE /v1/account`
+
+"Delete my account" in Settings (DECISIONS.md #118). In one transaction, under the same per-user lock as a sync: every row of the user in the progress tables, `api_usage` and `allowed_users`, then the `neon_auth."user"` row, whose foreign keys (ON DELETE CASCADE) remove the Google link and tokens, the sessions with IP addresses and device details. Answers `{ ok: true, rowsDeleted: { <table>: n } }`. Never rate-limited. A token of the deleted account stays valid for up to 15 minutes, so every data route answers it **410 `account_deleted`**, and a sync waiting for the lock sees the account gone. The restore history keeps deleted data for up to 6 hours (`history_retention_seconds` = 21600, checked 2026-11-24). Checked without deleting anything: the same statements on the test account inside a rolled-back transaction removed its rows, its login and its 21 sessions.
+
 ### Errors
 
 Always JSON: `{"error": {"code", "message", "details"?}, "requestId"}`, with CORS headers for the allowed origins, so the app can show the message. Look up `requestId` with `neon logs query --source function`.
@@ -272,7 +278,9 @@ Always JSON: `{"error": {"code", "message", "details"?}, "requestId"}`, with COR
 | 400 | `invalid_json`, `invalid_query`, `invalid_data`, `empty_batch` | bad JSON, bad `days`, database rejected a value, nothing to sync |
 | 401 | `unauthorized` | no, malformed or invalid token |
 | 401 | `token_expired` | call `authClient.token()` again and retry once |
-| 403 | `not_allowed` | signed in, but not on the allowlist (Claude runs `progress.py allow-user`) |
+| 403 | `quota_exceeded` | an account outside `allowed_users` reached its row limit, or the database passed 400 MB (DECISIONS.md #118) |
+| 410 | `account_deleted` | the account was deleted ("Delete my account"); its token is still valid for up to 15 minutes |
+| 429 | `rate_limited` | an account outside `allowed_users`, or all of them together, reached the daily limit; `details.retryAfterSeconds` |
 | 403 | `forbidden_origin` | page served from an origin not in `src/config.ts` |
 | 404 | `not_found` | unknown route |
 | 409 | `conflict` | reused id with different content; batch rolled back; `details.ids` |
@@ -295,6 +303,6 @@ Always JSON: `{"error": {"code", "message", "details"?}, "requestId"}`, with COR
 
 ## Security notes
 
-- The function has a public URL. Every data route verifies the JWT and the allowlist before any work; queries are always filtered by the verified user id, never by an id from the request.
+- The function has a public URL. Every data route verifies the JWT and that the account exists before any work; queries are always filtered by the verified user id, never by an id from the request.
 - The function uses the injected owner-role `DATABASE_URL`; there is no row-level security. Scoping lives in the code.
 - Connection strings and tokens are never logged or printed (the smoke test's password is random and not logged).

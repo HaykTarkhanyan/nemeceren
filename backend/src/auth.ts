@@ -1,6 +1,5 @@
-// Who is calling? Verify the Neon Auth JWT (EdDSA, 15-minute expiry) against the branch's JWKS,
-// then check the user is on the allowlist. A valid token alone is not enough: Neon Auth lets
-// anyone sign up unless sign-up is disabled, and every table is scoped by the verified user id.
+// Who is calling? Verify the Neon Auth JWT (EdDSA, 15-minute expiry) against the branch's JWKS and
+// check that the account still exists. Every table is scoped by the verified user id.
 import type { MiddlewareHandler } from 'hono'
 import { createRemoteJWKSet, errors, jwtVerify } from 'jose'
 import { requireEnv } from './config.ts'
@@ -50,18 +49,20 @@ export async function verifyToken(authorization: string | undefined): Promise<Id
   }
 }
 
-/** Route middleware: verified token + allowlisted user, else 401/403. Sets c.var.userId. */
+/**
+ * Route middleware: a verified token of an account that still exists, else 401/410. Anyone may sign up with Google
+ * (DECISIONS.md #118), so there is no allowlist gate any more; allowed_users now marks the trusted learners (Hayk and
+ * the friends), who skip the usage and row limits. A token stays valid for up to 15 minutes after "Delete my account",
+ * so the account is looked up on every request. Sets c.var.userId and c.var.trusted.
+ */
 export const requireUser: MiddlewareHandler<AppEnv> = async (c, next) => {
   const identity = await verifyToken(c.req.header('authorization'))
-  const { rows } = await pool.query('SELECT 1 FROM allowed_users WHERE user_id = $1', [identity.userId])
-  if (rows.length === 0) {
-    throw new HttpError(
-      403,
-      'not_allowed',
-      `This account (user id ${identity.userId}, email ${identity.email ?? 'unknown'}) is not allowed to use this API. ` +
-        'Claude adds it with: uv run backend/scripts/progress.py allow-user <email>',
-    )
-  }
+  const { rows } = await pool.query<{ exists: boolean; trusted: boolean }>(
+    'SELECT EXISTS (SELECT 1 FROM neon_auth."user" WHERE id = $1::uuid) AS exists, EXISTS (SELECT 1 FROM allowed_users WHERE user_id = $2) AS trusted',
+    [identity.userId, identity.userId],
+  )
+  if (!rows[0]?.exists) throw new HttpError(410, 'account_deleted', 'This account has been deleted.')
   c.set('userId', identity.userId)
+  c.set('trusted', rows[0].trusted)
   await next()
 }

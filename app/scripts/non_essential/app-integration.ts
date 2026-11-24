@@ -25,7 +25,7 @@ import { currentUser, getToken, jwtExpiry, signIn, signOut, signUp } from '../..
 import type { AuthUser } from '../../src/lib/auth.ts'
 import { AUTH_URL } from '../../src/lib/config.ts'
 import { localDay } from '../../src/lib/dates.ts'
-import { ApiError, createProgressStore } from '../../src/lib/storage.ts'
+import { createProgressStore } from '../../src/lib/storage.ts'
 import type { StoreDeps } from '../../src/lib/storage.ts'
 import { emptyState, Rating, review } from '../../src/lib/srs.ts'
 
@@ -197,21 +197,8 @@ try {
   const before1 = requests
   check((await getToken()) === token && requests === before1, 'a second getToken() is served from the SDK cache (no request)')
 
-  if (TEST_ACCOUNT) {
-    console.log('\n== 2-3. the test account is allowlisted already (the smoke test checks the 403 with it)')
-  } else {
-    console.log('\n== 2. not on the allowlist yet')
-    let err: unknown = null
-    try {
-      await store().start(user)
-    } catch (e) {
-      err = e
-    }
-    check(err instanceof ApiError && err.status === 403 && err.code === 'not_allowed', 'start() -> ApiError 403 not_allowed', String(err))
-
-    console.log('\n== 3. allowlist')
-    check(run('uv', ['run', 'backend/scripts/progress.py', 'allow-user', email], REPO).status === 0, 'progress.py allow-user exit 0')
-  }
+  // Steps 2-3 checked the allowlist's 403. Since open sign-up (DECISIONS.md #118) every account is served, and the
+  // smoke test checks the usage counting instead.
 
   console.log('\n== 4. device A: start, record, one sync')
   const devA = memoryStorage()

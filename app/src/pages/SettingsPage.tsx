@@ -1,10 +1,12 @@
+import { useState } from 'react'
 import { SignOutButton } from '../components/AuthGate.tsx'
+import { PrivacyNotice } from '../components/PrivacyNotice.tsx'
 import { SyncStatusLine } from '../components/SyncStatus.tsx'
-import { reportError } from '../lib/errors.ts'
+import { messageOf, reportError } from '../lib/errors.ts'
 import { RATES, updateSettings, useSettings } from '../lib/settings.ts'
 import type { Settings } from '../lib/settings.ts'
 import { isRobotic, pickVoice, speak, useSpeech } from '../lib/speech.ts'
-import { leaveGuest, useSession } from '../lib/session.ts'
+import { deleteAccountNow, leaveGuest, useSession } from '../lib/session.ts'
 
 function save(patch: Partial<Settings>): void {
   try {
@@ -125,7 +127,41 @@ export function SettingsPage() {
             <SignOutButton />
           </div>
           <p className="muted small">The settings on this page (voice, speed, new words per day) are stored per device.</p>
+          <PrivacyNotice />
+          {session.phase === 'ready' && <DeleteAccount email={session.user.email} />}
         </section>
+      )}
+    </div>
+  )
+}
+
+/** "Delete my account" (DECISIONS.md #118): progress and login go for good, after a confirmation that names the account. */
+function DeleteAccount({ email }: { email: string }) {
+  const [busy, setBusy] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  return (
+    <div className="stack">
+      <div className="row">
+        <button
+          type="button"
+          className="btn danger"
+          disabled={busy}
+          onClick={() => {
+            if (!window.confirm(`Delete the account ${email} and all its progress for good? This cannot be undone.`)) return
+            setBusy(true)
+            setError(null)
+            deleteAccountNow()
+              .catch((err: unknown) => setError(`Nothing was deleted: ${messageOf(err)}`))
+              .finally(() => setBusy(false))
+          }}
+        >
+          {busy ? 'Deleting...' : 'Delete my account'}
+        </button>
+      </div>
+      {error && (
+        <div className="alert error" role="alert">
+          {error}
+        </div>
       )}
     </div>
   )

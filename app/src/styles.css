@@ -3204,3 +3204,22 @@ ol.line {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
+
+/* Delete my account and the privacy note (DECISIONS.md #118). */
+.btn.danger {
+  color: var(--bad);
+  border-color: var(--bad);
+}
+
+.privacy summary {
+  cursor: pointer;
+}
+
+.privacy ul {
+  margin: 8px 0 0;
+  padding-left: 1.2em;
+}
+
+.privacy li + li {
+  margin-top: 4px;
+}

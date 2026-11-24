@@ -85,7 +85,7 @@ export function isOffline(err: unknown): boolean {
 
 /** The sign-in is gone (expired session, blocked cookie): the app must show the sign-in page. */
 export function isSignedOut(err: unknown): boolean {
-  return (err instanceof ApiError && err.status === 401) || (err instanceof AuthFailure && err.status === 401)
+  return (err instanceof ApiError && (err.status === 401 || err.code === 'account_deleted')) || (err instanceof AuthFailure && err.status === 401)
 }
 
 export type SyncPhase = 'idle' | 'syncing' | 'offline' | 'error'
@@ -199,7 +199,7 @@ export function createProgressStore(deps: StoreDeps) {
     }
   }
 
-  async function request(method: 'GET' | 'POST', path: string, body?: unknown, keepalive = false): Promise<unknown> {
+  async function request(method: 'GET' | 'POST' | 'DELETE', path: string, body?: unknown, keepalive = false): Promise<unknown> {
     let token = await deps.getToken()
     for (let attempt = 0; ; attempt++) {
       const json = body === undefined ? undefined : JSON.stringify(body)
@@ -239,7 +239,6 @@ export function createProgressStore(deps: StoreDeps) {
       const ids = (err.details as { ids?: unknown } | undefined)?.ids
       return `Sync conflict: the server already has different data under the same id${Array.isArray(ids) ? ` (${ids.join(', ')})` : ''}. Nothing was lost: the changes stay on this device. This is an app bug; tell Claude. ${err.message}`
     }
-    if (err instanceof ApiError && err.code === 'not_allowed') return 'This account is not activated yet. Ask Claude to activate it (allowlist).'
     if (err instanceof ContentError) return `The progress server sent data the app does not understand: ${err.message}`
     return messageOf(err)
   }
@@ -252,6 +251,12 @@ export function createProgressStore(deps: StoreDeps) {
     if (isSignedOut(err)) {
       setStatus({ phase: 'error', error: 'Signed out. Sign in again to sync; your changes stay on this device.' })
       deps.onSignedOut?.()
+      return
+    }
+    // A daily limit or the row limit of an account outside the trusted learners (DECISIONS.md #118): expected, not a
+    // bug. The changes stay in the outbox; automatic syncs pause until the next start or "Sync now".
+    if (err instanceof ApiError && (err.code === 'rate_limited' || err.code === 'quota_exceeded')) {
+      setStatus({ phase: 'error', error: `Not synced: ${err.message}`, blocked: true })
       return
     }
     const message = `Sync failed: ${describe(err)}`
@@ -301,7 +306,7 @@ export function createProgressStore(deps: StoreDeps) {
     return run
   }
 
-  /** Loads the user's outbox and state. Throws ApiError (e.g. 403 not_allowed), AuthFailure or NetworkError. */
+  /** Loads the user's outbox and state. Throws ApiError (e.g. 410 account_deleted, 429 rate_limited), AuthFailure or NetworkError. */
   async function start(user: { id: string }): Promise<void> {
     guest = false
     userId = user.id
@@ -374,6 +379,24 @@ export function createProgressStore(deps: StoreDeps) {
     persistCache()
     status = { ...status, fromCache: false }
     rebuild()
+  }
+
+  /** Removes a user's unsynced changes and offline copy from this device (their account is gone). */
+  function forget(id: string) {
+    deps.storage.removeItem(outboxKey(id))
+    deps.storage.removeItem(cacheKey(id))
+  }
+
+  /**
+   * "Delete my account" (DECISIONS.md #118): the server removes the progress and the login together, then this device
+   * forgets the user. Throws (and keeps everything) when the server did not confirm.
+   */
+  async function deleteAccount(): Promise<void> {
+    if (guest || !userId) throw new Error('Delete my account: nobody is signed in')
+    const id = userId
+    await request('DELETE', '/v1/account')
+    forget(id)
+    stop()
   }
 
   /** Forgets the user in memory (the outbox stays on the device and syncs after the next sign-in). */
@@ -475,6 +498,8 @@ export function createProgressStore(deps: StoreDeps) {
     start,
     startGuest,
     stop,
+    forget,
+    deleteAccount,
     flush,
     refresh,
     isGuest: () => guest,

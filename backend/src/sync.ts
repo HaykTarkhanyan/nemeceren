@@ -17,6 +17,8 @@
 // upload differs from it, with its feedback. Each table takes the whole list as one JSON
 // parameter (jsonb_to_recordset): one query per table per batch.
 import type { PoolClient } from 'pg'
+import { lockUser, requireAccount } from './account.ts'
+import { ACCOUNT_ROW_LIMITS, STORAGE_LIMIT_BYTES } from './config.ts'
 import { withTransaction } from './db.ts'
 import { HttpError } from './errors.ts'
 import type {
@@ -478,7 +480,43 @@ async function upsertPathEvents(client: PoolClient, userId: string, events: Path
   return { received: events.length, written: r.written, unchanged: events.length - r.written - r.stale.length, stale: r.stale }
 }
 
-export async function applySync(userId: string, body: SyncBody): Promise<SyncResult> {
+/** Which table each list of a sync batch writes to (for the row limits of accounts outside allowed_users). */
+const BATCH_TABLES = [
+  ['reviewEvents', 'review_events'],
+  ['cards', 'review_cards'],
+  ['attempts', 'test_attempts'],
+  ['lessons', 'lesson_progress'],
+  ['newWordExtras', 'new_word_extras'],
+  ['notes', 'notes'],
+  ['customWords', 'custom_words'],
+  ['studySessions', 'study_sessions'],
+  ['pathEvents', 'path_events'],
+] as const satisfies readonly (readonly [keyof SyncBody, keyof typeof ACCOUNT_ROW_LIMITS])[]
+
+const COUNT_ROWS = `SELECT ${BATCH_TABLES.map(([, t]) => `(SELECT count(*) FROM ${t} WHERE user_id = $1)::int AS ${t}`).join(', ')},
+  pg_database_size(current_database())::bigint AS db_bytes`
+
+/**
+ * Accounts outside allowed_users may keep at most ACCOUNT_ROW_LIMITS rows per table, and nobody of them writes once the
+ * database passes STORAGE_LIMIT_BYTES (DECISIONS.md #118). Every item in the batch counts as a new row, so the check
+ * errs on the safe side. 403 quota_exceeded: the progress stays in the app's outbox.
+ */
+async function checkAccountLimits(client: PoolClient, userId: string, body: SyncBody): Promise<void> {
+  const { rows } = await client.query<Record<string, number | string>>(COUNT_ROWS, [userId])
+  const counts = rows[0]
+  if (!counts) throw new Error('Counting the account rows returned nothing')
+  if (Number(counts.db_bytes) > STORAGE_LIMIT_BYTES) {
+    throw new HttpError(403, 'quota_exceeded', 'The app has no room for more progress from new accounts right now. Your progress stays on this device.')
+  }
+  const over = BATCH_TABLES.filter(([key, table]) => Number(counts[table]) + body[key].length > ACCOUNT_ROW_LIMITS[table])
+  if (over.length > 0) {
+    throw new HttpError(403, 'quota_exceeded', `This account has reached the most rows it may keep (${over.map(([, t]) => t).join(', ')}). Your progress stays on this device.`, {
+      tables: over.map(([, t]) => t),
+    })
+  }
+}
+
+export async function applySync(userId: string, body: SyncBody, trusted: boolean): Promise<SyncResult> {
   const total =
     body.reviewEvents.length +
     body.cards.length +
@@ -494,6 +532,9 @@ export async function applySync(userId: string, body: SyncBody): Promise<SyncRes
     throw new HttpError(400, 'empty_batch', 'Nothing to sync: send at least one item, and skip the request otherwise.')
   }
   return withTransaction('BEGIN', async (client) => {
+    await lockUser(client, userId) // a "Delete my account" running now finishes first
+    await requireAccount(client, userId)
+    if (!trusted) await checkAccountLimits(client, userId, body)
     const inserts = { received: 0, inserted: 0, duplicates: 0 }
     const upserts = { received: 0, written: 0, unchanged: 0, stale: [] }
     return {

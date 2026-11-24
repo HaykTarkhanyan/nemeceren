@@ -1,5 +1,5 @@
-// The sign-in state of the app: checking -> signed out -> loading progress -> ready, plus the
-// two dead ends that need a person: "not activated" (the API allowlist, 403) and errors.
+// The sign-in state of the app: checking -> signed out -> loading progress -> ready, plus errors.
+// Anyone may sign in with Google since DECISIONS.md #118, so there is no "not activated" state any more.
 // Offline starts: if the sign-in server cannot be reached, the last signed-in user on this
 // device is used with the offline copy of their progress (see storage.ts).
 // Guest mode (DECISIONS.md #55): from the sign-in page, without an account. Progress stays in
@@ -8,7 +8,7 @@
 import { useSyncExternalStore } from 'react'
 import { AuthFailure, currentUser, signIn, signOut, signUp } from './auth.ts'
 import type { AuthUser } from './auth.ts'
-import { messageOf } from './errors.ts'
+import { messageOf, reportError } from './errors.ts'
 import { ApiError, isSignedOut, onSignedOut, progressStore } from './storage.ts'
 import { timerStore } from './timer.ts'
 
@@ -18,7 +18,6 @@ export type Session =
   | { phase: 'loading'; user: AuthUser }
   | { phase: 'ready'; user: AuthUser }
   | { phase: 'guest' }
-  | { phase: 'not-allowed'; user: AuthUser; justCreated: boolean }
   | { phase: 'error'; user: AuthUser | null; message: string }
 
 let session: Session = { phase: 'checking' }
@@ -54,6 +53,7 @@ function lastUser(): AuthUser | null {
 }
 
 const EXPIRED = 'Your sign-in has expired. Please sign in again. Unsynced changes stay on this device and sync after you sign in.'
+const DELETED = 'This account has been deleted, with its progress on the server and on this device.'
 
 onSignedOut(() => {
   progressStore().stop()
@@ -61,7 +61,7 @@ onSignedOut(() => {
   set({ phase: 'signed-out', notice: EXPIRED })
 })
 
-async function load(user: AuthUser, justCreated: boolean): Promise<void> {
+async function load(user: AuthUser): Promise<void> {
   rememberUser(user)
   set({ phase: 'loading', user })
   try {
@@ -69,8 +69,12 @@ async function load(user: AuthUser, justCreated: boolean): Promise<void> {
     timerStore().attachUser(user.id)
     set({ phase: 'ready', user })
   } catch (err) {
-    if (err instanceof ApiError && err.code === 'not_allowed') {
-      set({ phase: 'not-allowed', user, justCreated })
+    if (err instanceof ApiError && err.code === 'account_deleted') {
+      // Deleted on another device: forget it here too.
+      progressStore().forget(user.id)
+      progressStore().stop()
+      localStorage.removeItem(LAST_USER)
+      set({ phase: 'signed-out', notice: DELETED })
     } else if (isSignedOut(err)) {
       progressStore().stop()
       set({ phase: 'signed-out', notice: EXPIRED })
@@ -89,7 +93,7 @@ export async function boot(): Promise<void> {
   } catch (err) {
     if (err instanceof AuthFailure && err.network) {
       const last = lastUser()
-      if (last) return load(last, false)
+      if (last) return load(last)
       set({ phase: 'error', user: null, message: `${err.message}. Connect to the internet and try again.` })
       return
     }
@@ -100,16 +104,16 @@ export async function boot(): Promise<void> {
     set({ phase: 'signed-out', notice: null })
     return
   }
-  await load(user, false)
+  await load(user)
 }
 
 /** Throws AuthFailure (wrong password, no network, ...) for the sign-in form to show. */
 export async function signInWith(email: string, password: string): Promise<void> {
-  await load(await signIn(email, password), false)
+  await load(await signIn(email, password))
 }
 
 export async function signUpWith(email: string, password: string): Promise<void> {
-  await load(await signUp(email, password), true)
+  await load(await signUp(email, password))
 }
 
 export function useIsGuest(): boolean {
@@ -130,11 +134,28 @@ export function leaveGuest(): void {
   set({ phase: 'signed-out', notice: null })
 }
 
-/** Loads again after an error or after Claude activated the account. */
+/** Loads again after an error. */
 export function retry(): Promise<void> {
   const s = session
-  if ((s.phase === 'error' || s.phase === 'not-allowed') && s.user) return load(s.user, s.phase === 'not-allowed' && s.justCreated)
+  if (s.phase === 'error' && s.user) return load(s.user)
   return boot()
+}
+
+/**
+ * "Delete my account" in Settings (DECISIONS.md #118). Throws (and nothing is deleted) when the server did not confirm.
+ * The server also removed the login's sessions, so signing out afterwards only clears the SDK's own cache; a failure
+ * there is reported, but the account is gone either way.
+ */
+export async function deleteAccountNow(): Promise<void> {
+  await progressStore().deleteAccount()
+  timerStore().detach()
+  localStorage.removeItem(LAST_USER)
+  set({ phase: 'signed-out', notice: DELETED })
+  try {
+    await signOut()
+  } catch (err) {
+    reportError(`The account is deleted, but clearing the sign-in in this browser failed: ${messageOf(err)}`)
+  }
 }
 
 /**

@@ -21,6 +21,33 @@ export const MAX_BODY_BYTES = 2 * 1024 * 1024
 /** Most items of each kind in one POST /v1/sync. The app splits a bigger outbox into several batches. */
 export const SYNC_LIMITS = { reviewEvents: 1000, cards: 2000, attempts: 20, lessons: 500, newWordExtras: 31, notes: 50, customWords: 20, studySessions: 100, pathEvents: 200 } as const
 
+/**
+ * Daily limits for accounts outside allowed_users (usage.ts, DECISIONS.md #118). A window is a 5-minute slot with at
+ * least one request; each costs at most ~10 minutes awake at 0.25 CU. 48 windows a day for all of them together:
+ * 48 x 10 min x 0.25 CU x 31 days = 62 CU-hours, leaving room in the free 100 for Hayk and the friends (about 3 a
+ * month, measured 2026-11-24), who are never limited.
+ */
+export const USAGE_LIMITS = { userRequestsPerDay: 1000, userWindowsPerDay: 24, othersWindowsPerDay: 48 } as const
+
+/**
+ * Most rows one account outside allowed_users may keep per table (sync.ts). Generous: the busiest learner had 360
+ * review events and 19 test attempts on 2026-11-24. They keep the 0.5 GB free storage out of a stranger's reach.
+ */
+export const ACCOUNT_ROW_LIMITS = {
+  review_events: 50000,
+  review_cards: 5000,
+  test_attempts: 2000,
+  lesson_progress: 1000,
+  new_word_extras: 1000,
+  notes: 1000,
+  custom_words: 2000,
+  study_sessions: 5000,
+  path_events: 10000,
+} as const
+
+/** New progress from accounts outside allowed_users is refused above this database size; the Free plan allows 512 MB. */
+export const STORAGE_LIMIT_BYTES = 400 * 1024 * 1024
+
 /** GET /v1/state returns raw review events and study sessions from this many days back (the Stats page charts 30 days). */
 export const STATE_DAYS = { default: 35, max: 400 } as const
 

@@ -1,4 +1,4 @@
-// Sign-in with Neon Auth (Managed Better Auth), email + password, through the official
+// Sign-in with Neon Auth (Managed Better Auth), email + password or Google, through the official
 // @neondatabase/auth client (default vanilla adapter). The session is a 7-day cookie on the
 // auth host; Better Auth's client sends it cross-origin by default (credentials: 'include',
 // better-auth/dist/client/config.mjs). The API needs a short-lived JWT (15 minutes), which the
@@ -117,6 +117,18 @@ export async function signUp(email: string, password: string): Promise<AuthUser>
   const name = email.split('@')[0] || email
   const data = await call('Create account', async () => (await auth()).signUp.email({ email, password, name }))
   return userOf('Create account', data)
+}
+
+/**
+ * Leaves the page for Google (DECISIONS.md #118). Google sends the browser back to the app's start page, where boot()
+ * calls currentUser(): the SDK's first getSession() there finishes the sign-in. Uses Neon's shared Google credentials,
+ * so Google's screen names Neon.
+ */
+export async function signInWithGoogle(): Promise<void> {
+  lastToken = null
+  // The app's own page without the #route, e.g. https://hayktarkhanyan.github.io/nemeceren/ (a trusted Neon Auth domain).
+  const callbackURL = `${window.location.origin}${window.location.pathname}`
+  await call('Sign in with Google', async () => (await auth()).signIn.social({ provider: 'google', callbackURL }))
 }
 
 export async function signOut(): Promise<void> {

@@ -2,10 +2,11 @@
 // loaded, or for a guest (no account, nothing saved).
 import { useEffect, useState } from 'react'
 import type { FormEvent, ReactNode } from 'react'
-import { loginEmail } from '../lib/auth.ts'
+import { loginEmail, signInWithGoogle } from '../lib/auth.ts'
 import { messageOf } from '../lib/errors.ts'
 import { boot, continueAsGuest, retry, signInWith, signOutNow, signUpWith, useSession } from '../lib/session.ts'
 import { startAutoSync } from '../lib/storage.ts'
+import { PrivacyNotice } from './PrivacyNotice.tsx'
 
 export function AuthGate({ children }: { children: ReactNode }) {
   const session = useSession()
@@ -27,23 +28,6 @@ export function AuthGate({ children }: { children: ReactNode }) {
       return <Centered>Loading your progress...</Centered>
     case 'signed-out':
       return <LoginPage notice={session.notice} />
-    case 'not-allowed':
-      return (
-        <Centered>
-          <div className="alert warn" role="alert">
-            {session.justCreated
-              ? 'Account created. Ask Claude to activate it (allowlist).'
-              : 'This account is not activated yet. Ask Claude to activate it (allowlist).'}
-          </div>
-          <p className="muted small">Signed in as {session.user.email}.</p>
-          <div className="row">
-            <button type="button" className="btn primary" onClick={() => void retry()}>
-              Try again
-            </button>
-            <SignOutButton />
-          </div>
-        </Centered>
-      )
     case 'error':
       return (
         <Centered>
@@ -99,7 +83,7 @@ export function SignOutButton() {
 }
 
 const MIN_PASSWORD = 8
-/** Sign-up is disabled in Neon Auth since 2026-09-29 (Claude creates accounts), so the form hides it. */
+/** Password sign-up is disabled in Neon Auth since 2026-09-29, so the form hides it; new learners use Google (DECISIONS.md #118). */
 const SIGN_UP_OPEN = false
 
 function LoginPage({ notice }: { notice: string | null }) {
@@ -108,6 +92,17 @@ function LoginPage({ notice }: { notice: string | null }) {
   const [password, setPassword] = useState('')
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState<string | null>(null)
+
+  async function google() {
+    setError(null)
+    setBusy(true)
+    try {
+      await signInWithGoogle() // leaves the page for Google
+    } catch (err) {
+      setError(messageOf(err))
+      setBusy(false)
+    }
+  }
 
   async function submit(e: FormEvent) {
     e.preventDefault()
@@ -139,6 +134,10 @@ function LoginPage({ notice }: { notice: string | null }) {
       )}
       <form className="card stack login" onSubmit={(e) => void submit(e)}>
         <h2>{mode === 'sign-in' ? 'Sign in' : 'Create account'}</h2>
+        <button type="button" className="btn primary" disabled={busy} onClick={() => void google()}>
+          Sign in with Google
+        </button>
+        <p className="small muted">New here? Google creates your account. With a name and password from Hayk, use the fields below.</p>
         <label className="field">
           <span className="label">Email or name</span>
           <input
@@ -168,7 +167,7 @@ function LoginPage({ notice }: { notice: string | null }) {
             {error}
           </div>
         )}
-        <button type="submit" className="btn primary" disabled={busy}>
+        <button type="submit" className="btn" disabled={busy}>
           {busy ? 'Please wait...' : mode === 'sign-in' ? 'Sign in' : 'Create account'}
         </button>
         {SIGN_UP_OPEN ? (
@@ -186,7 +185,7 @@ function LoginPage({ notice }: { notice: string | null }) {
             </button>
           </p>
         ) : (
-          <p className="small muted">No account? Ask Claude.</p>
+          <PrivacyNotice />
         )}
       </form>
       <section className="card stack">

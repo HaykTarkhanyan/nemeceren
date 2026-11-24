@@ -2,6 +2,26 @@
 
 Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
+## 118. Anyone can sign in with Google and gets their own progress; strangers have daily and row limits, a privacy note and "Delete my account" (asked for by Hayk, 2026-11-24)
+
+- **Date:** 2026-11-24 - **Status:** active; partly supersedes #52. Not yet tried with a real Google sign-in.
+- **Why:** Hayk wanted Google sign-in "like the armenia-driving-test repo" (its #13, #14). In the interview Hayk chose: anyone may sign in (Q65), Neon's shared Google credentials for now (Q66), and the full version with protections (Q68, after Q67's "invited only" note contradicted Q65).
+  - **What was already true:** Neon Auth had Google on with shared credentials (`neon neon-auth oauth-provider list`: `google, shared`), and `disable_sign_up` covers only email and password; Neon's docs say social sign-up restrictions are "coming soon". So anyone could already create a login; the allowlist (403) kept them from all data.
+  - **Measured before choosing the limits (2026-11-24):** nemeceren used 2.9 of 100 CU-hours this month (11.3 h awake in 24 days, all learners); the busiest account held 360 review events and 19 test attempts; the database was 9.4 MB of 512 MB.
+- **What changed:**
+  - **Gate** (`backend/src/auth.ts`): a verified token of an account that still exists. `allowed_users` stays, as the list of trusted learners (Hayk, Anahit, Armen, Elya, the test account), who are never counted or limited, so strangers can't lock them out.
+  - **Limits for everyone else** (`usage.ts`, `config.ts`, migration 007): 1,000 requests and 24 five-minute windows a day per account, 48 windows for all of them together (at most ~62 CU-hours a month), row limits per table (`ACCOUNT_ROW_LIMITS`, e.g. 50,000 review events), and no new writes above a 400 MB database. Over a limit the API answers 429 `rate_limited` or 403 `quota_exceeded`; the app keeps the changes in its outbox and says "Not synced".
+  - **Delete my account** (`DELETE /v1/account`, Settings): progress, `api_usage`, `allowed_users` and the auth user in one transaction under the sync's per-user lock; the cascade removes the Google link, tokens and sessions. Tokens of a deleted account get 410 `account_deleted`. Checked with a rolled-back dry run on the test account (rows, login and 21 sessions gone inside the transaction, all back after).
+  - **App:** "Sign in with Google" first on the sign-in page (name + password stay for existing accounts), a privacy note there and in Settings (what is stored, from the real `neon_auth` columns; who can read it, including Claude; deletion; 6 hours of restore history), and the "not activated" screen removed.
+  - **Smoke test:** checks that a trusted learner is not counted and that the same account outside `allowed_users` is served and counted; 143 checks passed. It also had a stale `validate_review` call from #112 (an int instead of the set of indexes), fixed.
+- **Known limits:** sign-ins and the app's "still signed in?" checks go straight to Neon Auth, whose tables live in the same database, so they wake the compute too and no limit here sees them (the driving app has the same gap); watch the monthly CU-hours once strangers come (`neon projects get aged-violet-98333413 --output json`: `compute_time_seconds` / 3600 = CU-hours this month; 10,298 = 2.9 on 2026-11-24). Google's screen names Neon (shared credentials, which Neon calls development-only). Google's redirect may not return into an iPhone home-screen app (see #117's research). Strangers' written answers wait for a Claude review that only happens when Hayk asks; writing tasks are skippable (#112).
+- **Alternatives rejected:**
+  - **Invited only** (Google button, allowlist kept): the smallest change; Hayk chose open sign-up.
+  - **Open with no limits:** a few strangers could use up the monthly compute, and Neon would pause the database for everyone; their data would be stored with no notice or way to delete it.
+  - **Limits for everyone, including the trusted learners:** strangers could then use up the shared daily budget and block Hayk's syncs.
+  - **A privacy page as its own route:** the sign-in page must show it before sign-in, and the app's routes only render after sign-in; one `<details>` component serves both places.
+- **What would change this:** Hayk creating their own Google OAuth client (then the privacy note's sentence about Neon goes); real strangers getting close to the limits (check `api_usage`); a new stored field or processor (the privacy note must change with it); Neon adding social sign-up restrictions.
+
 ## 117. iPhone audio: robotic voices go last, and reading aloud plays in silent mode (Anahit's feedback, approved by Hayk, 2026-11-11)
 
 - **Date:** 2026-11-11 - **Status:** active; not yet tested on an iPhone
@@ -1026,7 +1046,7 @@ Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
 ## 52. Sign-up stays closed; Claude has a permanent test account for browser checks; the sign-in page no longer offers sign-up (decided with Hayk, 2026-09-29)
 
-- **Date:** 2026-09-29 - **Status:** active (refined 2026-09-30: the sign-in field also takes a name, #60)
+- **Date:** 2026-09-29 - **Status:** partly superseded by #118 (2026-11-24: anyone may sign in with Google, the allowlist is no longer the gate; password sign-up stays closed and the test account stays) (refined 2026-09-30: the sign-in field also takes a name, #60)
 - **Why:**
   - After Hayk's account was allowlisted, sign-up was disabled in Neon Auth (`neon neon-auth config email-password update --disable-sign-up`). Verified: a sign-up request now gets HTTP 400 `EMAIL_PASSWORD_SIGN_UP_DISABLED`.
   - Browser checks of pages behind sign-in need an account whose progress Claude may change freely, so the checks don't write into Hayk's data. Hayk chose a test account and asked to keep it for future tests: `claude-test@example.com`, allowlisted. Its password is only in the gitignored `.env.local` (`NEMECEREN_TEST_EMAIL`, `NEMECEREN_TEST_PASSWORD`).
