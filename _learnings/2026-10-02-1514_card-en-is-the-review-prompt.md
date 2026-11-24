@@ -7,5 +7,6 @@
 **Consequences:**
 - Keep `en` in English. Usage goes in the card's `example`, or in a curated glossary note.
 - Irregular forms in brackets are the accepted exception, as on the older cards ("to speak (du sprichst)", "to meet (er trifft)").
+  **Revisited 2026-11-24:** they give the answer away too. Hayk saw "to walk; to run (er läuft)" and asked "isn't this just revealing the answer?". The app now hides such notes while the question is open and shows them after answering (`app/src/lib/prompt.ts`, DECISIONS.md #120), so the cards can keep them.
 - Two cards shouldn't have prompts that invite each other's answer. Units 4-5 had zahlen/bezahlen both as "to pay", toll/super both as "great", and beginnen/anfangen. Add a short distinction to one of them ("to pay (for something)", "to begin (not separable)").
 - The generated popups copy the card's `en`, so rerun `npm run glossary` after editing it.

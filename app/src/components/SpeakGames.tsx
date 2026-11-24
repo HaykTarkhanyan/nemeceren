@@ -24,6 +24,7 @@ import { De, GlossScope } from './GermanText.tsx'
 import { nearMissText } from './ResultView.tsx'
 import { WordDe } from './ReviewCard.tsx'
 import { PlayButtons } from './Speaker.tsx'
+import { promptOf } from '../lib/prompt.ts'
 
 /** After a spoken right answer, the next word comes after this long. */
 const AUTO_NEXT_MS = 1500
@@ -228,7 +229,7 @@ function SpeakWordCard(props: {
     <GlossScope surface={word.custom ? { kind: 'custom-word' } : { kind: 'review-card', revealed }}>
       <section className="card stack word-card game-card">
         {again && <span className="badge pending">once more</span>}
-        <p className={revealed ? 'word-meaning muted' : 'word-big speak-prompt'}>{word.en}</p>
+        <p className={revealed ? 'word-meaning muted' : 'word-big speak-prompt'}>{revealed ? word.en : promptOf(word.en)}</p>
         {revealed && (
           <>
             <p className="word-big">

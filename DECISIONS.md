@@ -2,6 +2,16 @@
 
 Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
+## 120. The English question hides bracketed notes that give the German away; they show after answering (Hayk, 2026-11-24)
+
+- **Date:** 2026-11-24 - **Status:** active; revisits the "accepted exception" in `_learnings/2026-10-02-1514_card-en-is-the-review-prompt.md`
+- **Why:** Hayk, on "to walk; to run (er läuft)" in Say the words: "isn't this just revealing the answer?". A card's `en` is also the question in English-to-German review and in Say the words, and 44 of 1,199 cards had a note that gives the answer away: 31 conjugated forms ("du sprichst, er spricht"), German letters ("with ß"), wrong spellings to avoid ("not sechs-zehn"), literal translations ("literally 'mid-week'"), false friends ("not 'to become'"), "auf = for", "always with die".
+- **What changed:** `promptOf(en)` (`app/src/lib/prompt.ts`) drops bracketed notes that match one of those patterns. The review card (English to German) and Say the words show it while the question is open and the full `en` once answered. Notes that tell cards apart stay ("informal", "male", "separable", "a fact", "against a 'not' question"). Checked over all cards: 44 questions change, none becomes empty, and no two cards end up with the same question.
+- **Alternatives rejected:**
+  - **Moving the notes out of `en` into a new field:** a schema change and 44 card edits, and new cards would bring the problem back; the rule in the app covers future cards too.
+  - **Hiding every bracket:** "hello (informal)" and "hello (polite)" would ask the same question.
+- **What would change this:** a note the patterns miss (add a pattern and a test case), or one they hide that was needed to tell two cards apart.
+
 ## 119. Daily quick tasks for busy days: "review 10 words" and "learn 3 new words", on Home and in kachayt each morning (asked for by Hayk, 2026-11-24)
 
 - **Date:** 2026-11-24 - **Status:** active (revisited 2026-11-24, after Hayk's first try: see the last bullet of "What was built")

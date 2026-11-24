@@ -26,6 +26,7 @@ import { checkWord } from '../lib/text.ts'
 import { TypoDiff } from './TypoDiff.tsx'
 import type { Comparison } from '../lib/text.ts'
 import type { Typed } from '../lib/reviewEntries.ts'
+import { promptOf } from '../lib/prompt.ts'
 
 export const MODES: { mode: ReviewMode; title: string; desc: string }[] = [
   { mode: 'recognition', title: 'German to English', desc: 'See the German word, recall the meaning, grade yourself.' },
@@ -231,7 +232,8 @@ export function Card(props: {
       )}
       {mode === 'production' && (
         <>
-          <p className="word-big">{word.en}</p>
+          {/* Notes that give the German away show only once answered (lib/prompt.ts, DECISIONS.md #120). */}
+          <p className="word-big">{done ? word.en : promptOf(word.en)}</p>
           <p className="muted small">
             {micOn ? 'Say or type the German word.' : 'Type the German word.'} Nouns: include der/die/das.
             {autoListen && !done ? ' The mic stays on for the next cards.' : ''}
