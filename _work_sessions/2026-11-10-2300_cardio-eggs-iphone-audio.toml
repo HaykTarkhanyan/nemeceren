@@ -1,0 +1,36 @@
+title = "iPhone install answer, cardio easter eggs and texts for Anahit, iPhone audio fixes"
+date = "2026-11-10"
+time = "23:00"
+areas = ["app/src", "content/themes", "content/readings.json", "content/words.json", "content/glossary*.json", "DECISIONS.md"]
+done = [
+  "Answered 'how well does the app work on iPhone': it is already an installable web app (#89); Safari > Share > Add to Home Screen, iOS 26 opens it as a web app. Risks found: login needs iOS 18.4+ (partitioned cookie), speech recognition in home-screen web apps is unreliable (WebKit bug 225298, a 27.2 crash report). App Store route rejected: $99/year, a Mac, guideline 4.2, no Web Speech in WKWebView, the cookie would break. Asked Q50 (iPhone help text) and Q51 (if the mic fails): still open.",
+  "Cardio easter eggs for Anahit (#116): Home greeting 'Gruess Gott, Anahit!' with a daily cardio line; zone meter in the daily mix (zones start after 3, 5, 8, 13 right answers, Fibonacci for Tool's Lateralus; a miss drops one zone; end screen 'Gut gelaufen!' with time per zone). Keyed to her login and the test account. Visual check with the eggs switched on for a guest in the working copy only, reverted before the commit.",
+  "Content for everyone (agent, checked here): theme lesson t-ausdauer (cardio words, heart rates as numbers above 100, a running-group scene), readings staeffele, sprechtest, wochenende-in-stuttgart, lateralus, zwei-sprachen (25 texts now), 19 cards; every fact with a source, unverifiable ones left out. The gruess-gott card now says southern Germany and Austria.",
+  "Hayk's Q65-style picks: all four texts plus the Tool and Opeth readings; greeting and meter only for her login; texts visible to everyone (the public repo would otherwise show where she lives); no look at her data.",
+  "iPhone audio after Anahit's feedback (#117): robotic Apple voices (Eddy, Grandma, Rocko...) go last and never pair with a natural voice in dialogues; Settings marks them; navigator.audioSession is 'playback' while the app reads aloud (plays in silent mode on iOS 17+), back to 'auto' after.",
+  "Checks before each push: check-content, tsc, vitest (639 at the end), build; both deploys succeeded.",
+]
+pending = [
+  "Anahit's answers: is the sound fine without headphones once silent mode is off, which German voices her Settings list shows, her iOS version. If silent mode still mutes: try the silent-clip trick; if only robotic voices exist: recorded audio is Hayk's call.",
+  "Q50 (iPhone help text and install hint) and Q51 (fallback if the mic fails on her iPhone) are still open.",
+  "Nobody has seen the greeting and zone meter on Anahit's real account yet.",
+]
+next = """
+Hayk asks Anahit the four audio questions and whether she sees the greeting.
+"""
+files = [
+  "app/src/lib/zones.ts, zones.test.ts, eggs.ts, eggs.test.ts, audioSession.ts, audioSession.test.ts (new)",
+  "app/src/components/ZoneMeter.tsx, CardioGreeting.tsx (new); MatchPairs.tsx, ReviewRun.tsx, MistakesSession.tsx (onAnswer)",
+  "app/src/pages/HomePage.tsx, DailyPage.tsx, SettingsPage.tsx; app/src/lib/speech.ts, speech.test.ts, readings.test.ts; app/src/styles.css",
+  "content/themes/t-ausdauer.json (new), content/readings.json, content/words.json, content/glossary.json, content/glossary.generated.json",
+  "DECISIONS.md (#116, #117)",
+]
+commits = [
+  "91b48a2 session log of 10 Nov (the earlier part)",
+  "3c0ea67 cardio easter eggs for Anahit, plus cardio, Stuttgart and music texts",
+  "e4a82a1 iPhone audio: robotic voices last, reading aloud plays in silent mode",
+]
+notes = """
+The \\b in a TS regex written through a Python heredoc came out as a backspace character; fixed by replacing the control
+character. Python string edits with backslashes or apostrophes belong in a file or the Edit tool (global CLAUDE.md).
+"""

@@ -1,0 +1,54 @@
+title = "Google sign-in for anyone (with limits, privacy note, Delete my account), daily quick tasks on Home and in kachayt"
+date = "2026-11-24"
+time = "12:19"
+areas = ["backend/src", "backend/db/migrations", "backend/scripts", "backend/README.md", "app/src", "app/scripts/non_essential", "progress/README.md", "DECISIONS.md", "CLAUDE.md", "DEFERRED_TODO.md", "_learnings", "~/.claude/skills/aziz (backup in 00_notes)"]
+done = [
+  "Looked at armenia-driving-test's Google sign-in (its #13, #14): same stack, Neon's shared Google credentials.",
+  "Found: Google was already on for nemeceren's Neon Auth (shared), and disable_sign_up covers only email and password (Neon: social sign-up restrictions 'coming soon'). Recorded as a learning.",
+  "Interview: Q65 anyone, Q66 shared credentials, Q67 'invited only' note contradicted Q65, so Q68 confirmed the scope: open, with protections. Reopens #52.",
+  "Measured first: 2.9 of 100 CU-hours used in November (11.3 h awake in 24 days, all learners), database 9.4 MB, the busiest account (the test account) 360 review events.",
+  "Backend (#118): the gate is now 'token of an account that still exists' (410 account_deleted otherwise); allowed_users marks trusted learners, never counted or limited; usage.ts limits everyone else (1,000 requests and 24 windows a day per account, 48 windows for all of them, at most ~62 CU-hours a month); row limits per table; no writes above 400 MB; DELETE /v1/account in one transaction under the sync's per-user lock. Migration 007 applied, function deployed.",
+  "Deletion checked without deleting: the same statements on the test account in a rolled-back transaction removed its rows, its login and its 21 sessions (cascade), all back after the rollback.",
+  "Smoke test updated (trusted not counted, others served and counted, DELETE needs a token, DELETE preflight) and an old bug fixed (validate_review got an int instead of the set of indexes since #112): 143 checks passed in 9 s.",
+  "App: 'Sign in with Google' first on the sign-in page, privacy note there and in Settings (from the real neon_auth columns), 'Delete my account' in Settings, the 'not activated' screen removed; sync handles 429/403 quota (changes stay, 'Not synced') and 410. The button reaches Google's sign-in page with Neon's callback (browser check); live site shows it.",
+  "The plugin's heads-up was right: sign-ins and session checks hit the same database and no limit counts them. Noted in #118 and the backend README.",
+  "Q69: committed the kachayt section of CLAUDE.md ('their task platform', original line endings) and the DEFERRED_TODO offline-start item. Q70: learning file about disable_sign_up.",
+  "Daily quick tasks (#119), from Q71 (kachayt and the app), Q72 (made from progress each day), Q73 (goal unchanged): Home's Daily card lists 'Review 10 words' (or the due count) and 'Learn 3 new words' with their own runs #/daily/review and #/daily/new, ticked from today's log; a 10-card quick review records a review round (#86). Guest browser check: both ran and ticked.",
+  "kachayt: progress.py daily-tasks --kachayt adds today's 'German quick: ...' tasks to the German project, ticks done ones, closes earlier days' ones (done or cancelled); aziz step 7c runs it every briefing (notes repo 06285dd5). Today's tasks: c62ae422 (review 10) and 1955098b (learn 3).",
+  "Final checks before each push: check-content, tsc, vitest (648), build, backend typecheck; all three deploys succeeded.",
+]
+pending = [
+  "Hayk's first real Google sign-in: does it attach to the existing Gmail account (keeps progress) or create a new empty one? If new, link them.",
+  "Tomorrow's briefing is the first run that closes yesterday's quick tasks in kachayt; check it did done/cancel correctly.",
+  "Watch nemeceren's monthly CU-hours once strangers sign in (neon projects get ... compute_time_seconds / 3600).",
+  "Optional: Hayk's own Google OAuth client (Google's screen says Neon now); the kachayt habit 'German' could tick itself, but kachayt's CLI can't write habits; the Daily card headline doesn't mention the 10-card review round; backend/scripts/__pycache__/progress.cpython-314.pyc is tracked in git (left alone).",
+  "Q50 and Q51 (iPhone help, mic fallback) and Anahit's audio answers are still open.",
+]
+next = """
+Hayk signs in with Google once and checks the progress is there; tomorrow's aziz run shows whether the quick tasks roll over.
+"""
+files = [
+  "backend/src/account.ts, backend/src/usage.ts, backend/db/migrations/007_open_signup.sql (new)",
+  "backend/src/auth.ts, config.ts, errors.ts, index.ts, sync.ts, types.ts; backend/README.md",
+  "backend/scripts/progress.py (daily-tasks), backend/scripts/non_essential/smoke_test.py",
+  "app/src/components/PrivacyNotice.tsx, app/src/lib/quickTasks.ts, quickTasks.test.ts (new)",
+  "app/src/components/AuthGate.tsx, app/src/lib/auth.ts, session.ts, storage.ts, storage.test.ts, app/src/pages/SettingsPage.tsx, DailyCard.tsx, DailyPage.tsx, app/src/styles.css, app/scripts/non_essential/app-integration.ts",
+  "DECISIONS.md (#118, #119, #52 marked partly superseded), CLAUDE.md, DEFERRED_TODO.md, progress/README.md",
+  "_learnings/2026-11-24-1258_neon-auth-disable-signup-is-email-only.md",
+  "~/.claude/skills/aziz/SKILL.md step 7c (backup 00_notes/.claude/global_skills/aziz/SKILL.md)",
+]
+commits = [
+  "278f16c Google sign-in for anyone, with limits, a privacy note and Delete my account",
+  "72660e6 project notes: kachayt tasks section, offline-start idea, Neon Auth sign-up learning",
+  "ab8941f daily quick tasks for busy days: on Home and in kachayt each morning",
+  "00_notes 06285dd5 aziz: step 7c, German quick tasks from nemeceren into kachayt",
+]
+notes = """
+Mistakes and fixes this session:
+- The first kachayt sync parsed kachayt's output with single spaces (its fields are separated by two) and added a duplicate task; deleted it, fixed the parser, tested on real lines, the second sync added nothing. The earlier format check had used a search with no matches, so it never showed a real line.
+- A commit guard (grep -c with a wrong pattern) returned 0 and skipped one commit; reran after checking the staged diff directly.
+- The heredoc escaping trap hit three more times (an apostrophe in a TS string, \\s in a Python replace); the Edit tool or a script file fixed each.
+- The privacy note said 'he' for Hayk; changed to 'they'.
+- Vite outlived TaskStop twice (_learnings/2026-11-07-1316); stopped by PID after checking its command line.
+Only the one CLAUDE.md line and later the kachayt section went into commits, each staged from HEAD's bytes.
+"""
