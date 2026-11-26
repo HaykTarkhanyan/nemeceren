@@ -18,6 +18,7 @@ import type { Comparison } from '../lib/text.ts'
 import { AskClaude } from './AskClaude.tsx'
 import { useReviewSound } from './FocusBar.tsx'
 import { GameEnd, GameFrame, saveGameReview, TooFewWords, TypeAnswer, useEnterKey, useRoundCounted } from './GameFrame.tsx'
+import { SkipWordButton } from './SkipWord.tsx'
 import type { GameBack } from './GameFrame.tsx'
 import { De, GlossScope } from './GermanText.tsx'
 import { nearMissText } from './ResultView.tsx'
@@ -212,6 +213,9 @@ function BuildCard(props: {
           <button type="button" className="btn primary" onClick={() => onNext(result.right)}>
             Next (Enter)
           </button>
+          <div className="card-foot">
+            <SkipWordButton word={item.word} onSkipped={() => onNext(result.right)} />
+          </div>
         </>
       )}
     </section>

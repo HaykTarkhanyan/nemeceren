@@ -33,11 +33,23 @@ const Settings = z.object({
   /** The word set (content/sets.json id) the daily mix takes its new words from; null = the next lessons. */
   activeSet: z.string().nullable(),
   speak: SpeakSetup,
+  /** Starting an exercise starts the study timer (DECISIONS.md #122). */
+  autoTimer: z.boolean(),
 })
 export type Settings = z.infer<typeof Settings>
 
 const KEY = 'nemeceren.settings'
-const DEFAULTS: Settings = { voiceURI: null, rate: 0.85, newPerDay: 10, wordSource: 'all', umlautKeys: 'answers', dailyMode: 'recognition', activeSet: null, speak: SPEAK_DEFAULTS }
+const DEFAULTS: Settings = {
+  voiceURI: null,
+  rate: 0.85,
+  newPerDay: 10,
+  wordSource: 'all',
+  umlautKeys: 'answers',
+  dailyMode: 'recognition',
+  activeSet: null,
+  speak: SPEAK_DEFAULTS,
+  autoTimer: true,
+}
 
 let current: Settings | null = null
 const listeners = new Set<() => void>()

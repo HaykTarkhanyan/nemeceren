@@ -907,6 +907,25 @@ def cmd_sessions(conn: psycopg.Connection, args: argparse.Namespace) -> None:
         LOG.info(f"{r['id']}  {r['local_day']}  {minutes:>4.0f} min  {when}{edited}{label}")
 
 
+def cmd_skipped(conn: psycopg.Connection, args: argparse.Namespace) -> None:
+    """The words the learner skipped ("Skip word", DECISIONS.md #123): leave them out of new exercises too."""
+    user = resolve_user(conn, args.user)
+    rows = conn.execute(
+        "SELECT word_id, updated_at FROM skipped_words WHERE user_id = %s AND skipped ORDER BY updated_at, word_id",
+        (user["user_id"],),
+    ).fetchall()
+    words = {w["id"]: w for w in json.loads((REPO_ROOT / "content" / "words.json").read_text(encoding="utf-8"))}
+    custom = {
+        r["id"]: r
+        for r in conn.execute("SELECT id, de, en FROM custom_words WHERE user_id = %s", (user["user_id"],)).fetchall()
+    }
+    LOG.info(f"Words {user['email']} skipped: {len(rows)}, oldest first. Times are UTC.")
+    for r in rows:
+        w = words.get(r["word_id"]) or custom.get(r["word_id"])
+        what = f"{w['de']} = {w['en']}" if w else "(no such word any more)"
+        LOG.info(f"{r['updated_at'].astimezone(timezone.utc):%Y-%m-%d %H:%M}  {r['word_id']}  {what}")
+
+
 def _one_line(text: str, width: int = 70) -> str:
     flat = " ".join(text.split())
     return flat if len(flat) <= width else flat[: width - 3] + "..."
@@ -1273,6 +1292,8 @@ def main() -> None:
     p = sub.add_parser("my-words", help="list Hayk's own words (not deleted), oldest first")
     p.add_argument("--unchecked", action="store_true", help="only words without Claude's check yet")
     p.add_argument("--user", default=None)
+    p = sub.add_parser("skipped", help="list the words skipped with Skip word (DECISIONS.md #123), oldest first")
+    p.add_argument("--user", default=None)
     p = sub.add_parser("check-word", help="save Claude's check of one own word: ok, or fix with the corrected fields")
     p.add_argument("word_id", help='the word id ("u-" + a UUID), from my-words')
     p.add_argument("verdict", choices=["ok", "fix"])
@@ -1310,6 +1331,7 @@ def main() -> None:
         "note-feedback": cmd_note_feedback,
         "my-words": cmd_my_words,
         "check-word": cmd_check_word,
+        "skipped": cmd_skipped,
         "daily-tasks": cmd_daily_tasks,
     }
     with connect() as conn:

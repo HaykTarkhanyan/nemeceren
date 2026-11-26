@@ -10,6 +10,7 @@ import type { SortKey, SourceFilter, StatusFilter, WordRow } from '../lib/allWor
 import { asSentence, checkText } from '../lib/customWords.ts'
 import { messageOf, reportError } from '../lib/errors.ts'
 import { sourceLessons, sourceThemes } from '../lib/plan.ts'
+import { idsWithoutSkipped } from '../lib/skipped.ts'
 import { link } from '../lib/router.ts'
 import { deleteCustomWord, STATE_DAYS, useProgress } from '../lib/storage.ts'
 import { useVisibleContent } from '../lib/visibleContent.ts'
@@ -18,6 +19,7 @@ import { Speaker } from './Speaker.tsx'
 import { PracticeButtons } from './WordSetsTab.tsx'
 import type { PracticeHow } from './WordSetsTab.tsx'
 import { practiceIds, PRACTICE_MAX, recentlyLearned, RECENT_DAYS } from '../lib/wordSets.ts'
+import { SkipWordButton } from './SkipWord.tsx'
 
 const GRADE_NAME: Record<number, string> = { 1: 'Again', 2: 'Hard', 3: 'Good', 4: 'Easy' }
 const MODE_NAME: Record<string, string> = { recognition: 'German to English', production: 'English to German', listening: 'listening' }
@@ -46,6 +48,8 @@ export function AllWords(props: {
   const [open, setOpen] = useState<ReadonlySet<string>>(() => new Set())
   const [ticked, setTicked] = useState<ReadonlySet<string>>(() => new Set())
   const [pick, setPick] = useState<PracticePick>('shown')
+  // Only the skipped words (DECISIONS.md #123), on top of the other filters.
+  const [skippedOnly, setSkippedOnly] = useState(false)
   const visible = useVisibleContent()
   const rows = useMemo(
     () =>
@@ -67,20 +71,20 @@ export function AllWords(props: {
   const base = inSet ? rows.filter((r) => inSet.has(r.id)) : rows
   const plainSource = set ? 'all' : source
   const counts = statusCounts(base, { query, source: plainSource })
-  const shown = sortRows(filterRows(base, { query, source: plainSource, status }), sort)
+  const matching = sortRows(filterRows(base, { query, source: plainSource, status }), sort)
+  const shown = skippedOnly ? matching.filter((r) => view.skipped.has(r.id)) : matching
+  const skippedCount = filterRows(base, { query, source: plainSource, status: 'all' }).filter((r) => view.skipped.has(r.id)).length
   const state = view.reviewState
+  // Skipped words never go into practice (DECISIONS.md #123), even when they are shown or ticked.
+  const practise = (ids: string[]) => practiceIds(idsWithoutSkipped(ids, view.skipped), state)
   const pickIds: Record<PracticePick, string[]> = {
-    shown: practiceIds(
-      shown.map((r) => r.id),
-      state,
-    ),
-    ticked: practiceIds([...ticked], state),
-    recent: practiceIds(recentlyLearned(view.reviewLog, state, now), state),
-    weakest: practiceIds(
+    shown: practise(shown.map((r) => r.id)),
+    ticked: practise([...ticked]),
+    recent: practise(recentlyLearned(view.reviewLog, state, now)),
+    weakest: practise(
       sortRows(rows, 'hardest')
         .filter((r) => r.lapses > 0 || r.again > 0)
         .map((r) => r.id),
-      state,
     ),
   }
 
@@ -136,6 +140,9 @@ export function AllWords(props: {
             {s === 'all' ? 'All' : STATUS_LABEL[s]} <span className="chip-count">{counts[s]}</span>
           </button>
         ))}
+        <button type="button" className={`chip ${skippedOnly ? 'active' : ''}`} aria-pressed={skippedOnly} onClick={() => setSkippedOnly((v) => !v)}>
+          Skipped <span className="chip-count">{skippedCount}</span>
+        </button>
       </div>
       <div className="words-tools">
         <label className="field">
@@ -217,9 +224,10 @@ export function AllWords(props: {
               {shown.map((r) => {
                 const isOpen = open.has(r.id)
                 const pct = correctPct(r)
+                const skipped = view.skipped.has(r.id)
                 return (
                   <Fragment key={r.id}>
-                    <tr className={`word-row status-${r.status}${isOpen ? ' open' : ''}`} onClick={() => toggle(r.id)}>
+                    <tr className={`word-row status-${r.status}${isOpen ? ' open' : ''}${skipped ? ' skipped' : ''}`} onClick={() => toggle(r.id)}>
                       <td className="cell-de">
                         <input
                           type="checkbox"
@@ -263,6 +271,10 @@ export function AllWords(props: {
                             <i key={i} className={i <= strengthOf(r.status) ? 'on' : ''} />
                           ))}
                         </span>
+                        {skipped && <span className="badge">skipped</span>}{' '}
+                        <span onClick={(e) => e.stopPropagation()}>
+                          <SkipWordButton word={r} />
+                        </span>
                       </td>
                       <td data-label="Next review">{r.status === 'not-started' ? '-' : relativeDue(r.due, now)}</td>
                       <td data-label="Reviews" className="num">
@@ -303,6 +315,10 @@ export function AllWords(props: {
           <li>
             <strong>learning</strong>: still in the short first steps. <strong>review</strong>: in the long-term schedule. <strong>known</strong>: its next
             review is 7 days or more away (the same rule as the Stats page).
+          </li>
+          <li>
+            <strong>skipped</strong>: you chose not to study it (Skip word). It stays out of reviews, new words, the daily mix, Speak and the games on
+            every device, and out of the Stats word counts. Unskip brings it back with its old schedule.
           </li>
         </ul>
       </details>

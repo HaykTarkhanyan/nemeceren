@@ -5,7 +5,7 @@
 // later last_review wins, per lesson the later updatedAt, per day the larger extra, per note the
 // later updatedAt unless the server's note has Claude's feedback (then it is locked and the
 // server's version stands), per custom word the later updatedAt (an edit clears Claude's check,
-// a delete keeps it), per study session and path event the later updatedAt; events and attempts are identified
+// a delete keeps it), per study session, path event and skipped word the later updatedAt; events and attempts are identified
 // by client-made UUIDs, so a resend is harmless.
 import { z } from 'zod'
 import {
@@ -17,6 +17,8 @@ import {
   NoteText,
   PathEvent as PathEventSchema,
   PathEventRecord as PathEventRecordSchema,
+  SkippedWord as SkippedWordSchema,
+  SkippedWordRecord as SkippedWordRecordSchema,
   StoredCard as StoredCardSchema,
   StudySession as StudySessionSchema,
   StudySessionRecord as StudySessionRecordSchema,
@@ -30,6 +32,8 @@ import type {
   Result,
   ReviewLogEntry,
   ReviewState,
+  SkippedWord,
+  SkippedWordRecord,
   StoredCard,
   StudySession,
   StudySessionRecord,
@@ -65,6 +69,9 @@ export type { StudySession, StudySessionRecord }
 /** PathEventRecord: a station or daily-mix event as the app writes it (the upload, without the id); deletedAt is a soft delete. */
 export type { PathEvent, PathEventRecord }
 
+/** SkippedWordRecord: Skip word / Unskip as the app writes it (the upload, without the word id). */
+export type { SkippedWord, SkippedWordRecord }
+
 export interface Outbox {
   version: 1
   reviewEvents: ReviewEventUpload[]
@@ -83,10 +90,12 @@ export interface Outbox {
   studySessions: Record<string, StudySessionRecord>
   /** Latest local record per path event id. */
   pathEvents: Record<string, PathEventRecord>
+  /** Latest local Skip word / Unskip per word id. */
+  skippedWords: Record<string, SkippedWordRecord>
 }
 
 export function emptyOutbox(): Outbox {
-  return { version: 1, reviewEvents: [], cards: {}, attempts: [], lessons: {}, newWordExtras: {}, notes: {}, customWords: {}, studySessions: {}, pathEvents: {} }
+  return { version: 1, reviewEvents: [], cards: {}, attempts: [], lessons: {}, newWordExtras: {}, notes: {}, customWords: {}, studySessions: {}, pathEvents: {}, skippedWords: {} }
 }
 
 export function outboxSize(o: Outbox): number {
@@ -99,7 +108,8 @@ export function outboxSize(o: Outbox): number {
     Object.keys(o.notes).length +
     Object.keys(o.customWords).length +
     Object.keys(o.studySessions).length +
-    Object.keys(o.pathEvents).length
+    Object.keys(o.pathEvents).length +
+    Object.keys(o.skippedWords).length
   )
 }
 
@@ -125,7 +135,7 @@ export function sameJson(a: unknown, b: unknown): boolean {
 // ---------- batches (POST /v1/sync) ----------
 
 /** The API's per-request limits (backend/src/config.ts SYNC_LIMITS). */
-export const SYNC_LIMITS = { reviewEvents: 1000, cards: 2000, attempts: 20, lessons: 500, newWordExtras: 31, notes: 50, customWords: 20, studySessions: 100, pathEvents: 200 } as const
+export const SYNC_LIMITS = { reviewEvents: 1000, cards: 2000, attempts: 20, lessons: 500, newWordExtras: 31, notes: 50, customWords: 20, studySessions: 100, pathEvents: 200, skippedWords: 500 } as const
 
 export interface SyncBatch {
   reviewEvents?: ReviewEventUpload[]
@@ -137,6 +147,7 @@ export interface SyncBatch {
   customWords?: (CustomWordRecord & { id: string })[]
   studySessions?: (StudySessionRecord & { id: string })[]
   pathEvents?: (PathEventRecord & { id: string })[]
+  skippedWords?: (SkippedWordRecord & { wordId: string })[]
 }
 
 /** The next request's worth of the outbox (empty lists left out), or null when there is nothing to send. */
@@ -181,6 +192,11 @@ export function nextBatch(o: Outbox): SyncBatch | null {
     .slice(0, SYNC_LIMITS.pathEvents)
     .map((id) => ({ id, ...o.pathEvents[id] }))
   if (pathEvents.length) b.pathEvents = pathEvents
+  const skipped = Object.keys(o.skippedWords)
+    .sort()
+    .slice(0, SYNC_LIMITS.skippedWords)
+    .map((wordId) => ({ wordId, ...o.skippedWords[wordId] }))
+  if (skipped.length) b.skippedWords = skipped
   return Object.keys(b).length > 0 ? b : null
 }
 
@@ -205,6 +221,8 @@ export function removeSent(o: Outbox, sent: SyncBatch): Outbox {
   for (const { id, ...rec } of sent.studySessions ?? []) if (sameJson(studySessions[id], rec)) delete studySessions[id]
   const pathEvents = { ...o.pathEvents }
   for (const { id, ...rec } of sent.pathEvents ?? []) if (sameJson(pathEvents[id], rec)) delete pathEvents[id]
+  const skippedWords = { ...o.skippedWords }
+  for (const { wordId, ...rec } of sent.skippedWords ?? []) if (sameJson(skippedWords[wordId], rec)) delete skippedWords[wordId]
   return {
     version: 1,
     reviewEvents: o.reviewEvents.filter((e) => !eventIds.has(e.id)),
@@ -216,6 +234,7 @@ export function removeSent(o: Outbox, sent: SyncBatch): Outbox {
     customWords,
     studySessions,
     pathEvents,
+    skippedWords,
   }
 }
 
@@ -257,6 +276,7 @@ export const SyncResponse = z.object({
   customWords: upserts(CustomWordSchema),
   studySessions: upserts(StudySessionSchema),
   pathEvents: upserts(PathEventSchema),
+  skippedWords: upserts(SkippedWordSchema),
 })
 export type SyncResponse = z.infer<typeof SyncResponse>
 
@@ -289,6 +309,8 @@ export interface ServerState {
   studySessions: StudySession[]
   /** Every path event that is not deleted, all time (the streak needs the whole history); a deleted one only after a sync. */
   pathEvents: PathEvent[]
+  /** Every word ever skipped, also brought-back ones (skipped false), so the newer change wins. */
+  skippedWords: SkippedWord[]
 }
 
 const StateEnvelope = z.object({
@@ -305,6 +327,7 @@ const StateEnvelope = z.object({
   customWords: z.array(CustomWordSchema),
   studySessions: z.array(StudySessionSchema),
   pathEvents: z.array(PathEventSchema),
+  skippedWords: z.array(SkippedWordSchema),
 })
 
 /** Validates the server state (or the offline copy of it); every problem names its field. */
@@ -332,6 +355,7 @@ export function parseState(what: string, data: unknown): ServerState {
     customWords: s.customWords,
     studySessions: s.studySessions,
     pathEvents: s.pathEvents,
+    skippedWords: s.skippedWords,
   }
 }
 
@@ -383,6 +407,10 @@ export function applySent(s: ServerState, sent: SyncBatch, reply: SyncResponse):
   for (const { id, ...rec } of sent.pathEvents ?? []) pathEvents.set(id, { id, ...rec })
   for (const x of reply.pathEvents.stale) pathEvents.set(x.id, x)
 
+  const skipped = new Map(s.skippedWords.map((x) => [x.wordId, x]))
+  for (const x of sent.skippedWords ?? []) skipped.set(x.wordId, x)
+  for (const x of reply.skippedWords.stale) skipped.set(x.wordId, x)
+
   const days = new Set(s.studyDays)
   for (const e of sent.reviewEvents ?? []) days.add(e.localDay)
   for (const a of sent.attempts ?? []) {
@@ -406,6 +434,7 @@ export function applySent(s: ServerState, sent: SyncBatch, reply: SyncResponse):
     customWords: [...words.values()],
     studySessions: [...sessions.values()],
     pathEvents: [...pathEvents.values()],
+    skippedWords: [...skipped.values()],
     studyDays: [...days].sort(),
   }
 }
@@ -444,6 +473,7 @@ export function acceptedLocally(serverTime: string): SyncResponse {
     customWords: upserts,
     studySessions: upserts,
     pathEvents: upserts,
+    skippedWords: upserts,
   }
 }
 
@@ -477,6 +507,8 @@ export interface ProgressView {
   studySessions: StudySessionView[]
   /** Path events that are not deleted (all synced ones plus unsynced ones), oldest first. */
   pathEvents: PathEventView[]
+  /** Words skipped now ("Skip word", DECISIONS.md #123): out of every review, new-word pick and game. */
+  skipped: ReadonlySet<string>
 }
 
 export interface NoteView extends ServerNote {
@@ -531,6 +563,16 @@ function mergeSession(server: StudySession | undefined, id: string, local: Study
 function mergePathEvent(server: PathEvent | undefined, id: string, local: PathEventRecord): PathEvent {
   if (server && server.updatedAt > local.updatedAt) return server
   return { id, ...local }
+}
+
+/** The latest Skip word / Unskip per word: the server's, or the local change when it is not older (the server's rule). */
+export function skippedRecords(s: Pick<ServerState, 'skippedWords'>, o: Pick<Outbox, 'skippedWords'>): Map<string, SkippedWordRecord> {
+  const out = new Map<string, SkippedWordRecord>(s.skippedWords.map(({ wordId, ...rec }) => [wordId, rec]))
+  for (const [wordId, rec] of Object.entries(o.skippedWords)) {
+    const server = out.get(wordId)
+    if (!server || server.updatedAt <= rec.updatedAt) out.set(wordId, rec)
+  }
+  return out
 }
 
 export function buildView(s: ServerState, o: Outbox, today: string): ProgressView {
@@ -609,6 +651,7 @@ export function buildView(s: ServerState, o: Outbox, today: string): ProgressVie
       .filter((x) => x.deletedAt === undefined)
       .map((x) => ({ ...x, pending: x.id in o.pathEvents }))
       .sort((a, b) => a.at.localeCompare(b.at) || a.id.localeCompare(b.id)),
+    skipped: new Set([...skippedRecords(s, o)].filter(([, rec]) => rec.skipped).map(([wordId]) => wordId)),
   }
 }
 
@@ -629,6 +672,8 @@ const OutboxEnvelope = z.strictObject({
   studySessions: z.record(z.string(), StudySessionRecordSchema).optional(),
   // The same for path events (added 2026-11-07).
   pathEvents: z.record(z.string(), PathEventRecordSchema).optional(),
+  // The same for skipped words (added 2026-11-26).
+  skippedWords: z.record(z.string(), SkippedWordRecordSchema).optional(),
 })
 
 /** Parses a stored outbox; a damaged one is a loud error (its changes would otherwise be lost). */
@@ -655,5 +700,6 @@ export function parseOutbox(what: string, data: unknown): Outbox {
     customWords: o.customWords ?? {},
     studySessions: o.studySessions ?? {},
     pathEvents: o.pathEvents ?? {},
+    skippedWords: o.skippedWords ?? {},
   }
 }

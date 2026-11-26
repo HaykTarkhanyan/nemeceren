@@ -8,9 +8,72 @@ import { useEffect, useRef, useState } from 'react'
 import type { FormEvent, KeyboardEvent } from 'react'
 import { STUDY_LABEL_MAX } from '../content/schema.ts'
 import { messageOf, reportError } from '../lib/errors.ts'
+import { getSettings } from '../lib/settings.ts'
 import { saveStudySession } from '../lib/storage.ts'
-import { activeMsFor, clockText, durationText, elapsedMs, isPaused, MAX_SESSION_MINUTES, planStop, timerStore, useTimer } from '../lib/timer.ts'
+import {
+  activeMsFor,
+  clockText,
+  durationText,
+  elapsedMs,
+  isIdlePaused,
+  isPaused,
+  MAX_SESSION_MINUTES,
+  planStop,
+  setTimerAutoSaver,
+  timerStore,
+  useTimer,
+} from '../lib/timer.ts'
 import type { StopPlan, TimerState } from '../lib/timer.ts'
+
+// An auto timer that saves itself (Q83) goes into the progress like a saved Stop, without a label.
+setTimerAutoSaver((plan) => {
+  saveStudySession({ startedAt: new Date(plan.startedAt).toISOString(), endedAt: new Date(plan.endedAt).toISOString(), activeMs: plan.activeMs, label: '' })
+})
+
+/** How often an auto timer checks the idle rule and auto-save, so the header stops counting soon after 5 idle minutes. */
+const IDLE_CHECK_MS = 15_000
+/** What counts as activity for the idle rule (saved answers count too: lib/storage.ts recordReview). */
+const ACTIVITY_EVENTS = ['pointerdown', 'pointermove', 'keydown', 'wheel', 'touchstart', 'scroll'] as const
+
+/**
+ * Starting an exercise starts the study timer (DECISIONS.md #122), unless Settings turned it off. Called once
+ * when an exercise opens: a focus view (Words reviews and practice, every game, Speak), a review run (the daily
+ * mix, quick tasks), match pairs, mistakes, a test, a lesson, a reading or listening practice.
+ */
+export function useAutoTimer(): void {
+  useEffect(() => {
+    try {
+      if (getSettings().autoTimer) timerStore().autoStart()
+    } catch (err) {
+      reportError(err)
+    }
+  }, [])
+}
+
+/** Feeds taps, keys and scrolling to the idle rule, and checks it on a tick and when the tab comes back. */
+function useTimerActivity(state: TimerState | null): void {
+  useEffect(() => {
+    const store = timerStore()
+    const onActivity = () => act(() => store.activity())
+    const opts = { capture: true, passive: true }
+    ACTIVITY_EVENTS.forEach((t) => window.addEventListener(t, onActivity, opts))
+    return () => ACTIVITY_EVENTS.forEach((t) => window.removeEventListener(t, onActivity, opts))
+  }, [])
+  // Also while it paused itself: it may be due to save itself (Q83).
+  const watching = state?.auto === true && (state.runningSince !== null || state.idle === true)
+  useEffect(() => {
+    if (!watching) return
+    const store = timerStore()
+    const check = () => act(() => store.checkIdle())
+    check()
+    const interval = window.setInterval(check, IDLE_CHECK_MS)
+    document.addEventListener('visibilitychange', check)
+    return () => {
+      window.clearInterval(interval)
+      document.removeEventListener('visibilitychange', check)
+    }
+  }, [watching])
+}
 
 /** The current time, renewed just after each new second of the shown time, only while running and visible. */
 function useSecondTick(state: TimerState | null): number {
@@ -69,6 +132,7 @@ function Icon({ kind }: { kind: 'start' | 'pause' | 'resume' | 'stop' }) {
 export function HeaderTimer({ onStop, stopping }: { onStop: (plan: StopPlan) => void; stopping: boolean }) {
   const { attached, state } = useTimer()
   const now = useSecondTick(state)
+  useTimerActivity(state)
   if (!attached) return null
   const store = timerStore()
   if (!state) {
@@ -79,15 +143,21 @@ export function HeaderTimer({ onStop, stopping }: { onStop: (plan: StopPlan) => 
     )
   }
   const paused = isPaused(state)
+  const idle = isIdlePaused(state)
   const pauseLabel = paused ? 'Resume study timer' : 'Pause study timer'
+  const timeTitle = idle
+    ? 'Paused by itself after 5 minutes without activity (those minutes do not count). It goes on when you continue; 30 minutes after your last activity, or on the next day, it saves itself.'
+    : paused
+      ? 'Study timer paused'
+      : 'Study time so far, without pauses'
   return (
     <span className={`timer ${paused ? 'paused' : ''}`}>
       <button type="button" className="timer-btn" aria-label={pauseLabel} title={pauseLabel} onClick={() => act(() => (paused ? store.resume() : store.pause()))}>
         <Icon kind={paused ? 'resume' : 'pause'} />
       </button>
-      <span className="timer-time" role="timer" title={paused ? 'Study timer paused' : 'Study time so far, without pauses'}>
+      <span className="timer-time" role="timer" title={timeTitle}>
         {clockText(elapsedMs(state, now))}
-        {paused && <span className="visually-hidden"> (paused)</span>}
+        {paused && <span className="visually-hidden">{idle ? ' (paused while idle)' : ' (paused)'}</span>}
       </span>
       <button
         type="button"

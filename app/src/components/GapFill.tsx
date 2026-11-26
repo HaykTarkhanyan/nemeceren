@@ -15,6 +15,7 @@ import { lessonOfWords } from '../lib/review.ts'
 import { speak } from '../lib/speech.ts'
 import { useReviewSound } from './FocusBar.tsx'
 import { GameEnd, GameFrame, savePractice, TooFewWords, useEnterKey } from './GameFrame.tsx'
+import { SkipWordButton } from './SkipWord.tsx'
 import type { GameBack } from './GameFrame.tsx'
 import { De, GlossScope } from './GermanText.tsx'
 import { PlayButtons } from './Speaker.tsx'
@@ -151,6 +152,9 @@ function GapCard({ item, state, sound, onNext }: { item: GapItem<StudyWord>; sta
           <button type="button" className="btn primary" onClick={() => onNext(ok)}>
             Next (Enter)
           </button>
+          <div className="card-foot">
+            <SkipWordButton word={item.word} onSkipped={() => onNext(ok)} />
+          </div>
         </>
       )}
     </section>

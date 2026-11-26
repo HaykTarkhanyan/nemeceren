@@ -67,6 +67,7 @@ const server = (over: Partial<ServerState> = {}): ServerState => ({
   customWords: [],
   studySessions: [],
   pathEvents: [],
+  skippedWords: [],
   ...over,
 })
 
@@ -82,6 +83,7 @@ const reply = (over: Partial<SyncResponse> = {}): SyncResponse => ({
   customWords: { received: 0, written: 0, unchanged: 0, stale: [] },
   studySessions: { received: 0, written: 0, unchanged: 0, stale: [] },
   pathEvents: { received: 0, written: 0, unchanged: 0, stale: [] },
+  skippedWords: { received: 0, written: 0, unchanged: 0, stale: [] },
   ...over,
 })
 
@@ -234,6 +236,7 @@ describe('parsing', () => {
     customWords: [],
     studySessions: [],
     pathEvents: [],
+    skippedWords: [],
   }
 
   it('reads the server state into the app types, keeping the ids', () => {
@@ -368,6 +371,7 @@ describe('notes: the lock rule', () => {
       customWords: [],
       studySessions: [],
       pathEvents: [],
+      skippedWords: [],
     }
     expect(parseState('state', raw).notes[0].feedback).toEqual(feedback)
     // The offline copy is the state as JSON; it must parse back the same.
@@ -673,5 +677,67 @@ describe('path events in the outbox', () => {
     expect(() => parseOutbox('outbox', { ...emptyOutbox(), pathEvents: { [sid(1)]: mixWithRange } })).toThrow(/a daily-mix or review-round event has no lessonId/)
     const roundWithRange = pathRec('2026-11-07', t1, { kind: 'review-round' })
     expect(() => parseOutbox('outbox', { ...emptyOutbox(), pathEvents: { [sid(1)]: roundWithRange } })).toThrow(/a daily-mix or review-round event has no lessonId/)
+  })
+})
+
+describe('skipped words in the outbox (DECISIONS.md #123)', () => {
+  const t1 = '2026-11-26T09:00:00.000Z'
+  const t2 = '2026-11-26T11:00:00.000Z'
+
+  it('batches skipped words up to SYNC_LIMITS.skippedWords and drops sent ones that did not change', () => {
+    const skippedWords = Object.fromEntries(Array.from({ length: 505 }, (_, i) => [`w-${String(i).padStart(3, '0')}`, { skipped: true, updatedAt: t1 }]))
+    const o: Outbox = { ...emptyOutbox(), skippedWords }
+    expect(outboxSize(o)).toBe(505)
+    const b = nextBatch(o)!
+    expect(Object.keys(b)).toEqual(['skippedWords'])
+    expect(b.skippedWords).toHaveLength(SYNC_LIMITS.skippedWords)
+    expect(b.skippedWords![0]).toEqual({ wordId: 'w-000', skipped: true, updatedAt: t1 })
+    // Unskipped while the batch was on its way: that change stays for the next sync.
+    const changed: Outbox = { ...o, skippedWords: { ...o.skippedWords, 'w-001': { skipped: false, updatedAt: t2 } } }
+    const left = removeSent(changed, b).skippedWords
+    expect(Object.keys(left).sort()).toEqual(['w-001', 'w-500', 'w-501', 'w-502', 'w-503', 'w-504'])
+  })
+
+  it('views the words skipped now: the later change wins, server or local', () => {
+    const s = server({
+      skippedWords: [
+        { wordId: 'ausdauer', skipped: true, updatedAt: t1 },
+        { wordId: 'termin', skipped: true, updatedAt: t2 },
+        { wordId: 'brot', skipped: false, updatedAt: t1 },
+      ],
+    })
+    const o: Outbox = {
+      ...emptyOutbox(),
+      skippedWords: {
+        // Unskipped here after the server's skip: back in.
+        ausdauer: { skipped: false, updatedAt: t2 },
+        // Unskipped here before another device skipped it again: the server's newer skip stands.
+        termin: { skipped: false, updatedAt: t1 },
+        // New here.
+        'u-9b1d0c6e-1f2a-4b3c-8d4e-5f6a7b8c9d0e': { skipped: true, updatedAt: t1 },
+      },
+    }
+    expect([...buildView(s, o, '2026-11-26').skipped].sort()).toEqual(['termin', 'u-9b1d0c6e-1f2a-4b3c-8d4e-5f6a7b8c9d0e'])
+    expect([...buildView(s, emptyOutbox(), '2026-11-26').skipped].sort()).toEqual(['ausdauer', 'termin'])
+  })
+
+  it('keeps what was sent, unless the server had a newer change (stale)', () => {
+    const s = server({ skippedWords: [{ wordId: 'ausdauer', skipped: true, updatedAt: t1 }] })
+    const newer = { wordId: 'brot', skipped: false, updatedAt: t2 }
+    const after = applySent(
+      s,
+      { skippedWords: [{ wordId: 'ausdauer', skipped: false, updatedAt: t2 }, { wordId: 'brot', skipped: true, updatedAt: t1 }] },
+      reply({ skippedWords: { received: 2, written: 1, unchanged: 0, stale: [newer] } }),
+    )
+    expect(after.skippedWords.sort((a, b) => a.wordId.localeCompare(b.wordId))).toEqual([{ wordId: 'ausdauer', skipped: false, updatedAt: t2 }, newer])
+    expect([...buildView(after, emptyOutbox(), '2026-11-26').skipped]).toEqual([])
+  })
+
+  it('reads an outbox saved before skipped words existed, and refuses a broken record loudly', () => {
+    const { skippedWords: _x, ...old } = emptyOutbox()
+    expect(parseOutbox('outbox', old).skippedWords).toEqual({})
+    expect(() => parseOutbox('outbox', { ...emptyOutbox(), skippedWords: { ausdauer: { skipped: 'yes', updatedAt: t1 } } })).toThrow(/skippedWords\.ausdauer\.skipped/)
+    const raw = { ...server(), skippedWords: [{ wordId: 'Not A Slug', skipped: true, updatedAt: t1 }] }
+    expect(() => parseState('state', raw)).toThrow(/skippedWords\.0\.wordId/)
   })
 })

@@ -6,6 +6,7 @@ import { MIN_PAIRS } from '../lib/daily.ts'
 import { messageOf, reportError } from '../lib/errors.ts'
 import { link } from '../lib/router.ts'
 import { updateSettings, useSettings } from '../lib/settings.ts'
+import { idsWithoutSkipped } from '../lib/skipped.ts'
 import { useProgress } from '../lib/storage.ts'
 import { practiceIds, PRACTICE_MAX, setProgress } from '../lib/wordSets.ts'
 
@@ -45,7 +46,7 @@ export function WordSetsTab({ onPractice }: { onPractice: (ids: string[], how: P
       {content.sets.map((s) => {
         const p = setProgress(s, state)
         const active = settings.activeSet === s.id
-        const ids = practiceIds(s.words, state)
+        const ids = practiceIds(idsWithoutSkipped(s.words, view.skipped), state)
         return (
           <div key={s.id} className={`card stack word-set${active ? ' active' : ''}`}>
             <div className="row between">

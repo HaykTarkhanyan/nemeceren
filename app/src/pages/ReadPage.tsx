@@ -10,6 +10,7 @@ import type { Reading } from '../content/schema.ts'
 import { GermanText, GlossScope } from '../components/GermanText.tsx'
 import { InlineExercise } from '../components/InlineExercise.tsx'
 import { SpeakerIcon } from '../components/Speaker.tsx'
+import { useAutoTimer } from '../components/StudyTimer.tsx'
 import { messageOf } from '../lib/errors.ts'
 import { byUnit, filterReadings, KIND_LABEL, READING_FILTERS, readStatus, speakerIndexes, wordsToAdd } from '../lib/readings.ts'
 import type { ReadingFilter, ReadStatus } from '../lib/readings.ts'
@@ -75,6 +76,7 @@ export function ReadPage() {
 }
 
 export function ReadingPage({ id }: { id: string }) {
+  useAutoTimer()
   const reading = content.readings.find((r) => r.id === id)
   if (!reading) {
     return (

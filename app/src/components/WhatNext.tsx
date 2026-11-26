@@ -3,6 +3,7 @@
 import { content } from '../content/load.ts'
 import type { StudyWord } from '../lib/customWords.ts'
 import { listeningWords, nextLesson, nextTest, weakWords } from '../lib/plan.ts'
+import { withoutSkipped } from '../lib/skipped.ts'
 import { link } from '../lib/router.ts'
 import { useProgress } from '../lib/storage.ts'
 
@@ -24,7 +25,7 @@ export function WhatNext(props: { words: StudyWord[]; allWords: boolean; onMoreN
   const weak = weakWords(words, state, data.log, now)
   const lesson = nextLesson(content.lessons, progress)
   const test = nextTest(content.tests, content.lessons, data.results)
-  const listening = listeningWords(content.words, state)
+  const listening = listeningWords(withoutSkipped(content.words, view.skipped), state)
 
   return (
     <section className="card stack what-next">

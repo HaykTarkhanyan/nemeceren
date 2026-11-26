@@ -16,6 +16,7 @@ import { De, GlossScope } from './GermanText.tsx'
 import { initialAnswer, initialLayout, ItemInput, SaveLine } from './ItemInput.tsx'
 import type { SaveStatus } from './ItemInput.tsx'
 import { ResultView } from './ResultView.tsx'
+import { useAutoTimer } from './StudyTimer.tsx'
 
 export interface MistakeStats {
   right: number
@@ -25,6 +26,7 @@ export interface MistakeStats {
 }
 
 export function MistakesSession({ mistakes, onDone, onAnswer }: { mistakes: Mistake[]; onDone: (s: MistakeStats) => void; onAnswer?: (ok: boolean) => void }) {
+  useAutoTimer()
   const [index, setIndex] = useState(0)
   const [stats, setStats] = useState<MistakeStats>({ right: 0, wrong: 0, pending: 0 })
   const m = mistakes[index]

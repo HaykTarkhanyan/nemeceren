@@ -1,21 +1,30 @@
 import { describe, expect, it, vi } from 'vitest'
 import {
+  ACTIVITY_WRITE_MS,
   activeMsFor,
+  afterActivity,
+  AUTO_SAVE_MS,
   cleanLabel,
   clockText,
   createTimerStore,
   durationText,
   elapsedMs,
+  IDLE_MS,
+  idleCheck,
+  isIdlePaused,
+  isPaused,
   LONG_SESSION_MS,
   manualStart,
   pauseTimer,
   planStop,
   resumeTimer,
   SHORT_SESSION_MS,
+  shouldAutoSave,
+  startAutoTimer,
   startTimer,
   timerKey,
 } from './timer.ts'
-import type { TimerDeps } from './timer.ts'
+import type { StopPlan, TimerDeps } from './timer.ts'
 import { localDay } from './dates.ts'
 
 const MIN = 60_000
@@ -125,6 +134,7 @@ function fakeDevice() {
   const watchers = new Set<(key: string | null) => void>()
   let clock = t0
   const errors: string[] = []
+  const saved: StopPlan[] = []
   const deps: TimerDeps = {
     storage: () => ({
       getItem: (k) => data.get(k) ?? null,
@@ -137,10 +147,12 @@ function fakeDevice() {
       watchers.add(onChange)
       return () => watchers.delete(onChange)
     },
+    saveSession: (plan) => void saved.push(plan),
   }
   return {
     data,
     errors,
+    saved,
     deps,
     advance: (ms: number) => (clock += ms),
     /** Another tab wrote to storage: the browser fires "storage" in every other tab. */
@@ -254,5 +266,189 @@ describe('the timer on this device', () => {
   it('refuses to start before sign-in or guest mode', () => {
     const store = createTimerStore(fakeDevice().deps)
     expect(() => store.start()).toThrow(/not ready/)
+  })
+})
+
+describe('auto-start and the idle rule (DECISIONS.md #122)', () => {
+  it('pauses an auto timer at its last activity after 5 idle minutes, so those minutes do not count', () => {
+    let s = startAutoTimer(t0)
+    s = afterActivity(s, t0 + 3 * MIN)
+    expect(s.lastActiveAt).toBe(t0 + 3 * MIN)
+    // 4 minutes after the last activity: still running.
+    expect(idleCheck(s, t0 + 7 * MIN)).toBe(s)
+    // 5 minutes after it: paused as of the last activity.
+    const idle = idleCheck(s, t0 + 8 * MIN)
+    expect(isIdlePaused(idle)).toBe(true)
+    expect(idle.pausedAt).toBe(t0 + 3 * MIN)
+    expect(elapsedMs(idle, t0 + 30 * MIN)).toBe(3 * MIN)
+    // Stop on an idle timer ends the session at the last activity.
+    expect(planStop(idle, t0 + 30 * MIN)).toMatchObject({ endedAt: t0 + 3 * MIN, activeMs: 3 * MIN })
+  })
+
+  it('resumes on the next activity without the idle minutes, even if no tick paused it first (laptop asleep)', () => {
+    // Busy for 10 minutes (a tap every 4), then the laptop sleeps.
+    let s = startAutoTimer(t0)
+    for (const m of [4, 8, 10]) s = afterActivity(s, t0 + m * MIN)
+    expect(s.lastActiveAt).toBe(t0 + 10 * MIN)
+    // A gap longer than 5 minutes is idle even without a tick in between: here 10 minutes from the start.
+    expect(elapsedMs(afterActivity(startAutoTimer(t0), t0 + 10 * MIN), t0 + 10 * MIN)).toBe(0)
+    // Two hours later, the first tap: paused at the last activity, then resumed now.
+    const back = afterActivity(s, t0 + 2 * HOUR)
+    expect(isPaused(back)).toBe(false)
+    expect(back.idle).toBeUndefined()
+    expect(elapsedMs(back, t0 + 2 * HOUR + MIN)).toBe(11 * MIN)
+  })
+
+  it('keeps a pause Hayk made, and never pauses a timer started by hand', () => {
+    const paused = pauseTimer(startAutoTimer(t0), t0 + 2 * MIN)
+    expect(isIdlePaused(paused)).toBe(false)
+    expect(afterActivity(paused, t0 + 10 * MIN)).toBe(paused)
+    const byHand = startTimer(t0)
+    expect(idleCheck(byHand, t0 + 5 * HOUR)).toBe(byHand)
+    expect(afterActivity(byHand, t0 + 5 * HOUR)).toBe(byHand)
+    // Resuming by hand clears nothing it should not: the timer stays an auto timer, and counts activity from now.
+    const resumed = resumeTimer(paused, t0 + 20 * MIN)
+    expect(resumed).toMatchObject({ auto: true, lastActiveAt: t0 + 20 * MIN, runningSince: t0 + 20 * MIN })
+  })
+
+  it('writes the last activity at most every ACTIVITY_WRITE_MS', () => {
+    const s = startAutoTimer(t0)
+    expect(afterActivity(s, t0 + ACTIVITY_WRITE_MS - 1)).toBe(s)
+    expect(afterActivity(s, t0 + ACTIVITY_WRITE_MS).lastActiveAt).toBe(t0 + ACTIVITY_WRITE_MS)
+    expect(IDLE_MS).toBe(5 * MIN)
+  })
+
+  it('autoStart starts a timer, adopts a running one, resumes an idle one and leaves a pause by hand', () => {
+    const dev = fakeDevice()
+    const store = createTimerStore(dev.deps)
+    // Before sign-in there is nothing to start, and no error.
+    store.autoStart()
+    expect(store.getSnapshot().state).toBeNull()
+    store.attachUser('u1')
+    store.autoStart()
+    expect(store.getSnapshot().state).toMatchObject({ startedAt: t0, auto: true })
+    dev.advance(2 * MIN)
+    store.autoStart()
+    expect(store.getSnapshot().state!.startedAt).toBe(t0)
+
+    // Idle for 6 minutes: the tick pauses it at the last activity, the next exercise resumes it.
+    dev.advance(6 * MIN)
+    store.checkIdle()
+    expect(isIdlePaused(store.getSnapshot().state!)).toBe(true)
+    store.autoStart()
+    expect(isPaused(store.getSnapshot().state!)).toBe(false)
+    expect(elapsedMs(store.getSnapshot().state!, dev.deps.now())).toBe(2 * MIN)
+
+    // Paused by hand: an exercise or a tap does not resume it.
+    store.pause()
+    dev.advance(MIN)
+    store.autoStart()
+    store.activity()
+    expect(isPaused(store.getSnapshot().state!)).toBe(true)
+    expect(JSON.parse(dev.data.get(timerKey('u1'))!)).toMatchObject({ auto: true, runningSince: null })
+    expect(dev.errors).toEqual([])
+  })
+})
+
+describe('auto-save of an idle auto timer (Q83)', () => {
+  const dayOf = (ms: number) => new Date(ms).toISOString().slice(0, 10)
+  /** 10 minutes of study: a tap every 2 minutes (a gap over 5 minutes would be idle). */
+  const study10 = (dev: ReturnType<typeof fakeDevice>, store: { activity: () => void }) => {
+    for (let i = 0; i < 5; i++) {
+      dev.advance(2 * MIN)
+      store.activity()
+    }
+  }
+
+  it('saves 30 minutes after the last activity, or on a later day, never while active or paused by hand', () => {
+    const s = afterActivity(startAutoTimer(t0), t0 + 4 * MIN)
+    expect(shouldAutoSave(s, t0 + 4 * MIN + AUTO_SAVE_MS - 1, dayOf)).toBe(false)
+    expect(shouldAutoSave(s, t0 + 4 * MIN + AUTO_SAVE_MS, dayOf)).toBe(true)
+    // Idle (6 minutes) into the next day: saves at once.
+    const late = afterActivity(startAutoTimer(Date.parse('2026-10-02T23:50:00.000Z')), Date.parse('2026-10-02T23:54:00.000Z'))
+    expect(shouldAutoSave(late, Date.parse('2026-10-03T00:00:00.000Z'), dayOf)).toBe(true)
+    // Active across midnight: no save (the session counts on the day it started).
+    const busy = afterActivity(late, Date.parse('2026-10-02T23:58:00.000Z'))
+    expect(shouldAutoSave(busy, Date.parse('2026-10-03T00:01:00.000Z'), dayOf)).toBe(false)
+    expect(shouldAutoSave(pauseTimer(s, t0 + 5 * MIN), t0 + 5 * HOUR, dayOf)).toBe(false)
+    expect(shouldAutoSave(startTimer(t0), t0 + 5 * HOUR, dayOf)).toBe(false)
+  })
+
+  it('saves start to last activity, clears the timer, and the next exercise starts a new one', () => {
+    const dev = fakeDevice()
+    const store = createTimerStore(dev.deps)
+    store.attachUser('u1')
+    store.autoStart()
+    study10(dev, store)
+    // Gone for an hour: the first tick saves the 10 minutes and clears the timer.
+    dev.advance(HOUR)
+    store.checkIdle()
+    expect(dev.saved).toEqual([{ kind: 'normal', startedAt: t0, endedAt: t0 + 10 * MIN, activeMs: 10 * MIN }])
+    expect(store.getSnapshot().state).toBeNull()
+    expect(dev.data.has(timerKey('u1'))).toBe(false)
+    // The next exercise: a fresh timer, not yesterday's.
+    store.autoStart()
+    expect(store.getSnapshot().state!.startedAt).toBe(t0 + 70 * MIN)
+    // An exercise opened a day later saves the old timer first, even without a tick in between.
+    dev.advance(MIN)
+    store.activity()
+    dev.advance(24 * HOUR)
+    store.autoStart()
+    expect(dev.saved).toHaveLength(2)
+    expect(dev.saved[1]).toMatchObject({ startedAt: t0 + 70 * MIN, endedAt: t0 + 71 * MIN, activeMs: MIN })
+    expect(store.getSnapshot().state!.startedAt).toBe(t0 + 71 * MIN + 24 * HOUR)
+    expect(dev.errors).toEqual([])
+  })
+
+  it('drops a timer under a minute without saving, and a second tab does not save it twice', () => {
+    const dev = fakeDevice()
+    const tab1 = createTimerStore(dev.deps)
+    const tab2 = createTimerStore(dev.deps)
+    tab1.attachUser('u1')
+    tab2.attachUser('u1')
+    tab1.autoStart()
+    dev.advance(40_000)
+    tab1.activity()
+    dev.advance(HOUR)
+    tab1.checkIdle()
+    expect(dev.saved).toEqual([])
+    expect(tab1.getSnapshot().state).toBeNull()
+
+    tab1.autoStart()
+    dev.otherTabWrote(timerKey('u1'))
+    study10(dev, tab1)
+    dev.otherTabWrote(timerKey('u1'))
+    dev.advance(HOUR)
+    tab1.checkIdle()
+    // Tab 2 still shows the old state (its storage event has not arrived yet): it re-reads and saves nothing.
+    tab2.checkIdle()
+    expect(dev.saved).toHaveLength(1)
+    expect(tab2.getSnapshot().state).toBeNull()
+  })
+
+  it('keeps the timer and reports once when the save fails', () => {
+    const dev = fakeDevice()
+    let fail = true
+    const store = createTimerStore({
+      ...dev.deps,
+      saveSession: (plan) => {
+        if (fail) throw new Error('Progress is not loaded yet')
+        dev.saved.push(plan)
+      },
+    })
+    store.attachUser('u1')
+    store.autoStart()
+    study10(dev, store)
+    dev.advance(HOUR)
+    store.checkIdle()
+    store.activity()
+    store.activity()
+    expect(dev.errors).toHaveLength(1)
+    expect(dev.errors[0]).toMatch(/could not save its 10 min by itself.*Progress is not loaded yet/)
+    expect(isIdlePaused(store.getSnapshot().state!)).toBe(true)
+    fail = false
+    store.checkIdle()
+    expect(dev.saved).toHaveLength(1)
+    expect(store.getSnapshot().state).toBeNull()
   })
 })

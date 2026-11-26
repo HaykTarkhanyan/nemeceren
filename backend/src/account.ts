@@ -16,6 +16,7 @@ export const USER_TABLES = [
   'custom_words',
   'study_sessions',
   'path_events',
+  'skipped_words',
   'api_usage',
   'allowed_users',
 ] as const

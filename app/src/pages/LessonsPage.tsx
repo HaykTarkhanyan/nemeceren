@@ -7,6 +7,8 @@ import { content } from '../content/load.ts'
 import { byCourseOrder, exerciseSections, isThemeLesson, openAt, sectionIndex, THEME_KIND_LABEL, THEME_LINK_LABEL } from '../content/lessons.ts'
 import type { Lesson, Theme, ThemeLesson } from '../content/schema.ts'
 import { BlockView } from '../components/LessonBlocks.tsx'
+import { SkipWordButton } from '../components/SkipWord.tsx'
+import { useAutoTimer } from '../components/StudyTimer.tsx'
 import { VideoList } from '../components/VideoList.tsx'
 import { messageOf, reportError } from '../lib/errors.ts'
 import { doneRangesByLesson, isCovered, stationRanges } from '../lib/path.ts'
@@ -191,6 +193,7 @@ function ThemeCard({ lesson, status }: { lesson: ThemeLesson; status: LessonStat
 /** `sectionId` (from "#/lesson/<id>/<section id>", e.g. a Topics link) opens the lesson at that section. */
 /** One lesson; with `station` (from #/lesson/<id>/station/<k>, 0-based) only that station's sections. */
 export function LessonPage({ id, sectionId, station }: { id: string; sectionId?: string; station?: string }) {
+  useAutoTimer()
   const lesson = content.allLessons.find((l) => l.id === id)
   if (!lesson) {
     return (
@@ -419,11 +422,22 @@ function LessonView({ lesson, linked, station }: { lesson: Lesson; linked: numbe
             </p>
             <p className="lesson-words">
               {words.map((w) => (
-                <span key={w.id} className={`badge word-${wordStatus(w.id)}`} lang="de">
+                <span key={w.id} className={`badge word-${view.skipped.has(w.id) ? 'skipped' : wordStatus(w.id)}`} lang="de">
                   {w.de}
                 </span>
               ))}
             </p>
+            {/* Skip word (DECISIONS.md #123): a word Hayk does not want to study never comes up anywhere. */}
+            <details className="lesson-skip">
+              <summary>Skip words you don't want to study</summary>
+              <ul className="game-list">
+                {words.map((w) => (
+                  <li key={w.id}>
+                    <span lang="de">{w.de}</span> <span className="muted">{w.en}</span> <SkipWordButton word={w} />
+                  </li>
+                ))}
+              </ul>
+            </details>
           </div>
         )}
       </section>

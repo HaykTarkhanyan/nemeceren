@@ -9,7 +9,7 @@
 // Guest mode (startGuest, DECISIONS.md #55): the same store with an empty state in memory; changes
 // go straight into it, nothing is written to browser storage and no request is ever made.
 import { useSyncExternalStore } from 'react'
-import { PathEventRecord as PathEventRecordSchema, StudySessionRecord as StudySessionRecordSchema } from '../content/schema.ts'
+import { PathEventRecord as PathEventRecordSchema, Slug, StudySessionRecord as StudySessionRecordSchema } from '../content/schema.ts'
 import type { LessonProgress, Result, ReviewLogEntry, StoredCard } from '../content/schema.ts'
 import { ContentError } from '../content/validate.ts'
 import { AuthFailure, getToken } from './auth.ts'
@@ -33,6 +33,7 @@ import {
   parseSyncResponse,
   removeSent,
   sameJson,
+  skippedRecords,
 } from './outbox.ts'
 import type {
   CustomWordRecord,
@@ -51,7 +52,7 @@ import type {
 } from './outbox.ts'
 import { introducedCard } from './srs.ts'
 import type { ReviewEvent, TestItemEvent } from './stats.ts'
-import { activeMsFor, cleanLabel, manualStart } from './timer.ts'
+import { activeMsFor, cleanLabel, manualStart, timerStore } from './timer.ts'
 
 export type { CustomWordView, NoteView, PathEventView, ProgressView, SavedResult, StudySessionView }
 
@@ -139,6 +140,7 @@ function emptyServerState(now: Date): ServerState {
     customWords: [],
     studySessions: [],
     pathEvents: [],
+    skippedWords: [],
   }
 }
 
@@ -330,7 +332,7 @@ export function createProgressStore(deps: StoreDeps) {
         throw new NetworkError(`${messageOf(err)}. There is no copy of your progress on this device yet, so the app needs the internet once.`)
       }
       // Offline copies saved before notes and custom words (2026-09-30), study sessions (2026-10-02)
-      // or path events (2026-11-07) existed have no such key: that copy had none.
+      // path events (2026-11-07) or skipped words (2026-11-26) existed have no such key: that copy had none.
       const copy =
         cached !== null && typeof cached === 'object'
           ? {
@@ -338,6 +340,7 @@ export function createProgressStore(deps: StoreDeps) {
               ...('customWords' in cached ? {} : { customWords: [] }),
               ...('studySessions' in cached ? {} : { studySessions: [] }),
               ...('pathEvents' in cached ? {} : { pathEvents: [] }),
+              ...('skippedWords' in cached ? {} : { skippedWords: [] }),
               ...cached,
             }
           : cached
@@ -732,6 +735,20 @@ export function createProgressStore(deps: StoreDeps) {
       return id
     },
 
+    /**
+     * Skip word (true) or Unskip (false), DECISIONS.md #123: a skipped word stays out of every review, new-word pick
+     * and game, on every device; its card and history stay. Syncs at once (a rare action). Doing it twice changes nothing.
+     */
+    skipWord(wordId: string, skipped: boolean) {
+      if (!Slug.max(100).safeParse(wordId).success) throw new Error(`"${wordId}" is not a word id, so it cannot be skipped.`)
+      current()
+      const before = skippedRecords(server!, outbox).get(wordId)
+      if ((before?.skipped ?? false) === skipped) return
+      const at = before ? changedAt(before.updatedAt) : deps.now().toISOString()
+      change((o) => ({ ...o, skippedWords: { ...o.skippedWords, [wordId]: { skipped, updatedAt: at } } }))
+      void flush()
+    },
+
     /** Undoes a path event (a soft delete, so the other devices learn it too) and starts a sync. */
     deletePathEvent(id: string) {
       const { id: _id, pending: _pending, ...rest } = pathEvent(id)
@@ -788,8 +805,18 @@ export function useSyncStatus(): SyncStatus {
   return useSyncExternalStore(s.subscribe, s.getStatus)
 }
 
-export const recordReview = (entry: ReviewLogEntry, card: StoredCard) => progressStore().recordReview(entry, card)
-export const recordPractice = (entry: ReviewLogEntry) => progressStore().recordPractice(entry)
+/** A saved answer is activity for the study timer's idle rule (DECISIONS.md #122): spoken answers make no tap. */
+function answered(): void {
+  timerStore().activity()
+}
+export const recordReview = (entry: ReviewLogEntry, card: StoredCard) => {
+  progressStore().recordReview(entry, card)
+  answered()
+}
+export const recordPractice = (entry: ReviewLogEntry) => {
+  progressStore().recordPractice(entry)
+  answered()
+}
 export const addExtraNewWords = (n: number) => progressStore().addExtraNewWords(n)
 export const saveResult = (result: Result) => progressStore().saveResult(result)
 export const saveLessonProgress = (p: LessonProgress) => progressStore().saveLessonProgress(p)
@@ -806,6 +833,7 @@ export const recordStationDone = (lessonId: string, from: number, to: number) =>
 export const recordDailyMixDone = () => progressStore().recordDailyMixDone()
 export const recordReviewRoundDone = () => progressStore().recordReviewRoundDone()
 export const deletePathEvent = (id: string) => progressStore().deletePathEvent(id)
+export const skipWord = (wordId: string, skipped: boolean) => progressStore().skipWord(wordId, skipped)
 export const refreshState = () => progressStore().refresh()
 
 /** Starts a sync unless the outbox is empty (e.g. after a review round). */

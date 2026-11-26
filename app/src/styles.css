@@ -2569,6 +2569,35 @@ ol.line {
   z-index: 20;
 }
 
+/* "Skipped X. Undo" (DECISIONS.md #123): at the bottom, so it never covers the goal toast or the focus bar. */
+.skip-toast {
+  top: auto;
+  bottom: 16px;
+  border-left-color: var(--muted);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.skip-btn {
+  color: var(--muted);
+}
+
+.card-foot {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.badge.word-skipped {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+.word-row.skipped td {
+  opacity: 0.6;
+}
+
 .station-divider {
   align-items: center;
   padding: 6px 12px;

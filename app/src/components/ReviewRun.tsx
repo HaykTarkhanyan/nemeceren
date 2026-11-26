@@ -9,8 +9,10 @@ import { scheduledEntry } from '../lib/reviewEntries.ts'
 import type { Typed } from '../lib/reviewEntries.ts'
 import { nextCard, previewIntervals, Rating } from '../lib/srs.ts'
 import type { Grade } from '../lib/srs.ts'
-import { recordReview } from '../lib/storage.ts'
+import { withoutSkipped } from '../lib/skipped.ts'
+import { recordReview, useProgress } from '../lib/storage.ts'
 import { Card } from './ReviewCard.tsx'
+import { useAutoTimer } from './StudyTimer.tsx'
 
 export interface RunStats {
   cards: number
@@ -31,7 +33,11 @@ export function ReviewRun(props: {
   /** Called after each saved grade: false for Again (the zone meter, DECISIONS.md #116). */
   onAnswer?: (ok: boolean) => void
 }) {
-  const { words, mode, state, newLimit, maxCards, maxNew, onDone, onAnswer } = props
+  // The daily mix and the quick tasks have no focus bar: the run itself starts the study timer (DECISIONS.md #122).
+  useAutoTimer()
+  const { mode, state, newLimit, maxCards, maxNew, onDone, onAnswer } = props
+  // A word skipped during the run leaves it at once (DECISIONS.md #123), also when the caller keeps its list.
+  const words = withoutSkipped(props.words, useProgress().skipped)
   const [now, setNow] = useState(() => new Date())
   const [stats, setStats] = useState<RunStats>({ cards: 0, fresh: 0, again: 0 })
   const [saving, setSaving] = useState(false)

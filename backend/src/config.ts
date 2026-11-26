@@ -13,13 +13,13 @@ export function isAllowedOrigin(origin: string): boolean {
 /**
  * Largest accepted sync body. A full batch at the limits below is about 1.3 MB, plus up to
  * ~0.5 MB of notes (50 notes of 5000 characters, at most ~10 KB each as UTF-8 JSON), ~0.1 MB
- * of custom words (20 words of at most 1500 characters, a few KB each) and ~0.05 MB of study
- * sessions (100 sessions of at most ~0.5 KB each).
+ * of custom words (20 words of at most 1500 characters, a few KB each), ~0.05 MB of study
+ * sessions (100 sessions of at most ~0.5 KB each) and ~0.06 MB of skipped words (500 of ~120 bytes).
  */
 export const MAX_BODY_BYTES = 2 * 1024 * 1024
 
 /** Most items of each kind in one POST /v1/sync. The app splits a bigger outbox into several batches. */
-export const SYNC_LIMITS = { reviewEvents: 1000, cards: 2000, attempts: 20, lessons: 500, newWordExtras: 31, notes: 50, customWords: 20, studySessions: 100, pathEvents: 200 } as const
+export const SYNC_LIMITS = { reviewEvents: 1000, cards: 2000, attempts: 20, lessons: 500, newWordExtras: 31, notes: 50, customWords: 20, studySessions: 100, pathEvents: 200, skippedWords: 500 } as const
 
 /**
  * Daily limits for accounts outside allowed_users (usage.ts, DECISIONS.md #118). A window is a 5-minute slot with at
@@ -43,6 +43,7 @@ export const ACCOUNT_ROW_LIMITS = {
   custom_words: 2000,
   study_sessions: 5000,
   path_events: 10000,
+  skipped_words: 5000,
 } as const
 
 /** New progress from accounts outside allowed_users is refused above this database size; the Free plan allows 512 MB. */

@@ -13,6 +13,7 @@ import type { CardAnswer } from '../lib/review.ts'
 import type { MicSession, SessionResult } from '../lib/recognition.ts'
 import { link } from '../lib/router.ts'
 import { MicButton } from './GameFrame.tsx'
+import { SkipWordButton } from './SkipWord.tsx'
 import { nearMissText } from './ResultView.tsx'
 import { De, GlossScope } from './GermanText.tsx'
 import { PlayButtons } from './Speaker.tsx'
@@ -100,8 +101,10 @@ export function Card(props: {
   autoSpeak?: boolean
   /** Offer the mic on English to German cards; without it the card is typing only (the daily mix). */
   speech?: CardSpeech
+  /** After Skip word, for a caller with a fixed list (practice); the reviews drop skipped words by themselves. */
+  onSkipped?: () => void
 }) {
-  const { word, isNew, mode, intervals, disabled, onGrade, autoSpeak = false, speech } = props
+  const { word, isNew, mode, intervals, disabled, onGrade, autoSpeak = false, speech, onSkipped } = props
   const [revealed, setRevealed] = useState(false)
   const [typed, setTyped] = useState('')
   const [check, setCheck] = useState<Comparison | null>(null)
@@ -389,6 +392,10 @@ export function Card(props: {
           </div>
         </div>
       )}
+      {/* Before or after answering (DECISIONS.md #123): the review moves on to the next word, which never comes back. */}
+      <div className="card-foot">
+        <SkipWordButton word={word} onSkipped={onSkipped} />
+      </div>
     </section>
     </GlossScope>
   )

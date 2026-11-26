@@ -24,7 +24,8 @@ Two ways to get a user:
   - without it, a throwaway nemeceren-smoke-<random>@example.com user is signed up. That only works
     while sign-up is open, which it is not since 2026-09-29 (#52).
 
-What it checks, stopping loudly at the first unexpected answer:
+What it checks, stopping loudly at the first unexpected answer (since 2026-11-26 also skipped words:
+written, resent, brought back, an older skip stale, bad bodies, every row back in the state):
   1. health, 404, no token (401, also for DELETE /v1/account), garbage token (401), a foreign Origin (403),
      CORS preflight (POST and DELETE);
   2. gets a JWT for the user (sign-in or sign-up with email + password);
@@ -91,7 +92,7 @@ LOG = logging.getLogger("smoke_test")
 APP_ORIGIN = "http://localhost:5173"
 SMOKE_EMAIL_RE = re.compile(r"^nemeceren-smoke-[0-9a-f]{12}@example\.com$")
 # A user's progress rows. The test account keeps its allowlist entry; a throwaway user loses it too.
-DATA_TABLES = ("review_events", "review_cards", "test_attempts", "lesson_progress", "new_word_extras", "notes", "custom_words", "study_sessions", "path_events", "api_usage")
+DATA_TABLES = ("review_events", "review_cards", "test_attempts", "lesson_progress", "new_word_extras", "notes", "custom_words", "study_sessions", "path_events", "skipped_words", "api_usage")
 USER_TABLES = (*DATA_TABLES, "allowed_users")
 
 
@@ -313,7 +314,7 @@ def run(api: str, auth: str, conn: Any, ctx: dict[str, Any], test_account: dict[
     check(
         s["userId"] == user_id and s["cards"] == {} and s["reviewEvents"] == [] and s["attempts"] == [] and s["studyDays"] == []
         and s["lessonProgress"] == {"version": 1, "lessons": {}} and s["newWordExtras"] == {} and s["notes"] == []
-        and s["customWords"] == [] and s["studySessions"] == [] and s["pathEvents"] == [],
+        and s["customWords"] == [] and s["studySessions"] == [] and s["pathEvents"] == [] and s["skippedWords"] == [],
         "the user's state is empty",
         s,
     )
@@ -743,6 +744,37 @@ def run(api: str, auth: str, conn: Any, ctx: dict[str, Any], test_account: dict[
     r = request(plain, "GET", f"{api}/v1/state?days=1", token=token)
     got = sorted(r.json()["pathEvents"], key=lambda x: x["id"]) if r.status == 200 else None
     check(got == sorted([p1, p3, p4], key=lambda x: x["id"]), "GET /v1/state returns every path event that is not undone, all time", r.text())
+
+    # ---- 5e. skipped words ("Skip word", DECISIONS.md #123) ----
+    t_skip = iso(now)
+    k1 = {"wordId": "ausdauer-smoke", "skipped": True, "updatedAt": t_skip}
+    k2 = {"wordId": "u-9b1d0c6e-1f2a-4b3c-8d4e-5f6a7b8c9d0e", "skipped": True, "updatedAt": t_skip}
+    r = sync({"skippedWords": [k1, k2]})
+    check(r.status == 200 and r.json()["skippedWords"] == {"received": 2, "written": 2, "unchanged": 0, "stale": []}, "two skipped words (a content and a custom id) are written", r.text())
+    r = sync({"skippedWords": [k1, k2]})
+    check(r.status == 200 and r.json()["skippedWords"] == {"received": 2, "written": 0, "unchanged": 2, "stale": []}, "the same skipped words again are unchanged", r.text())
+    k1_back = {**k1, "skipped": False, "updatedAt": iso(now + timedelta(seconds=1))}
+    r = sync({"skippedWords": [k1_back]})
+    check(r.status == 200 and r.json()["skippedWords"]["written"] == 1, "a skipped word can be brought back (skipped false, later updatedAt)", r.text())
+    r = sync({"skippedWords": [k1]})
+    check(
+        r.status == 200 and r.json()["skippedWords"] == {"received": 1, "written": 0, "unchanged": 0, "stale": [k1_back]},
+        "an older skip is not written (the newer unskip comes back as stale)",
+        r.text(),
+    )
+    for bad, what, path in (
+        ({**k1, "wordId": "Die Ausdauer"}, "a word id that is not a slug", "skippedWords.0.wordId"),
+        ({**k1, "skipped": "yes"}, "skipped that is not a boolean", "skippedWords.0.skipped"),
+        ({**k1, "extra": 1}, "an unknown key", "skippedWords.0"),
+    ):
+        r = sync({"skippedWords": [bad]})
+        issues = r.json().get("error", {}).get("details", {}).get("issues", []) if r.status == 400 else []
+        check(r.status == 400 and r.error_code() == "invalid_body" and any(i["path"] == path for i in issues), f"{what} -> 400 invalid_body at {path}", r.text())
+    r = sync({"skippedWords": [k1, k1]})
+    check(r.status == 400 and r.error_code() == "invalid_body", "the same word twice in one batch -> 400 invalid_body", r.text())
+    r = request(plain, "GET", f"{api}/v1/state?days=1", token=token)
+    got = sorted(r.json()["skippedWords"], key=lambda x: x["wordId"]) if r.status == 200 else None
+    check(got == sorted([k1_back, k2], key=lambda x: x["wordId"]), "GET /v1/state returns every skipped-word row, also the brought-back one", r.text())
 
     # ---- 6. Claude's review, then read everything back ----
     try:

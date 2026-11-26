@@ -28,6 +28,7 @@ import {
 } from '../lib/stats.ts'
 import type { DayStats } from '../lib/stats.ts'
 import { contentRunway, runwayText } from '../lib/plan.ts'
+import { withoutSkipped } from '../lib/skipped.ts'
 import { useIsGuest } from '../lib/session.ts'
 import { useSettings } from '../lib/settings.ts'
 import { activityOf, addManualStudySession, deleteStudySession, editStudySession, STATE_DAYS, useProgress } from '../lib/storage.ts'
@@ -98,7 +99,8 @@ export function StatsPage() {
   const afterLaunch = today >= PATH_LAUNCH_DAY
   const cal = daysThisWeekAndMonth(study, today)
   const last30 = lastDays(days, today, 30)
-  const words = wordProgress(content.words, state, now)
+  // Skipped words are not part of what Hayk studies (DECISIONS.md #123).
+  const words = wordProgress(withoutSkipped(content.words, progress.skipped), state, now)
   const untimed = [...days.values()].reduce((s, d) => s + d.untimed, 0)
   const sum = (f: (d: DayStats) => number) => last30.reduce((s, d) => s + f(d), 0)
   const reviews30 = sum((d) => d.reviews)

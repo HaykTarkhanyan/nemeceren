@@ -19,6 +19,7 @@ import type { MicSession, SessionResult } from '../lib/recognition.ts'
 import { speak } from '../lib/speech.ts'
 import { useReviewSound } from './FocusBar.tsx'
 import { GameEnd, GameFrame, MicButton, saveGameReview, TooFewWords, useEnterKey, useRoundCounted } from './GameFrame.tsx'
+import { SkipWordButton } from './SkipWord.tsx'
 import type { GameBack } from './GameFrame.tsx'
 import { GlossScope } from './GermanText.tsx'
 import { nearMissText } from './ResultView.tsx'
@@ -309,6 +310,12 @@ function PairCard(props: {
             <button type="button" className="btn primary" onClick={() => onDone(outcome)}>
               Next (Enter)
             </button>
+          </div>
+        )}
+        {/* Skips the word that was asked (DECISIONS.md #123). */}
+        {revealed && (
+          <div className="card-foot">
+            <SkipWordButton word={item.prompt} onSkipped={() => onDone(outcome)} />
           </div>
         )}
       </section>

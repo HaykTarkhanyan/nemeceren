@@ -12,7 +12,8 @@
 //                            its fields clears Claude's check (a delete alone keeps it)
 //   studySessions            upsert per session; the record with the later updatedAt wins
 //   pathEvents               upsert per event; the record with the later updatedAt wins (undo = soft delete)
-// For the last seven, whatever the server already had in a newer version comes back as "stale",
+//   skippedWords             upsert per word; the record with the later updatedAt wins (unskip = skipped false)
+// For the last eight, whatever the server already had in a newer version comes back as "stale",
 // so a device that was offline can adopt it. A locked note comes back as stale whenever the
 // upload differs from it, with its feedback. Each table takes the whole list as one JSON
 // parameter (jsonb_to_recordset): one query per table per batch.
@@ -30,6 +31,7 @@ import type {
   NoteUpload,
   PathEventUpload,
   ReviewEventUpload,
+  SkippedWordUpload,
   StoredCard,
   StudySessionUpload,
   SyncBody,
@@ -65,6 +67,7 @@ export interface SyncResult {
   customWords: { received: number; written: number; unchanged: number; stale: CustomWordRecord[] }
   studySessions: { received: number; written: number; unchanged: number; stale: StudySessionRecord[] }
   pathEvents: { received: number; written: number; unchanged: number; stale: PathEventRecord[] }
+  skippedWords: { received: number; written: number; unchanged: number; stale: SkippedWordRecord[] }
 }
 
 /**
@@ -84,6 +87,13 @@ export type StudySessionRecord = Record<string, unknown> & { id: string; updated
  * PathEvent. Optional keys (lessonId, sectionFrom, sectionTo, deletedAt) are left out when empty.
  */
 export type PathEventRecord = Record<string, unknown> & { id: string; updatedAt: string }
+
+/** A skipped word as the server has it (also the shape of GET /v1/state skippedWords): the app's SkippedWord. */
+export interface SkippedWordRecord {
+  wordId: string
+  skipped: boolean
+  updatedAt: string
+}
 
 /** timestamptz as the app writes it (Date.prototype.toISOString): 2026-09-29T10:00:00.000Z */
 const iso = (col: string) => `to_char(${col} AT TIME ZONE 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS.MS"Z"')`
@@ -334,6 +344,29 @@ SELECT
      FROM input i JOIN path_events pe ON pe.user_id = $1 AND pe.id = i.id
     WHERE pe.updated_at > i.updated_at) AS stale`
 
+/** One skipped word as JSON in the app's field names; the same shape as GET /v1/state skippedWords. */
+export const SKIPPED_WORD_JSON = (x: string) => `jsonb_build_object(
+  'wordId', ${x}.word_id, 'skipped', ${x}.skipped, 'updatedAt', ${iso(`${x}.updated_at`)})`
+
+// The later updated_at wins (Skip word, then maybe Unskip on another device).
+const UPSERT_SKIPPED_WORDS = `
+WITH input AS (
+  SELECT * FROM jsonb_to_recordset($2::jsonb) AS x(word_id text, skipped boolean, updated_at timestamptz)
+),
+up AS (
+  INSERT INTO skipped_words AS sw (user_id, word_id, skipped, updated_at)
+  SELECT $1, word_id, skipped, updated_at FROM input
+  ON CONFLICT (user_id, word_id) DO UPDATE
+    SET skipped = excluded.skipped, updated_at = excluded.updated_at, received_at = now()
+    WHERE excluded.updated_at > sw.updated_at
+  RETURNING word_id
+)
+SELECT
+  (SELECT count(*)::int FROM up) AS written,
+  (SELECT coalesce(jsonb_agg(${SKIPPED_WORD_JSON('sw')} ORDER BY sw.word_id), '[]'::jsonb)
+     FROM input i JOIN skipped_words sw ON sw.user_id = $1 AND sw.word_id = i.word_id
+    WHERE sw.updated_at > i.updated_at) AS stale`
+
 function conflictError(kind: string, ids: string[]): HttpError {
   return new HttpError(
     409,
@@ -480,6 +513,12 @@ async function upsertPathEvents(client: PoolClient, userId: string, events: Path
   return { received: events.length, written: r.written, unchanged: events.length - r.written - r.stale.length, stale: r.stale }
 }
 
+async function upsertSkippedWords(client: PoolClient, userId: string, words: SkippedWordUpload[]): Promise<SyncResult['skippedWords']> {
+  const rows = words.map((x) => ({ word_id: x.wordId, skipped: x.skipped, updated_at: x.updatedAt }))
+  const { rows: [r] } = await client.query<{ written: number; stale: SkippedWordRecord[] }>(UPSERT_SKIPPED_WORDS, [userId, JSON.stringify(rows)])
+  return { received: words.length, written: r.written, unchanged: words.length - r.written - r.stale.length, stale: r.stale }
+}
+
 /** Which table each list of a sync batch writes to (for the row limits of accounts outside allowed_users). */
 const BATCH_TABLES = [
   ['reviewEvents', 'review_events'],
@@ -491,6 +530,7 @@ const BATCH_TABLES = [
   ['customWords', 'custom_words'],
   ['studySessions', 'study_sessions'],
   ['pathEvents', 'path_events'],
+  ['skippedWords', 'skipped_words'],
 ] as const satisfies readonly (readonly [keyof SyncBody, keyof typeof ACCOUNT_ROW_LIMITS])[]
 
 const COUNT_ROWS = `SELECT ${BATCH_TABLES.map(([, t]) => `(SELECT count(*) FROM ${t} WHERE user_id = $1)::int AS ${t}`).join(', ')},
@@ -526,7 +566,8 @@ export async function applySync(userId: string, body: SyncBody, trusted: boolean
     body.notes.length +
     body.customWords.length +
     body.studySessions.length +
-    body.pathEvents.length
+    body.pathEvents.length +
+    body.skippedWords.length
   if (total === 0) {
     // Enforces the free-plan rule: the app only syncs when its outbox has something in it.
     throw new HttpError(400, 'empty_batch', 'Nothing to sync: send at least one item, and skip the request otherwise.')
@@ -549,6 +590,7 @@ export async function applySync(userId: string, body: SyncBody, trusted: boolean
       customWords: body.customWords.length > 0 ? await upsertCustomWords(client, userId, body.customWords) : upserts,
       studySessions: body.studySessions.length > 0 ? await upsertStudySessions(client, userId, body.studySessions) : upserts,
       pathEvents: body.pathEvents.length > 0 ? await upsertPathEvents(client, userId, body.pathEvents) : upserts,
+      skippedWords: body.skippedWords.length > 0 ? await upsertSkippedWords(client, userId, body.skippedWords) : upserts,
     }
   })
 }

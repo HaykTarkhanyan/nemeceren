@@ -1,9 +1,12 @@
 // The top bar of the full-screen focus view (DECISIONS.md #85), shared by the word review, the
 // practice and the practice games: close, how far the round is, and the sound switch.
+// Opening it starts the study timer (DECISIONS.md #122): every focus view is an exercise.
 import { useState } from 'react'
 import { readReviewSound, writeReviewSound } from '../lib/homeView.ts'
+import { useAutoTimer } from './StudyTimer.tsx'
 
 export function FocusBar(props: { onClose: () => void; closeLabel: string; done: number; target: number; label: string; sound: boolean; onSound: () => void }) {
+  useAutoTimer()
   const { onClose, closeLabel, done, target, label, sound, onSound } = props
   return (
     <div className="focus-bar">

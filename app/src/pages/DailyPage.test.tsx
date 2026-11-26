@@ -51,7 +51,7 @@ describe('practice games from Home', () => {
     const ids = new Set(scope.words.map((w) => w.id))
     for (const id of courseWordIds) expect(ids.has(id), id).toBe(true)
     // The front of the list is the review's own new words, in path order (words only a reading lists wait for its button).
-    const path = pathNewWords(bankWords(view.reviewState), content.allLessons, view.lessonProgress, view.reviewState, reachOf(view)).map((w) => w.id)
+    const path = pathNewWords(bankWords(view.reviewState, view.skipped), content.allLessons, view.lessonProgress, view.reviewState, reachOf(view)).map((w) => w.id)
     expect(scope.words.slice(0, path.length).map((w) => w.id)).toEqual(path)
     // Say the words: 8 words, drawn from the first 16 on the path.
     const round = gameWords(scope.words, view.reviewState, GAMES.speakWords, scope.pick).map((w) => w.id)

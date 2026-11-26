@@ -19,6 +19,7 @@ import type { Comparison } from '../lib/text.ts'
 import type { Typed } from '../lib/reviewEntries.ts'
 import { useReviewSound } from './FocusBar.tsx'
 import { GameEnd, GameFrame, MicButton, saveGameReview, TooFewWords, TypeAnswer, useEnterKey, useRoundCounted } from './GameFrame.tsx'
+import { SkipWordButton } from './SkipWord.tsx'
 import type { GameBack } from './GameFrame.tsx'
 import { De, GlossScope } from './GermanText.tsx'
 import { nearMissText } from './ResultView.tsx'
@@ -132,11 +133,11 @@ export function SpeakWords({ words, state, back, pick, onAgain, size = GAMES.spe
   }
 
   const word = queue[index]
-  function finish(result: 'said' | 'typed' | 'wrong' | 'skipped') {
+  function finish(result: 'said' | 'typed' | 'wrong' | 'skipped', skippedWord = false) {
     const right = result === 'said' || result === 'typed'
     setOutcomes((m) => new Map(m).set(word.id, right ? result : 'missed'))
-    // A word not said or typed right comes back once at the end.
-    if (!right && index < firstPass) setQueue((q) => [...q, word])
+    // A word not said or typed right comes back once at the end, unless Hayk skipped it (DECISIONS.md #123).
+    if (!right && index < firstPass && !skippedWord) setQueue((q) => [...q, word])
     setIndex((i) => i + 1)
     if (!goalSaved.current && counted.size >= GOAL_ROUND_MIN) {
       goalSaved.current = true
@@ -186,7 +187,8 @@ function SpeakWordCard(props: {
   /** A spoken noun counts only with its der/die/das (the Speak page's choice). */
   withArticle: boolean
   onTyping: (on: boolean, why: string | null) => void
-  onDone: (result: 'said' | 'typed' | 'wrong' | 'skipped') => void
+  /** `skippedWord`: Skip word was pressed, so it must not come back this round. */
+  onDone: (result: 'said' | 'typed' | 'wrong' | 'skipped', skippedWord?: boolean) => void
 }) {
   const { word, state, again, typing, sound, mic, counted, withArticle, onTyping, onDone } = props
   const reviewAnswer = (right: boolean, typed: Typed | null) => saveGameReview({ state, word, right, typed, timeMs: Math.round(performance.now() - shownAt), counted })
@@ -309,6 +311,11 @@ function SpeakWordCard(props: {
           <button type="button" className="btn primary" onClick={() => onDone(result)}>
             Next (Enter)
           </button>
+        )}
+        {revealed && (
+          <div className="card-foot">
+            <SkipWordButton word={word} onSkipped={() => onDone(result, true)} />
+          </div>
         )}
       </section>
     </GlossScope>
@@ -524,6 +531,11 @@ function SentenceCard(props: {
           <button type="button" className="btn primary" onClick={() => onDone(item.done!)}>
             Next (Enter)
           </button>
+        )}
+        {done && (
+          <div className="card-foot">
+            <SkipWordButton word={word} onSkipped={() => onDone(item.done!)} />
+          </div>
         )}
       </section>
     </GlossScope>

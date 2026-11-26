@@ -16,6 +16,7 @@ import { shuffle } from '../lib/shuffle.ts'
 import { speak } from '../lib/speech.ts'
 import { useReviewSound } from './FocusBar.tsx'
 import { GameEnd, GameFrame, savePractice, TooFewWords } from './GameFrame.tsx'
+import { SkipWordButton } from './SkipWord.tsx'
 import type { GameBack } from './GameFrame.tsx'
 import { GlossScope } from './GermanText.tsx'
 import { WordDe } from './ReviewCard.tsx'
@@ -186,7 +187,7 @@ function Drill(props: {
                 <ul className="game-list">
                   {round.missed.map((m) => (
                     <li key={m.noun}>
-                      <WordDe de={m.word.de} /> <span className="muted">{m.word.en}</span>
+                      <WordDe de={m.word.de} /> <span className="muted">{m.word.en}</span> <SkipWordButton word={m.word} />
                     </li>
                   ))}
                 </ul>

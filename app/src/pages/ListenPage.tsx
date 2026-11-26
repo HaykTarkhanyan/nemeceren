@@ -4,14 +4,17 @@ import { useState } from 'react'
 import { content } from '../content/load.ts'
 import type { Item } from '../content/schema.ts'
 import { InlineExercise } from '../components/InlineExercise.tsx'
+import { useAutoTimer } from '../components/StudyTimer.tsx'
 import { listeningWords } from '../lib/plan.ts'
+import { withoutSkipped } from '../lib/skipped.ts'
 import { link } from '../lib/router.ts'
 import { useProgress } from '../lib/storage.ts'
 
 export function ListenPage() {
-  const state = useProgress().reviewState
+  useAutoTimer()
+  const { reviewState: state, skipped } = useProgress()
   // Fixed when the page opens, so sentences do not change while Hayk types.
-  const [words] = useState(() => listeningWords(content.words, state))
+  const [words] = useState(() => listeningWords(withoutSkipped(content.words, skipped), state))
 
   if (words.length === 0) {
     return (

@@ -5,6 +5,7 @@ import type { Result, Test } from '../content/schema.ts'
 import { ResultView } from '../components/ResultView.tsx'
 import { GlossScope } from '../components/GermanText.tsx'
 import { initialAnswer, initialLayout, ItemInput, SaveLine } from '../components/ItemInput.tsx'
+import { useAutoTimer } from '../components/StudyTimer.tsx'
 import type { SaveStatus } from '../components/ItemInput.tsx'
 import { localDay } from '../lib/dates.ts'
 import { messageOf } from '../lib/errors.ts'
@@ -17,6 +18,7 @@ import { NATURAL_RATE, speakAudio } from '../lib/speech.ts'
 import { saveResult } from '../lib/storage.ts'
 
 export function TestPage({ id }: { id: string }) {
+  useAutoTimer()
   const [attempt, setAttempt] = useState(0)
   const test = content.tests.find((t) => t.id === id)
   if (!test) {

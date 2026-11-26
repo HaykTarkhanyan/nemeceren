@@ -4,7 +4,8 @@
 // note record (NoteRecord in app/src/lib/outbox.ts, text rules of NoteText in schema.ts; added 2026-09-30),
 // the custom word record (CustomWordRecord in app/src/lib/outbox.ts, fields and limits of
 // CustomWordFields / CUSTOM_WORD_MAX in schema.ts; added 2026-09-30), and the study session record
-// (StudySessionRecord in app/src/content/schema.ts, with STUDY_LABEL_MAX and STUDY_SESSION_MAX_MS; added 2026-10-02).
+// (StudySessionRecord in app/src/content/schema.ts, with STUDY_LABEL_MAX and STUDY_SESSION_MAX_MS; added 2026-10-02),
+// the path event record (added 2026-11-07) and the skipped word record (SkippedWordRecord; added 2026-11-26).
 // KEEP THEM IN STEP: when the app changes one of those types, change it here and redeploy.
 // Objects are strict on purpose: a key this API does not know is a 400 that names the key,
 // instead of data silently dropped on the way into the database.
@@ -257,6 +258,17 @@ export const PathEventUpload = z
     }
   })
 
+// ---------- skipped words ("Skip word", DECISIONS.md #123) ----------
+
+/** The app's SkippedWordRecord plus the word id (app/src/content/schema.ts) and the table (008_skipped_words.sql). */
+export const SkippedWordUpload = z.strictObject({
+  /** A content word id or a custom word id ("u-<uuid>"), as in cards. */
+  wordId: Slug,
+  /** false = skipped once, then brought back. */
+  skipped: z.boolean(),
+  updatedAt: IsoDateTime,
+})
+
 // ---------- one sync batch ----------
 
 function checkUnique<T>(list: T[], key: (x: T) => string, field: string, name: string, ctx: z.RefinementCtx): void {
@@ -279,6 +291,7 @@ export const SyncBody = z
     customWords: z.array(CustomWordUpload).max(SYNC_LIMITS.customWords).default([]),
     studySessions: z.array(StudySessionUpload).max(SYNC_LIMITS.studySessions).default([]),
     pathEvents: z.array(PathEventUpload).max(SYNC_LIMITS.pathEvents).default([]),
+    skippedWords: z.array(SkippedWordUpload).max(SYNC_LIMITS.skippedWords).default([]),
   })
   .superRefine((b, ctx) => {
     checkUnique(b.reviewEvents, (e) => e.id, 'reviewEvents', 'id', ctx)
@@ -290,6 +303,7 @@ export const SyncBody = z
     checkUnique(b.customWords, (w) => w.id, 'customWords', 'id', ctx)
     checkUnique(b.studySessions, (x) => x.id, 'studySessions', 'id', ctx)
     checkUnique(b.pathEvents, (x) => x.id, 'pathEvents', 'id', ctx)
+    checkUnique(b.skippedWords, (x) => x.wordId, 'skippedWords', 'wordId', ctx)
   })
 
 export type ReviewEventUpload = z.infer<typeof ReviewEventUpload>
@@ -302,4 +316,5 @@ export type NoteUpload = z.infer<typeof NoteUpload>
 export type CustomWordUpload = z.infer<typeof CustomWordUpload>
 export type StudySessionUpload = z.infer<typeof StudySessionUpload>
 export type PathEventUpload = z.infer<typeof PathEventUpload>
+export type SkippedWordUpload = z.infer<typeof SkippedWordUpload>
 export type SyncBody = z.infer<typeof SyncBody>

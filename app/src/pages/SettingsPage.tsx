@@ -87,6 +87,19 @@ export function SettingsPage() {
       </section>
 
       <section className="card stack">
+        <h2>Study timer</h2>
+        <label className="radio">
+          <input type="checkbox" checked={settings.autoTimer} onChange={(e) => save({ autoTimer: e.target.checked })} /> Start the study timer when I start an
+          exercise
+        </label>
+        <p className="muted small">
+          Reviews, the daily mix, games, Speak, tests, lessons and readings start it. A timer started this way pauses itself after 5 minutes without a tap,
+          key or answer, without counting those minutes, and goes on when you continue. A pause you make stays until you resume. A timer you start by hand
+          never pauses itself. This choice is kept on this device.
+        </p>
+      </section>
+
+      <section className="card stack">
         <h2>Typing</h2>
         <label className="field">
           <span className="label">Umlaut keys: 1 = ä, 2 = ö, 3 = ü, 4 = ß (Shift+1-3: Ä Ö Ü)</span>

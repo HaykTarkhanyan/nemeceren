@@ -201,7 +201,8 @@ Everything the app needs on start, from one snapshot. `days` = window for raw re
   "notes": [ { "id": "<uuid>", "text": "Ich heiße Hayk.", "localDay": "2026-09-30", "createdAt": "...", "updatedAt": "...", "deletedAt": null, "feedback": null } ],
   "customWords": [ { "id": "u-<uuid>", "de": "Stau", "en": "traffic jam", "example": { "de": "Ich stehe im Stau." }, "createdAt": "...", "updatedAt": "...", "check": { "at": "...", "ok": false, "note": "...", "fixed": { "de": "der Stau" } } } ],
   "studySessions": [ { "id": "<uuid>", "startedAt": "...", "endedAt": "...", "activeMs": 2520000, "localDay": "2026-10-02", "label": "lesson 0.3", "createdAt": "...", "updatedAt": "..." } ],
-  "pathEvents": [ { "id": "<uuid>", "kind": "station", "lessonId": "u1-02-laender-sprachen", "sectionFrom": 0, "sectionTo": 5, "localDay": "2026-11-08", "at": "...", "createdAt": "...", "updatedAt": "..." } ]
+  "pathEvents": [ { "id": "<uuid>", "kind": "station", "lessonId": "u1-02-laender-sprachen", "sectionFrom": 0, "sectionTo": 5, "localDay": "2026-11-08", "at": "...", "createdAt": "...", "updatedAt": "..." } ],
+  "skippedWords": [ { "wordId": "ausdauer", "skipped": true, "updatedAt": "..." } ]
 }
 ```
 
@@ -215,11 +216,12 @@ Everything the app needs on start, from one snapshot. `days` = window for raw re
 - `customWords`: Hayk's own words that are not deleted, oldest first (by `createdAt`), all time, in the app's `CustomWord` shape: optional keys (`plural`, `example`, `note`, `check`) are left out when empty; `deletedAt` is never present here (a stale word in a sync reply can have it). `check` is Claude's `WordCheck`. The word's FSRS card and reviews are in `cards` and `reviewEvents` under the same `u-...` id.
 - `studySessions`: the study timer's sessions (and time added by hand) that are not deleted and **started in the same window as `reviewEvents`** (`startedAt >= reviewEventsSince`, i.e. the last `days` days, default 35), oldest first, in the app's `StudySession` shape: `label` and `manual` (only ever `true`) are left out when empty, `deletedAt` is never present here (a stale session in a sync reply can have it). Older sessions still count in `studyDays`.
 - `pathEvents` (since 2026-11-07, DECISIONS.md #84): **every** path event that is not deleted, all time, oldest first (`at`, then `id`), in the app's `PathEvent` shape: a finished station (`kind: "station"` with `lessonId` and the half-open section range `sectionFrom`/`sectionTo`) or a daily mix run to its end (`kind: "daily-mix"`, no lesson or range), or (since migration 006) a word review round that ended with 10+ cards graded (`kind: "review-round"`, no lesson or range). The app derives the stations done, the daily goal days and the streak with its freezes from these plus the attempts. Path events do not make study days.
+- `skippedWords` (since 2026-11-26, migration 008, DECISIONS.md #123): **every** row, by word id, also words brought back (`skipped: false`), so a device can tell which change is newer. The app leaves the words with `skipped: true` out of every review, new-word pick and game.
 - `ReviewState.newToday` is built, not stored: `count` = `reviewEvents.filter(e => e.localDay === today && e.isNew && !e.practice && !e.wordId.startsWith('u-')).length` (own words are introduced outside the daily limit, DECISIONS.md #58), `extra` = `newWordExtras[today]` (leave the key out when missing or 0, as `srs.ts` does).
 
 ### `POST /v1/sync`
 
-`Content-Type: application/json`, at most 2 MB, one transaction. Any subset of the eight lists; at least one item in total.
+`Content-Type: application/json`, at most 2 MB, one transaction. Any subset of the ten lists; at least one item in total.
 
 ```json
 {
@@ -231,11 +233,12 @@ Everything the app needs on start, from one snapshot. `days` = window for raw re
   "notes": [ { "id": "<crypto.randomUUID()>", "text": "Ich heiße Hayk.", "localDay": "2026-09-30", "createdAt": "...", "updatedAt": "...", "deletedAt": null } ],
   "customWords": [ { "id": "u-<crypto.randomUUID()>", "de": "Stau", "en": "traffic jam", "plural": "...", "example": { "de": "...", "en": "..." }, "note": "...", "createdAt": "...", "updatedAt": "...", "deletedAt": "..." } ],
   "studySessions": [ { "id": "<crypto.randomUUID()>", "startedAt": "...", "endedAt": "...", "activeMs": 2520000, "localDay": "2026-10-02", "label": "lesson 0.3", "manual": true, "createdAt": "...", "updatedAt": "...", "deletedAt": "..." } ],
-  "pathEvents": [ { "id": "<crypto.randomUUID()>", "kind": "daily-mix", "localDay": "2026-11-08", "at": "...", "createdAt": "...", "updatedAt": "...", "deletedAt": "..." } ]
+  "pathEvents": [ { "id": "<crypto.randomUUID()>", "kind": "daily-mix", "localDay": "2026-11-08", "at": "...", "createdAt": "...", "updatedAt": "...", "deletedAt": "..." } ],
+  "skippedWords": [ { "wordId": "ausdauer", "skipped": false, "updatedAt": "..." } ]
 }
 ```
 
-Limits per request: 1000 review events, 2000 cards, 20 attempts, 500 lessons, 31 extras, 50 notes, 20 custom words, 100 study sessions, 200 path events; ids (and word ids, lesson ids, days) unique within a batch. A note's text is 1 to 5000 characters and not only whitespace; `updatedAt` is not before `createdAt`. A custom word's id is `u-` + a lowercase UUID; `de` (at most 100 characters) and `en` (200) are required, `plural` (100), `example.de`/`example.en` (300 each) and `note` (500) are optional and left out when empty, never blank; `deletedAt` is present only for a deleted word; `updatedAt` is not before `createdAt`. Review events and cards take `u-...` word ids like any other word id. A study session has `endedAt` not before `startedAt`, `activeMs` (the running time without pauses, whole milliseconds) from 0 to the time between `startedAt` and `endedAt` and at most 16 hours, `localDay` = the local day of `startedAt`, an optional `label` of 1 to 100 characters (not only whitespace; left out when empty), `manual: true` only for a session added by hand (left out otherwise), `deletedAt` only for a deleted one, and `updatedAt` not before `createdAt`. The table repeats these rules as CHECKs (`004_study_sessions.sql`). A path event of kind `station` has `lessonId` (a slug), `sectionFrom` (0 or more) and `sectionTo` (larger than `sectionFrom`); one of kind `daily-mix` has none of the three; `deletedAt` only for an undone one; `updatedAt` not before `createdAt`; the later `updatedAt` wins. The table repeats these rules as CHECKs (`005_path_events.sql`).
+Limits per request: 1000 review events, 2000 cards, 20 attempts, 500 lessons, 31 extras, 50 notes, 20 custom words, 100 study sessions, 200 path events, 500 skipped words; ids (and word ids, lesson ids, days) unique within a batch. A note's text is 1 to 5000 characters and not only whitespace; `updatedAt` is not before `createdAt`. A custom word's id is `u-` + a lowercase UUID; `de` (at most 100 characters) and `en` (200) are required, `plural` (100), `example.de`/`example.en` (300 each) and `note` (500) are optional and left out when empty, never blank; `deletedAt` is present only for a deleted word; `updatedAt` is not before `createdAt`. Review events and cards take `u-...` word ids like any other word id. A study session has `endedAt` not before `startedAt`, `activeMs` (the running time without pauses, whole milliseconds) from 0 to the time between `startedAt` and `endedAt` and at most 16 hours, `localDay` = the local day of `startedAt`, an optional `label` of 1 to 100 characters (not only whitespace; left out when empty), `manual: true` only for a session added by hand (left out otherwise), `deletedAt` only for a deleted one, and `updatedAt` not before `createdAt`. The table repeats these rules as CHECKs (`004_study_sessions.sql`). A path event of kind `station` has `lessonId` (a slug), `sectionFrom` (0 or more) and `sectionTo` (larger than `sectionFrom`); one of kind `daily-mix` has none of the three; `deletedAt` only for an undone one; `updatedAt` not before `createdAt`; the later `updatedAt` wins. The table repeats these rules as CHECKs (`005_path_events.sql`). A skipped word has `wordId` (a slug: a content word id or `u-...`), `skipped` (a boolean) and `updatedAt`; the later `updatedAt` wins.
 
 ```json
 {
@@ -249,7 +252,8 @@ Limits per request: 1000 review events, 2000 cards, 20 attempts, 500 lessons, 31
   "notes": { "received": 1, "written": 0, "unchanged": 0, "stale": [ { "id": "...", "text": "...", "localDay": "...", "createdAt": "...", "updatedAt": "...", "deletedAt": null, "feedback": { "summary": "...", "at": "..." } } ] },
   "customWords": { "received": 1, "written": 1, "unchanged": 0, "stale": [] },
   "studySessions": { "received": 1, "written": 1, "unchanged": 0, "stale": [] },
-  "pathEvents": { "received": 1, "written": 1, "unchanged": 0, "stale": [] }
+  "pathEvents": { "received": 1, "written": 1, "unchanged": 0, "stale": [] },
+  "skippedWords": { "received": 1, "written": 1, "unchanged": 0, "stale": [] }
 }
 ```
 
@@ -261,7 +265,8 @@ Idempotency, so a retry after a timeout is always safe:
 - Notes: per note, the record with the later `updatedAt` wins; a delete is a record with `deletedAt` set (soft delete). **A note with Claude's feedback is locked:** it is never changed or deleted, and whenever the upload differs from it the server's version, with its `feedback`, comes back in `stale`. The app adopts it and tells Hayk that their change was not saved, with the changed text.
 - Custom words: per word, the record with the later `updatedAt` wins; a delete is a record with `deletedAt` set (soft delete, so the word leaves practice while its reviews stay for the statistics). **A newer version whose fields (`de`, `en`, `plural`, `example`, `note`) differ from the stored ones clears Claude's check**, so Claude looks again; the same fields with a later time (a delete) keep it. A stale word comes back with its `check`.
 - Study sessions: per session, the record with the later `updatedAt` wins (Hayk can edit the minutes and the label); a delete is a record with `deletedAt` set (soft delete).
-- For those six, an older or equal value is not written, and when the server has a newer one it comes back in `stale`: adopt it locally.
+- Path events: per event, the later `updatedAt` wins (an undo is a soft delete). Skipped words: per word, the later `updatedAt` wins (Unskip is `skipped: false`, never a delete).
+- For those eight, an older or equal value is not written, and when the server has a newer one it comes back in `stale`: adopt it locally.
 - Attempts must not contain `review`, notes must not contain `feedback`, and custom words must not contain `check` (400). Only Claude writes those.
 
 ### `DELETE /v1/account`

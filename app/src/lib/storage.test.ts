@@ -41,6 +41,7 @@ const emptyStateReply = (over: Record<string, unknown> = {}) => ({
   customWords: [],
   studySessions: [],
   pathEvents: [],
+  skippedWords: [],
   ...over,
 })
 
@@ -59,6 +60,7 @@ function okSync(body: Record<string, unknown>, over: Record<string, unknown> = {
     customWords: { received: n('customWords'), written: n('customWords'), unchanged: 0, stale: [] },
     studySessions: { received: n('studySessions'), written: n('studySessions'), unchanged: 0, stale: [] },
     pathEvents: { received: n('pathEvents'), written: n('pathEvents'), unchanged: 0, stale: [] },
+    skippedWords: { received: n('skippedWords'), written: n('skippedWords'), unchanged: 0, stale: [] },
     ...over,
   })
 }
@@ -804,5 +806,49 @@ describe('delete my account (DECISIONS.md #118)', () => {
     await expect(env.store.deleteAccount()).rejects.toThrow(ApiError)
     expect([...storage.keys()].sort()).toEqual(['nemeceren.outbox.u1', 'nemeceren.state.u1'])
     expect(env.store.getStatus().pending).toBe(2)
+  })
+})
+
+describe('skipped words (DECISIONS.md #123)', () => {
+  it('skips and unskips a word, syncs each change at once, and ignores a repeat', async () => {
+    const env = await started([(c) => okSync(c.body!), (c) => okSync(c.body!)])
+    env.store.skipWord('ausdauer', true)
+    expect([...env.store.getView().skipped]).toEqual(['ausdauer'])
+    // Skipping it again changes nothing and sends nothing.
+    env.store.skipWord('ausdauer', true)
+    await env.store.flush()
+    expect(env.calls[1].body!.skippedWords).toEqual([{ wordId: 'ausdauer', skipped: true, updatedAt: '2026-09-29T10:00:00.000Z' }])
+    env.store.skipWord('ausdauer', false)
+    expect([...env.store.getView().skipped]).toEqual([])
+    await env.store.flush()
+    // Always later than the change it replaces, even with the same clock.
+    expect(env.calls[2].body!.skippedWords).toEqual([{ wordId: 'ausdauer', skipped: false, updatedAt: '2026-09-29T10:00:00.001Z' }])
+    expect(env.calls).toHaveLength(3)
+  })
+
+  it('refuses something that is not a word id, without a request', async () => {
+    const env = await started([])
+    expect(() => env.store.skipWord('Die Ausdauer', true)).toThrow(/not a word id/)
+    expect(env.store.getStatus().pending).toBe(0)
+  })
+
+  it('reads skipped words from the server, and an offline copy saved before they existed', async () => {
+    const env = setup([() => json(200, emptyStateReply({ skippedWords: [{ wordId: 'termin', skipped: true, updatedAt: '2026-09-28T10:00:00.000Z' }] }))])
+    await env.store.start({ id: 'u1' })
+    expect([...env.store.getView().skipped]).toEqual(['termin'])
+    const { skippedWords: _x, ...old } = emptyStateReply()
+    const env2 = setup([() => 'network-error'], { storage: new Map([['nemeceren.state.u1', JSON.stringify(old)]]) })
+    await env2.store.start({ id: 'u1' })
+    expect([...env2.store.getView().skipped]).toEqual([])
+  })
+
+  it('works for a guest, in memory only', () => {
+    const env = setup([])
+    env.store.startGuest()
+    env.store.skipWord('ausdauer', true)
+    expect([...env.store.getView().skipped]).toEqual(['ausdauer'])
+    expect(env.store.getStatus().pending).toBe(0)
+    expect(env.storage.size).toBe(0)
+    expect(env.calls).toEqual([])
   })
 })

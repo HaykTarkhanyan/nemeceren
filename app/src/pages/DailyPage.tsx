@@ -19,6 +19,7 @@ import { PRACTICE_NOTE } from '../components/GameFrame.tsx'
 import type { GameBack } from '../components/GameFrame.tsx'
 import { GapFill } from '../components/GapFill.tsx'
 import { PairsGame } from '../components/PairsGame.tsx'
+import { useAutoTimer } from '../components/StudyTimer.tsx'
 import { SpeakSentences, SpeakWords } from '../components/SpeakGames.tsx'
 import { MatchPairs } from '../components/MatchPairs.tsx'
 import type { MatchStats } from '../components/MatchPairs.tsx'
@@ -34,6 +35,7 @@ import type { MixStep, RoundPick } from '../lib/daily.ts'
 import { deriveMistakes, MISTAKE_SESSION_MAX } from '../lib/mistakes.ts'
 import type { Mistake } from '../lib/mistakes.ts'
 import { lessonsOfPart, nextLesson, withCourseRest, wordsForSource } from '../lib/plan.ts'
+import { withoutSkipped } from '../lib/skipped.ts'
 import type { ProgressView } from '../lib/storage.ts'
 import { link } from '../lib/router.ts'
 import { useSettings } from '../lib/settings.ts'
@@ -62,17 +64,25 @@ export function activeSet(settings: Settings): { set: WordSet | null; problem: s
   return set ? { set, problem: null } : { set: null, problem: `The word set "${settings.activeSet}" no longer exists, so new words come from the next lessons.` }
 }
 
-/** The word bank for new words: words only a reading lists wait for its "Add N new words" button (lib/readings.ts). */
-export function bankWords(state: ReviewState) {
-  return withoutWaitingReadingWords(content.words, content.readingOnlyWords, state.cards)
+/**
+ * The word bank for new words: words only a reading lists wait for its "Add N new words" button (lib/readings.ts),
+ * and skipped words never come (DECISIONS.md #123). Every review, new-word pick and game starts from here.
+ */
+export function bankWords(state: ReviewState, skipped: ReadonlySet<string>) {
+  return withoutSkipped(withoutWaitingReadingWords(content.words, content.readingOnlyWords, state.cards), skipped)
+}
+
+/** Hayk's own words for the reviews and games, without the skipped ones. */
+export function ownStudyWords(progress: ProgressView): StudyWord[] {
+  return withoutSkipped(progress.customWords.map(practiceWord), progress.skipped)
 }
 
 /** All words the reviews may use (new words follow the path), plus Hayk's own words. */
 export function studyPool(progress: ProgressView): StudyWord[] {
   return wordsForSource(
     { kind: 'all' },
-    bankWords(progress.reviewState),
-    progress.customWords.map(practiceWord),
+    bankWords(progress.reviewState, progress.skipped),
+    ownStudyWords(progress),
     content.allLessons,
     progress.lessonProgress,
     progress.reviewState,
@@ -83,7 +93,7 @@ export function studyPool(progress: ProgressView): StudyWord[] {
 
 /** The words of a practice game started from Home, in the order it takes them: the study pool, then the rest of the course, then the word bank (lib/plan.ts withCourseRest; all lessons, so unopened theme words stay out). */
 export function homeGameWords(progress: ProgressView): StudyWord[] {
-  return withCourseRest(studyPool(progress), bankWords(progress.reviewState), content.allLessons, content.sets)
+  return withCourseRest(studyPool(progress), bankWords(progress.reviewState, progress.skipped), content.allLessons, content.sets)
 }
 
 /** Mistakes from tests and lesson exercises (DECISIONS.md #81): the due ones, and how many changed since. */
@@ -117,7 +127,7 @@ export function mixPlan(progress: ProgressView, settings: Settings, now: Date): 
   const state = progress.reviewState
   const pool = studyPool(progress)
   const { set, problem } = activeSet(settings)
-  const fresh = mixNewWords({ words: bankWords(state), lessons: content.allLessons, progress: progress.lessonProgress, state, set, reach: reachOf(progress) })
+  const fresh = mixNewWords({ words: bankWords(state, progress.skipped), lessons: content.allLessons, progress: progress.lessonProgress, state, set, reach: reachOf(progress) })
   const newLeft = counts(fresh.words, state, now, settings.newPerDay).newLeft
   const newCount = Math.min(newLeft, fresh.words.length, MIX.maxNew)
   const due = Math.min(
@@ -216,7 +226,7 @@ export function gameScope(progress: ProgressView, lessons: string | undefined): 
   const named = lessonsOfPart(lessons, content.allLessons)
   if ('problem' in named) return named
   const ids = new Set(unionWordIds(named.lessons))
-  const words = content.words.filter((w) => ids.has(w.id))
+  const words = content.words.filter((w) => ids.has(w.id) && !progress.skipped.has(w.id))
   return { words, pool: [...words, ...home.filter((w) => !ids.has(w.id))], pick: 'any', back: { href: link('words', 'map'), lessons: named.lessons.length } }
 }
 
@@ -414,6 +424,7 @@ function MatchOnly({ lessons }: { lessons?: string }) {
 
 /** Match pairs on its own: 3 rounds. Also used by the Words page for a picked list of words. */
 export function MatchGame(props: { pool: StudyWord[]; state: ReviewState; pick?: RoundPick; onAgain: () => void; rounds?: number }) {
+  useAutoTimer()
   const { pool, state, pick = 'learned-first', onAgain, rounds = 3 } = props
   const [plan] = useState(() => matchRounds(pool, state, rounds, MIX.pairsPerRound, pick))
   const [stats, setStats] = useState<MatchStats | null>(null)

@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { content } from './content/load.ts'
 import { AuthGate } from './components/AuthGate.tsx'
 import { GoalToast } from './components/GoalToast.tsx'
+import { SkipUndoToast } from './components/SkipWord.tsx'
 import { ErrorBanner, ErrorBoundary, GuestBanner, Header, VoiceWarning } from './components/Chrome.tsx'
 import { movedRoute, useRoute } from './lib/router.ts'
 import { DailyPage } from './pages/DailyPage.tsx'
@@ -89,6 +90,7 @@ export function App() {
         <VoiceWarning />
         <ErrorBoundary>
           <GoalToast />
+          <SkipUndoToast />
         </ErrorBoundary>
         <main className="container">
           <ErrorBoundary key={route.join('/')}>{moved === null && <Page route={route} />}</ErrorBoundary>

@@ -2,6 +2,41 @@
 
 Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
+## 123. "Skip word": a word the learner does not want to study leaves every review, new-word pick and game, synced through Neon (asked for by Hayk, 2026-11-26)
+
+- **Date:** 2026-11-26 - **Status:** active
+- **Why:** Hayk: "for all words add a button for ignoring them, e.g. i dont really want to study the word stamina". Interview: synced across devices through Neon (Q81), the button on the review card, in All words, in a lesson's word list and on the games' answer screens (Q82).
+- **What was built:**
+  - **Storage:** migration `008_skipped_words.sql`, one row per word ever skipped, keyed by (user_id, word_id): `skipped` (false = brought back), `updated_at` (the merge key, the later wins). Unskip writes `skipped = false` instead of deleting, so it reaches the other devices. `POST /v1/sync` takes `skippedWords` (500 per request, a row limit of 5,000 for accounts outside allowed_users), `GET /v1/state` returns every row (a few KB at most), "Delete my account" deletes them. The app: `SkippedWordRecord` in `content/schema.ts`, the outbox and merge in `lib/outbox.ts` (`skippedRecords`), `skipWord(wordId, skipped)` in `lib/storage.ts` (syncs at once, a repeat changes nothing), `useProgress().skipped` (a Set).
+  - **Where skipped words are filtered out:** `bankWords` (DailyPage.tsx), which every review, new-word pick, daily mix, quick task, Speak source and Home game starts from; Hayk's own words (`ownStudyWords`); games on map tiles (`gameScope`); listening practice; the practice lists in All words and Word sets; a run already on screen (ReviewRun and the Words page practice drop a word skipped mid-run); Say the words does not bring a skipped word back "once more"; the Stats word counts.
+  - **Not filtered:** lesson text, word popups and the Words map tiles (they describe lessons, not what to study). A skipped word's card and history stay, so Unskip brings it back with its old schedule.
+  - **The button:** "Skip word" on the review card (both sides), in All words (Status column, with a "skipped" badge, Unskip, and a "Skipped" chip that filters to them), in a lesson's folding "Skip words you don't want to study" list (skipped words are struck through in the word badges), and after the answer in Say the words, Say the sentence, Fill the gap, Build the sentence and Opposites (the asked word). der/die/das is a 60-second drill with no answer screen, so its end list has the button. A toast "Skipped X ... Undo" shows for 6 s after a skip anywhere.
+  - **For Claude:** `progress.py skipped` lists them, so new exercises can leave them out.
+- **Checked:** unit tests for the outbox, merge and parse (newer change wins either way, old outboxes without the key), the store (skip, repeat, unskip later than the skip, refused ids, offline copy, guest); smoke test against the deployed API, 154 checks (11 new); in the browser as a guest: skip on a new-word card moved to the next word with the toast, All words showed it under Skipped with Unskip, the lesson list struck it through, and Say the words did not requeue a skipped word.
+- **Alternatives rejected:**
+  - **Per device (localStorage):** no backend change, but every word would have to be skipped again on the phone (Hayk chose sync, Q81).
+  - **A flag on the FSRS card, or pushing its due date far away:** a skipped new word has no card yet, the stats would read it as known, and the card merge rule (later last_review wins) does not fit a toggle.
+  - **Deleting the row on Unskip:** the other devices would never learn of it.
+  - **A Skip button on the question side of games:** Hayk picked the answer screens; the review card has it on both sides.
+- **What would change this:** Hayk wanting skipped words hidden from lesson text or the map too, or wanting a reason per skip ("too rare", "know it already"); a skipped answer word still showing in Opposites (it skips the asked word only).
+
+## 122. Starting an exercise starts the study timer; it pauses itself after 5 idle minutes and saves itself after 30 or on a new day (asked for by Hayk, 2026-11-26; extends #62)
+
+- **Date:** 2026-11-26 - **Status:** active; extends #62 (the timer's Stop + Save stays)
+- **Why:** Hayk: "start a timer once i do anything, e.g. start a speak exercise, let me pause or stop it myself as well if i want". Interview: any exercise starts it, browsing does not (Q79); it pauses itself after 5 minutes without activity (Q80). The plugin's heads-up, checked in the code: a timer saved only on Stop + Save, so an auto timer never stopped never reached Stats, and the next day's first exercise would have resumed it; Hayk chose auto-save after 30 idle minutes or a new day (Q83).
+- **What was built (`lib/timer.ts`, `components/StudyTimer.tsx`):**
+  - **Start:** `useAutoTimer()` runs once when an exercise opens: every focus view (Words reviews and practice, every game, Speak's round), a review run (the daily mix, quick tasks), match pairs, mistakes, a test, a lesson, a reading, listening practice. It starts a timer marked `auto` when none runs on this device; a running one carries on. Settings, "Study timer": a per-device switch, on by default.
+  - **Idle pause:** activity is a tap, key, pointer move, wheel or scroll anywhere, and every saved answer (spoken answers make no tap). The last activity is stored with the timer at most every 20 s (`lastActiveAt`), so all tabs share it. With 5 minutes and no activity, the timer is paused **as of the last activity**, so the idle minutes never count. This works without ticks too: the next tap after a sleeping laptop first pauses it back at the last activity, then resumes. The header checks every 15 s while an auto timer runs, so the clock stops soon after. The tooltip says it paused by itself.
+  - **Resume:** any activity resumes a timer that paused itself; a pause Hayk made stays until Hayk resumes. A timer started by hand never pauses or saves itself (it also times study away from the app, #62).
+  - **Auto-save (Q83):** an auto timer still idle 30 minutes after the last activity, or on a later local day, saves itself as a session from its start to the last activity (no label; under a minute it is dropped, as Stop would), and the next exercise starts a new one. It runs first in every auto-start, activity and tick, so an old timer is saved before anything could resume it. The store re-reads browser storage before saving, so a second tab does not save it twice. A failed save is reported once and the timer stays paused for Stop.
+- **Checked:** unit tests for the idle rule (pause at the last activity, resume without the idle minutes, a pause by hand stays, a timer by hand never pauses), auto-save (30 minutes, a new day, active across midnight, under a minute, two tabs, a failed save) and the store; in the browser as a guest: Home left the timer idle, a new-word run started it.
+- **Alternatives rejected:**
+  - **Any tap in the app starts it:** opening the app to look at Stats would count as study (Hayk chose exercises, Q79).
+  - **Never pausing by itself:** one forgotten timer gives a 3-hour session.
+  - **Saving at the 5-minute pause:** every short break would split a session (Q83).
+  - **A server-side timer:** a request on every start and pause (#62 rejected it for the Free plan).
+- **What would change this:** sessions split too often by long videos or long readings without a tap (then a longer idle time on those pages); Hayk wanting a label on auto-saved sessions; the timer starting where Hayk does not want it (then a per-page choice).
+
 ## 121. "Say the words" gets its own menu tab, Speak, with choices for which words and how; it is one tap from Home, the Words page, the map and every end screen (asked for by Hayk, 2026-11-26)
 
 - **Date:** 2026-11-26 - **Status:** active; revisits #54 (the menu now has 11 text links)

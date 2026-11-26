@@ -7,7 +7,6 @@ import { content } from '../content/load.ts'
 import { isThemeLesson } from '../content/lessons.ts'
 import { ensureGlossary, useGlossary } from '../glossary/load.ts'
 import { lookup } from '../glossary/lookup.ts'
-import { practiceWord } from '../lib/customWords.ts'
 import type { StudyWord } from '../lib/customWords.ts'
 import { localDay } from '../lib/dates.ts'
 import { messageOf, reportError } from '../lib/errors.ts'
@@ -21,7 +20,7 @@ import type { SpeakKind, SpeakWhich } from '../lib/speak.ts'
 import type { ProgressView } from '../lib/storage.ts'
 import { useProgress } from '../lib/storage.ts'
 import { useVisibleContent } from '../lib/visibleContent.ts'
-import { bankWords, homeGameWords } from './DailyPage.tsx'
+import { bankWords, homeGameWords, ownStudyWords } from './DailyPage.tsx'
 
 function saveSpeak(setup: SpeakSetup, patch: Partial<SpeakSetup>): void {
   try {
@@ -35,8 +34,8 @@ function saveSpeak(setup: SpeakSetup, patch: Partial<SpeakSetup>): void {
 function sourceWords(from: readonly string[], progress: ProgressView): { words: StudyWord[]; problems: string[] } {
   if (from.length === 0) return { words: homeGameWords(progress), problems: [] }
   const state = progress.reviewState
-  const bank = bankWords(state)
-  const custom = progress.customWords.map(practiceWord)
+  const bank = bankWords(state, progress.skipped)
+  const custom = ownStudyWords(progress)
   const out = new Map<string, StudyWord>()
   const problems: string[] = []
   for (const key of from) {

@@ -698,6 +698,18 @@ export const PathEventRecord = z.strictObject(PathEventFields).superRefine(check
 /** A path event as the server has it (GET /v1/state, stale in a sync reply). */
 export const PathEvent = z.strictObject({ id: z.string().min(1), ...PathEventFields }).superRefine(checkPathEvent)
 
+// ---------- Skipped words ("Skip word", DECISIONS.md #123; stored in Neon) ----------
+
+/** A word the learner chose not to study, as the app writes it (the upload without the word id). */
+export const SkippedWordRecord = z.strictObject({
+  /** false = skipped once, then brought back ("Unskip"). */
+  skipped: z.boolean(),
+  updatedAt: IsoDateTime,
+})
+
+/** A skipped word as the server has it (GET /v1/state, stale in a sync reply). The id is a content or custom word id. */
+export const SkippedWord = z.strictObject({ wordId: Slug.max(100), ...SkippedWordRecord.shape })
+
 const ARTICLE = /^(der|die|das) /
 
 export const Word = z
@@ -1011,6 +1023,8 @@ export type StudySessionRecord = z.infer<typeof StudySessionRecord>
 export type StudySession = z.infer<typeof StudySession>
 export type PathEventRecord = z.infer<typeof PathEventRecord>
 export type PathEvent = z.infer<typeof PathEvent>
+export type SkippedWordRecord = z.infer<typeof SkippedWordRecord>
+export type SkippedWord = z.infer<typeof SkippedWord>
 export type TableColumn = z.infer<typeof TableColumn>
 export type LessonProgress = z.infer<typeof LessonProgress>
 export type ReviewMode = z.infer<typeof ReviewMode>

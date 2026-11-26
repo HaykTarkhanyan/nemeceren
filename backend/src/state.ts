@@ -13,12 +13,14 @@
 //                   last `days` days (the same window as reviewEvents), oldest first
 //   pathEvents      every path event (station done, daily mix done) that is not deleted, all time
 //                   (the streak and its freezes need the whole history), oldest first
+//   skippedWords    every skipped-word row, also unskipped ones (skipped false), so a device can tell which
+//                   change is newer; at most one per word, by word id
 // The field names match the app's types (app/src/content/schema.ts), plus an `id` on events and
 // attempts. Keys the app models as optional (not nullable) are left out when empty.
 import { withTransaction } from './db.ts'
 import type { StoredCard } from './schema.ts'
-import { CUSTOM_WORD_JSON, NOTE_JSON, PATH_EVENT_JSON, STUDY_SESSION_JSON } from './sync.ts'
-import type { CustomWordRecord, NoteRecord, PathEventRecord, StudySessionRecord } from './sync.ts'
+import { CUSTOM_WORD_JSON, NOTE_JSON, PATH_EVENT_JSON, SKIPPED_WORD_JSON, STUDY_SESSION_JSON } from './sync.ts'
+import type { CustomWordRecord, NoteRecord, PathEventRecord, SkippedWordRecord, StudySessionRecord } from './sync.ts'
 
 interface LessonRecord {
   startedAt: string
@@ -41,6 +43,7 @@ export interface StateResponse {
   customWords: CustomWordRecord[]
   studySessions: StudySessionRecord[]
   pathEvents: PathEventRecord[]
+  skippedWords: SkippedWordRecord[]
 }
 
 interface EventRow {
@@ -213,6 +216,11 @@ export async function loadState(userId: string, days: number): Promise<StateResp
       [userId],
     )
 
+    const skippedRows = await client.query<{ word: SkippedWordRecord }>(
+      `SELECT ${SKIPPED_WORD_JSON('sw')} AS word FROM skipped_words sw WHERE sw.user_id = $1 ORDER BY sw.word_id`,
+      [userId],
+    )
+
     return {
       serverTime: clock.now.toISOString(),
       userId,
@@ -227,6 +235,7 @@ export async function loadState(userId: string, days: number): Promise<StateResp
       customWords: wordRows.rows.map((r) => r.word),
       studySessions: sessionRows.rows.map((r) => r.session),
       pathEvents: pathRows.rows.map((r) => r.event),
+      skippedWords: skippedRows.rows.map((r) => r.word),
     }
   })
 }

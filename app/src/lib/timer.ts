@@ -6,11 +6,20 @@
 //     timer lives in memory only.
 //   - Elapsed time comes from timestamps, never from counting ticks, so a sleeping laptop or a
 //     background tab cannot make it drift.
+//   - Auto-start (DECISIONS.md #122): starting an exercise starts the timer when none runs (Settings:
+//     autoTimer). Such a timer pauses itself after 5 minutes with no activity (a tap, a key, a saved
+//     answer), as of the last activity, so the idle minutes never count; the next activity resumes it.
+//     A pause Hayk made stays until Hayk resumes. A timer started by hand never pauses itself (it
+//     also times study away from the app).
+//   - Auto-save (Q83): an auto timer still idle 30 minutes after the last activity, or on a later local
+//     day, saves itself as a session that ends at the last activity, and the next exercise starts a new
+//     one. So time counts without pressing Stop, and a session never runs into the next day.
 // The pure functions below are tested in timer.test.ts; createTimerStore takes its storage, clock
 // and event source as arguments, so the tests run without a browser.
 import { useSyncExternalStore } from 'react'
 import { z } from 'zod'
 import { STUDY_LABEL_MAX, STUDY_SESSION_MAX_MS } from '../content/schema.ts'
+import { localDay } from './dates.ts'
 import { messageOf, reportError } from './errors.ts'
 
 /** A stop under 1 minute is not saved: "Discard this short session?" */
@@ -18,6 +27,12 @@ export const SHORT_SESSION_MS = 60_000
 /** A stop over 3 hours asks "Did you study the whole ...?" with the minutes to correct. */
 export const LONG_SESSION_MS = 3 * 60 * 60_000
 export const MAX_SESSION_MINUTES = STUDY_SESSION_MAX_MS / 60_000
+/** An auto-started timer with no activity for this long pauses itself, as of the last activity (Hayk, Q80). */
+export const IDLE_MS = 5 * 60_000
+/** While an auto-started timer runs, the last activity is written at most this often (it goes to browser storage). */
+export const ACTIVITY_WRITE_MS = 20_000
+/** An auto timer with no activity for this long saves itself (Hayk, Q83), as does one idle into a new local day. */
+export const AUTO_SAVE_MS = 30 * 60_000
 
 // ---------- the running timer ----------
 
@@ -30,6 +45,12 @@ export interface TimerState {
   runningSince: number | null
   /** When it was paused, or null while running. */
   pausedAt: number | null
+  /** Started by starting an exercise: only such a timer pauses itself when idle. */
+  auto?: true
+  /** Paused by IDLE_MS without activity, not by Hayk: the next activity resumes it. */
+  idle?: true
+  /** The last activity seen while it ran (auto timers only), at most ACTIVITY_WRITE_MS old. */
+  lastActiveAt?: number
 }
 
 const TimerStateSchema = z
@@ -38,11 +59,24 @@ const TimerStateSchema = z
     activeMs: z.number().int().nonnegative(),
     runningSince: z.number().int().nonnegative().nullable(),
     pausedAt: z.number().int().nonnegative().nullable(),
+    auto: z.literal(true).optional(),
+    idle: z.literal(true).optional(),
+    lastActiveAt: z.number().int().nonnegative().optional(),
   })
   .refine((s) => (s.runningSince === null) !== (s.pausedAt === null), { message: 'a timer is either running or paused' })
 
 export function startTimer(now: number): TimerState {
   return { startedAt: now, activeMs: 0, runningSince: now, pausedAt: null }
+}
+
+/** A timer started by starting an exercise. */
+export function startAutoTimer(now: number): TimerState {
+  return { ...startTimer(now), auto: true, lastActiveAt: now }
+}
+
+/** Paused by the idle rule, so activity resumes it (a pause Hayk made does not). */
+export function isIdlePaused(s: TimerState): boolean {
+  return s.idle === true && s.runningSince === null
 }
 
 export function isPaused(s: TimerState): boolean {
@@ -54,14 +88,52 @@ export function elapsedMs(s: TimerState, now: number): number {
   return s.activeMs + (s.runningSince === null ? 0 : Math.max(0, now - s.runningSince))
 }
 
-export function pauseTimer(s: TimerState, now: number): TimerState {
+/** Pauses at `now`; `idle` marks a pause made by the idle rule (activity resumes it). */
+export function pauseTimer(s: TimerState, now: number, idle = false): TimerState {
   if (s.runningSince === null) return s
-  return { startedAt: s.startedAt, activeMs: elapsedMs(s, now), runningSince: null, pausedAt: now }
+  const { idle: _idle, ...rest } = s
+  return { ...rest, activeMs: elapsedMs(s, now), runningSince: null, pausedAt: now, ...(idle ? { idle: true as const } : {}) }
 }
 
 export function resumeTimer(s: TimerState, now: number): TimerState {
   if (s.runningSince !== null) return s
-  return { startedAt: s.startedAt, activeMs: s.activeMs, runningSince: now, pausedAt: null }
+  const { idle: _idle, ...rest } = s
+  return { ...rest, runningSince: now, pausedAt: null, ...(s.auto ? { lastActiveAt: now } : {}) }
+}
+
+/**
+ * An auto-started timer with no activity for IDLE_MS is paused as of its last activity, so the idle
+ * minutes do not count, whenever this runs (a tick, the tab coming back, the next tap). Else unchanged.
+ */
+export function idleCheck(s: TimerState, now: number): TimerState {
+  if (!s.auto || s.runningSince === null) return s
+  const last = Math.max(s.lastActiveAt ?? s.runningSince, s.runningSince)
+  return now - last < IDLE_MS ? s : pauseTimer(s, last, true)
+}
+
+/**
+ * The timer after activity at `now` (a tap, a key, a saved answer): one that paused itself (or should
+ * have by now) resumes without the idle minutes; a running auto timer notes the time, at most every
+ * ACTIVITY_WRITE_MS. A pause Hayk made, and a timer started by hand, stay as they are. Returns the
+ * same object when nothing changes, so the caller writes nothing.
+ */
+/**
+ * Whether an auto timer saves itself now (Q83): it paused itself (or should have by now) and its last activity
+ * was AUTO_SAVE_MS ago or on an earlier local day. What it saves is planStop of idleCheck: start to last activity.
+ */
+export function shouldAutoSave(s: TimerState, now: number, dayOf: (ms: number) => string = (ms) => localDay(new Date(ms))): boolean {
+  const checked = idleCheck(s, now)
+  if (!checked.auto || !isIdlePaused(checked)) return false
+  const last = checked.pausedAt!
+  return now - last >= AUTO_SAVE_MS || dayOf(now) !== dayOf(last)
+}
+
+export function afterActivity(s: TimerState, now: number): TimerState {
+  const checked = idleCheck(s, now)
+  if (isIdlePaused(checked)) return resumeTimer(checked, now)
+  if (!checked.auto || checked.runningSince === null) return checked
+  if (now - (checked.lastActiveAt ?? 0) < ACTIVITY_WRITE_MS) return checked
+  return { ...checked, lastActiveAt: now }
 }
 
 /** The header's clock: "07:05" (mm:ss) under an hour, then "1:07:05" (h:mm:ss). */
@@ -147,6 +219,8 @@ export interface TimerDeps {
   reportError: (message: string) => void
   /** Calls back when browser storage changes in another tab (the "storage" event). Returns a stop function. */
   watch: (onChange: (key: string | null) => void) => () => void
+  /** Saves the session of an auto timer that saved itself (Q83); throws when it cannot (the timer then stays). */
+  saveSession: (plan: StopPlan) => void
 }
 
 export interface TimerSnapshot {
@@ -161,6 +235,8 @@ export function createTimerStore(deps: TimerDeps) {
   let owner: { kind: 'none' } | { kind: 'guest' } | { kind: 'user'; key: string } = { kind: 'none' }
   let snapshot: TimerSnapshot = { attached: false, state: null }
   let unwatch: (() => void) | null = null
+  /** The startedAt of a timer whose auto-save failed and was reported (once). */
+  let failedSave: number | null = null
   const listeners = new Set<() => void>()
 
   function set(state: TimerState | null) {
@@ -212,6 +288,39 @@ export function createTimerStore(deps: TimerDeps) {
     set(state)
   }
 
+  /**
+   * An auto timer idle for AUTO_SAVE_MS or into a new day saves itself (Q83) and is cleared, so the next exercise
+   * starts a new one; under a minute it is just cleared. Re-read from storage first, so a second tab that saved it
+   * a moment ago is seen. Returns the timer that is left (null after a save). A failed save keeps the timer and is
+   * reported once per timer (this runs on pointer moves too); later calls try again.
+   */
+  function settle(s: TimerState | null): TimerState | null {
+    if (s === null || owner.kind === 'none') return s
+    const now = deps.now()
+    if (!shouldAutoSave(s, now)) return s
+    const fresh = owner.kind === 'user' ? read(owner.key) : snapshot.state
+    if (fresh === null || fresh.startedAt !== s.startedAt || !shouldAutoSave(fresh, now)) {
+      set(fresh)
+      return fresh
+    }
+    const plan = planStop(idleCheck(fresh, now), now)
+    if (plan.kind !== 'short') {
+      try {
+        deps.saveSession({ ...plan, activeMs: Math.min(plan.activeMs, STUDY_SESSION_MAX_MS) })
+      } catch (err) {
+        if (failedSave !== fresh.startedAt) deps.reportError(`The study timer could not save its ${durationText(plan.activeMs)} by itself, so it stays in the header (press Stop to save it): ${messageOf(err)}`)
+        failedSave = fresh.startedAt
+        // It stays paused (the callers do not resume a timer that is due to save), so the next tap cannot carry it on.
+        const paused = idleCheck(fresh, now)
+        if (paused !== fresh) write(paused)
+        else set(fresh)
+        return paused
+      }
+    }
+    write(null)
+    return null
+  }
+
   function detach() {
     unwatch?.()
     unwatch = null
@@ -249,6 +358,38 @@ export function createTimerStore(deps: TimerDeps) {
       if (snapshot.state) return
       write(startTimer(deps.now()))
     },
+    /**
+     * Starting an exercise (DECISIONS.md #122): starts an auto timer when none runs on this device, or
+     * counts as activity for the one that does (a timer that paused itself resumes; Hayk's pause stays).
+     * Before sign-in or guest mode there is no timer to start, so it does nothing.
+     */
+    autoStart() {
+      if (owner.kind === 'none') return
+      const there = settle(owner.kind === 'user' ? read(owner.key) : snapshot.state)
+      if (there === null) {
+        write(startAutoTimer(deps.now()))
+        return
+      }
+      if (shouldAutoSave(there, deps.now())) return // its save failed (reported): it waits for Stop
+      const next = afterActivity(there, deps.now())
+      if (next !== there || there !== snapshot.state) write(next)
+    },
+    /** A tap, a key or a saved answer. Cheap when nothing changes (it runs on pointer moves): no storage access then. */
+    activity() {
+      if (owner.kind === 'none' || snapshot.state === null) return
+      const s = settle(snapshot.state)
+      if (s === null || shouldAutoSave(s, deps.now())) return
+      const next = afterActivity(s, deps.now())
+      if (next !== s) write(next)
+    },
+    /** The idle rule and auto-save on a tick or when the tab comes back, so the header stops counting idle minutes. */
+    checkIdle() {
+      if (owner.kind === 'none' || snapshot.state === null) return
+      const s = settle(snapshot.state)
+      if (s === null) return
+      const next = idleCheck(s, deps.now())
+      if (next !== s) write(next)
+    },
     pause() {
       if (snapshot.state) write(pauseTimer(snapshot.state, deps.now()))
     },
@@ -272,6 +413,12 @@ export function createTimerStore(deps: TimerDeps) {
 export type TimerStore = ReturnType<typeof createTimerStore>
 
 let store: TimerStore | null = null
+let autoSaver: ((plan: StopPlan) => void) | null = null
+
+/** How the app's timer saves a session by itself (StudyTimer.tsx sets it: lib/storage.ts saveStudySession). */
+export function setTimerAutoSaver(save: (plan: StopPlan) => void): void {
+  autoSaver = save
+}
 
 /** The app's timer, created on first use (tests make their own with createTimerStore). */
 export function timerStore(): TimerStore {
@@ -284,6 +431,10 @@ export function timerStore(): TimerStore {
         const handler = (e: StorageEvent) => onChange(e.key)
         window.addEventListener('storage', handler)
         return () => window.removeEventListener('storage', handler)
+      },
+      saveSession(plan) {
+        if (autoSaver === null) throw new Error('The study timer cannot save by itself yet (the app is still starting).')
+        autoSaver(plan)
       },
     })
   }
