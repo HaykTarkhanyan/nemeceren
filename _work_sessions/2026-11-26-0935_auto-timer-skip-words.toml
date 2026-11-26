@@ -1,0 +1,38 @@
+title = "Study timer starts with any exercise (idle pause, auto-save); Skip word for words Hayk does not want to study"
+date = "2026-11-26"
+time = "09:35"
+areas = ["app/src/lib", "app/src/components", "app/src/pages", "backend/src", "backend/db/migrations", "backend/scripts", "backend/README.md", "progress/README.md", "DECISIONS.md"]
+done = [
+  "Found the study timer already existed (#62, Start/Pause/Stop in the header), so feature 1 became auto-start.",
+  "Interview: Q79 any exercise starts it (not browsing), Q80 pause itself after 5 idle minutes, Q81 skipped words synced through Neon, Q82 Skip on the review card, All words, lesson word list and game answer screens.",
+  "Timer (#122): useAutoTimer in focus views, review runs (daily mix, quick tasks), match pairs, mistakes, tests, lessons, readings, listening; idle pause back-dated to the last activity (taps, keys, pointer, scroll, saved answers; lastActiveAt shared by tabs, written at most every 20 s); a pause by hand stays; a timer by hand never pauses itself; Settings switch, on by default.",
+  "The plugin's heads-up was right (checked): an auto timer saved nothing without Stop + Save, and the next day's first exercise would have resumed it. Q83: it now saves itself 30 minutes after the last activity or on a new day, before anything can resume it; a failed save is reported once and the timer stays paused.",
+  "Skip word (#123): migration 008 skipped_words (applied), sync and state in the function (deployed), account deletion covers it; app outbox, merge, view (useProgress().skipped), skipWord; filtered from bankWords, own words, map-tile games, listening, practice lists, runs already on screen, Say the words' once-more, Stats word counts; button with Undo toast in the four places; der/die/das gets it on its end list.",
+  "progress.py skipped (read-only) so new exercises can leave skipped words out; smoke test section 5e.",
+  "Checks: check-content, tsc, vitest 673 (24 new), build, backend typecheck all exit 0; smoke test 154 checks against the deployed API (11 new); browser as a guest: Home left the timer idle, a new-word run started it, Skip moved to the next card with the toast, All words showed Skipped 1 with Unskip, the lesson list struck the word through, Say the words did not requeue a skipped word.",
+]
+pending = [
+  "Hayk's first real use: does the 5-minute idle pause split sessions during long videos or readings? (then a longer idle time on those pages)",
+  "Opposites skips only the asked word; a skipped answer word can still show there.",
+  "Earlier sessions' open items (Google sign-in linking, CU-hours watch, Q50/Q51) are unchanged.",
+]
+next = """
+Hayk tries both on the phone and the PC: skip a word on one, check it is gone on the other; leave the app idle and see the session appear in Stats.
+"""
+files = [
+  "app/src/lib/timer.ts, timer.test.ts, settings.ts, storage.ts, storage.test.ts, outbox.ts, outbox.test.ts, skipped.ts (new)",
+  "app/src/components/StudyTimer.tsx, SkipWord.tsx (new), FocusBar.tsx, ReviewCard.tsx, ReviewRun.tsx, MistakesSession.tsx, AllWords.tsx, WordSetsTab.tsx, WhatNext.tsx, SpeakGames.tsx, GapFill.tsx, BuildSentence.tsx, PairsGame.tsx, ArticleDrill.tsx",
+  "app/src/pages/DailyPage.tsx, DailyPage.test.tsx, WordsPage.tsx, SpeakPage.tsx, LessonsPage.tsx, ListenPage.tsx, ReadPage.tsx, TestPage.tsx, StatsPage.tsx, SettingsPage.tsx; app/src/App.tsx, styles.css, content/schema.ts",
+  "backend/db/migrations/008_skipped_words.sql (new), backend/src/schema.ts, sync.ts, state.ts, config.ts, account.ts, backend/README.md",
+  "backend/scripts/progress.py (skipped), backend/scripts/non_essential/smoke_test.py, progress/README.md, DECISIONS.md (#122, #123)",
+]
+commits = [
+  "b852bf5 Auto-start study timer and Skip word for words you don't want to study",
+]
+notes = """
+Mistakes and fixes this session:
+- Assumed every exercise used FocusBar; the browser check showed the daily mix and quick tasks do not, so the timer did not start there. Moved the hook into ReviewRun, MatchGame and MistakesSession too.
+- Two of my own test scenarios jumped 10 minutes without activity, which the 5-minute rule correctly treats as idle; the tests were rewritten to tap every 2 minutes. The second time it also exposed a real gap: after a failed auto-save the next tap would have resumed the old timer.
+- The Speak vitest warning "localStorage is not available" predates this session (useReviewSound reads storage while games.test.tsx server-renders).
+Deploy order: migration 008, then the function (its state query needs the table), then the app push.
+"""
