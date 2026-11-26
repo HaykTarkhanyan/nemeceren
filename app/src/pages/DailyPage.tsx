@@ -393,6 +393,9 @@ function MixEnd({ done, startedAt, nothing, zones }: { done: Done; startedAt: nu
             {lesson.status === 'in-progress' ? 'Continue' : 'Next'} lesson: {lesson.lesson.unit}.{lesson.lesson.order} {lesson.lesson.title}
           </a>
         )}
+        <a className="btn" href={link('speak')}>
+          Speak
+        </a>
         <a className="btn" href={link()}>
           Home
         </a>
@@ -457,6 +460,9 @@ function GameEndButtons({ onAgain }: { onAgain: () => void }) {
       <button type="button" className="btn primary" onClick={onAgain}>
         Play again
       </button>
+      <a className="btn" href={link('speak')}>
+        Speak
+      </a>
       <a className="btn" href={link('daily')}>
         Daily mix
       </a>
@@ -671,6 +677,9 @@ function QuickEnd({ line, children }: { line: string; children?: ReactNode }) {
       </div>
       <div className="row">
         {children}
+        <a className="btn" href={link('speak')}>
+          Speak
+        </a>
         <a className={children ? 'btn' : 'btn primary'} href={link()}>
           Home
         </a>

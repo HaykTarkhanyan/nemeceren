@@ -47,9 +47,10 @@ export function introduced<W extends { id: string }>(words: W[], state: ReviewSt
  * How a practice game picks its words (Hayk, 2026-11-09: "dont lock anything"). From Home
  * ("learned-first"): the learned words first, then words not learned yet in the order given, which
  * is path order, so a round is always full. From tiles on the Words map ("any"): any word of the
- * lessons, learned or not, at random.
+ * lessons, learned or not, at random. From the Speak page ("as-given"): the page already chose and
+ * ordered the words (lib/speak.ts, DECISIONS.md #121).
  */
-export type RoundPick = 'learned-first' | 'any'
+export type RoundPick = 'learned-first' | 'any' | 'as-given'
 
 /**
  * Words not learned yet, in the order a round takes them: `slots` drawn at random from the first

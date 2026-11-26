@@ -21,6 +21,8 @@ export interface GameBack {
   href: string
   /** How many lessons' words the game plays on (tiles on the Words map); 0 for a game from Home. */
   lessons: number
+  /** A named way back instead of "Back to the map" or Daily mix and Home (the Speak page: "Back to Speak"). */
+  label?: string
 }
 
 export function GameFrame(props: { title: string; done: number; target: number; back: GameBack; sound: boolean; onSound: () => void; children: ReactNode }) {
@@ -101,7 +103,11 @@ export function GameEnd(props: { title: string; back: GameBack; onAgain: () => v
       {children}
       <p className="muted small">{reviews ? REVIEW_NOTE : PRACTICE_NOTE}</p>
       <div className="row actions">
-        {back.lessons > 0 ? (
+        {back.label ? (
+          <a className="btn" href={back.href}>
+            {back.label}
+          </a>
+        ) : back.lessons > 0 ? (
           <a className="btn" href={back.href}>
             Back to the map
           </a>
@@ -114,6 +120,12 @@ export function GameEnd(props: { title: string; back: GameBack; onAgain: () => v
               Home
             </a>
           </>
+        )}
+        {/* Speak (DECISIONS.md #121) from the end of every other game. */}
+        {back.href !== link('speak') && (
+          <a className="btn" href={link('speak')}>
+            Speak
+          </a>
         )}
         <button type="button" className="btn primary" onClick={onAgain}>
           Play again

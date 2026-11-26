@@ -17,6 +17,7 @@ import { StatsPage } from './pages/StatsPage.tsx'
 import { TestPage } from './pages/TestPage.tsx'
 import { TopicsPage } from './pages/TopicsPage.tsx'
 import { WordsPage } from './pages/WordsPage.tsx'
+import { SpeakPage } from './pages/SpeakPage.tsx'
 
 function ContentProblems({ problems }: { problems: string[] }) {
   return (
@@ -58,6 +59,8 @@ function Page({ route }: { route: string[] }) {
       return <ListenPage />
     case 'words':
       return <WordsPage tab={arg} />
+    case 'speak':
+      return <SpeakPage sub={arg} arg={sub} />
     case 'results':
       return arg ? <ResultDetailPage id={arg} /> : <ResultsPage />
     case 'stats':

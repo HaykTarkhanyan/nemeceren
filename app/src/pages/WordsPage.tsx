@@ -209,10 +209,14 @@ function Words({ tab }: { tab: (typeof WORDS_TABS)[number] }) {
           onCancel={() => setForm(null)}
         />
       ) : (
-        <div>
+        <div className="row">
           <button type="button" className="btn" onClick={() => openForm(null)}>
             Add a word
           </button>
+          {/* Say the words (DECISIONS.md #121), one tap from every Words tab. */}
+          <a className="btn speak-btn" href={link('speak')}>
+            Speak: say the words
+          </a>
         </div>
       )}
       {tab === 'map' ? (
@@ -410,6 +414,9 @@ function RoundEnd(props: {
         <button type="button" className={`btn${canContinue ? '' : ' primary'}`} onClick={onExit}>
           Done
         </button>
+        <a className="btn" href={link('speak')}>
+          Speak
+        </a>
         {canContinue && (
           <button type="button" className="btn primary" onClick={onNext}>
             Next round

@@ -1,8 +1,24 @@
 // Per-device settings, kept in localStorage in both modes.
 import { useSyncExternalStore } from 'react'
 import { z } from 'zod'
+import { SPEAK_KINDS, SPEAK_ORDERS, SPEAK_WHICH } from './speak.ts'
 
 export const RATES = [0.7, 0.85, 1] as const
+
+/** The Speak page's choices (DECISIONS.md #121), remembered on this device. */
+const SpeakSetup = z.object({
+  /** Where the words come from: [] = everything; else source keys "mine", "unit:2", "lesson:<id>" (course or theme), "lessons:<ids>" (map tiles), "set:<id>". */
+  from: z.array(z.string()),
+  which: z.enum(SPEAK_WHICH),
+  kinds: z.array(z.enum(SPEAK_KINDS)).min(1),
+  /** Words per round; 0 = keep going. */
+  size: z.union([z.literal(8), z.literal(15), z.literal(30), z.literal(0)]),
+  order: z.enum(SPEAK_ORDERS),
+  /** A spoken noun counts only with the right der/die/das (typed answers always need it). */
+  article: z.boolean(),
+})
+export type SpeakSetup = z.infer<typeof SpeakSetup>
+export const SPEAK_DEFAULTS: SpeakSetup = { from: [], which: 'learned', kinds: [...SPEAK_KINDS], size: 15, order: 'weakest', article: false }
 
 const Settings = z.object({
   voiceURI: z.string().nullable(),
@@ -16,11 +32,12 @@ const Settings = z.object({
   dailyMode: z.enum(['recognition', 'production']),
   /** The word set (content/sets.json id) the daily mix takes its new words from; null = the next lessons. */
   activeSet: z.string().nullable(),
+  speak: SpeakSetup,
 })
 export type Settings = z.infer<typeof Settings>
 
 const KEY = 'nemeceren.settings'
-const DEFAULTS: Settings = { voiceURI: null, rate: 0.85, newPerDay: 10, wordSource: 'all', umlautKeys: 'answers', dailyMode: 'recognition', activeSet: null }
+const DEFAULTS: Settings = { voiceURI: null, rate: 0.85, newPerDay: 10, wordSource: 'all', umlautKeys: 'answers', dailyMode: 'recognition', activeSet: null, speak: SPEAK_DEFAULTS }
 
 let current: Settings | null = null
 const listeners = new Set<() => void>()

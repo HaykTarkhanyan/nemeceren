@@ -40,6 +40,12 @@ interface GameProps {
   onAgain: () => void
 }
 
+/** The Speak page's extras (DECISIONS.md #121): round size (default GAMES.speakWords) and the article rule for spoken nouns. */
+interface SpeakOptions {
+  size?: number
+  withArticle?: boolean
+}
+
 // ---------- Say the words ----------
 
 type WordOutcome = 'said' | 'typed' | 'missed'
@@ -66,9 +72,9 @@ function useRoundMic(roundOver: boolean, typing: boolean, onTyping: (on: boolean
   return { mic, line }
 }
 
-export function SpeakWords({ words, state, back, pick, onAgain }: GameProps) {
+export function SpeakWords({ words, state, back, pick, onAgain, size = GAMES.speakWords, withArticle = false }: GameProps & SpeakOptions) {
   const [sound, toggleSound] = useReviewSound()
-  const [queue, setQueue] = useState(() => gameWords(words, state, GAMES.speakWords, pick))
+  const [queue, setQueue] = useState(() => gameWords(words, state, size, pick))
   const [firstPass] = useState(queue.length)
   const [index, setIndex] = useState(0)
   const [outcomes, setOutcomes] = useState<ReadonlyMap<string, WordOutcome>>(() => new Map())
@@ -140,6 +146,7 @@ export function SpeakWords({ words, state, back, pick, onAgain }: GameProps) {
         sound={sound}
         mic={mic}
         counted={counted}
+        withArticle={withArticle}
         onTyping={onTyping}
         onDone={finish}
       />
@@ -162,10 +169,12 @@ function SpeakWordCard(props: {
   mic: MicSession
   /** The words already reviewed this round (saveGameReview). */
   counted: Set<string>
+  /** A spoken noun counts only with its der/die/das (the Speak page's choice). */
+  withArticle: boolean
   onTyping: (on: boolean, why: string | null) => void
   onDone: (result: 'said' | 'typed' | 'wrong' | 'skipped') => void
 }) {
-  const { word, state, again, typing, sound, mic, counted, onTyping, onDone } = props
+  const { word, state, again, typing, sound, mic, counted, withArticle, onTyping, onDone } = props
   const reviewAnswer = (right: boolean, typed: Typed | null) => saveGameReview({ state, word, right, typed, timeMs: Math.round(performance.now() - shownAt), counted })
   const [shownAt] = useState(() => performance.now())
   const [heard, setHeard] = useState<{ text: string; right: boolean } | null>(null)
@@ -194,11 +203,11 @@ function SpeakWordCard(props: {
   const taken = useRef(false)
   useEffect(() => {
     if (typing || revealed) return
-    const rest = splitArticle(word.de).rest
+    const target = withArticle ? word.de : splitArticle(word.de).rest
     return mic.attach((r: SessionResult) => {
       if (taken.current) return
-      const best = bestAlternative(rest, r.alternatives)
-      const right = spokenWordRight(word.de, best)
+      const best = bestAlternative(target, r.alternatives)
+      const right = spokenWordRight(word.de, best, withArticle)
       if (!right && !r.final) return
       if (right) taken.current = true
       setHeard({ text: best, right })

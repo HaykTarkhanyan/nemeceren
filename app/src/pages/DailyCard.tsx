@@ -83,6 +83,9 @@ export const DailyCard = memo(function DailyCard({ goal }: { goal: GoalStreak })
             <a className="btn primary" href={link('daily')}>
               Start the daily mix
             </a>
+            <a className="btn speak-btn" href={link('speak')}>
+              Speak
+            </a>
           </>
         ) : (
           <span className="muted small">Nothing for the daily mix yet. Open the next station below, then come back.</span>
@@ -123,7 +126,7 @@ export const DailyCard = memo(function DailyCard({ goal }: { goal: GoalStreak })
               Match pairs
             </a>
             {PRACTICE_GAMES.map((g) => (
-              <a key={g} className="btn" href={link('daily', g)}>
+              <a key={g} className="btn" href={g === 'speak' ? link('speak') : link('daily', g)}>
                 {GAME_LABEL[g]}
               </a>
             ))}

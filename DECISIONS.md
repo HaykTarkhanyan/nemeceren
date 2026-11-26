@@ -2,6 +2,24 @@
 
 Newest at the top. Never delete a superseded entry - mark it and add a new one.
 
+## 121. "Say the words" gets its own menu tab, Speak, with choices for which words and how; it is one tap from Home, the Words page, the map and every end screen (asked for by Hayk, 2026-11-26)
+
+- **Date:** 2026-11-26 - **Status:** active; revisits #54 (the menu now has 11 text links)
+- **Why:** Hayk: "I like the say the words exercise too much, pls make it a separate tab ... a lot of customization ... a well visible option in many other places." Interview: all word choices (Q74), round size, article and order but no listen-and-repeat mode (Q75), Home, the Words page and map, and end screens but not lesson pages (Q76), the name "Speak" (Q77).
+- **What was built:**
+  - **The page** (`#/speak`, `pages/SpeakPage.tsx`): a big Start with the number of matching words, then folding sections. **Words from:** everything (Home's game words), my own words, units, themes (the ones this learner sees), word sets, and map tiles. **Which words:** all learned, due now, hard (missed at least once, FSRS lapses), learned in the last 7 days, got wrong in the last 7 days (any Again in the log, practice included), new, or everything; each with its count. **Kinds:** nouns, verbs, adjectives and adverbs, phrases, other, with counts. **Round:** 8, 15, 30 or keep going; weakest first, random or course order; and "say nouns with der/die/das".
+  - **Word kinds** (`lib/speak.ts` wordKind): from the card where it can tell (der/die/das = noun, several words or ?!. = phrase, English "to ..." = verb), else the glossary's part of speech (adjective or adverb), else other. On the 1,199 cards: 598 nouns, 211 verbs, about 190 adjectives and adverbs, 69 phrases, about 130 other. The glossary loads on the page (it is its own chunk); until then such words count as other.
+  - **The article rule:** typed answers already needed der/die/das; spoken ones ignored it. With the option on, a spoken noun counts only with the right article (`spokenWordRight(..., withArticle)`).
+  - **The game itself is unchanged:** the page hands `SpeakWords` its words in order (`pick: 'as-given'`) and the round size; answers still count as reviews (#109).
+  - **Remembered per device** in Settings (`speak`), like the other per-device choices.
+  - **Where it shows:** the menu tab; a Speak button next to "Start the daily mix" on Home, and More practice now opens the page; a button on every Words tab; map tiles open `#/speak/map/<ids>`, which picks those lessons and shows the setup; Speak on the end screens of the daily mix, the quick tasks, the word review round and every game.
+- **Checked:** unit tests for kinds, the 7-day lists, filters and order; in the browser as a guest: the menu tab, Home's button, the counts (1,094 words for everything; Unit 1 without verbs 66), a 15-word round, Close back to the setup, and the map link.
+- **Alternatives rejected:**
+  - **A part of speech on every card:** 1,199 card edits; the card plus the glossary already tell.
+  - **"Hard" as weakest-first only:** that is an order, so "hard" is a filter (lapses > 0) and "weakest first" an order.
+  - **Lesson and theme pages:** Hayk didn't pick them; map tiles cover single lessons.
+- **What would change this:** Hayk missing a filter (add it to lib/speak.ts); the menu getting crowded on the phone; words landing in the wrong kind (then a curated kind per card).
+
 ## 120. The English question hides bracketed notes that give the German away; they show after answering (Hayk, 2026-11-24)
 
 - **Date:** 2026-11-24 - **Status:** active; revisits the "accepted exception" in `_learnings/2026-10-02-1514_card-en-is-the-review-prompt.md`

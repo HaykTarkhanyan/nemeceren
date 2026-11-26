@@ -58,6 +58,7 @@ export function weakestFirst<W extends { id: string }>(words: W[], state: Review
  * freshOrder). "any" (from map tiles): all words at random, learned or not.
  */
 export function roundOrder<W extends { id: string }>(words: W[], state: ReviewState, n: number, pick: RoundPick, rand: () => number = Math.random): W[] {
+  if (pick === 'as-given') return words
   if (pick === 'any') return shuffle(words, rand)
   const learned = weakestFirst(words, state)
   const drawn = new Set(
@@ -86,9 +87,12 @@ export function gameWords<W extends { id: string }>(words: W[], state: ReviewSta
 /** A spoken sentence counts as right from this share of its words heard (Claude's call). */
 export const SPOKEN_SENTENCE_MIN = 0.8
 
-/** A spoken word counts when every word of its German, the article aside, was heard (case and punctuation ignored). */
-export function spokenWordRight(de: string, heard: string): boolean {
-  return compareSpoken(splitArticle(de).rest, heard).score === 1
+/**
+ * A spoken word counts when every word of its German was heard (case and punctuation ignored): the article aside, or,
+ * with `withArticle` (the Speak page's choice, DECISIONS.md #121), a noun's der/die/das too.
+ */
+export function spokenWordRight(de: string, heard: string, withArticle = false): boolean {
+  return compareSpoken(withArticle ? de : splitArticle(de).rest, heard).score === 1
 }
 
 export function spokenSentence(expected: string, heard: string): { words: SpokenWord[]; score: number; right: boolean } {

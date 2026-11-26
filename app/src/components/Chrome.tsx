@@ -25,6 +25,8 @@ export function Header({ route }: { route: string[] }) {
     ['read', 'Read'],
     ['topics', 'Topics'],
     ['words', 'Words'],
+    // Say the words on its own tab (Hayk, 2026-11-26; DECISIONS.md #121).
+    ['speak', 'Speak'],
     ['extras', 'Extras'],
     // Guests cannot write notes: nothing of theirs is kept, and Claude could not read it.
     ...(guest ? [] : [['notes', 'Notes'] as [string, string]]),

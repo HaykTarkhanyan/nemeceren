@@ -3255,3 +3255,20 @@ ol.line {
   color: var(--muted);
   text-decoration: line-through;
 }
+
+/* The Speak page (DECISIONS.md #121): folding sections and a big Start; the chips are the Extras page's. */
+.speak-page details > summary {
+  cursor: pointer;
+}
+
+.speak-go {
+  align-self: flex-start;
+  font-size: 1.15em;
+  padding: 10px 28px;
+}
+
+.btn.speak-btn {
+  border-color: var(--accent);
+  color: var(--accent);
+  font-weight: 600;
+}

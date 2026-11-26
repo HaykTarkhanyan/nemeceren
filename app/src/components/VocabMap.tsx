@@ -148,7 +148,7 @@ function GameLinks({ lessonIds, words }: { lessonIds: string[]; words: WordRow[]
     <>
       {(['match', ...PRACTICE_GAMES] as const).map((g) =>
         lessonIds.length > 0 && canPlay(g, words, content.pairs) ? (
-          <a key={g} className="btn small" href={link('daily', g, lessonsPart(lessonIds))}>
+          <a key={g} className="btn small" href={g === 'speak' ? link('speak', 'map', lessonsPart(lessonIds)) : link('daily', g, lessonsPart(lessonIds))}>
             {GAME_LABEL[g]}
           </a>
         ) : (
