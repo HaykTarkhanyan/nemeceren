@@ -12,7 +12,7 @@ import type { SentenceState } from '../lib/games.ts'
 import { micStatsLine, recognitionCtor, useMicSession } from '../lib/recognition.ts'
 import type { MicSession, SessionResult } from '../lib/recognition.ts'
 import { bestAlternative } from '../lib/speaking.ts'
-import { splitArticle } from '../lib/review.ts'
+import { GOAL_ROUND_MIN, splitArticle } from '../lib/review.ts'
 import { speak } from '../lib/speech.ts'
 import { checkWord } from '../lib/text.ts'
 import type { Comparison } from '../lib/text.ts'
@@ -25,6 +25,8 @@ import { nearMissText } from './ResultView.tsx'
 import { WordDe } from './ReviewCard.tsx'
 import { PlayButtons } from './Speaker.tsx'
 import { promptOf } from '../lib/prompt.ts'
+import { recordReviewRoundDone } from '../lib/storage.ts'
+import { messageOf, reportError } from '../lib/errors.ts'
 
 /** After a spoken right answer, the next word comes after this long. */
 const AUTO_NEXT_MS = 1500
@@ -90,6 +92,9 @@ export function SpeakWords({ words, state, back, pick, onAgain, size = GAMES.spe
   const { mic, line } = useRoundMic(roundOver, typing, onTyping)
   // Each word's first answer this round is a scheduled review (Hayk, 2026-11-09); its repeat is not.
   const counted = useRoundCounted()
+  // 10+ words answered count for the daily goal like a review round (Hayk, Q78, 2026-11-26; #86, #121): saved as soon
+  // as the 10th answer lands, so a "keep going" round or one closed early counts too, once per round.
+  const goalSaved = useRef(false)
   const frame = { title: 'Say the words', back, sound, onSound: toggleSound }
 
   if (queue.length === 0) {
@@ -109,6 +114,7 @@ export function SpeakWords({ words, state, back, pick, onAgain, size = GAMES.spe
           <p>
             Said {count('said')}, typed {count('typed')}, missed {count('missed')} of {first.length}.
           </p>
+          {goalSaved.current && <p className="ok-text">This round counts for today's goal.</p>}
           <GlossScope surface={{ kind: 'review-card', revealed: true }}>
             <ul className="game-list">
               {first.map((w) => (
@@ -132,6 +138,14 @@ export function SpeakWords({ words, state, back, pick, onAgain, size = GAMES.spe
     // A word not said or typed right comes back once at the end.
     if (!right && index < firstPass) setQueue((q) => [...q, word])
     setIndex((i) => i + 1)
+    if (!goalSaved.current && counted.size >= GOAL_ROUND_MIN) {
+      goalSaved.current = true
+      try {
+        recordReviewRoundDone()
+      } catch (err) {
+        reportError(`Could not save this round for your daily goal: ${messageOf(err)}`)
+      }
+    }
   }
 
   return (
